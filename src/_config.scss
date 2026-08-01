@@ -46,11 +46,23 @@ $emit-base-vars: false !default;
 $emit-component-vars: false !default;
 
 // Themes to compile. Removing one removes its entire block from the output.
-$themes: (light, dark) !default;
+// The FIRST one also lands on `:root`, so it applies before any `data-theme`
+// attribute is set.
+$themes: (light, dark, brand) !default;
 
 // Adapters to compile. Each is an isolated file; nothing else in the system
 // knows these libraries exist. Set to `()` for a project on plain CSS.
-$adapters: (bootstrap) !default;
+//
+// Both are listed here because this repository demonstrates both. A real
+// project should list only the library it uses: an unselected adapter costs
+// nothing, but a selected one it never loads is pure weight.
+//
+// Listing both in one APPLICATION is almost never right, and not because of
+// anything here — Bootstrap and daisyUI collide on 158 class names (`btn`,
+// `btn-primary`, `card`, `alert`, `badge`, `modal`, `table`…), so whichever
+// cascade layer lands later silently wins. This layer can make two libraries
+// agree on colour; it cannot make them agree on who owns `.btn`.
+$adapters: (bootstrap, daisyui) !default;
 
 // -----------------------------------------------------------------------------
 // Cascade layer names

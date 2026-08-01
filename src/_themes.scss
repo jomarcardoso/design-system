@@ -188,7 +188,104 @@ $dark: (
   'info-border': base.color(sky, 800)
 );
 
-$registry: (light: $light, dark: $dark);
+// -----------------------------------------------------------------------------
+// Brand — a warm, earthy identity built from five supplied colours
+// -----------------------------------------------------------------------------
+//
+// This theme exists to test the claim the architecture makes: that adding a
+// theme is a set of colour DECISIONS, not a rewrite. Nothing below this file
+// changed to accommodate it — no new token name, no adapter edit, no component
+// edit. Both adapters picked it up for free.
+//
+// Two decisions worth naming, because they are the interesting part:
+//
+//   - `action` is cocoa and `selected` is steel. In `light` the two share a hue
+//     and the README lists collapsing them as an open question. Here they are
+//     genuinely different colours, which is what those two roles being separate
+//     was FOR. Anything reading `bg-selected` now visibly diverges from
+//     anything reading `bg-action` — with no code change anywhere.
+//
+//   - Status colours stay on the stock ramps. A brand palette says what the
+//     product looks like; it does not get to say that danger is brown. Warning
+//     and danger are re-tinted slightly warm to sit with the palette, but they
+//     stay recognisably amber and red.
+
+$brand: (
+  // Surfaces. The supplied palette gives these directly: the near-white is the
+  // raised/surface level and the cream is the page behind it, which is the
+  // right way round — the page should recede.
+  page: base.color(parchment, 100),
+  surface: base.color(parchment, 50),
+  raised: base.color(parchment, 50),
+  sunken: base.color(parchment, 200),
+  overlay: color.change(base.color(parchment, 950), $alpha: 0.55),
+
+  // Text.
+  text: base.color(parchment, 900),
+  'text-muted': base.color(parchment, 600),
+  'text-subtle': base.color(parchment, 500),
+  heading: base.color(parchment, 950),
+
+  // Action — cocoa.
+  action: base.color(cocoa, 700),
+  'on-action': base.color(parchment, 50),
+  'action-hover': base.color(cocoa, 800),
+  'action-active': base.color(cocoa, 900),
+  'action-subtle': base.color(cocoa, 100),
+
+  // Selected — steel. Deliberately a different family from action.
+  selected: base.color(steel, 600),
+  'on-selected': base.color(parchment, 50),
+  'selected-hover': base.color(steel, 700),
+  'selected-subtle': base.color(steel, 100),
+
+  // Navigation. Cocoa one step darker than `action` so a link reads as text
+  // rather than as a button that lost its background.
+  link: base.color(cocoa, 800),
+  'link-hover': base.color(cocoa, 900),
+  'link-visited': base.color(steel, 800),
+
+  // Lines — the neutral family, so borders sit in the palette rather than
+  // introducing a fourth grey.
+  border: base.color(parchment, 300),
+  'border-subtle': base.color(parchment, 200),
+  'border-strong': base.color(parchment, 400),
+  ring: base.color(cocoa, 600),
+
+  'shadow-raised': base.scale(shadow, sm),
+  'shadow-overlay': base.scale(shadow, lg),
+
+  // Status — stock ramps, warmed slightly to sit with the palette.
+  success: base.color(green, 700),
+  'on-success': base.color(parchment, 50),
+  'success-hover': base.color(green, 800),
+  'success-subtle': base.color(green, 50),
+  'success-text': base.color(green, 800),
+  'success-border': base.color(green, 200),
+
+  warning: base.color(amber, 600),
+  'on-warning': base.color(parchment, 50),
+  'warning-hover': base.color(amber, 700),
+  'warning-subtle': base.color(amber, 50),
+  'warning-text': base.color(amber, 800),
+  'warning-border': base.color(amber, 200),
+
+  danger: base.color(red, 700),
+  'on-danger': base.color(parchment, 50),
+  'danger-hover': base.color(red, 800),
+  'danger-subtle': base.color(red, 50),
+  'danger-text': base.color(red, 800),
+  'danger-border': base.color(red, 200),
+
+  info: base.color(steel, 600),
+  'on-info': base.color(parchment, 50),
+  'info-hover': base.color(steel, 700),
+  'info-subtle': base.color(steel, 100),
+  'info-text': base.color(steel, 700),
+  'info-border': base.color(steel, 300)
+);
+
+$registry: (light: $light, dark: $dark, brand: $brand);
 
 // -----------------------------------------------------------------------------
 // Contexts — subthemes

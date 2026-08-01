@@ -21,8 +21,9 @@ is exactly one place — the semantic layer — and everything else derives from
 - **Theme and context switching** via `data-theme` and `data-surface`, with a
   build-time invariant that a context cannot change a background without its
   foreground.
-- **Bootstrap adapter** that replaces a 957-line hand-written mapping with
-  build-time Sass configuration plus 64 runtime variables.
+- **Two adapters, one contract.** Bootstrap (build-time Sass configuration plus
+  64 runtime variables, replacing a 957-line hand-written mapping) and daisyUI
+  (28 custom properties, its entire theming surface).
 - **Tailwind bridge** that publishes layer 2 as utilities through
   `@theme inline` — no extra custom properties, and utilities follow the theme.
 - **Enforced, not just documented.** Stylelint fails the build on a literal
@@ -62,7 +63,7 @@ both behave differently under `file://`.
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
 | 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 110, the public contract |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
-| 3.5 — adapter | `src/adapters/_bootstrap.scss` | custom properties | 64 — 45 for root theming, the rest component hooks |
+| 3.5 — adapter | `src/adapters/*.scss` | custom properties | Bootstrap 64, daisyUI 28 — whichever is selected |
 
 The rule that produces that table:
 
@@ -154,6 +155,41 @@ the subtler `background-color: var(--app-button-bg, var(--app-bg-action, var(--b
 because layer 2 is always defined and resolution never reaches the variant
 level. Each variant is bound to the semantic role it means.
 
+## daisyUI
+
+The second adapter, and the instructive contrast with Bootstrap. Both libraries
+express variants through custom properties, but resolve them at opposite times:
+
+```
+Bootstrap  .btn-primary { --bs-btn-bg: #5f3212 }               compiled literal
+daisyUI    .btn-primary { --btn-color: var(--color-primary) }   live reference
+```
+
+Because daisyUI keeps references, setting `--color-primary` once moves every
+primary component — so its adapter is 28 declarations with no per-variant work,
+while Bootstrap's has to re-bind each variant selector. Same architecture, very
+different amount of code, for a reason that belongs to the libraries.
+
+Compile `daisyui-entry.css`, which sets `themes: false`. Without that, daisyUI's
+built-in themes declare the same variables the adapter drives and whichever
+loads last wins.
+
+## Pick one library, not two
+
+`$adapters` accepts a list, but an application should name one. Bootstrap and
+daisyUI collide on **158 class names** — `btn`, `btn-primary`, `card`,
+`card-body`, `alert`, `badge`, `modal`, `table`, `navbar` among them — so
+loading both means the later cascade layer silently wins and one library's
+components become the other's.
+
+That is a property of the libraries. This design system makes them agree on
+colour, spacing and shape; it cannot make them agree on who owns `.btn`.
+
+The failure is worth knowing because it is nearly invisible: with both loaded
+`.btn-primary` still looks correct, since both resolve it to the action token.
+Only a class one library lacks — `.btn-danger`, which daisyUI does not define —
+exposes it.
+
 ## Tailwind
 
 Optional, and a bridge rather than an adapter — it runs the other direction,
@@ -184,11 +220,16 @@ src/                    the design system itself
   _core.scss            emission machinery, pair invariant
   _config.scss          prefix, themes, adapters, layer names
   adapters/_bootstrap.scss
+  adapters/_daisyui.scss
 app.css                 cascade layer order + token-driven baseline
 reset-a11y.css          optional; restores the native focus outline
 tailwind.css            optional Tailwind bridge
 bootstrap-entry.scss    optional Bootstrap build entry
-example/                the side-by-side demo
+daisyui-entry.css       optional daisyUI build entry
+example/
+  coexistence.html      Bootstrap vs plain CSS, light/dark
+  theme-brand.html      a custom theme across Bootstrap and plain CSS
+  daisyui.html          the daisyUI adapter, all three themes
 ```
 
 ## Build and verify

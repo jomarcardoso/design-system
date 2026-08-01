@@ -52,17 +52,29 @@ Adds `tailwind.css`, which publishes layer 2 as utilities (`bg-surface`,
 `text-fg-muted`) through `@theme inline`. Zero extra custom properties. Only
 meaningful if the project already uses Tailwind v4.
 
-**3. An adapter** — independent of question 2.
+**3. An adapter** — independent of question 2. Pick **one**.
 
 - **None** — plain CSS, or a framework with no adapter yet. Set
   `$adapters: ()`. Everything still works; components read layer 2 directly.
-- **Bootstrap** — the only adapter that exists today. Adds
-  `bootstrap-entry.scss` and `src/adapters/_bootstrap.scss`, and changes how
-  Bootstrap is imported: compile the entry instead of importing prebuilt CSS.
+- **Bootstrap** — adds `bootstrap-entry.scss` and
+  `src/adapters/_bootstrap.scss`, and changes how Bootstrap is imported:
+  compile the entry instead of importing prebuilt CSS.
+- **daisyUI** — adds `daisyui-entry.css` and `src/adapters/_daisyui.scss`.
+  Requires Tailwind v4. The entry sets `themes: false`, without which daisyUI's
+  built-in themes declare the same variables the adapter drives.
 
-If they want an adapter for a library that has none, say so plainly rather than
-improvising one mid-install. `src/adapters/_bootstrap.scss` is the template;
-writing a new one is its own task.
+**One, not several.** Bootstrap and daisyUI collide on 158 class names (`btn`,
+`btn-primary`, `card`, `alert`, `badge`, `modal`, `table`…), so loading both
+means the later cascade layer silently wins. The design system makes libraries
+agree on colour; it cannot make them agree on who owns `.btn`. If a project
+genuinely runs two libraries today, that is a migration to finish, not a
+configuration to support.
+
+If they want an adapter for a library that has neither, say so plainly rather
+than improvising one mid-install. The two existing adapters are the templates —
+`_bootstrap.scss` for a library that compiles variants to literals,
+`_daisyui.scss` for one that keeps them as references — and writing a new one is
+its own task.
 
 ### Choosing the prefix
 

@@ -405,6 +405,67 @@ $palette: (
     900: oklch(21.4% 0.009 43.1),
     950: oklch(14.7% 0.004 49.3),
   ),
+  // ---------------------------------------------------------------------------
+  // Brand families
+  // ---------------------------------------------------------------------------
+  //
+  // Built from five colours supplied as a brand palette:
+  //
+  //   #fbf9f6  #f8f4ec  #28211c   -> `parchment` 50 / 100 / 900
+  //   #5f3212                     -> `cocoa` 700
+  //   #425668                     -> `steel` 600
+  //
+  // The first three are one family, not three colours: at chroma 0.005-0.014
+  // and hue 58-85 they are the light, lighter and dark ends of the same warm
+  // neutral. Reading them that way is what makes surfaces, text and borders
+  // fall out of the palette instead of being decided one at a time.
+  //
+  // Each supplied colour is pinned to its step EXACTLY — a brand colour that
+  // arrives as `#5f3212` must still be `#5f3212` after the round trip. The
+  // remaining steps interpolate lightness with a chroma curve that peaks in the
+  // middle, which is what keeps the pale end from looking dirty and the dark
+  // end from looking muddy.
+  //
+  // These are layer 1: nothing outside `_themes.scss` may name them.
+  parchment: (
+    50: oklch(98.3% 0.005 78.3),
+    100: oklch(96.8% 0.011 84.6),
+    200: oklch(92.5% 0.012 80),
+    300: oklch(86.5% 0.013 74),
+    400: oklch(74% 0.014 68),
+    500: oklch(60% 0.014 64),
+    600: oklch(48.5% 0.014 62),
+    700: oklch(39% 0.014 60),
+    800: oklch(31.5% 0.014 58),
+    900: oklch(25.4% 0.014 57.6),
+    950: oklch(17% 0.012 56),
+  ),
+  cocoa: (
+    50: oklch(97.2% 0.008 60),
+    100: oklch(94% 0.018 58),
+    200: oklch(88% 0.034 56),
+    300: oklch(79% 0.052 55),
+    400: oklch(66% 0.07 54),
+    500: oklch(53% 0.082 53),
+    600: oklch(44% 0.083 53),
+    700: oklch(36.9% 0.079 52.7),
+    800: oklch(30.5% 0.066 52),
+    900: oklch(25.5% 0.054 51),
+    950: oklch(17% 0.036 50),
+  ),
+  steel: (
+    50: oklch(97% 0.005 240),
+    100: oklch(93.5% 0.01 242),
+    200: oklch(87% 0.018 244),
+    300: oklch(78% 0.026 245),
+    400: oklch(62.5% 0.034 245),
+    500: oklch(52% 0.038 246),
+    600: oklch(44.4% 0.039 246),
+    700: oklch(38% 0.036 246),
+    800: oklch(31% 0.03 247),
+    900: oklch(25% 0.024 248),
+    950: oklch(17% 0.016 249),
+  ),
   black: (
     base: #000,
   ),

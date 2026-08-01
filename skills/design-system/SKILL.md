@@ -287,6 +287,51 @@ promise. `surface-pad` and `surface-shadow` sat in `_component.scss` unread, and
 a Bootstrap card silently disagreed with a hand-written one about both. When
 adding a name to the contract, wire it in the adapter in the same change.
 
+## daisyUI
+
+The second adapter, and the useful contrast with Bootstrap. Both libraries
+express variants through custom properties, but they resolve them at opposite
+times, and that single difference explains most of the size gap between the two
+adapter files:
+
+```
+Bootstrap  .btn-primary { --bs-btn-bg: #5f3212 }              <- compiled LITERAL
+daisyUI    .btn-primary { --btn-color: var(--color-primary) }  <- REFERENCE
+```
+
+Because daisyUI keeps references, setting `--color-primary` once moves every
+primary component and no per-variant binding is needed. Compile
+`daisyui-entry.css` with `themes: false`, or daisyUI's built-in themes declare
+the same variables and whichever loads last wins.
+
+Two things to get right, both found by testing rather than by reading:
+
+**`--size-field` and `--size-selector` are units, not heights.** daisyUI does
+`--size: calc(var(--size-field) * 10)`. Mapping `--size-field` straight to
+`--app-size-control` renders a 22.5rem button. Divide by the same factor:
+`calc(var(--app-size-control) / 10)`.
+
+**`--root-bg` is a separate indirection point.** daisyUI paints the document
+from `--root-bg`, which defaults to `var(--color-base-100)` behind a `:where()`.
+Re-pointing `--root-bg` at `bg-page` while `base-100` takes `bg-surface`
+preserves the page/surface distinction that daisyUI's own model does not make.
+
+## Two libraries cannot share one page
+
+Bootstrap and daisyUI collide on 158 class names — `btn`, `btn-primary`, `card`,
+`card-body`, `alert`, `badge`, `modal`, `table`, `navbar` and more. On one page
+the later cascade layer wins and one library's components silently become the
+other's.
+
+No adapter can fix this and it is not a design-system problem: the token layer
+makes libraries agree on *colour*, not on who owns `.btn`. Pick one library per
+application. If a page must demo both, give each its own page.
+
+Worth knowing because the failure is nearly invisible: with both loaded,
+`.btn-primary` still looks right, since both libraries resolve it to the action
+token. Only a class one library lacks — `.btn-danger`, which daisyUI does not
+define — exposes it.
+
 ## Tailwind
 
 Optional, and a **bridge rather than an adapter** — it runs the other direction,

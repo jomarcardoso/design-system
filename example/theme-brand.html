@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brand theme across two vocabularies</title>
+
+<!--
+  Load order: app.css FIRST, because it declares the cascade layer order before
+  anything else can fix a layer's position by appearing in it. Bootstrap then
+  slots into the `vendor` layer it already named.
+
+  daisyUI is deliberately NOT loaded here. The two libraries share 158 class
+  names — `btn`, `btn-primary`, `card`, `card-body`, `alert`, `badge`, `modal`,
+  `table`, `navbar` among them — so on one page the later cascade layer simply
+  wins and one library's components silently become the other's. That is a
+  property of the libraries, not of this design system, and no adapter can fix
+  it. daisyUI has its own page, `daisyui.html`, with the same theme switcher.
+
+  The collision is worth knowing about because it is nearly invisible: with both
+  loaded, `.btn-primary` still looked right — both libraries resolve it to the
+  action token — and only `.btn-danger`, which daisyUI does not define, exposed
+  the problem by falling through to daisyUI's default button colour.
+
+  Build with `npm run demo`.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/bootstrap.css">
+
+<style>
+  body { margin: 0; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 1.6rem; margin: 0 0 0.25rem; }
+  .lede { color: var(--app-fg-muted); max-width: 66ch; margin: 0 0 1rem; }
+
+  .toolbar { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; margin-bottom: var(--app-space-xl); }
+  .toolbar button {
+    height: var(--app-size-control);
+    padding-inline: var(--app-pad-control-x);
+    font: inherit; cursor: pointer;
+    background: var(--app-bg-surface);
+    color: var(--app-fg-default);
+    border: var(--app-border);
+    border-radius: var(--app-radius-control);
+  }
+  .toolbar button[aria-pressed="true"] {
+    background: var(--app-bg-selected);
+    color: var(--app-fg-on-selected);
+    border-color: var(--app-bg-selected);
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--app-space-xl); }
+  .col-head { margin: 0 0 var(--app-space-md); font-size: 0.95rem; }
+  .col-head code { font-size: 0.78rem; color: var(--app-fg-muted); font-weight: 400; }
+  .stack { display: flex; flex-direction: column; gap: var(--app-gap-stack); }
+  .row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+
+  /* No-library column. Layer 2 only; local variables per variant so the base
+     hover rule cannot clobber a variant, and fg travels with bg. */
+  .x-btn {
+    --_bg: var(--app-button-bg, var(--app-bg-action));
+    --_bg-hover: var(--app-button-bg-hover, var(--app-bg-action-hover));
+    --_fg: var(--app-button-fg, var(--app-fg-on-action));
+    height: var(--app-size-control);
+    padding-inline: var(--app-pad-control-x);
+    font: inherit; cursor: pointer;
+    border: var(--app-border-width) solid transparent;
+    border-radius: var(--app-radius-control);
+    background: var(--_bg);
+    color: var(--_fg);
+  }
+  .x-btn:hover { background: var(--_bg-hover); }
+  .x-btn--selected { --_bg: var(--app-bg-selected); --_bg-hover: var(--app-bg-selected-hover); --_fg: var(--app-fg-on-selected); }
+  .x-btn--danger   { --_bg: var(--app-bg-danger);   --_bg-hover: var(--app-bg-danger-hover);   --_fg: var(--app-fg-on-danger); }
+
+  .x-card {
+    padding: var(--app-pad-surface);
+    background: var(--app-bg-surface);
+    color: var(--app-fg-default);
+    border: var(--app-border-width) solid var(--app-border-color);
+    border-radius: var(--app-radius-surface);
+    box-shadow: var(--app-shadow-raised);
+  }
+  .x-card h3 { margin: 0 0 var(--app-space-2xs); font-size: 1rem; }
+  .x-card p { margin: 0; color: var(--app-fg-muted); font-size: 0.9rem; }
+
+  .x-input {
+    height: var(--app-size-control);
+    width: 100%;
+    padding-inline: var(--app-pad-control-x);
+    font: inherit;
+    color: var(--app-fg-default);
+    background: var(--app-bg-surface);
+    border: var(--app-border-width) solid var(--app-border-color);
+    border-radius: var(--app-radius-control);
+  }
+  .x-alert {
+    padding: var(--app-space-sm) var(--app-space-md);
+    font-size: 0.9rem;
+    border-radius: var(--app-radius-control);
+    background: var(--app-bg-success-subtle);
+    color: var(--app-fg-success);
+    border: var(--app-border-width) solid var(--app-border-success);
+  }
+  .x-badge {
+    display: inline-block;
+    padding: var(--app-space-2xs) var(--app-space-sm);
+    font-size: 0.75rem;
+    border-radius: var(--app-radius-pill);
+    background: var(--app-bg-action);
+    color: var(--app-fg-on-action);
+  }
+
+  .swatches { display: flex; gap: var(--app-space-xs); flex-wrap: wrap; margin-bottom: var(--app-space-xl); }
+  .sw { width: 92px; }
+  .sw i { display: block; height: 44px; border-radius: var(--app-radius-control); border: var(--app-border); }
+  .sw span { display: block; font-size: 0.7rem; color: var(--app-fg-muted); margin-top: 0.25rem; font-family: var(--app-font-mono); }
+
+  .note {
+    margin-top: var(--app-space-2xl);
+    padding: var(--app-pad-surface);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+    border-radius: var(--app-radius-surface);
+    font-size: 0.88rem; color: var(--app-fg-muted);
+  }
+  .note strong { color: var(--app-fg-default); }
+  .note code { font-family: var(--app-font-mono); font-size: 0.82em; color: var(--app-fg-default); }
+  .note li { margin-bottom: var(--app-space-xs); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>One theme, two vocabularies</h1>
+  <p class="lede">
+    A brand theme built from five supplied colours. Bootstrap and plain CSS read the
+    same layer 2 contract, so switching the theme moves both at once. No adapter and
+    no component was edited to add this theme.
+    <br>
+    daisyUI is on <a href="daisyui.html">its own page</a> — it shares 158 class names
+    with Bootstrap, so the two cannot be shown side by side.
+  </p>
+
+  <div class="toolbar" role="group" aria-label="Theme">
+    <button data-set-theme="light">Light</button>
+    <button data-set-theme="dark">Dark</button>
+    <button data-set-theme="brand" aria-pressed="true">Brand</button>
+  </div>
+
+  <div class="swatches" id="swatches"></div>
+
+  <div class="grid">
+    <!-- ===================== Bootstrap ===================== -->
+    <div>
+      <h2 class="col-head">Bootstrap <code>.btn .card .alert</code></h2>
+      <div class="stack">
+        <div class="row">
+          <button class="btn btn-primary">Action</button>
+          <button class="btn btn-secondary">Selected</button>
+          <button class="btn btn-danger">Danger</button>
+        </div>
+        <input class="form-control" placeholder="Field">
+        <div class="card"><div class="card-body">
+          <h3 class="card-title h6">Card</h3>
+          <p class="card-text mb-0">Surface, border, radius, padding and elevation.</p>
+        </div></div>
+        <div class="alert alert-success py-2 mb-0">Saved successfully.</div>
+        <div><span class="badge text-bg-primary">Badge</span></div>
+      </div>
+    </div>
+
+    <!-- ===================== No library ===================== -->
+    <div>
+      <h2 class="col-head">No library <code>.x-btn .x-card</code></h2>
+      <div class="stack">
+        <div class="row">
+          <button class="x-btn">Action</button>
+          <button class="x-btn x-btn--selected">Selected</button>
+          <button class="x-btn x-btn--danger">Danger</button>
+        </div>
+        <input class="x-input" placeholder="Field">
+        <div class="x-card">
+          <h3>Card</h3>
+          <p>Surface, border, radius, padding and elevation.</p>
+        </div>
+        <div class="x-alert">Saved successfully.</div>
+        <div><span class="x-badge">Badge</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>What this page is testing:</strong>
+    <ul>
+      <li><strong>A theme is data, not code.</strong> <code>brand</code> is one map of colour
+        decisions in <code>_themes.scss</code>. The token count did not change — 110 names
+        before and after — because a theme supplies values, never new names.</li>
+      <li><strong>Action and selected finally diverge.</strong> In <code>light</code> both are
+        indigo, and the README lists collapsing them as an open question. Here action is
+        cocoa and selected is steel, and every library shows the split with no code change.
+        That is what keeping them separate was for.</li>
+      <li><strong>Status colours stay recognisable.</strong> A brand palette says what the
+        product looks like; it does not get to say that danger is brown.</li>
+      <li><strong>Two libraries cannot share a page.</strong> Bootstrap and daisyUI collide on
+        158 class names. The design system makes them agree on <em>colour</em>; it cannot make
+        them agree on who owns <code>.btn</code>. Choose one per application — which is what
+        <code>$adapters</code> is for.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const buttons = [...document.querySelectorAll('[data-set-theme]')];
+
+  const paint = () => {
+    const cs = getComputedStyle(root);
+    document.getElementById('swatches').innerHTML = [
+      ['bg-page','--app-bg-page'], ['bg-surface','--app-bg-surface'],
+      ['bg-sunken','--app-bg-sunken'], ['bg-action','--app-bg-action'],
+      ['bg-selected','--app-bg-selected'], ['fg-default','--app-fg-default'],
+      ['border','--app-border-color']
+    ].map(([label, v]) =>
+      `<div class="sw"><i style="background:var(${v})"></i><span>${label}</span></div>`
+    ).join('');
+  };
+
+  const setTheme = (name) => {
+    root.dataset.theme = name;
+    buttons.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.setTheme === name)));
+    paint();
+  };
+
+  buttons.forEach((b) => b.addEventListener('click', () => setTheme(b.dataset.setTheme)));
+  paint();
+</script>
+</body>
+</html>

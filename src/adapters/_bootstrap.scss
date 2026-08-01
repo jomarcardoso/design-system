@@ -100,6 +100,7 @@
 // =============================================================================
 
 @use 'sass:color';
+@use 'sass:list';
 @use 'sass:math';
 @use 'sass:map';
 @use '../core';
@@ -138,7 +139,7 @@ $_map: (
 // Thirteen constants that were being shipped as runtime custom properties for
 // no reason. `--bs-focus-ring-COLOR` stays: that one does change with the theme.
 
-@mixin _root($choices) {
+@mixin _refs() {
   // --- Core surfaces and text -------------------------------------------
   --bs-body-bg: #{core.ref('bg-page')};
   --bs-body-color: #{core.ref('fg-default')};
@@ -165,14 +166,26 @@ $_map: (
   --bs-box-shadow-sm: #{core.ref('shadow-raised')};
 
   // --- Theme colour family, generated ------------------------------------
-  // Five variables per colour x six colours. Written by hand this is thirty
-  // lines that drift; here it is one loop that cannot.
+  // Four variables per colour x six colours. Written by hand this is
+  // twenty-four lines that drift; here it is one loop that cannot.
   @each $bs, $role in $_map {
     --bs-#{$bs}: #{core.ref('bg-#{$role}')};
-    --bs-#{$bs}-rgb: #{rgb-triplet(map.get($choices, $role))};
     --bs-#{$bs}-bg-subtle: #{core.ref('bg-#{$role}-subtle')};
     --bs-#{$bs}-border-subtle: #{core.ref('border-#{$role}')};
     --bs-#{$bs}-text-emphasis: #{core.ref('fg-#{$role}')};
+  }
+}
+
+// The one part of the mapping that CANNOT be a `var()` reference.
+//
+// Bootstrap's opacity utilities do `rgba(var(--bs-primary-rgb), …)`, which
+// needs three bare numbers, and `rgba()` cannot take an oklch value or a
+// `var()`. So the triplet is computed from the theme's own colour at build
+// time, which makes it the only theme-SPECIFIC thing this adapter emits and
+// the reason the emit block below is split in two.
+@mixin _triplets($choices) {
+  @each $bs, $role in $_map {
+    --bs-#{$bs}-rgb: #{rgb-triplet(map.get($choices, $role))};
   }
 }
 
@@ -378,17 +391,49 @@ $_map: (
 
 @mixin emit() {
   @include core.in-layer(config.$layer-adapter) {
-    // Bootstrap keys dark mode off its own attribute. Driving both attributes
-    // from one selector keeps `data-theme` as the single switch the product
-    // toggles, and leaves `data-bs-theme` as an implementation detail.
+    // Everything that is a plain `var(--app-…)` goes here, once.
+    //
+    // The selector list is doing real work. A custom property is SUBSTITUTED
+    // where it is declared and then inherits as that result, so declaring
+    // these only on `:root` would freeze Bootstrap at the root's theme: a
+    // `[data-theme="brand"]` section or a `[data-surface="inverted"]` band
+    // would move the layer 2 tokens underneath and Bootstrap would not follow.
+    // Re-declaring at every boundary that can change a token is what makes
+    // contexts propagate into the library.
     :root,
-    [data-theme='light'] {
-      @include _root(themes.$light);
+    [data-theme],
+    [data-bs-theme],
+    [data-surface] {
+      @include _refs();
     }
 
-    [data-theme='dark'],
-    [data-bs-theme='dark'] {
-      @include _root(themes.$dark);
+    // The triplets, per theme, generated from `$themes` rather than listed by
+    // hand. This is what keeps the promise that adding a theme touches no
+    // adapter: register it in `_themes.scss`, add it to `$themes`, done.
+    $default-theme: list.nth(config.$themes, 1);
+
+    @each $name in config.$themes {
+      $choices: map.get(themes.$registry, $name);
+
+      @if $name == $default-theme {
+        :root,
+        [data-theme='#{$name}'] {
+          @include _triplets($choices);
+        }
+      } @else {
+        [data-theme='#{$name}'] {
+          @include _triplets($choices);
+        }
+      }
+
+      // Bootstrap keys dark mode off its own attribute. Aliasing it here keeps
+      // `data-theme` as the single switch the product toggles and leaves
+      // `data-bs-theme` an implementation detail.
+      @if $name == dark {
+        [data-bs-theme='dark'] {
+          @include _triplets($choices);
+        }
+      }
     }
 
     @include _components();

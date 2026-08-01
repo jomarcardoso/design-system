@@ -1,0 +1,60 @@
+/* =============================================================================
+ * DAISYUI BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ * The daisyUI counterpart to `bootstrap-entry.scss`. Compile this to produce
+ * the library's own CSS; `src/adapters/_daisyui.scss` then repoints its
+ * variables at the token layer at runtime.
+ *
+ *     npx @tailwindcss/cli -i daisyui-entry.css -o dist/daisyui.css
+ *
+ * `themes: false` is the important part. daisyUI ships built-in themes that
+ * declare the same variables the adapter drives; leaving them on means two
+ * sources of truth for colour and whichever loads last wins. Turned off, the
+ * adapter is the only thing that colours daisyUI.
+ *
+ * -----------------------------------------------------------------------------
+ * WHY THIS FILE DECLARES NO CASCADE LAYER
+ * -----------------------------------------------------------------------------
+ *
+ * Bootstrap's entry wraps the library in `@layer vendor` by hand. This one must
+ * not, for two reasons:
+ *
+ *   - `@plugin` cannot be nested inside `@layer`; Tailwind rejects it outright.
+ *   - Tailwind v4 already emits `@layer theme, base, components, utilities;`
+ *     and places daisyUI's output into `components` and `utilities` itself.
+ *
+ * Those four names are already in the order `app.css` declares, which is why
+ * that file lists `theme` and `utilities` even though it never fills them. So
+ * the layering works out — provided `app.css` is loaded FIRST, so its ordering
+ * statement is the one that fixes the positions.
+ *
+ * The consequence worth knowing: daisyUI's component rules land in `components`,
+ * which is declared AFTER `vendor-config` where the adapter lives. That is
+ * harmless here because the adapter only sets custom properties and daisyUI's
+ * components read them — declarations of a variable never fight rules that
+ * consume it. It would matter if the adapter tried to override a daisyUI
+ * property directly, which is a reason not to.
+ *
+ * -----------------------------------------------------------------------------
+ * THE ASYMMETRY WITH BOOTSTRAP
+ * -----------------------------------------------------------------------------
+ *
+ * This entry carries almost no configuration while `bootstrap-entry.scss`
+ * carries a lot. That is a property of the LIBRARIES, not of the approach:
+ * Bootstrap derives ~400 component variables from Sass at build time, so its
+ * static values have to be set before compilation. daisyUI exposes its whole
+ * theming surface as custom properties, so there is nothing to configure at
+ * build time and the adapter does all the work at runtime.
+ * ========================================================================== */
+
+@import 'tailwindcss';
+
+/* Tailwind only emits the classes it can find. Without this, daisyUI's output
+ * silently depends on whatever happens to be in the working directory — which
+ * is a confusing way to discover that half your components have no CSS. */
+@source './example';
+
+@plugin "daisyui" {
+  themes: false;
+}

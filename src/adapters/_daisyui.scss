@@ -1,0 +1,141 @@
+// =============================================================================
+// ADAPTER — daisyUI 5
+// =============================================================================
+//
+// An adapter is a LEAF: nothing in the system depends on it, and it is the only
+// file that knows this library exists. Deleting it removes daisyUI support and
+// changes nothing else.
+//
+// Direction is one-way and never negotiable:
+//     library-variable: var(--our-token);
+// The reverse — teaching the foundation about `--color-primary` — is how a
+// design system becomes permanently married to a component library.
+//
+// -----------------------------------------------------------------------------
+// WHY THIS FILE IS SHORTER THAN THE BOOTSTRAP ONE
+// -----------------------------------------------------------------------------
+//
+// Both libraries express variants through custom properties, but they resolve
+// them at opposite times, and that single difference is most of the size gap:
+//
+//   Bootstrap  .btn-primary { --bs-btn-bg: #5f3212 }      <- compiled LITERAL
+//   daisyUI    .btn-primary { --btn-color: var(--color-primary) }  <- REFERENCE
+//
+// Because daisyUI's variants stay references, setting `--color-primary` once
+// moves every primary component. Bootstrap's are baked at Sass time, so its
+// adapter has to re-bind each variant selector by hand. Same architecture, very
+// different amount of work — a property of the libraries, not of the approach.
+//
+// The cost of an adapter is whatever the library's theming surface costs. It
+// has nothing to do with how many components the library ships.
+//
+// Usage: compile `daisyui-entry.css`, which sets `themes: false`.
+// =============================================================================
+
+@use '../core';
+@use '../config';
+
+@mixin emit() {
+  @include core.in-layer(config.$layer-adapter) {
+    // The selector list matters as much as the mappings.
+    //
+    // Every value below is `var(--app-…)`, and a custom property's computed
+    // value is SUBSTITUTED where it is declared, then inherited as that result.
+    // Declaring these only on `:root` would freeze them at the root's theme:
+    // a `[data-theme="brand"]` section, or a `[data-surface="inverted"]` band,
+    // would change the layer 2 tokens underneath and daisyUI would not notice.
+    //
+    // Re-declaring the mapping at every boundary that can change a token is
+    // what makes contexts propagate into the library.
+    :root,
+    [data-theme],
+    [data-surface] {
+      // --- Surfaces ---------------------------------------------------
+      //
+      // daisyUI has one base colour plus two darker shades. Layer 2 has a page
+      // that recedes and a surface that comes forward — a distinction daisyUI
+      // does not make, so the adapter has to choose what to preserve.
+      //
+      // It preserves both, using daisyUI's own indirection: `--root-bg` is what
+      // paints the document, and it defaults to `var(--color-base-100)` behind
+      // a `:where()` (zero specificity), so re-pointing it is free. The page
+      // gets `bg-page`; components sitting on base-100 get `bg-surface`.
+      --root-bg: #{core.ref('bg-page')};
+      --color-base-100: #{core.ref('bg-surface')};
+      --color-base-200: #{core.ref('bg-sunken')};
+      // base-300 is daisyUI's deepest neutral — dividers, inactive fills. Layer
+      // 2 stops at two surfaces, so the next step down the neutral ramp is the
+      // line colour, which is where it sits anyway.
+      --color-base-300: #{core.ref('border-color')};
+      --color-base-content: #{core.ref('fg-default')};
+
+      // --- Intents ----------------------------------------------------
+      // daisyUI's `-content` convention is the same pair invariant layer 2
+      // already guarantees, which is why this half is mechanical.
+      --color-primary: #{core.ref('bg-action')};
+      --color-primary-content: #{core.ref('fg-on-action')};
+      --color-secondary: #{core.ref('bg-selected')};
+      --color-secondary-content: #{core.ref('fg-on-selected')};
+
+      // daisyUI models THREE interactive roles; layer 2 models two, on purpose
+      // — `action` (an invitation) and `selected` (a state). There is no third
+      // decision to map, so accent shares with secondary. Inventing
+      // `--app-bg-accent` to fill the slot would be daisyUI's shape leaking
+      // upward into the foundation, which is the one thing an adapter must
+      // never cause.
+      --color-accent: #{core.ref('bg-selected')};
+      --color-accent-content: #{core.ref('fg-on-selected')};
+
+      // `neutral` is daisyUI's dark solid (`btn-neutral`), not a grey text
+      // colour — hence the foreground token as its background.
+      --color-neutral: #{core.ref('fg-default')};
+      --color-neutral-content: #{core.ref('bg-surface')};
+
+      // --- Status -----------------------------------------------------
+      // Note `error` -> `danger`. Vocabulary translation is exactly what an
+      // adapter is for; the foundation does not adopt a library's spelling.
+      --color-info: #{core.ref('bg-info')};
+      --color-info-content: #{core.ref('fg-on-info')};
+      --color-success: #{core.ref('bg-success')};
+      --color-success-content: #{core.ref('fg-on-success')};
+      --color-warning: #{core.ref('bg-warning')};
+      --color-warning-content: #{core.ref('fg-on-warning')};
+      --color-error: #{core.ref('bg-danger')};
+      --color-error-content: #{core.ref('fg-on-danger')};
+
+      // --- Shape ------------------------------------------------------
+      // `selector` is checkboxes and toggles, `field` is inputs and buttons,
+      // `box` is cards and modals. Layer 2 has one control radius, so the first
+      // two share it rather than inventing a distinction the system does not
+      // make.
+      --radius-selector: #{core.ref('radius-control')};
+      --radius-field: #{core.ref('radius-control')};
+      --radius-box: #{core.ref('radius-surface')};
+
+      // --- Size -------------------------------------------------------
+      //
+      // These are NOT heights, and reading them as heights is the single
+      // easiest way to break this adapter. daisyUI multiplies them:
+      //
+      //     .btn { --size: calc(var(--size-field, 0.25rem) * 10); }
+      //
+      // so `--size-field: var(--app-size-control)` would render a 22.5rem
+      // button. Dividing by the same factor makes daisyUI's controls land on
+      // exactly the height layer 2 specifies, and keeps them following
+      // `[data-density]` because the token is a calc() over `--app-space-unit`.
+      --size-field: calc(#{core.ref('size-control')} / 10);
+      --size-selector: calc(#{core.ref('size-control-sm')} / 10);
+
+      --border: #{core.ref('border-width')};
+
+      // --- Library-local constants ------------------------------------
+      // `depth` and `noise` are purely aesthetic knobs with no semantic
+      // equivalent, and inventing `--app-fx-depth` to feed them would be the
+      // foundation absorbing daisyUI's shape. They stay here, at daisyUI's own
+      // defaults, because where the design system has no opinion the library
+      // keeps its character.
+      --depth: 1;
+      --noise: 0;
+    }
+  }
+}

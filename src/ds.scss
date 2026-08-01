@@ -16,6 +16,7 @@
 @use 'themes';
 @use 'component';
 @use 'adapters/bootstrap';
+@use 'adapters/daisyui';
 
 // Layer 1 — normally emits nothing (see _base.scss).
 @include base.emit();
@@ -31,4 +32,8 @@
 // contributes zero bytes rather than dead rules.
 @if list.index(config.$adapters, bootstrap) {
   @include bootstrap.emit();
+}
+
+@if list.index(config.$adapters, daisyui) {
+  @include daisyui.emit();
 }

@@ -17,13 +17,17 @@
     "watch:tokens": "sass --watch src/ds.scss dist/ds.css",
     "lint": "stylelint \"src/**/*.scss\" \"app.css\"",
     "build": "npm run build:tokens && npm run lint",
-    "demo": "npm run build:tokens && npm run build:bootstrap"
+    "build:daisyui": "tailwindcss -i daisyui-entry.css -o dist/daisyui.css",
+    "demo": "npm run build:tokens && npm run build:bootstrap && npm run build:daisyui"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
     "bootstrap": "5.3",
+    "daisyui": "^5.7.9",
     "postcss-scss": "^4.0.9",
     "sass": "^1.83.0",
-    "stylelint": "^16.0.0"
+    "stylelint": "^16.0.0",
+    "tailwindcss": "^4.3.3"
   },
   "peerDependencies": {
     "bootstrap": "^5.3.0",
