@@ -1,0 +1,198 @@
+// =============================================================================
+// LAYER 3 — COMPONENT  (injection points, not components)
+// =============================================================================
+//
+// Also known as: component tokens (Material 3, Spectrum, Atlassian),
+// scoped tokens (Design Tokens W3C CG).
+//
+// This layer does NOT ship components. That is the whole redesign. Shipping
+// `.btn` and `.card` would be building "another Bootstrap that forces its own
+// anatomy" — the opposite of a foundation. Anatomy comes from whichever library
+// the team already chose; this layer never competes with it.
+//
+// What this layer ships is a NAMING CONTRACT: a documented set of
+// `--app-<component>-<part>-<property>` names that adapters consult FIRST and
+// that consumers may set to customise a single instance. It is almost entirely
+// empty by default, and that is correct.
+//
+// -----------------------------------------------------------------------------
+// THE 3-LEVEL FALLBACK — why the contract can be empty and still work
+// -----------------------------------------------------------------------------
+//
+// Every adapter resolves a component value as a chain:
+//
+//     library-var: var(--app-<component>, var(--app-<semantic>, <library-default>));
+//                        └ level 1: component  └ level 2: semantic   └ level 3: lib default
+//
+// Read the consequences carefully, because they resolve the tension you named
+// (this layer helps the adapter AND risks duplicating it):
+//
+//   - If NOBODY sets the component token, level 1 is undefined and the chain
+//     falls straight through to the semantic token. The component is themed
+//     correctly with ZERO component tokens emitted. This is the default state,
+//     and it is why the layer ships empty.
+//
+//   - If a consumer sets ONE component token (your input-label-bg example), it
+//     wins for that instance, and everything else still flows from semantic.
+//     No duplication: you added one name, not a parallel component system.
+//
+//   - The library's own default is the LAST resort, so removing our layers
+//     entirely leaves a working (unthemed) component rather than a broken one.
+//
+// So this layer's value is not the tokens it emits — it is the NAMES it
+// reserves, so that a consumer customising a component reaches for a token
+// instead of editing the component's CSS. That is the exact behaviour you want
+// from teams who do not know design systems: the path of least resistance is a
+// variable, not a fork.
+//
+// -----------------------------------------------------------------------------
+// THE ADMISSION TEST (unchanged, restated with your example)
+// -----------------------------------------------------------------------------
+//
+// A component token is worth RESERVING A NAME for if it answers yes to one:
+//   1. Does a theme/context change it independently of its semantic source?
+//   2. Will a consumer plausibly override it for one instance? (input-label-bg
+//      passes here: unusual to theme, occasionally set per instance.)
+//   3. Does it encode component-specific anatomy with no semantic equivalent?
+//
+// Names that pass are DOCUMENTED below even when we emit nothing for them, so
+// the adapter and the consumer agree on spelling. Names that fail all three do
+// not get reserved; the component reads semantic directly.
+//
+// -----------------------------------------------------------------------------
+// DEFAULT: emit nothing
+// -----------------------------------------------------------------------------
+//
+// `$emit-component-vars` defaults to false. The registry below is the
+// documented contract; turning emission on writes DEFAULTS for a chosen subset,
+// which a project does only when it wants a component token to have a value
+// other than "fall through to semantic". Most projects never turn it on.
+// =============================================================================
+
+@use 'sass:map';
+@use 'core';
+@use 'config';
+
+// -----------------------------------------------------------------------------
+// THE CONTRACT
+// -----------------------------------------------------------------------------
+//
+// This map is the source of truth for component token NAMES. Adapters import it
+// and iterate it, so a name added here is automatically available to every
+// adapter's fallback chain without editing each adapter. The values are the
+// SEMANTIC tokens each component part falls through to — used only when
+// emission is on; otherwise the fallback happens naturally at runtime.
+//
+// Grammar: 'component-part-property': 'semantic-token-it-derives-from'
+//
+// Keep this list SHORT. It covers the parts teams actually customise across
+// libraries. It is not a catalogue of every component a library has — that
+// catalogue is the library's job, and reproducing it here is precisely the
+// 627-token mistake from the old Bootstrap adapter.
+
+$contract: (
+  // --- Button: the most-customised component in every library ------------
+  'button-bg': 'bg-action',
+  'button-fg': 'fg-on-action',
+  'button-bg-hover': 'bg-action-hover',
+  'button-bg-active': 'bg-action-active',
+  'button-border-color': 'border-action',
+  'button-radius': 'radius-control',
+  'button-height': 'size-control',
+  'button-pad-x': 'pad-control-x',
+
+  // --- Input / field -----------------------------------------------------
+  'field-bg': 'bg-surface',
+  'field-fg': 'fg-default',
+  'field-border-color': 'border-color',
+  'field-border-color-focus': 'border-action',
+  'field-radius': 'radius-control',
+  'field-height': 'size-control',
+  // Your example lives here: unusual to theme, occasionally set per instance.
+  'field-label-fg': 'fg-default',
+  'field-label-bg': null, // no semantic source: transparent unless set
+
+  // --- Surface / card ----------------------------------------------------
+  'surface-bg': 'bg-surface',
+  'surface-fg': 'fg-default',
+  'surface-border-color': 'border-color',
+  'surface-radius': 'radius-surface',
+  'surface-pad': 'pad-surface',
+  'surface-shadow': 'shadow-raised',
+
+  // --- Table: called out as a key parameter ------------------------------
+  'table-fg': 'fg-default',
+  'table-border-color': 'border-color-subtle',
+  'table-header-bg': 'bg-sunken',
+  'table-header-fg': 'fg-heading',
+  'table-row-bg-hover': 'bg-sunken',
+  'table-row-bg-striped': 'bg-sunken',
+
+  // --- Overlay / modal / dropdown ---------------------------------------
+  'overlay-bg': 'bg-raised',
+  'overlay-fg': 'fg-default',
+  'overlay-border-color': 'border-color',
+  'overlay-radius': 'radius-surface',
+  'overlay-shadow': 'shadow-overlay',
+  'overlay-backdrop': 'bg-overlay',
+
+  // --- Navigation --------------------------------------------------------
+  'nav-fg': 'fg-link',
+  'nav-fg-hover': 'fg-link-hover',
+  'nav-fg-active': 'fg-on-selected',
+  'nav-bg-active': 'bg-selected',
+
+  // --- Feedback: alert / badge ------------------------------------------
+  'alert-radius': 'radius-control',
+  'alert-pad': 'pad-surface',
+  'badge-radius': 'radius-pill',
+  'badge-fg': 'fg-on-action',
+  'badge-bg': 'bg-action'
+);
+
+// Public accessor for adapters: returns the component var NAME, or the
+// semantic token it falls through to. Adapters use `ref-chain()` below rather
+// than reading this directly.
+@function contract() {
+  @return $contract;
+}
+
+// Builds the 3-level fallback for one component part:
+//   var(--app-button-bg, var(--app-bg-action, <lib-default>))
+// This is the function adapters call. It guarantees every adapter spells the
+// component token the same way and always falls through to the right semantic
+// token, with the library default as the final safety net.
+@function ref-chain($part, $lib-default) {
+  $semantic: map.get($contract, $part);
+  @if $semantic == null {
+    // Part with no semantic source (e.g. field-label-bg): component token or
+    // the library default, nothing in between.
+    @return var(#{core.var-name($part)}, #{$lib-default});
+  }
+  @return var(
+    #{core.var-name($part)},
+    var(#{core.var-name($semantic)}, #{$lib-default})
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Emission — OFF by default
+// -----------------------------------------------------------------------------
+//
+// When a project turns this on, it emits DEFAULTS for the contract so that the
+// component tokens resolve even outside an adapter (e.g. for hand-written
+// components). Scoped to `:root`; per-instance overrides win by cascade.
+
+@mixin emit() {
+  @if config.$emit-component-vars {
+    @include core.in-layer(config.$layer-component) {
+      :root {
+        @each $part, $semantic in $contract {
+          @if $semantic != null {
+            #{core.var-name($part)}: #{core.ref($semantic)};
+          }
+        }
+      }
+    }
+  }
+}

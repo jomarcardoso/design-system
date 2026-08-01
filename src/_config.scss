@@ -1,0 +1,63 @@
+// =============================================================================
+// BUILD CONFIGURATION
+// =============================================================================
+//
+// Everything here is a SCSS variable, which means it is resolved at compile
+// time and costs zero bytes in the output. Consumers override these with
+// `@use 'ds/src/config' with (...)` before the first import of the system.
+//
+// This file is the single place where a project decides how much of the design
+// system it wants to pay for.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Namespace
+// -----------------------------------------------------------------------------
+// Prefix for every custom property the system emits. `app` is kept from the
+// existing Bootstrap adapter so previous work keeps resolving.
+//
+// A prefix is not cosmetic here: daisyUI and Tailwind both own the bare
+// `--color-*` namespace, and Bootstrap owns `--bs-*`. Without a prefix, layer 2
+// would collide with the very libraries it is supposed to drive.
+$prefix: 'app' !default;
+
+// -----------------------------------------------------------------------------
+// Emission switches
+// -----------------------------------------------------------------------------
+//
+// THE EMISSION RULE, which these switches exist to enforce:
+//
+//   A value becomes a CSS custom property ONLY if it changes at runtime — a
+//   theme swap, a context, a per-instance override — or if it is a public
+//   extension point. Everything else resolves at compile time and ships as a
+//   literal, costing zero bytes.
+//
+// Emit layer 1 primitives as runtime custom properties. Layer 1 is private:
+// nothing reads `--app-base-*`, because layer 2 reads it through `color()` and
+// `scale()` at build time and inlines the literal. Turning this on adds ~260
+// custom properties that nothing is allowed to reference. See _base.scss.
+$emit-base-vars: false !default;
+
+// Emit DEFAULTS for the layer 3 component contract. Off by default: with the
+// 3-level fallback chain, component tokens resolve to their semantic source at
+// runtime WITHOUT being emitted. Turn on only to give a component token a value
+// other than "fall through to semantic", or for hand-written components used
+// outside any adapter. See _component.scss.
+$emit-component-vars: false !default;
+
+// Themes to compile. Removing one removes its entire block from the output.
+$themes: (light, dark) !default;
+
+// Adapters to compile. Each is an isolated file; nothing else in the system
+// knows these libraries exist. Set to `()` for a project on plain CSS.
+$adapters: (bootstrap) !default;
+
+// -----------------------------------------------------------------------------
+// Cascade layer names
+// -----------------------------------------------------------------------------
+// Kept configurable because the layer ORDER lives in the application entry
+// stylesheet, not here — a library must not dictate the host's cascade.
+$layer-base: 'ds.base' !default;
+$layer-semantic: 'ds.semantic' !default;
+$layer-component: 'ds.component' !default;
+$layer-adapter: 'vendor-config' !default;

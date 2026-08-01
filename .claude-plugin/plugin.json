@@ -1,0 +1,9 @@
+{
+  "name": "design-system",
+  "description": "A framework-independent CSS token foundation and the skill that applies it. Installs the token layers into a project, wires Bootstrap or Tailwind to them, and keeps application code reading only the semantic contract.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Jomar Cardoso"
+  },
+  "license": "MPL-2.0"
+}

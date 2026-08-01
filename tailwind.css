@@ -1,0 +1,67 @@
+/* =============================================================================
+ * INTEGRATION — Tailwind CSS v4  (OPTIONAL)
+ * =============================================================================
+ *
+ * Add this ON TOP of app.css only when the project wants Tailwind utilities
+ * (`bg-surface`, `text-fg-muted`) that follow the tokens and themes. A project
+ * that does not use Tailwind never imports this file and never sees a Tailwind
+ * directive.
+ *
+ *     @import './ds/app.css';       - required, framework-neutral
+ *     @import './ds/tailwind.css';  - optional, adds the utilities
+ *
+ * (Paths are relative to wherever you vendored the design system. Nothing here
+ * assumes a package name.)
+ *
+ * -----------------------------------------------------------------------------
+ * WHY TAILWIND NEEDS NO ADAPTER, ONLY THIS BRIDGE
+ * -----------------------------------------------------------------------------
+ *
+ * An adapter translates a LIBRARY'S vocabulary into ours: Bootstrap says
+ * `--bs-primary`, daisyUI says `--color-primary`, and the adapter maps them to
+ * our `--app-*`. The direction is library -> us.
+ *
+ * Tailwind v4 has no theme vocabulary of its own. `@theme` is the mechanism by
+ * which YOU declare the vocabulary — which is exactly why layer 1 already uses
+ * Tailwind's names and needs no adapter at all.
+ *
+ * So this file is not an adapter. It runs the other direction: it PUBLISHES our
+ * layer 2 as Tailwind utilities. `@theme inline` is what makes that a single
+ * declaration instead of a duplicate:
+ *
+ *   - plain `@theme` resolves the value at BUILD time and bakes it into the
+ *     utility, so `[data-theme="dark"]` changing `--app-bg-surface` would not
+ *     move `bg-surface`.
+ *   - `@theme inline` keeps the `var()` reference in the generated utility, so
+ *     the utility follows the theme and every context at runtime.
+ *
+ * Bridge only what is genuinely useful as a utility. Every entry generates a
+ * family of classes. Spacing, radius and typography are usually better served
+ * by Tailwind's own scales, which already read the same layer 1 values, so they
+ * are intentionally NOT re-bridged here.
+ * ============================================================================= */
+
+@import 'tailwindcss';
+
+@theme inline {
+  --color-page: var(--app-bg-page);
+  --color-surface: var(--app-bg-surface);
+  --color-raised: var(--app-bg-raised);
+  --color-sunken: var(--app-bg-sunken);
+
+  --color-fg: var(--app-fg-default);
+  --color-fg-muted: var(--app-fg-muted);
+  --color-fg-heading: var(--app-fg-heading);
+
+  --color-action: var(--app-bg-action);
+  --color-on-action: var(--app-fg-on-action);
+  --color-selected: var(--app-bg-selected);
+  --color-link: var(--app-fg-link);
+
+  --color-success: var(--app-bg-success);
+  --color-warning: var(--app-bg-warning);
+  --color-danger: var(--app-bg-danger);
+  --color-info: var(--app-bg-info);
+
+  --color-line: var(--app-border-color);
+}

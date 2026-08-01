@@ -1,0 +1,294 @@
+// =============================================================================
+// LAYER 2 — SEMANTIC
+// =============================================================================
+//
+// Also known as:
+//   system tokens      (Material Design 3)
+//   decision tokens    (Nathan Curtis / EightShapes)
+//   alias tokens       (Design Tokens W3C Community Group, Adobe Spectrum)
+//   semantic tokens    (Atlassian, GitHub Primer, Shopify Polaris)
+//
+// This is the ONLY public API of the foundation. Application styles, component
+// styles, third-party adapters and product teams all read from here and from
+// nowhere else. Layer 1 is private; layer 3 is optional. If a project only ever
+// consumed this file, the system would still work.
+//
+// Defining properties:
+//   1. Every token carries INTENT, not appearance. `bg-danger`, never `bg-red`.
+//      The test: if renaming a colour family would force renaming the token,
+//      the token is misnamed.
+//   2. Every token points at layer 1, never at a literal. A hex value appearing
+//      here is a bug.
+//   3. This is the only layer themes and contexts are allowed to override.
+//   4. Every token is a runtime custom property, because runtime override is
+//      the entire reason this layer exists.
+//
+// -----------------------------------------------------------------------------
+// NAMING GRAMMAR
+// -----------------------------------------------------------------------------
+//
+//   --app-{property}-{role}[-{prominence}][-{state}]
+//
+//   property    bg fg border ring shadow radius space size font text
+//               weight leading duration ease z opacity
+//   role        page surface raised sunken overlay | default muted subtle
+//               heading | action selected link | success warning danger info
+//               | on-<role>
+//   prominence  subtle | (omitted = default) | strong
+//   state       hover | active | disabled | selected | visited
+//
+// Prominence and state are OPTIONAL SUFFIXES. That is what lets the system
+// grow without renaming: adding `--app-bg-action-hover` never disturbs
+// `--app-bg-action`, so new roles are always additive.
+//
+// -----------------------------------------------------------------------------
+// THE PAIR INVARIANT
+// -----------------------------------------------------------------------------
+//
+// Every `bg-X` has a matching `fg-on-X`. Contrast is then guaranteed by
+// construction rather than by review, and a subtheme cannot half-override
+// itself into unreadable text — `core.context()` refuses to compile that.
+// Material calls this `on-primary`; daisyUI calls it `primary-content`. Same
+// idea, and keeping it is precisely why the daisyUI adapter is thirty lines.
+// =============================================================================
+
+@use 'sass:map';
+@use 'base';
+@use 'core';
+@use 'config';
+
+// -----------------------------------------------------------------------------
+// STRUCTURE — theme-independent tokens
+// -----------------------------------------------------------------------------
+//
+// These do not change between light and dark. A card's radius, a control's
+// height and the motion curve are properties of the product, not of the theme.
+// Keeping them out of the theme files means a new theme is ~35 colour
+// decisions rather than ~85 tokens, which is what makes themes cheap to add.
+
+@function structure() {
+  @return (
+    // --- Border ---------------------------------------------------------
+    // The original sketch had a single "border (colour, width, style)" token.
+    // Split into atoms, because a subtheme routinely changes the colour while
+    // keeping the width, and a shorthand cannot be partially overridden.
+    // The composed shorthand is provided too, built from the atoms.
+    'border-width': 1px,
+    'border-style': solid,
+    'border': #{core.ref('border-width')} #{core.ref('border-style')} #{core.ref('border-color')},
+
+    // --- Radius ---------------------------------------------------------
+    // Named by what they wrap, not by size. `radius-md` forces every consumer
+    // to re-decide which size a button is; `radius-control` decides once.
+    'radius-control': base.scale(radius, md),
+    'radius-surface': base.scale(radius, xl),
+    'radius-pill': base.scale(radius, full),
+
+    // --- Spacing --------------------------------------------------------
+    // The original sketch had one general padding and one general gap. One
+    // value does not survive contact with a real UI: a card's padding and a
+    // button's padding are different decisions that must scale together.
+    //
+    // `space-unit` is the density knob. Every step is a calc() against it, so
+    // setting `--app-space-unit: 0.2rem` on a container compacts that whole
+    // subtree — this is how a "comfortable / compact" toggle is built without
+    // a second set of tokens.
+    'space-unit': base.$spacing-unit,
+    'space-2xs': calc(#{core.ref('space-unit')} * 1),
+    'space-xs': calc(#{core.ref('space-unit')} * 2),
+    'space-sm': calc(#{core.ref('space-unit')} * 3),
+    'space-md': calc(#{core.ref('space-unit')} * 4),
+    'space-lg': calc(#{core.ref('space-unit')} * 6),
+    'space-xl': calc(#{core.ref('space-unit')} * 8),
+    'space-2xl': calc(#{core.ref('space-unit')} * 12),
+
+    // Intent-named spacing — the direct replacement for "padding geral".
+    'pad-control-x': core.ref('space-sm'),
+    'pad-control-y': core.ref('space-xs'),
+    'pad-surface': core.ref('space-lg'),
+    'gap-inline': core.ref('space-xs'),
+    'gap-stack': core.ref('space-md'),
+
+    // --- Typography -----------------------------------------------------
+    'font-body': base.scale(font, sans),
+    'font-heading': base.scale(font, sans),
+    'font-mono': base.scale(font, mono),
+    'text-size': base.scale(text, base),
+    'text-leading': base.scale(leading, normal),
+    'weight-body': base.scale(weight, normal),
+    'weight-heading': base.scale(weight, semibold),
+
+    // --- Control sizing -------------------------------------------------
+    // Without this, an input and a button next to each other are never the
+    // same height, and every team rediscovers it independently.
+    'size-control': calc(#{core.ref('space-unit')} * 9),
+    'size-control-sm': calc(#{core.ref('space-unit')} * 7),
+    'size-control-lg': calc(#{core.ref('space-unit')} * 11),
+    'size-icon': calc(#{core.ref('space-unit')} * 4),
+
+    // --- Focus ring -----------------------------------------------------
+    // Missing from most homegrown systems and the first thing an accessibility
+    // audit asks for. Separate from border because focus must be visible on
+    // top of any border the component already has.
+    'ring-width': 2px,
+    'ring-offset': 2px,
+    'ring': #{core.ref('ring-width')} solid #{core.ref('ring-color')},
+
+    // --- Radius extras --------------------------------------------------
+    'radius-control-sm': base.scale(radius, sm),
+    'radius-surface-lg': base.scale(radius, '2xl'),
+
+    // --- Typography scale -----------------------------------------------
+    'text-size-sm': base.scale(text, sm),
+    'text-size-lg': base.scale(text, lg),
+    'text-size-heading': base.scale(text, '2xl'),
+    'text-leading-heading': base.scale(leading, tight),
+    'text-tracking-heading': base.scale(tracking, tight),
+
+    // --- Motion ---------------------------------------------------------
+    'duration-fast': base.scale(duration, fast),
+    'duration-base': base.scale(duration, base),
+    'duration-slow': base.scale(duration, slow),
+    'ease': base.scale(ease, out),
+
+    // --- Layering -------------------------------------------------------
+    // A scale, not arbitrary numbers. Prevents the z-index arms race.
+    'z-base': 0,
+    'z-dropdown': 1000,
+    'z-sticky': 1020,
+    'z-overlay': 1040,
+    'z-modal': 1050,
+    'z-toast': 1080,
+    'z-tooltip': 1090,
+
+    // --- States ---------------------------------------------------------
+    'opacity-disabled': 0.55
+  );
+}
+
+// -----------------------------------------------------------------------------
+// COLOUR — produced from a theme's decisions
+// -----------------------------------------------------------------------------
+//
+// A theme supplies a small map of choices; this function expands it into the
+// full colour contract. Two consequences worth the indirection:
+//
+//   - Adding a theme is ~35 lines, not ~55 tokens copied and edited.
+//   - The status family (success / warning / danger / info) is generated by a
+//     loop, so all four are guaranteed to have identical token shapes. Hand
+//     writing them is how systems end up with `bg-danger-subtle` but no
+//     `bg-warning-subtle`.
+//
+// Expected keys in $c are documented in _themes.scss.
+
+@function colors($c) {
+  $tokens: (
+    // Surfaces. The original sketch had a single "background colour"; a real
+    // UI needs a hierarchy or a card on a card is impossible to express.
+    'bg-page': map.get($c, page),
+    'bg-surface': map.get($c, surface),
+    'bg-raised': map.get($c, raised),
+
+    // Text. "text colour" and "heading colour" from the sketch, plus the muted
+    // level every product needs within a week for captions and placeholders.
+    'fg-default': map.get($c, text),
+    'fg-muted': map.get($c, text-muted),
+    'fg-heading': map.get($c, heading),
+
+    // Action — the sketch's "cor de ação". Buttons, primary CTAs.
+    'bg-action': map.get($c, action),
+    'fg-on-action': map.get($c, on-action),
+
+    'border-color': map.get($c, border),
+
+    'bg-sunken': map.get($c, sunken),
+    'bg-overlay': map.get($c, overlay),
+
+    'fg-subtle': map.get($c, text-subtle),
+    'fg-on-surface': map.get($c, text),
+
+    // Interaction states. The sketch had "active colour" but not hover —
+    // they are different states and both are needed.
+    'bg-action-hover': map.get($c, action-hover),
+    'bg-action-active': map.get($c, action-active),
+    'bg-action-subtle': map.get($c, action-subtle),
+    'fg-action': map.get($c, action),
+    'border-action': map.get($c, action),
+
+    // Selected — the sketch's "cor ativa": chips, menu items, tabs, anything
+    // with a persistent selected state. Distinct from hover, which is
+    // transient, and from action, which is an invitation rather than a status.
+    'bg-selected': map.get($c, selected),
+    'fg-on-selected': map.get($c, on-selected),
+    'bg-selected-hover': map.get($c, selected-hover),
+    'bg-selected-subtle': map.get($c, selected-subtle),
+    'fg-selected': map.get($c, selected),
+    'border-selected': map.get($c, selected),
+
+    // Navigation — the sketch's "cor de navegação". Modelled as a FOREGROUND
+    // role, because navigation is overwhelmingly links and anchors. A "next"
+    // button is an action with a different label, not a different colour role;
+    // giving it its own background role would create a token nobody sets.
+    'fg-link': map.get($c, link),
+    'fg-link-hover': map.get($c, link-hover),
+    'fg-link-visited': map.get($c, link-visited),
+
+    // Borders at three prominences. `subtle` for dividers inside a card,
+    // default for component outlines, `strong` for hover and emphasis.
+    'border-color-subtle': map.get($c, border-subtle),
+    'border-color-strong': map.get($c, border-strong),
+
+    'ring-color': map.get($c, ring),
+
+    // Elevation is a colour-layer concern: shadows are near-invisible in dark
+    // themes and usually get replaced by a lighter raised surface.
+    'shadow-raised': map.get($c, shadow-raised),
+    'shadow-overlay': map.get($c, shadow-overlay)
+  );
+
+  // --- Status family, generated ------------------------------------------
+  // Four roles x six tokens from one loop, which is the single
+  // highest-leverage use of SCSS in this system. Hand writing them is how
+  // systems end up with `bg-danger-subtle` but no `bg-warning-subtle`.
+  //
+  // `-hover` is in the loop for a reason worth stating: any role that can be
+  // the background of something clickable needs one. Leaving it out of the
+  // contract does not remove the need — it just pushes each consumer to invent
+  // its own darkening, which is a design decision escaping layer 2. An adapter
+  // reaching for `color-mix()` here is the symptom to watch for.
+  @each $role in (success, warning, danger, info) {
+    $tokens: map.merge(
+      $tokens,
+      (
+        'bg-#{$role}': map.get($c, $role),
+        'fg-on-#{$role}': map.get($c, 'on-#{$role}'),
+        'bg-#{$role}-hover': map.get($c, '#{$role}-hover'),
+        'bg-#{$role}-subtle': map.get($c, '#{$role}-subtle'),
+        'fg-#{$role}': map.get($c, '#{$role}-text'),
+        'border-#{$role}': map.get($c, '#{$role}-border')
+      )
+    );
+  }
+
+  @return $tokens;
+}
+
+// -----------------------------------------------------------------------------
+// Emission
+// -----------------------------------------------------------------------------
+
+@mixin emit-structure() {
+  @include core.in-layer(config.$layer-semantic) {
+    :root {
+      @include core.emit(structure());
+    }
+  }
+}
+
+@mixin emit-theme($name, $choices, $default: false) {
+  @include core.in-layer(config.$layer-semantic) {
+    @include core.theme($name, $default) {
+      @include core.emit(colors($choices));
+    }
+  }
+}

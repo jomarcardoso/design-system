@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>One token layer, two vocabularies</title>
+
+<!--
+  Load order matters, and not for the usual reason.
+
+  app.css comes FIRST because it declares the cascade layer order up front,
+  before any @import. A layer's position is fixed by its first appearance, so
+  declaring the full order in one statement is what keeps `vendor-config`
+  (the adapter) after `vendor` (Bootstrap itself) even though Bootstrap's
+  stylesheet is physically loaded afterwards.
+
+  app.css also pulls in dist/ds.css, so there is no separate link for it.
+
+  Run `npm run demo` before opening this file — both stylesheets are build
+  output. Nothing here is hand-maintained, which is the point: an earlier
+  version of this page transcribed the tokens by hand and had already drifted
+  from what the compiler actually emits.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/bootstrap.css">
+
+<style>
+  /* -----------------------------------------------------------------------
+   * Demo chrome, and the "no library" column.
+   *
+   * Every value below comes from layer 2. That is the honest test: this
+   * column is what a project's OWN components look like when they read the
+   * same contract Bootstrap reads. Not one literal colour appears here.
+   * -------------------------------------------------------------------- */
+  body { margin: 0; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  header { margin-bottom: 1.5rem; }
+  h1 { font-size: 1.6rem; margin: 0 0 0.25rem; }
+  .lede { color: var(--app-fg-muted); max-width: 62ch; margin: 0 0 1rem; }
+
+  .toolbar { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; }
+  .toolbar button {
+    height: var(--app-size-control);
+    padding-inline: var(--app-pad-control-x);
+    cursor: pointer;
+    font: inherit;
+    background: var(--app-bg-surface);
+    color: var(--app-fg-default);
+    border: var(--app-border);
+    border-radius: var(--app-radius-control);
+  }
+  .toolbar button[aria-pressed="true"] {
+    background: var(--app-bg-selected);
+    color: var(--app-fg-on-selected);
+    border-color: var(--app-bg-selected);
+  }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--app-space-xl); }
+  .col-head { margin: 0 0 var(--app-space-md); font-size: 0.95rem; }
+  .col-head code { font-size: 0.78rem; color: var(--app-fg-muted); font-weight: 400; }
+
+  .stack { display: flex; flex-direction: column; gap: var(--app-gap-stack); }
+  .row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+
+  /* The no-library component set — layer 2 only.
+   *
+   * Note the shape: each variant re-points three LOCAL variables, and the
+   * base rule is the only place that touches `background`/`color`. Writing
+   * it the obvious way instead —
+   *
+   *     .x-btn:hover      { background: var(--app-bg-action-hover); }
+   *     .x-btn--danger    { background: var(--app-bg-danger); }
+   *
+   * — reproduces, in twelve lines of hand-written CSS, the exact bug the
+   * Bootstrap adapter had to be restructured to avoid. `.x-btn:hover` is
+   * (0,2,0) and `.x-btn--danger` is (0,1,0), so hovering a danger button
+   * turns it indigo. The quiet variant gets it worse: it inherits the base
+   * hover background but keeps its own dark `color`, which is the pair
+   * invariant broken by hand — a background moved without its foreground.
+   *
+   * Local variables fix both at once, because the cascade resolves them
+   * before the property ever reads them, and bg/fg travel together.
+   */
+  .x-btn {
+    --_bg: var(--app-button-bg, var(--app-bg-action));
+    --_bg-hover: var(--app-button-bg-hover, var(--app-bg-action-hover));
+    --_fg: var(--app-button-fg, var(--app-fg-on-action));
+
+    height: var(--app-size-control);
+    padding-inline: var(--app-pad-control-x);
+    font: inherit;
+    cursor: pointer;
+    border: var(--app-border-width) solid transparent;
+    border-radius: var(--app-radius-control);
+    background: var(--_bg);
+    color: var(--_fg);
+  }
+  .x-btn:hover { background: var(--_bg-hover); }
+  .x-btn--danger {
+    --_bg: var(--app-bg-danger);
+    --_bg-hover: var(--app-bg-danger-hover);
+    --_fg: var(--app-fg-on-danger);
+  }
+  .x-btn--quiet {
+    --_bg: var(--app-bg-surface);
+    --_bg-hover: var(--app-bg-sunken);
+    --_fg: var(--app-fg-default);
+    border-color: var(--app-border-color);
+  }
+
+  .x-field { display: flex; flex-direction: column; gap: var(--app-space-2xs); font-size: 0.8rem; color: var(--app-fg-muted); }
+  .x-field input {
+    height: var(--app-size-control);
+    padding-inline: var(--app-pad-control-x);
+    font: inherit;
+    color: var(--app-fg-default);
+    background: var(--app-field-bg, var(--app-bg-surface));
+    border: var(--app-border-width) solid var(--app-field-border-color, var(--app-border-color));
+    border-radius: var(--app-field-radius, var(--app-radius-control));
+  }
+  .x-field input:focus-visible { border-color: var(--app-border-action); }
+
+  .x-card {
+    padding: var(--app-pad-surface);
+    background: var(--app-surface-bg, var(--app-bg-surface));
+    color: var(--app-surface-fg, var(--app-fg-default));
+    border: var(--app-border-width) solid var(--app-surface-border-color, var(--app-border-color));
+    border-radius: var(--app-surface-radius, var(--app-radius-surface));
+    box-shadow: var(--app-shadow-raised);
+  }
+  .x-card h3 { margin: 0 0 var(--app-space-2xs); font-size: 1rem; }
+  .x-card p { margin: 0; color: var(--app-fg-muted); font-size: 0.9rem; }
+
+  .x-badge {
+    display: inline-block;
+    padding: var(--app-space-2xs) var(--app-space-sm);
+    font-size: 0.75rem;
+    border-radius: var(--app-radius-pill);
+    background: var(--app-bg-action);
+    color: var(--app-fg-on-action);
+  }
+  .x-alert {
+    padding: var(--app-space-sm) var(--app-space-md);
+    font-size: 0.9rem;
+    border-radius: var(--app-radius-control);
+    background: var(--app-bg-success-subtle);
+    color: var(--app-fg-success);
+    border: var(--app-border-width) solid var(--app-border-success);
+  }
+
+  .x-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .x-table th, .x-table td {
+    padding: var(--app-space-xs) var(--app-space-sm);
+    text-align: left;
+    border-bottom: var(--app-border-width) solid var(--app-border-color-subtle);
+  }
+  .x-table th { background: var(--app-bg-sunken); color: var(--app-fg-heading); font-weight: 600; }
+
+  section.band { margin-top: var(--app-space-2xl); }
+  section.band > h2 { font-size: 1.05rem; margin: 0 0 var(--app-space-2xs); }
+  section.band > p { color: var(--app-fg-muted); margin: 0 0 var(--app-space-md); font-size: 0.9rem; max-width: 68ch; }
+
+  .note {
+    margin-top: var(--app-space-2xl);
+    padding: var(--app-pad-surface);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+    border-radius: var(--app-radius-surface);
+    font-size: 0.88rem;
+    color: var(--app-fg-muted);
+  }
+  .note strong { color: var(--app-fg-default); }
+  .note code { font-family: var(--app-font-mono); font-size: 0.82em; color: var(--app-fg-default); }
+  .note li { margin-bottom: var(--app-space-xs); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>One token layer, two vocabularies</h1>
+    <p class="lede">
+      The left column is Bootstrap markup. The right column is hand-written CSS that
+      knows nothing about Bootstrap. Both read the same layer 2 contract, so every
+      control below moves together.
+    </p>
+    <div class="toolbar" role="group" aria-label="Demo controls">
+      <button id="theme" aria-pressed="false">Toggle theme</button>
+      <button id="hue" aria-pressed="false">Rewrite one semantic token</button>
+      <button id="density" aria-pressed="false">Compact density</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <!-- ================= Bootstrap ================= -->
+    <div>
+      <h2 class="col-head">Bootstrap <code>.btn .card .table</code></h2>
+      <div class="stack">
+        <div class="row">
+          <button class="btn btn-primary">Primary</button>
+          <button class="btn btn-secondary">Secondary</button>
+          <button class="btn btn-danger">Danger</button>
+        </div>
+
+        <div>
+          <label class="form-label" for="bs-input">Field</label>
+          <input class="form-control" id="bs-input" placeholder="Type something">
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title h6">Card</h3>
+            <p class="card-text">Surface, border and radius all resolve through the adapter.</p>
+          </div>
+        </div>
+
+        <div>
+          <span class="badge text-bg-primary">Badge</span>
+        </div>
+
+        <div class="alert alert-success py-2 mb-0" role="alert">Saved successfully.</div>
+
+        <table class="table table-striped mb-0">
+          <thead><tr><th>Name</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>First</td><td>Active</td></tr>
+            <tr><td>Second</td><td>Pending</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ================= No library ================= -->
+    <div>
+      <h2 class="col-head">No library <code>.x-btn .x-card .x-table</code></h2>
+      <div class="stack">
+        <div class="row">
+          <button class="x-btn">Primary</button>
+          <button class="x-btn x-btn--quiet">Secondary</button>
+          <button class="x-btn x-btn--danger">Danger</button>
+        </div>
+
+        <label class="x-field" for="x-input">
+          Field
+          <input id="x-input" placeholder="Type something">
+        </label>
+
+        <div class="x-card">
+          <h3>Card</h3>
+          <p>Same tokens, no adapter in between — this column reads layer 2 directly.</p>
+        </div>
+
+        <div><span class="x-badge">Badge</span></div>
+
+        <div class="x-alert">Saved successfully.</div>
+
+        <table class="x-table">
+          <thead><tr><th>Name</th><th>Status</th></tr></thead>
+          <tbody>
+            <tr><td>First</td><td>Active</td></tr>
+            <tr><td>Second</td><td>Pending</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= Layer 3 proof ================= -->
+  <section class="band">
+    <h2>Layer 3: one instance diverges, nothing else moves</h2>
+    <p>
+      The middle button in each row sets <code>--app-button-bg</code> on itself and nothing
+      else. Its neighbours keep flowing from the semantic token, and the danger variant is
+      untouched — which is the property the fallback chain exists to guarantee.
+    </p>
+    <div class="grid">
+      <div class="row">
+        <button class="btn btn-primary">Bootstrap, default</button>
+        <button class="btn btn-primary" style="--app-button-bg: var(--app-bg-success); --app-button-bg-hover: var(--app-bg-success-hover);">
+          Bootstrap, overridden
+        </button>
+        <button class="btn btn-danger">Bootstrap, danger</button>
+      </div>
+      <div class="row">
+        <button class="x-btn">No library, default</button>
+        <button class="x-btn" style="--app-button-bg: var(--app-bg-success); --app-button-bg-hover: var(--app-bg-success-hover);">
+          No library, overridden
+        </button>
+        <button class="x-btn x-btn--danger">No library, danger</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= Contexts ================= -->
+  <section class="band">
+    <h2>Contexts: a partial override that inherits the rest</h2>
+    <p>
+      <code>data-surface</code> changes a handful of tokens and leaves spacing, radius,
+      typography and motion alone. Both columns follow it without knowing it exists.
+    </p>
+    <div data-surface="inverted" style="padding: var(--app-pad-surface); border-radius: var(--app-radius-surface); background: var(--app-bg-page); color: var(--app-fg-default);">
+      <div class="row">
+        <button class="btn btn-primary">Bootstrap</button>
+        <button class="x-btn">No library</button>
+        <span style="color: var(--app-fg-muted);">Inverted band</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <strong>What to watch:</strong>
+    <ul>
+      <li><strong>Toggle theme</strong> — every control in both columns changes together. Bootstrap follows because the adapter repoints <code>--bs-*</code> at the semantic tokens; the right column follows because it reads them directly.</li>
+      <li><strong>Rewrite one semantic token</strong> — this button changes <code>--app-bg-action</code> on <code>:root</code> and nothing else. One declaration moves both vocabularies. That single-token propagation is the entire promise of the adapter, made visible.</li>
+      <li><strong>Danger stays red</strong> through all of it. Bootstrap expresses variants by setting <code>--bs-btn-bg</code> per class, so the adapter binds the design system on <code>background-color</code> rather than on <code>--bs-btn-bg</code> — binding on the variable would beat every variant and collapse all three buttons into one colour.</li>
+      <li><strong>Compact density</strong> moves <code>--app-space-unit</code> alone. Every spacing step is a <code>calc()</code> against it, so one variable rescales the whole subtree.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+
+  const toggle = (btn, on) => btn.setAttribute('aria-pressed', String(on));
+
+  const themeBtn = document.getElementById('theme');
+  themeBtn.addEventListener('click', () => {
+    const dark = root.dataset.theme !== 'dark';
+    root.dataset.theme = dark ? 'dark' : 'light';
+    toggle(themeBtn, dark);
+  });
+
+  // Rewrites exactly one layer 2 token. No library-specific variable is touched.
+  const hueBtn = document.getElementById('hue');
+  hueBtn.addEventListener('click', () => {
+    const on = !root.style.getPropertyValue('--app-bg-action');
+    if (on) {
+      root.style.setProperty('--app-bg-action', 'oklch(60% 0.18 160)');
+      root.style.setProperty('--app-bg-action-hover', 'oklch(54% 0.18 160)');
+    } else {
+      root.style.removeProperty('--app-bg-action');
+      root.style.removeProperty('--app-bg-action-hover');
+    }
+    toggle(hueBtn, on);
+  });
+
+  const densityBtn = document.getElementById('density');
+  densityBtn.addEventListener('click', () => {
+    const on = root.dataset.density !== 'compact';
+    if (on) root.dataset.density = 'compact';
+    else delete root.dataset.density;
+    toggle(densityBtn, on);
+  });
+</script>
+</body>
+</html>

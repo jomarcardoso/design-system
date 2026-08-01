@@ -1,0 +1,180 @@
+// =============================================================================
+// BOOTSTRAP BUILD ENTRY
+// =============================================================================
+//
+// Compile this INSTEAD of importing Bootstrap's prebuilt CSS. It is the half of
+// the Bootstrap adapter that runs at build time, and it is where roughly 400 of
+// the original 446 runtime mappings stop being necessary.
+//
+// The mechanism: Bootstrap derives every component variable from its Sass
+// variables during compilation. Set `$primary` here and `--bs-btn-bg`,
+// `--bs-btn-hover-bg`, `--bs-btn-active-border-color`, `--bs-nav-link-color`,
+// `--bs-pagination-active-bg` and several hundred others are generated
+// correctly, with no mapping written by hand and nothing shipped for values
+// nobody will override.
+//
+// Split of responsibility, and the rule that decides it:
+//
+//   A value the theme cannot change  -> here, as a Sass variable, inlined at
+//                                       compile time, zero runtime bytes.
+//   A value the theme swaps           -> src/adapters/_bootstrap.scss, as a
+//                                       custom property, because Sass cannot
+//                                       switch themes at runtime.
+//
+// That is why radii, border width, the font stacks and the focus-ring geometry
+// live here and not in the adapter, while `--bs-focus-ring-color` — same
+// component, different lifetime — lives there.
+//
+// Bundle effect: `$enable-*` flags below drop whole feature areas from the
+// compiled output. `$utilities` can be pruned the same way if the project uses
+// Tailwind for utilities, which is the usual case in a mixed setup.
+// =============================================================================
+
+@use 'sass:color';
+@use 'src/base';
+
+// -----------------------------------------------------------------------------
+// Colour — fed from layer 1, so Bootstrap and Tailwind share one palette
+// -----------------------------------------------------------------------------
+// These are literal values at compile time. Runtime theme switching is handled
+// by the runtime adapter; these only need to be the LIGHT theme's values, since
+// they seed the compiled defaults.
+//
+// EVERY colour goes through `srgb()` first, and it is not optional. Bootstrap
+// derives its hover/active/subtle variants with `shade-color()` and
+// `tint-color()`, which call the LEGACY `mix($color1, $color2, $weight)`. That
+// function only accepts the sRGB/HSL/HWB family and hard-errors on an oklch
+// value:
+//
+//     $color2: To use color.mix() with non-legacy color oklch(...),
+//              you must provide a $method.
+//
+// Converting here costs nothing visible: Bootstrap's compiled output is sRGB
+// either way, and these values only ever act as the FALLBACK. At runtime the
+// adapter overwrites `--bs-primary` and friends with the oklch semantic tokens,
+// so what the user actually sees stays in the wider space.
+
+@function srgb($c) {
+  @return color.to-space($c, rgb);
+}
+
+$primary: srgb(base.color(indigo, 600));
+$secondary: srgb(base.color(zinc, 500));
+$success: srgb(base.color(green, 600));
+$info: srgb(base.color(sky, 600));
+$warning: srgb(base.color(amber, 500));
+$danger: srgb(base.color(red, 600));
+$light: srgb(base.color(zinc, 50));
+$dark: srgb(base.color(zinc, 900));
+
+$body-bg: srgb(base.color(zinc, 50));
+$body-color: srgb(base.color(zinc, 900));
+$body-secondary-color: srgb(base.color(zinc, 600));
+$body-tertiary-bg: srgb(base.color(zinc, 100));
+
+$link-color: srgb(base.color(indigo, 700));
+$link-hover-color: srgb(base.color(indigo, 800));
+
+$border-color: srgb(base.color(zinc, 200));
+
+// -----------------------------------------------------------------------------
+// Shape, spacing, typography — mirrors the semantic structure layer
+// -----------------------------------------------------------------------------
+// These must agree with `structure()` in src/_semantic.scss. They are stated
+// twice because one side is Sass and the other is CSS, but both read the same
+// layer 1 scales, so they cannot drift apart in VALUE — only in which scale
+// step was chosen, which is a two-line diff to reconcile.
+
+$border-width: 1px;
+$border-style: solid;
+$border-radius: base.scale(radius, md);
+$border-radius-sm: base.scale(radius, sm);
+$border-radius-lg: base.scale(radius, xl);
+$border-radius-xl: base.scale(radius, '2xl');
+$border-radius-pill: base.scale(radius, full);
+
+$spacer: base.space(4);
+$font-family-sans-serif: base.scale(font, sans);
+$font-family-monospace: base.scale(font, mono);
+$font-size-base: base.scale(text, base);
+$line-height-base: base.scale(leading, normal);
+$headings-font-weight: base.scale(weight, semibold);
+
+$focus-ring-width: 2px;
+$focus-ring-offset: 2px;
+$focus-ring-color: color.change(srgb(base.color(indigo, 500)), $alpha: 0.35);
+
+// -----------------------------------------------------------------------------
+// Bundle pruning
+// -----------------------------------------------------------------------------
+// Every flag here removes compiled CSS. In a project that also loads Tailwind,
+// most of Bootstrap's utility and decoration layers are dead weight.
+
+$enable-dark-mode: true; // keep: the runtime adapter drives [data-bs-theme]
+$enable-shadows: false;
+$enable-gradients: false;
+$enable-cssgrid: false;
+$enable-button-pointers: true;
+$enable-smooth-scroll: true;
+$enable-important-utilities: false;
+
+// -----------------------------------------------------------------------------
+// Bootstrap, in a cascade layer
+// -----------------------------------------------------------------------------
+// Layered on purpose so the declared order in app.css governs it. See the note
+// in app.css about unlayered CSS — this is the other half of that story.
+
+@layer vendor {
+  // Full Bootstrap. Comment out any line to drop that area per client — the
+  // required core (functions -> mixins) must stay; everything below utilities-api
+  // is a component you can remove freely. Keeping the full list here means the
+  // default build matches stock Bootstrap and nothing is missing when a client
+  // reaches for a component; trimming is a one-line-per-component edit.
+
+  // --- Required core (do not remove) ------------------------------------
+  @import 'bootstrap/scss/functions';
+  @import 'bootstrap/scss/variables';
+  @import 'bootstrap/scss/variables-dark';
+  @import 'bootstrap/scss/maps';
+  @import 'bootstrap/scss/mixins';
+  @import 'bootstrap/scss/utilities';
+
+  // --- Layout ------------------------------------------------------------
+  @import 'bootstrap/scss/root';
+  @import 'bootstrap/scss/reboot';
+  @import 'bootstrap/scss/type';
+  @import 'bootstrap/scss/images';
+  @import 'bootstrap/scss/containers';
+  @import 'bootstrap/scss/grid';
+  @import 'bootstrap/scss/tables';
+  @import 'bootstrap/scss/forms';
+
+  // --- Components --------------------------------------------------------
+  @import 'bootstrap/scss/buttons';
+  @import 'bootstrap/scss/transitions';
+  @import 'bootstrap/scss/dropdown';
+  @import 'bootstrap/scss/button-group';
+  @import 'bootstrap/scss/nav';
+  @import 'bootstrap/scss/navbar';
+  @import 'bootstrap/scss/card';
+  @import 'bootstrap/scss/accordion';
+  @import 'bootstrap/scss/breadcrumb';
+  @import 'bootstrap/scss/pagination';
+  @import 'bootstrap/scss/badge';
+  @import 'bootstrap/scss/alert';
+  @import 'bootstrap/scss/progress';
+  @import 'bootstrap/scss/list-group';
+  @import 'bootstrap/scss/close';
+  @import 'bootstrap/scss/toasts';
+  @import 'bootstrap/scss/modal';
+  @import 'bootstrap/scss/tooltip';
+  @import 'bootstrap/scss/popover';
+  @import 'bootstrap/scss/carousel';
+  @import 'bootstrap/scss/spinners';
+  @import 'bootstrap/scss/offcanvas';
+  @import 'bootstrap/scss/placeholders';
+
+  // --- Helpers & utilities API ------------------------------------------
+  @import 'bootstrap/scss/helpers';
+  @import 'bootstrap/scss/utilities/api';
+}

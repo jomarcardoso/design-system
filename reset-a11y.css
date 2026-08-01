@@ -1,0 +1,102 @@
+/* =============================================================================
+ * ACCESSIBILITY RESET  —  restore native focus
+ * =============================================================================
+ *
+ * Import this LAST, after any CSS reset (normalize, Tailwind preflight,
+ * Bootstrap reboot) and after the design system. Its one job is to put the
+ * platform's native focus indicator back, because every popular reset removes
+ * or weakens it and that is the single most common accessibility regression in
+ * component-library projects.
+ *
+ * -----------------------------------------------------------------------------
+ * WHY NATIVE, AND WHY THIS IS A SEPARATE FILE
+ * -----------------------------------------------------------------------------
+ *
+ * The native `:focus-visible` outline is the accessible default. The browser
+ * already decides, per input modality, when to show it: keyboard and
+ * programmatic focus get a ring, a mouse click does not. It respects the user's
+ * OS high-contrast and forced-colors settings for free. It is drawn OUTSIDE the
+ * box, so it never triggers layout shift and is never clipped by `overflow`.
+ *
+ * A design-token ring (`outline: 2px solid var(--app-ring-color)`) throws two of
+ * those away: it does not follow forced-colors mode unless you special-case it,
+ * and a token colour can fail contrast against some backgrounds where the
+ * browser's adaptive outline would not. So this file keeps the NATIVE outline
+ * and only guarantees it survives the reset. Components that want a branded ring
+ * opt in per component; the global default stays native.
+ *
+ * It is a separate file, not folded into app.css, precisely so that a project
+ * can choose. Import it and native focus is guaranteed. Skip it and you are on
+ * your own reset's behaviour. The design system does not force either.
+ *
+ * -----------------------------------------------------------------------------
+ * WHAT IT DOES
+ * -----------------------------------------------------------------------------
+ *
+ *  1. Undo the `outline: none` / `outline: 0` that resets apply to :focus.
+ *  2. Ensure a visible ring on :focus-visible using the UA's own value.
+ *  3. Give the outline a small offset so it clears tight borders.
+ *  4. Leave :focus (without -visible) alone, so mouse users are not nagged.
+ * ============================================================================= */
+
+@layer base {
+  /* Step 1 — neutralise reset suppression. Bootstrap reboot and several
+   * normalize variants set `outline: 0` on interactive elements; Tailwind
+   * preflight removes the default ring in favour of its own utility. Both are
+   * reverted here to the platform default. */
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex],
+    [contenteditable]
+  ):focus {
+    outline: revert;
+  }
+
+  /* Step 2 — the actual guarantee. `revert` returns the property to the value
+   * the user-agent stylesheet would have used, i.e. the browser's own adaptive
+   * focus ring, including its correct behaviour under forced-colors mode. */
+  :where(
+    a,
+    button,
+    input,
+    select,
+    textarea,
+    summary,
+    [tabindex],
+    [contenteditable]
+  ):focus-visible {
+    outline: revert;
+    outline-offset: 2px;
+  }
+
+  /* Step 3 — belt and braces for engines that fully drop the UA outline after a
+   * reset (some do). Only applies if `revert` resolved to none. Uses the CSS
+   * system colour `Highlight`, which is forced-colors aware, NOT a token. */
+  @supports not (outline: revert) {
+    :where(
+      a,
+      button,
+      input,
+      select,
+      textarea,
+      summary,
+      [tabindex]
+    ):focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
+
+  /* Step 4 — do not show the ring for pointer users. This is the browser
+   * default already; stated explicitly so a later reset cannot undo it. */
+  :where(a, button, input, select, textarea, summary):focus:not(
+      :focus-visible
+    ) {
+    outline: none;
+  }
+}

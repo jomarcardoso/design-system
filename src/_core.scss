@@ -1,0 +1,141 @@
+// =============================================================================
+// CORE — emission machinery
+// =============================================================================
+//
+// Nothing in this file produces CSS on its own. It exists so that the semantic
+// layer can be written as data (a map) rather than as hand-typed declarations.
+// That matters for two reasons:
+//
+//   - Repetitive families (four status roles x five tokens each) come from a
+//     six-line loop instead of twenty hand-written lines that drift apart.
+//   - The pair invariant (see `context`) can be MECHANICALLY enforced, which is
+//     the difference between a convention and a guarantee.
+// =============================================================================
+
+@use 'sass:map';
+@use 'config';
+
+// -----------------------------------------------------------------------------
+// Naming
+// -----------------------------------------------------------------------------
+
+@function var-name($name) {
+  @return --#{config.$prefix}-#{$name};
+}
+
+// The public read accessor. Layer 2, layer 3 and adapters use this; nothing
+// else in the codebase should type `var(--app-…)` by hand.
+@function ref($name, $fallback: null) {
+  @if $fallback == null {
+    @return var(#{var-name($name)});
+  }
+  @return var(#{var-name($name)}, #{$fallback});
+}
+
+// -----------------------------------------------------------------------------
+// Emission
+// -----------------------------------------------------------------------------
+
+// Writes a flat map of token-name -> value as custom property declarations.
+// `null` values are skipped, so a token a theme has no opinion about is erased
+// completely rather than emitted empty.
+@mixin emit($tokens) {
+  @each $name, $value in $tokens {
+    @if $value != null {
+      #{var-name($name)}: #{$value};
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Scoping: themes vs contexts
+// -----------------------------------------------------------------------------
+//
+// THEME — a complete, self-sufficient set. Dark mode is a theme: nothing from
+// light mode is worth reusing, every surface and every foreground changes.
+// A theme declares EVERY token in the contract.
+//
+// CONTEXT (subtheme) — a partial override that inherits everything it does not
+// mention. A "brand" section with an inverted background is a context: spacing,
+// radius, typography and motion all stay. Contexts nest.
+//
+// Both are just custom properties on a selector, so inheritance does the work.
+// The only hard requirement is that components read `var(--app-…)` rather than
+// resolving against `:root`, which they do because `ref()` is the only accessor.
+
+@mixin theme($name, $default: false) {
+  // Spelled out rather than `if($name == dark, ...)`: Sass is deprecating the
+  // plain `if()` function because CSS is claiming the name.
+  $scheme: light;
+  @if $name == dark {
+    $scheme: dark;
+  }
+
+  @if $default {
+    :root,
+    [data-theme='#{$name}'] {
+      color-scheme: $scheme;
+      @content;
+    }
+  } @else {
+    [data-theme='#{$name}'] {
+      color-scheme: $scheme;
+      @content;
+    }
+  }
+}
+
+// Pairs that must move together. Overriding a background without its
+// foreground is the single most common way a subtheme ships unreadable text,
+// so the build fails instead of shipping it.
+//
+// To answer "I checked, and the inherited foreground is still correct", give
+// the foreground key an explicit `null`. That satisfies the invariant and emits
+// nothing. Do NOT satisfy it by pointing the token at itself
+// (`'fg-default': core.ref('fg-default')`) — a custom property that references
+// itself is a cycle, and the declaration is dropped as invalid.
+$_pairs: (
+  'bg-page': 'fg-default',
+  'bg-surface': 'fg-default',
+  'bg-raised': 'fg-default',
+  'bg-sunken': 'fg-default',
+  'bg-action': 'fg-on-action',
+  'bg-action-hover': 'fg-on-action',
+  'bg-selected': 'fg-on-selected',
+  'bg-success': 'fg-on-success',
+  'bg-warning': 'fg-on-warning',
+  'bg-danger': 'fg-on-danger',
+  'bg-info': 'fg-on-info'
+);
+
+@mixin context($selector, $tokens) {
+  @each $bg, $fg in $_pairs {
+    @if map.has-key($tokens, $bg) and not map.has-key($tokens, $fg) {
+      @error 'context "#{$selector}" overrides "#{$bg}" without "#{$fg}". '
+           + 'A background and its foreground must always move together, '
+           + 'otherwise this context inherits unreadable text.';
+    }
+  }
+
+  #{$selector} {
+    @include emit($tokens);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Layer helper
+// -----------------------------------------------------------------------------
+//
+// IMPORTANT, and counter-intuitive: unlayered CSS beats ALL layered CSS,
+// regardless of layer order. Wrapping the design system in a cascade layer
+// makes it WEAKER against a legacy stylesheet, not stronger.
+//
+// The way to win over existing project CSS is to put THAT code into an early
+// layer (`@import 'legacy.css' layer(legacy);`) so it becomes layered too and
+// the declared order applies. See app.css for the full ordering.
+
+@mixin in-layer($name) {
+  @layer #{$name} {
+    @content;
+  }
+}

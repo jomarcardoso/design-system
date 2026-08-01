@@ -1,0 +1,278 @@
+// =============================================================================
+// THEMES AND CONTEXTS
+// =============================================================================
+//
+// THEME — a complete, self-sufficient set of colour decisions. Dark mode is a
+// theme: nothing from light is worth reusing, every surface and every
+// foreground changes. Selector: `[data-theme="…"]`, plus `:root` for the
+// default. A theme must define every key below or the build fails on a null.
+//
+// CONTEXT (subtheme) — a PARTIAL override that inherits everything it does not
+// mention. An inverted brand band, a sidebar on a tinted surface, a danger
+// zone in a settings page: spacing, radius, typography, motion and z-index all
+// stay. Selector: any attribute or class, and contexts nest freely because
+// custom properties inherit down the DOM.
+//
+// The rule that decides which one you are writing: if you find yourself
+// redefining the text colour AND the surface AND the borders AND the action
+// colour, it is a theme. If it is two or three pairs, it is a context.
+//
+// Contexts are validated by `core.context()`: overriding a background without
+// its foreground is a compile error, not a runtime contrast bug.
+// =============================================================================
+
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'base';
+@use 'core';
+@use 'config';
+@use 'semantic';
+
+// -----------------------------------------------------------------------------
+// Light — the default theme
+// -----------------------------------------------------------------------------
+
+$light: (
+  // Surfaces, from furthest back to closest to the viewer.
+  page: base.color(zinc, 50),
+  surface: base.color(white),
+  raised: base.color(white),
+  sunken: base.color(zinc, 100),
+  // `color.change`, not `rgba()`: the legacy function only accepts the sRGB
+  // family, and layer 1 is oklch throughout.
+  overlay: color.change(base.color(zinc, 950), $alpha: 0.55),
+
+  // Text.
+  text: base.color(zinc, 900),
+  'text-muted': base.color(zinc, 600),
+  'text-subtle': base.color(zinc, 400),
+  heading: base.color(zinc, 950),
+
+  // Action — buttons, primary CTAs.
+  action: base.color(indigo, 600),
+  'on-action': base.color(white),
+  'action-hover': base.color(indigo, 700),
+  'action-active': base.color(indigo, 800),
+  'action-subtle': base.color(indigo, 50),
+
+  // Selected — chips, menu items, tabs, active nav entries.
+  selected: base.color(indigo, 600),
+  'on-selected': base.color(white),
+  'selected-hover': base.color(indigo, 700),
+  'selected-subtle': base.color(indigo, 100),
+
+  // Navigation.
+  link: base.color(indigo, 700),
+  'link-hover': base.color(indigo, 800),
+  'link-visited': base.color(violet, 700),
+
+  // Lines.
+  border: base.color(zinc, 200),
+  'border-subtle': base.color(zinc, 100),
+  'border-strong': base.color(zinc, 300),
+  ring: base.color(indigo, 500),
+
+  // Elevation.
+  'shadow-raised': base.scale(shadow, sm),
+  'shadow-overlay': base.scale(shadow, lg),
+
+  // Status.
+  // Status. `-hover` is one step down the ramp, the same move `action-hover`
+  // makes, so a status button darkens like every other button.
+  success: base.color(green, 600),
+  'on-success': base.color(white),
+  'success-hover': base.color(green, 700),
+  'success-subtle': base.color(green, 50),
+  'success-text': base.color(green, 700),
+  'success-border': base.color(green, 200),
+
+  warning: base.color(amber, 500),
+  'on-warning': base.color(amber, 950),
+  'warning-hover': base.color(amber, 600),
+  'warning-subtle': base.color(amber, 50),
+  'warning-text': base.color(amber, 700),
+  'warning-border': base.color(amber, 200),
+
+  danger: base.color(red, 600),
+  'on-danger': base.color(white),
+  'danger-hover': base.color(red, 700),
+  'danger-subtle': base.color(red, 50),
+  'danger-text': base.color(red, 700),
+  'danger-border': base.color(red, 200),
+
+  info: base.color(sky, 600),
+  'on-info': base.color(white),
+  'info-hover': base.color(sky, 700),
+  'info-subtle': base.color(sky, 50),
+  'info-text': base.color(sky, 700),
+  'info-border': base.color(sky, 200)
+);
+
+// -----------------------------------------------------------------------------
+// Dark
+// -----------------------------------------------------------------------------
+//
+// Note the two things that are NOT a mirror of light, and that catch every
+// system built by naive inversion:
+//
+//   - `raised` is LIGHTER than `surface`, not darker. In dark UIs elevation is
+//     expressed by lifting luminance, because shadows are invisible on near
+//     black. `shadow-raised` is correspondingly reduced to almost nothing.
+//   - Action and status colours move UP the ramp (600 -> 500/400), because the
+//     same hue that reads as vivid on white reads as muddy on near black.
+
+$dark: (
+  page: base.color(zinc, 950),
+  surface: base.color(zinc, 900),
+  raised: base.color(zinc, 800),
+  sunken: base.color(zinc, 950),
+  overlay: color.change(base.color(black), $alpha: 0.7),
+
+  text: base.color(zinc, 100),
+  'text-muted': base.color(zinc, 400),
+  'text-subtle': base.color(zinc, 500),
+  heading: base.color(white),
+
+  action: base.color(indigo, 500),
+  'on-action': base.color(white),
+  'action-hover': base.color(indigo, 400),
+  'action-active': base.color(indigo, 300),
+  'action-subtle': base.color(indigo, 950),
+
+  selected: base.color(indigo, 500),
+  'on-selected': base.color(white),
+  'selected-hover': base.color(indigo, 400),
+  'selected-subtle': base.color(indigo, 950),
+
+  link: base.color(indigo, 300),
+  'link-hover': base.color(indigo, 200),
+  'link-visited': base.color(violet, 300),
+
+  border: base.color(zinc, 800),
+  'border-subtle': base.color(zinc, 900),
+  'border-strong': base.color(zinc, 700),
+  ring: base.color(indigo, 400),
+
+  'shadow-raised': base.scale(shadow, '2xs'),
+  'shadow-overlay': base.scale(shadow, md),
+
+  // Status. In dark, `-hover` moves UP the ramp for the same reason the base
+  // colours do — brightening reads as "closer" on a dark surface.
+  success: base.color(green, 500),
+  'on-success': base.color(green, 950),
+  'success-hover': base.color(green, 400),
+  'success-subtle': base.color(green, 950),
+  'success-text': base.color(green, 300),
+  'success-border': base.color(green, 800),
+
+  warning: base.color(amber, 400),
+  'on-warning': base.color(amber, 950),
+  'warning-hover': base.color(amber, 300),
+  'warning-subtle': base.color(amber, 950),
+  'warning-text': base.color(amber, 300),
+  'warning-border': base.color(amber, 800),
+
+  danger: base.color(red, 500),
+  'on-danger': base.color(white),
+  'danger-hover': base.color(red, 400),
+  'danger-subtle': base.color(red, 950),
+  'danger-text': base.color(red, 300),
+  'danger-border': base.color(red, 800),
+
+  info: base.color(sky, 500),
+  'on-info': base.color(sky, 950),
+  'info-hover': base.color(sky, 400),
+  'info-subtle': base.color(sky, 950),
+  'info-text': base.color(sky, 300),
+  'info-border': base.color(sky, 800)
+);
+
+$registry: (light: $light, dark: $dark);
+
+// -----------------------------------------------------------------------------
+// Contexts — subthemes
+// -----------------------------------------------------------------------------
+//
+// These are deliberately short. A context that grows past a dozen tokens is a
+// theme wearing a disguise; promote it and stop paying the inheritance tax.
+
+@mixin emit-contexts() {
+  @include core.in-layer(config.$layer-semantic) {
+    // Inverted band: hero sections, footers, promotional strips.
+    // Works under BOTH themes because it names its own pair explicitly.
+    @include core.context(
+      '[data-surface="inverted"]',
+      (
+        'bg-page': core.ref('bg-inverted-base'),
+        'bg-surface': core.ref('bg-inverted-base'),
+        'fg-default': core.ref('fg-inverted-base'),
+        'fg-heading': core.ref('fg-inverted-base'),
+        'fg-muted': base.color(zinc, 400),
+        'border-color': base.color(zinc, 700)
+      )
+    );
+
+    // Secondary surface: sidebars, wells, table headers. The most common
+    // subtheme, and the reason `bg-sunken` exists in the contract.
+    @include core.context(
+      '[data-surface="sunken"]',
+      (
+        'bg-surface': core.ref('bg-sunken'),
+        // `null`, not `core.ref('fg-default')`. The pair invariant demands that
+        // this key be considered, and it has been: a sunken surface is a tint
+        // of the same theme, so the inherited foreground is already correct.
+        // Writing `--app-fg-default: var(--app-fg-default)` would say the same
+        // thing as a self-reference, which is a cycle and therefore invalid.
+        // `null` is the documented way to answer "checked, unchanged" — it
+        // satisfies the invariant and emits nothing.
+        'fg-default': null,
+        'border-color': core.ref('border-color-subtle')
+      )
+    );
+
+    // Density, not colour: no pair to honour, just the one knob.
+    [data-density='compact'] {
+      --#{config.$prefix}-space-unit: 0.2rem;
+    }
+
+    // The two anchors the inverted context leans on, defined per theme.
+    :root {
+      --#{config.$prefix}-bg-inverted-base: #{base.color(zinc, 900)};
+      --#{config.$prefix}-fg-inverted-base: #{base.color(zinc, 50)};
+    }
+
+    [data-theme='dark'] {
+      --#{config.$prefix}-bg-inverted-base: #{base.color(zinc, 800)};
+      --#{config.$prefix}-fg-inverted-base: #{base.color(white)};
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Orchestration
+// -----------------------------------------------------------------------------
+
+@mixin emit() {
+  @include semantic.emit-structure();
+
+  // The FIRST theme in `$themes` also lands on `:root`, so it applies before
+  // any `data-theme` attribute is set. Keying this on the literal name `light`
+  // instead would leave a project that compiles only `(dark)` with every token
+  // undefined until something wrote the attribute.
+  $default-theme: list.nth(config.$themes, 1);
+
+  @each $name in config.$themes {
+    $choices: map.get($registry, $name);
+    @if $choices == null {
+      @error 'themes: "#{$name}" is listed in $themes but not defined.';
+    }
+    @include semantic.emit-theme(
+      $name,
+      $choices,
+      $default: $name == $default-theme
+    );
+  }
+
+  @include emit-contexts();
+}

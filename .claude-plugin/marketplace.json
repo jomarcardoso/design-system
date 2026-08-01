@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "jomarcardoso",
+  "description": "Design system tooling by Jomar Cardoso.",
+  "owner": {
+    "name": "Jomar Cardoso"
+  },
+  "plugins": [
+    {
+      "name": "design-system",
+      "source": "./",
+      "description": "A framework-independent CSS token foundation and the skill that applies it. Installs the token layers into a project, wires Bootstrap or Tailwind to them, and keeps application code reading only the semantic contract.",
+      "category": "design",
+      "skills": ["./skills/design-system"]
+    }
+  ]
+}
