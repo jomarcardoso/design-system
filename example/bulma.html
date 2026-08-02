@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bulma adapter</title>
+
+<!--
+  Bulma ships unlayered like Pico, so `bulma-entry.css` wraps it in
+  `@layer vendor`. Load `dist/bulma.css`, never the raw package.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/bulma.css">
+
+<style>
+  .wrap { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .themebar { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; margin-bottom: var(--app-space-xl); }
+  .stack > * + * { margin-top: var(--app-gap-stack); }
+  section { margin-top: var(--app-space-2xl); }
+  .note {
+    margin-top: var(--app-space-2xl); padding: var(--app-pad-surface);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+    border-radius: var(--app-radius-surface);
+    font-size: 0.88rem; color: var(--app-fg-muted);
+  }
+  .note strong { color: var(--app-fg-default); }
+  .note code { font-family: var(--app-font-mono); font-size: 0.82em; color: var(--app-fg-default); }
+  .note li { margin-bottom: var(--app-space-xs); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1 class="title">Bulma adapter</h1>
+  <p class="subtitle">
+    1416 custom properties, driven by about thirty declarations — because Bulma
+    decomposes every colour into hue, saturation and lightness and derives the rest.
+  </p>
+
+  <div class="themebar buttons">
+    <button class="button" data-set-theme="light">Light</button>
+    <button class="button" data-set-theme="dark">Dark</button>
+    <button class="button is-primary" data-set-theme="brand">Brand</button>
+  </div>
+
+  <section>
+    <h2 class="title is-5">Colour families</h2>
+    <p class="content">
+      Each of these is three numbers in the adapter. Bulma derives the hover, active,
+      light, dark and invert variants itself by shifting lightness on the same hue.
+    </p>
+    <div class="buttons">
+      <button class="button is-primary">Primary</button>
+      <button class="button is-link">Link</button>
+      <button class="button is-info">Info</button>
+      <button class="button is-success">Success</button>
+      <button class="button is-warning">Warning</button>
+      <button class="button is-danger">Danger</button>
+    </div>
+    <div class="buttons">
+      <button class="button is-primary is-light">Light variant</button>
+      <button class="button is-primary is-outlined">Outlined</button>
+      <button class="button is-primary is-inverted">Inverted</button>
+      <button class="button">Default</button>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="title is-5">Surfaces</h2>
+    <div class="box">
+      <p class="content">
+        A <code>.box</code> sits on <code>scheme-main</code>, which the adapter points at the
+        surface token — while the page behind it keeps <code>bg-page</code> through
+        <code>--bulma-body-background-color</code>. Bulma has no page/surface split of its own,
+        so the adapter makes one using the only whole-colour variable it exposes here.
+      </p>
+      <div class="tags">
+        <span class="tag is-primary">Primary</span>
+        <span class="tag is-info">Info</span>
+        <span class="tag is-success">Success</span>
+        <span class="tag is-danger">Danger</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <p class="title is-6">Card</p>
+        <p class="content">Border, radius and elevation from the token layer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="title is-5">Forms and feedback</h2>
+    <div class="stack">
+      <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+          <input class="input" type="email" placeholder="you@example.com">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <select><option>Starter</option><option>Growth</option></select>
+          </div>
+        </div>
+      </div>
+      <div class="notification is-success">Saved successfully.</div>
+      <div class="notification is-danger">Something went wrong.</div>
+      <progress class="progress is-primary" value="60" max="100">60%</progress>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="title is-5">Table</h2>
+    <table class="table is-fullwidth is-striped">
+      <thead><tr><th>Name</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>First</td><td>Active</td></tr>
+        <tr><td>Second</td><td>Pending</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="note">
+    <strong>What this page is testing:</strong>
+    <ul>
+      <li><strong>A library that will not take a colour.</strong> Bulma wants
+        <code>--bulma-primary-h/s/l</code>, not <code>--bulma-primary</code>. CSS cannot take a
+        <code>var()</code> apart, so the channels are computed from the theme's own colour at
+        build time and emitted per theme — the same answer Bootstrap's
+        <code>--bs-primary-rgb</code> needed, reached from a different direction.</li>
+      <li><strong>Gamut mapping is load-bearing.</strong> oklch describes colours sRGB cannot
+        show; asking for their HSL channels raw returns saturation above 100%, which CSS
+        rejects. The adapter maps into sRGB with <code>local-minde</code> first, which
+        preserves lightness and hue instead of merely clipping.</li>
+      <li><strong>The honest cost.</strong> A decomposed value can follow a theme but not a
+        runtime override. Rewriting <code>--app-bg-action</code> on <code>:root</code> moves
+        Bootstrap, daisyUI and Pico live; it does not move Bulma's channel-derived colours.
+        Everything Bulma exposes whole — radius, spacing, fonts, the body background — stays
+        live and is mapped as a reference.</li>
+      <li><strong>Derivability beats surface size.</strong> Bulma exposes far more variables
+        than Bootstrap and needs a far smaller adapter, because
+        <code>--bulma-button-h</code> is just <code>var(--bulma-scheme-h)</code>. The cost of an
+        adapter is set by how a library is <em>organised</em>, not by how much it ships.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const buttons = [...document.querySelectorAll('[data-set-theme]')];
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    root.dataset.theme = b.dataset.setTheme;
+    buttons.forEach((o) => o.classList.toggle('is-primary', o === b));
+  }));
+</script>
+</body>
+</html>

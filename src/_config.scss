@@ -62,7 +62,7 @@ $themes: (light, dark, brand) !default;
 // `btn-primary`, `card`, `alert`, `badge`, `modal`, `table`…), so whichever
 // cascade layer lands later silently wins. This layer can make two libraries
 // agree on colour; it cannot make them agree on who owns `.btn`.
-$adapters: (bootstrap, daisyui) !default;
+$adapters: (bootstrap, daisyui, pico, bulma) !default;
 
 // -----------------------------------------------------------------------------
 // Cascade layer names

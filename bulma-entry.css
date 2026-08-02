@@ -1,0 +1,22 @@
+/* =============================================================================
+ * BULMA BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i bulma-entry.css -o dist/bulma.css
+ *
+ * The CLI is used purely as a bundler — nothing here imports Tailwind.
+ *
+ * Bulma ships unlayered like Pico, so the `layer(vendor)` wrapper is required
+ * for the same reason: unlayered CSS beats all layered CSS, and without it
+ * Bulma's own `:root` block would beat `src/adapters/_bulma.scss`.
+ *
+ * Note what is NOT here. Bulma has a full Sass build with hundreds of
+ * `!default` variables, and configuring it that way would be the obvious
+ * parallel to `bootstrap-entry.scss`. It is unnecessary: Bulma 1 derives its
+ * entire runtime surface from HSL channels, so the adapter can set everything
+ * from CSS at runtime and the prebuilt stylesheet is enough. The build-time
+ * work Bootstrap needs is a consequence of Bootstrap compiling variants to
+ * literals, not something every library requires.
+ * ========================================================================== */
+
+@import 'bulma/css/bulma.css' layer(vendor);

@@ -18,12 +18,13 @@ is exactly one place — the semantic layer — and everything else derives from
 - **Sass first.** A value becomes a CSS custom property only if it changes at
   runtime. Layer 1's 28 colour ramps cost **0 bytes**; the whole token layer is
   110 custom properties.
-- **Theme and context switching** via `data-theme` and `data-surface`, with a
-  build-time invariant that a context cannot change a background without its
-  foreground.
-- **Two adapters, one contract.** Bootstrap (build-time Sass configuration plus
-  64 runtime variables, replacing a 957-line hand-written mapping) and daisyUI
-  (28 custom properties, its entire theming surface).
+- **Theme and context switching** via `data-theme` and `data-surface`, with two
+  build-time guarantees: a context cannot change a background without its
+  foreground, and **every bg/fg pair in every theme is measured against WCAG** —
+  error below 3:1, warning below 4.5:1. Both cost zero runtime bytes.
+- **Four adapters, one contract.** Bootstrap, daisyUI, Pico CSS and Bulma — a
+  class-based library, a utility-based one, a classless one, and one that only
+  accepts HSL channels. Plus a Tailwind bridge, which is not an adapter.
 - **Tailwind bridge** that publishes layer 2 as utilities through
   `@theme inline` — no extra custom properties, and utilities follow the theme.
 - **Enforced, not just documented.** Stylelint fails the build on a literal
@@ -63,7 +64,7 @@ both behave differently under `file://`.
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
 | 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 110, the public contract |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
-| 3.5 — adapter | `src/adapters/*.scss` | custom properties | Bootstrap 64, daisyUI 28 — whichever is selected |
+| 3.5 — adapter | `src/adapters/*.scss` | custom properties | 28–64, whichever one is selected |
 
 The rule that produces that table:
 
@@ -155,10 +156,37 @@ the subtler `background-color: var(--app-button-bg, var(--app-bg-action, var(--b
 because layer 2 is always defined and resolution never reaches the variant
 level. Each variant is bound to the semantic role it means.
 
+## What four adapters are for
+
+Each library was picked because it breaks a different assumption, and together
+they are the evidence that the layering holds:
+
+| Library | The thing it tests | Adapter size |
+|---|---|---|
+| **Bootstrap** | Variants compiled to literals; needs a build-time half | ~440 lines |
+| **daisyUI** | Variants kept as references; one variable moves everything | ~140 lines |
+| **Pico CSS** | Classless — no variant classes exist at all | ~150 lines |
+| **Bulma** | Refuses whole colours; wants HSL channels | ~170 lines |
+
+The generalisation worth keeping: **an adapter's cost is set by how a library is
+organised, not by how much it ships.** Bulma exposes 1416 custom properties and
+needs about thirty declarations, because every component family is
+`var(--bulma-scheme-h)` under the hood. Bootstrap exposes fewer and needs more.
+
+Two constraints fall out of the set:
+
+- **A library that ships unlayered must be wrapped** in `@layer vendor` by its
+  entry file. Unlayered CSS beats every cascade layer, so otherwise the library
+  beats its own adapter. Pico and Bulma both need this.
+- **A value the library decomposes cannot follow a runtime override.** Bulma's
+  channels and Bootstrap's rgb triplets are computed per theme at build time, so
+  they track `data-theme` but not a live `--app-*` rewrite. Everything a library
+  exposes whole stays live.
+
 ## daisyUI
 
-The second adapter, and the instructive contrast with Bootstrap. Both libraries
-express variants through custom properties, but resolve them at opposite times:
+The instructive contrast with Bootstrap. Both libraries express variants through
+custom properties, but resolve them at opposite times:
 
 ```
 Bootstrap  .btn-primary { --bs-btn-bg: #5f3212 }               compiled literal
@@ -219,17 +247,18 @@ src/                    the design system itself
   _component.scss       layer 3 naming contract
   _core.scss            emission machinery, pair invariant
   _config.scss          prefix, themes, adapters, layer names
-  adapters/_bootstrap.scss
-  adapters/_daisyui.scss
+  adapters/                _bootstrap _daisyui _pico _bulma
 app.css                 cascade layer order + token-driven baseline
 reset-a11y.css          optional; restores the native focus outline
 tailwind.css            optional Tailwind bridge
-bootstrap-entry.scss    optional Bootstrap build entry
-daisyui-entry.css       optional daisyUI build entry
+*-entry.{scss,css}      one optional build entry per library
 example/
   coexistence.html      Bootstrap vs plain CSS, light/dark
-  theme-brand.html      a custom theme across Bootstrap and plain CSS
-  daisyui.html          the daisyUI adapter, all three themes
+  theme-brand.html      the brand theme across Bootstrap and plain CSS
+  daisyui.html          daisyUI adapter
+  pico.html             Pico adapter — classless, unlayered library
+  bulma.html            Bulma adapter — HSL channels
+  tailwind.html         the bridge, no adapter and no library
 ```
 
 ## Build and verify

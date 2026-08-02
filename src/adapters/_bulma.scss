@@ -1,0 +1,229 @@
+// =============================================================================
+// ADAPTER — Bulma 1
+// =============================================================================
+//
+// An adapter is a LEAF: nothing in the system depends on it, and it is the only
+// file that knows this library exists.
+//
+// Bulma is the hardest case in this collection, and the most instructive,
+// because it does not accept colours at all. It accepts CHANNELS:
+//
+//     --bulma-primary-h: 171deg;
+//     --bulma-primary-s: 100%;
+//     --bulma-primary-l: 41%;
+//     --bulma-primary: hsla(var(--bulma-primary-h), var(--bulma-primary-s),
+//                           var(--bulma-primary-l), 1);
+//
+// Decomposing colour that way is how Bulma derives its whole surface at
+// runtime: every hover, active, invert, light and dark variant is the same hue
+// and saturation with a shifted lightness. It is why the library ships 1416
+// custom properties and why this adapter can drive all of them from about
+// thirty declarations — `--bulma-button-h` is literally `var(--bulma-scheme-h)`,
+// and so is every other component family.
+//
+// -----------------------------------------------------------------------------
+// THE CONSTRAINT, AND WHY IT LOOKS FAMILIAR
+// -----------------------------------------------------------------------------
+//
+// CSS cannot take a `var()` apart. There is no way to write
+// `--bulma-primary-h: hue-of(var(--app-bg-action))`, so the channels cannot be
+// plain references the way every other adapter's mappings are.
+//
+// This is the same shape as Bootstrap's `--bs-primary-rgb` problem, and it gets
+// the same answer: compute the parts from the theme's own colour at BUILD time,
+// and emit them per theme. Layer 1 is oklch, Sass converts to hsl during
+// compilation, and what ships is three numbers.
+//
+// The cost is honest and worth stating: a value that has to be decomposed can
+// only follow a theme, never a runtime override. Rewriting `--app-bg-action` on
+// `:root` moves Bootstrap, daisyUI and Pico; it does NOT move Bulma, because
+// Bulma is reading channels that were fixed at build time. Everything Bulma
+// exposes as a whole colour — and it does expose some — stays live, and those
+// are mapped as references below.
+// =============================================================================
+
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../core';
+@use '../config';
+@use '../themes';
+
+// oklch -> the three hsl parts Bulma wants, resolved at compile time.
+//
+// The gamut mapping is required, not tidiness. oklch describes colours sRGB
+// cannot show, and asking for the hsl channels of one of those returns
+// nonsense that CSS will not accept:
+//
+//     green-700 raw   -> saturation 143.08%
+//     green-700 mapped -> saturation 100%, lightness 25.5%
+//
+// `local-minde` is the CSS Color 4 algorithm — it reduces chroma while holding
+// lightness and hue, which is what keeps a mapped colour recognisable instead
+// of merely clipped.
+//
+// Rounded afterwards because Bulma interpolates these into `hsl()` and long
+// decimals make the output noisy without moving a pixel.
+@function _srgb($c) {
+  @return color.to-gamut($c, $space: rgb, $method: local-minde);
+}
+@function _h($c) {
+  @return math.round(color.channel(_srgb($c), 'hue', $space: hsl));
+}
+@function _s($c) {
+  @return math.round(color.channel(_srgb($c), 'saturation', $space: hsl));
+}
+@function _l($c) {
+  @return math.round(color.channel(_srgb($c), 'lightness', $space: hsl));
+}
+
+// Bulma colour family -> the semantic role that drives it.
+//
+// Every entry must name a role that can be a BACKGROUND, because Bulma fills
+// buttons, tags and notifications with it. `link` used to point at the `link`
+// role here, which is a foreground — a text colour pressed into service as a
+// fill, and therefore a fill with no defined text colour on top of it.
+// `core.fg-for()` now rejects that at build time.
+//
+// Bulma's `link` family is its second brand emphasis, which is the role layer 2
+// calls `selected`.
+$_map: (
+  primary: 'action',
+  link: 'selected',
+  info: 'info',
+  success: 'success',
+  warning: 'warning',
+  danger: 'danger',
+);
+
+// -----------------------------------------------------------------------------
+// The half that CAN be a live reference
+// -----------------------------------------------------------------------------
+//
+// Anything Bulma exposes as a whole colour, plus everything that is not a
+// colour at all. These follow runtime overrides and contexts like every other
+// adapter's mappings.
+
+@mixin _refs() {
+  // Bulma paints the body from `--bulma-scheme-main`, which is assembled from
+  // channels. Overriding the composed variable instead keeps the page on
+  // `bg-page` while `scheme-main` stays free to be the surface colour that
+  // cards and inputs sit on — the same separation daisyUI needed `--root-bg`
+  // for.
+  --bulma-body-background-color: #{core.ref('bg-page')};
+
+  --bulma-radius-small: #{core.ref('radius-control-sm')};
+  --bulma-radius: #{core.ref('radius-control')};
+  --bulma-radius-medium: #{core.ref('radius-control')};
+  --bulma-radius-large: #{core.ref('radius-surface')};
+  --bulma-radius-rounded: #{core.ref('radius-pill')};
+
+  --bulma-family-primary: #{core.ref('font-body')};
+  --bulma-family-secondary: #{core.ref('font-heading')};
+  --bulma-family-code: #{core.ref('font-mono')};
+
+  --bulma-body-size: #{core.ref('text-size')};
+  --bulma-body-line-height: #{core.ref('text-leading')};
+  --bulma-weight-normal: #{core.ref('weight-body')};
+  --bulma-weight-semibold: #{core.ref('weight-heading')};
+
+  --bulma-block-spacing: #{core.ref('gap-stack')};
+  --bulma-duration: #{core.ref('duration-base')};
+  --bulma-easing: #{core.ref('ease')};
+}
+
+// -----------------------------------------------------------------------------
+// The half that must be resolved at build time
+// -----------------------------------------------------------------------------
+
+@mixin _channels($c) {
+  // --- Neutral scheme ------------------------------------------------
+  // Hue and saturation come from the surface colour; the lightness steps are
+  // taken from the individual surface tokens, so Bulma's ramp follows the
+  // theme's own surface hierarchy instead of a fixed 100/98/96.
+  $surface: map.get($c, surface);
+  --bulma-scheme-h: #{_h($surface)};
+  --bulma-scheme-s: #{_s($surface)};
+  --bulma-scheme-main-l: #{_l($surface)};
+  --bulma-scheme-main-bis-l: #{_l(map.get($c, page))};
+  --bulma-scheme-main-ter-l: #{_l(map.get($c, sunken))};
+
+  // `invert` is the far end of the same ramp — what Bulma puts text on when it
+  // flips a surface.
+  $invert: map.get($c, text);
+  --bulma-scheme-invert-l: #{_l($invert)};
+  --bulma-scheme-invert-bis-l: #{_l(map.get($c, 'text-muted'))};
+  --bulma-scheme-invert-ter-l: #{_l(map.get($c, 'text-subtle'))};
+
+  // --- Text ----------------------------------------------------------
+  --bulma-text-h: #{_h($invert)};
+  --bulma-text-s: #{_s($invert)};
+  --bulma-text-l: #{_l($invert)};
+  --bulma-text-strong-l: #{_l(map.get($c, heading))};
+  --bulma-text-weak-l: #{_l(map.get($c, 'text-muted'))};
+
+  // --- Borders -------------------------------------------------------
+  --bulma-border-l: #{_l(map.get($c, border))};
+  --bulma-border-weak-l: #{_l(map.get($c, 'border-subtle'))};
+
+  // --- Colour families, generated ------------------------------------
+  // Four channels per family x six families. Bulma derives every hover,
+  // active, light and dark variant from the first three.
+  //
+  // The fourth is the one that matters and the one this file originally
+  // omitted. Left to itself Bulma sets
+  // `--bulma-{family}-invert-l: var(--bulma-{family}-05-l)` — a near-black tint
+  // of the family's own hue. That is a reasonable guess for the bright teal it
+  // ships with, and unreadable on a dark brand colour. Buttons, tags and
+  // notifications all read that single variable, so one missing mapping is
+  // three broken components.
+  //
+  // Layer 2 already knows the answer: every background has a paired foreground,
+  // guaranteed by construction. `core.fg-for()` is how an adapter asks for it,
+  // and it errors if the role cannot legitimately be a background.
+  @each $bulma, $role in $_map {
+    $bg: map.get($c, $role);
+    $fg-token: core.fg-for('bg-#{$role}'); // build-time guard; see $_map above
+    $fg: map.get($c, 'on-#{$role}');
+
+    --bulma-#{$bulma}-h: #{_h($bg)};
+    --bulma-#{$bulma}-s: #{_s($bg)};
+    --bulma-#{$bulma}-l: #{_l($bg)};
+
+    // Only the lightness: Bulma composes the invert from the FAMILY's hue and
+    // saturation, so what ships is a tinted version of the paired foreground
+    // rather than the exact colour. The contrast decision — light text or dark
+    // text — is what carries across, and that is the part that was wrong.
+    --bulma-#{$bulma}-invert-l: #{_l($fg)};
+  }
+}
+
+@mixin emit() {
+  @include core.in-layer(config.$layer-adapter) {
+    :root,
+    [data-theme],
+    [data-surface] {
+      @include _refs();
+    }
+
+    // Per theme, generated from `$themes` rather than listed by hand, so
+    // registering a theme never requires editing this file.
+    $default-theme: list.nth(config.$themes, 1);
+
+    @each $name in config.$themes {
+      $choices: map.get(themes.$registry, $name);
+
+      @if $name == $default-theme {
+        :root,
+        [data-theme='#{$name}'] {
+          @include _channels($choices);
+        }
+      } @else {
+        [data-theme='#{$name}'] {
+          @include _channels($choices);
+        }
+      }
+    }
+  }
+}

@@ -58,7 +58,9 @@
 // resolve to the same value.
 // =============================================================================
 
+@use 'sass:color';
 @use 'sass:map';
+@use 'sass:math';
 @use 'config';
 
 // -----------------------------------------------------------------------------
@@ -656,6 +658,51 @@ $breakpoint: (
 // Multiples of the spacing unit. `space(4)` -> 1rem.
 @function space($steps) {
   @return $spacing-unit * $steps;
+}
+
+// -----------------------------------------------------------------------------
+// Contrast — so a theme's readability is checked, not assumed
+// -----------------------------------------------------------------------------
+//
+// The pair invariant in `_core.scss` guarantees that a background always has a
+// foreground DECLARED. It cannot say whether that foreground is readable, and
+// the gap between those two things is where accessibility bugs live: every
+// theme in this repository declared a complete set of pairs, and two of them
+// were failing WCAG AA.
+//
+// Both misses were the same shape — white text on a mid-bright colour, which
+// looks fine in a swatch and fails in a paragraph. Amber and teal are the usual
+// culprits, because their perceived lightness runs ahead of their step number.
+//
+// WCAG 2.1 relative luminance. sRGB, because that is the space the ratio is
+// defined in; oklch values are gamut-mapped first for the same reason the
+// Bulma adapter maps before decomposing.
+
+@function _linear($v) {
+  @if $v <= 0.03928 {
+    @return math.div($v, 12.92);
+  }
+  @return math.pow(math.div($v + 0.055, 1.055), 2.4);
+}
+
+@function _luminance($c) {
+  $srgb: color.to-gamut($c, $space: rgb, $method: local-minde);
+  @return 0.2126 * _linear(math.div(color.channel($srgb, 'red', $space: rgb), 255)) +
+    0.7152 * _linear(math.div(color.channel($srgb, 'green', $space: rgb), 255)) +
+    0.0722 * _linear(math.div(color.channel($srgb, 'blue', $space: rgb), 255));
+}
+
+// The WCAG contrast ratio between two colours, 1 to 21.
+// 4.5 is AA for body text, 3 is AA for large text only.
+@function contrast($a, $b) {
+  $x: _luminance($a);
+  $y: _luminance($b);
+  @if $x < $y {
+    $swap: $x;
+    $x: $y;
+    $y: $swap;
+  }
+  @return math.div(math.round(math.div($x + 0.05, $y + 0.05) * 100), 100);
 }
 
 // -----------------------------------------------------------------------------

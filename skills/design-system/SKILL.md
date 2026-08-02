@@ -259,6 +259,67 @@ Generalising, when adapting any library: check whether the library variable is
 `--bs-modal-bg`), binding on the variable is fine — just terminate the chain on
 a *different* property.
 
+### Writing a new adapter: what to work out first
+
+Four questions, in this order. They decide the shape of the whole file, and each
+has a worked example among the existing adapters.
+
+1. **Does it ship layered?** If not, wrap it: `@import '…' layer(vendor)` in an
+   entry file. Unlayered CSS beats every cascade layer, so an unwrapped library
+   beats the adapter. (Pico, Bulma.)
+2. **Does it accept whole colours, or channels?** Whole colours map as live
+   references. Channels — or rgb triplets — must be computed per theme at build
+   time and stop following runtime overrides. (Bulma, Bootstrap.)
+3. **Are variants references or literals?** References mean setting one root
+   variable moves everything (daisyUI, Bulma). Literals mean binding per variant
+   selector (Bootstrap). Classless libraries have no variants at all (Pico).
+4. **Where does it paint the page?** Most libraries conflate "page" with
+   "surface" where layer 2 separates them. Look for a separate indirection —
+   daisyUI's `--root-bg`, Bulma's `--bulma-body-background-color` — and point
+   that at `bg-page` while the surface variable takes `bg-surface`.
+
+And in every case, declare the mapping on `:root, [data-theme], [data-surface]`
+rather than `:root` alone, or the library freezes at the root's theme.
+
+### The pair invariant applies to adapters, and this is where it breaks
+
+Every `bg-X` in layer 2 has a paired `fg-on-X`. `core.context()` enforces that
+mechanically for contexts. **An adapter is the other place a background gets
+assigned, and it is the easier place to forget** — with worse consequences,
+because a library will not leave the foreground undefined. It derives one.
+
+Bulma is the worked example. Given only a background it computes
+`--bulma-primary-invert-l: var(--bulma-primary-05-l)`, a near-black tint of the
+same hue. That reads well on the bright teal it ships with and is unreadable on
+a dark brand colour — and because buttons, tags and notifications all read that
+one variable, a single missing mapping broke three components at once.
+
+So: **whenever an adapter assigns a background, map the paired foreground in the
+same breath.** `core.fg-for('bg-action')` returns the token that belongs on top,
+and errors if the role cannot legitimately be a background — which also catches
+the related mistake of mapping a `fg-*` role into a fill slot, as the Bulma
+adapter originally did with `link`.
+
+### Contrast is checked at build time, not assumed
+
+The pair invariant guarantees a foreground is *declared*. It cannot say whether
+that foreground is *readable*, and the gap between those two is where
+accessibility regressions live: every theme here had a complete, well-formed set
+of pairs, and three of them were failing WCAG AA.
+
+`base.contrast($fg, $bg)` returns the WCAG ratio, and `_themes.scss` measures
+every pair of every theme on each build:
+
+- below **3.0** → `@error`. Unreadable at any size.
+- **3.0–4.5** → `@warn`. Large text only, which is a real choice for a badge.
+- **4.5+** → silent.
+
+It costs nothing at runtime — pure Sass arithmetic, no CSS emitted. When adding
+or editing a theme, let the build tell you rather than eyeballing swatches. The
+misses cluster in one place: **white text on a mid-bright fill.** Amber, teal,
+green and sky all read lighter than their step number suggests and need one more
+step down, or a dark foreground instead.
+
 ### Three more adapter rules learned the hard way
 
 **If an adapter has to invent a value, layer 2 is missing a token.** An earlier
@@ -316,6 +377,59 @@ from `--root-bg`, which defaults to `var(--color-base-100)` behind a `:where()`.
 Re-pointing `--root-bg` at `bg-page` while `base-100` takes `bg-surface`
 preserves the page/surface distinction that daisyUI's own model does not make.
 
+## Pico CSS — the classless case
+
+Pico styles `button`, `input` and `table` directly. There is no variant class to
+enumerate, so none of the per-variant machinery applies and the whole adapter is
+root variables.
+
+Two things it teaches that generalise:
+
+**A library that ships unlayered must be wrapped.** Unlayered CSS beats every
+cascade layer, so Pico's own `[data-theme=dark]` block would beat the adapter
+and dark mode would silently revert to Pico's blues. `pico-entry.css` exists
+only to do `@import '…/pico.css' layer(vendor)`. This is the `@layer` trap met
+from the other side: `app.css` says layer the *legacy* stylesheet, and the same
+reasoning says layer the *library*.
+
+**Pico owns `data-theme` too**, shipping its own `[data-theme=light|dark]`
+blocks. That is an attribute collision rather than a class collision, and layer
+order resolves it entirely — no theme-name special-casing needed. Under a third
+theme like `brand`, neither of Pico's blocks matches and the adapter overrides
+its `:root` defaults instead; same mechanism, same result.
+
+Pico also splits each intent into a text colour and a background colour
+(`--pico-primary` vs `--pico-primary-background`). Layer 2 already models that as
+`fg-action` and `bg-action`, so it maps one-to-one.
+
+## Bulma — the library that will not take a colour
+
+Bulma decomposes colour into channels and derives everything from them:
+
+```css
+--bulma-primary-h: 25deg;  --bulma-primary-s: 69%;  --bulma-primary-l: 22%;
+--bulma-primary: hsla(var(--bulma-primary-h), var(--bulma-primary-s), …);
+```
+
+CSS cannot take a `var()` apart, so the channels cannot be references. Compute
+them from the theme's colour at **build time** and emit per theme — the same
+answer `--bs-primary-rgb` needed, reached from a different direction.
+
+**Gamut-map before reading channels.** oklch describes colours sRGB cannot show,
+and their raw HSL channels come back invalid — `green-700` yields saturation
+143%. Use `color.to-gamut($c, $space: rgb, $method: local-minde)`, which reduces
+chroma while holding lightness and hue instead of clipping.
+
+**State the cost.** A decomposed value follows a theme but *not* a runtime
+override: rewriting `--app-bg-action` on `:root` moves Bootstrap, daisyUI and
+Pico live, and does not move Bulma. Whatever the library exposes whole — radius,
+fonts, the body background — stays a live reference; map those normally.
+
+The payoff is that derivability beats surface size. Bulma ships 1416 custom
+properties and needs ~30 declarations, because `--bulma-button-h` is just
+`var(--bulma-scheme-h)`. **An adapter's cost is set by how a library is
+organised, not by how much it ships.**
+
 ## Two libraries cannot share one page
 
 Bootstrap and daisyUI collide on 158 class names — `btn`, `btn-primary`, `card`,
@@ -358,7 +472,9 @@ borrows Tailwind's *naming*; it is not published to it.
 - **New colour, spacing or shape decision** → `src/_semantic.scss`, then let
   themes supply the value in `src/_themes.scss`. Give every `bg-X` its `fg-on-X`.
 - **New theme** → add a choices map to `src/_themes.scss` and list it in
-  `$themes`. A theme is ~35 colour decisions, not ~103 tokens.
+  `$themes`. A theme is ~35 colour decisions, not ~110 tokens. The build
+  measures every bg/fg pair for contrast, so add the theme first and let it tell
+  you which pairs need moving.
 - **A section that overrides part of a theme** (inverted band, sunken well) →
   a **context**, not a theme. Contexts inherit everything they do not mention.
   `core.context()` refuses to compile a context that changes a background

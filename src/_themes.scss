@@ -56,11 +56,25 @@ $light: (
   'action-active': base.color(indigo, 800),
   'action-subtle': base.color(indigo, 50),
 
-  // Selected — chips, menu items, tabs, active nav entries.
-  selected: base.color(indigo, 600),
+  // Selected — chips, menu items, tabs, active nav entries, and the second
+  // brand emphasis every component library asks for.
+  //
+  // Deliberately a DIFFERENT hue from `action`, and that is a change worth
+  // explaining. These two were the same indigo for a long time, on the grounds
+  // that a product can always diverge them later. The cost of that default only
+  // became visible through the adapters: a library with three brand intents
+  // (daisyUI's primary/secondary/accent, Bulma's primary/link) renders two of
+  // them identically, and a real modelling error — mapping two library roles
+  // onto one semantic role — looks exactly like a working theme.
+  //
+  // A default that hides a distinction teaches every consumer the wrong thing.
+  // Diverging costs nothing (same token count) and makes the collapse visible
+  // the moment it happens. Collapse them back in your own theme if your product
+  // genuinely has one brand colour.
+  selected: base.color(teal, 700),
   'on-selected': base.color(white),
-  'selected-hover': base.color(indigo, 700),
-  'selected-subtle': base.color(indigo, 100),
+  'selected-hover': base.color(teal, 800),
+  'selected-subtle': base.color(teal, 100),
 
   // Navigation.
   link: base.color(indigo, 700),
@@ -80,9 +94,13 @@ $light: (
   // Status.
   // Status. `-hover` is one step down the ramp, the same move `action-hover`
   // makes, so a status button darkens like every other button.
-  success: base.color(green, 600),
+  // Status fills sit at 700, not 600. White on green-600 is 3.22:1 and on
+  // sky-600 is 4.02:1 — both fail AA for body text, which the build now
+  // refuses to let past. Green and blue read lighter than their step number
+  // suggests, so they need one more step than red does.
+  success: base.color(green, 700),
   'on-success': base.color(white),
-  'success-hover': base.color(green, 700),
+  'success-hover': base.color(green, 800),
   'success-subtle': base.color(green, 50),
   'success-text': base.color(green, 700),
   'success-border': base.color(green, 200),
@@ -101,9 +119,9 @@ $light: (
   'danger-text': base.color(red, 700),
   'danger-border': base.color(red, 200),
 
-  info: base.color(sky, 600),
+  info: base.color(sky, 700),
   'on-info': base.color(white),
-  'info-hover': base.color(sky, 700),
+  'info-hover': base.color(sky, 800),
   'info-subtle': base.color(sky, 50),
   'info-text': base.color(sky, 700),
   'info-border': base.color(sky, 200)
@@ -134,16 +152,29 @@ $dark: (
   'text-subtle': base.color(zinc, 500),
   heading: base.color(white),
 
-  action: base.color(indigo, 500),
-  'on-action': base.color(white),
-  'action-hover': base.color(indigo, 400),
-  'action-active': base.color(indigo, 300),
+  // Bright fill, dark text — the pattern the status roles below already used,
+  // which `action` and `danger` were the only two not following.
+  //
+  // The old pairing was indigo-500 with white, and it broke on interaction:
+  // hover brightens to indigo-400, where white drops to 3.12:1. There is no
+  // single foreground that works for both a 500 fill and a 400 hover, so the
+  // fill has to move rather than the text. Going brighter and flipping to dark
+  // text also means hover can keep brightening, which is what a dark theme
+  // wants, instead of having to darken to protect contrast.
+  action: base.color(indigo, 400),
+  'on-action': base.color(indigo, 950),
+  'action-hover': base.color(indigo, 300),
+  'action-active': base.color(indigo, 200),
   'action-subtle': base.color(indigo, 950),
 
-  selected: base.color(indigo, 500),
-  'on-selected': base.color(white),
-  'selected-hover': base.color(indigo, 400),
-  'selected-subtle': base.color(indigo, 950),
+  // Distinct from `action` for the reason spelled out in `$light`. Dark takes
+  // the foreground down the ramp rather than to white, the same move the status
+  // roles make here — a 500-step colour is light enough that white text on it
+  // is the weaker pairing.
+  selected: base.color(teal, 500),
+  'on-selected': base.color(teal, 950),
+  'selected-hover': base.color(teal, 400),
+  'selected-subtle': base.color(teal, 950),
 
   link: base.color(indigo, 300),
   'link-hover': base.color(indigo, 200),
@@ -173,9 +204,9 @@ $dark: (
   'warning-text': base.color(amber, 300),
   'warning-border': base.color(amber, 800),
 
-  danger: base.color(red, 500),
-  'on-danger': base.color(white),
-  'danger-hover': base.color(red, 400),
+  danger: base.color(red, 400),
+  'on-danger': base.color(red, 950),
+  'danger-hover': base.color(red, 300),
   'danger-subtle': base.color(red, 950),
   'danger-text': base.color(red, 300),
   'danger-border': base.color(red, 800),
@@ -263,8 +294,12 @@ $brand: (
   'success-text': base.color(green, 800),
   'success-border': base.color(green, 200),
 
+  // Dark text on amber, not light. Amber reads far lighter than its step
+  // number suggests: the near-white foreground the rest of this theme uses
+  // gives 3.04:1 here, which the build rejects. This is the one status role
+  // where the pair inverts, in every theme.
   warning: base.color(amber, 600),
-  'on-warning': base.color(parchment, 50),
+  'on-warning': base.color(parchment, 950),
   'warning-hover': base.color(amber, 700),
   'warning-subtle': base.color(amber, 50),
   'warning-text': base.color(amber, 800),
@@ -350,7 +385,74 @@ $registry: (light: $light, dark: $dark, brand: $brand);
 // Orchestration
 // -----------------------------------------------------------------------------
 
+// -----------------------------------------------------------------------------
+// Contrast validation
+// -----------------------------------------------------------------------------
+//
+// The pair invariant guarantees a foreground is DECLARED for every background.
+// It cannot say whether that foreground is READABLE, and that gap is where
+// accessibility regressions hide: a theme with a complete, well-formed set of
+// pairs can still ship white text on amber.
+//
+// So every theme is measured at build time. This costs nothing at runtime — it
+// is Sass arithmetic that produces no CSS — and it is the difference between
+// "we intend the system to be accessible" and "the build will not let it stop
+// being accessible".
+//
+// The ladder is deliberate rather than a single threshold:
+//   below 3.0   -> error. Unreadable at any size; this is a broken theme.
+//   3.0 to 4.5  -> warn. Legal for large text only, which is a real choice for
+//                  a badge or a heading, so it is surfaced rather than blocked.
+//   4.5 and up  -> silent. AA for body text.
+//
+// Pairs are listed as THEME keys rather than derived from `core.pairs()`,
+// because the surface pairs (`page`/`text`) do not follow the `X`/`on-X`
+// convention the intent pairs do, and spelling them out is clearer than
+// encoding the exception.
+
+$_contrast-pairs: (
+  (page, text),
+  (surface, text),
+  (raised, text),
+  (sunken, text),
+  (surface, 'text-muted'),
+  (action, 'on-action'),
+  ('action-hover', 'on-action'),
+  (selected, 'on-selected'),
+  (success, 'on-success'),
+  (warning, 'on-warning'),
+  (danger, 'on-danger'),
+  (info, 'on-info')
+);
+
+@mixin _check-contrast($name, $choices) {
+  @each $pair in $_contrast-pairs {
+    $bg-key: list.nth($pair, 1);
+    $fg-key: list.nth($pair, 2);
+    $bg: map.get($choices, $bg-key);
+    $fg: map.get($choices, $fg-key);
+
+    @if $bg != null and $fg != null {
+      $ratio: base.contrast($fg, $bg);
+
+      @if $ratio < 3 {
+        @error 'theme "#{$name}": #{$fg-key} on #{$bg-key} has a contrast ratio '
+             + 'of #{$ratio}:1, which is unreadable at any size. Pick a lighter '
+             + 'or darker foreground, or move the background along its ramp.';
+      } @else if $ratio < 4.5 {
+        @warn 'theme "#{$name}": #{$fg-key} on #{$bg-key} is #{$ratio}:1 — '
+            + 'large text only (AA needs 4.5). Fine for a badge or a heading, '
+            + 'not for body copy.';
+      }
+    }
+  }
+}
+
 @mixin emit() {
+  @each $name in config.$themes {
+    @include _check-contrast($name, map.get($registry, $name));
+  }
+
   @include semantic.emit-structure();
 
   // The FIRST theme in `$themes` also lands on `:root`, so it applies before

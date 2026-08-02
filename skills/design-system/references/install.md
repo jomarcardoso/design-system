@@ -62,6 +62,14 @@ meaningful if the project already uses Tailwind v4.
 - **daisyUI** — adds `daisyui-entry.css` and `src/adapters/_daisyui.scss`.
   Requires Tailwind v4. The entry sets `themes: false`, without which daisyUI's
   built-in themes declare the same variables the adapter drives.
+- **Pico CSS** — adds `pico-entry.css` and `src/adapters/_pico.scss`. Classless,
+  so it suits projects writing semantic HTML. The entry wraps Pico in
+  `@layer vendor`; loading the raw package instead means Pico's own
+  `[data-theme=dark]` beats the adapter.
+- **Bulma** — adds `bulma-entry.css` and `src/adapters/_bulma.scss`. Same
+  layer-wrapping requirement. Note the one real limitation in the set: Bulma
+  derives colour from HSL channels computed at build time, so its colours follow
+  a theme but not a runtime `--app-*` override.
 
 **One, not several.** Bootstrap and daisyUI collide on 158 class names (`btn`,
 `btn-primary`, `card`, `alert`, `badge`, `modal`, `table`…), so loading both

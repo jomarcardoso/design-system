@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pico CSS adapter</title>
+
+<!--
+  Pico ships UNLAYERED, so `pico-entry.css` wraps it in `@layer vendor` before
+  it gets here. Without that wrapper Pico's own `[data-theme=dark]` block would
+  beat the adapter — unlayered CSS outranks every cascade layer — and dark mode
+  would revert to Pico's blues. Load `dist/pico.css`, never the raw package.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/pico.css">
+
+<style>
+  .wrap { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .themebar { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; margin-bottom: var(--app-space-xl); }
+  .themebar button { width: auto; margin: 0; }
+  .row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+  .row > * { margin-bottom: 0; }
+  .note {
+    margin-top: var(--app-space-2xl); padding: var(--app-pad-surface);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+    border-radius: var(--app-radius-surface);
+    font-size: 0.88rem; color: var(--app-fg-muted);
+  }
+  .note strong { color: var(--app-fg-default); }
+  .note li { margin-bottom: var(--app-space-xs); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <hgroup>
+    <h1>Pico CSS adapter</h1>
+    <p>Classless. There is no <code>.btn</code> to bind and no variant class to enumerate — the whole adapter is root variables.</p>
+  </hgroup>
+
+  <div class="themebar" role="group">
+    <button class="secondary outline" data-set-theme="light">Light</button>
+    <button class="secondary outline" data-set-theme="dark">Dark</button>
+    <button data-set-theme="brand">Brand</button>
+  </div>
+
+  <h2>Elements, not classes</h2>
+  <p>
+    Every control below is a bare HTML element. Pico styles <code>button</code>,
+    <code>input</code> and <code>table</code> directly, which is why this adapter needs none
+    of the per-variant machinery the Bootstrap one does.
+  </p>
+  <div class="row">
+    <button>Primary</button>
+    <button class="secondary">Secondary</button>
+    <button class="contrast">Contrast</button>
+    <button class="outline">Outline</button>
+    <button disabled>Disabled</button>
+  </div>
+
+  <h2>Forms</h2>
+  <form onsubmit="return false">
+    <fieldset>
+      <label>
+        Email
+        <input type="email" name="email" placeholder="you@example.com" autocomplete="off">
+      </label>
+      <label>
+        Plan
+        <select name="plan">
+          <option>Starter</option>
+          <option>Growth</option>
+        </select>
+      </label>
+      <label>
+        <input type="checkbox" name="terms" checked>
+        Accept the terms
+      </label>
+      <label>
+        <input type="checkbox" name="switch" role="switch" checked>
+        Notifications
+      </label>
+      <label>
+        Volume
+        <input type="range" min="0" max="100" value="60">
+      </label>
+    </fieldset>
+  </form>
+
+  <h2>Surfaces</h2>
+  <article>
+    <header>Card header</header>
+    <p>An <code>article</code> is Pico's card. Background, border, radius and elevation all come from the token layer.</p>
+    <footer>Card footer, on the sectioning background.</footer>
+  </article>
+
+  <h2>Content</h2>
+  <p>
+    Body text with a <a href="#pico">link</a>, some <code>inline code</code>,
+    <mark>a highlight</mark>, <ins>an insertion</ins> and <del>a deletion</del>.
+  </p>
+  <blockquote>
+    A blockquote, bordered from the subtle line token.
+  </blockquote>
+
+  <table>
+    <thead><tr><th scope="col">Name</th><th scope="col">Status</th></tr></thead>
+    <tbody>
+      <tr><td>First</td><td>Active</td></tr>
+      <tr><td>Second</td><td>Pending</td></tr>
+    </tbody>
+  </table>
+
+  <progress value="60" max="100"></progress>
+
+  <details>
+    <summary>An accordion</summary>
+    <p>Opened content sits on the same surface token as the card.</p>
+  </details>
+
+  <h2>Contexts reach in</h2>
+  <div data-surface="inverted" style="padding: var(--app-pad-surface); border-radius: var(--app-radius-surface); background: var(--app-bg-page); color: var(--app-fg-default);">
+    <div class="row">
+      <button>Primary</button>
+      <button class="secondary">Secondary</button>
+      <span style="color: var(--app-fg-muted)">Inverted band</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>What this page is testing:</strong>
+    <ul>
+      <li><strong>A classless library needs no variant binding.</strong> Bootstrap expresses
+        variants as classes that set custom properties, so its adapter re-binds each one.
+        Pico expresses them as element selectors, so there is nothing to re-bind — the
+        adapter is root variables and nothing else.</li>
+      <li><strong>Pico owns <code>data-theme</code> too.</strong> It ships
+        <code>[data-theme=light]</code> and <code>[data-theme=dark]</code> blocks declaring the
+        same variables this adapter drives. That is an attribute collision, resolved purely
+        by layer order. Under <code>brand</code> neither of Pico's blocks matches at all, and
+        the result is the same — which is the point of not special-casing theme names.</li>
+      <li><strong>The library had to be layered.</strong> Pico ships unlayered, and unlayered
+        CSS beats every cascade layer. <code>pico-entry.css</code> exists solely to wrap it in
+        <code>@layer vendor</code>.</li>
+      <li><strong>Pico splits text from background per intent.</strong> <code>--pico-primary</code>
+        colours links while <code>--pico-primary-background</code> fills buttons. Layer 2
+        already models that split as <code>fg-action</code> and <code>bg-action</code>, so the
+        mapping is one-to-one rather than a compromise.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const buttons = [...document.querySelectorAll('[data-set-theme]')];
+  const sync = (name) => buttons.forEach((b) => {
+    const on = b.dataset.setTheme === name;
+    b.classList.toggle('outline', !on);
+    b.classList.toggle('secondary', !on);
+  });
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    root.dataset.theme = b.dataset.setTheme;
+    sync(b.dataset.setTheme);
+  }));
+</script>
+</body>
+</html>

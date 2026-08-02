@@ -18,11 +18,16 @@
     "lint": "stylelint \"src/**/*.scss\" \"app.css\"",
     "build": "npm run build:tokens && npm run lint",
     "build:daisyui": "tailwindcss -i daisyui-entry.css -o dist/daisyui.css",
-    "demo": "npm run build:tokens && npm run build:bootstrap && npm run build:daisyui"
+    "build:pico": "tailwindcss -i pico-entry.css -o dist/pico.css",
+    "build:bulma": "tailwindcss -i bulma-entry.css -o dist/bulma.css",
+    "build:tailwind": "tailwindcss -i tailwind.css -o dist/tailwind.css",
+    "demo": "npm run build:tokens && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind"
   },
   "devDependencies": {
+    "@picocss/pico": "^2.1.1",
     "@tailwindcss/cli": "^4.3.3",
     "bootstrap": "5.3",
+    "bulma": "^1.0.4",
     "daisyui": "^5.7.9",
     "postcss-scss": "^4.0.9",
     "sass": "^1.83.0",

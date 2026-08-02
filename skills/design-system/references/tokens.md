@@ -33,8 +33,15 @@ without renaming: adding `--app-bg-action-hover` never disturbs
 `--app-bg-action`.
 
 **The pair invariant.** Every `bg-X` has a matching `fg-on-X`. Use them
-together and contrast is guaranteed by construction. A context that changes a
-background without its foreground fails to compile.
+together. A context that changes a background without its foreground fails to
+compile, and an adapter should ask `core.fg-for()` rather than let the library
+guess.
+
+**Contrast is measured, not assumed.** Declaring a foreground is not the same as
+declaring a readable one, so every pair of every theme is checked against WCAG
+on each build — error below 3.0, warning below 4.5. The one role where the pair
+inverts is `warning`: amber reads light enough that it takes dark text in every
+theme.
 
 ## Surfaces and backgrounds
 

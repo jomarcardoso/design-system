@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tailwind bridge</title>
+
+<!--
+  No adapter on this page, and no component library at all.
+
+  `tailwind.css` is a BRIDGE, not an adapter: it runs the other direction,
+  publishing layer 2 as Tailwind utilities through `@theme inline`. There is no
+  library vocabulary to translate, because Tailwind has none — `@theme` is how
+  you declare the vocabulary in the first place.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/tailwind.css">
+</head>
+<body class="bg-page text-fg">
+<div class="mx-auto max-w-4xl px-5 pt-8 pb-16">
+
+  <h1 class="text-2xl font-semibold text-fg-heading">Tailwind bridge</h1>
+  <p class="mt-1 max-w-2xl text-fg-muted">
+    Utilities that follow the theme. <code class="font-mono text-sm">bg-surface</code> and
+    <code class="font-mono text-sm">text-fg-muted</code> are generated from layer 2, and
+    <code class="font-mono text-sm">@theme inline</code> keeps the <code class="font-mono text-sm">var()</code>
+    reference in the utility rather than baking a value — so switching the theme moves them.
+  </p>
+
+  <div class="mt-6 flex flex-wrap gap-2">
+    <button data-set-theme="light" class="h-9 rounded-md border border-line px-3 hover:bg-sunken">Light</button>
+    <button data-set-theme="dark" class="h-9 rounded-md border border-line px-3 hover:bg-sunken">Dark</button>
+    <button data-set-theme="brand" class="h-9 rounded-md border border-line px-3 hover:bg-sunken">Brand</button>
+  </div>
+
+  <!-- ============================ Swatches ============================ -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">What the bridge publishes</h2>
+    <p class="mt-1 text-sm text-fg-muted">Sixteen colour utilities. Nothing else is bridged — see the note at the bottom.</p>
+    <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div><div class="h-12 rounded-md border border-line bg-page"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-page</p></div>
+      <div><div class="h-12 rounded-md border border-line bg-surface"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-surface</p></div>
+      <div><div class="h-12 rounded-md border border-line bg-raised"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-raised</p></div>
+      <div><div class="h-12 rounded-md border border-line bg-sunken"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-sunken</p></div>
+      <div><div class="h-12 rounded-md bg-action"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-action</p></div>
+      <div><div class="h-12 rounded-md bg-selected"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-selected</p></div>
+      <div><div class="h-12 rounded-md bg-success"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-success</p></div>
+      <div><div class="h-12 rounded-md bg-danger"></div><p class="mt-1 font-mono text-xs text-fg-muted">bg-danger</p></div>
+    </div>
+  </section>
+
+  <!-- ============================ Components ============================ -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">Components, built from utilities</h2>
+    <p class="mt-1 max-w-2xl text-sm text-fg-muted">
+      No library anatomy is imposed here — these are utility compositions. Hover states reach
+      for the layer 2 token directly, because the bridge publishes base colours only.
+    </p>
+
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <button class="h-9 rounded-md bg-action px-3 text-on-action hover:bg-[var(--app-bg-action-hover)]">Action</button>
+      <button class="h-9 rounded-md bg-selected px-3 text-on-action hover:bg-[var(--app-bg-selected-hover)]">Selected</button>
+      <button class="h-9 rounded-md bg-danger px-3 text-on-action hover:bg-[var(--app-bg-danger-hover)]">Danger</button>
+      <button class="h-9 rounded-md border border-line bg-surface px-3 hover:bg-sunken">Quiet</button>
+    </div>
+
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <div class="rounded-xl border border-line bg-surface p-6 shadow-sm">
+        <h3 class="font-semibold text-fg-heading">Card</h3>
+        <p class="mt-1 text-sm text-fg-muted">Surface, border and text all follow the theme.</p>
+      </div>
+      <label class="flex flex-col gap-1 text-sm text-fg-muted">
+        Field
+        <input placeholder="Type something"
+               class="h-9 rounded-md border border-line bg-surface px-3 text-fg placeholder:text-fg-muted focus:border-[var(--app-border-action)] focus:outline-none">
+      </label>
+    </div>
+
+    <div class="mt-4 rounded-md border border-[var(--app-border-success)] bg-[var(--app-bg-success-subtle)] px-4 py-2 text-sm text-[var(--app-fg-success)]">
+      Saved successfully.
+    </div>
+  </section>
+
+  <!-- ============================ Context ============================ -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">Contexts work without any adapter</h2>
+    <p class="mt-1 max-w-2xl text-sm text-fg-muted">
+      There is nothing to re-declare here. The utility already <em>is</em>
+      <code class="font-mono text-xs">var(--app-bg-surface)</code>, so it re-resolves inside any
+      context on its own — the one case in this project where the boundary problem simply does
+      not arise.
+    </p>
+    <div data-surface="inverted" class="mt-4 rounded-xl bg-page p-6 text-fg">
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="h-9 rounded-md bg-action px-3 text-on-action">Action</button>
+        <div class="rounded-md border border-line bg-surface px-3 py-2 text-sm">Surface inside the band</div>
+        <span class="text-sm text-fg-muted">Inverted</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="mt-12 rounded-xl border border-line bg-sunken p-6 text-sm text-fg-muted">
+    <strong class="text-fg">What this page is testing:</strong>
+    <ul class="mt-2 list-disc space-y-2 pl-5">
+      <li><strong class="text-fg">A bridge is not an adapter.</strong> An adapter translates a
+        library's vocabulary into ours, one way. This runs the other direction and publishes
+        ours as utilities. Tailwind needs no adapter because it has no theme vocabulary of its
+        own to translate.</li>
+      <li><strong class="text-fg"><code class="font-mono text-xs">inline</code> is the whole
+        mechanism.</strong> Plain <code class="font-mono text-xs">@theme</code> would resolve the
+        value at build time and publish a second variable, so a theme switch would not move the
+        utility. <code class="font-mono text-xs">@theme inline</code> keeps the reference and
+        publishes nothing — the utilities above follow the theme at zero extra bytes.</li>
+      <li><strong class="text-fg">The bridge is colour-only, on purpose.</strong> Spacing, radius
+        and typography come from Tailwind's own scales, which already read the same layer 1
+        values. Re-bridging them would generate a second family of classes that do the same
+        thing.</li>
+      <li><strong class="text-fg">Anything unbridged is still reachable.</strong> Hover and
+        status-subtle colours use <code class="font-mono text-xs">bg-[var(--app-…)]</code>. That
+        is still layer 2, so it is inside the rule, not around it — and it is the signal to
+        watch: if one of these gets written often, bridge it.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  document.querySelectorAll('[data-set-theme]').forEach((b) =>
+    b.addEventListener('click', () => { root.dataset.theme = b.dataset.setTheme; })
+  );
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+/* =============================================================================
+ * PICO CSS BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i pico-entry.css -o dist/pico.css
+ *
+ * The CLI is used purely as a bundler here — nothing in this file imports
+ * Tailwind, and none of Tailwind's own output is generated. It is simply the
+ * tool already in the project that resolves `@import` from node_modules.
+ *
+ * -----------------------------------------------------------------------------
+ * THE WRAPPER IS THE WHOLE POINT OF THIS FILE
+ * -----------------------------------------------------------------------------
+ *
+ * Pico ships unlayered, and unlayered CSS beats ALL layered CSS regardless of
+ * order or specificity. Without `layer(vendor)` below, Pico's own
+ * `[data-theme=dark]` block would beat `src/adapters/_pico.scss` — which lives
+ * in the `vendor-config` layer — and switching to dark would silently revert
+ * every colour to Pico's defaults.
+ *
+ * This is the same trap `app.css` warns about, met from the other side. There
+ * the advice is to pull the LEGACY stylesheet into a layer so the design system
+ * can win; here it is the LIBRARY, for exactly the same reason. Any adapter for
+ * a library that ships unlayered CSS needs this line.
+ * ========================================================================== */
+
+@import '@picocss/pico/css/pico.css' layer(vendor);
