@@ -70,13 +70,29 @@ meaningful if the project already uses Tailwind v4.
   layer-wrapping requirement. Note the one real limitation in the set: Bulma
   derives colour from HSL channels computed at build time, so its colours follow
   a theme but not a runtime `--app-*` override.
+- **Flowbite** — adds `flowbite-entry.css` and `src/adapters/_flowbite.scss`.
+  Requires Tailwind v4. Ships no component CSS; its components are markup made
+  of utilities, so the entry file also registers the pair companions
+  (`--color-on-brand`) that Flowbite omits.
+- **Preline UI** — adds `preline-entry.css` and `src/adapters/_preline.scss`.
+  Requires Tailwind v4. The least translation of any adapter here: Preline
+  already splits a semantic layer from an `@theme inline` bridge, so the adapter
+  just sets the semantic variables.
 
-**One, not several.** Bootstrap and daisyUI collide on 158 class names (`btn`,
-`btn-primary`, `card`, `alert`, `badge`, `modal`, `table`…), so loading both
-means the later cascade layer silently wins. The design system makes libraries
-agree on colour; it cannot make them agree on who owns `.btn`. If a project
-genuinely runs two libraries today, that is a migration to finish, not a
-configuration to support.
+**One, not several**, and for two independent reasons. Bootstrap and daisyUI
+collide on 158 class names (`btn`, `card`, `alert`, `modal`, `table`…), so the
+later cascade layer silently wins. And daisyUI and Preline collide on a
+*variable* — `--border` is a width to one and a colour to the other — which
+`scripts/check-collisions.mjs` now fails the build on. The design system makes
+libraries agree on colour; it cannot make them agree on who owns `.btn` or
+`--border`. If a project genuinely runs two libraries today, that is a migration
+to finish, not a configuration to support.
+
+**Where the adapter goes.** Either name it in `$adapters` so it bundles into
+`dist/ds.css`, or compile `src/adapter-<name>.scss` on its own and load it as a
+separate file after the token build. The second is what this repository does,
+and it is the only option if several adapters have to coexist as builds (not as
+pages).
 
 If they want an adapter for a library that has neither, say so plainly rather
 than improvising one mid-install. The two existing adapters are the templates —

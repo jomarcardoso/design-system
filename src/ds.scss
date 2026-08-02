@@ -19,6 +19,8 @@
 @use 'adapters/daisyui';
 @use 'adapters/pico';
 @use 'adapters/bulma';
+@use 'adapters/flowbite';
+@use 'adapters/preline';
 
 // Layer 1 — normally emits nothing (see _base.scss).
 @include base.emit();
@@ -46,4 +48,12 @@
 
 @if list.index(config.$adapters, bulma) {
   @include bulma.emit();
+}
+
+@if list.index(config.$adapters, flowbite) {
+  @include flowbite.emit();
+}
+
+@if list.index(config.$adapters, preline) {
+  @include preline.emit();
 }

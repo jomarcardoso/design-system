@@ -50,19 +50,28 @@ $emit-component-vars: false !default;
 // attribute is set.
 $themes: (light, dark, brand) !default;
 
-// Adapters to compile. Each is an isolated file; nothing else in the system
-// knows these libraries exist. Set to `()` for a project on plain CSS.
+// Adapters to BUNDLE into `dist/ds.css`. Empty by default, which is the honest
+// default for a framework-neutral foundation: the token build knows about no
+// library at all.
 //
-// Both are listed here because this repository demonstrates both. A real
-// project should list only the library it uses: an unselected adapter costs
-// nothing, but a selected one it never loads is pure weight.
+// Naming one here bundles it, which is convenient for a project that has
+// settled on a library. The alternative is to compile `src/adapter-<name>.scss`
+// separately and load it as its own file; both emit the same declarations, and
+// this repository uses the separate route because it demonstrates six.
 //
-// Listing both in one APPLICATION is almost never right, and not because of
-// anything here — Bootstrap and daisyUI collide on 158 class names (`btn`,
-// `btn-primary`, `card`, `alert`, `badge`, `modal`, `table`…), so whichever
-// cascade layer lands later silently wins. This layer can make two libraries
-// agree on colour; it cannot make them agree on who owns `.btn`.
-$adapters: (bootstrap, daisyui, pico, bulma) !default;
+// LIST AT MOST ONE. Two reasons, and neither is fixable here:
+//
+//   - Class collisions. Bootstrap and daisyUI share 158 class names (`btn`,
+//     `btn-primary`, `card`, `alert`, `modal`, `table`…), so whichever cascade
+//     layer lands later silently wins.
+//   - Variable collisions. daisyUI uses `--border` for a WIDTH and Preline uses
+//     it for a COLOUR. Bundling both left daisyUI's inputs with no border, in
+//     valid CSS, with a silent build. `scripts/check-collisions.mjs` now fails
+//     the build on that rather than letting a browser find it.
+//
+// This layer can make two libraries agree on colour. It cannot make them agree
+// on who owns `.btn` or `--border`.
+$adapters: () !default;
 
 // -----------------------------------------------------------------------------
 // Cascade layer names

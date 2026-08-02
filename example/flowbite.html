@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flowbite adapter</title>
+
+<!--
+  Flowbite ships no component CSS at all — its components are copy-paste markup
+  made of Tailwind utilities. So everything below is utilities, and the adapter's
+  entire job is to point Flowbite's semantic `@theme` names at layer 2.
+
+  `flowbite-entry.css` wraps the library in `@layer vendor`: Tailwind hoists the
+  `@theme` block out either way, but Flowbite's dark-mode `.dark { … }` rule
+  ships unlayered without it, and unlayered CSS beats every cascade layer.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/adapter-flowbite.css">
+<link rel="stylesheet" href="../dist/flowbite.css">
+</head>
+<body class="bg-neutral-secondary text-body">
+<div class="mx-auto max-w-4xl px-5 pt-8 pb-16">
+
+  <h1 class="text-2xl font-semibold text-heading">Flowbite adapter</h1>
+  <p class="mt-1 max-w-2xl text-body-subtle">
+    A library whose theming surface <em>is</em> Tailwind's <code class="font-mono text-sm">@theme</code>,
+    written as semantic names — <code class="font-mono text-sm">--color-brand</code>,
+    <code class="font-mono text-sm">--color-body</code>,
+    <code class="font-mono text-sm">--color-neutral-primary</code>. The mapping to layer 2 is
+    close to one-to-one.
+  </p>
+
+  <div class="mt-6 flex flex-wrap gap-2">
+    <button data-set-theme="light" class="rounded-sm border border-default px-3 py-2 text-sm hover:bg-muted">Light</button>
+    <button data-set-theme="dark" class="rounded-sm border border-default px-3 py-2 text-sm hover:bg-muted">Dark</button>
+    <button data-set-theme="brand" class="rounded-sm border border-default px-3 py-2 text-sm hover:bg-muted">Brand</button>
+  </div>
+
+  <!-- ===================== Buttons ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-heading">Buttons</h2>
+    <p class="mt-1 max-w-2xl text-sm text-body-subtle">
+      Note <code class="font-mono text-xs">text-on-brand</code> rather than Flowbite's own
+      <code class="font-mono text-xs">text-white</code>. Flowbite has no "text on brand" token,
+      which puts the foreground half of the pair in the markup where no adapter can reach it —
+      so this adapter publishes the missing companions.
+    </p>
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <button class="rounded-sm bg-brand px-5 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-strong">Brand</button>
+      <button class="rounded-sm bg-success px-5 py-2.5 text-sm font-medium text-on-success hover:bg-success-strong">Success</button>
+      <button class="rounded-sm bg-danger px-5 py-2.5 text-sm font-medium text-on-danger hover:bg-danger-strong">Danger</button>
+      <button class="rounded-sm bg-warning px-5 py-2.5 text-sm font-medium text-on-warning hover:bg-warning-strong">Warning</button>
+      <button class="rounded-sm border border-default bg-neutral-primary px-5 py-2.5 text-sm font-medium hover:bg-muted">Neutral</button>
+      <button class="rounded-sm bg-brand-soft px-5 py-2.5 text-sm font-medium text-fg-brand hover:bg-brand-medium">Soft</button>
+    </div>
+  </section>
+
+  <!-- ===================== Surfaces ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-heading">Surfaces</h2>
+    <p class="mt-1 max-w-2xl text-sm text-body-subtle">
+      Flowbite names surfaces by <em>prominence</em> — primary, secondary, tertiary — where
+      layer 2 names them by <em>role</em>: page, surface, raised, sunken. They run parallel in
+      a light theme, which is why the mapping stays clean.
+    </p>
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <div class="rounded-base border border-default bg-neutral-primary p-6 shadow-sm">
+        <h3 class="font-semibold text-heading">Card</h3>
+        <p class="mt-1 text-sm text-body-subtle">On <code class="font-mono text-xs">neutral-primary</code>, which the adapter points at the surface token.</p>
+      </div>
+      <div class="rounded-base border border-default bg-neutral-tertiary p-6">
+        <h3 class="font-semibold text-heading">Sunken well</h3>
+        <p class="mt-1 text-sm text-body-subtle">On <code class="font-mono text-xs">neutral-tertiary</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Feedback ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-heading">Feedback and forms</h2>
+    <div class="mt-4 space-y-3">
+      <div class="rounded-sm border border-success-subtle bg-success-soft p-4 text-sm text-fg-success" role="alert">Saved successfully.</div>
+      <div class="rounded-sm border border-danger-subtle bg-danger-soft p-4 text-sm text-fg-danger" role="alert">Something went wrong.</div>
+      <div class="rounded-sm border border-warning-subtle bg-warning-soft p-4 text-sm text-fg-warning" role="alert">Check your input.</div>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="rounded-sm bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-fg-brand">Badge</span>
+        <span class="rounded-sm bg-brand px-2.5 py-0.5 text-xs font-medium text-on-brand">Solid badge</span>
+      </div>
+      <label class="block text-sm text-body-subtle">
+        Field
+        <input placeholder="Type something"
+               class="mt-1 block w-full rounded-sm border border-default bg-neutral-primary px-3 py-2 text-body placeholder:text-fg-disabled focus:border-brand focus:outline-none">
+      </label>
+    </div>
+  </section>
+
+  <!-- ===================== Context ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-heading">Contexts reach in</h2>
+    <div data-surface="inverted" class="mt-4 rounded-base bg-neutral-secondary p-6 text-body">
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="rounded-sm bg-brand px-4 py-2 text-sm font-medium text-on-brand">Brand</button>
+        <div class="rounded-sm border border-default bg-neutral-primary px-3 py-2 text-sm">Surface inside the band</div>
+        <span class="text-sm text-body-subtle">Inverted</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="mt-12 rounded-base border border-default bg-muted p-6 text-sm text-body-subtle">
+    <strong class="text-body">What this page is testing:</strong>
+    <ul class="mt-2 list-disc space-y-2 pl-5">
+      <li><strong class="text-body">A library with no vocabulary to translate.</strong> No component
+        classes, no <code class="font-mono text-xs">--fb-*</code> namespace. Flowbite is a semantic
+        token layer that happens to ship markup — which makes it the closest thing here to a peer
+        rather than a target.</li>
+      <li><strong class="text-body">Prominence versus role.</strong> Flowbite says primary /
+        secondary / tertiary; layer 2 says page / surface / raised / sunken. Both describe the same
+        ramp, but role survives a theme inversion and prominence does not — "primary neutral" is
+        white in one theme and near-black in the other.</li>
+      <li><strong class="text-body">The pair invariant has to be exported.</strong> Flowbite's own
+        markup writes <code class="font-mono text-xs">text-white</code> on filled components, which
+        is the pairing that fails WCAG on a mid-bright fill. The adapter publishes
+        <code class="font-mono text-xs">--color-on-brand</code> and friends so the markup can name
+        the paired foreground instead.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  document.querySelectorAll('[data-set-theme]').forEach((b) =>
+    b.addEventListener('click', () => { root.dataset.theme = b.dataset.setTheme; })
+  );
+</script>
+</body>
+</html>

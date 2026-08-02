@@ -166,22 +166,43 @@ they are the evidence that the layering holds:
 | **Bootstrap** | Variants compiled to literals; needs a build-time half | ~440 lines |
 | **daisyUI** | Variants kept as references; one variable moves everything | ~140 lines |
 | **Pico CSS** | Classless — no variant classes exist at all | ~150 lines |
-| **Bulma** | Refuses whole colours; wants HSL channels | ~170 lines |
+| **Bulma** | Refuses whole colours; wants HSL channels | ~200 lines |
+| **Flowbite** | No component CSS; its surface *is* Tailwind's `@theme` | ~160 lines |
+| **Preline UI** | Already had this architecture — semantic layer + inline bridge | ~170 lines |
 
 The generalisation worth keeping: **an adapter's cost is set by how a library is
 organised, not by how much it ships.** Bulma exposes 1416 custom properties and
 needs about thirty declarations, because every component family is
 `var(--bulma-scheme-h)` under the hood. Bootstrap exposes fewer and needs more.
 
-Two constraints fall out of the set:
+Three constraints fall out of the set:
 
 - **A library that ships unlayered must be wrapped** in `@layer vendor` by its
   entry file. Unlayered CSS beats every cascade layer, so otherwise the library
-  beats its own adapter. Pico and Bulma both need this.
+  beats its own adapter. Pico, Bulma, Flowbite and Preline all need this.
 - **A value the library decomposes cannot follow a runtime override.** Bulma's
   channels and Bootstrap's rgb triplets are computed per theme at build time, so
   they track `data-theme` but not a live `--app-*` rewrite. Everything a library
   exposes whole stays live.
+- **Adapters can collide with each other.** daisyUI uses `--border` for a width;
+  Preline uses it for a colour. Bundling both left daisyUI's inputs with no
+  border, in valid CSS, with a silent build. `scripts/check-collisions.mjs` runs
+  on every build and fails on it now. Namespaced libraries (`--bs-*`, `--pico-*`,
+  `--bulma-*`) cannot collide; bare names can, and no adapter can prevent it.
+
+Which is why **`dist/ds.css` ships tokens only** and each adapter compiles to
+its own file from `src/adapter-<name>.scss`. Adapters are leaves — building them
+separately is the honest shape, and it is what lets this repository demo six
+libraries that could never share a page:
+
+```html
+<link rel="stylesheet" href="app.css">                 <!-- layer order + tokens -->
+<link rel="stylesheet" href="dist/adapter-bulma.css">  <!-- one adapter -->
+<link rel="stylesheet" href="dist/bulma.css">          <!-- the library -->
+```
+
+A project settled on one library can instead name it in `$adapters` and get it
+bundled into `dist/ds.css`. Both routes emit the same declarations.
 
 ## daisyUI
 

@@ -259,9 +259,56 @@ Generalising, when adapting any library: check whether the library variable is
 `--bs-modal-bg`), binding on the variable is fine — just terminate the chain on
 a *different* property.
 
+## Utility-based libraries — Flowbite and Preline
+
+A library can have no vocabulary of its own to translate. Flowbite and Preline
+ship **no component CSS at all**: their components are copy-paste markup made of
+Tailwind utilities, so their theming surface *is* Tailwind's `@theme`.
+
+Two consequences that do not arise anywhere else:
+
+**Re-pointing works at runtime; ADDING does not.** A Tailwind utility only
+exists if the token was visible at build time. Re-declaring `--color-brand` in
+the adapter works, because Tailwind already generated `.bg-brand` holding a
+`var()` reference. Declaring a *new* name like `--color-on-brand` at runtime
+produces a variable no class reads — the background comes out right and the text
+silently does not move. New names belong in the entry file under
+`@theme inline`, which is why these adapters have a build-time half like
+Bootstrap's.
+
+**The pair invariant has to be exported.** Flowbite's own markup writes
+`text-white` on filled components, putting the foreground half of the pair in
+the markup where no adapter can reach it — and white on a mid-bright fill is
+exactly what the contrast check rejects. The adapter publishes `--color-on-brand`
+and friends so markup can name the paired foreground. Preline needs none of
+this: it models `--primary-foreground` itself.
+
+Preline is worth reading as a peer rather than a target. Its `theme.css` is a
+semantic layer in `:root` plus an `@theme inline` bridge — the same split as
+`src/_semantic.scss` plus `tailwind.css`, arrived at independently, `inline` and
+all.
+
+## Adapters can collide with each other
+
+Two adapters can declare the same custom property with different meanings, and
+nothing in either file shows it. daisyUI uses `--border` for a WIDTH; Preline
+uses it for a COLOUR. Compiling both left daisyUI's inputs with
+`border-width: 0` — valid CSS, silent build, visible only in a browser.
+
+A library that namespaces its variables (`--bs-*`, `--pico-*`, `--bulma-*`)
+cannot collide. One that uses bare names, or borrows a shared namespace like
+Tailwind's `--color-*`, can — and no adapter can prevent it, because the names
+belong to the library.
+
+So: **`$adapters` should name at most one**, and `scripts/check-collisions.mjs`
+fails the build if a bundled set disagrees about a name. To ship several (as
+this repository does, to demonstrate six), compile each on its own from
+`src/adapter-<name>.scss` and load it as a separate file next to the token
+build. Adapters are leaves; building them separately is the honest shape.
+
 ### Writing a new adapter: what to work out first
 
-Four questions, in this order. They decide the shape of the whole file, and each
+Five questions, in this order. They decide the shape of the whole file, and each
 has a worked example among the existing adapters.
 
 1. **Does it ship layered?** If not, wrap it: `@import '…' layer(vendor)` in an
@@ -277,6 +324,9 @@ has a worked example among the existing adapters.
    "surface" where layer 2 separates them. Look for a separate indirection —
    daisyUI's `--root-bg`, Bulma's `--bulma-body-background-color` — and point
    that at `bg-page` while the surface variable takes `bg-surface`.
+5. **Does it namespace its variables?** If it uses bare names or a shared
+   namespace, it can collide with another adapter and must not be bundled
+   alongside one. Compile it standalone from `src/adapter-<name>.scss`.
 
 And in every case, declare the mapping on `:root, [data-theme], [data-surface]`
 rather than `:root` alone, or the library freezes at the root's theme.

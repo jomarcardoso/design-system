@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Preline UI adapter</title>
+
+<!--
+  Preline's own architecture, from its theme.css:
+
+      :root         { --primary: <value>; --foreground: <value>; … }
+      @theme inline { --color-primary: var(--primary); … }
+
+  A semantic layer plus an inline bridge — the same split this project uses. The
+  adapter therefore never touches `--color-*`; it sets the semantic variables and
+  Preline's bridge carries them into every utility.
+
+  `preline-entry.css` wraps the theme file in `@layer vendor`, because that
+  `:root` block ships unlayered and would otherwise beat the adapter outright.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/adapter-preline.css">
+<link rel="stylesheet" href="../dist/preline.css">
+</head>
+<body class="bg-background text-foreground">
+<div class="mx-auto max-w-4xl px-5 pt-8 pb-16">
+
+  <h1 class="text-2xl font-semibold">Preline UI adapter</h1>
+  <p class="mt-1 max-w-2xl text-muted-foreground">
+    The library that already had our architecture. A semantic layer in
+    <code class="font-mono text-sm">:root</code>, a
+    <code class="font-mono text-sm">@theme inline</code> bridge on top, and the bg/fg pair
+    invariant built in as <code class="font-mono text-sm">--primary-foreground</code>.
+  </p>
+
+  <div class="mt-6 flex flex-wrap gap-2">
+    <button data-set-theme="light" class="rounded-lg border border-border px-3 py-2 text-sm hover:bg-muted">Light</button>
+    <button data-set-theme="dark" class="rounded-lg border border-border px-3 py-2 text-sm hover:bg-muted">Dark</button>
+    <button data-set-theme="brand" class="rounded-lg border border-border px-3 py-2 text-sm hover:bg-muted">Brand</button>
+  </div>
+
+  <!-- ===================== Buttons ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold">Buttons</h2>
+    <p class="mt-1 max-w-2xl text-sm text-muted-foreground">
+      Preline names the paired foreground itself, so the mapping needs no extra thought:
+      <code class="font-mono text-xs">--primary</code> takes
+      <code class="font-mono text-xs">bg-action</code> and
+      <code class="font-mono text-xs">--primary-foreground</code> takes
+      <code class="font-mono text-xs">fg-on-action</code>.
+    </p>
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <button class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover">Primary</button>
+      <button class="rounded-lg bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary-hover">Secondary</button>
+      <button class="rounded-lg bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-destructive-hover">Destructive</button>
+      <button class="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium hover:bg-surface-hover">Outline</button>
+      <button class="rounded-lg bg-muted px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted-hover">Muted</button>
+    </div>
+  </section>
+
+  <!-- ===================== Surfaces ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold">Surfaces</h2>
+    <div class="mt-4 grid gap-4 sm:grid-cols-2">
+      <div class="rounded-xl border border-card-line bg-card p-6 shadow-2xs">
+        <h3 class="font-semibold">Card</h3>
+        <p class="mt-1 text-sm text-muted-foreground">On <code class="font-mono text-xs">--card</code>, pointed at the surface token.</p>
+      </div>
+      <div class="rounded-xl border border-border bg-layer p-6">
+        <h3 class="font-semibold">Layer</h3>
+        <p class="mt-1 text-sm text-muted-foreground">On <code class="font-mono text-xs">--layer</code>, pointed at the raised token.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Forms ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold">Forms</h2>
+    <div class="mt-4 space-y-3">
+      <label class="block text-sm text-muted-foreground">
+        Email
+        <input type="email" placeholder="you@example.com"
+               class="mt-1 block w-full rounded-lg border border-border bg-surface px-3 py-2 text-foreground placeholder:text-muted-foreground-2 focus:border-primary-line focus:outline-none">
+      </label>
+      <div class="rounded-lg border border-border bg-muted p-4 text-sm text-muted-foreground">
+        A muted panel, using the pair <code class="font-mono text-xs">--muted</code> /
+        <code class="font-mono text-xs">--muted-foreground</code>.
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== The ramp ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold">Where the shapes disagree</h2>
+    <p class="mt-1 max-w-2xl text-sm text-muted-foreground">
+      Preline exposes a numbered primary ramp; layer 2 publishes chosen steps instead, because
+      a ramp is a layer 1 concern and layer 1 is private. The numbered steps are compressed
+      onto the decisions that exist, so components stay on-brand with a flatter ramp than
+      Preline's own.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <div class="h-10 w-20 rounded-lg bg-primary-50"></div>
+      <div class="h-10 w-20 rounded-lg bg-primary-200"></div>
+      <div class="h-10 w-20 rounded-lg bg-primary-400"></div>
+      <div class="h-10 w-20 rounded-lg bg-primary-600"></div>
+      <div class="h-10 w-20 rounded-lg bg-primary-800"></div>
+      <div class="h-10 w-20 rounded-lg bg-primary-950"></div>
+    </div>
+  </section>
+
+  <!-- ===================== Context ===================== -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold">Contexts reach in</h2>
+    <div data-surface="inverted" class="mt-4 rounded-xl bg-background p-6 text-foreground">
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">Primary</button>
+        <div class="rounded-lg border border-border bg-surface px-3 py-2 text-sm">Surface inside the band</div>
+        <span class="text-sm text-muted-foreground">Inverted</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="mt-12 rounded-xl border border-border bg-muted p-6 text-sm text-muted-foreground">
+    <strong class="text-foreground">What this page is testing:</strong>
+    <ul class="mt-2 list-disc space-y-2 pl-5">
+      <li><strong class="text-foreground">Independent confirmation of the layering.</strong> Preline
+        splits decisions from bridge exactly as this project does, and uses
+        <code class="font-mono text-xs">@theme inline</code> for the same reason — so the utility
+        keeps the reference and follows a runtime theme swap. Nothing here needed translating
+        because there was almost nothing to translate.</li>
+      <li><strong class="text-foreground">The pair invariant, arrived at twice.</strong>
+        <code class="font-mono text-xs">--primary-foreground</code>,
+        <code class="font-mono text-xs">--destructive-foreground</code>,
+        <code class="font-mono text-xs">--muted-foreground</code>. Same rule, same reason: a fill
+        without its text is a contrast bug waiting to happen.</li>
+      <li><strong class="text-foreground">Unprefixed names are a shared namespace.</strong>
+        <code class="font-mono text-xs">--primary</code>, <code class="font-mono text-xs">--border</code>
+        and <code class="font-mono text-xs">--card</code> are generic enough that a project may
+        already own them — and daisyUI uses <code class="font-mono text-xs">--border</code> for a
+        width where Preline uses it for a colour. One adapter per application.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  document.querySelectorAll('[data-set-theme]').forEach((b) =>
+    b.addEventListener('click', () => { root.dataset.theme = b.dataset.setTheme; })
+  );
+</script>
+</body>
+</html>

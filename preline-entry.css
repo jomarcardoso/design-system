@@ -1,0 +1,39 @@
+/* =============================================================================
+ * PRELINE UI BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i preline-entry.css -o dist/preline.css
+ *
+ * Preline is worth reading before writing its adapter, because it independently
+ * arrived at the same two-layer split this project uses:
+ *
+ *     :root       { --primary: <value>; --foreground: <value>; … }   <- decisions
+ *     @theme inline { --color-primary: var(--primary); … }           <- bridge
+ *
+ * The unprefixed variables are its semantic layer; the `@theme inline` block is
+ * a bridge that publishes them as utilities without emitting a second variable.
+ * That is exactly what `src/_semantic.scss` and `tailwind.css` do here.
+ *
+ * The consequence for the adapter is that it never touches `--color-*` at all.
+ * It sets the semantic variables and Preline's own bridge carries them into
+ * every utility — which is the strongest evidence so far that the layering is
+ * not an invention of this project.
+ *
+ * Two things about the imports below are load-bearing:
+ *
+ *   - RELATIVE PATHS, not bare specifiers. Preline's `exports` map covers only
+ *     its JavaScript, so `@import 'preline/variants.css'` is rejected by Node
+ *     resolution even though the file is sitting right there.
+ *
+ *   - `layer(vendor)` on the THEME file only. Preline's semantic `:root` block
+ *     and its `.dark` override both ship unlayered, and unlayered CSS beats
+ *     every cascade layer — so without the wrapper the library beats its own
+ *     adapter completely. It cannot go on `variants.css`, because that file
+ *     declares `@custom-variant`, which Tailwind refuses to nest.
+ * ========================================================================== */
+
+@import 'tailwindcss';
+@import './node_modules/preline/variants.css';
+@import './node_modules/preline/css/themes/theme.css' layer(vendor);
+
+@source './example';

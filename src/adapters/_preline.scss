@@ -1,0 +1,169 @@
+// =============================================================================
+// ADAPTER — Preline UI 4
+// =============================================================================
+//
+// An adapter is a LEAF: nothing in the system depends on it, and it is the only
+// file that knows this library exists.
+//
+// Preline is the strongest evidence in this collection that the layering is not
+// an invention of this project, because Preline arrived at the same one
+// independently:
+//
+//     :root         { --primary: <value>; --foreground: <value>; … }   decisions
+//     @theme inline { --color-primary: var(--primary); … }             bridge
+//
+// The unprefixed variables are its semantic layer. The `@theme inline` block is
+// a bridge that publishes them as Tailwind utilities without emitting a second
+// variable. That is precisely what `src/_semantic.scss` and `tailwind.css` do
+// here, down to the choice of `inline` so the utility keeps the reference and
+// follows a runtime theme swap.
+//
+// The practical consequence: this adapter never touches `--color-*` at all. It
+// sets the semantic variables and Preline's own bridge carries them into every
+// utility it generates. Nothing else in this project has needed so little
+// translation, and the reason is that there is almost nothing to translate.
+//
+// It also ships the pair invariant: `--primary` / `--primary-foreground`,
+// `--destructive` / `--destructive-foreground`, `--muted` / `--muted-foreground`.
+// Same rule, same reason.
+//
+// -----------------------------------------------------------------------------
+// TWO THINGS TO WATCH
+// -----------------------------------------------------------------------------
+//
+// UNPREFIXED NAMES ARE A SHARED NAMESPACE. `--primary`, `--border`, `--muted`
+// and `--card` are generic enough that a project may already own them, and
+// daisyUI independently uses `--border` for a WIDTH where Preline uses it for a
+// COLOUR. Nothing here can prevent that; it is the reason `$adapters` should
+// name only the library actually in use.
+//
+// PRELINE WANTS A RAMP. It exposes `--primary-50` through `--primary-950`, where
+// layer 2 publishes chosen steps rather than a scale — deliberately, because a
+// ramp is a layer 1 concern and layer 1 is private. The numbered steps are
+// mapped onto the steps that do exist, which keeps components on-brand at the
+// cost of a flatter ramp than Preline's own. See the note where they are set.
+// =============================================================================
+
+@use '../core';
+@use '../config';
+
+@mixin emit() {
+  @include core.in-layer(config.$layer-adapter) {
+    :root,
+    [data-theme],
+    [data-surface] {
+      // --- Page, text, lines ------------------------------------------
+      --background: #{core.ref('bg-page')};
+      --background-1: #{core.ref('bg-sunken')};
+      --background-2: #{core.ref('bg-sunken')};
+      --background-plain: #{core.ref('bg-surface')};
+
+      --foreground: #{core.ref('fg-default')};
+      --foreground-inverse: #{core.ref('fg-inverted-base')};
+      --inverse: #{core.ref('bg-inverted-base')};
+
+      --border: #{core.ref('border-color')};
+      --border-line-1: #{core.ref('border-color-subtle')};
+      --border-line-2: #{core.ref('border-color')};
+      --border-line-3: #{core.ref('border-color-strong')};
+      --border-line-inverse: #{core.ref('fg-inverted-base')};
+      --table-line: #{core.ref('border-color-subtle')};
+
+      // --- Primary ----------------------------------------------------
+      // Note `--primary-foreground`: Preline models the pair itself, so this
+      // is one of the few adapters where honouring the invariant needs no
+      // extra thought — the name it wants is the name layer 2 already has.
+      --primary: #{core.ref('bg-action')};
+      --primary-foreground: #{core.ref('fg-on-action')};
+      --primary-hover: #{core.ref('bg-action-hover')};
+      --primary-active: #{core.ref('bg-action-active')};
+      --primary-checked: #{core.ref('bg-action')};
+      --primary-focus: #{core.ref('ring-color')};
+      --primary-line: #{core.ref('border-action')};
+
+      // The numbered ramp, compressed onto the steps layer 2 publishes. A full
+      // scale lives in layer 1, which is private on purpose: exposing it would
+      // let application code reach a primitive, which is the one thing the
+      // stylelint rules exist to prevent. Components that ask for a mid step
+      // get the nearest decision rather than an interpolation nobody chose.
+      --primary-50: #{core.ref('bg-action-subtle')};
+      --primary-100: #{core.ref('bg-action-subtle')};
+      --primary-200: #{core.ref('bg-action-subtle')};
+      --primary-300: #{core.ref('border-action')};
+      --primary-400: #{core.ref('bg-action')};
+      --primary-500: #{core.ref('bg-action')};
+      --primary-600: #{core.ref('bg-action')};
+      --primary-700: #{core.ref('bg-action-hover')};
+      --primary-800: #{core.ref('bg-action-active')};
+      --primary-900: #{core.ref('bg-action-active')};
+      --primary-950: #{core.ref('bg-action-active')};
+
+      // --- Secondary --------------------------------------------------
+      --secondary: #{core.ref('bg-selected')};
+      --secondary-foreground: #{core.ref('fg-on-selected')};
+      --secondary-hover: #{core.ref('bg-selected-hover')};
+      --secondary-active: #{core.ref('bg-selected-hover')};
+      --secondary-focus: #{core.ref('ring-color')};
+      --secondary-line: #{core.ref('border-selected')};
+
+      // --- Muted ------------------------------------------------------
+      --muted: #{core.ref('bg-sunken')};
+      --muted-foreground: #{core.ref('fg-muted')};
+      --muted-foreground-1: #{core.ref('fg-muted')};
+      --muted-foreground-2: #{core.ref('fg-subtle')};
+      --muted-hover: #{core.ref('bg-sunken')};
+      --muted-focus: #{core.ref('bg-sunken')};
+      --muted-active: #{core.ref('bg-sunken')};
+
+      // --- Destructive ------------------------------------------------
+      // Preline models exactly one status. Success, warning and info have no
+      // equivalent here, so they are simply not mapped — the library does not
+      // ask for them and inventing names it will not read would be noise.
+      --destructive: #{core.ref('bg-danger')};
+      --destructive-foreground: #{core.ref('fg-on-danger')};
+      --destructive-hover: #{core.ref('bg-danger-hover')};
+      --destructive-focus: #{core.ref('ring-color')};
+
+      // --- Surfaces and layers ----------------------------------------
+      --surface: #{core.ref('bg-surface')};
+      --surface-1: #{core.ref('bg-surface')};
+      --surface-2: #{core.ref('bg-sunken')};
+      --surface-foreground: #{core.ref('fg-default')};
+      --surface-line: #{core.ref('border-color')};
+      --surface-hover: #{core.ref('bg-sunken')};
+      --surface-focus: #{core.ref('bg-sunken')};
+      --surface-active: #{core.ref('bg-sunken')};
+
+      --layer: #{core.ref('bg-raised')};
+      --layer-foreground: #{core.ref('fg-default')};
+      --layer-line: #{core.ref('border-color')};
+      --layer-hover: #{core.ref('bg-sunken')};
+      --layer-focus: #{core.ref('bg-sunken')};
+      --layer-active: #{core.ref('bg-sunken')};
+
+      --card: #{core.ref('bg-surface')};
+      --card-line: #{core.ref('border-color')};
+      --card-divider: #{core.ref('border-color-subtle')};
+      --card-header: #{core.ref('bg-surface')};
+      --card-inverse: #{core.ref('bg-inverted-base')};
+
+      --overlay: #{core.ref('bg-raised')};
+      --overlay-line: #{core.ref('border-color')};
+      --overlay-divider: #{core.ref('border-color-subtle')};
+      --overlay-header: #{core.ref('bg-surface')};
+      --popover: #{core.ref('bg-raised')};
+      --popover-line: #{core.ref('border-color')};
+
+      --tooltip: #{core.ref('bg-inverted-base')};
+      --tooltip-foreground: #{core.ref('fg-inverted-base')};
+      --tooltip-line: #{core.ref('border-color-strong')};
+
+      --switch: #{core.ref('border-color-strong')};
+
+      // --- Shape and type ---------------------------------------------
+      --radius: #{core.ref('radius-control')};
+      --font-custom-default: #{core.ref('font-body')};
+      --font-custom-mono: #{core.ref('font-mono')};
+    }
+  }
+}

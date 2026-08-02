@@ -1,0 +1,58 @@
+/* =============================================================================
+ * FLOWBITE BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i flowbite-entry.css -o dist/flowbite.css
+ *
+ * Flowbite is the first library here with NO vocabulary of its own to translate.
+ * It ships no component classes at all — its components are copy-paste markup
+ * made of Tailwind utilities — so its entire theming surface is Tailwind's
+ * `@theme`, expressed as semantic colour names (`--color-brand`,
+ * `--color-body`, `--color-neutral-primary`, …).
+ *
+ * That makes the adapter's job unusually direct: those names are already
+ * semantic, so the mapping is close to one-to-one with layer 2.
+ *
+ * The `layer(vendor)` below is required, and easy to miss because it is only
+ * half needed. Tailwind hoists the `@theme` block out to its own `theme` layer
+ * either way — but Flowbite's dark-mode block is a plain `.dark { … }` rule,
+ * and that ships UNLAYERED without the wrapper. Unlayered CSS beats every
+ * cascade layer, so an unwrapped Flowbite wins over its own adapter the moment
+ * anything adds `class="dark"`.
+ * ========================================================================== */
+
+@import 'tailwindcss';
+@import 'flowbite/src/themes/default.css' layer(vendor);
+
+@source './example';
+
+/* -----------------------------------------------------------------------------
+ * THE BUILD-TIME HALF OF THE ADAPTER
+ * -----------------------------------------------------------------------------
+ *
+ * `src/adapters/_flowbite.scss` re-points names Flowbite ALREADY declares, and
+ * that works at runtime because Tailwind generated `.bg-brand` from Flowbite's
+ * own `@theme` and left the `var(--color-brand)` reference in it.
+ *
+ * Adding a name Flowbite does NOT declare is a different problem. A utility only
+ * exists if Tailwind saw the token at BUILD time, so declaring
+ * `--color-on-brand` at runtime produces a variable no class ever reads — the
+ * background comes out right and the text silently does not move.
+ *
+ * Hence this block. `inline` matters for the same reason it matters in
+ * `tailwind.css`: it keeps the `var()` in the generated utility instead of
+ * baking a value, so `text-on-brand` follows every theme and context.
+ *
+ * These are the foreground halves of pairs layer 2 already guarantees. Flowbite
+ * omits them because its own markup writes `text-white`, which puts the pair in
+ * the markup where no adapter can reach it — and white on a mid-bright fill is
+ * exactly the pairing the contrast check in `_themes.scss` rejects.
+ * -------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-on-brand: var(--app-fg-on-action);
+  --color-on-success: var(--app-fg-on-success);
+  --color-on-danger: var(--app-fg-on-danger);
+  --color-on-warning: var(--app-fg-on-warning);
+  --color-on-dark: var(--app-fg-inverted-base);
+}
