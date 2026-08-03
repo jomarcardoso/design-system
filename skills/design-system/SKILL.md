@@ -85,6 +85,38 @@ being helpful.
 So: prefer Sass. Reach for a custom property when you can name the runtime event
 that changes it. If you cannot name that event, it is a constant — inline it.
 
+## Compressing is fine. Compressing without a hook is not.
+
+Layer 2 is deliberately smaller than most libraries: two brand roles, one
+heading colour, no ramps. When a library offers more, the adapter maps the extra
+onto the nearest semantic role. That is the right **default**.
+
+It is only right as a default. If the adapter points straight at the semantic
+token, the compression becomes a **limit** — and then using that library through
+this foundation delivers less than using the library alone. For a base meant to
+be universal that is disqualifying: adopting it must never take something away.
+
+So every compression reads a **layer 3 hook** instead:
+
+```scss
+// wrong — the default is now the only option
+--color-accent: #{core.ref('bg-selected')};
+
+// right — same default, same zero bytes, one variable to diverge
+--color-accent: #{component.ref-chain('accent-bg')};
+```
+
+Setting `--app-accent-bg` on `:root`, a section, or one element gives daisyUI a
+genuine third brand colour without forking anything. The reserved names live in
+`$contract` (`accent-*`, `heading-1-fg` … `heading-6-fg`, `action-50` …
+`action-950`) and emit nothing until someone sets them.
+
+**Where the line is.** The foundation may grow a name the ecosystem shares —
+`accent` is a role Material, Radix and daisyUI all name; `heading-2-fg`
+describes a document. It may not grow a name that only means something inside
+one library. That distinction, not "never add anything", is what keeps the
+vocabulary agnostic.
+
 ## Layer 3: how a component diverges without breaking the contract
 
 Layer 3 ships **no components**. Building `.btn` and `.card` here would be
@@ -360,7 +392,9 @@ build time against a background that moves at runtime.
   `--bs-primary-rgb` per theme. Dark theme brightens the fill and the baked
   white lands at 3.13:1.
 - **Flowbite** writes `text-white` in its component markup.
-- **Water** sets the button background and lets the text inherit `--text-main`.
+- **Water** sets the button background and lets the text inherit `--text-main`,
+  and compiles `mark { color: #000 }` — which under a dark theme puts black on a
+  near-black amber highlight at 1.4:1.
 
 In each case the fix is the same: bind the paired foreground from the token,
 per variant if the library has variants. Ask `core.fg-for()` what belongs on
@@ -387,8 +421,16 @@ that foreground is *readable*, and the gap between those two is where
 accessibility regressions live: every theme here had a complete, well-formed set
 of pairs, and three of them were failing WCAG AA.
 
-`base.contrast($fg, $bg)` returns the WCAG ratio, and `_themes.scss` measures
-every pair of every theme on each build:
+There are two checks, and they see different things. `npm run audit:contrast`
+drives every demo page in every theme through a real browser and measures what
+is actually rendered — the only way to catch a foreground the library baked, a
+state rule the adapter clobbered, or a filter. It finds filled elements
+**structurally** (an opaque background different from the parent's, plus text of
+its own) rather than by class name, because a class-based scan measured five
+elements on a utility-composed page and reported "all pass" on almost nothing.
+
+The build-time check is the cheaper one. `base.contrast($fg, $bg)` returns the
+WCAG ratio, and `_themes.scss` measures every pair of every theme on each build:
 
 - below **3.0** → `@error`. Unreadable at any size.
 - **3.0–4.5** → `@warn`. Large text only, which is a real choice for a badge.
@@ -400,7 +442,37 @@ misses cluster in one place: **white text on a mid-bright fill.** Amber, teal,
 green and sky all read lighter than their step number suggests and need one more
 step down, or a dark foreground instead.
 
-### Three more adapter rules learned the hard way
+### Find the library's open seams before declaring a limit
+
+A library often *derives* a variant instead of reading a token for it. daisyUI's
+`.btn-outline`, `.btn-dash`, `.btn-ghost` and `.btn-soft` all draw the label in
+the variant's **fill** colour. A fill is picked to carry white text, so reusing
+it as text on a near-white background fails by construction — daisyUI's own
+default theme renders `btn-warning btn-soft` at **1.69:1** and three of its
+siblings under 2.7:1.
+
+The first reading of this said the derivation was unreachable, because daisyUI
+sits inside `utilities` and no adapter rule can beat it by property. That
+conclusion was wrong, and the way it was wrong is the lesson: **"cannot override
+by property" is not "cannot reach".** daisyUI publishes `--btn-rest-fg` for
+exactly this purpose, and *nothing declares it* — it only ever appears inside a
+`var(--btn-rest-fg, …)` fallback. A variable nobody declares has no cascade
+fight to lose, so the adapter binds it per variant to `fg-{role}`, the tone
+layer 2 already validates against a subtle background, and all four variants
+clear 6:1 in every theme.
+
+**So grep the built library CSS for `var(--x, …)` hooks it reads but never
+sets.** Those are the seams the library deliberately left open. They are easy to
+miss precisely because they never appear as a declaration.
+
+**And beware the fix that bends layer 2 instead.** The wrong version of this
+darkened `bg-success` and `bg-danger` a step so the derived text would pass.
+That works, and it is contamination: layer 2 would have moved to accommodate one
+library's arithmetic, changing every other library's buttons as a side effect.
+When a library's derivation misbehaves, the adapter owns the problem. Moving a
+semantic token is only correct when the token itself is wrong.
+
+### Five more adapter rules learned the hard way
 
 **If an adapter has to invent a value, layer 2 is missing a token.** An earlier
 version computed button hover here with `color-mix(in oklab, … 85%, black)`,
@@ -422,6 +494,24 @@ padding differed from `--app-pad-surface`, so the adapter binds it — the syste
 has an opinion there. Bootstrap's bold badge and its `em`-based control padding
 have no corresponding token, so they stay Bootstrap's own character. This keeps
 adapters small and stops them from drifting into restyling the library.
+
+**An absolute colour name is a palette entry, not a theme role.** Bootstrap's
+`.btn-light` and Bulma's `.is-light` look like they should map to `bg-sunken`,
+and mapping them is a regression. `--bulma-light-l` is a *modifier*: Bulma
+subtracts it from a variant's lightness to build `.button.is-primary.is-light`,
+so an absolute lightness is load-bearing there. Binding it to a theme role
+dropped seven variants to 1.06:1. If a library names a colour by how light it
+is rather than by what it means, leave it alone — the theme has nothing to say
+about it.
+
+**Check where the library puts its own layers before designing the adapter.**
+Wrapping a library in `layer(vendor)` only moves CSS that was unlayered to begin
+with. daisyUI nests its components inside `utilities.daisyui.l1…`, inside the
+*last* layer, so no adapter rule can beat a daisyUI declaration by property at
+any specificity. Grep the built library CSS for `@layer` first — but read the
+finding narrowly: it tells you property-level binding is unavailable, **not**
+that the library is out of reach. Variables still work, and that is usually
+enough (see "Find the library's open seams").
 
 **A contract entry nobody reads is worse than no entry**, because it reads as a
 promise. `surface-pad` and `surface-shadow` sat in `_component.scss` unread, and

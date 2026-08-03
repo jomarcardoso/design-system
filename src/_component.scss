@@ -147,7 +147,72 @@ $contract: (
   'alert-pad': 'pad-surface',
   'badge-radius': 'radius-pill',
   'badge-fg': 'fg-on-action',
-  'badge-bg': 'bg-action'
+  'badge-bg': 'bg-action',
+
+  // ---------------------------------------------------------------------
+  // CAPABILITIES LAYER 2 COMPRESSES — a default is not a limit
+  // ---------------------------------------------------------------------
+  //
+  // Layer 2 is deliberately smaller than most libraries. It models two brand
+  // roles, one heading colour and no colour ramps, because a foundation that
+  // grows a token every time some library has one stops being a foundation.
+  //
+  // Compressing is therefore the right DEFAULT. What is NOT acceptable is
+  // compressing without an escape hatch, because that turns an editorial
+  // decision into a technical limit: a team using daisyUI directly gets three
+  // brand colours, and a team using daisyUI THROUGH this foundation would get
+  // two. Choosing this base would cost them something. For a base meant to be
+  // universal that is disqualifying — the whole proposition is that adopting it
+  // takes nothing away.
+  //
+  // So every compression below gets a reserved name. The default resolves to
+  // the nearest semantic role through the usual fallback chain, so nothing is
+  // emitted and nothing costs bytes. Set the variable and the capability is
+  // back, at whatever scope you set it on.
+  //
+  // The names are deliberately design-system vocabulary, not library
+  // vocabulary: `accent` is a role Material, Radix and daisyUI all name, and
+  // `heading-2-fg` describes a document, not a framework. That is the line —
+  // the foundation may grow a NAME the ecosystem shares, never a name that only
+  // makes sense inside one library.
+
+  // A third brand intent. daisyUI's `accent`, Material's tertiary. Defaults to
+  // the selected role, which is what two-brand-colour products want.
+  'accent-bg': 'bg-selected',
+  'accent-fg': 'fg-on-selected',
+  'accent-bg-hover': 'bg-selected-hover',
+  // The tinted pair, for the "soft" variant every library ships.
+  'accent-bg-subtle': 'bg-selected-subtle',
+  'accent-fg-on-subtle': 'fg-selected',
+
+  // Per-level heading colour. Layer 2 makes one decision — a heading is a
+  // heading — but Pico steps six levels down a ramp and some brands do too.
+  'heading-1-fg': 'fg-heading',
+  'heading-2-fg': 'fg-heading',
+  'heading-3-fg': 'fg-heading',
+  'heading-4-fg': 'fg-heading',
+  'heading-5-fg': 'fg-heading',
+  'heading-6-fg': 'fg-heading',
+
+  // A brand ramp. Layer 1 has one and keeps it private, on purpose: a ramp is a
+  // primitive, and application code reaching for `--app-base-indigo-300` is the
+  // exact failure the stylelint rules exist to prevent. But Preline asks for
+  // `--primary-50` through `--primary-950`, and flattening those onto three
+  // steps loses gradients the library can otherwise draw.
+  //
+  // These are the public, themeable version: nine names, each defaulting to the
+  // nearest decision layer 2 actually made. Set them and the ramp is real.
+  'action-50': 'bg-action-subtle',
+  'action-100': 'bg-action-subtle',
+  'action-200': 'bg-action-subtle',
+  'action-300': 'border-action',
+  'action-400': 'bg-action',
+  'action-500': 'bg-action',
+  'action-600': 'bg-action',
+  'action-700': 'bg-action-hover',
+  'action-800': 'bg-action-active',
+  'action-900': 'bg-action-active',
+  'action-950': 'bg-action-active'
 );
 
 // Public accessor for adapters: returns the component var NAME, or the
@@ -162,13 +227,33 @@ $contract: (
 // This is the function adapters call. It guarantees every adapter spells the
 // component token the same way and always falls through to the right semantic
 // token, with the library default as the final safety net.
-@function ref-chain($part, $lib-default) {
+// `$lib-default` is optional. Omit it when the library has no value of its own
+// worth falling back to — which is the normal case for a hook that exists only
+// to make a compression overridable. Passing the semantic token as the last
+// resort would emit it twice:
+//
+//     var(--app-accent-bg, var(--app-bg-selected, var(--app-bg-selected)))
+//
+// The default lives in `$contract` either way, so it stays defined in exactly
+// one place regardless of how many levels the chain ends up with.
+@function ref-chain($part, $lib-default: null) {
   $semantic: map.get($contract, $part);
+
+  @if $semantic == null and $lib-default == null {
+    @error 'ref-chain("#{$part}") has neither a semantic default in $contract '
+         + 'nor a library fallback, so it would resolve to nothing.';
+  }
+
   @if $semantic == null {
     // Part with no semantic source (e.g. field-label-bg): component token or
     // the library default, nothing in between.
     @return var(#{core.var-name($part)}, #{$lib-default});
   }
+
+  @if $lib-default == null {
+    @return var(#{core.var-name($part)}, var(#{core.var-name($semantic)}));
+  }
+
   @return var(
     #{core.var-name($part)},
     var(#{core.var-name($semantic)}, #{$lib-default})

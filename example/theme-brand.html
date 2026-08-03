@@ -190,6 +190,45 @@
     </div>
   </div>
 
+    <section class="band">
+    <h2>The same six rows, both vocabularies</h2>
+    <p>
+      A table is the densest test in the set: header fill, row border, stripe tint and text
+      colour are four separate decisions that have to agree with each other and with the
+      theme. Two rows never show a stripe pattern — six do.
+    </p>
+    <div class="grid">
+      <div>
+        <h3 class="col-head">Bootstrap <code>.table .table-striped</code></h3>
+        <table class="table table-striped">
+          <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="text-end">Amount</th></tr></thead>
+          <tbody>
+            <tr><td class="font-monospace small">INV-1001</td><td>Aurora Labs</td><td>Paid</td><td class="text-end">1,240.00</td></tr>
+            <tr><td class="font-monospace small">INV-1002</td><td>Borealis Foods</td><td>Pending</td><td class="text-end">890.50</td></tr>
+            <tr><td class="font-monospace small">INV-1003</td><td>Cadence Media</td><td>Overdue</td><td class="text-end">3,120.00</td></tr>
+            <tr><td class="font-monospace small">INV-1004</td><td>Delta Robotics</td><td>Paid</td><td class="text-end">455.25</td></tr>
+            <tr><td class="font-monospace small">INV-1005</td><td>Everline Co</td><td>Draft</td><td class="text-end">2,010.75</td></tr>
+            <tr><td class="font-monospace small">INV-1006</td><td>Fathom Studio</td><td>Paid</td><td class="text-end">678.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3 class="col-head">No library <code>.x-table</code></h3>
+        <table class="x-table">
+          <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th style="text-align:right">Amount</th></tr></thead>
+          <tbody>
+            <tr><td>INV-1001</td><td>Aurora Labs</td><td>Paid</td><td style="text-align:right">1,240.00</td></tr>
+            <tr><td>INV-1002</td><td>Borealis Foods</td><td>Pending</td><td style="text-align:right">890.50</td></tr>
+            <tr><td>INV-1003</td><td>Cadence Media</td><td>Overdue</td><td style="text-align:right">3,120.00</td></tr>
+            <tr><td>INV-1004</td><td>Delta Robotics</td><td>Paid</td><td style="text-align:right">455.25</td></tr>
+            <tr><td>INV-1005</td><td>Everline Co</td><td>Draft</td><td style="text-align:right">2,010.75</td></tr>
+            <tr><td>INV-1006</td><td>Fathom Studio</td><td>Paid</td><td style="text-align:right">678.00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
   <div class="note">
     <strong>What this page is testing:</strong>
     <ul>

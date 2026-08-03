@@ -42,14 +42,45 @@ export const SNIPPET = `(() => {
   const lum = (c) => { const [r, g, b] = rgb(c).map(lin); return 0.2126 * r + 0.7152 * g + 0.0722 * b; };
   const ratio = (f, b) => { const [a, c] = [lum(f), lum(b)].sort((x, y) => y - x); return +((a + 0.05) / (c + 0.05)).toFixed(2); };
 
-  const SEL = 'button,.btn,.badge,.tag,.alert,.notification,.x-btn,.x-badge,.x-alert,'
-            + 'input[type=submit],input[type=reset],thead th,sup';
+  // Find filled elements STRUCTURALLY, not by class name.
+  //
+  // Looking for \`.btn, .badge, .alert\` only works for libraries that ship
+  // component classes. Flowbite, Preline and the Tailwind bridge compose
+  // everything from utilities, so a class-based scan measured five elements on
+  // a page with thirty — and reported "all pass" on almost nothing.
+  //
+  // The structural definition of a thing whose contrast matters: it paints an
+  // opaque background DIFFERENT from its parent's, and it has text of its own.
+  // That catches a utility-composed badge and skips a layout wrapper.
   const out = [];
-  for (const el of document.querySelectorAll(SEL)) {
+  for (const el of document.querySelectorAll('body *')) {
     const cs = getComputedStyle(el);
     if (!isOpaque(cs.backgroundColor)) continue;
-    const label = (el.value || el.textContent || '').trim().slice(0, 16) || el.tagName;
-    out.push({ label, ratio: ratio(cs.color, cs.backgroundColor) });
+
+    // Transparent TEXT, not just a transparent background. Bulma's
+    // \`is-loading\` sets \`color: rgba(0,0,0,0)\` and swaps in a spinner, so
+    // measuring its contrast asks what a colour nobody can see reads like.
+    if (!isOpaque(cs.color)) continue;
+
+    const parentBg = el.parentElement ? getComputedStyle(el.parentElement).backgroundColor : '';
+    if (cs.backgroundColor === parentBg) continue;
+
+    // Direct text only — otherwise a card counts its children's paragraphs.
+    const own = [...el.childNodes]
+      .filter((n) => n.nodeType === 3)
+      .map((n) => n.textContent.trim())
+      .join(' ')
+      .trim();
+    // Only these input types render their \`value\` as visible text. A checkbox
+    // reports \`value === "on"\` by default, which made every switch look like a
+    // filled element with 1.47:1 text on it — a control that has no text at all.
+    // \`String()\` because \`<progress>\` and \`<meter>\` expose a NUMERIC value.
+    const showsValue = el.tagName === 'INPUT'
+      && ['submit', 'reset', 'button'].includes(el.type);
+    const label = (showsValue ? String(el.value ?? '').trim() : '') || own;
+    if (!label) continue;
+
+    out.push({ label: label.slice(0, 16), ratio: ratio(cs.color, cs.backgroundColor) });
   }
   out.sort((a, b) => a.ratio - b.ratio);
   return { theme: document.documentElement.dataset.theme, measured: out.length,
@@ -84,13 +115,25 @@ for (const name of PAGES) {
   });
 
   for (const theme of THEMES) {
-    await page.evaluate(async (t) => {
-      document.documentElement.dataset.theme = t;
-      // One frame is enough once transitions are off: style resolution still
-      // lags the attribute flip, but nothing is animating toward a value.
-      await new Promise((r) => requestAnimationFrame(r));
-    }, theme);
-    const r = await page.evaluate(SNIPPET);
+    await page.evaluate((t) => { document.documentElement.dataset.theme = t; }, theme);
+
+    // Wait for the reading to STABILISE rather than for a fixed number of
+    // frames. A fixed wait is a guess, and it was wrong: Bulma resolves colour
+    // through a dozen chained `var()` levels and takes more than one frame to
+    // settle after a theme flip, which produced a different set of "failures"
+    // on every run and once reported 1.06:1 on a button that measures 13:1.
+    //
+    // Two identical consecutive readings is the actual signal that the cascade
+    // has finished.
+    let r = null;
+    let previous = null;
+    for (let attempt = 0; attempt < 20; attempt++) {
+      await page.evaluate(() => new Promise((res) => requestAnimationFrame(res)));
+      r = await page.evaluate(SNIPPET);
+      const fingerprint = JSON.stringify(r.worst) + r.measured;
+      if (fingerprint === previous) break;
+      previous = fingerprint;
+    }
     const mark = r.allPassAA ? 'ok ' : 'FAIL';
     console.log(`  ${mark} ${name.padEnd(13)} ${theme.padEnd(6)} ${String(r.measured).padStart(3)} fills, worst ${r.worst[0]?.ratio ?? '-'}`);
     if (!r.allPassAA) { failures++; console.log('        ' + JSON.stringify(r.worst)); }

@@ -106,6 +106,74 @@
     </div>
   </section>
 
+    <section class="mt-10">
+    <h2 class="text-lg font-semibold text-heading">Data and disclosure</h2>
+    <p class="mt-1 max-w-2xl text-sm text-body-subtle">
+      Flowbite has no table component — this is utilities over a plain table, which is the
+      honest test for a library whose components are markup.
+    </p>
+    <div class="mt-4 overflow-x-auto rounded-base border border-default">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-neutral-tertiary text-heading">
+          <tr><th class="px-4 py-2">Invoice</th><th class="px-4 py-2">Client</th><th class="px-4 py-2">Status</th><th class="px-4 py-2 text-right">Amount</th></tr>
+        </thead>
+        <tbody>
+        <tr class="border-t border-default odd:bg-neutral-primary even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1001</td><td class="px-4 py-2">Aurora Labs</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">1,240.00</td></tr>
+        <tr class="border-t border-default odd:bg-neutral-primary even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1002</td><td class="px-4 py-2">Borealis Foods</td><td class="px-4 py-2">Pending</td><td class="px-4 py-2 text-right tabular-nums">890.50</td></tr>
+        <tr class="border-t border-default odd:bg-neutral-primary even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1003</td><td class="px-4 py-2">Cadence Media</td><td class="px-4 py-2">Overdue</td><td class="px-4 py-2 text-right tabular-nums">3,120.00</td></tr>
+        <tr class="border-t border-default odd:bg-neutral-primary even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1004</td><td class="px-4 py-2">Delta Robotics</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">455.25</td></tr>
+        <tr class="border-t border-default odd:bg-neutral-primary even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1005</td><td class="px-4 py-2">Everline Co</td><td class="px-4 py-2">Draft</td><td class="px-4 py-2 text-right tabular-nums">2,010.75</td></tr>
+        <tr class="border-t border-default odd:bg-neutral-primary even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1006</td><td class="px-4 py-2">Fathom Studio</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">678.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details class="mt-4 rounded-base border border-default bg-neutral-primary p-4" open>
+      <summary class="cursor-pointer font-medium text-heading">An accordion</summary>
+      <p class="mt-2 text-sm text-body-subtle">A native <code class="font-mono text-xs">&lt;details&gt;</code>, coloured entirely from the theme.</p>
+    </details>
+  </section>
+
+    <section class="mt-10">
+    <h2 class="text-lg font-semibold text-heading">Every button Flowbite documents</h2>
+    <p class="mt-1 max-w-2xl text-sm text-body-subtle">
+      Flowbite ships no button class — every one of these is a utility composition, exactly as
+      its docs present them. The only edit against the published markup is
+      <code class="font-mono text-xs">text-on-brand</code> in place of
+      <code class="font-mono text-xs">text-white</code>, so the foreground follows the theme
+      instead of being fixed in the HTML.
+    </p>
+
+    <h3 class="mt-4 font-semibold text-heading">Solid</h3>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="rounded-sm bg-brand px-5 py-2.5 text-sm font-medium text-on-brand hover:bg-brand-strong">Brand</button>
+      <button class="rounded-sm bg-success px-5 py-2.5 text-sm font-medium text-on-success hover:bg-success-strong">Success</button>
+      <button class="rounded-sm bg-danger px-5 py-2.5 text-sm font-medium text-on-danger hover:bg-danger-strong">Danger</button>
+      <button class="rounded-sm bg-warning px-5 py-2.5 text-sm font-medium text-on-warning hover:bg-warning-strong">Warning</button>
+      <button class="rounded-sm bg-dark px-5 py-2.5 text-sm font-medium text-on-dark hover:bg-dark-strong">Dark</button>
+      <button class="rounded-sm border border-default bg-neutral-primary px-5 py-2.5 text-sm font-medium hover:bg-muted">Alternative</button>
+      <button class="rounded-sm bg-neutral-tertiary px-5 py-2.5 text-sm font-medium hover:bg-neutral-quaternary">Light</button>
+    </div>
+
+    <h3 class="mt-4 font-semibold text-heading">Outline and soft</h3>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="rounded-sm border border-brand px-5 py-2.5 text-sm font-medium text-fg-brand hover:bg-brand hover:text-on-brand">Brand outline</button>
+      <button class="rounded-sm border border-danger-subtle px-5 py-2.5 text-sm font-medium text-fg-danger hover:bg-danger hover:text-on-danger">Danger outline</button>
+      <button class="rounded-sm bg-brand-soft px-5 py-2.5 text-sm font-medium text-fg-brand hover:bg-brand-medium">Brand soft</button>
+      <button class="rounded-sm bg-success-soft px-5 py-2.5 text-sm font-medium text-fg-success hover:bg-success-medium">Success soft</button>
+    </div>
+
+    <h3 class="mt-4 font-semibold text-heading">Sizes and shapes</h3>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="rounded-sm bg-brand px-3 py-2 text-xs font-medium text-on-brand">Extra small</button>
+      <button class="rounded-sm bg-brand px-3 py-2 text-sm font-medium text-on-brand">Small</button>
+      <button class="rounded-sm bg-brand px-5 py-2.5 text-sm font-medium text-on-brand">Base</button>
+      <button class="rounded-sm bg-brand px-5 py-3 text-base font-medium text-on-brand">Large</button>
+      <button class="rounded-full bg-brand px-5 py-2.5 text-sm font-medium text-on-brand">Pill</button>
+      <button class="rounded-sm bg-brand px-5 py-2.5 text-sm font-medium text-on-brand opacity-50" disabled>Disabled</button>
+    </div>
+  </section>
+
   <div class="mt-12 rounded-base border border-default bg-muted p-6 text-sm text-body-subtle">
     <strong class="text-body">What this page is testing:</strong>
     <ul class="mt-2 list-disc space-y-2 pl-5">

@@ -94,5 +94,17 @@
     input[type='button'] {
       color: #{core.ref('fg-on-action')};
     }
+
+    // `mark` has the same problem one element over, and it is the fourth
+    // spelling of it in this project: Water compiles `mark { color: #000 }`
+    // while the background comes from `--highlight`, which the adapter moves.
+    // Under the dark theme the highlight becomes a near-black amber and the
+    // baked black text lands at 1.4:1.
+    //
+    // Same fix, same reason — name the paired foreground. `bg-warning-subtle`
+    // pairs with `fg-warning`, which is exactly how an alert is built.
+    mark {
+      color: #{core.ref('fg-warning')};
+    }
   }
 }

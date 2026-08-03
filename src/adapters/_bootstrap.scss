@@ -276,6 +276,13 @@ $_map: (
     }
   }
 
+  // `.btn-light` and `.btn-dark` are deliberately NOT bound, for the reason the
+  // Bulma adapter spells out at length: `light` and `dark` are absolute colour
+  // names, not theme roles. They already take their value from this palette,
+  // via `$light` and `$dark` in `bootstrap-entry.scss`, so they are on-brand —
+  // they simply do not invert with the theme, which is what Bootstrap itself
+  // does and what the class name promises.
+
   // Left to Bootstrap on purpose:
   //   .btn-outline-*  transparent by design; its colour already comes from the
   //                   variant, and `_root()` themes that.

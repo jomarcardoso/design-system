@@ -102,28 +102,28 @@ $light: (
   'on-success': base.color(white),
   'success-hover': base.color(green, 800),
   'success-subtle': base.color(green, 50),
-  'success-text': base.color(green, 700),
+  'success-text': base.color(green, 800),
   'success-border': base.color(green, 200),
 
   warning: base.color(amber, 500),
   'on-warning': base.color(amber, 950),
   'warning-hover': base.color(amber, 600),
   'warning-subtle': base.color(amber, 50),
-  'warning-text': base.color(amber, 700),
+  'warning-text': base.color(amber, 800),
   'warning-border': base.color(amber, 200),
 
   danger: base.color(red, 600),
   'on-danger': base.color(white),
   'danger-hover': base.color(red, 700),
   'danger-subtle': base.color(red, 50),
-  'danger-text': base.color(red, 700),
+  'danger-text': base.color(red, 800),
   'danger-border': base.color(red, 200),
 
   info: base.color(sky, 700),
   'on-info': base.color(white),
   'info-hover': base.color(sky, 800),
   'info-subtle': base.color(sky, 50),
-  'info-text': base.color(sky, 700),
+  'info-text': base.color(sky, 800),
   'info-border': base.color(sky, 200)
 );
 
@@ -312,12 +312,19 @@ $brand: (
   'danger-text': base.color(red, 800),
   'danger-border': base.color(red, 200),
 
-  info: base.color(steel, 600),
+  // Sky, not steel. `selected` is already steel-600 in this theme, and pointing
+  // `info` at the same value made Bulma's `is-link` and `is-info` render
+  // identically — a theme hiding a distinction the system deliberately models,
+  // which is the same mistake the stock light/dark themes made with
+  // `action`/`selected`. Status colours should stay recognisable anyway: a
+  // brand palette says what the product looks like, not that information is
+  // brown-grey.
+  info: base.color(sky, 700),
   'on-info': base.color(parchment, 50),
-  'info-hover': base.color(steel, 700),
-  'info-subtle': base.color(steel, 100),
-  'info-text': base.color(steel, 700),
-  'info-border': base.color(steel, 300)
+  'info-hover': base.color(sky, 800),
+  'info-subtle': base.color(sky, 50),
+  'info-text': base.color(sky, 800),
+  'info-border': base.color(sky, 200)
 );
 
 $registry: (light: $light, dark: $dark, brand: $brand);
@@ -422,7 +429,19 @@ $_contrast-pairs: (
   (success, 'on-success'),
   (warning, 'on-warning'),
   (danger, 'on-danger'),
-  (info, 'on-info')
+  (info, 'on-info'),
+
+  // The SUBTLE pairs, which is the second most common colour combination in any
+  // interface and was missing from this list for a long time. Every tinted
+  // alert is one, and so is every "soft" button variant — daisyUI, Flowbite and
+  // Bulma all ship one, and they all put the status TEXT colour on the status
+  // TINT. Measuring only the solid pairs left that whole family unchecked, and
+  // it was failing at 4.26:1.
+  ('action-subtle', 'link'),
+  ('success-subtle', 'success-text'),
+  ('warning-subtle', 'warning-text'),
+  ('danger-subtle', 'danger-text'),
+  ('info-subtle', 'info-text')
 );
 
 @mixin _check-contrast($name, $choices) {

@@ -40,6 +40,7 @@
 
 @use '../core';
 @use '../config';
+@use '../component';
 
 @mixin emit() {
   @include core.in-layer(config.$layer-adapter) {
@@ -57,15 +58,19 @@
       --pico-muted-border-color: #{core.ref('border-color-subtle')};
 
       // Pico gives every heading level its own colour, stepping down the
-      // neutral ramp. Layer 2 makes one decision — a heading is a heading — so
-      // all six take it rather than inventing five more tokens to satisfy a
-      // distinction the foundation does not make.
-      --pico-h1-color: #{core.ref('fg-heading')};
-      --pico-h2-color: #{core.ref('fg-heading')};
-      --pico-h3-color: #{core.ref('fg-heading')};
-      --pico-h4-color: #{core.ref('fg-heading')};
-      --pico-h5-color: #{core.ref('fg-heading')};
-      --pico-h6-color: #{core.ref('fg-heading')};
+      // neutral ramp. Layer 2 makes ONE decision — a heading is a heading — so
+      // all six default to it.
+      //
+      // They read the layer 3 hooks rather than the semantic token, so the
+      // single decision stays the default without becoming the only option. A
+      // brand with a stepped heading ramp sets `--app-heading-2-fg` and gets
+      // it; nothing is emitted until someone does.
+      --pico-h1-color: #{component.ref-chain('heading-1-fg')};
+      --pico-h2-color: #{component.ref-chain('heading-2-fg')};
+      --pico-h3-color: #{component.ref-chain('heading-3-fg')};
+      --pico-h4-color: #{component.ref-chain('heading-4-fg')};
+      --pico-h5-color: #{component.ref-chain('heading-5-fg')};
+      --pico-h6-color: #{component.ref-chain('heading-6-fg')};
 
       // --- Primary ----------------------------------------------------
       // Pico splits every intent into a TEXT colour and a BACKGROUND colour.

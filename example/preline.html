@@ -120,6 +120,67 @@
     </div>
   </section>
 
+    <section class="mt-10">
+    <h2 class="text-lg font-semibold">Data and disclosure</h2>
+    <p class="mt-1 max-w-2xl text-sm text-muted-foreground">
+      Preline's own table styling comes from utilities, so the header, the zebra tint and the
+      row borders each name a different token.
+    </p>
+    <div class="mt-4 overflow-x-auto rounded-xl border border-border">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-muted text-foreground">
+          <tr><th class="px-4 py-2">Invoice</th><th class="px-4 py-2">Client</th><th class="px-4 py-2">Status</th><th class="px-4 py-2 text-right">Amount</th></tr>
+        </thead>
+        <tbody>
+        <tr class="border-t border-border odd:bg-surface even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1001</td><td class="px-4 py-2">Aurora Labs</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">1,240.00</td></tr>
+        <tr class="border-t border-border odd:bg-surface even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1002</td><td class="px-4 py-2">Borealis Foods</td><td class="px-4 py-2">Pending</td><td class="px-4 py-2 text-right tabular-nums">890.50</td></tr>
+        <tr class="border-t border-border odd:bg-surface even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1003</td><td class="px-4 py-2">Cadence Media</td><td class="px-4 py-2">Overdue</td><td class="px-4 py-2 text-right tabular-nums">3,120.00</td></tr>
+        <tr class="border-t border-border odd:bg-surface even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1004</td><td class="px-4 py-2">Delta Robotics</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">455.25</td></tr>
+        <tr class="border-t border-border odd:bg-surface even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1005</td><td class="px-4 py-2">Everline Co</td><td class="px-4 py-2">Draft</td><td class="px-4 py-2 text-right tabular-nums">2,010.75</td></tr>
+        <tr class="border-t border-border odd:bg-surface even:bg-muted"><td class="px-4 py-2 font-mono text-xs">INV-1006</td><td class="px-4 py-2">Fathom Studio</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">678.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details class="mt-4 rounded-xl border border-border bg-card p-4" open>
+      <summary class="cursor-pointer font-medium">An accordion</summary>
+      <p class="mt-2 text-sm text-muted-foreground">Preline ships a JS accordion; this is the native element with the same tokens.</p>
+    </details>
+  </section>
+
+    <section class="mt-10">
+    <h2 class="text-lg font-semibold">Every button Preline documents</h2>
+    <p class="mt-1 max-w-2xl text-sm text-muted-foreground">
+      Solid, outline, ghost, soft and white — the five button styles, all built from utilities.
+      Every colour resolves through the semantic variables the adapter sets, and the markup is
+      unmodified from the docs.
+    </p>
+
+    <h3 class="mt-4 font-semibold">Solid</h3>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-hover">Primary</button>
+      <button class="rounded-lg bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-secondary-hover">Secondary</button>
+      <button class="rounded-lg bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-destructive-hover">Destructive</button>
+      <button class="rounded-lg bg-muted px-4 py-2 text-sm font-medium text-muted-foreground hover:bg-muted-hover">Muted</button>
+    </div>
+
+    <h3 class="mt-4 font-semibold">Outline, ghost, soft and white</h3>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="rounded-lg border border-primary-line px-4 py-2 text-sm font-medium text-primary hover:bg-primary hover:text-primary-foreground">Outline</button>
+      <button class="rounded-lg px-4 py-2 text-sm font-medium text-primary hover:bg-muted">Ghost</button>
+      <button class="rounded-lg bg-primary-100 px-4 py-2 text-sm font-medium text-primary-800 hover:bg-primary-200">Soft</button>
+      <button class="rounded-lg border border-border bg-surface px-4 py-2 text-sm font-medium hover:bg-surface-hover">White</button>
+    </div>
+
+    <h3 class="mt-4 font-semibold">Sizes and states</h3>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground">Small</button>
+      <button class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">Default</button>
+      <button class="rounded-lg bg-primary px-5 py-3 text-base font-medium text-primary-foreground">Large</button>
+      <button class="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground opacity-50" disabled>Disabled</button>
+    </div>
+  </section>
+
   <div class="mt-12 rounded-xl border border-border bg-muted p-6 text-sm text-muted-foreground">
     <strong class="text-foreground">What this page is testing:</strong>
     <ul class="mt-2 list-disc space-y-2 pl-5">

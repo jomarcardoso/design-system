@@ -34,6 +34,7 @@
 
 @use '../core';
 @use '../config';
+@use '../component';
 
 @mixin emit() {
   @include core.in-layer(config.$layer-adapter) {
@@ -77,14 +78,19 @@
       --color-secondary: #{core.ref('bg-selected')};
       --color-secondary-content: #{core.ref('fg-on-selected')};
 
-      // daisyUI models THREE interactive roles; layer 2 models two, on purpose
-      // — `action` (an invitation) and `selected` (a state). There is no third
-      // decision to map, so accent shares with secondary. Inventing
-      // `--app-bg-accent` to fill the slot would be daisyUI's shape leaking
-      // upward into the foundation, which is the one thing an adapter must
-      // never cause.
-      --color-accent: #{core.ref('bg-selected')};
-      --color-accent-content: #{core.ref('fg-on-selected')};
+      // daisyUI models THREE interactive roles; layer 2 models two — `action`
+      // (an invitation) and `selected` (a state). So accent DEFAULTS to the
+      // selected role, which is what a two-brand-colour product wants.
+      //
+      // It reads the layer 3 hook rather than the semantic token directly, and
+      // that distinction is the whole point. Pointing straight at
+      // `bg-selected` would make the compression a limit: a team wanting three
+      // brand colours would have to fork this file, and using daisyUI through
+      // this foundation would deliver less than using daisyUI alone. Reading
+      // `accent-bg` keeps the same default at the same cost — nothing is
+      // emitted — while leaving one variable to set.
+      --color-accent: #{component.ref-chain('accent-bg')};
+      --color-accent-content: #{component.ref-chain('accent-fg')};
 
       // `neutral` is daisyUI's dark solid (`btn-neutral`), not a grey text
       // colour — hence the foreground token as its background.
@@ -137,5 +143,92 @@
       --depth: 1;
       --noise: 0;
     }
+
+    // --- The "colour as text" variants ----------------------------------
+    //
+    // `.btn-outline`, `.btn-dash`, `.btn-ghost` and `.btn-soft` all draw their
+    // LABEL in the variant's fill colour, over the page or over an 8% tint of
+    // that same fill:
+    //
+    //     .btn-soft { color: var(--btn-rest-fg, var(--btn-color, …)) }
+    //
+    // A fill is chosen to carry white text, so reusing it as text on a near-
+    // white background is a contrast problem by construction. It is not a
+    // hypothetical one: daisyUI's OWN default light theme renders `btn-warning
+    // btn-soft` at 1.69:1, error at 2.64:1, success at 1.87:1 and info at
+    // 2.10:1 — four failures out of five, measured, not assumed.
+    //
+    // `--btn-rest-fg` is daisyUI's hook for exactly this, and nothing declares
+    // it (only `.btn-neutral` resets it to `initial`), so the adapter's
+    // declaration is unopposed and no layer fight arises. Layer 2 already has
+    // the right colour for the job — `fg-{role}` is the text tone paired with
+    // `bg-{role}-subtle`, validated against that background on every build.
+    //
+    // Binding it per variant is what makes these four variants readable at
+    // every step of every theme, and it is the reason the fill tokens did NOT
+    // have to move. Darkening `bg-success` would have "fixed" the soft button
+    // by bending layer 2 around one library's derivation — the exact
+    // contamination this architecture exists to prevent.
+    .btn-primary {
+      --btn-rest-fg: #{core.ref('fg-link')};
+    }
+
+    .btn-secondary {
+      --btn-rest-fg: #{core.ref('fg-selected')};
+    }
+
+    .btn-accent {
+      --btn-rest-fg: #{component.ref-chain('accent-fg-on-subtle')};
+    }
+
+    .btn-info {
+      --btn-rest-fg: #{core.ref('fg-info')};
+    }
+
+    .btn-success {
+      --btn-rest-fg: #{core.ref('fg-success')};
+    }
+
+    .btn-warning {
+      --btn-rest-fg: #{core.ref('fg-warning')};
+    }
+
+    .btn-error {
+      --btn-rest-fg: #{core.ref('fg-danger')};
+    }
+
+    // --- Why there is no property-level binding in this file ------------
+    //
+    // Every other adapter here can fall back to writing a real declaration when
+    // a library has no variable for something. This one cannot, and it is worth
+    // knowing before trying.
+    //
+    // daisyUI nests its component CSS inside TAILWIND'S `utilities` layer:
+    //
+    //     utilities.daisyui.l1.l2.l3  ->  .btn { background-color: var(--btn-bg) }
+    //
+    // `utilities` is deliberately the LAST layer in `app.css`, so that a utility
+    // always wins. Which means nothing this adapter emits — in `vendor-config`,
+    // several layers earlier — can override a daisyUI declaration by property,
+    // at any specificity. Layer order beats specificity, and this library sits
+    // on the winning side of it.
+    //
+    // The general lesson: check where a library puts its layers before
+    // designing around them. A library inside `utilities` cannot be overridden
+    // by property from an adapter.
+    //
+    // WHAT THAT DOES NOT MEAN, because getting this backwards costs real
+    // capability: "cannot override by property" is not "cannot reach". The
+    // `soft` variant above looked unreachable — daisyUI MIXES its background
+    // instead of reading `bg-*-subtle`, and draws the label in the fill colour
+    // — and the first read of this file concluded the only lever was layer 2.
+    // That was wrong. daisyUI publishes `--btn-rest-fg` precisely so the label
+    // can be redirected, and a variable is not subject to the layer problem at
+    // all when nothing else declares it.
+    //
+    // So: before concluding a library cannot express something, grep its built
+    // CSS for the `var(--x, …)` hooks it reads but never sets. Those are the
+    // seams a library deliberately leaves open, and they are easy to miss
+    // because they never appear as a declaration anywhere.
   }
 }

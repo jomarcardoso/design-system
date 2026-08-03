@@ -39,13 +39,22 @@
 //
 // PRELINE WANTS A RAMP. It exposes `--primary-50` through `--primary-950`, where
 // layer 2 publishes chosen steps rather than a scale — deliberately, because a
-// ramp is a layer 1 concern and layer 1 is private. The numbered steps are
-// mapped onto the steps that do exist, which keeps components on-brand at the
-// cost of a flatter ramp than Preline's own. See the note where they are set.
+// ramp is a primitive and layer 1 is private.
+//
+// The numbered steps DEFAULT to the nearest decision layer 2 made, which is a
+// flatter ramp than Preline's own. That default is an editorial choice, not a
+// ceiling: each one reads a layer 3 hook (`action-50` … `action-950`), so a
+// project that wants the full gradient sets nine variables and has it. Nothing
+// is emitted until it does.
+//
+// The distinction matters more than it looks. Compressing without a hook would
+// mean using Preline through this foundation delivers less than using Preline
+// alone — which would make adopting the foundation a cost rather than a gain.
 // =============================================================================
 
 @use '../core';
 @use '../config';
+@use '../component';
 
 @mixin emit() {
   @include core.in-layer(config.$layer-adapter) {
@@ -86,17 +95,17 @@
       // let application code reach a primitive, which is the one thing the
       // stylelint rules exist to prevent. Components that ask for a mid step
       // get the nearest decision rather than an interpolation nobody chose.
-      --primary-50: #{core.ref('bg-action-subtle')};
-      --primary-100: #{core.ref('bg-action-subtle')};
-      --primary-200: #{core.ref('bg-action-subtle')};
-      --primary-300: #{core.ref('border-action')};
-      --primary-400: #{core.ref('bg-action')};
-      --primary-500: #{core.ref('bg-action')};
-      --primary-600: #{core.ref('bg-action')};
-      --primary-700: #{core.ref('bg-action-hover')};
-      --primary-800: #{core.ref('bg-action-active')};
-      --primary-900: #{core.ref('bg-action-active')};
-      --primary-950: #{core.ref('bg-action-active')};
+      --primary-50: #{component.ref-chain('action-50')};
+      --primary-100: #{component.ref-chain('action-100')};
+      --primary-200: #{component.ref-chain('action-200')};
+      --primary-300: #{component.ref-chain('action-300')};
+      --primary-400: #{component.ref-chain('action-400')};
+      --primary-500: #{component.ref-chain('action-500')};
+      --primary-600: #{component.ref-chain('action-600')};
+      --primary-700: #{component.ref-chain('action-700')};
+      --primary-800: #{component.ref-chain('action-800')};
+      --primary-900: #{component.ref-chain('action-900')};
+      --primary-950: #{component.ref-chain('action-950')};
 
       // --- Secondary --------------------------------------------------
       --secondary: #{core.ref('bg-selected')};

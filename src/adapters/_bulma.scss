@@ -167,6 +167,35 @@ $_map: (
   --bulma-border-l: #{_l(map.get($c, border))};
   --bulma-border-weak-l: #{_l(map.get($c, 'border-subtle'))};
 
+  // --- What is deliberately NOT mapped --------------------------------
+  //
+  // `white`, `light`, `dark` and `black`. They look like four neutral buttons
+  // that ought to follow the theme, and mapping them to surface tokens is the
+  // obvious move. It is wrong twice over, and the second reason is the one that
+  // actually breaks pages.
+  //
+  // They are ABSOLUTE names. `is-white` means white — not "the surface colour".
+  // A theme-following `is-white` renders dark under a dark theme, which
+  // contradicts what the author asked for.
+  //
+  // And `light` and `dark` are not only button colours: each is a variant
+  // MODIFIER for all seven colour families.
+  //
+  //     .button.is-primary.is-light {
+  //       --bulma-button-background-l: var(--bulma-light-l);
+  //       --bulma-button-color-l: var(--bulma-primary-light-invert-l);  /* 11% */
+  //     }
+  //
+  // The paired text is always a dark 11%, because Bulma's model assumes the
+  // light variant is light. Pointing `--bulma-light-l` at `bg-sunken` made that
+  // background near-black under the dark theme while the text stayed near-black:
+  // 1.06:1, on seven variants at once, from one mapping that looked reasonable.
+  //
+  // The general rule: a library name that reads as an absolute colour is
+  // usually a fixed palette entry rather than a themeable role. Before mapping
+  // one, check whether other components use it as a modifier — if they do, its
+  // absolute lightness is load-bearing and the theme must not move it.
+
   // --- Colour families, generated ------------------------------------
   // Four channels per family x six families. Bulma derives every hover,
   // active, light and dark variant from the first three.

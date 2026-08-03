@@ -44,9 +44,10 @@
  *   ds.base        Layer 1 primitives. Normally empty — see src/_base.scss.
  *   ds.semantic    Layer 2. Themes and contexts. The public contract.
  *   ds.component   Layer 3. Component token defaults.
- *   vendor         daisyUI / Bootstrap / shadcn component CSS.
- *   vendor-config  The adapters. AFTER vendor so they win over library
- *                  defaults — that is the entire point of an adapter.
+ *   vendor         Component CSS from a library that ships unlayered and is
+ *                  wrapped by its entry file (Bootstrap, Pico, Bulma, …).
+ *   vendor-config  The adapters. AFTER the library layers so they win over
+ *                  library defaults — that is the entire point of an adapter.
  *   components     Project component CSS.
  *   ds.overrides   Surgical exceptions only.
  *   utilities      Tailwind utilities, IF on. Last, so a utility always wins.
@@ -56,6 +57,16 @@
  * reorder it by accident. The order is declared here even for the layers this
  * file does not itself fill (theme, utilities), so that adding the Tailwind
  * integration later slots into the right place with no edit here.
+ *
+ * A LIBRARY CAN DECLARE ITS OWN LAYERS, and that decides what its adapter is
+ * able to do. Wrapping a library in `layer(vendor)` only controls CSS that was
+ * unlayered to begin with; anything the library already placed in a layer keeps
+ * that position. daisyUI nests its components inside `utilities.daisyui.l1…` —
+ * inside the layer above, the last one — so no adapter rule can beat a daisyUI
+ * declaration by property, at any specificity. Its adapter is variable-only.
+ *
+ * When writing an adapter, grep the built library CSS for `@layer` first. Where
+ * the library sits tells you whether property-level binding is available.
  * ============================================================================= */
 
 @layer legacy, theme, base, ds.base, ds.semantic, ds.component, vendor,

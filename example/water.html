@@ -82,10 +82,14 @@
   <pre><code>npm run demo</code></pre>
 
   <table>
-    <thead><tr><th>Name</th><th>Status</th></tr></thead>
+    <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th>Amount</th></tr></thead>
     <tbody>
-      <tr><td>First</td><td>Active</td></tr>
-      <tr><td>Second</td><td>Pending</td></tr>
+      <tr><td>INV-1001</td><td>Aurora Labs</td><td>Paid</td><td>1,240.00</td></tr>
+      <tr><td>INV-1002</td><td>Borealis Foods</td><td>Pending</td><td>890.50</td></tr>
+      <tr><td>INV-1003</td><td>Cadence Media</td><td>Overdue</td><td>3,120.00</td></tr>
+      <tr><td>INV-1004</td><td>Delta Robotics</td><td>Paid</td><td>455.25</td></tr>
+      <tr><td>INV-1005</td><td>Everline Co</td><td>Draft</td><td>2,010.75</td></tr>
+      <tr><td>INV-1006</td><td>Fathom Studio</td><td>Paid</td><td>678.00</td></tr>
     </tbody>
   </table>
 
@@ -102,6 +106,24 @@
       <button>Button</button>
       <span style="color: var(--app-fg-muted)">Inverted band</span>
     </div>
+  </div>
+
+    <h2>Every button Water documents</h2>
+  <p>
+    Water has no variant classes at all — it styles four selectors and stops. That is the whole
+    button surface, and it is why the adapter binds the foreground on the property: there is no
+    <code>--button-text</code> to point at.
+  </p>
+  <div class="row">
+    <button>Button</button>
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+    <input type="button" value="Input button">
+  </div>
+  <div class="row" style="margin-top: var(--app-gap-inline)">
+    <button disabled>Disabled</button>
+    <input type="submit" value="Disabled submit" disabled>
+    <a href="#water">A link, which Water styles as text rather than a button</a>
   </div>
 
   <div class="note">

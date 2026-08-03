@@ -155,6 +155,121 @@
     </div>
   </section>
 
+    <section>
+    <h2>Data and disclosure</h2>
+    <p>
+      Six rows, because two never show a stripe pattern or let you hover a row that is not an
+      edge case. Header fill, zebra tint and row border are three separate tokens, and all
+      three have to survive a theme change together.
+    </p>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra">
+        <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th class="text-right">Amount</th></tr></thead>
+        <tbody>
+          <tr><td class="font-mono text-xs">INV-1001</td><td>Aurora Labs</td><td>Paid</td><td class="text-right">1,240.00</td></tr>
+          <tr><td class="font-mono text-xs">INV-1002</td><td>Borealis Foods</td><td>Pending</td><td class="text-right">890.50</td></tr>
+          <tr><td class="font-mono text-xs">INV-1003</td><td>Cadence Media</td><td>Overdue</td><td class="text-right">3,120.00</td></tr>
+          <tr><td class="font-mono text-xs">INV-1004</td><td>Delta Robotics</td><td>Paid</td><td class="text-right">455.25</td></tr>
+          <tr><td class="font-mono text-xs">INV-1005</td><td>Everline Co</td><td>Draft</td><td class="text-right">2,010.75</td></tr>
+          <tr><td class="font-mono text-xs">INV-1006</td><td>Fathom Studio</td><td>Paid</td><td class="text-right">678.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="collapse collapse-arrow bg-base-100 border border-base-300 mt-4">
+      <input type="checkbox" checked>
+      <div class="collapse-title font-medium">An accordion</div>
+      <div class="collapse-content">
+        <p>daisyUI builds this from a checkbox and two divs, no JavaScript. The open panel sits
+        on <code>base-100</code>, which the adapter points at the surface token.</p>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <h2>Every button daisyUI documents</h2>
+    <p>
+      The full matrix, straight from the library's docs. Nothing here is styled by hand: every
+      one of these resolves through <code>--color-*</code>, which the adapter points at layer 2.
+      Switch the theme and all of them move together.
+    </p>
+
+    <h3 class="text-base font-semibold mt-4">Colours</h3>
+    <div class="row">
+      <button class="btn">Default</button>
+      <button class="btn btn-neutral">Neutral</button>
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-accent">Accent</button>
+      <button class="btn btn-info">Info</button>
+      <button class="btn btn-success">Success</button>
+      <button class="btn btn-warning">Warning</button>
+      <button class="btn btn-error">Error</button>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4">Styles</h3>
+    <div class="row">
+      <button class="btn btn-primary btn-outline">Outline</button>
+      <button class="btn btn-primary btn-dash">Dash</button>
+      <button class="btn btn-primary btn-soft">Soft</button>
+      <button class="btn btn-primary btn-ghost">Ghost</button>
+      <button class="btn btn-primary btn-link">Link</button>
+    </div>
+    <div class="row mt-2">
+      <button class="btn btn-secondary btn-outline">Secondary outline</button>
+      <button class="btn btn-accent btn-outline">Accent outline</button>
+      <button class="btn btn-error btn-soft">Error soft</button>
+      <button class="btn btn-success btn-soft">Success soft</button>
+      <button class="btn btn-info btn-soft">Info soft</button>
+      <button class="btn btn-warning btn-soft">Warning soft</button>
+      <button class="btn btn-warning btn-outline">Warning outline</button>
+      <button class="btn btn-warning btn-ghost">Warning ghost</button>
+      <button class="btn btn-warning btn-dash">Warning dash</button>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4">Sizes</h3>
+    <div class="row">
+      <button class="btn btn-primary btn-xs">Extra small</button>
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary btn-md">Medium</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+      <button class="btn btn-primary btn-xl">Extra large</button>
+    </div>
+
+    <h3 class="text-base font-semibold mt-4">States and shapes</h3>
+    <div class="row">
+      <button class="btn btn-primary btn-active">Active</button>
+      <button class="btn btn-primary" disabled>Disabled</button>
+      <button class="btn btn-primary btn-square">□</button>
+      <button class="btn btn-primary btn-circle">○</button>
+      <button class="btn btn-primary btn-wide">Wide</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Accent is a default, not a limit</h2>
+    <p>
+      Out of the box <code>accent</code> resolves to the same colour as <code>secondary</code>,
+      because layer 2 models two brand roles and daisyUI wants three. That compression is the
+      DEFAULT — it is what a two-brand-colour product wants — and it is deliberately not the
+      ceiling.
+    </p>
+    <p>
+      The button below sets <code>--app-accent-bg</code> and <code>--app-accent-fg</code> on
+      <code>:root</code> and nothing else. No adapter is edited, no CSS is forked, no token is
+      emitted until you press it. If a compression could not be undone this cheaply, choosing
+      this foundation would deliver less than using daisyUI directly — which is the one thing a
+      universal base must never do.
+    </p>
+    <div class="row">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-accent">Accent</button>
+      <button class="btn btn-outline" id="accent-toggle">Give accent its own colour</button>
+    </div>
+    <p class="mt-2"><code id="accent-state">--app-accent-bg is unset — accent inherits from bg-selected</code></p>
+  </section>
+
   <div class="note">
     <strong>Where the two adapters agree and disagree:</strong>
     <ul>
@@ -176,6 +291,25 @@
 
 <script>
   const root = document.documentElement;
+
+  // The whole customisation: two variables on :root. Layer 3 reserves the names
+  // and emits nothing, so this costs zero bytes until someone opts in.
+  const toggle = document.getElementById('accent-toggle');
+  const state = document.getElementById('accent-state');
+  toggle.addEventListener('click', () => {
+    const on = !root.style.getPropertyValue('--app-accent-bg');
+    if (on) {
+      root.style.setProperty('--app-accent-bg', 'oklch(62% 0.17 25)');
+      root.style.setProperty('--app-accent-fg', 'oklch(98% 0.005 78)');
+      state.textContent = '--app-accent-bg: oklch(62% 0.17 25) — a third brand colour, no fork';
+      toggle.textContent = 'Reset accent to the default';
+    } else {
+      root.style.removeProperty('--app-accent-bg');
+      root.style.removeProperty('--app-accent-fg');
+      state.textContent = '--app-accent-bg is unset — accent inherits from bg-selected';
+      toggle.textContent = 'Give accent its own colour';
+    }
+  });
   const buttons = [...document.querySelectorAll('[data-set-theme]')];
   buttons.forEach((b) => b.addEventListener('click', () => {
     root.dataset.theme = b.dataset.setTheme;

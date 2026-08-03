@@ -222,10 +222,14 @@
         <div class="alert alert-success py-2 mb-0" role="alert">Saved successfully.</div>
 
         <table class="table table-striped mb-0">
-          <thead><tr><th>Name</th><th>Status</th></tr></thead>
+          <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th>Amount</th></tr></thead>
           <tbody>
-            <tr><td>First</td><td>Active</td></tr>
-            <tr><td>Second</td><td>Pending</td></tr>
+            <tr><td>INV-1001</td><td>Aurora Labs</td><td>Paid</td><td>1,240.00</td></tr>
+            <tr><td>INV-1002</td><td>Borealis Foods</td><td>Pending</td><td>890.50</td></tr>
+            <tr><td>INV-1003</td><td>Cadence Media</td><td>Overdue</td><td>3,120.00</td></tr>
+            <tr><td>INV-1004</td><td>Delta Robotics</td><td>Paid</td><td>455.25</td></tr>
+            <tr><td>INV-1005</td><td>Everline Co</td><td>Draft</td><td>2,010.75</td></tr>
+            <tr><td>INV-1006</td><td>Fathom Studio</td><td>Paid</td><td>678.00</td></tr>
           </tbody>
         </table>
       </div>
@@ -256,10 +260,14 @@
         <div class="x-alert">Saved successfully.</div>
 
         <table class="x-table">
-          <thead><tr><th>Name</th><th>Status</th></tr></thead>
+          <thead><tr><th>Invoice</th><th>Client</th><th>Status</th><th>Amount</th></tr></thead>
           <tbody>
-            <tr><td>First</td><td>Active</td></tr>
-            <tr><td>Second</td><td>Pending</td></tr>
+            <tr><td>INV-1001</td><td>Aurora Labs</td><td>Paid</td><td>1,240.00</td></tr>
+            <tr><td>INV-1002</td><td>Borealis Foods</td><td>Pending</td><td>890.50</td></tr>
+            <tr><td>INV-1003</td><td>Cadence Media</td><td>Overdue</td><td>3,120.00</td></tr>
+            <tr><td>INV-1004</td><td>Delta Robotics</td><td>Paid</td><td>455.25</td></tr>
+            <tr><td>INV-1005</td><td>Everline Co</td><td>Draft</td><td>2,010.75</td></tr>
+            <tr><td>INV-1006</td><td>Fathom Studio</td><td>Paid</td><td>678.00</td></tr>
           </tbody>
         </table>
       </div>
@@ -305,6 +313,42 @@
         <button class="x-btn">No library</button>
         <span style="color: var(--app-fg-muted);">Inverted band</span>
       </div>
+    </div>
+  </section>
+
+    <section class="band">
+    <h2>Every button Bootstrap documents</h2>
+    <p>
+      Solid, outline, sizes and states — the whole matrix from the docs. Two of these are worth
+      watching: <code>.btn-light</code> and <code>.btn-dark</code> are not status colours, so
+      they are not in the adapter's role map. They used to compile from Sass and freeze there,
+      ignoring every theme switch; they are now bound to the surface and inverted tokens.
+    </p>
+    <div class="row">
+      <button class="btn btn-primary">Primary</button>
+      <button class="btn btn-secondary">Secondary</button>
+      <button class="btn btn-success">Success</button>
+      <button class="btn btn-danger">Danger</button>
+      <button class="btn btn-warning">Warning</button>
+      <button class="btn btn-info">Info</button>
+      <button class="btn btn-light">Light</button>
+      <button class="btn btn-dark">Dark</button>
+      <button class="btn btn-link">Link</button>
+    </div>
+    <div class="row" style="margin-top: var(--app-gap-inline)">
+      <button class="btn btn-outline-primary">Primary</button>
+      <button class="btn btn-outline-secondary">Secondary</button>
+      <button class="btn btn-outline-success">Success</button>
+      <button class="btn btn-outline-danger">Danger</button>
+      <button class="btn btn-outline-warning">Warning</button>
+      <button class="btn btn-outline-info">Info</button>
+    </div>
+    <div class="row" style="margin-top: var(--app-gap-inline)">
+      <button class="btn btn-primary btn-sm">Small</button>
+      <button class="btn btn-primary">Default</button>
+      <button class="btn btn-primary btn-lg">Large</button>
+      <button class="btn btn-primary active">Active</button>
+      <button class="btn btn-primary" disabled>Disabled</button>
     </div>
   </section>
 

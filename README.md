@@ -29,6 +29,14 @@ is exactly one place — the semantic layer — and everything else derives from
 - **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
   every theme through a real browser and measures each rendered fill against
   WCAG. It has caught three bugs the build-time check structurally cannot see.
+- **Every button each library documents, rendered from these tokens.** The demo
+  pages carry the full button catalogue from all eight libraries' own docs —
+  colours, styles, sizes, states and shapes — because a foundation that covers
+  the common variants and quietly drops the rest is not a foundation. Adopting
+  it should never cost you something the library gave you directly, so the
+  demos are the check on that claim: daisyUI's own default theme renders four
+  of its five `btn-soft` variants below 2.7:1, and through this foundation the
+  same buttons clear 6:1.
 - **Tailwind bridge** that publishes layer 2 as utilities through
   `@theme inline` — no extra custom properties, and utilities follow the theme.
 - **Enforced, not just documented.** Stylelint fails the build on a literal

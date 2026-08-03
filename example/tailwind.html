@@ -99,6 +99,98 @@
     </div>
   </section>
 
+    <!-- ============================ Data ============================ -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">Data and disclosure</h2>
+    <p class="mt-1 max-w-2xl text-sm text-fg-muted">
+      The densest test the bridge gets: a table needs a header fill, a row border, a stripe tint
+      and a text colour to agree with each other, and every one of them is a separate utility
+      resolving a separate token.
+    </p>
+    <div class="mt-4 overflow-x-auto rounded-xl border border-line">
+      <table class="w-full text-left text-sm">
+        <thead class="bg-sunken text-fg-heading">
+          <tr><th class="px-4 py-2">Invoice</th><th class="px-4 py-2">Client</th><th class="px-4 py-2">Status</th><th class="px-4 py-2 text-right">Amount</th></tr>
+        </thead>
+        <tbody>
+        <tr class="border-t border-line odd:bg-surface even:bg-sunken"><td class="px-4 py-2 font-mono text-xs">INV-1001</td><td class="px-4 py-2">Aurora Labs</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">1,240.00</td></tr>
+        <tr class="border-t border-line odd:bg-surface even:bg-sunken"><td class="px-4 py-2 font-mono text-xs">INV-1002</td><td class="px-4 py-2">Borealis Foods</td><td class="px-4 py-2">Pending</td><td class="px-4 py-2 text-right tabular-nums">890.50</td></tr>
+        <tr class="border-t border-line odd:bg-surface even:bg-sunken"><td class="px-4 py-2 font-mono text-xs">INV-1003</td><td class="px-4 py-2">Cadence Media</td><td class="px-4 py-2">Overdue</td><td class="px-4 py-2 text-right tabular-nums">3,120.00</td></tr>
+        <tr class="border-t border-line odd:bg-surface even:bg-sunken"><td class="px-4 py-2 font-mono text-xs">INV-1004</td><td class="px-4 py-2">Delta Robotics</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">455.25</td></tr>
+        <tr class="border-t border-line odd:bg-surface even:bg-sunken"><td class="px-4 py-2 font-mono text-xs">INV-1005</td><td class="px-4 py-2">Everline Co</td><td class="px-4 py-2">Draft</td><td class="px-4 py-2 text-right tabular-nums">2,010.75</td></tr>
+        <tr class="border-t border-line odd:bg-surface even:bg-sunken"><td class="px-4 py-2 font-mono text-xs">INV-1006</td><td class="px-4 py-2">Fathom Studio</td><td class="px-4 py-2">Paid</td><td class="px-4 py-2 text-right tabular-nums">678.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <details class="mt-4 rounded-xl border border-line bg-surface p-4" open>
+      <summary class="cursor-pointer font-medium text-fg-heading">An accordion</summary>
+      <p class="mt-2 text-sm text-fg-muted">
+        A native disclosure element. Nothing about it is Tailwind-specific — the utilities just
+        carry the tokens.
+      </p>
+    </details>
+  </section>
+
+  <!-- ============================ Status ============================ -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">Status, and the edge of the bridge</h2>
+    <p class="mt-1 max-w-2xl text-sm text-fg-muted">
+      The bridge publishes the four status FILLS. Their subtle tints and text colours are not
+      bridged, so those reach for the token directly — which is the honest signal that they are
+      candidates for bridging if a project writes them often.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-2">
+      <span class="rounded-full bg-success px-3 py-1 text-xs text-on-action">Success</span>
+      <span class="rounded-full bg-warning px-3 py-1 text-xs text-[var(--app-fg-on-warning)]">Warning</span>
+      <span class="rounded-full bg-danger px-3 py-1 text-xs text-on-action">Danger</span>
+      <span class="rounded-full bg-info px-3 py-1 text-xs text-on-action">Info</span>
+    </div>
+    <div class="mt-3 grid gap-2 sm:grid-cols-2">
+      <div class="rounded-md border border-[var(--app-border-success)] bg-[var(--app-bg-success-subtle)] px-4 py-2 text-sm text-[var(--app-fg-success)]">Subtle success</div>
+      <div class="rounded-md border border-[var(--app-border-danger)] bg-[var(--app-bg-danger-subtle)] px-4 py-2 text-sm text-[var(--app-fg-danger)]">Subtle danger</div>
+    </div>
+  </section>
+
+  <!-- ============================ Typography ============================ -->
+  <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">Typography and code</h2>
+    <p class="mt-2 max-w-2xl text-fg">
+      Body copy on <code class="rounded bg-sunken px-1 font-mono text-sm">bg-page</code>, with a
+      <a href="#tw" class="text-link underline">link</a> and some
+      <span class="text-fg-muted">muted text</span> beside it.
+    </p>
+    <pre class="mt-3 overflow-x-auto rounded-xl border border-line bg-sunken p-4 text-sm"><code>npm run demo
+npm run audit:contrast</code></pre>
+    <blockquote class="mt-3 border-l-4 border-line bg-surface py-2 pl-4 text-fg-muted">
+      A blockquote, bordered from the line token.
+    </blockquote>
+  </section>
+
+    <section class="mt-10">
+    <h2 class="text-lg font-semibold text-fg-heading">Buttons, with no library at all</h2>
+    <p class="mt-1 max-w-2xl text-sm text-fg-muted">
+      There is no button component to document here — the bridge publishes colours and the
+      markup composes the rest. Which makes this the control case for every other page: the same
+      tokens, none of the anatomy.
+    </p>
+    <div class="mt-4 flex flex-wrap items-center gap-2">
+      <button class="h-9 rounded-md bg-action px-4 text-sm font-medium text-on-action hover:bg-[var(--app-bg-action-hover)]">Action</button>
+      <button class="h-9 rounded-md bg-selected px-4 text-sm font-medium text-on-action hover:bg-[var(--app-bg-selected-hover)]">Selected</button>
+      <button class="h-9 rounded-md bg-success px-4 text-sm font-medium text-on-action hover:bg-[var(--app-bg-success-hover)]">Success</button>
+      <button class="h-9 rounded-md bg-warning px-4 text-sm font-medium text-[var(--app-fg-on-warning)] hover:bg-[var(--app-bg-warning-hover)]">Warning</button>
+      <button class="h-9 rounded-md bg-danger px-4 text-sm font-medium text-on-action hover:bg-[var(--app-bg-danger-hover)]">Danger</button>
+      <button class="h-9 rounded-md bg-info px-4 text-sm font-medium text-on-action hover:bg-[var(--app-bg-info-hover)]">Info</button>
+    </div>
+    <div class="mt-2 flex flex-wrap items-center gap-2">
+      <button class="h-9 rounded-md border border-line bg-surface px-4 text-sm font-medium hover:bg-sunken">Quiet</button>
+      <button class="h-9 rounded-md border border-[var(--app-border-action)] px-4 text-sm font-medium text-[var(--app-fg-action)] hover:bg-action hover:text-on-action">Outline</button>
+      <button class="h-9 rounded-md px-4 text-sm font-medium text-[var(--app-fg-action)] hover:bg-sunken">Ghost</button>
+      <button class="h-9 rounded-full bg-action px-4 text-sm font-medium text-on-action">Pill</button>
+      <button class="h-9 rounded-md bg-action px-4 text-sm font-medium text-on-action opacity-50" disabled>Disabled</button>
+    </div>
+  </section>
+
   <div class="mt-12 rounded-xl border border-line bg-sunken p-6 text-sm text-fg-muted">
     <strong class="text-fg">What this page is testing:</strong>
     <ul class="mt-2 list-disc space-y-2 pl-5">
