@@ -255,6 +255,27 @@ $_map: (
     }
   }
 
+  // --- `.text-bg-*`, the other baked foreground -------------------------
+  //
+  // Bootstrap compiles these as
+  //
+  //     .text-bg-primary { color: #fff; background-color: RGBA(var(--bs-primary-rgb), …) }
+  //
+  // The background follows the theme, because the adapter emits
+  // `--bs-primary-rgb` per theme. The COLOUR does not: Bootstrap picks it at
+  // Sass time with `color-contrast()`, measured against the build-time
+  // `$primary`. In the dark theme the fill brightens to a 400 step and that
+  // baked `#fff` lands at 3.13:1.
+  //
+  // Identical in kind to Flowbite's `text-white` — a foreground fixed at build
+  // time against a background that is not — and found the same way, by
+  // measuring rendered pages rather than tokens.
+  @each $bs, $role in $_map {
+    .text-bg-#{$bs} {
+      color: #{core.ref('fg-on-#{$role}')};
+    }
+  }
+
   // Left to Bootstrap on purpose:
   //   .btn-outline-*  transparent by design; its colour already comes from the
   //                   variant, and `_root()` themes that.

@@ -350,6 +350,36 @@ and errors if the role cannot legitimately be a background — which also catche
 the related mistake of mapping a `fg-*` role into a fill slot, as the Bulma
 adapter originally did with `link`.
 
+### A baked foreground is the recurring adapter bug
+
+Three libraries, three spellings of the same failure: a foreground fixed at
+build time against a background that moves at runtime.
+
+- **Bootstrap** compiles `.text-bg-primary { color: #fff }` via `color-contrast()`
+  against the build-time `$primary`, while the background follows
+  `--bs-primary-rgb` per theme. Dark theme brightens the fill and the baked
+  white lands at 3.13:1.
+- **Flowbite** writes `text-white` in its component markup.
+- **Water** sets the button background and lets the text inherit `--text-main`.
+
+In each case the fix is the same: bind the paired foreground from the token,
+per variant if the library has variants. Ask `core.fg-for()` what belongs on
+top. **Whenever an adapter moves a background, find where that thing's text
+comes from** — if the answer is a literal, a markup class, or inheritance, it
+will not follow the theme.
+
+### An adapter binding a base selector overrides the library's state rules
+
+Cascade layers beat specificity, and adapters live in a later layer. So
+`button { color: … }` in the adapter beats `button:disabled { color: … }` in the
+library, even though the library's selector is more specific. MVP models the
+disabled pair correctly and still ended up with light text on a light disabled
+fill at 1.19:1.
+
+Exclude the states the library already handles — `button:not(:disabled)` — rather
+than re-implementing them. Same shape as the Bootstrap variant collapse: a base
+selector in a later layer silently swallowing a more specific rule.
+
 ### Contrast is checked at build time, not assumed
 
 The pair invariant guarantees a foreground is *declared*. It cannot say whether

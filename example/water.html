@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Water.css adapter</title>
+
+<!--
+  Twenty-one variables for the whole library — the smallest theming surface in
+  the collection, and a useful floor: if the layering could not drive twenty-one
+  variables cleanly it would not be worth four layers.
+
+  `water-entry.css` imports the LIGHT build, not the auto one. Water's default
+  build picks a theme from `prefers-color-scheme`, which would fight the adapter
+  for control; the light build is an unconditional `:root` the adapter sits on
+  top of. It also wraps Water in `@layer vendor`, since it ships unlayered.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/adapter-water.css">
+<link rel="stylesheet" href="../dist/water.css">
+
+<style>
+  .themebar { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; margin-bottom: var(--app-space-xl); }
+  .themebar button { margin: 0; }
+  .row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+  .note {
+    margin-top: var(--app-space-2xl); padding: var(--app-pad-surface);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+    border-radius: var(--app-radius-surface);
+    font-size: 0.88rem; color: var(--app-fg-muted);
+  }
+  .note strong { color: var(--app-fg-default); }
+  .note li { margin-bottom: var(--app-space-xs); }
+</style>
+</head>
+<body>
+  <h1>Water.css adapter</h1>
+  <p>
+    Classless, and the smallest surface here: twenty-one variables. Water has no
+    notion of a primary action — its buttons are grey chrome and the accent lives
+    only in links — so this adapter changes that on purpose.
+  </p>
+
+  <div class="themebar">
+    <button data-set-theme="light">Light</button>
+    <button data-set-theme="dark">Dark</button>
+    <button data-set-theme="brand">Brand</button>
+  </div>
+
+  <h2>Buttons</h2>
+  <p>
+    Water sets only <code>background-color</code> on buttons and lets the text inherit
+    <code>--text-main</code>. That is fine on the grey it ships with and dark-on-dark on a
+    real brand colour, so the adapter binds the foreground on the property.
+  </p>
+  <div class="row">
+    <button>Button</button>
+    <input type="submit" value="Submit">
+    <input type="reset" value="Reset">
+    <button disabled>Disabled</button>
+  </div>
+
+  <h2>Forms</h2>
+  <form onsubmit="return false">
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="you@example.com">
+    <label for="plan">Plan</label>
+    <select id="plan"><option>Starter</option><option>Growth</option></select>
+    <label><input type="checkbox" checked> Accept the terms</label>
+    <label for="vol">Volume</label>
+    <input type="range" id="vol" min="0" max="100" value="60">
+    <textarea rows="2" placeholder="Notes"></textarea>
+  </form>
+
+  <h2>Content</h2>
+  <p>
+    Body text with a <a href="#water">link</a>, <code>inline code</code>,
+    <mark>a highlight</mark> and a <var>variable</var>.
+  </p>
+  <blockquote>A blockquote, on the secondary background.</blockquote>
+  <pre><code>npm run demo</code></pre>
+
+  <table>
+    <thead><tr><th>Name</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>First</td><td>Active</td></tr>
+      <tr><td>Second</td><td>Pending</td></tr>
+    </tbody>
+  </table>
+
+  <details>
+    <summary>An accordion</summary>
+    <p>Opened content sits on the alternate background.</p>
+  </details>
+
+  <progress value="60" max="100"></progress>
+
+  <h2>Contexts reach in</h2>
+  <div data-surface="inverted" style="padding: var(--app-pad-surface); border-radius: var(--app-radius-surface); background: var(--app-bg-page); color: var(--app-fg-default);">
+    <div class="row">
+      <button>Button</button>
+      <span style="color: var(--app-fg-muted)">Inverted band</span>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>What this page is testing:</strong>
+    <ul>
+      <li><strong>A library with no brand fill.</strong> <code>--button-base</code> is a grey.
+        Water models buttons as neutral chrome, so pointing it at <code>bg-action</code> is a
+        real change to how Water looks — and the right one, because a <code>&lt;button&gt;</code>
+        is the canonical action and a design system whose brand never reaches it is not doing
+        its job.</li>
+      <li><strong>A third library needing the pair exported.</strong> After Bootstrap and
+        Flowbite: Water has no <code>--button-text</code>, so the foreground half is bound on the
+        property. Every time a library omits it, the same failure appears — a fill the theme
+        controls and text it does not.</li>
+      <li><strong>The floor holds.</strong> Twenty-one variables, no variant classes, no
+        namespace. If the four layers can drive this cleanly they can drive almost anything —
+        which is the point of testing against the smallest surface as well as the largest.</li>
+    </ul>
+  </div>
+
+<script>
+  const root = document.documentElement;
+  document.querySelectorAll('[data-set-theme]').forEach((b) =>
+    b.addEventListener('click', () => { root.dataset.theme = b.dataset.setTheme; })
+  );
+</script>
+</body>
+</html>

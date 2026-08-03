@@ -1,0 +1,17 @@
+/* =============================================================================
+ * MVP.CSS BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i mvp-entry.css -o dist/mvp.css
+ *
+ * The CLI is used purely as a bundler; nothing here imports Tailwind.
+ *
+ * `layer(vendor)` is required — MVP ships unlayered.
+ *
+ * Note what MVP's own dark mode is: a `prefers-color-scheme` media query gated
+ * on `:root[color-mode="user"]`. It has no manual toggle at all, which makes it
+ * the one library here that cannot switch themes on its own. Driving it from
+ * `data-theme` through the adapter gives it one it never had.
+ * ========================================================================== */
+
+@import './node_modules/mvp.css/mvp.css' layer(vendor);

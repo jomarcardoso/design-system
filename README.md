@@ -22,9 +22,13 @@ is exactly one place — the semantic layer — and everything else derives from
   build-time guarantees: a context cannot change a background without its
   foreground, and **every bg/fg pair in every theme is measured against WCAG** —
   error below 3:1, warning below 4.5:1. Both cost zero runtime bytes.
-- **Four adapters, one contract.** Bootstrap, daisyUI, Pico CSS and Bulma — a
-  class-based library, a utility-based one, a classless one, and one that only
-  accepts HSL channels. Plus a Tailwind bridge, which is not an adapter.
+- **Eight adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
+  Preline, Water.css and MVP.css — from a 1416-variable library down to a
+  21-variable one, all driven by the same 110 tokens. Plus a Tailwind bridge,
+  which is not an adapter.
+- **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
+  every theme through a real browser and measures each rendered fill against
+  WCAG. It has caught three bugs the build-time check structurally cannot see.
 - **Tailwind bridge** that publishes layer 2 as utilities through
   `@theme inline` — no extra custom properties, and utilities follow the theme.
 - **Enforced, not just documented.** Stylelint fails the build on a literal
@@ -156,7 +160,7 @@ the subtler `background-color: var(--app-button-bg, var(--app-bg-action, var(--b
 because layer 2 is always defined and resolution never reaches the variant
 level. Each variant is bound to the semantic role it means.
 
-## What four adapters are for
+## What eight adapters are for
 
 Each library was picked because it breaks a different assumption, and together
 they are the evidence that the layering holds:
@@ -169,6 +173,8 @@ they are the evidence that the layering holds:
 | **Bulma** | Refuses whole colours; wants HSL channels | ~200 lines |
 | **Flowbite** | No component CSS; its surface *is* Tailwind's `@theme` | ~160 lines |
 | **Preline UI** | Already had this architecture — semantic layer + inline bridge | ~170 lines |
+| **Water.css** | The floor: 21 variables, no brand fill, no text-on-fill | ~100 lines |
+| **MVP.css** | Derives interaction with a `filter`, not a colour | ~120 lines |
 
 The generalisation worth keeping: **an adapter's cost is set by how a library is
 organised, not by how much it ships.** Bulma exposes 1416 custom properties and

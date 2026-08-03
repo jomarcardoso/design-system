@@ -13,10 +13,11 @@
   },
   "scripts": {
     "build:tokens": "sass --no-source-map --style=compressed src/ds.scss dist/ds.css && node scripts/check-collisions.mjs dist/ds.css",
-    "build:adapters": "sass --no-source-map --style=compressed src/adapter-bootstrap.scss:dist/adapter-bootstrap.css src/adapter-daisyui.scss:dist/adapter-daisyui.css src/adapter-pico.scss:dist/adapter-pico.css src/adapter-bulma.scss:dist/adapter-bulma.css src/adapter-flowbite.scss:dist/adapter-flowbite.css src/adapter-preline.scss:dist/adapter-preline.css",
+    "build:adapters": "sass --no-source-map --style=compressed src/adapter-bootstrap.scss:dist/adapter-bootstrap.css src/adapter-daisyui.scss:dist/adapter-daisyui.css src/adapter-pico.scss:dist/adapter-pico.css src/adapter-bulma.scss:dist/adapter-bulma.css src/adapter-flowbite.scss:dist/adapter-flowbite.css src/adapter-preline.scss:dist/adapter-preline.css src/adapter-water.scss:dist/adapter-water.css src/adapter-mvp.scss:dist/adapter-mvp.css",
     "build:bootstrap": "sass --no-source-map --style=compressed --quiet-deps --silence-deprecation=import --load-path=node_modules bootstrap-entry.scss dist/bootstrap.css",
     "watch:tokens": "sass --watch src/ds.scss dist/ds.css",
     "lint": "stylelint \"src/**/*.scss\" \"app.css\"",
+    "audit:contrast": "node scripts/audit-contrast.mjs",
     "build": "npm run build:tokens && npm run lint",
     "build:daisyui": "tailwindcss -i daisyui-entry.css -o dist/daisyui.css",
     "build:pico": "tailwindcss -i pico-entry.css -o dist/pico.css",
@@ -24,7 +25,9 @@
     "build:tailwind": "tailwindcss -i tailwind.css -o dist/tailwind.css",
     "build:flowbite": "tailwindcss -i flowbite-entry.css -o dist/flowbite.css",
     "build:preline": "tailwindcss -i preline-entry.css -o dist/preline.css",
-    "demo": "npm run build:tokens && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline"
+    "build:water": "tailwindcss -i water-entry.css -o dist/water.css",
+    "build:mvp": "tailwindcss -i mvp-entry.css -o dist/mvp.css",
+    "demo": "npm run build:tokens && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline && npm run build:water && npm run build:mvp"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",
@@ -33,11 +36,14 @@
     "bulma": "^1.0.4",
     "daisyui": "^5.7.9",
     "flowbite": "^4.0.2",
+    "mvp.css": "^1.17.3",
     "postcss-scss": "^4.0.9",
     "preline": "^4.2.0",
+    "puppeteer": "^25.4.0",
     "sass": "^1.83.0",
     "stylelint": "^16.0.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.3",
+    "water.css": "^2.1.1"
   },
   "peerDependencies": {
     "bootstrap": "^5.3.0",

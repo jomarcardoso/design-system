@@ -1,0 +1,18 @@
+/* =============================================================================
+ * WATER.CSS BUILD ENTRY  (OPTIONAL)
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i water-entry.css -o dist/water.css
+ *
+ * The CLI is used purely as a bundler; nothing here imports Tailwind.
+ *
+ * `light.css` rather than `water.css`: the latter picks a theme from
+ * `prefers-color-scheme`, which would fight the adapter for control. The light
+ * build is an unconditional `:root`, and the adapter drives every theme from
+ * `data-theme` on top of it.
+ *
+ * `layer(vendor)` is required for the same reason as Pico and Bulma — Water
+ * ships unlayered, and unlayered CSS beats every cascade layer.
+ * ========================================================================== */
+
+@import './node_modules/water.css/out/light.css' layer(vendor);

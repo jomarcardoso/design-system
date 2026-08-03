@@ -78,6 +78,12 @@ meaningful if the project already uses Tailwind v4.
   Requires Tailwind v4. The least translation of any adapter here: Preline
   already splits a semantic layer from an `@theme inline` bridge, so the adapter
   just sets the semantic variables.
+- **Water.css** — adds `water-entry.css` and `src/adapters/_water.scss`. The
+  smallest surface here, 21 variables. Note it has no brand fill of its own: the
+  adapter makes buttons carry the action colour, which changes how Water looks.
+- **MVP.css** — adds `mvp-entry.css` and `src/adapters/_mvp.scss`. The adapter
+  neutralises MVP's brightness filter and binds hover from the token instead,
+  because a filter moves a background without its foreground.
 
 **One, not several**, and for two independent reasons. Bootstrap and daisyUI
 collide on 158 class names (`btn`, `card`, `alert`, `modal`, `table`…), so the
@@ -94,11 +100,14 @@ separate file after the token build. The second is what this repository does,
 and it is the only option if several adapters have to coexist as builds (not as
 pages).
 
-If they want an adapter for a library that has neither, say so plainly rather
-than improvising one mid-install. The two existing adapters are the templates —
-`_bootstrap.scss` for a library that compiles variants to literals,
-`_daisyui.scss` for one that keeps them as references — and writing a new one is
-its own task.
+If they want an adapter for a library that has none, say so plainly rather than
+improvising one mid-install. The eight that exist are the templates, and one of
+them is almost certainly the same shape — `_bootstrap.scss` for variants
+compiled to literals, `_daisyui.scss` for variants kept as references,
+`_pico.scss` for classless, `_bulma.scss` for decomposed channels,
+`_flowbite.scss` for a Tailwind `@theme` surface, `_water.scss` for a library
+with no brand fill. Writing a new one is its own task; see the five questions in
+`SKILL.md`.
 
 ### Choosing the prefix
 

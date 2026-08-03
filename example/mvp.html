@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" data-theme="brand">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MVP.css adapter</title>
+
+<!--
+  MVP has no manual theme switch of its own: its dark mode is a
+  `prefers-color-scheme` media query gated on `:root[color-mode="user"]`. Driving
+  it from `data-theme` through the adapter gives it one it never had.
+
+  `mvp-entry.css` wraps it in `@layer vendor`, since it ships unlayered.
+-->
+<link rel="stylesheet" href="../app.css">
+<link rel="stylesheet" href="../dist/adapter-mvp.css">
+<link rel="stylesheet" href="../dist/mvp.css">
+
+<style>
+  .themebar { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; }
+  .themebar button { margin: 0; }
+  .row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+  .note {
+    margin-top: var(--app-space-2xl); padding: var(--app-pad-surface);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+    border-radius: var(--app-radius-surface);
+    font-size: 0.88rem; color: var(--app-fg-muted); text-align: left;
+  }
+  .note strong { color: var(--app-fg-default); }
+  .note li { margin-bottom: var(--app-space-xs); }
+</style>
+</head>
+<body>
+<header>
+  <h1>MVP.css adapter</h1>
+  <p>Classless, and the only library here that derives interaction with a filter rather than a colour.</p>
+  <div class="themebar">
+    <button data-set-theme="light">Light</button>
+    <button data-set-theme="dark">Dark</button>
+    <button data-set-theme="brand">Brand</button>
+  </div>
+</header>
+
+<main>
+  <section>
+    <header>
+      <h2>Buttons</h2>
+      <p>
+        MVP fills buttons from <code>--color-link</code> — one variable doing two jobs, link
+        colour and button background. Hover was <code>filter: brightness(1.2)</code>; the
+        adapter sets that multiplier to 1 and binds the hover colour from the token instead.
+      </p>
+    </header>
+    <div class="row">
+      <button>Button</button>
+      <input type="submit" value="Submit">
+      <a href="#mvp"><b>Link button</b></a>
+      <button disabled>Disabled</button>
+    </div>
+  </section>
+
+  <section>
+    <header><h2>Content</h2></header>
+    <p>
+      Body text with a <a href="#mvp">link</a>, <code>inline code</code> and a footnote<sup>1</sup>.
+    </p>
+    <blockquote>
+      A blockquote, on the secondary accent tint with a secondary border.
+    </blockquote>
+    <table>
+      <thead><tr><th>Name</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>First</td><td>Active</td></tr>
+        <tr><td>Second</td><td>Pending</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <header><h2>Cards</h2></header>
+    <aside>
+      <h3>Card</h3>
+      <p>MVP's card is an <code>aside</code>, bordered from the secondary background.</p>
+    </aside>
+    <aside>
+      <h3>Another</h3>
+      <p>Radius and font come from the token layer.</p>
+    </aside>
+  </section>
+
+  <section>
+    <header><h2>Forms</h2></header>
+    <form onsubmit="return false">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="you@example.com">
+      <label for="plan">Plan</label>
+      <select id="plan"><option>Starter</option><option>Growth</option></select>
+      <label><input type="checkbox" checked> Accept the terms</label>
+      <button type="submit">Send</button>
+    </form>
+  </section>
+
+  <section>
+    <header><h2>Contexts reach in</h2></header>
+    <div data-surface="inverted" style="padding: var(--app-pad-surface); border-radius: var(--app-radius-surface); background: var(--app-bg-page); color: var(--app-fg-default);">
+      <div class="row">
+        <button>Button</button>
+        <span style="color: var(--app-fg-muted)">Inverted band</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="note">
+    <strong>What this page is testing:</strong>
+    <ul>
+      <li><strong>Interaction as a filter, not a colour.</strong> The one shape none of the other
+        seven libraries has. The standing rule is to leave a library's character alone where the
+        design system has no token — but here it does have one, and a brightness multiplier does
+        the opposite of what the brand theme asked for, since its hover goes one step
+        <em>darker</em>.</li>
+      <li><strong>A filter breaks the pair invariant by construction.</strong> It moves the
+        background without the foreground, and it does so invisibly: the build-time contrast
+        check measures token pairs and cannot see a runtime filter. That is why this is the one
+        library trait the adapter overrides rather than preserves.</li>
+      <li><strong>Decomposition again, in miniature.</strong> <code>--box-shadow</code> is
+        geometry only, composed at the use site with a separate colour variable. Pointing it at
+        a complete shadow token would emit two shadows concatenated. It stays MVP's — the same
+        problem as Bulma's HSL channels, one variable wide.</li>
+      <li><strong>No theme switch of its own.</strong> MVP's dark mode is a media query gated on
+        an attribute, with no manual toggle. The buttons above give it one it never shipped
+        with, without touching the library.</li>
+    </ul>
+  </div>
+</main>
+
+<script>
+  const root = document.documentElement;
+  document.querySelectorAll('[data-set-theme]').forEach((b) =>
+    b.addEventListener('click', () => { root.dataset.theme = b.dataset.setTheme; })
+  );
+</script>
+</body>
+</html>
