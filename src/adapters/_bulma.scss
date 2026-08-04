@@ -225,6 +225,21 @@ $_map: (
     // rather than the exact colour. The contrast decision — light text or dark
     // text — is what carries across, and that is the part that was wrong.
     --bulma-#{$bulma}-invert-l: #{_l($fg)};
+
+    // The FIFTH channel, and the second one this file learned about the hard
+    // way. `invert-l` answers "what text goes ON this colour"; this answers the
+    // opposite question — "what lightness does this colour take when it IS the
+    // text, on the page". Bulma composes it into
+    //
+    //     --bulma-{family}-text: hsl(h, s, var(--bulma-{family}-on-scheme-l))
+    //
+    // and left alone it keeps a lightness computed from Bulma's own palette,
+    // which pairs a foreign lightness with our hue. `.button.is-ghost` reads
+    // exactly that variable and rendered at 1.21:1.
+    //
+    // Layer 2 has the answer and it is now a real token rather than an alias:
+    // `{role}-text` is the tone validated against all four surfaces.
+    --bulma-#{$bulma}-on-scheme-l: #{_l(map.get($c, '#{$role}-text'))};
   }
 }
 

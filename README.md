@@ -21,14 +21,20 @@ is exactly one place — the semantic layer — and everything else derives from
 - **Theme and context switching** via `data-theme` and `data-surface`, with two
   build-time guarantees: a context cannot change a background without its
   foreground, and **every bg/fg pair in every theme is measured against WCAG** —
-  error below 3:1, warning below 4.5:1. Both cost zero runtime bytes.
+  error below 3:1, warning below 4.5:1. The pair list is generated, not curated:
+  every surface against every foreground that can land on one, so it cannot
+  quietly omit a combination. Both cost zero runtime bytes.
 - **Eight adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
   Preline, Water.css and MVP.css — from a 1416-variable library down to a
   21-variable one, all driven by the same 110 tokens. Plus a Tailwind bridge,
   which is not an adapter.
 - **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
-  every theme through a real browser and measures each rendered fill against
-  WCAG. It has caught three bugs the build-time check structurally cannot see.
+  every theme through a real browser and measures what is actually rendered —
+  both filled elements and coloured text on a transparent background, which is
+  where outline, ghost and link variants live. It has caught seven bugs the
+  build-time check structurally cannot see, including a Bootstrap link colour
+  that never followed the theme because Bootstrap reads `--bs-link-color-rgb`
+  and the adapter was setting `--bs-link-color`.
 - **Every button each library documents, rendered from these tokens.** The demo
   pages carry the full button catalogue from all eight libraries' own docs —
   colours, styles, sizes, states and shapes — because a foundation that covers

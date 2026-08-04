@@ -49,21 +49,59 @@ export const SNIPPET = `(() => {
   // everything from utilities, so a class-based scan measured five elements on
   // a page with thirty — and reported "all pass" on almost nothing.
   //
-  // The structural definition of a thing whose contrast matters: it paints an
-  // opaque background DIFFERENT from its parent's, and it has text of its own.
-  // That catches a utility-composed badge and skips a layout wrapper.
+  // The structural definition of a thing whose contrast matters is TWO cases,
+  // and for a long time this only had the first:
+  //
+  //   1. it paints an opaque background different from its parent's  (a fill)
+  //   2. it paints a text colour different from its parent's         (a label)
+  //
+  // Case 2 was the blind spot, and it hid an entire category. Every library
+  // ships variants that colour the TEXT and leave the background transparent —
+  // \`.btn-outline-*\`, \`.is-outlined\`, \`.btn-ghost\`, \`.outline\`, link buttons.
+  // Those have no fill, so case 1 skipped them silently and the audit reported
+  // "all pass" while never having looked at them once. They are exactly the
+  // variants where a foreground chosen to sit on a fill gets reused over the
+  // page background, which is the most common way this goes wrong.
+  //
+  // Case 2 needs the nearest OPAQUE ancestor, not the parent: the parent of an
+  // outline button is usually a transparent wrapper, and flattening onto a
+  // transparent colour silently yields black.
+  const effectiveBg = (el) => {
+    for (let n = el.parentElement; n; n = n.parentElement) {
+      const c = getComputedStyle(n).backgroundColor;
+      if (isOpaque(c)) return c;
+    }
+    const html = getComputedStyle(document.documentElement).backgroundColor;
+    return isOpaque(html) ? html : 'rgb(255,255,255)';
+  };
+
   const out = [];
   for (const el of document.querySelectorAll('body *')) {
     const cs = getComputedStyle(el);
-    if (!isOpaque(cs.backgroundColor)) continue;
 
     // Transparent TEXT, not just a transparent background. Bulma's
     // \`is-loading\` sets \`color: rgba(0,0,0,0)\` and swaps in a spinner, so
     // measuring its contrast asks what a colour nobody can see reads like.
     if (!isOpaque(cs.color)) continue;
 
-    const parentBg = el.parentElement ? getComputedStyle(el.parentElement).backgroundColor : '';
-    if (cs.backgroundColor === parentBg) continue;
+    // Not rendered: a collapsed \`<details>\`, a closed dropdown. A computed
+    // style still resolves for these, so without this they get measured and
+    // reported as failures nobody can see.
+    if (!el.getClientRects().length) continue;
+
+    // WCAG 1.4.3 exempts disabled controls, and every library deliberately
+    // dims them. Measuring them turns a design decision into a false alarm.
+    if (el.disabled || el.getAttribute('aria-disabled') === 'true') continue;
+
+    const parent = el.parentElement;
+    const parentBg = parent ? getComputedStyle(parent).backgroundColor : '';
+    const parentFg = parent ? getComputedStyle(parent).color : '';
+
+    const paintsFill = isOpaque(cs.backgroundColor) && cs.backgroundColor !== parentBg;
+    const paintsText = cs.color !== parentFg;
+    if (!paintsFill && !paintsText) continue;
+
+    const against = paintsFill ? cs.backgroundColor : effectiveBg(el);
 
     // Direct text only — otherwise a card counts its children's paragraphs.
     const own = [...el.childNodes]
@@ -80,11 +118,15 @@ export const SNIPPET = `(() => {
     const label = (showsValue ? String(el.value ?? '').trim() : '') || own;
     if (!label) continue;
 
-    out.push({ label: label.slice(0, 16), ratio: ratio(cs.color, cs.backgroundColor) });
+    out.push({
+      label: label.slice(0, 16),
+      kind: paintsFill ? 'fill' : 'text',
+      ratio: ratio(cs.color, against)
+    });
   }
   out.sort((a, b) => a.ratio - b.ratio);
   return { theme: document.documentElement.dataset.theme, measured: out.length,
-           worst: out.slice(0, 3), allPassAA: out.every((x) => x.ratio >= 4.5) };
+           worst: out.slice(0, 6), allPassAA: out.every((x) => x.ratio >= 4.5) };
 })()`;
 
 let puppeteer;

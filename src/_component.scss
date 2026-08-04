@@ -142,6 +142,12 @@ $contract: (
   'nav-fg-active': 'fg-on-selected',
   'nav-bg-active': 'bg-selected',
 
+  // --- Inline code -------------------------------------------------------
+  // Libraries like to tint `<code>` (Bootstrap ships a fixed pink). The
+  // foundation has no opinion about code, so this defaults to body text and
+  // exists so a project can have one without editing an adapter.
+  'code-fg': 'fg-default',
+
   // --- Feedback: alert / badge ------------------------------------------
   'alert-radius': 'radius-control',
   'alert-pad': 'pad-surface',

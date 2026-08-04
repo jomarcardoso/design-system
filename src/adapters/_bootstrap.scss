@@ -154,6 +154,18 @@ $_map: (
   --bs-link-color: #{core.ref('fg-link')};
   --bs-link-hover-color: #{core.ref('fg-link-hover')};
 
+  // --- Inline code -------------------------------------------------------
+  //
+  // Bootstrap bakes `#d63384` here, which follows no theme and lands at
+  // 4.31:1 on a light page — below AA for what is, structurally, body text.
+  //
+  // Layer 2 has no "code" role and should not grow one: a foundation does not
+  // need an opinion about `<code>`. So this compresses onto `fg-default` and
+  // reserves a layer 3 name, the same shape as `accent`. Projects that want
+  // code to stand out set `--app-code-fg` and get their colour back, with the
+  // difference that theirs will be measured.
+  --bs-code-color: #{component.ref-chain('code-fg')};
+
   // --- Lines -------------------------------------------------------------
   --bs-border-color: #{core.ref('border-color')};
   --bs-border-color-translucent: #{core.ref('border-color-subtle')};
@@ -187,6 +199,27 @@ $_map: (
   @each $bs, $role in $_map {
     --bs-#{$bs}-rgb: #{rgb-triplet(map.get($choices, $role))};
   }
+
+  // The four non-family triplets, and the reason they are here at all.
+  //
+  // `--bs-link-color` was bound in `_root()` and looked correct in devtools,
+  // but Bootstrap's anchor rule does not read it:
+  //
+  //     a { color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1)) }
+  //
+  // So every link on every Bootstrap page kept the triplet compiled from the
+  // BUILD-TIME link colour and did not follow the theme at all — indigo-700 on
+  // a near-black dark page, 2.46:1. The variable we were setting was real,
+  // spelled right, and simply never consumed. `--bs-emphasis-color-rgb` is read
+  // in fourteen places and had the same problem.
+  //
+  // This is the "a library variable that exists is not necessarily read" trap,
+  // and the lesson is narrow: grep the built CSS for who CONSUMES a variable,
+  // not for who declares it.
+  --bs-link-color-rgb: #{rgb-triplet(map.get($choices, link))};
+  --bs-body-color-rgb: #{rgb-triplet(map.get($choices, text))};
+  --bs-body-bg-rgb: #{rgb-triplet(map.get($choices, page))};
+  --bs-emphasis-color-rgb: #{rgb-triplet(map.get($choices, heading))};
 }
 
 // -----------------------------------------------------------------------------
@@ -276,6 +309,40 @@ $_map: (
     }
   }
 
+  // --- `.btn-outline-*`, the third baked foreground ---------------------
+  //
+  // This block used to say outline buttons needed no binding because "the
+  // colour already comes from the variant, and `_root()` themes that". Reading
+  // the compiled CSS disproves it:
+  //
+  //     .btn-outline-primary { --bs-btn-color: rgb(31.08%, 22.44%, 96.62%) }
+  //
+  // A literal, resolved from the build-time `$primary`, exactly like
+  // `.text-bg-*` above. So an outline button kept the LIGHT theme's colour on a
+  // dark page — five variants between 3.08:1 and 4.12:1 — and none of it was
+  // visible until the audit learned to measure text on a transparent
+  // background. An outline button has no fill, so a fill-shaped check skips it.
+  //
+  // The right colour here is `fg-{role}`, not `bg-{role}`: the fill tone is
+  // chosen to carry white text, and reusing it as text on the page is the same
+  // mistake daisyUI's soft variant makes. `fg-{role}` is the tone layer 2
+  // already validates against a light surface, and the surface matrix now
+  // checks it against all four.
+  @each $bs, $role in $_map {
+    .btn-outline-#{$bs} {
+      color: #{core.ref('fg-#{$role}')};
+      border-color: #{core.ref('border-#{$role}')};
+    }
+
+    // Hover fills with the variant colour, so the label flips to the paired
+    // foreground — the same pair the solid button uses.
+    .btn-outline-#{$bs}:hover {
+      background-color: #{core.ref('bg-#{$role}')};
+      border-color: #{core.ref('bg-#{$role}')};
+      color: #{core.ref('fg-on-#{$role}')};
+    }
+  }
+
   // `.btn-light` and `.btn-dark` are deliberately NOT bound, for the reason the
   // Bulma adapter spells out at length: `light` and `dark` are absolute colour
   // names, not theme roles. They already take their value from this palette,
@@ -284,8 +351,6 @@ $_map: (
   // does and what the class name promises.
 
   // Left to Bootstrap on purpose:
-  //   .btn-outline-*  transparent by design; its colour already comes from the
-  //                   variant, and `_root()` themes that.
   //   .btn-light / .btn-dark / .btn-link  no semantic role maps to them.
   //   :active         selected by `.btn:first-child:active` and friends;
   //                   rebinding it on a plainer selector would widen WHEN the

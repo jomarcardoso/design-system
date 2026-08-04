@@ -55,6 +55,10 @@ $light: (
   'action-hover': base.color(indigo, 700),
   'action-active': base.color(indigo, 800),
   'action-subtle': base.color(indigo, 50),
+  // The TEXT tone of the action role, as distinct from its fill. Without
+  // this, `fg-action` was an alias of `bg-action` — a fill reused as text,
+  // the exact mistake the outline/ghost variants make.
+  'action-text': base.color(indigo, 700),
 
   // Selected — chips, menu items, tabs, active nav entries, and the second
   // brand emphasis every component library asks for.
@@ -75,6 +79,7 @@ $light: (
   'on-selected': base.color(white),
   'selected-hover': base.color(teal, 800),
   'selected-subtle': base.color(teal, 100),
+  'selected-text': base.color(teal, 800),
 
   // Navigation.
   link: base.color(indigo, 700),
@@ -166,6 +171,7 @@ $dark: (
   'action-hover': base.color(indigo, 300),
   'action-active': base.color(indigo, 200),
   'action-subtle': base.color(indigo, 950),
+  'action-text': base.color(indigo, 300),
 
   // Distinct from `action` for the reason spelled out in `$light`. Dark takes
   // the foreground down the ramp rather than to white, the same move the status
@@ -175,6 +181,7 @@ $dark: (
   'on-selected': base.color(teal, 950),
   'selected-hover': base.color(teal, 400),
   'selected-subtle': base.color(teal, 950),
+  'selected-text': base.color(teal, 300),
 
   link: base.color(indigo, 300),
   'link-hover': base.color(indigo, 200),
@@ -263,12 +270,14 @@ $brand: (
   'action-hover': base.color(cocoa, 800),
   'action-active': base.color(cocoa, 900),
   'action-subtle': base.color(cocoa, 100),
+  'action-text': base.color(cocoa, 800),
 
   // Selected — steel. Deliberately a different family from action.
   selected: base.color(steel, 600),
   'on-selected': base.color(parchment, 50),
   'selected-hover': base.color(steel, 700),
   'selected-subtle': base.color(steel, 100),
+  'selected-text': base.color(steel, 800),
 
   // Navigation. Cocoa one step darker than `action` so a link reads as text
   // rather than as a button that lost its background.
@@ -417,12 +426,25 @@ $registry: (light: $light, dark: $dark, brand: $brand);
 // convention the intent pairs do, and spelling them out is clearer than
 // encoding the exception.
 
+// Every foreground that can legitimately land on a plain surface. A curated
+// list of pairs only ever checks what someone remembered to write down, and
+// what got forgotten here was consistent: `text` was checked against all four
+// surfaces, but `text-muted` only against `surface`, and `link` only against
+// `action-subtle`. So muted text on a sunken panel and a link on a raised card
+// — both extremely common — were never measured, and both were failing in the
+// rendered audit at 4.31:1 and 2.46:1 while the build said nothing.
+//
+// The status `*-text` tones belong here too, not just on their own tint. Every
+// library's outline/ghost/link button variant paints them straight onto the
+// page, which is precisely where they are least likely to pass.
+$_surfaces: (page, surface, raised, sunken);
+$_surface-foregrounds: (
+  text, 'text-muted', heading, link, 'link-hover', 'link-visited',
+  'action-text', 'selected-text',
+  'success-text', 'warning-text', 'danger-text', 'info-text'
+);
+
 $_contrast-pairs: (
-  (page, text),
-  (surface, text),
-  (raised, text),
-  (sunken, text),
-  (surface, 'text-muted'),
   (action, 'on-action'),
   ('action-hover', 'on-action'),
   (selected, 'on-selected'),
@@ -443,6 +465,15 @@ $_contrast-pairs: (
   ('danger-subtle', 'danger-text'),
   ('info-subtle', 'info-text')
 );
+
+// The surface matrix, generated rather than typed. 4 surfaces x 10 foregrounds
+// is 40 pairs nobody would maintain by hand, and the whole point is that it
+// cannot silently miss one.
+@each $_bg in $_surfaces {
+  @each $_fg in $_surface-foregrounds {
+    $_contrast-pairs: list.append($_contrast-pairs, ($_bg, $_fg), comma) !global;
+  }
+}
 
 @mixin _check-contrast($name, $choices) {
   @each $pair in $_contrast-pairs {

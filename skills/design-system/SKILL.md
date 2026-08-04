@@ -442,6 +442,44 @@ misses cluster in one place: **white text on a mid-bright fill.** Amber, teal,
 green and sky all read lighter than their step number suggests and need one more
 step down, or a dark foreground instead.
 
+### A fill-shaped check cannot see an outline button
+
+The rendered audit measured elements that paint an **opaque background** — and
+for a long time only those. Every library also ships variants that colour the
+*text* and leave the background transparent (`.btn-outline-*`, `.is-outlined`,
+`.btn-ghost`, Pico's `.outline`, every link button). Those have no fill, so the
+scan skipped them in silence and reported "all pass" on pages where five
+buttons were failing. Widening the check to two cases — *paints a background
+different from its parent's* **or** *paints a text colour different from its
+parent's* — nearly doubled what gets measured and immediately found four
+distinct bugs.
+
+Two details make case 2 correct rather than noisy: measure against the nearest
+**opaque ancestor** (an outline button's parent is usually a transparent
+wrapper, and flattening onto transparent silently yields black — a bug that
+made passing elements look like 2.6:1 failures), and skip disabled controls,
+which WCAG exempts and every library deliberately dims.
+
+### Generate the contrast matrix; do not curate it
+
+The build-time check took a hand-written list of pairs, and a hand-written list
+only ever covers what someone remembered. `text` was checked against all four
+surfaces, but `text-muted` only against `surface` and `link` only against
+`action-subtle` — so muted text on a sunken panel and a link on a raised card,
+both everyday combinations, were never measured. Replace the list with a
+generated matrix: every surface x every foreground that can legitimately land on
+one. It is 48 pairs nobody would maintain by hand, and its value is that it
+cannot silently omit one.
+
+Building that matrix exposed a naming lie worth watching for. `fg-action` and
+`fg-selected` were *aliases of the fill* — `map.get($c, action)` — while the
+four status roles each had a real `{role}-text` tone. So two of the six roles
+had no text colour at all, and anything reaching for "the action text colour"
+silently got a colour chosen to sit **under** white text. Layer 2 now defines
+`action-text` and `selected-text` like every other role. If a token named `fg-*`
+resolves to the same value as its `bg-*`, that is not a shortcut, it is a
+missing decision.
+
 ### Find the library's open seams before declaring a limit
 
 A library often *derives* a variant instead of reading a token for it. daisyUI's

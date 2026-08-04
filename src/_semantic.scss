@@ -212,7 +212,7 @@
     'bg-action-hover': map.get($c, action-hover),
     'bg-action-active': map.get($c, action-active),
     'bg-action-subtle': map.get($c, action-subtle),
-    'fg-action': map.get($c, action),
+    'fg-action': map.get($c, 'action-text'),
     'border-action': map.get($c, action),
 
     // Selected — the sketch's "cor ativa": chips, menu items, tabs, anything
@@ -222,7 +222,7 @@
     'fg-on-selected': map.get($c, on-selected),
     'bg-selected-hover': map.get($c, selected-hover),
     'bg-selected-subtle': map.get($c, selected-subtle),
-    'fg-selected': map.get($c, selected),
+    'fg-selected': map.get($c, 'selected-text'),
     'border-selected': map.get($c, selected),
 
     // Navigation — the sketch's "cor de navegação". Modelled as a FOREGROUND
