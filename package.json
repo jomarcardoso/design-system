@@ -27,7 +27,12 @@
     "build:preline": "tailwindcss -i preline-entry.css -o dist/preline.css",
     "build:water": "tailwindcss -i water-entry.css -o dist/water.css",
     "build:mvp": "tailwindcss -i mvp-entry.css -o dist/mvp.css",
-    "demo": "npm run build:tokens && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline && npm run build:water && npm run build:mvp"
+    "demo": "npm run build:tokens && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline && npm run build:water && npm run build:mvp",
+    "verify:patterns": "node scripts/verify-patterns.mjs",
+    "build:example-hot-tone": "sass --no-source-map --load-path=. example/ds-hot-tone-bootstrap-phase1/ds.scss example/ds-hot-tone-bootstrap-phase1/ds.css",
+    "build:example-cyberpunk": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-cyberpunk-bulma-phase2/ds.scss example/ds-cyberpunk-bulma-phase2/ds.css",
+    "demo:examples": "npm run build:bootstrap && npm run build:example-hot-tone && npm run build:example-cyberpunk",
+    "verify:examples": "node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json && node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 --ledger example/ds-cyberpunk-bulma-phase2/patterns.json"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

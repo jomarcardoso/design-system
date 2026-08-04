@@ -174,6 +174,61 @@ the subtler `background-color: var(--app-button-bg, var(--app-bg-action, var(--b
 because layer 2 is always defined and resolution never reaches the variant
 level. Each variant is bound to the semantic role it means.
 
+## Supporting libraries is the easy half
+
+Everything above is about making a library follow the project's decisions. That
+is necessary and it is not the goal, because a foundation that supports every
+library is an aggregator, not a design system.
+
+**The goal is restriction.** Bootstrap ships several hundred usable button
+combinations. A product needs three or four. The system's job is to make those
+three easy and the rest unavailable — so the measure of a release is the allowed
+list getting **shorter**, not the supported list getting longer.
+
+The library is scaffolding. It holds the building up early, shows through
+everywhere, and comes down as the structure sets. It is not hidden; it is
+fenced.
+
+The fence is a **pattern ledger** the project owns — this tool ships the schema,
+the verifier and an empty template, never a vocabulary. What a product allows is
+the product's decision. The ledger records what exists, what it means, and how
+mature each piece is:
+
+| State | Meaning | What an agent emits |
+|---|---|---|
+| `raw` | still using library classes | `btn btn-outline-secondary` |
+| `styled` | a semantic class exists | `app-btn-secondary` |
+| `wrapped` | a component exists | `<Button variant="secondary">` |
+| `forbidden` | outside the vocabulary | a refusal, with the alternative |
+
+Every entry also carries its **intent** in plain language — "a supporting action
+next to a primary one; reads as outline so it never competes". The intent is the
+part that must survive; the class names are the part expected to change. That is
+what lets the mapping be rebuilt when the library updates or is replaced.
+
+Progress becomes measurable — entries moving `raw` → `styled` → `wrapped`, and
+the forbidden list growing:
+
+```bash
+npm run verify:examples
+```
+
+```
+button     4 allowed  raw 4 (100%)  styled 0 (0%)  ...   # hot-tone, phase 1
+button     4 allowed  raw 0 (0%)  styled 4 (100%)  ...   # cyberpunk, phase 2
+```
+
+Two worked examples live in `example/`: **DS Hot Tone with Bootstrap phase 1**
+and **DS Cyberpunk with Bulma phase 2**. They are products built *with* the
+tool, and they disagree with each other — one allows a borderless button, the
+other forbids it. That disagreement is the argument for keeping the vocabulary
+out of the foundation.
+
+Promotion order is fixed: **SCSS first, wrapper second**, so the wrapper consumes
+the semantic class rather than the library composition, and projects with no
+component framework are protected too. Dropping the library then changes one
+SCSS body instead of every call site.
+
 ## What eight adapters are for
 
 Each library was picked because it breaks a different assumption, and together
@@ -280,7 +335,11 @@ way around layer 2.
 
 ```
 .claude-plugin/         plugin + marketplace manifests
-skills/design-system/   SKILL.md and references — what the agent reads
+skills/design-system/   SKILL.md and references — the CSS token side
+skills/design-patterns/ SKILL.md — the markup side: what may be built
+patterns/
+  patterns.json         the ledger: vocabulary, intent, state per pattern
+  patterns.schema.json  its schema, and the reasoning behind each field
 src/                    the design system itself
   _base.scss            layer 1, compile-time only
   _semantic.scss        layer 2, the public contract

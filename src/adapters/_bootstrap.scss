@@ -109,7 +109,15 @@
 @use '../component';
 
 @function rgb-triplet($c) {
-  $srgb: color.to-space($c, rgb);
+  // Gamut-map BEFORE converting, or a saturated oklch colour produces channels
+  // outside 0–255 — `--bs-primary-rgb: 202, 53, -25` for a vivid orange. A
+  // browser clamps that, so it looks fine until the value is used in a
+  // `color-mix()` or an opacity utility and the result is wrong.
+  //
+  // The built-in themes never hit this, which is exactly why it survived: they
+  // sit comfortably inside sRGB. The first project to pick a colour at the edge
+  // of the gamut found it immediately.
+  $srgb: color.to-space(color.to-gamut($c, $space: rgb, $method: local-minde), rgb);
   @return #{math.round(color.channel($srgb, 'red', $space: rgb))},
     #{math.round(color.channel($srgb, 'green', $space: rgb))},
     #{math.round(color.channel($srgb, 'blue', $space: rgb))};
@@ -482,7 +490,28 @@ $_map: (
   }
 }
 
-@mixin emit() {
+// `$themes` is a map of `name: choices`, and it exists because the first
+// project to define its own theme could not use this adapter at all.
+//
+// The triplets below have to be computed from a theme's actual colours (see
+// `_triplets`), so the adapter needs the choice maps — and it used to read them
+// straight out of `themes.$registry`, which only holds the themes that ship
+// with the tool. A product that turned those off and emitted its own hit
+// `list.nth($themes, 1)` on an empty list and could not build.
+//
+// Passing the map in makes a project theme exactly as supported as a built-in
+// one. Omit the argument and the built-ins are used, so nothing existing
+// changes.
+@mixin emit($themes: null) {
+  $set: $themes;
+
+  @if $set == null {
+    $set: ();
+    @each $name in config.$themes {
+      $set: map.merge($set, ($name: map.get(themes.$registry, $name)));
+    }
+  }
+
   @include core.in-layer(config.$layer-adapter) {
     // Everything that is a plain `var(--app-…)` goes here, once.
     //
@@ -503,11 +532,14 @@ $_map: (
     // The triplets, per theme, generated from `$themes` rather than listed by
     // hand. This is what keeps the promise that adding a theme touches no
     // adapter: register it in `_themes.scss`, add it to `$themes`, done.
-    $default-theme: list.nth(config.$themes, 1);
+    $names: map.keys($set);
+    $default-theme: null;
 
-    @each $name in config.$themes {
-      $choices: map.get(themes.$registry, $name);
+    @if list.length($names) > 0 {
+      $default-theme: list.nth($names, 1);
+    }
 
+    @each $name, $choices in $set {
       @if $name == $default-theme {
         :root,
         [data-theme='#{$name}'] {

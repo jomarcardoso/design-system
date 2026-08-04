@@ -1,0 +1,91 @@
+// =============================================================================
+// CYBERPUNK — a project-defined theme
+// =============================================================================
+//
+// Dark by default rather than dark as an alternative: `page` is near-black and
+// there is no light counterpart, because this product does not have one. A
+// design system with one theme is a normal design system.
+//
+// Two things this palette does that the tool's demonstration themes do not, and
+// both were found by the build refusing to compile:
+//
+//   - Elevation goes UP in luminance. On near-black a shadow is invisible, so
+//     `raised` is lighter than `surface` and the shadow token is nearly nothing.
+//   - Fills are bright and their paired foregrounds are DARK. A neon cyan
+//     carrying white text is unreadable; the pairing has to invert.
+// =============================================================================
+
+@use '../../src/base';
+
+$cyberpunk: (
+  // Surfaces — near-black, with a violet cast rather than neutral grey so the
+  // neon reads as belonging to the same world.
+  page: base.color(zinc, 950),
+  surface: base.color(zinc, 900),
+  raised: base.color(zinc, 800),
+  sunken: base.color(black),
+  overlay: rgba(0, 0, 0, 0.72),
+
+  text: base.color(zinc, 100),
+  'text-muted': base.color(zinc, 400),
+  'text-subtle': base.color(zinc, 500),
+  heading: base.color(white),
+
+  // Action — neon cyan. Bright fill, dark text: the inversion the header
+  // mentions. `action-text` is a separate, lighter tone for when the colour is
+  // used AS text on the page.
+  action: base.color(cyan, 400),
+  'on-action': base.color(cyan, 950),
+  'action-hover': base.color(cyan, 300),
+  'action-active': base.color(cyan, 200),
+  'action-subtle': base.color(cyan, 950),
+  'action-text': base.color(cyan, 300),
+
+  // Selected — magenta, the other half of the two-colour neon scheme.
+  selected: base.color(fuchsia, 400),
+  'on-selected': base.color(fuchsia, 950),
+  'selected-hover': base.color(fuchsia, 300),
+  'selected-subtle': base.color(fuchsia, 950),
+  'selected-text': base.color(fuchsia, 300),
+
+  link: base.color(cyan, 300),
+  'link-hover': base.color(cyan, 200),
+  'link-visited': base.color(fuchsia, 300),
+
+  border: base.color(zinc, 700),
+  'border-subtle': base.color(zinc, 800),
+  'border-strong': base.color(zinc, 600),
+  ring: base.color(cyan, 400),
+
+  // Almost nothing: elevation is carried by luminance here, not by shadow.
+  'shadow-raised': base.scale(shadow, xs),
+  'shadow-overlay': base.scale(shadow, md),
+
+  success: base.color(lime, 400),
+  'on-success': base.color(lime, 950),
+  'success-hover': base.color(lime, 300),
+  'success-subtle': base.color(lime, 950),
+  'success-text': base.color(lime, 300),
+  'success-border': base.color(lime, 800),
+
+  warning: base.color(amber, 400),
+  'on-warning': base.color(amber, 950),
+  'warning-hover': base.color(amber, 300),
+  'warning-subtle': base.color(amber, 950),
+  'warning-text': base.color(amber, 300),
+  'warning-border': base.color(amber, 800),
+
+  danger: base.color(rose, 400),
+  'on-danger': base.color(rose, 950),
+  'danger-hover': base.color(rose, 300),
+  'danger-subtle': base.color(rose, 950),
+  'danger-text': base.color(rose, 300),
+  'danger-border': base.color(rose, 800),
+
+  info: base.color(sky, 400),
+  'on-info': base.color(sky, 950),
+  'info-hover': base.color(sky, 300),
+  'info-subtle': base.color(sky, 950),
+  'info-text': base.color(sky, 300),
+  'info-border': base.color(sky, 800)
+);

@@ -1,0 +1,98 @@
+// =============================================================================
+// HOT TONE — a project-defined theme
+// =============================================================================
+//
+// This file is what a PROJECT writes. It is not part of the tool, and the tool
+// was not edited to make it work.
+//
+// A theme is a complete set of colour decisions. This one is warm throughout:
+// the surfaces carry a paper tint rather than being neutral grey, so the
+// interface reads as printed matter, and the action colour is the orange the
+// brand already uses.
+//
+// The two calls at the bottom are the whole API:
+//
+//   themes.check-contrast()   validates every pair at BUILD time
+//   semantic.emit-theme()     writes the layer 2 tokens under [data-theme]
+//
+// Compile with:
+//   sass example/ds-hot-tone-bootstrap-phase1/theme.scss <out>.css
+// =============================================================================
+
+@use '../../src/base';
+
+
+$hot-tone: (
+  // Surfaces — warm paper, not grey. `raised` is lighter than `surface` so a
+  // card lifts off the page.
+  page: base.color(orange, 50),
+  surface: base.color(white),
+  raised: base.color(white),
+  sunken: base.color(orange, 100),
+  overlay: rgba(69, 26, 3, 0.55),
+
+  // Text — very dark brown rather than black, so nothing on screen is colder
+  // than the paper it sits on.
+  text: base.color(stone, 900),
+  'text-muted': base.color(stone, 600),
+  'text-subtle': base.color(stone, 500),
+  heading: base.color(stone, 950),
+
+  // Action — the brand orange. Deep enough to carry white text.
+  action: base.color(orange, 700),
+  'on-action': base.color(white),
+  'action-hover': base.color(orange, 800),
+  'action-active': base.color(orange, 900),
+  'action-subtle': base.color(orange, 50),
+  'action-text': base.color(orange, 800),
+
+  // Selected — rose, a different family from action so the two never collapse
+  // into "the brand colour" in someone's head.
+  selected: base.color(rose, 700),
+  'on-selected': base.color(white),
+  'selected-hover': base.color(rose, 800),
+  'selected-subtle': base.color(rose, 100),
+  'selected-text': base.color(rose, 800),
+
+  link: base.color(orange, 800),
+  'link-hover': base.color(orange, 900),
+  'link-visited': base.color(rose, 800),
+
+  border: base.color(stone, 200),
+  'border-subtle': base.color(stone, 100),
+  'border-strong': base.color(stone, 300),
+  ring: base.color(orange, 600),
+
+  'shadow-raised': base.scale(shadow, sm),
+  'shadow-overlay': base.scale(shadow, lg),
+
+  // Status. These stay conventional even in a warm brand: a green that is not
+  // green stops meaning "it worked".
+  success: base.color(green, 700),
+  'on-success': base.color(white),
+  'success-hover': base.color(green, 800),
+  'success-subtle': base.color(green, 50),
+  'success-text': base.color(green, 800),
+  'success-border': base.color(green, 200),
+
+  warning: base.color(amber, 500),
+  'on-warning': base.color(amber, 950),
+  'warning-hover': base.color(amber, 600),
+  'warning-subtle': base.color(amber, 50),
+  'warning-text': base.color(amber, 800),
+  'warning-border': base.color(amber, 200),
+
+  danger: base.color(red, 600),
+  'on-danger': base.color(white),
+  'danger-hover': base.color(red, 700),
+  'danger-subtle': base.color(red, 50),
+  'danger-text': base.color(red, 800),
+  'danger-border': base.color(red, 200),
+
+  info: base.color(sky, 700),
+  'on-info': base.color(white),
+  'info-hover': base.color(sky, 800),
+  'info-subtle': base.color(sky, 50),
+  'info-text': base.color(sky, 800),
+  'info-border': base.color(sky, 200)
+);

@@ -1,0 +1,92 @@
+// =============================================================================
+// CYBERPUNK — phase 2: the semantic layer
+// =============================================================================
+//
+// This file is what "phase 2" means. Each class here corresponds to exactly one
+// entry in `patterns.json` whose `state` is `styled`, and the markup stops
+// carrying library classes.
+//
+// -----------------------------------------------------------------------------
+// WHY SCSS BEFORE A COMPONENT WRAPPER
+// -----------------------------------------------------------------------------
+//
+// The tempting order is to write `<Button variant="primary">` first and have it
+// emit `button is-primary`. That moves the coupling into the component instead
+// of removing it — every consumer now depends on a component that depends on
+// Bulma, and code with no component framework gets no protection at all.
+//
+// With the semantic class in between, three things become true:
+//
+//   - a plain HTML page is governed too;
+//   - the wrapper, when it arrives, is one line and knows nothing about Bulma;
+//   - removing Bulma edits THIS file and nothing else.
+//
+// This product has no component framework, so phase 2 ends here. That is a
+// complete stopping point, not an unfinished phase 3.
+//
+// -----------------------------------------------------------------------------
+// WHY `@extend` AND NOT A COPY
+// -----------------------------------------------------------------------------
+//
+// `@extend` keeps Bulma as the single source of the button's anatomy — padding,
+// line height, focus behaviour, the disabled state. Redeclaring those here
+// would fork the library quietly and drift within a release.
+//
+// What each class ADDS is only the divergence, which is also what earned the
+// promotion in the first place. If a class here ends up with no declarations of
+// its own, it did not deserve promoting: it was a rename.
+// =============================================================================
+
+// No `@use` here on purpose: a file containing `@use` cannot be `@import`ed,
+// and this one must be imported into the same scope as Bulma for `@extend` to
+// resolve. It needs no module anyway — every value it reads is a layer 2
+// custom property, which is the point of layer 2 being the public contract.
+
+@layer components {
+  // The neon edge. Bulma has no modifier for this, which is the STRUCTURAL
+  // divergence that triggered promotion — a colour change would not have.
+  .cp-btn-primary {
+    @extend .button;
+    @extend .is-primary;
+
+    box-shadow:
+      0 0 0 1px var(--app-bg-action),
+      0 0 12px -2px var(--app-bg-action);
+  }
+
+  // Three classes at the call site was the trigger here. The border is heavier
+  // than Bulma's so an outlined control survives on a near-black surface.
+  .cp-btn-secondary {
+    @extend .button;
+    @extend .is-primary;
+    @extend .is-outlined;
+
+    border-width: 2px;
+  }
+
+  .cp-btn-destructive {
+    @extend .button;
+    @extend .is-danger;
+
+    box-shadow:
+      0 0 0 1px var(--app-bg-danger),
+      0 0 12px -2px var(--app-bg-danger);
+  }
+
+  // Allowed in this product and forbidden in Hot Tone. The hover fill is what
+  // makes it survivable here: the control is invisible at rest but the panel it
+  // sits in has visible chrome, so its position is predictable.
+  .cp-btn-ghost {
+    @extend .button;
+    @extend .is-ghost;
+
+    color: var(--app-fg-action);
+    text-decoration: none;
+
+    &:hover {
+      background: var(--app-bg-action-subtle);
+      color: var(--app-fg-action);
+      text-decoration: none;
+    }
+  }
+}

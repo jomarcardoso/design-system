@@ -1,0 +1,62 @@
+// =============================================================================
+// CYBERPUNK — the project's design system build
+// =============================================================================
+//
+// Differs from the Hot Tone entry in one structural way, and the reason is
+// worth knowing before copying either.
+//
+// Phase 2 uses `@extend` to build semantic classes on top of Bulma's, and
+// `@extend` only works if SASS can see the selector being extended. Bulma
+// distributed as compiled CSS is invisible to it. So this entry compiles Bulma
+// FROM SOURCE, which is also what a real Bulma project does — the library ships
+// Sass precisely so it can be configured and extended at build time.
+//
+// The consequence: this file produces one stylesheet containing the library,
+// the tokens and the semantic layer, rather than three separate ones. That is
+// the normal shape for a project; the tool keeps them separate only so each
+// piece can be demonstrated on its own.
+//
+//     sass --load-path=. --load-path=node_modules \
+//       example/ds-cyberpunk-bulma-phase2/ds.scss out.css
+// =============================================================================
+
+@use '../../src/config' with ($themes: (), $adapters: (bulma));
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/themes';
+@use '../../src/component';
+@use '../../src/adapters/bulma' as bulma-adapter;
+@use 'theme';
+
+// The library, wrapped in the `vendor` layer so the adapter — which lands in
+// `vendor-config`, declared after it — wins over library defaults.
+//
+// A nested legacy `@import` rather than `@use`, and this is forced rather than
+// chosen: `@extend` can only reach selectors in the current scope, and `@use`
+// puts a module in its own. Importing textually is what lets `patterns.scss`
+// extend `.button`. Sass warns that `@import` is deprecated; there is currently
+// no module-system replacement for extending a third-party library, so the
+// warning is expected here and does not indicate a problem.
+@layer vendor {
+  @import 'bulma/bulma';
+}
+
+// Layer 1 — compiles away.
+@include base.emit();
+
+// Layer 2 — structure, then this product's only theme, then contexts.
+@include semantic.emit-structure();
+@include themes.check-contrast('cyberpunk', theme.$cyberpunk);
+@include semantic.emit-theme('cyberpunk', theme.$cyberpunk, $default: true);
+@include themes.emit-contexts();
+
+// Layer 3 — names only.
+@include component.emit();
+
+// Layer 3.5 — the adapter, receiving this product's theme rather than the
+// tool's built-ins.
+@include bulma-adapter.emit(('cyberpunk': theme.$cyberpunk));
+
+// The semantic layer — phase 2 itself. Imported, not used, for the scope reason
+// above: it extends Bulma's selectors, so it has to share Bulma's scope.
+@import 'patterns';

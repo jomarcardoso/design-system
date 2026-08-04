@@ -1,6 +1,6 @@
 {
   "name": "design-system",
-  "description": "A framework-independent CSS token foundation and the skill that applies it. Installs the token layers into a project, wires Bootstrap or Tailwind to them, and keeps application code reading only the semantic contract.",
+  "description": "A framework-independent CSS token foundation plus the pattern ledger that restricts which component variants a project may use. Installs the token layers, wires Bootstrap or Tailwind to them, keeps application code reading only the semantic contract, and holds the vocabulary closed as the library is scaffolded away.",
   "version": "0.1.0",
   "author": {
     "name": "Jomar Cardoso"

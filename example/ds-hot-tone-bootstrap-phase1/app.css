@@ -1,0 +1,38 @@
+/* =============================================================================
+ * HOT TONE — the application entry
+ * =============================================================================
+ *
+ * The project's own entry, not the tool's `app.css`. It differs in one way that
+ * matters: it imports THIS product's compiled design system, which contains one
+ * theme, rather than the tool's, which contains three demonstration themes.
+ *
+ * The layer order is declared first and in full, including layers this file
+ * never fills, so that adding Tailwind or a legacy stylesheet later slots into
+ * the right position with no edit here.
+ * ========================================================================== */
+
+@layer legacy, theme, base, ds.base, ds.semantic, ds.component, vendor,
+  vendor-config, components, ds.overrides, utilities;
+
+@import '../../dist/bootstrap.css';
+@import './ds.css';
+
+@layer base {
+  html {
+    background: var(--app-bg-page);
+    color: var(--app-fg-default);
+    font-family: var(--app-font-body);
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-leading);
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    color: var(--app-fg-heading);
+    font-family: var(--app-font-heading);
+    font-weight: var(--app-weight-heading);
+    line-height: var(--app-text-leading-heading);
+  }
+
+  :where(a) { color: var(--app-fg-link); }
+  :where(a:hover) { color: var(--app-fg-link-hover); }
+}

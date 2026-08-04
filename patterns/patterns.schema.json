@@ -1,0 +1,265 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/jomarcardoso/design-system/patterns.schema.json",
+  "title": "Design system pattern ledger",
+  "description": "The record of what the design system allows, what each pattern means, and how mature each one is. Not a class table: a ledger. The library mapping is the part expected to change; the intent is the part that must not.",
+  "type": "object",
+  "required": [
+    "version",
+    "libraries",
+    "components"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "description": "Schema version. Bump when the shape changes so the verifier can refuse a file it does not understand."
+    },
+    "libraries": {
+      "type": "array",
+      "description": "Libraries this ledger knows how to emit for. A pattern does not have to map to all of them; a missing mapping means 'this library cannot express this pattern', which is itself worth recording.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1
+    },
+    "components": {
+      "type": "object",
+      "description": "One entry per component the design system has an opinion about. A component absent from here is ungoverned — the verifier says nothing about it.",
+      "additionalProperties": {
+        "$ref": "#/$defs/component"
+      }
+    }
+  },
+  "$defs": {
+    "component": {
+      "type": "object",
+      "required": [
+        "intent",
+        "namespace",
+        "patterns"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "type": "string",
+          "description": "What this component is for, in plain language. Read by a human deciding whether to add a pattern, and by an agent deciding whether a request belongs here at all."
+        },
+        "namespace": {
+          "type": "object",
+          "description": "Per library, a regular expression matching every class that belongs to this component. This is what makes the ledger an ALLOWLIST: a class matching the namespace that no allowed pattern produces is a violation, even if nobody wrote a forbidden entry for it. Without this the ledger could only catch mistakes someone predicted.",
+          "additionalProperties": {
+            "type": "string",
+            "format": "regex"
+          }
+        },
+        "modifiers": {
+          "type": "object",
+          "description": "Orthogonal axes that combine with any pattern (size, width). Kept separate from patterns so the ledger does not have to enumerate the cross product — which is exactly how a vocabulary reaches 500 variations without anyone deciding to.",
+          "additionalProperties": {
+            "$ref": "#/$defs/modifier"
+          }
+        },
+        "patterns": {
+          "type": "object",
+          "description": "The vocabulary. Every key here is a name application code and agents may use.",
+          "additionalProperties": {
+            "$ref": "#/$defs/pattern"
+          }
+        },
+        "namespaceNote": {
+          "type": "string",
+          "description": "Why the namespace regex is drawn where it is. A prefix is rarely exactly one component."
+        }
+      }
+    },
+    "modifier": {
+      "type": "object",
+      "required": [
+        "intent",
+        "options"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "type": "string"
+        },
+        "options": {
+          "type": "object",
+          "description": "Allowed values for this axis, each mapping to per-library classes. An empty class list means 'this is the default and adds nothing'.",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "libraries"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "intent": {
+                "type": "string"
+              },
+              "libraries": {
+                "$ref": "#/$defs/libraryClasses"
+              }
+            }
+          }
+        },
+        "forbidden": {
+          "type": "object",
+          "description": "Values deliberately removed from this axis.",
+          "additionalProperties": {
+            "$ref": "#/$defs/forbidden"
+          }
+        }
+      }
+    },
+    "pattern": {
+      "type": "object",
+      "required": [
+        "intent",
+        "state"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "type": "string",
+          "description": "What this pattern MEANS, independent of any library. This is the load-bearing field. If the project swaps Bootstrap for something else, or the library renames a class, the intent is what lets an agent rebuild the mapping instead of guessing from class names."
+        },
+        "state": {
+          "enum": [
+            "raw",
+            "styled",
+            "wrapped",
+            "forbidden"
+          ],
+          "description": "Maturity, and the instruction to the agent. `raw` emit library classes. `styled` emit the project's semantic class. `wrapped` emit the framework component. `forbidden` refuse and offer the alternative. Promotion is: fill the next slot, then change this field."
+        },
+        "raw": {
+          "$ref": "#/$defs/libraryClasses",
+          "description": "Library classes, per library. Present from day one; it is the scaffolding."
+        },
+        "styled": {
+          "type": "string",
+          "description": "The project's own semantic class, once one exists. Written in SCSS BEFORE any component wrapper, so that code with no component framework is protected too."
+        },
+        "wrapped": {
+          "type": "object",
+          "description": "The framework component, once one exists. It should render the `styled` class, not the library composition — that is what keeps the wrapper thin and makes removing the library a one-file change.",
+          "required": [
+            "component"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "type": "string"
+            },
+            "props": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "import": {
+              "type": "string"
+            }
+          }
+        },
+        "reason": {
+          "type": "string",
+          "description": "Required when state is `forbidden`. Why this is not in the vocabulary. A refusal without a reason gets overridden by the next person in a hurry."
+        },
+        "instead": {
+          "type": "string",
+          "description": "The pattern to use in its place. A refusal that does not name an alternative just moves the problem."
+        },
+        "matches": {
+          "$ref": "#/$defs/libraryClasses",
+          "description": "For forbidden patterns: the library classes that indicate someone reached for this, so the verifier can name it precisely instead of reporting an anonymous unknown class."
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "forbidden"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "reason",
+              "instead"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "styled"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "styled"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "wrapped"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "wrapped"
+            ]
+          }
+        }
+      ]
+    },
+    "libraryClasses": {
+      "type": "object",
+      "description": "Library name to the exact class list for that library.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "forbidden": {
+      "type": "object",
+      "required": [
+        "reason",
+        "instead"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "instead": {
+          "type": "string"
+        },
+        "matches": {
+          "$ref": "#/$defs/libraryClasses"
+        }
+      }
+    }
+  }
+}

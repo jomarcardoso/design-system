@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en" data-theme="cyberpunk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DS Cyberpunk with Bulma — phase 2</title>
+
+<!--
+  Run `npm run demo:examples` before opening this file.
+
+  Compare the markup below with the Hot Tone example. There is not a single
+  Bulma class here — no `button`, no `is-primary`. That is the whole difference
+  phase 2 makes, and it is why removing Bulma from this product would edit
+  patterns.scss and nothing else.
+
+      node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 \
+        --ledger example/ds-cyberpunk-bulma-phase2/patterns.json
+
+  Writing `class="button is-primary"` here now FAILS — not because it is
+  forbidden, but because that pattern has been promoted and the call site is
+  supposed to have stopped naming the library.
+-->
+<link rel="stylesheet" href="./ds.css">
+
+<style>
+  body {
+    margin: 0;
+    background: var(--app-bg-page);
+    color: var(--app-fg-default);
+    font-family: var(--app-font-body);
+  }
+
+  /* Bulma's minireset flattens h1–h6 to inherit, expecting `.title` instead.
+     A product using Bulma has to restore a document baseline somewhere; doing
+     it from tokens keeps the scale in one place rather than in a class. */
+  h1, h2 {
+    color: var(--app-fg-heading);
+    font-family: var(--app-font-heading);
+    font-weight: var(--app-weight-heading);
+    line-height: var(--app-text-leading-heading);
+    margin-block: 0 var(--app-space-md);
+  }
+  h1 { font-size: var(--app-text-size-heading); }
+  h2 { font-size: var(--app-text-size-lg); }
+  .wrap { max-width: 60rem; margin: 0 auto; padding: var(--app-space-2xl) var(--app-space-lg); }
+  .lede { color: var(--app-fg-muted); max-width: 46rem; }
+  .panel {
+    background: var(--app-bg-surface);
+    border: var(--app-border-width) solid var(--app-border-color);
+    border-radius: var(--app-radius-surface);
+    padding: var(--app-pad-surface);
+    margin-block: var(--app-space-lg);
+  }
+  /* Prefixed on purpose: an unprefixed `.row` collides with the library's
+     grid, whose `.row > *` forces width:100%. Page-local class names need a
+     namespace for the same reason component patterns do. */
+  .ex-row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+  .label { color: var(--app-fg-muted); font-size: 0.85rem; margin-block: var(--app-space-md) var(--app-space-xs); }
+  code { font-family: var(--app-font-mono); font-size: 0.85em; color: var(--app-fg-action); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: var(--app-space-sm); border-bottom: 1px solid var(--app-border-color-subtle); }
+  th { color: var(--app-fg-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>DS Cyberpunk <small style="color:var(--app-fg-muted);font-weight:400">with Bulma · phase 2</small></h1>
+  <p class="lede">
+    A second product on the same foundation, reaching different conclusions. Dark by
+    default with no light counterpart, neon cyan and magenta as the two brand roles, and
+    a vocabulary of four button patterns — one of which the Hot Tone example forbids.
+  </p>
+  <p class="lede">
+    <strong>Phase 2</strong> means each allowed pattern has been promoted to a semantic
+    class in <code>patterns.scss</code>. There is no component framework here, so phase 2
+    is the end of the line rather than a step toward a wrapper — a complete stopping
+    point.
+  </p>
+
+  <section class="panel">
+    <h2>The vocabulary</h2>
+    <p class="lede">Four patterns, and the markup names none of them after Bulma.</p>
+
+    <p class="label">Emphasis</p>
+    <div class="ex-row">
+      <button class="cp-btn-primary">Execute</button>
+      <button class="cp-btn-secondary">Abort sequence</button>
+      <button class="cp-btn-destructive">Purge node</button>
+      <button class="cp-btn-ghost">Collapse pane</button>
+    </div>
+
+    <p class="label">Size — an orthogonal axis</p>
+    <div class="ex-row">
+      <button class="cp-btn-primary">Execute</button>
+      <button class="cp-btn-primary is-small">Run</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>In use</h2>
+    <table>
+      <thead>
+        <tr><th>Node</th><th>Region</th><th>State</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>node-7f21</td><td>sector 4</td><td>online</td>
+          <td><button class="cp-btn-ghost is-small">Collapse</button></td>
+        </tr>
+        <tr>
+          <td>node-7f22</td><td>sector 4</td><td>degraded</td>
+          <td><button class="cp-btn-ghost is-small">Collapse</button></td>
+        </tr>
+        <tr>
+          <td>node-9a08</td><td>sector 11</td><td>offline</td>
+          <td><button class="cp-btn-ghost is-small">Collapse</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ex-row" style="margin-top:var(--app-space-lg)">
+      <button class="cp-btn-primary">Commit changes</button>
+      <button class="cp-btn-secondary">Revert</button>
+      <button class="cp-btn-destructive">Purge node</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>Two products, one foundation, opposite conclusions</h2>
+    <p class="lede">
+      The <code>ghost</code> pattern is allowed here and forbidden in Hot Tone. The
+      trade-off is identical — a borderless control can read as text — and the products
+      resolve it differently, because this one's surfaces are dark panels with visible
+      chrome so the affordance survives.
+    </p>
+    <p class="lede">
+      That disagreement is the argument for keeping the vocabulary in the product rather
+      than in the tool. A foundation that shipped an opinion here would be wrong for one
+      of these two, and the tool cannot know which.
+    </p>
+    <table>
+      <thead><tr><th>Decision</th><th>Hot Tone</th><th>Cyberpunk</th></tr></thead>
+      <tbody>
+        <tr><td>Low-emphasis action</td><td><code>quiet</code>, table rows only</td><td><code>ghost</code>, any dense panel</td></tr>
+        <tr><td>Large size</td><td>allowed — landing pages</td><td>forbidden — emphasis said twice</td></tr>
+        <tr><td>Secondary reads as</td><td>outline of a neutral role</td><td>outline of the brand role</td></tr>
+        <tr><td>Themes</td><td>one, light</td><td>one, dark</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en" data-theme="hot-tone">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DS Hot Tone with Bootstrap — phase 1</title>
+
+<!--
+  Run `npm run demo:examples` before opening this file.
+
+  Everything here is CONFORMING markup: every button matches a pattern in
+  ./patterns.json. Running
+
+      node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 \
+        --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json
+
+  reports no violations. Introduce a `btn-success` and it fails with the reason
+  this product recorded for refusing it.
+-->
+<link rel="stylesheet" href="./app.css">
+
+<style>
+  body { margin: 0; }
+  .wrap { max-width: 60rem; margin: 0 auto; padding: var(--app-space-2xl) var(--app-space-lg); }
+  .lede { color: var(--app-fg-muted); max-width: 46rem; }
+  .panel {
+    background: var(--app-bg-surface);
+    border: var(--app-border-width) solid var(--app-border-color);
+    border-radius: var(--app-radius-surface);
+    padding: var(--app-pad-surface);
+    margin-block: var(--app-space-lg);
+  }
+  /* Prefixed on purpose: an unprefixed `.row` collides with the library's
+     grid, whose `.row > *` forces width:100%. Page-local class names need a
+     namespace for the same reason component patterns do. */
+  .ex-row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+  .label { color: var(--app-fg-muted); font-size: 0.85rem; margin-block: var(--app-space-md) var(--app-space-xs); }
+  code { font-family: var(--app-font-mono); font-size: 0.85em; color: var(--app-fg-default); }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: var(--app-space-sm); border-bottom: 1px solid var(--app-border-color-subtle); }
+  th { color: var(--app-fg-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>DS Hot Tone <small style="color:var(--app-fg-muted);font-weight:400">with Bootstrap · phase 1</small></h1>
+  <p class="lede">
+    A product design system built on this foundation. The palette is warm throughout —
+    surfaces carry a paper tint rather than neutral grey — and the vocabulary is four
+    button patterns, not the several hundred Bootstrap makes available.
+  </p>
+  <p class="lede">
+    <strong>Phase 1</strong> means there is no abstraction yet: the ledger records the
+    decisions and the agent both applies and enforces them, but the markup still carries
+    library classes. Nothing has been written in SCSS or wrapped in a component. This is
+    the cheapest possible closed vocabulary.
+  </p>
+
+  <section class="panel">
+    <h2>The vocabulary</h2>
+    <p class="lede">Four patterns. Every button below is the whole allowed set.</p>
+
+    <p class="label">Emphasis</p>
+    <div class="ex-row">
+      <button class="btn btn-primary">Place order</button>
+      <button class="btn btn-outline-secondary">Back to menu</button>
+      <button class="btn btn-danger">Cancel order</button>
+      <button class="btn btn-link">Show details</button>
+    </div>
+
+    <p class="label">Size — an orthogonal axis, not a new pattern</p>
+    <div class="ex-row">
+      <button class="btn btn-primary btn-lg">Start an order</button>
+      <button class="btn btn-primary">Place order</button>
+      <button class="btn btn-primary btn-sm">Add</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>In use</h2>
+    <p class="lede">
+      The same four patterns carrying a real screen. Note that <code>quiet</code> only
+      appears inside the table, which is the condition this product recorded for
+      allowing it at all.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Order</th><th>Customer</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>#4021</td><td>M. Okonkwo</td><td>Preparing</td>
+          <td><button class="btn btn-link btn-sm">Show details</button></td>
+        </tr>
+        <tr>
+          <td>#4020</td><td>S. Ferreira</td><td>Out for delivery</td>
+          <td><button class="btn btn-link btn-sm">Show details</button></td>
+        </tr>
+        <tr>
+          <td>#4019</td><td>A. Lindqvist</td><td>Delivered</td>
+          <td><button class="btn btn-link btn-sm">Show details</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="ex-row" style="margin-top:var(--app-space-lg)">
+      <button class="btn btn-primary">Save changes</button>
+      <button class="btn btn-outline-secondary">Discard</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2>What the ledger refuses</h2>
+    <p class="lede">
+      These are not rendered, because they are not in the vocabulary. Each refusal in
+      <code>patterns.json</code> carries a reason and an alternative — a rule with
+      neither gets bypassed by the next person in a hurry.
+    </p>
+    <table>
+      <thead><tr><th>Asked for</th><th>Why not</th><th>Use</th></tr></thead>
+      <tbody>
+        <tr><td><code>btn-success</code></td><td>Status colours report an outcome; a button proposes an action that has not happened. A green Save reads as “saved”.</td><td><code>primary</code></td></tr>
+        <tr><td><code>btn-warning</code></td><td>Amber is feedback, and in a warm palette it is nearly indistinguishable from primary.</td><td><code>destructive</code></td></tr>
+        <tr><td><code>btn-info</code></td><td>Blue is outside this brand's palette; it reads as a foreign element.</td><td><code>secondary</code></td></tr>
+        <tr><td><code>btn-light</code>, <code>btn-dark</code></td><td>Absolute palette names do not invert with a theme.</td><td><code>secondary</code></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="panel">
+    <h2>Where this goes next</h2>
+    <p class="lede">
+      Phase 2 promotes a pattern out of <code>raw</code> when it earns it: three or more
+      library classes at the call site, a structural divergence from Bootstrap, or a
+      mistake repeated. <code>secondary</code> is the likely first candidate — it already
+      composes two classes and this product wants a heavier border than Bootstrap draws.
+      See the Cyberpunk example for what phase 2 looks like.
+    </p>
+  </section>
+
+</div>
+</body>
+</html>

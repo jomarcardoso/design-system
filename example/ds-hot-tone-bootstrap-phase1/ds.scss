@@ -1,0 +1,39 @@
+// =============================================================================
+// HOT TONE — the project's design system build
+// =============================================================================
+//
+// A project's own entry, replacing the tool's `src/ds.scss`. It exists to show
+// that the layer order is an API rather than a script you must run whole: a
+// product assembles the pieces it needs and nothing else.
+//
+// What is deliberately absent: the `light`, `dark` and `brand` themes that ship
+// with the tool. They are examples, not a starting point to inherit, and
+// compiling them here would ship three palettes this product does not use.
+// `$themes: ()` turns them off, and the theme below is emitted directly.
+//
+//     sass --load-path=. example/ds-hot-tone-bootstrap-phase1/ds.scss out.css
+// =============================================================================
+
+@use '../../src/config' with ($themes: (), $adapters: (bootstrap));
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/themes';
+@use '../../src/component';
+@use '../../src/adapters/bootstrap';
+@use 'theme';
+
+// Layer 1 — compiles away, as always.
+@include base.emit();
+
+// Layer 2 — structure first (spacing, radius, typography: theme-independent),
+// then this product's single theme, then the surface contexts.
+@include semantic.emit-structure();
+@include themes.check-contrast('hot-tone', theme.$hot-tone);
+@include semantic.emit-theme('hot-tone', theme.$hot-tone, $default: true);
+@include themes.emit-contexts();
+
+// Layer 3 — names only; nothing is emitted unless the project turns it on.
+@include component.emit();
+
+// Layer 3.5 — the adapter, which is what makes Bootstrap read all of the above.
+@include bootstrap.emit(('hot-tone': theme.$hot-tone));

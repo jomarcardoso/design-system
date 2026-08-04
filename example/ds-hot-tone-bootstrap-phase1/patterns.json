@@ -1,0 +1,89 @@
+{
+  "$schema": "../../patterns/patterns.schema.json",
+  "version": 1,
+  "libraries": ["bootstrap"],
+
+  "components": {
+    "button": {
+      "intent": "A control that performs an action. If it navigates, it is an anchor and nothing here applies.",
+      "namespace": {
+        "bootstrap": "^btn$|^btn-(?!group|toolbar|close)"
+      },
+      "namespaceNote": "Bootstrap puts `btn-group`, `btn-toolbar` and `btn-close` behind the same prefix while they are container and icon components. The lookahead marks where this component's authority ends; everything else under `btn-` is claimed deliberately, so an unrecognised variant is caught.",
+
+      "modifiers": {
+        "size": {
+          "intent": "Physical size, independent of emphasis.",
+          "options": {
+            "medium": {
+              "intent": "The default. Adds no class, so most call sites name no size.",
+              "libraries": { "bootstrap": [] }
+            },
+            "small": {
+              "intent": "Dense rows: the order table, the ingredient list.",
+              "libraries": { "bootstrap": ["btn-sm"] }
+            },
+            "large": {
+              "intent": "The single call to action on a marketing page. Allowed here because Hot Tone's landing pages are the product's front door.",
+              "libraries": { "bootstrap": ["btn-lg"] }
+            }
+          }
+        }
+      },
+
+      "patterns": {
+        "primary": {
+          "intent": "The one action a screen most wants. At most one per view.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-primary"] }
+        },
+        "secondary": {
+          "intent": "A supporting action beside a primary one — cancel, go back. Outline, so it never competes for attention.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-outline-secondary"] }
+        },
+        "destructive": {
+          "intent": "An action that cannot be undone easily: delete an order, revoke access. Filled, because the weight IS the warning.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-danger"] },
+          "notes": "Named `destructive`, not `danger`, so the name says what it does rather than which colour it borrows. The colour can change; the meaning cannot."
+        },
+        "quiet": {
+          "intent": "A tertiary action inside a dense surface — 'show more', 'edit' on a table row. Reads as text until hovered.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-link"] },
+          "notes": "Allowed here and forbidden in the Cyberpunk example. Both are defensible: the risk is that it reads as a link, and this product accepts it because it only appears inside table rows where the affordance is established."
+        },
+
+        "success": {
+          "intent": "A green button.",
+          "state": "forbidden",
+          "reason": "Status colours report an outcome; a button proposes an action that has not happened. A green Save reads as 'saved'. Green belongs to the confirmation that follows the click.",
+          "instead": "primary",
+          "matches": { "bootstrap": ["btn-success", "btn-outline-success"] }
+        },
+        "warning": {
+          "intent": "An amber button.",
+          "state": "forbidden",
+          "reason": "Amber is feedback, not intent — and in a warm palette it is nearly indistinguishable from primary, so emphasis stops being readable.",
+          "instead": "destructive",
+          "matches": { "bootstrap": ["btn-warning", "btn-outline-warning"] }
+        },
+        "info": {
+          "intent": "A blue informational button.",
+          "state": "forbidden",
+          "reason": "Blue is outside this brand's palette entirely; it appears on screen as a foreign element rather than a level of emphasis.",
+          "instead": "secondary",
+          "matches": { "bootstrap": ["btn-info", "btn-outline-info"] }
+        },
+        "neutral": {
+          "intent": "A button coloured by an absolute palette name.",
+          "state": "forbidden",
+          "reason": "`light` and `dark` are fixed palette entries, not theme roles — they do not invert, so a light button stays light on a dark theme. Emphasis named by shade breaks the moment a second theme exists.",
+          "instead": "secondary",
+          "matches": { "bootstrap": ["btn-light", "btn-dark", "btn-outline-light", "btn-outline-dark"] }
+        }
+      }
+    }
+  }
+}

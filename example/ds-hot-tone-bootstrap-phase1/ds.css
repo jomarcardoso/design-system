@@ -1,0 +1,373 @@
+@layer ds.semantic {
+  :root {
+    --app-border-width: 1px;
+    --app-border-style: solid;
+    --app-border: var(--app-border-width) var(--app-border-style) var(--app-border-color);
+    --app-radius-control: 0.375rem;
+    --app-radius-surface: 0.75rem;
+    --app-radius-pill: 9999px;
+    --app-space-unit: 0.25rem;
+    --app-space-2xs: calc(var(--app-space-unit) * 1);
+    --app-space-xs: calc(var(--app-space-unit) * 2);
+    --app-space-sm: calc(var(--app-space-unit) * 3);
+    --app-space-md: calc(var(--app-space-unit) * 4);
+    --app-space-lg: calc(var(--app-space-unit) * 6);
+    --app-space-xl: calc(var(--app-space-unit) * 8);
+    --app-space-2xl: calc(var(--app-space-unit) * 12);
+    --app-pad-control-x: var(--app-space-sm);
+    --app-pad-control-y: var(--app-space-xs);
+    --app-pad-surface: var(--app-space-lg);
+    --app-gap-inline: var(--app-space-xs);
+    --app-gap-stack: var(--app-space-md);
+    --app-font-body: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --app-font-heading: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-text-size: 1rem;
+    --app-text-leading: 1.5;
+    --app-weight-body: 400;
+    --app-weight-heading: 600;
+    --app-size-control: calc(var(--app-space-unit) * 9);
+    --app-size-control-sm: calc(var(--app-space-unit) * 7);
+    --app-size-control-lg: calc(var(--app-space-unit) * 11);
+    --app-size-icon: calc(var(--app-space-unit) * 4);
+    --app-ring-width: 2px;
+    --app-ring-offset: 2px;
+    --app-ring: var(--app-ring-width) solid var(--app-ring-color);
+    --app-radius-control-sm: 0.25rem;
+    --app-radius-surface-lg: 1rem;
+    --app-text-size-sm: 0.875rem;
+    --app-text-size-lg: 1.125rem;
+    --app-text-size-heading: 1.5rem;
+    --app-text-leading-heading: 1.25;
+    --app-text-tracking-heading: -0.025em;
+    --app-duration-fast: 120ms;
+    --app-duration-base: 200ms;
+    --app-duration-slow: 320ms;
+    --app-ease: cubic-bezier(0, 0, 0.2, 1);
+    --app-z-base: 0;
+    --app-z-dropdown: 1000;
+    --app-z-sticky: 1020;
+    --app-z-overlay: 1040;
+    --app-z-modal: 1050;
+    --app-z-toast: 1080;
+    --app-z-tooltip: 1090;
+    --app-opacity-disabled: 0.55;
+  }
+}
+@layer ds.semantic {
+  :root,
+  [data-theme=hot-tone] {
+    color-scheme: light;
+    --app-bg-page: oklch(98% 0.016 73.684deg);
+    --app-bg-surface: #fff;
+    --app-bg-raised: #fff;
+    --app-fg-default: oklch(21.6% 0.006 56.043deg);
+    --app-fg-muted: oklch(44.4% 0.011 73.639deg);
+    --app-fg-heading: oklch(14.7% 0.004 49.25deg);
+    --app-bg-action: oklch(55.3% 0.195 38.402deg);
+    --app-fg-on-action: #fff;
+    --app-border-color: oklch(92.3% 0.003 48.717deg);
+    --app-bg-sunken: oklch(95.4% 0.038 75.164deg);
+    --app-bg-overlay: rgba(69, 26, 3, 0.55);
+    --app-fg-subtle: oklch(55.3% 0.013 58.071deg);
+    --app-fg-on-surface: oklch(21.6% 0.006 56.043deg);
+    --app-bg-action-hover: oklch(47% 0.157 37.304deg);
+    --app-bg-action-active: oklch(40.8% 0.123 38.172deg);
+    --app-bg-action-subtle: oklch(98% 0.016 73.684deg);
+    --app-fg-action: oklch(47% 0.157 37.304deg);
+    --app-border-action: oklch(55.3% 0.195 38.402deg);
+    --app-bg-selected: oklch(51.4% 0.222 16.935deg);
+    --app-fg-on-selected: #fff;
+    --app-bg-selected-hover: oklch(45.5% 0.188 13.697deg);
+    --app-bg-selected-subtle: oklch(94.1% 0.03 12.58deg);
+    --app-fg-selected: oklch(45.5% 0.188 13.697deg);
+    --app-border-selected: oklch(51.4% 0.222 16.935deg);
+    --app-fg-link: oklch(47% 0.157 37.304deg);
+    --app-fg-link-hover: oklch(40.8% 0.123 38.172deg);
+    --app-fg-link-visited: oklch(45.5% 0.188 13.697deg);
+    --app-border-color-subtle: oklch(97% 0.001 106.424deg);
+    --app-border-color-strong: oklch(86.9% 0.005 56.366deg);
+    --app-ring-color: oklch(64.6% 0.222 41.116deg);
+    --app-shadow-raised: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+    --app-shadow-overlay: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --app-bg-success: oklch(52.7% 0.154 150.069deg);
+    --app-fg-on-success: #fff;
+    --app-bg-success-hover: oklch(44.8% 0.119 151.328deg);
+    --app-bg-success-subtle: oklch(98.2% 0.018 155.826deg);
+    --app-fg-success: oklch(44.8% 0.119 151.328deg);
+    --app-border-success: oklch(92.5% 0.084 155.995deg);
+    --app-bg-warning: oklch(76.9% 0.188 70.08deg);
+    --app-fg-on-warning: oklch(27.9% 0.077 45.635deg);
+    --app-bg-warning-hover: oklch(66.6% 0.179 58.318deg);
+    --app-bg-warning-subtle: oklch(98.7% 0.022 95.277deg);
+    --app-fg-warning: oklch(47.3% 0.137 46.201deg);
+    --app-border-warning: oklch(92.4% 0.12 95.746deg);
+    --app-bg-danger: oklch(57.7% 0.245 27.325deg);
+    --app-fg-on-danger: #fff;
+    --app-bg-danger-hover: oklch(50.5% 0.213 27.518deg);
+    --app-bg-danger-subtle: oklch(97.1% 0.013 17.38deg);
+    --app-fg-danger: oklch(44.4% 0.177 26.899deg);
+    --app-border-danger: oklch(88.5% 0.062 18.334deg);
+    --app-bg-info: oklch(50% 0.134 242.749deg);
+    --app-fg-on-info: #fff;
+    --app-bg-info-hover: oklch(44.3% 0.11 240.79deg);
+    --app-bg-info-subtle: oklch(97.7% 0.013 236.62deg);
+    --app-fg-info: oklch(44.3% 0.11 240.79deg);
+    --app-border-info: oklch(90.1% 0.058 230.902deg);
+  }
+}
+@layer ds.semantic {
+  [data-surface=inverted] {
+    --app-bg-page: var(--app-bg-inverted-base);
+    --app-bg-surface: var(--app-bg-inverted-base);
+    --app-fg-default: var(--app-fg-inverted-base);
+    --app-fg-heading: var(--app-fg-inverted-base);
+    --app-fg-muted: oklch(70.5% 0.015 286.067deg);
+    --app-border-color: oklch(37% 0.013 285.805deg);
+  }
+  [data-surface=sunken] {
+    --app-bg-surface: var(--app-bg-sunken);
+    --app-border-color: var(--app-border-color-subtle);
+  }
+  [data-density=compact] {
+    --app-space-unit: 0.2rem;
+  }
+  :root {
+    --app-bg-inverted-base: oklch(21% 0.006 285.885deg);
+    --app-fg-inverted-base: oklch(98.5% 0 0deg);
+  }
+  [data-theme=dark] {
+    --app-bg-inverted-base: oklch(27.4% 0.006 286.033deg);
+    --app-fg-inverted-base: #fff;
+  }
+}
+@layer vendor-config {
+  :root,
+  [data-theme],
+  [data-bs-theme],
+  [data-surface] {
+    --bs-body-bg: var(--app-bg-page);
+    --bs-body-color: var(--app-fg-default);
+    --bs-emphasis-color: var(--app-fg-heading);
+    --bs-secondary-color: var(--app-fg-muted);
+    --bs-secondary-bg: var(--app-bg-sunken);
+    --bs-tertiary-color: var(--app-fg-subtle);
+    --bs-tertiary-bg: var(--app-bg-sunken);
+    --bs-heading-color: var(--app-fg-heading);
+    --bs-link-color: var(--app-fg-link);
+    --bs-link-hover-color: var(--app-fg-link-hover);
+    --bs-code-color: var(--app-code-fg, var(--app-fg-default));
+    --bs-border-color: var(--app-border-color);
+    --bs-border-color-translucent: var(--app-border-color-subtle);
+    --bs-focus-ring-color: var(--app-ring-color);
+    --bs-box-shadow: var(--app-shadow-overlay);
+    --bs-box-shadow-sm: var(--app-shadow-raised);
+    --bs-primary: var(--app-bg-action);
+    --bs-primary-bg-subtle: var(--app-bg-action-subtle);
+    --bs-primary-border-subtle: var(--app-border-action);
+    --bs-primary-text-emphasis: var(--app-fg-action);
+    --bs-secondary: var(--app-bg-selected);
+    --bs-secondary-bg-subtle: var(--app-bg-selected-subtle);
+    --bs-secondary-border-subtle: var(--app-border-selected);
+    --bs-secondary-text-emphasis: var(--app-fg-selected);
+    --bs-success: var(--app-bg-success);
+    --bs-success-bg-subtle: var(--app-bg-success-subtle);
+    --bs-success-border-subtle: var(--app-border-success);
+    --bs-success-text-emphasis: var(--app-fg-success);
+    --bs-info: var(--app-bg-info);
+    --bs-info-bg-subtle: var(--app-bg-info-subtle);
+    --bs-info-border-subtle: var(--app-border-info);
+    --bs-info-text-emphasis: var(--app-fg-info);
+    --bs-warning: var(--app-bg-warning);
+    --bs-warning-bg-subtle: var(--app-bg-warning-subtle);
+    --bs-warning-border-subtle: var(--app-border-warning);
+    --bs-warning-text-emphasis: var(--app-fg-warning);
+    --bs-danger: var(--app-bg-danger);
+    --bs-danger-bg-subtle: var(--app-bg-danger-subtle);
+    --bs-danger-border-subtle: var(--app-border-danger);
+    --bs-danger-text-emphasis: var(--app-fg-danger);
+  }
+  :root,
+  [data-theme=hot-tone] {
+    --bs-primary-rgb: 202, 53, 0;
+    --bs-secondary-rgb: 199, 0, 54;
+    --bs-success-rgb: 0, 130, 54;
+    --bs-info-rgb: 0, 105, 168;
+    --bs-warning-rgb: 253, 154, 0;
+    --bs-danger-rgb: 231, 0, 11;
+    --bs-link-color-rgb: 159, 45, 0;
+    --bs-body-color-rgb: 28, 25, 23;
+    --bs-body-bg-rgb: 255, 247, 237;
+    --bs-emphasis-color-rgb: 12, 10, 9;
+  }
+  .btn-primary {
+    background-color: var(--app-button-bg, var(--app-bg-action));
+    border-color: var(--app-button-border-color, var(--app-bg-action));
+    color: var(--app-button-fg, var(--app-fg-on-action));
+  }
+  .btn-primary:hover {
+    background-color: var(--app-button-bg-hover, var(--app-bg-action-hover));
+    border-color: var(--app-button-bg-hover, var(--app-bg-action-hover));
+  }
+  .btn-secondary {
+    background-color: var(--app-button-bg, var(--app-bg-selected));
+    border-color: var(--app-button-border-color, var(--app-bg-selected));
+    color: var(--app-button-fg, var(--app-fg-on-selected));
+  }
+  .btn-secondary:hover {
+    background-color: var(--app-button-bg-hover, var(--app-bg-selected-hover));
+    border-color: var(--app-button-bg-hover, var(--app-bg-selected-hover));
+  }
+  .btn-success {
+    background-color: var(--app-button-bg, var(--app-bg-success));
+    border-color: var(--app-button-border-color, var(--app-bg-success));
+    color: var(--app-button-fg, var(--app-fg-on-success));
+  }
+  .btn-success:hover {
+    background-color: var(--app-button-bg-hover, var(--app-bg-success-hover));
+    border-color: var(--app-button-bg-hover, var(--app-bg-success-hover));
+  }
+  .btn-info {
+    background-color: var(--app-button-bg, var(--app-bg-info));
+    border-color: var(--app-button-border-color, var(--app-bg-info));
+    color: var(--app-button-fg, var(--app-fg-on-info));
+  }
+  .btn-info:hover {
+    background-color: var(--app-button-bg-hover, var(--app-bg-info-hover));
+    border-color: var(--app-button-bg-hover, var(--app-bg-info-hover));
+  }
+  .btn-warning {
+    background-color: var(--app-button-bg, var(--app-bg-warning));
+    border-color: var(--app-button-border-color, var(--app-bg-warning));
+    color: var(--app-button-fg, var(--app-fg-on-warning));
+  }
+  .btn-warning:hover {
+    background-color: var(--app-button-bg-hover, var(--app-bg-warning-hover));
+    border-color: var(--app-button-bg-hover, var(--app-bg-warning-hover));
+  }
+  .btn-danger {
+    background-color: var(--app-button-bg, var(--app-bg-danger));
+    border-color: var(--app-button-border-color, var(--app-bg-danger));
+    color: var(--app-button-fg, var(--app-fg-on-danger));
+  }
+  .btn-danger:hover {
+    background-color: var(--app-button-bg-hover, var(--app-bg-danger-hover));
+    border-color: var(--app-button-bg-hover, var(--app-bg-danger-hover));
+  }
+  .text-bg-primary {
+    color: var(--app-fg-on-action);
+  }
+  .text-bg-secondary {
+    color: var(--app-fg-on-selected);
+  }
+  .text-bg-success {
+    color: var(--app-fg-on-success);
+  }
+  .text-bg-info {
+    color: var(--app-fg-on-info);
+  }
+  .text-bg-warning {
+    color: var(--app-fg-on-warning);
+  }
+  .text-bg-danger {
+    color: var(--app-fg-on-danger);
+  }
+  .btn-outline-primary {
+    color: var(--app-fg-action);
+    border-color: var(--app-border-action);
+  }
+  .btn-outline-primary:hover {
+    background-color: var(--app-bg-action);
+    border-color: var(--app-bg-action);
+    color: var(--app-fg-on-action);
+  }
+  .btn-outline-secondary {
+    color: var(--app-fg-selected);
+    border-color: var(--app-border-selected);
+  }
+  .btn-outline-secondary:hover {
+    background-color: var(--app-bg-selected);
+    border-color: var(--app-bg-selected);
+    color: var(--app-fg-on-selected);
+  }
+  .btn-outline-success {
+    color: var(--app-fg-success);
+    border-color: var(--app-border-success);
+  }
+  .btn-outline-success:hover {
+    background-color: var(--app-bg-success);
+    border-color: var(--app-bg-success);
+    color: var(--app-fg-on-success);
+  }
+  .btn-outline-info {
+    color: var(--app-fg-info);
+    border-color: var(--app-border-info);
+  }
+  .btn-outline-info:hover {
+    background-color: var(--app-bg-info);
+    border-color: var(--app-bg-info);
+    color: var(--app-fg-on-info);
+  }
+  .btn-outline-warning {
+    color: var(--app-fg-warning);
+    border-color: var(--app-border-warning);
+  }
+  .btn-outline-warning:hover {
+    background-color: var(--app-bg-warning);
+    border-color: var(--app-bg-warning);
+    color: var(--app-fg-on-warning);
+  }
+  .btn-outline-danger {
+    color: var(--app-fg-danger);
+    border-color: var(--app-border-danger);
+  }
+  .btn-outline-danger:hover {
+    background-color: var(--app-bg-danger);
+    border-color: var(--app-bg-danger);
+    color: var(--app-fg-on-danger);
+  }
+  .form-control,
+  .form-select {
+    background-color: var(--app-field-bg, var(--app-bg-surface, var(--app-bg-surface)));
+    border-color: var(--app-field-border-color, var(--app-border-color, var(--app-border-color)));
+    border-radius: var(--app-field-radius, var(--app-radius-control, var(--app-radius-control)));
+  }
+  .form-control:focus,
+  .form-select:focus {
+    border-color: var(--app-field-border-color-focus, var(--app-border-action, var(--app-border-action)));
+  }
+  .card {
+    --bs-card-bg: var(--app-surface-bg, var(--app-bg-surface, var(--bs-body-bg)));
+    --bs-card-color: var(--app-surface-fg, var(--app-fg-default, var(--bs-body-color)));
+    --bs-card-border-color: var(--app-surface-border-color, var(--app-border-color, var(--bs-border-color)));
+    --bs-card-border-radius: var(--app-surface-radius, var(--app-radius-surface, var(--bs-border-radius-lg)));
+    --bs-card-cap-bg: var(--app-table-header-bg, var(--app-bg-sunken, var(--bs-secondary-bg)));
+    --bs-card-spacer-y: var(--app-surface-pad, var(--app-pad-surface));
+    --bs-card-spacer-x: var(--app-surface-pad, var(--app-pad-surface));
+    box-shadow: var(--app-surface-shadow, var(--app-shadow-raised));
+  }
+  .table {
+    --bs-table-color: var(--app-table-fg, var(--app-fg-default, var(--bs-body-color)));
+    --bs-table-border-color: var(--app-table-border-color, var(--app-border-color-subtle, var(--bs-border-color)));
+    --bs-table-striped-bg: var(--app-table-row-bg-striped, var(--app-bg-sunken, var(--bs-secondary-bg)));
+    --bs-table-hover-bg: var(--app-table-row-bg-hover, var(--app-bg-sunken, var(--bs-secondary-bg)));
+  }
+  .modal {
+    --bs-modal-bg: var(--app-overlay-bg, var(--app-bg-raised, var(--bs-body-bg)));
+    --bs-modal-border-radius: var(--app-overlay-radius, var(--app-radius-surface, var(--bs-border-radius-lg)));
+  }
+  .dropdown-menu {
+    --bs-dropdown-bg: var(--app-overlay-bg, var(--app-bg-raised, var(--bs-body-bg)));
+    --bs-dropdown-border-radius: var(--app-overlay-radius, var(--app-radius-surface, var(--bs-border-radius)));
+  }
+  .nav-link {
+    --bs-nav-link-color: var(--app-nav-fg, var(--app-fg-link, var(--bs-link-color)));
+    --bs-nav-link-hover-color: var(--app-nav-fg-hover, var(--app-fg-link-hover, var(--bs-link-hover-color)));
+  }
+  .alert {
+    --bs-alert-border-radius: var(--app-alert-radius, var(--app-radius-control, var(--bs-border-radius)));
+  }
+  .badge {
+    --bs-badge-border-radius: var(--app-badge-radius, var(--app-radius-pill, var(--bs-border-radius-pill)));
+  }
+}

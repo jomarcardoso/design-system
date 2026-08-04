@@ -243,7 +243,21 @@ $_map: (
   }
 }
 
-@mixin emit() {
+// `$themes` is a map of `name: choices`. See the note on the Bootstrap
+// adapter's `emit()`: the channels below are computed from a theme's actual
+// colours, so the adapter needs the choice maps, and reading them from
+// `themes.$registry` limited it to the themes shipped with the tool. A product
+// that defines its own theme passes it here. Omitted, the built-ins are used.
+@mixin emit($themes: null) {
+  $set: $themes;
+
+  @if $set == null {
+    $set: ();
+    @each $name in config.$themes {
+      $set: map.merge($set, ($name: map.get(themes.$registry, $name)));
+    }
+  }
+
   @include core.in-layer(config.$layer-adapter) {
     :root,
     [data-theme],
@@ -251,13 +265,14 @@ $_map: (
       @include _refs();
     }
 
-    // Per theme, generated from `$themes` rather than listed by hand, so
-    // registering a theme never requires editing this file.
-    $default-theme: list.nth(config.$themes, 1);
+    $names: map.keys($set);
+    $default-theme: null;
 
-    @each $name in config.$themes {
-      $choices: map.get(themes.$registry, $name);
+    @if list.length($names) > 0 {
+      $default-theme: list.nth($names, 1);
+    }
 
+    @each $name, $choices in $set {
       @if $name == $default-theme {
         :root,
         [data-theme='#{$name}'] {

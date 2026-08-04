@@ -475,7 +475,14 @@ $_contrast-pairs: (
   }
 }
 
-@mixin _check-contrast($name, $choices) {
+// Public on purpose. `$registry` below holds the themes that ship with the
+// tool, but a project can define its own theme in its own file and call
+// `semantic.emit-theme()` directly — that is the supported way to add a theme
+// without editing a vendored file. Such a theme must get the same guarantee as
+// a built-in one, so this mixin is part of the API rather than an internal
+// detail. A validation you can only run on themes you did not write is not a
+// validation.
+@mixin check-contrast($name, $choices) {
   @each $pair in $_contrast-pairs {
     $bg-key: list.nth($pair, 1);
     $fg-key: list.nth($pair, 2);
@@ -500,7 +507,7 @@ $_contrast-pairs: (
 
 @mixin emit() {
   @each $name in config.$themes {
-    @include _check-contrast($name, map.get($registry, $name));
+    @include check-contrast($name, map.get($registry, $name));
   }
 
   @include semantic.emit-structure();
