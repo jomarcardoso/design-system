@@ -20,21 +20,22 @@
     .mc-chip {
       display: inline-flex;
       align-items: center;
-      padding: var(--app-space-xs) var(--app-space-md);
+      min-height: var(--app-chip-height, var(--app-size-control-sm));
+      padding-inline: var(--app-chip-pad-x, var(--app-pad-control-x));
       font-size: var(--app-text-size-sm);
-      color: var(--app-fg-default);
+      color: var(--app-chip-fg, var(--app-fg-default));
       cursor: pointer;
-      background: var(--app-bg-surface);
-      border: var(--app-border-width) solid var(--app-border-color);
-      border-radius: var(--app-radius-pill);
+      background: var(--app-chip-bg, var(--app-bg-surface));
+      border: var(--app-border-width) solid var(--app-chip-border-color, var(--app-border-color));
+      border-radius: var(--app-chip-radius, var(--app-radius-pill));
     }
     .mc-chip:hover {
       background: var(--app-bg-sunken);
     }
     .mc-chip[aria-pressed=true] {
-      color: var(--app-fg-on-action);
-      background: var(--app-bg-action);
-      border-color: var(--app-bg-action);
+      color: var(--app-chip-fg-selected, var(--app-fg-on-selected));
+      background: var(--app-chip-bg-selected, var(--app-bg-selected));
+      border-color: var(--app-chip-bg-selected, var(--app-bg-selected));
     }
     .mc-chip-group {
       display: flex;

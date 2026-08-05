@@ -148,6 +148,60 @@ $contract: (
   // exists so a project can have one without editing an adapter.
   'code-fg': 'fg-default',
 
+  // --- Chip: the first entry reserved for a component NO library ships ---
+  //
+  // A chip is a selectable filter token: clickable, carries a pressed state,
+  // and reads as a label rather than as a control. Filter panels, faceted
+  // search, tag pickers and dashboard segment selectors are all built from it.
+  //
+  // Nine libraries were checked and none has one. Bulma has `.tag`, which is a
+  // read-only label; everyone else has a button and a badge and nothing in
+  // between. So this is the first contract entry whose adapters mostly have
+  // nothing to bind — and that is precisely the argument for reserving the
+  // names anyway.
+  //
+  // WHY RESERVE NAMES FOR SOMETHING WE DO NOT SHIP
+  //
+  // Every product that needs a chip writes it. The names decide whether five
+  // products write five different vocabularies or the same one: an agent that
+  // knows `--app-chip-bg` can theme a chip it has never seen, a documentation
+  // generator can describe it, and a product that later adopts a library WITH
+  // a chip changes its adapter instead of its markup.
+  //
+  // The naming is not invented. CoreUI — MIT, built on Bootstrap's class
+  // vocabulary — ships a chip, and every name below has a counterpart there:
+  //
+  //     chip-bg           --cui-chip-bg
+  //     chip-fg           --cui-chip-color
+  //     chip-border-color --cui-chip-border-color
+  //     chip-radius       --cui-chip-border-radius
+  //     chip-height       --cui-chip-min-height
+  //     chip-pad-x        --cui-chip-padding-x
+  //     chip-bg-selected  --cui-chip-active-bg
+  //     chip-fg-selected  --cui-chip-active-color
+  //
+  // That correspondence is the evidence this is ecosystem vocabulary rather
+  // than one product's shape — the same bar `accent` and `font-display` had to
+  // clear.
+  //
+  // The SELECTED pair points at `selected`, not `action`. Layer 2 draws that
+  // distinction deliberately and most products collapse it: a pressed filter
+  // is a state the interface is in, not an invitation to act. A chip is the
+  // clearest case for the distinction existing at all.
+  //
+  // No hover entry, on purpose. Hover reads `bg-sunken` straight from layer 2,
+  // and the admission test asks whether a consumer would plausibly override
+  // this ONE part for ONE instance — which is true of the resting and selected
+  // fills and not of the hover.
+  'chip-bg': 'bg-surface',
+  'chip-fg': 'fg-default',
+  'chip-border-color': 'border-color',
+  'chip-radius': 'radius-pill',
+  'chip-height': 'size-control-sm',
+  'chip-pad-x': 'pad-control-x',
+  'chip-bg-selected': 'bg-selected',
+  'chip-fg-selected': 'fg-on-selected',
+
   // --- Feedback: alert / badge ------------------------------------------
   'alert-radius': 'radius-control',
   'alert-pad': 'pad-surface',

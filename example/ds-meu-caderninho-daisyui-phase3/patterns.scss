@@ -53,6 +53,8 @@
 //                component uses is the library's anatomy.
 // =============================================================================
 
+@use '../../src/component';
+
 @layer utilities {
   @layer mc {
     // -----------------------------------------------------------------
@@ -106,26 +108,41 @@
     // reads as a label. Built from tokens rather than from `btn`, because
     // inheriting a button's height and padding is what makes filter rows look
     // like toolbars.
+    //
+    // Every value reads the layer 3 CONTRACT rather than the semantic token
+    // directly, through the same three-level chain the adapters use:
+    //
+    //     var(--app-chip-bg, var(--app-bg-surface))
+    //
+    // Nothing is emitted for those names — the chain falls through to layer 2
+    // and this costs zero bytes. What it buys is that the product's own
+    // component is customisable by the SAME spelling an adapter would use, so
+    // the day a library with a real chip arrives, the markup does not change.
     .mc-chip {
       display: inline-flex;
       align-items: center;
-      padding: var(--app-space-xs) var(--app-space-md);
+      min-height: #{component.ref-chain('chip-height')};
+      padding-inline: #{component.ref-chain('chip-pad-x')};
       font-size: var(--app-text-size-sm);
-      color: var(--app-fg-default);
+      color: #{component.ref-chain('chip-fg')};
       cursor: pointer;
-      background: var(--app-bg-surface);
-      border: var(--app-border-width) solid var(--app-border-color);
-      border-radius: var(--app-radius-pill);
+      background: #{component.ref-chain('chip-bg')};
+      border: var(--app-border-width) solid #{component.ref-chain('chip-border-color')};
+      border-radius: #{component.ref-chain('chip-radius')};
     }
 
+    // Hover has no contract entry on purpose — it reads layer 2 directly.
     .mc-chip:hover {
       background: var(--app-bg-sunken);
     }
 
+    // `selected`, not `action`: a pressed filter is a state the interface is
+    // in, not an invitation to act. This product's two roles are one hue apart,
+    // so it looks the same either way — and the next product's will not.
     .mc-chip[aria-pressed='true'] {
-      color: var(--app-fg-on-action);
-      background: var(--app-bg-action);
-      border-color: var(--app-bg-action);
+      color: #{component.ref-chain('chip-fg-selected')};
+      background: #{component.ref-chain('chip-bg-selected')};
+      border-color: #{component.ref-chain('chip-bg-selected')};
     }
 
     .mc-chip-group {
