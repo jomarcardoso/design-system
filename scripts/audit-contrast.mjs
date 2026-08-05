@@ -17,11 +17,33 @@
 // should be able to run by hand.
 // =============================================================================
 
+const THEMES = ['light', 'dark', 'brand'];
+
+// A page is either a name under `example/` carrying the tool's demonstration
+// themes, or an object naming its own.
+//
+// The example PRODUCTS each ship a single theme of their own and compile the
+// built-in ones away, so driving them through `light`/`dark`/`brand` would
+// set an attribute nothing defines and measure undefined tokens. They still
+// belong in this audit — they are the most realistic pages here, full of
+// navbars, menus, tables and forms rather than component galleries, and they
+// are where a contrast bug would actually reach a user.
 const PAGES = [
   'coexistence', 'theme-brand', 'daisyui', 'pico', 'bulma',
-  'tailwind', 'flowbite', 'preline', 'water', 'mvp'
+  'tailwind', 'flowbite', 'preline', 'water', 'mvp',
+  // Trailing slash, not `/index.html`. The dev server rewrites an explicit
+  // index to an extensionless directory URL WITHOUT a slash, at which point
+  // every relative href loses a path segment and the page loads with no CSS
+  // at all. It still measured cleanly and reported ok — see the styled guard
+  // below, which exists because of this.
+  { path: 'ds-hot-tone-bootstrap-phase1/', themes: ['hot-tone'] },
+  { path: 'ds-cyberpunk-bulma-phase2/', themes: ['cyberpunk'] },
+  { path: 'ds-carmageddon-nescss-phase3/', themes: ['carmageddon'] },
+  // The generated documentation is audited too: it renders every composition
+  // live, so a contrast bug in a component nobody put on the main page still
+  // gets caught.
+  { path: 'ds-carmageddon-nescss-phase3/docs.html', themes: ['carmageddon'] }
 ];
-const THEMES = ['light', 'dark', 'brand'];
 
 export const SNIPPET = `(() => {
   const isOpaque = (css) => {
@@ -125,8 +147,19 @@ export const SNIPPET = `(() => {
     });
   }
   out.sort((a, b) => a.ratio - b.ratio);
+
+  // Did the page's CSS actually load?
+  //
+  // Every page here is driven by the token layer, so an empty \`--app-bg-page\`
+  // means no stylesheet arrived. An unstyled page is BLACK ON WHITE, which
+  // passes every contrast check ever written — so without this the audit
+  // reports its most confident "ok" precisely when it has measured nothing.
+  const styled = getComputedStyle(document.documentElement)
+    .getPropertyValue('--app-bg-page').trim() !== '';
+
   return { theme: document.documentElement.dataset.theme, measured: out.length,
-           worst: out.slice(0, 6), allPassAA: out.every((x) => x.ratio >= 4.5) };
+           styled, worst: out.slice(0, 6),
+           allPassAA: styled && out.every((x) => x.ratio >= 4.5) };
 })()`;
 
 let puppeteer;
@@ -142,8 +175,16 @@ const browser = await puppeteer.launch();
 const page = await browser.newPage();
 let failures = 0;
 
-for (const name of PAGES) {
-  await page.goto(`http://localhost:4173/example/${name}.html`, { waitUntil: 'networkidle0' });
+for (const entry of PAGES) {
+  const name = typeof entry === 'string' ? entry : entry.path;
+  const themes = typeof entry === 'string' ? THEMES : entry.themes;
+  const label = name.replace(/\/index$/, '');
+
+  const url = typeof entry === 'string'
+    ? `http://localhost:4173/example/${name}.html`
+    : `http://localhost:4173/example/${entry.path}`;
+
+  await page.goto(url, { waitUntil: 'networkidle0' });
 
   // Kill transitions before measuring anything.
   //
@@ -156,7 +197,7 @@ for (const name of PAGES) {
     content: '*, *::before, *::after { transition: none !important; animation: none !important; }'
   });
 
-  for (const theme of THEMES) {
+  for (const theme of themes) {
     await page.evaluate((t) => { document.documentElement.dataset.theme = t; }, theme);
 
     // Wait for the reading to STABILISE rather than for a fixed number of
@@ -177,8 +218,16 @@ for (const name of PAGES) {
       previous = fingerprint;
     }
     const mark = r.allPassAA ? 'ok ' : 'FAIL';
-    console.log(`  ${mark} ${name.padEnd(13)} ${theme.padEnd(6)} ${String(r.measured).padStart(3)} fills, worst ${r.worst[0]?.ratio ?? '-'}`);
-    if (!r.allPassAA) { failures++; console.log('        ' + JSON.stringify(r.worst)); }
+    console.log(`  ${mark} ${label.padEnd(30)} ${theme.padEnd(9)} ${String(r.measured).padStart(3)} fills, worst ${r.worst[0]?.ratio ?? '-'}`);
+
+    if (!r.styled) {
+      failures++;
+      console.log(`        NO STYLESHEET — --app-bg-page is undefined at ${url}.`);
+      console.log('        Nothing was measured; an unstyled page is black on white and passes everything.');
+    } else if (!r.allPassAA) {
+      failures++;
+      console.log('        ' + JSON.stringify(r.worst));
+    }
   }
 }
 

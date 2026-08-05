@@ -24,9 +24,9 @@ is exactly one place — the semantic layer — and everything else derives from
   error below 3:1, warning below 4.5:1. The pair list is generated, not curated:
   every surface against every foreground that can land on one, so it cannot
   quietly omit a combination. Both cost zero runtime bytes.
-- **Eight adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
-  Preline, Water.css and MVP.css — from a 1416-variable library down to a
-  21-variable one, all driven by the same 110 tokens. Plus a Tailwind bridge,
+- **Nine adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
+  Preline, Water.css, MVP.css and NES.css — from a 1416-variable library down to
+  one with **zero**, all driven by the same 110 tokens. Plus a Tailwind bridge,
   which is not an adapter.
 - **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
   every theme through a real browser and measures what is actually rendered —
@@ -36,7 +36,7 @@ is exactly one place — the semantic layer — and everything else derives from
   that never followed the theme because Bootstrap reads `--bs-link-color-rgb`
   and the adapter was setting `--bs-link-color`.
 - **Every button each library documents, rendered from these tokens.** The demo
-  pages carry the full button catalogue from all eight libraries' own docs —
+  pages carry the full button catalogue from the libraries' own docs —
   colours, styles, sizes, states and shapes — because a foundation that covers
   the common variants and quietly drops the rest is not a foundation. Adopting
   it should never cost you something the library gave you directly, so the
@@ -218,18 +218,31 @@ button     4 allowed  raw 4 (100%)  styled 0 (0%)  ...   # hot-tone, phase 1
 button     4 allowed  raw 0 (0%)  styled 4 (100%)  ...   # cyberpunk, phase 2
 ```
 
-Two worked examples live in `example/`: **DS Hot Tone with Bootstrap phase 1**
-and **DS Cyberpunk with Bulma phase 2**. They are products built *with* the
-tool, and they disagree with each other — one allows a borderless button, the
-other forbids it. That disagreement is the argument for keeping the vocabulary
-out of the foundation.
+Three worked examples live in `example/`, one per phase:
+
+| Example | Phase | What it shows |
+|---|---|---|
+| **DS Hot Tone with Bootstrap** | 1 | vocabulary recorded and enforced, no abstraction written |
+| **DS Cyberpunk with Bulma** | 2 | promoted to semantic classes, mixed maturity across components |
+| **DS Carmageddon with NES.css** | 3 | documentation generated from the ledger as a delta |
+
+They are products built *with* the tool, and they disagree with each other — one
+allows a borderless button, another forbids it; one allows status-coloured
+buttons, another does not. That disagreement is the argument for keeping the
+vocabulary out of the foundation.
+
+Phase 3 adds `npm run docs:carmageddon`, which generates a documentation page
+from the ledger. It documents in full only what a reader cannot look up — the
+compositions the library does not have, and the overrides where the product
+diverges — and links everything else to the library's own docs. Examples render
+live against the product's real stylesheet, beside their own source.
 
 Promotion order is fixed: **SCSS first, wrapper second**, so the wrapper consumes
 the semantic class rather than the library composition, and projects with no
 component framework are protected too. Dropping the library then changes one
 SCSS body instead of every call site.
 
-## What eight adapters are for
+## What nine adapters are for
 
 Each library was picked because it breaks a different assumption, and together
 they are the evidence that the layering holds:
@@ -242,7 +255,8 @@ they are the evidence that the layering holds:
 | **Bulma** | Refuses whole colours; wants HSL channels | ~200 lines |
 | **Flowbite** | No component CSS; its surface *is* Tailwind's `@theme` | ~160 lines |
 | **Preline UI** | Already had this architecture — semantic layer + inline bridge | ~170 lines |
-| **Water.css** | The floor: 21 variables, no brand fill, no text-on-fill | ~100 lines |
+| **Water.css** | 21 variables, no brand fill, no text-on-fill | ~100 lines |
+| **NES.css** | The floor: **zero** variables, and colour encoded inside an SVG asset | ~230 lines |
 | **MVP.css** | Derives interaction with a `filter`, not a colour | ~120 lines |
 
 The generalisation worth keeping: **an adapter's cost is set by how a library is

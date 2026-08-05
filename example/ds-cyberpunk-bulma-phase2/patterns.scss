@@ -89,4 +89,17 @@
       text-decoration: none;
     }
   }
+
+  // The card carries the same edge as the primary button, so a surface and an
+  // action read as parts of one system rather than two coincidences.
+  //
+  // Note what is NOT here: padding, header and footer layout, border radius.
+  // Those are `card-content`, `card-header` and `card-footer`, which stay
+  // Bulma's. The ledger governs which cards exist; the library owns the parts.
+  .cp-card {
+    @extend .card;
+
+    border: 1px solid var(--app-border-color);
+    box-shadow: 0 0 18px -8px var(--app-bg-action);
+  }
 }

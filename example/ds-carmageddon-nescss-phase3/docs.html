@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DS Carmageddon — patterns</title>
+<!--
+  GENERATED FILE. Do not edit.
+
+      node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html
+
+  Every fact on this page comes from patterns.json, which is also what the
+  verifier enforces and what an agent reads before writing markup. Editing this
+  file by hand creates a third place a decision lives.
+-->
+<link rel="stylesheet" href="./ds.css">
+<style>
+  .docs { max-width: 60rem; margin: 0 auto; padding: 2rem 1rem; }
+  .docs section { margin-block: 3rem; }
+  .pattern { margin-block: 2rem; padding-left: 1rem; border-left: 4px solid var(--app-border-color); }
+  .pattern.is-composition { border-left-color: var(--app-bg-action); }
+  .pattern.is-override { border-left-color: var(--app-bg-selected); }
+  .pattern.is-forbidden { border-left-color: var(--app-bg-danger); }
+  .intent { color: var(--app-fg-muted); }
+  .tag { font-size: 0.5em; padding: 0.2em 0.5em; vertical-align: middle;
+         background: var(--app-bg-sunken); color: var(--app-fg-muted); }
+  .tag-styled { background: var(--app-bg-action-subtle); color: var(--app-fg-action); }
+  .tag-forbidden { background: var(--app-bg-danger-subtle); color: var(--app-fg-danger); }
+  dl { display: grid; grid-template-columns: max-content 1fr; gap: 0.5rem 1rem; }
+  dt { color: var(--app-fg-muted); font-size: 0.7em; }
+  dd { margin: 0; }
+  .parts { margin: 0; padding-left: 1.2em; }
+  .demo { margin-block: 1rem; padding: 1rem; background: var(--app-bg-sunken); }
+  .src { overflow-x: auto; padding: 0.75rem; font-size: 0.65em;
+         background: var(--app-bg-sunken); color: var(--app-fg-muted); }
+  .deferred { margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--app-border-color-subtle); }
+  .defer { font-size: 0.8em; }
+  .tally { display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.7em; color: var(--app-fg-muted); }
+</style>
+</head>
+<body>
+<div class="docs">
+  <h1>DS Carmageddon</h1>
+  <p class="intent">
+    The delta between this product and nescss. Compositions and overrides are
+    documented here in full because they exist nowhere else; everything the
+    product uses unchanged links to the library.
+  </p>
+  <p class="tally">
+    <span>5 compositions</span>
+    <span>1 overrides</span>
+    <span>11 raw</span>
+    <span>6 styled</span>
+    <span>0 forbidden</span>
+  </p>
+<section id="button">
+  <h2>button</h2>
+  <p class="intent">A control that performs an action. Every button in this product is a NES.css button — the library already decided what a button is, and it decided well.</p>
+  <p class="defer">Everything below that this product has not changed is documented by the library: <a href="https://nostalgic-css.github.io/NES.css/#buttons">nescss docs for button</a>.</p>
+  
+  <div class="deferred"><h3>Used as the library ships them</h3><dl><dt><code>nes-btn</code> — default</dt><dd>The ordinary action. Most of the HUD is these.</dd><dt><code>nes-btn is-primary</code> — primary</dt><dd>The action a screen is for: start the race, confirm the purchase.</dd><dt><code>nes-btn is-success</code> — confirm</dt><dd>Completing something already in progress — repairs done, opponent recruited.</dd><dt><code>nes-btn is-warning</code> — caution</dt><dd>An action with a cost the player should notice before pressing.</dd><dt><code>nes-btn is-error</code> — destructive</dt><dd>Wreck, forfeit, delete a save.</dd></dl></div>
+</section>
+<section id="panel">
+  <h2>panel</h2>
+  <p class="intent">A framed region of the HUD.</p>
+  <p class="defer">Everything below that this product has not changed is documented by the library: <a href="https://nostalgic-css.github.io/NES.css/#containers">nescss docs for panel</a>.</p>
+  <article class="pattern is-override">
+  <h3>hud <span class="tag tag-styled">styled</span></h3>
+  <p class="intent">A panel that sits flush in the HUD grid.</p>
+  <dl><dt>Class</dt><dd><code>cm-panel</code></dd><dt>Diverges</dt><dd>NES.css centres a container's title over its border, which is right for a dialogue and wrong inside a grid — the overhang breaks alignment with the panel beside it. This override lays the panel out as a flex column with the system's own spacing and drops the overhang. Everything else, including the pixel border, stays the library's.</dd></dl>
+  <div class="demo"><div class="cm-panel"><p>LAP 2 / 3</p></div></div><pre class="src"><code>&lt;div class="cm-panel"&gt;&lt;p&gt;LAP 2 / 3&lt;/p&gt;&lt;/div&gt;</code></pre>
+</article>
+  <div class="deferred"><h3>Used as the library ships them</h3><dl><dt><code>nes-container</code> — plain</dt><dd>The library's container, unmodified. Used wherever a panel is a dialogue rather than part of the HUD grid.</dd></dl></div>
+</section>
+<section id="stat">
+  <h2>stat</h2>
+  <p class="intent">A labelled counter. The credits, the clock, the pedestrian tally — the HUD is mostly these.</p>
+  
+  <article class="pattern is-composition">
+  <h3>default <span class="tag tag-styled">styled</span></h3>
+  <p class="intent">A number with a name above it, sized so the number reads at a glance from a driving position.</p>
+  <dl><dt>Class</dt><dd><code>cm-stat</code></dd><dt>Parts</dt><dd><ul class="parts"><li><code>cm-stat__label</code> — What is being counted. Small, muted, uppercase tracking.</li><li><code>cm-stat__value</code> — The number itself, in the heading colour.</li></ul></dd></dl>
+  <div class="demo"><div class="cm-stat"><span class="cm-stat__label">CREDITS</span><span class="cm-stat__value">12,480</span></div></div><pre class="src"><code>&lt;div class="cm-stat"&gt;&lt;span class="cm-stat__label"&gt;CREDITS&lt;/span&gt;&lt;span class="cm-stat__value"&gt;12,480&lt;/span&gt;&lt;/div&gt;</code></pre>
+</article>
+<article class="pattern is-composition">
+  <h3>critical <span class="tag tag-styled">styled</span></h3>
+  <p class="intent">The same counter when its number is bad news — time nearly out, damage nearly total.</p>
+  <dl><dt>Class</dt><dd><code>cm-stat cm-stat--critical</code></dd><dt>Note</dt><dd>A modifier rather than a second pattern: same component, different state. Recording it as its own pattern would have made the vocabulary look wider than it is.</dd></dl>
+  <div class="demo"><div class="cm-stat cm-stat--critical"><span class="cm-stat__label">TIME LEFT</span><span class="cm-stat__value">0:07</span></div></div><pre class="src"><code>&lt;div class="cm-stat cm-stat--critical"&gt;&lt;span class="cm-stat__label"&gt;TIME LEFT&lt;/span&gt;&lt;span class="cm-stat__value"&gt;0:07&lt;/span&gt;&lt;/div&gt;</code></pre>
+</article>
+  
+</section>
+<section id="driver">
+  <h2>driver</h2>
+  <p class="intent">One opponent: who they are and how wrecked. NES.css has avatars and it has progress bars; it has no notion of the two together meaning one entity.</p>
+  
+  <article class="pattern is-composition">
+  <h3>default <span class="tag tag-styled">styled</span></h3>
+  <p class="intent">An opponent in the pre-race list.</p>
+  <dl><dt>Class</dt><dd><code>cm-driver</code></dd><dt>Parts</dt><dd><ul class="parts"><li><code>cm-driver__name</code> — The driver's name.</li><li><code>cm-driver__meta</code> — Vehicle and standing, muted.</li></ul></dd></dl>
+  <div class="demo"><div class="cm-driver"><i class="nes-icon trophy is-medium"></i><div><p class="cm-driver__name">Die Anna</p><p class="cm-driver__meta">Hawk R — 2nd</p></div></div></div><pre class="src"><code>&lt;div class="cm-driver"&gt;&lt;i class="nes-icon trophy is-medium"&gt;&lt;/i&gt;&lt;div&gt;&lt;p class="cm-driver__name"&gt;Die Anna&lt;/p&gt;&lt;p class="cm-driver__meta"&gt;Hawk R — 2nd&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+</article>
+<article class="pattern is-composition">
+  <h3>selected <span class="tag tag-styled">styled</span></h3>
+  <p class="intent">The opponent the player has picked to hunt.</p>
+  <dl><dt>Class</dt><dd><code>cm-driver is-selected</code></dd><dt>Note</dt><dd>Uses the `selected` role, not `action`. Layer 2 draws that distinction and most products collapse it: this is a state the player is in, not an invitation to click.</dd></dl>
+  <div class="demo"><div class="cm-driver is-selected"><i class="nes-icon star is-medium"></i><div><p class="cm-driver__name">Max Damage</p><p class="cm-driver__meta">Eagle R — 1st</p></div></div></div><pre class="src"><code>&lt;div class="cm-driver is-selected"&gt;&lt;i class="nes-icon star is-medium"&gt;&lt;/i&gt;&lt;div&gt;&lt;p class="cm-driver__name"&gt;Max Damage&lt;/p&gt;&lt;p class="cm-driver__meta"&gt;Eagle R — 1st&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+</article>
+  
+</section>
+<section id="damage">
+  <h2>damage</h2>
+  <p class="intent">A labelled meter with its reading beside it. Built ON the library's progress bar rather than replacing it.</p>
+  <p class="defer">Everything below that this product has not changed is documented by the library: <a href="https://nostalgic-css.github.io/NES.css/#progress">nescss docs for damage</a>.</p>
+  <article class="pattern is-composition">
+  <h3>meter <span class="tag tag-styled">styled</span></h3>
+  <p class="intent">How wrecked something is.</p>
+  <dl><dt>Class</dt><dd><code>cm-damage</code></dd><dt>Note</dt><dd>The bar itself stays `.nes-progress`, so the pixel styling and the three browser-specific pseudo-elements remain the library's problem. The composition adds only the label and the readout.</dd><dt>Parts</dt><dd><ul class="parts"><li><code>cm-damage__label</code> — What is being measured.</li><li><code>cm-damage__value</code> — The reading, as text, for anyone who cannot judge a bar.</li></ul></dd></dl>
+  <div class="demo"><div class="cm-damage"><span class="cm-damage__label">CHASSIS</span><progress class="nes-progress is-error" value="72" max="100"></progress><span class="cm-damage__value">72%</span></div></div><pre class="src"><code>&lt;div class="cm-damage"&gt;&lt;span class="cm-damage__label"&gt;CHASSIS&lt;/span&gt;&lt;progress class="nes-progress is-error" value="72" max="100"&gt;&lt;/progress&gt;&lt;span class="cm-damage__value"&gt;72%&lt;/span&gt;&lt;/div&gt;</code></pre>
+</article>
+  <div class="deferred"><h3>Used as the library ships them</h3><dl><dt><code>nes-progress</code> — bare</dt><dd>The library's progress bar with no label, for places where the surrounding text already says what it measures.</dd></dl></div>
+</section>
+<section id="field">
+  <h2>field</h2>
+  <p class="intent">A form control and its label. Untouched — NES.css already decided these and the adapter re-pointed their colours.</p>
+  <p class="defer">Everything below that this product has not changed is documented by the library: <a href="https://nostalgic-css.github.io/NES.css/#inputs">nescss docs for field</a>.</p>
+  
+  <div class="deferred"><h3>Used as the library ships them</h3><dl><dt><code>nes-input</code> — text</dt><dd>Single-line text entry.</dd><dt><code>nes-select</code> — select</dt><dd>A choice from a known list.</dd><dt><code>nes-checkbox</code> — check</dt><dd>A boolean.</dd></dl></div>
+</section>
+<section id="table">
+  <h2>table</h2>
+  <p class="intent">Standings and race results.</p>
+  <p class="defer">Everything below that this product has not changed is documented by the library: <a href="https://nostalgic-css.github.io/NES.css/#table">nescss docs for table</a>.</p>
+  
+  <div class="deferred"><h3>Used as the library ships them</h3><dl><dt><code>nes-table</code> — default</dt><dd>The results table.</dd></dl></div>
+</section>
+</div>
+</body>
+</html>

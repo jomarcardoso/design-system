@@ -6,12 +6,15 @@
 <title>DS Cyberpunk with Bulma — phase 2</title>
 
 <!--
-  Run `npm run demo:examples` before opening this file.
+  Run `npm run demo:examples`, then open with a TRAILING SLASH:
+  http://localhost:4173/example/ds-cyberpunk-bulma-phase2/
 
-  Compare the markup below with the Hot Tone example. There is not a single
-  Bulma class here — no `button`, no `is-primary`. That is the whole difference
-  phase 2 makes, and it is why removing Bulma from this product would edit
-  patterns.scss and nothing else.
+  Compare the markup with the Hot Tone example.
+
+  Buttons and cards carry NO Bulma class — they were promoted, so the call site
+  names `cp-btn-primary` and `cp-card` instead. The menu, the form controls and
+  the table still use Bulma's classes directly, because nothing about them has
+  diverged yet. Mixed maturity is the normal state of a real ledger.
 
       node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 \
         --ledger example/ds-cyberpunk-bulma-phase2/patterns.json
@@ -21,135 +24,245 @@
   supposed to have stopped naming the library.
 -->
 <link rel="stylesheet" href="./ds.css">
-
-<style>
-  body {
-    margin: 0;
-    background: var(--app-bg-page);
-    color: var(--app-fg-default);
-    font-family: var(--app-font-body);
-  }
-
-  /* Bulma's minireset flattens h1–h6 to inherit, expecting `.title` instead.
-     A product using Bulma has to restore a document baseline somewhere; doing
-     it from tokens keeps the scale in one place rather than in a class. */
-  h1, h2 {
-    color: var(--app-fg-heading);
-    font-family: var(--app-font-heading);
-    font-weight: var(--app-weight-heading);
-    line-height: var(--app-text-leading-heading);
-    margin-block: 0 var(--app-space-md);
-  }
-  h1 { font-size: var(--app-text-size-heading); }
-  h2 { font-size: var(--app-text-size-lg); }
-  .wrap { max-width: 60rem; margin: 0 auto; padding: var(--app-space-2xl) var(--app-space-lg); }
-  .lede { color: var(--app-fg-muted); max-width: 46rem; }
-  .panel {
-    background: var(--app-bg-surface);
-    border: var(--app-border-width) solid var(--app-border-color);
-    border-radius: var(--app-radius-surface);
-    padding: var(--app-pad-surface);
-    margin-block: var(--app-space-lg);
-  }
-  /* Prefixed on purpose: an unprefixed `.row` collides with the library's
-     grid, whose `.row > *` forces width:100%. Page-local class names need a
-     namespace for the same reason component patterns do. */
-  .ex-row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
-  .label { color: var(--app-fg-muted); font-size: 0.85rem; margin-block: var(--app-space-md) var(--app-space-xs); }
-  code { font-family: var(--app-font-mono); font-size: 0.85em; color: var(--app-fg-action); }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { text-align: left; padding: var(--app-space-sm); border-bottom: 1px solid var(--app-border-color-subtle); }
-  th { color: var(--app-fg-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
-</style>
 </head>
 <body>
-<div class="wrap">
 
-  <h1>DS Cyberpunk <small style="color:var(--app-fg-muted);font-weight:400">with Bulma · phase 2</small></h1>
-  <p class="lede">
-    A second product on the same foundation, reaching different conclusions. Dark by
-    default with no light counterpart, neon cyan and magenta as the two brand roles, and
-    a vocabulary of four button patterns — one of which the Hot Tone example forbids.
-  </p>
-  <p class="lede">
-    <strong>Phase 2</strong> means each allowed pattern has been promoted to a semantic
-    class in <code>patterns.scss</code>. There is no component framework here, so phase 2
-    is the end of the line rather than a step toward a wrapper — a complete stopping
-    point.
-  </p>
-
-  <section class="panel">
-    <h2>The vocabulary</h2>
-    <p class="lede">Four patterns, and the markup names none of them after Bulma.</p>
-
-    <p class="label">Emphasis</p>
-    <div class="ex-row">
-      <button class="cp-btn-primary">Execute</button>
-      <button class="cp-btn-secondary">Abort sequence</button>
-      <button class="cp-btn-destructive">Purge node</button>
-      <button class="cp-btn-ghost">Collapse pane</button>
+<header>
+  <nav class="navbar has-shadow" role="navigation" aria-label="main navigation">
+    <div class="container">
+      <div class="navbar-brand">
+        <a class="navbar-item has-text-weight-semibold" href="#">CYBERPUNK<span class="has-text-primary">/</span>OPS</a>
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="topnav">
+          <span aria-hidden="true"></span><span aria-hidden="true"></span>
+          <span aria-hidden="true"></span><span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="topnav" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item is-active" href="#">Grid</a>
+          <a class="navbar-item" href="#">Nodes</a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">Telemetry</a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="#">Throughput</a>
+              <a class="navbar-item" href="#">Latency</a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="#">Export</a>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <button class="cp-btn-primary">Deploy</button>
+          </div>
+        </div>
+      </div>
     </div>
+  </nav>
+</header>
 
-    <p class="label">Size — an orthogonal axis</p>
-    <div class="ex-row">
-      <button class="cp-btn-primary">Execute</button>
-      <button class="cp-btn-primary is-small">Run</button>
+<main class="section">
+  <div class="container">
+    <div class="columns is-variable is-5">
+
+      <!-- Sidebar menu -->
+      <aside class="column is-one-quarter">
+        <nav class="menu">
+          <p class="menu-label">Operations</p>
+          <ul class="menu-list">
+            <li><a class="is-active" href="#">Grid overview</a></li>
+            <li><a href="#">Node registry</a></li>
+            <li><a href="#">Scheduled jobs</a></li>
+          </ul>
+          <p class="menu-label">Maintenance</p>
+          <ul class="menu-list">
+            <li><a href="#">Firmware</a></li>
+            <li>
+              <a href="#">Incidents</a>
+              <ul>
+                <li><a href="#">Open</a></li>
+                <li><a href="#">Resolved</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="cp-card mt-5">
+          <div class="card-content">
+            <p class="heading">Grid load</p>
+            <p class="title is-4">78%</p>
+            <p class="is-size-7 has-text-grey-light mb-3">Two nodes degraded in sector 4.</p>
+            <button class="cp-btn-secondary is-small">Rebalance</button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="column">
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <div>
+                <h1 class="title is-4 mb-1">Grid overview</h1>
+                <p class="subtitle is-6 has-text-grey-light">Sector 4 · 24 nodes · 3 alerts</p>
+              </div>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item">
+              <div class="buttons">
+                <button class="cp-btn-ghost">Collapse all</button>
+                <button class="cp-btn-primary">Deploy</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <ul>
+            <li class="is-active"><a>Active</a></li>
+            <li><a>Degraded</a></li>
+            <li><a>Offline</a></li>
+          </ul>
+        </div>
+
+        <!-- Cards -->
+        <div class="columns is-multiline">
+          <div class="column is-half">
+            <div class="cp-card">
+              <header class="card-header">
+                <p class="card-header-title">node-7f21</p>
+              </header>
+              <div class="card-content">
+                <p class="is-size-7 has-text-grey-light">Sector 4 · uptime 41d · 2.1 Gb/s</p>
+              </div>
+              <footer class="card-footer">
+                <a href="#" class="card-footer-item">Inspect</a>
+                <a href="#" class="card-footer-item">Drain</a>
+              </footer>
+            </div>
+          </div>
+          <div class="column is-half">
+            <div class="cp-card">
+              <header class="card-header">
+                <p class="card-header-title">node-9a08</p>
+              </header>
+              <div class="card-content">
+                <p class="is-size-7 has-text-grey-light">Sector 11 · offline 18m · last seen 04:12</p>
+              </div>
+              <footer class="card-footer">
+                <a href="#" class="card-footer-item">Inspect</a>
+                <a href="#" class="card-footer-item">Purge</a>
+              </footer>
+            </div>
+          </div>
+        </div>
+
+        <!-- Table -->
+        <div class="cp-card mb-5">
+          <header class="card-header">
+            <p class="card-header-title">Node registry</p>
+          </header>
+          <div class="table-container">
+            <table class="table is-fullwidth is-hoverable mb-0">
+              <thead>
+                <tr><th>Node</th><th>Region</th><th>State</th><th>Throughput</th><th class="has-text-right">Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th class="has-text-weight-normal">node-7f21</th><td>sector 4</td>
+                  <td>online</td><td>2.1 Gb/s</td>
+                  <td class="has-text-right"><button class="cp-btn-ghost is-small">Inspect</button></td>
+                </tr>
+                <tr>
+                  <th class="has-text-weight-normal">node-7f22</th><td>sector 4</td>
+                  <td>degraded</td><td>0.4 Gb/s</td>
+                  <td class="has-text-right"><button class="cp-btn-ghost is-small">Inspect</button></td>
+                </tr>
+                <tr>
+                  <th class="has-text-weight-normal">node-9a08</th><td>sector 11</td>
+                  <td>offline</td><td>—</td>
+                  <td class="has-text-right"><button class="cp-btn-destructive is-small">Purge</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="cp-card">
+          <header class="card-header">
+            <p class="card-header-title">Register node</p>
+          </header>
+          <div class="card-content">
+            <div class="columns">
+              <div class="column">
+                <div class="field">
+                  <label class="label" for="node-id">Node ID</label>
+                  <div class="control">
+                    <input class="input" id="node-id" type="text" placeholder="node-0000">
+                  </div>
+                </div>
+              </div>
+              <div class="column">
+                <div class="field">
+                  <label class="label" for="sector">Sector</label>
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select id="sector">
+                        <option>Sector 4</option>
+                        <option>Sector 7</option>
+                        <option>Sector 11</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label" for="notes">Commissioning notes</label>
+              <div class="control">
+                <textarea class="textarea" id="notes" rows="2" placeholder="Hardware revision, cabling, anything the next operator needs"></textarea>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="checkbox">
+                <input type="checkbox"> Bring online immediately after registration
+              </label>
+            </div>
+
+            <div class="field is-grouped">
+              <div class="control"><button class="cp-btn-primary">Register</button></div>
+              <div class="control"><button class="cp-btn-secondary">Cancel</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</main>
 
-  <section class="panel">
-    <h2>In use</h2>
-    <table>
-      <thead>
-        <tr><th>Node</th><th>Region</th><th>State</th><th></th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>node-7f21</td><td>sector 4</td><td>online</td>
-          <td><button class="cp-btn-ghost is-small">Collapse</button></td>
-        </tr>
-        <tr>
-          <td>node-7f22</td><td>sector 4</td><td>degraded</td>
-          <td><button class="cp-btn-ghost is-small">Collapse</button></td>
-        </tr>
-        <tr>
-          <td>node-9a08</td><td>sector 11</td><td>offline</td>
-          <td><button class="cp-btn-ghost is-small">Collapse</button></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="ex-row" style="margin-top:var(--app-space-lg)">
-      <button class="cp-btn-primary">Commit changes</button>
-      <button class="cp-btn-secondary">Revert</button>
-      <button class="cp-btn-destructive">Purge node</button>
-    </div>
-  </section>
-
-  <section class="panel">
-    <h2>Two products, one foundation, opposite conclusions</h2>
-    <p class="lede">
-      The <code>ghost</code> pattern is allowed here and forbidden in Hot Tone. The
-      trade-off is identical — a borderless control can read as text — and the products
-      resolve it differently, because this one's surfaces are dark panels with visible
-      chrome so the affordance survives.
+<footer class="footer">
+  <div class="container is-flex is-justify-content-space-between is-flex-wrap-wrap">
+    <p class="is-size-7 has-text-grey-light">
+      DS Cyberpunk · phase 2 — buttons and cards promoted to semantic classes; menu, fields and table still Bulma's.
     </p>
-    <p class="lede">
-      That disagreement is the argument for keeping the vocabulary in the product rather
-      than in the tool. A foundation that shipped an opinion here would be wrong for one
-      of these two, and the tool cannot know which.
-    </p>
-    <table>
-      <thead><tr><th>Decision</th><th>Hot Tone</th><th>Cyberpunk</th></tr></thead>
-      <tbody>
-        <tr><td>Low-emphasis action</td><td><code>quiet</code>, table rows only</td><td><code>ghost</code>, any dense panel</td></tr>
-        <tr><td>Large size</td><td>allowed — landing pages</td><td>forbidden — emphasis said twice</td></tr>
-        <tr><td>Secondary reads as</td><td>outline of a neutral role</td><td>outline of the brand role</td></tr>
-        <tr><td>Themes</td><td>one, light</td><td>one, dark</td></tr>
-      </tbody>
-    </table>
-  </section>
+    <p class="is-size-7"><a href="../ds-hot-tone-bootstrap-phase1/">See a phase 1 system →</a></p>
+  </div>
+</footer>
 
-</div>
+<script>
+  // Bulma ships no JavaScript. This is the burger toggle from its own docs,
+  // included because a menu that cannot open on a narrow screen is not a menu.
+  document.querySelectorAll('.navbar-burger').forEach((el) => {
+    el.addEventListener('click', () => {
+      const target = document.getElementById(el.dataset.target);
+      el.classList.toggle('is-active');
+      target.classList.toggle('is-active');
+    });
+  });
+</script>
 </body>
 </html>

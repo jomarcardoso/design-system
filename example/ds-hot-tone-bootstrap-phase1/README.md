@@ -1,28 +1,51 @@
 # DS Hot Tone with Bootstrap — phase 1
 
 A product design system built **with** this tool. Nothing here is part of the
-tool: the palette, the vocabulary and every refusal are this product's
-decisions, and a different product would reach different ones.
+tool: the palette, the vocabulary and every decision are this product's, and a
+different product reaches different ones — see the Cyberpunk example.
+
+Open it with a **trailing slash**:
+<http://localhost:4173/example/ds-hot-tone-bootstrap-phase1/>
 
 ## What phase 1 is
 
-The vocabulary is closed and enforced, and **no abstraction has been written**.
-Markup still carries Bootstrap classes; what changed is that only four
-combinations of them are allowed, and an agent consults the ledger before
-emitting any of them.
+The vocabulary is recorded and enforced, and **no abstraction has been
+written**. Markup carries Bootstrap classes; what changed is that an agent
+consults the ledger before emitting any of them, and the check fails on
+anything outside it.
 
-That is the cheapest useful state of a design system. It costs one JSON file
-and it already stops the drift — no SCSS, no components, nothing to maintain.
+Phase 1 is also **wide on purpose**. Ten button patterns, close to what
+Bootstrap's own documentation shows, because a product this early has not
+earned the right to narrow yet. Narrowing is what maturing looks like, and the
+Cyberpunk example is what it looks like once it has happened.
+
+```
+button    10 allowed  raw 10 (100%)  styled 0 (0%)  forbidden 1
+card       1 allowed  raw  1 (100%)
+nav        3 allowed  raw  3 (100%)
+field      4 allowed  raw  4 (100%)
+```
+
+## The page writes no CSS
+
+`index.html` has no `<style>` block and no stylesheet of its own. Layout,
+spacing, typography and every state come from Bootstrap's own utilities and
+components — `container`, `row`/`col`, `d-flex gap-2`, `card`, `list-group`,
+`navbar`, `table`, `text-body-secondary`.
+
+That is the point of building on a library. CSS written here would be a third
+thing that can disagree with the other two, and every line of it would need
+maintaining after the library updates.
 
 ## Files
 
 | File | What it is |
 |---|---|
-| `patterns.json` | the ledger: four allowed patterns, four refusals, one modifier axis |
+| `patterns.json` | the ledger: four components, eighteen patterns, one refusal |
 | `theme.scss` | the palette, as a theme map |
-| `ds.scss` | the build: layers assembled, the tool's demo themes turned off |
+| `ds.scss` | the build — layers assembled, the tool's demo themes turned off |
 | `app.css` | cascade layer order and the token-driven baseline |
-| `index.html` | conforming markup |
+| `index.html` | a real screen: header, nav, sidebar menu, cards, table, form, footer |
 
 ## Running it
 
@@ -30,39 +53,34 @@ and it already stops the drift — no SCSS, no components, nothing to maintain.
 npm run demo:examples
 ```
 
-Then open `index.html`, and check the markup against the ledger:
-
 ```bash
 node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json
 ```
 
-```
-button     4 allowed  raw 4 (100%)  styled 0 (0%)  wrapped 0 (0%)  forbidden 4
-```
-
-100% `raw` is the honest description of phase 1. Add a `btn-success` to
-`index.html` and the check fails with the reason this product recorded.
+Add a `btn-light` anywhere and it fails with the reason this product recorded.
 
 ## Decisions worth arguing with
 
-These are the product's, not the tool's, and they are written down so they can
-be challenged rather than inherited:
-
-- **`quiet` is allowed**, on the condition that it appears inside table rows
-  where the affordance is already established. The Cyberpunk example forbids the
-  equivalent pattern. Both are defensible.
-- **`btn-lg` is allowed**, because this product's landing pages are its front
-  door. Cyberpunk forbids it as emphasis expressed twice.
-- **Status-coloured buttons are refused** — `success`, `warning`, `info`. A
-  button proposes an action that has not happened; status colour reports an
-  outcome that has.
-- **`destructive`, not `danger`.** The name says what the button does rather
-  than which colour it borrows, so the colour can change and the name still
-  holds.
+- **Status buttons are allowed** — `success`, `warning`, `danger`, `info`. A
+  kitchen screen genuinely has a "mark ready" and a "cancel order", and both
+  read faster in colour. The Cyberpunk example forbids them; both are
+  defensible, and the difference is the product, not the tool.
+- **Outline is a separate pattern, not a modifier.** Bootstrap renames the
+  class (`btn-outline-primary`) rather than adding one, so it cannot be an
+  additive modifier. Bulma does add one (`is-outlined`), which is why the same
+  visual idea is modelled differently in the other example — and why `intent`,
+  not the class name, is the field that survives a library change.
+- **One refusal so far**, `btn-light`/`btn-dark`. Not taste: absolute palette
+  names do not invert with a theme, which this project measured while building
+  the adapters. Refusals that rest on a fact age better than refusals that rest
+  on a preference.
+- **The ledger governs the root class only.** `card-body`, `nav-link` and the
+  rest are Bootstrap's anatomy. A ledger that enumerated them would be
+  redocumenting the library.
 
 ## What phase 2 would change here
 
-`secondary` is the first candidate: it already composes two classes and this
+`secondary-outline` is the first candidate — five call sites already, and this
 product wants a heavier border than Bootstrap draws. Promoting it means writing
-`.ht-btn-secondary` in SCSS, setting `styled` in the ledger and changing
-`state`. See the Cyberpunk example for the result.
+one class in SCSS, filling the `styled` slot and changing `state`. See the
+Cyberpunk example for the result.

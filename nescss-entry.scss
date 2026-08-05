@@ -1,0 +1,82 @@
+// =============================================================================
+// NES.CSS BUILD ENTRY  (OPTIONAL)
+// =============================================================================
+//
+// Compiles NES.css with this design system's colours already baked in:
+//
+//     sass --load-path=. --load-path=node_modules nescss-entry.scss dist/nescss.css
+//
+// -----------------------------------------------------------------------------
+// WHY THIS FILE CARRIES MORE THAN ANY OTHER ENTRY
+// -----------------------------------------------------------------------------
+//
+// NES.css publishes zero custom properties, so its only theming surface is its
+// Sass variables. Everything a theme wants to change has to be set here, before
+// the library is imported — and one thing can ONLY be set here:
+//
+//     border-image-source: url('…<path … fill="rgb(33,37,41)"/>…')
+//
+// The pixel border is an SVG data URI generated from `$base-color`. A colour
+// inside an asset is unreachable from CSS at any layer, so the border takes
+// whichever theme was compiled and does not follow `data-theme`. The adapter's
+// header spells out the consequence; the short version is that NES.css is a
+// single-theme library and that is a property of the library, not a bug here.
+//
+// -----------------------------------------------------------------------------
+// WHY LEGACY `@import` AND NOT `@use`
+// -----------------------------------------------------------------------------
+//
+// NES.css is written with `@import` internally, so it is not a Sass module and
+// `@use … with (…)` cannot configure it. Plain assignment before a textual
+// import is the supported path: the library's variables are declared `!default`
+// and a `!default` never overwrites a value that already exists.
+//
+// Sass warns that `@import` is deprecated. There is no module-system way to
+// configure a non-module library, so the warning is expected and the build
+// silences it explicitly rather than hiding it.
+// =============================================================================
+
+@use 'sass:list';
+@use 'sass:map';
+@use 'src/config';
+@use 'src/themes';
+@use 'src/adapters/nescss';
+
+// The theme whose colours get compiled in. The FIRST theme in `$themes`,
+// because a library that can only hold one should hold the default one.
+$_choices: map.get(themes.$registry, list.nth(config.$themes, 1));
+
+// --- Typography ---------------------------------------------------------
+// Left as the library's own. "Press Start 2P" is not a font choice this system
+// has an opinion about — it is the entire point of the library, and swapping it
+// for a token would produce NES.css that does not look like NES.css.
+//
+// The design system's font tokens still drive everything OUTSIDE the library.
+
+// --- Colour -------------------------------------------------------------
+$base-color: nescss.srgb-of($_choices, text);
+$background-color: nescss.srgb-of($_choices, page);
+
+$default-colors: (
+  normal: nescss.srgb-of($_choices, surface),
+  hover: nescss.srgb-of($_choices, sunken),
+  shadow: nescss.srgb-of($_choices, 'border-strong')
+);
+
+$primary-colors: nescss.variant-colors($_choices, 'action');
+$success-colors: nescss.variant-colors($_choices, 'success');
+$warning-colors: nescss.variant-colors($_choices, 'warning');
+$error-colors: nescss.variant-colors($_choices, 'danger');
+
+// --- Shape --------------------------------------------------------------
+// `$border-size` is NOT bound to `--app-border-width`. Four pixels is the grid
+// this library draws on — its corners, its shadows and its border images are
+// all built from it, and a 1px "refinement" produces a broken pixel grid rather
+// than a subtler NES.css.
+//
+// The rule this illustrates: align where the design system has an opinion, and
+// leave the library its character everywhere else.
+
+@layer vendor {
+  @import 'nes.css/scss/nes';
+}

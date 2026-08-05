@@ -1,103 +1,256 @@
 {
   "$schema": "../../patterns/patterns.schema.json",
   "version": 1,
-  "libraries": ["bulma"],
-
+  "libraries": [
+    "bulma"
+  ],
   "components": {
     "button": {
       "intent": "A control that performs an action. Navigation is an anchor and is governed elsewhere.",
       "namespace": {
-        "bulma": "^button$|^is-(primary|link|info|success|warning|danger|light|dark|white|black|text|ghost|outlined|inverted|rounded|small|normal|medium|large|loading|static|fullwidth)$|^cp-btn-"
+        "bulma": "^button$|^is-(primary|link|info|success|warning|danger|light|dark|white|black|text|ghost|outlined|inverted|small|normal|medium|large|loading|static|fullwidth)$|^cp-btn-"
       },
-      "namespaceNote": "Bulma has no per-component prefix — `.button` composes with generic `is-*` modifiers that other components also use. So the namespace lists the modifiers that change a button's appearance, plus this product's own `cp-btn-` prefix. Naming them explicitly is the cost of a library that shares one modifier vocabulary across components; the alternative, matching all of `is-*`, would claim classes belonging to columns and tags.",
-
+      "namespaceNote": "Bulma has no per-component prefix — `.button` composes with generic `is-*` modifiers that other components share. So the namespace lists the modifiers that change a button, plus this product's own `cp-btn-` prefix. Matching all of `is-*` would claim classes belonging to columns, tags and notifications.",
       "modifiers": {
         "size": {
-          "intent": "Physical size, independent of emphasis.",
+          "intent": "Physical size, orthogonal to emphasis.",
           "options": {
             "medium": {
               "intent": "The default. Adds nothing.",
-              "libraries": { "bulma": [] }
+              "libraries": {
+                "bulma": []
+              }
             },
             "small": {
-              "intent": "Terminal-dense surfaces: log rows, inline filters.",
-              "libraries": { "bulma": ["is-small"] }
+              "intent": "Dense surfaces: log rows, table actions, inline filters.",
+              "libraries": {
+                "bulma": [
+                  "is-small"
+                ]
+              }
             }
           },
           "forbidden": {
             "large": {
-              "reason": "Emphasis is what the pattern name carries. Size as a second emphasis channel means two ways to say the same thing, which eventually disagree.",
+              "reason": "Emphasis is what the pattern name carries. Size as a second emphasis channel means two ways to say the same thing, and they eventually disagree.",
               "instead": "primary",
-              "matches": { "bulma": ["is-large", "is-medium"] }
+              "matches": {
+                "bulma": [
+                  "is-large",
+                  "is-medium"
+                ]
+              }
             }
           }
         }
       },
-
       "patterns": {
         "primary": {
-          "intent": "The one action a screen most wants. At most one per view.",
+          "intent": "The main action on a screen.",
           "state": "styled",
-          "raw": { "bulma": ["button", "is-primary"] },
+          "raw": {
+            "bulma": [
+              "button",
+              "is-primary"
+            ]
+          },
           "styled": "cp-btn-primary",
-          "notes": "Promoted first: this product draws a neon edge that Bulma has no modifier for, which is a STRUCTURAL divergence rather than a colour change. That is one of the three promotion triggers."
+          "notes": "Promoted first: this product draws a neon edge Bulma has no modifier for — a STRUCTURAL divergence, not a colour change, which is one of the three promotion triggers."
         },
         "secondary": {
-          "intent": "A supporting action beside a primary one. Outlined, so it reads as available without competing.",
+          "intent": "A supporting action beside a primary one.",
           "state": "styled",
-          "raw": { "bulma": ["button", "is-primary", "is-outlined"] },
+          "raw": {
+            "bulma": [
+              "button",
+              "is-primary",
+              "is-outlined"
+            ]
+          },
           "styled": "cp-btn-secondary",
-          "notes": "Promoted because the call site composed three classes. Counting classes is a decent proxy for 'this is a concept, not a combination'."
+          "notes": "Promoted because the call site composed three classes. Outline is a MODIFIER in Bulma (`is-outlined`) and a renamed variant in Bootstrap (`btn-outline-primary`) — the same visual idea, expressed differently. `intent` is what carries across that difference."
         },
         "destructive": {
-          "intent": "An action that cannot be undone easily. Filled, because the weight IS the warning.",
+          "intent": "An action that is hard to undo. Filled, because the weight IS the warning.",
           "state": "styled",
-          "raw": { "bulma": ["button", "is-danger"] },
+          "raw": {
+            "bulma": [
+              "button",
+              "is-danger"
+            ]
+          },
           "styled": "cp-btn-destructive"
         },
         "ghost": {
           "intent": "A borderless action inside an already-dense panel: dismiss, collapse, toggle a pane.",
           "state": "styled",
-          "raw": { "bulma": ["button", "is-ghost"] },
+          "raw": {
+            "bulma": [
+              "button",
+              "is-ghost"
+            ]
+          },
           "styled": "cp-btn-ghost",
-          "notes": "ALLOWED here and FORBIDDEN in the Hot Tone example, on purpose. The risk is identical — a borderless control reads as text — but this product's surfaces are dark panels with visible chrome, so the affordance survives. Two products reaching opposite conclusions from the same trade-off is the normal case, and it is why this decision belongs to the product rather than to the tool."
+          "notes": "Allowed here, absent from the Hot Tone vocabulary. This product's surfaces are dark panels with visible chrome, so a borderless control still has a findable position."
         },
-
-        "success": {
-          "intent": "A green button.",
+        "status": {
+          "intent": "A button coloured by a status role — success, warning, info.",
           "state": "forbidden",
-          "reason": "Green means 'the system did the thing'. A button is a request, not a result. Reserving green for confirmation keeps it meaningful.",
+          "reason": "This product narrowed to four intents once the vocabulary had settled. Status colour reports an outcome; a button proposes an action that has not happened. Note that the Hot Tone example, still in phase 1, allows these — a wider vocabulary early is normal, and narrowing it is what maturing looks like.",
           "instead": "primary",
-          "matches": { "bulma": ["is-success"] }
-        },
-        "warning": {
-          "intent": "A yellow button.",
-          "state": "forbidden",
-          "reason": "Feedback, not intent. An action worth hesitating over is destructive, and that pattern exists.",
-          "instead": "destructive",
-          "matches": { "bulma": ["is-warning"] }
-        },
-        "info": {
-          "intent": "A cyan informational button.",
-          "state": "forbidden",
-          "reason": "In this palette cyan IS the primary hue, so an info button is a primary button that does not behave like one.",
-          "instead": "primary",
-          "matches": { "bulma": ["is-info"] }
+          "matches": {
+            "bulma": [
+              "is-success",
+              "is-warning",
+              "is-info"
+            ]
+          }
         },
         "neutral": {
           "intent": "A button coloured by an absolute palette name.",
           "state": "forbidden",
           "reason": "`is-light`, `is-dark`, `is-white` and `is-black` are fixed palette entries. In Bulma they are also variant MODIFIERS whose absolute lightness other components depend on, so they cannot follow a theme even in principle.",
           "instead": "secondary",
-          "matches": { "bulma": ["is-light", "is-dark", "is-white", "is-black"] }
+          "matches": {
+            "bulma": [
+              "is-light",
+              "is-dark",
+              "is-white",
+              "is-black"
+            ]
+          }
         },
         "text": {
           "intent": "Bulma's underlined text-style button.",
           "state": "forbidden",
-          "reason": "Indistinguishable from a link, and this product already has `ghost` for a low-emphasis action. Two patterns for one job is how a vocabulary starts growing without anyone deciding to.",
+          "reason": "`ghost` already covers the low-emphasis action. Two patterns for one job is how a vocabulary grows without anyone deciding to.",
           "instead": "ghost",
-          "matches": { "bulma": ["is-text"] }
+          "matches": {
+            "bulma": [
+              "is-text"
+            ]
+          }
         }
+      },
+      "root": {
+        "bulma": "^button$|^cp-btn-"
+      }
+    },
+    "card": {
+      "intent": "A bounded surface grouping related content. Anatomy — header, content, footer — belongs to Bulma; this records only which kinds of card exist.",
+      "namespace": {
+        "bulma": "^card$|^cp-card$"
+      },
+      "namespaceNote": "Only the ROOT class is governed. `card-content`, `card-header` and the rest are the library's anatomy; a ledger that enumerated them would be redocumenting Bulma. The rule across this file: the ledger owns the variant, the library owns the parts.",
+      "patterns": {
+        "default": {
+          "intent": "The ordinary panel. Carries the same neon edge as the primary button so surfaces and actions read as one system.",
+          "state": "styled",
+          "raw": {
+            "bulma": [
+              "card"
+            ]
+          },
+          "styled": "cp-card"
+        }
+      },
+      "root": {
+        "bulma": "^card$|^cp-card$"
+      }
+    },
+    "nav": {
+      "intent": "Navigation surfaces: the top bar and the sidebar menu.",
+      "namespace": {
+        "bulma": "^navbar$|^menu$|^tabs$"
+      },
+      "patterns": {
+        "bar": {
+          "intent": "The top-level navigation bar.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "navbar"
+            ]
+          }
+        },
+        "menu": {
+          "intent": "A vertical menu of destinations, in a sidebar. The primary way this product moves between sections.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "menu"
+            ]
+          },
+          "notes": "Still `raw` while buttons and cards are `styled`. Mixed maturity is the normal state of a real ledger — nothing about this component has diverged from Bulma yet, so promoting it would produce a class with no declarations of its own, which is a rename rather than a promotion."
+        },
+        "tabs": {
+          "intent": "Switching between views of the same thing without leaving the page.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "tabs"
+            ]
+          }
+        }
+      },
+      "root": {
+        "bulma": "^navbar$|^menu$|^tabs$"
+      }
+    },
+    "field": {
+      "intent": "A form control and its label.",
+      "namespace": {
+        "bulma": "^input$|^textarea$|^select$|^label$|^checkbox$"
+      },
+      "patterns": {
+        "text": {
+          "intent": "Single-line text entry.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "input"
+            ]
+          }
+        },
+        "multiline": {
+          "intent": "Multi-line text entry.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "textarea"
+            ]
+          }
+        },
+        "select": {
+          "intent": "A choice from a known list.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "select"
+            ]
+          }
+        },
+        "check": {
+          "intent": "A boolean.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "checkbox"
+            ]
+          }
+        },
+        "label": {
+          "intent": "The name of a field. Always present — a placeholder is not a label.",
+          "state": "raw",
+          "raw": {
+            "bulma": [
+              "label"
+            ]
+          }
+        }
+      },
+      "root": {
+        "bulma": "^input$|^textarea$|^select$|^label$|^checkbox$"
       }
     }
   }

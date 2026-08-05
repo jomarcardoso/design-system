@@ -6,140 +6,223 @@
 <title>DS Hot Tone with Bootstrap — phase 1</title>
 
 <!--
-  Run `npm run demo:examples` before opening this file.
+  Run `npm run demo:examples`, then open with a TRAILING SLASH:
+  http://localhost:4173/example/ds-hot-tone-bootstrap-phase1/
 
-  Everything here is CONFORMING markup: every button matches a pattern in
-  ./patterns.json. Running
+  This page contains no stylesheet of its own. Layout, spacing and typography
+  are Bootstrap's utilities; the colours behind them are this product's theme.
+  Writing CSS here would mean maintaining a third thing that can disagree with
+  the other two.
 
       node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 \
         --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json
-
-  reports no violations. Introduce a `btn-success` and it fails with the reason
-  this product recorded for refusing it.
 -->
 <link rel="stylesheet" href="./app.css">
-
-<style>
-  body { margin: 0; }
-  .wrap { max-width: 60rem; margin: 0 auto; padding: var(--app-space-2xl) var(--app-space-lg); }
-  .lede { color: var(--app-fg-muted); max-width: 46rem; }
-  .panel {
-    background: var(--app-bg-surface);
-    border: var(--app-border-width) solid var(--app-border-color);
-    border-radius: var(--app-radius-surface);
-    padding: var(--app-pad-surface);
-    margin-block: var(--app-space-lg);
-  }
-  /* Prefixed on purpose: an unprefixed `.row` collides with the library's
-     grid, whose `.row > *` forces width:100%. Page-local class names need a
-     namespace for the same reason component patterns do. */
-  .ex-row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
-  .label { color: var(--app-fg-muted); font-size: 0.85rem; margin-block: var(--app-space-md) var(--app-space-xs); }
-  code { font-family: var(--app-font-mono); font-size: 0.85em; color: var(--app-fg-default); }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { text-align: left; padding: var(--app-space-sm); border-bottom: 1px solid var(--app-border-color-subtle); }
-  th { color: var(--app-fg-heading); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; }
-</style>
 </head>
-<body>
-<div class="wrap">
+<body class="d-flex flex-column min-vh-100">
 
-  <h1>DS Hot Tone <small style="color:var(--app-fg-muted);font-weight:400">with Bootstrap · phase 1</small></h1>
-  <p class="lede">
-    A product design system built on this foundation. The palette is warm throughout —
-    surfaces carry a paper tint rather than neutral grey — and the vocabulary is four
-    button patterns, not the several hundred Bootstrap makes available.
-  </p>
-  <p class="lede">
-    <strong>Phase 1</strong> means there is no abstraction yet: the ledger records the
-    decisions and the agent both applies and enforces them, but the markup still carries
-    library classes. Nothing has been written in SCSS or wrapped in a component. This is
-    the cheapest possible closed vocabulary.
-  </p>
-
-  <section class="panel">
-    <h2>The vocabulary</h2>
-    <p class="lede">Four patterns. Every button below is the whole allowed set.</p>
-
-    <p class="label">Emphasis</p>
-    <div class="ex-row">
-      <button class="btn btn-primary">Place order</button>
-      <button class="btn btn-outline-secondary">Back to menu</button>
-      <button class="btn btn-danger">Cancel order</button>
-      <button class="btn btn-link">Show details</button>
+<header>
+  <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+    <div class="container">
+      <a class="navbar-brand fw-semibold" href="#">Hot Tone</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topnav" aria-controls="topnav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="topnav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Orders</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Kitchen</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Menu</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Reports</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Daily summary</a></li>
+              <li><a class="dropdown-item" href="#">Ingredient usage</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Export CSV</a></li>
+            </ul>
+          </li>
+        </ul>
+        <button class="btn btn-primary">New order</button>
+      </div>
     </div>
+  </nav>
+</header>
 
-    <p class="label">Size — an orthogonal axis, not a new pattern</p>
-    <div class="ex-row">
-      <button class="btn btn-primary btn-lg">Start an order</button>
-      <button class="btn btn-primary">Place order</button>
-      <button class="btn btn-primary btn-sm">Add</button>
+<main class="container py-4 flex-grow-1">
+  <div class="row g-4">
+
+    <!-- Sidebar menu -->
+    <aside class="col-lg-3">
+      <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+          Today
+          <span class="badge text-bg-secondary float-end">12</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action">Scheduled</a>
+        <a href="#" class="list-group-item list-group-item-action">On hold</a>
+        <a href="#" class="list-group-item list-group-item-action">Delivered</a>
+        <a href="#" class="list-group-item list-group-item-action">Cancelled</a>
+      </div>
+
+      <div class="card mt-4">
+        <div class="card-body">
+          <h3 class="card-title h6">Kitchen load</h3>
+          <p class="card-text text-body-secondary small mb-3">
+            Eleven orders in the queue, two of them over the promised time.
+          </p>
+          <button class="btn btn-warning btn-sm">Put queue on hold</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content -->
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+        <div>
+          <h1 class="h3 mb-1">Today's orders</h1>
+          <p class="text-body-secondary mb-0">Thursday, 4 August — 12 open, 3 delayed</p>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-outline-secondary">Print run sheet</button>
+          <button class="btn btn-primary">New order</button>
+        </div>
+      </div>
+
+      <ul class="nav nav-tabs mb-4">
+        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Open</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Delivered</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Cancelled</a></li>
+      </ul>
+
+      <!-- Cards -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title h6">#4021 · M. Okonkwo</h2>
+              <p class="card-text text-body-secondary small">Two mains, one dessert. Table 6.</p>
+              <span class="badge text-bg-warning">Preparing</span>
+            </div>
+            <div class="card-footer d-flex gap-2">
+              <button class="btn btn-success btn-sm">Mark ready</button>
+              <button class="btn btn-link btn-sm">Details</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h2 class="card-title h6">#4020 · S. Ferreira</h2>
+              <p class="card-text text-body-secondary small">Delivery, 2.4 km. Rider assigned.</p>
+              <span class="badge text-bg-info">Out for delivery</span>
+            </div>
+            <div class="card-footer d-flex gap-2">
+              <button class="btn btn-info btn-sm">Track</button>
+              <button class="btn btn-link btn-sm">Details</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 border-danger">
+            <div class="card-body">
+              <h2 class="card-title h6">#4014 · A. Lindqvist</h2>
+              <p class="card-text text-body-secondary small">Over the promised time by 18 minutes.</p>
+              <span class="badge text-bg-danger">Delayed</span>
+            </div>
+            <div class="card-footer d-flex gap-2">
+              <button class="btn btn-danger btn-sm">Cancel order</button>
+              <button class="btn btn-link btn-sm">Details</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="card mb-4">
+        <div class="card-header">All open orders</div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Channel</th><th scope="col">Status</th><th scope="col" class="text-end">Actions</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row" class="fw-normal">#4021</th><td>M. Okonkwo</td><td>Dine-in</td>
+                <td><span class="badge text-bg-warning">Preparing</span></td>
+                <td class="text-end"><button class="btn btn-outline-secondary btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <th scope="row" class="fw-normal">#4020</th><td>S. Ferreira</td><td>Delivery</td>
+                <td><span class="badge text-bg-info">Out for delivery</span></td>
+                <td class="text-end"><button class="btn btn-outline-secondary btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <th scope="row" class="fw-normal">#4019</th><td>A. Lindqvist</td><td>Takeaway</td>
+                <td><span class="badge text-bg-success">Ready</span></td>
+                <td class="text-end"><button class="btn btn-outline-secondary btn-sm">Edit</button></td>
+              </tr>
+              <tr>
+                <th scope="row" class="fw-normal">#4014</th><td>R. Haddad</td><td>Delivery</td>
+                <td><span class="badge text-bg-danger">Delayed</span></td>
+                <td class="text-end"><button class="btn btn-outline-danger btn-sm">Cancel</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="card">
+        <div class="card-header">New order</div>
+        <div class="card-body">
+          <form class="row g-3">
+            <div class="col-md-6">
+              <label for="customer" class="form-label">Customer</label>
+              <input type="text" class="form-control" id="customer" placeholder="Name on the order">
+            </div>
+            <div class="col-md-3">
+              <label for="channel" class="form-label">Channel</label>
+              <select class="form-select" id="channel">
+                <option selected>Dine-in</option>
+                <option>Takeaway</option>
+                <option>Delivery</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="table" class="form-label">Table</label>
+              <input type="text" class="form-control" id="table" placeholder="e.g. 6">
+            </div>
+            <div class="col-12">
+              <label for="notes" class="form-label">Kitchen notes</label>
+              <textarea class="form-control" id="notes" rows="2" placeholder="Allergies, timing, anything the kitchen needs"></textarea>
+            </div>
+            <div class="col-12">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="priority">
+                <label class="form-check-label" for="priority">Priority — move to the front of the queue</label>
+              </div>
+            </div>
+            <div class="col-12 d-flex gap-2">
+              <button type="submit" class="btn btn-primary">Create order</button>
+              <button type="button" class="btn btn-outline-secondary">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</main>
 
-  <section class="panel">
-    <h2>In use</h2>
-    <p class="lede">
-      The same four patterns carrying a real screen. Note that <code>quiet</code> only
-      appears inside the table, which is the condition this product recorded for
-      allowing it at all.
-    </p>
+<footer class="border-top py-4 mt-auto">
+  <div class="container d-flex flex-wrap justify-content-between gap-2">
+    <span class="text-body-secondary small">
+      DS Hot Tone · phase 1 — vocabulary recorded and enforced, no abstraction written yet.
+    </span>
+    <a href="../ds-cyberpunk-bulma-phase2/" class="small">See a phase 2 system →</a>
+  </div>
+</footer>
 
-    <table>
-      <thead>
-        <tr><th>Order</th><th>Customer</th><th>Status</th><th></th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>#4021</td><td>M. Okonkwo</td><td>Preparing</td>
-          <td><button class="btn btn-link btn-sm">Show details</button></td>
-        </tr>
-        <tr>
-          <td>#4020</td><td>S. Ferreira</td><td>Out for delivery</td>
-          <td><button class="btn btn-link btn-sm">Show details</button></td>
-        </tr>
-        <tr>
-          <td>#4019</td><td>A. Lindqvist</td><td>Delivered</td>
-          <td><button class="btn btn-link btn-sm">Show details</button></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="ex-row" style="margin-top:var(--app-space-lg)">
-      <button class="btn btn-primary">Save changes</button>
-      <button class="btn btn-outline-secondary">Discard</button>
-    </div>
-  </section>
-
-  <section class="panel">
-    <h2>What the ledger refuses</h2>
-    <p class="lede">
-      These are not rendered, because they are not in the vocabulary. Each refusal in
-      <code>patterns.json</code> carries a reason and an alternative — a rule with
-      neither gets bypassed by the next person in a hurry.
-    </p>
-    <table>
-      <thead><tr><th>Asked for</th><th>Why not</th><th>Use</th></tr></thead>
-      <tbody>
-        <tr><td><code>btn-success</code></td><td>Status colours report an outcome; a button proposes an action that has not happened. A green Save reads as “saved”.</td><td><code>primary</code></td></tr>
-        <tr><td><code>btn-warning</code></td><td>Amber is feedback, and in a warm palette it is nearly indistinguishable from primary.</td><td><code>destructive</code></td></tr>
-        <tr><td><code>btn-info</code></td><td>Blue is outside this brand's palette; it reads as a foreign element.</td><td><code>secondary</code></td></tr>
-        <tr><td><code>btn-light</code>, <code>btn-dark</code></td><td>Absolute palette names do not invert with a theme.</td><td><code>secondary</code></td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section class="panel">
-    <h2>Where this goes next</h2>
-    <p class="lede">
-      Phase 2 promotes a pattern out of <code>raw</code> when it earns it: three or more
-      library classes at the call site, a structural divergence from Bootstrap, or a
-      mistake repeated. <code>secondary</code> is the likely first candidate — it already
-      composes two classes and this product wants a heavier border than Bootstrap draws.
-      See the Cyberpunk example for what phase 2 looks like.
-    </p>
-  </section>
-
-</div>
+<script src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -1,0 +1,180 @@
+{
+  "$schema": "../../patterns/patterns.schema.json",
+  "version": 1,
+  "libraries": ["nescss"],
+
+  "components": {
+    "button": {
+      "intent": "A control that performs an action. Every button in this product is a NES.css button — the library already decided what a button is, and it decided well.",
+      "namespace": { "nescss": "^nes-btn$|^is-(primary|success|warning|error|disabled)$" },
+      "root": { "nescss": "^nes-btn$" },
+      "namespaceNote": "NES.css shares `is-*` modifiers across components, so `root` narrows the check to elements that actually are buttons. Without it, `.nes-container.is-dark` would report as a button with an unknown variant.",
+      "docs": { "library": "https://nostalgic-css.github.io/NES.css/#buttons" },
+
+      "patterns": {
+        "default": {
+          "intent": "The ordinary action. Most of the HUD is these.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-btn"] },
+          "example": "<button class=\"nes-btn\">Abandon race</button>"
+        },
+        "primary": {
+          "intent": "The action a screen is for: start the race, confirm the purchase.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-btn", "is-primary"] },
+          "example": "<button class=\"nes-btn is-primary\">Start race</button>"
+        },
+        "confirm": {
+          "intent": "Completing something already in progress — repairs done, opponent recruited.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-btn", "is-success"] },
+          "example": "<button class=\"nes-btn is-success\">Repair</button>"
+        },
+        "caution": {
+          "intent": "An action with a cost the player should notice before pressing.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-btn", "is-warning"] },
+          "example": "<button class=\"nes-btn is-warning\">Spend credits</button>"
+        },
+        "destructive": {
+          "intent": "Wreck, forfeit, delete a save.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-btn", "is-error"] },
+          "example": "<button class=\"nes-btn is-error\">Forfeit</button>"
+        }
+      }
+    },
+
+    "panel": {
+      "intent": "A framed region of the HUD.",
+      "namespace": { "nescss": "^nes-container$|^cm-panel$" },
+      "root": { "nescss": "^nes-container$|^cm-panel$" },
+      "docs": { "library": "https://nostalgic-css.github.io/NES.css/#containers" },
+
+      "patterns": {
+        "plain": {
+          "intent": "The library's container, unmodified. Used wherever a panel is a dialogue rather than part of the HUD grid.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-container"] },
+          "example": "<div class=\"nes-container\"><p>Wreck 'em all.</p></div>"
+        },
+        "hud": {
+          "intent": "A panel that sits flush in the HUD grid.",
+          "state": "styled",
+          "raw": { "nescss": ["nes-container", "is-dark"] },
+          "styled": "cm-panel",
+          "diverges": "NES.css centres a container's title over its border, which is right for a dialogue and wrong inside a grid — the overhang breaks alignment with the panel beside it. This override lays the panel out as a flex column with the system's own spacing and drops the overhang. Everything else, including the pixel border, stays the library's.",
+          "example": "<div class=\"cm-panel\"><p>LAP 2 / 3</p></div>"
+        }
+      }
+    },
+
+    "stat": {
+      "intent": "A labelled counter. The credits, the clock, the pedestrian tally — the HUD is mostly these.",
+      "namespace": { "nescss": "^cm-stat$|^cm-stat--[a-z]+$" },
+      "root": { "nescss": "^cm-stat$" },
+      "namespaceNote": "No NES.css classes appear here at all, because there is no NES.css component to name. A composition's namespace is entirely the product's.",
+
+      "patterns": {
+        "default": {
+          "intent": "A number with a name above it, sized so the number reads at a glance from a driving position.",
+          "state": "styled",
+          "styled": "cm-stat",
+          "parts": {
+            "cm-stat__label": "What is being counted. Small, muted, uppercase tracking.",
+            "cm-stat__value": "The number itself, in the heading colour."
+          },
+          "example": "<div class=\"cm-stat\"><span class=\"cm-stat__label\">CREDITS</span><span class=\"cm-stat__value\">12,480</span></div>"
+        },
+        "critical": {
+          "intent": "The same counter when its number is bad news — time nearly out, damage nearly total.",
+          "state": "styled",
+          "styled": "cm-stat cm-stat--critical",
+          "example": "<div class=\"cm-stat cm-stat--critical\"><span class=\"cm-stat__label\">TIME LEFT</span><span class=\"cm-stat__value\">0:07</span></div>",
+          "notes": "A modifier rather than a second pattern: same component, different state. Recording it as its own pattern would have made the vocabulary look wider than it is."
+        }
+      }
+    },
+
+    "driver": {
+      "intent": "One opponent: who they are and how wrecked. NES.css has avatars and it has progress bars; it has no notion of the two together meaning one entity.",
+      "namespace": { "nescss": "^cm-driver$|^is-selected$" },
+      "root": { "nescss": "^cm-driver$" },
+
+      "patterns": {
+        "default": {
+          "intent": "An opponent in the pre-race list.",
+          "state": "styled",
+          "styled": "cm-driver",
+          "parts": {
+            "cm-driver__name": "The driver's name.",
+            "cm-driver__meta": "Vehicle and standing, muted."
+          },
+          "example": "<div class=\"cm-driver\"><i class=\"nes-icon trophy is-medium\"></i><div><p class=\"cm-driver__name\">Die Anna</p><p class=\"cm-driver__meta\">Hawk R — 2nd</p></div></div>"
+        },
+        "selected": {
+          "intent": "The opponent the player has picked to hunt.",
+          "state": "styled",
+          "styled": "cm-driver is-selected",
+          "example": "<div class=\"cm-driver is-selected\"><i class=\"nes-icon star is-medium\"></i><div><p class=\"cm-driver__name\">Max Damage</p><p class=\"cm-driver__meta\">Eagle R — 1st</p></div></div>",
+          "notes": "Uses the `selected` role, not `action`. Layer 2 draws that distinction and most products collapse it: this is a state the player is in, not an invitation to click."
+        }
+      }
+    },
+
+    "damage": {
+      "intent": "A labelled meter with its reading beside it. Built ON the library's progress bar rather than replacing it.",
+      "namespace": { "nescss": "^cm-damage$|^nes-progress$" },
+      "root": { "nescss": "^cm-damage$|^nes-progress$" },
+      "docs": { "library": "https://nostalgic-css.github.io/NES.css/#progress" },
+
+      "patterns": {
+        "meter": {
+          "intent": "How wrecked something is.",
+          "state": "styled",
+          "styled": "cm-damage",
+          "parts": {
+            "cm-damage__label": "What is being measured.",
+            "cm-damage__value": "The reading, as text, for anyone who cannot judge a bar."
+          },
+          "example": "<div class=\"cm-damage\"><span class=\"cm-damage__label\">CHASSIS</span><progress class=\"nes-progress is-error\" value=\"72\" max=\"100\"></progress><span class=\"cm-damage__value\">72%</span></div>",
+          "notes": "The bar itself stays `.nes-progress`, so the pixel styling and the three browser-specific pseudo-elements remain the library's problem. The composition adds only the label and the readout."
+        },
+        "bare": {
+          "intent": "The library's progress bar with no label, for places where the surrounding text already says what it measures.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-progress"] },
+          "example": "<progress class=\"nes-progress is-success\" value=\"90\" max=\"100\"></progress>"
+        }
+      }
+    },
+
+    "field": {
+      "intent": "A form control and its label. Untouched — NES.css already decided these and the adapter re-pointed their colours.",
+      "namespace": { "nescss": "^nes-input$|^nes-textarea$|^nes-select$|^nes-checkbox$|^nes-radio$" },
+      "root": { "nescss": "^nes-input$|^nes-textarea$|^nes-select$|^nes-checkbox$|^nes-radio$" },
+      "docs": { "library": "https://nostalgic-css.github.io/NES.css/#inputs" },
+
+      "patterns": {
+        "text": { "intent": "Single-line text entry.", "state": "raw", "raw": { "nescss": ["nes-input"] }, "example": "<input type=\"text\" class=\"nes-input\" placeholder=\"Driver name\">" },
+        "select": { "intent": "A choice from a known list.", "state": "raw", "raw": { "nescss": ["nes-select"] }, "example": "<div class=\"nes-select\"><select><option>Coyote</option></select></div>" },
+        "check": { "intent": "A boolean.", "state": "raw", "raw": { "nescss": ["nes-checkbox"] }, "example": "<label><input type=\"checkbox\" class=\"nes-checkbox\" checked><span>Pedestrians on</span></label>" }
+      }
+    },
+
+    "table": {
+      "intent": "Standings and race results.",
+      "namespace": { "nescss": "^nes-table$" },
+      "root": { "nescss": "^nes-table$" },
+      "docs": { "library": "https://nostalgic-css.github.io/NES.css/#table" },
+      "patterns": {
+        "default": {
+          "intent": "The results table.",
+          "state": "raw",
+          "raw": { "nescss": ["nes-table"] },
+          "example": "<table class=\"nes-table is-bordered is-dark\"><tbody><tr><td>1</td><td>Max Damage</td></tr></tbody></table>"
+        }
+      }
+    }
+  }
+}

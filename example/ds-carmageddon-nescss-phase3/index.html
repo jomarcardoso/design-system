@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en" data-theme="carmageddon">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DS Carmageddon with NES.css — phase 3</title>
+
+<!--
+  Run `npm run demo:examples`, then open with a TRAILING SLASH:
+  http://localhost:4173/example/ds-carmageddon-nescss-phase3/
+
+  Three screens from a race game, built from NES.css plus this product's own
+  compositions. The generated pattern documentation is at ./docs.html — it is
+  produced from patterns.json by a script and never edited.
+
+      node scripts/verify-patterns.mjs example/ds-carmageddon-nescss-phase3 \
+        --ledger example/ds-carmageddon-nescss-phase3/patterns.json
+-->
+<link rel="stylesheet" href="./ds.css">
+</head>
+<body>
+
+<div class="cm-shell">
+
+  <!-- ===================== HEADER / NAV ===================== -->
+  <header class="cm-topbar">
+    <p class="cm-wordmark">CARMAGEDDON</p>
+    <nav class="cm-tabs">
+      <a href="#race" class="nes-btn is-primary">Race</a>
+      <a href="#opponents" class="nes-btn">Opponents</a>
+      <a href="#workshop" class="nes-btn">Workshop</a>
+      <a href="./docs.html" class="nes-btn">Patterns</a>
+    </nav>
+  </header>
+
+  <!-- ===================== HUD ===================== -->
+  <section id="race" class="cm-screen">
+    <h1 class="cm-screen__title">Lap 2 of 3 — Devil's Canyon</h1>
+
+    <div class="cm-hud">
+      <div class="cm-stat">
+        <span class="cm-stat__label">CREDITS</span>
+        <span class="cm-stat__value">12,480</span>
+      </div>
+      <div class="cm-stat cm-stat--critical">
+        <span class="cm-stat__label">TIME LEFT</span>
+        <span class="cm-stat__value">0:07</span>
+      </div>
+      <div class="cm-stat">
+        <span class="cm-stat__label">PEDS SPARED</span>
+        <span class="cm-stat__value">311</span>
+      </div>
+      <div class="cm-stat">
+        <span class="cm-stat__label">POSITION</span>
+        <span class="cm-stat__value">2 / 8</span>
+      </div>
+    </div>
+
+    <div class="cm-columns">
+      <div class="cm-panel">
+        <p class="cm-panel__title">Vehicle integrity</p>
+
+        <div class="cm-damage">
+          <span class="cm-damage__label">CHASSIS</span>
+          <progress class="nes-progress is-error" value="72" max="100"></progress>
+          <span class="cm-damage__value">72%</span>
+        </div>
+
+        <div class="cm-damage">
+          <span class="cm-damage__label">ENGINE</span>
+          <progress class="nes-progress is-warning" value="45" max="100"></progress>
+          <span class="cm-damage__value">45%</span>
+        </div>
+
+        <div class="cm-damage">
+          <span class="cm-damage__label">TYRES</span>
+          <progress class="nes-progress is-success" value="90" max="100"></progress>
+          <span class="cm-damage__value">90%</span>
+        </div>
+
+        <div class="cm-actions">
+          <button class="nes-btn is-success">Repair</button>
+          <button class="nes-btn is-warning">Spend credits</button>
+        </div>
+      </div>
+
+      <div class="cm-panel">
+        <p class="cm-panel__title">Race control</p>
+        <div class="nes-balloon from-left">
+          <p>You have wrecked Die Anna. She will not take that well.</p>
+        </div>
+        <div class="cm-actions">
+          <button class="nes-btn is-primary">Continue</button>
+          <button class="nes-btn is-error">Forfeit</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== OPPONENTS ===================== -->
+  <section id="opponents" class="cm-screen">
+    <h2 class="cm-screen__title">Opponents</h2>
+
+    <div class="cm-grid">
+      <div class="cm-driver is-selected">
+        <i class="nes-icon trophy is-medium"></i>
+        <div>
+          <p class="cm-driver__name">Max Damage</p>
+          <p class="cm-driver__meta">Eagle R — 1st — intact</p>
+        </div>
+      </div>
+      <div class="cm-driver">
+        <i class="nes-icon star is-medium"></i>
+        <div>
+          <p class="cm-driver__name">Die Anna</p>
+          <p class="cm-driver__meta">Hawk R — 3rd — wrecked</p>
+        </div>
+      </div>
+      <div class="cm-driver">
+        <i class="nes-icon coin is-medium"></i>
+        <div>
+          <p class="cm-driver__name">Vlad</p>
+          <p class="cm-driver__meta">Suppressor — 4th — smoking</p>
+        </div>
+      </div>
+      <div class="cm-driver">
+        <i class="nes-icon heart is-medium"></i>
+        <div>
+          <p class="cm-driver__name">Otis P. Jivefunk</p>
+          <p class="cm-driver__meta">Purple Piledriver — 6th</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cm-panel">
+      <p class="cm-panel__title">Standings</p>
+      <div class="nes-table-responsive">
+        <table class="nes-table is-bordered is-dark">
+          <thead>
+            <tr><th>#</th><th>Driver</th><th>Vehicle</th><th>Peds</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Max Damage</td><td>Eagle R</td><td>84</td></tr>
+            <tr><td>2</td><td>You</td><td>Red Eagle</td><td>77</td></tr>
+            <tr><td>3</td><td>Die Anna</td><td>Hawk R</td><td>52</td></tr>
+            <tr><td>4</td><td>Vlad</td><td>Suppressor</td><td>41</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WORKSHOP ===================== -->
+  <section id="workshop" class="cm-screen">
+    <h2 class="cm-screen__title">Workshop</h2>
+
+    <div class="cm-columns">
+      <div class="cm-panel">
+        <p class="cm-panel__title">Register a vehicle</p>
+
+        <div class="nes-field">
+          <label for="driver">Driver name</label>
+          <input type="text" id="driver" class="nes-input" placeholder="Max Damage">
+        </div>
+
+        <div class="nes-field">
+          <label for="chassis">Chassis</label>
+          <div class="nes-select">
+            <select id="chassis">
+              <option>Red Eagle</option>
+              <option>Suppressor</option>
+              <option>Purple Piledriver</option>
+            </select>
+          </div>
+        </div>
+
+        <label>
+          <input type="checkbox" class="nes-checkbox" checked>
+          <span>Pedestrians enabled</span>
+        </label>
+
+        <div class="cm-actions">
+          <button class="nes-btn is-primary">Start race</button>
+          <button class="nes-btn">Abandon race</button>
+        </div>
+      </div>
+
+      <div class="cm-panel">
+        <p class="cm-panel__title">Garage</p>
+        <div class="cm-stack">
+          <div class="cm-stat">
+            <span class="cm-stat__label">VEHICLES OWNED</span>
+            <span class="cm-stat__value">6</span>
+          </div>
+          <div class="cm-damage">
+            <span class="cm-damage__label">WORKSHOP CAPACITY</span>
+            <progress class="nes-progress is-primary" value="60" max="100"></progress>
+            <span class="cm-damage__value">60%</span>
+          </div>
+          <progress class="nes-progress is-success" value="90" max="100"></progress>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="cm-footer">
+    <p>DS Carmageddon · phase 3 — overrides, compositions and generated docs.</p>
+    <p><a href="./docs.html">Pattern documentation</a></p>
+  </footer>
+
+</div>
+</body>
+</html>

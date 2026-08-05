@@ -199,6 +199,8 @@
     --bs-body-color-rgb: 28, 25, 23;
     --bs-body-bg-rgb: 255, 247, 237;
     --bs-emphasis-color-rgb: 12, 10, 9;
+    --bs-secondary-bg-rgb: 255, 237, 212;
+    --bs-tertiary-bg-rgb: 255, 237, 212;
   }
   .btn-primary {
     background-color: var(--app-button-bg, var(--app-bg-action));

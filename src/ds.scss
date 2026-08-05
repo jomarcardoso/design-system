@@ -23,6 +23,7 @@
 @use 'adapters/preline';
 @use 'adapters/water';
 @use 'adapters/mvp';
+@use 'adapters/nescss';
 
 // Layer 1 — normally emits nothing (see _base.scss).
 @include base.emit();
@@ -66,4 +67,8 @@
 
 @if list.index(config.$adapters, mvp) {
   @include mvp.emit();
+}
+
+@if list.index(config.$adapters, nescss) {
+  @include nescss.emit();
 }

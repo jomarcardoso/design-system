@@ -9,22 +9,22 @@
       "namespace": {
         "bootstrap": "^btn$|^btn-(?!group|toolbar|close)"
       },
-      "namespaceNote": "Bootstrap puts `btn-group`, `btn-toolbar` and `btn-close` behind the same prefix while they are container and icon components. The lookahead marks where this component's authority ends; everything else under `btn-` is claimed deliberately, so an unrecognised variant is caught.",
+      "namespaceNote": "Bootstrap keeps `btn-group`, `btn-toolbar` and `btn-close` behind the same prefix while they are container and icon components, so the lookahead marks where this component's authority ends. Everything else under `btn-` is claimed on purpose: an unrecognised variant is what the allowlist exists to catch.",
 
       "modifiers": {
         "size": {
-          "intent": "Physical size, independent of emphasis.",
+          "intent": "Physical size. Orthogonal to emphasis — a secondary button can be small without becoming a different pattern.",
           "options": {
             "medium": {
-              "intent": "The default. Adds no class, so most call sites name no size.",
+              "intent": "The default. Adds no class, so most call sites name no size at all.",
               "libraries": { "bootstrap": [] }
             },
             "small": {
-              "intent": "Dense rows: the order table, the ingredient list.",
+              "intent": "Dense rows: the order table, inline actions.",
               "libraries": { "bootstrap": ["btn-sm"] }
             },
             "large": {
-              "intent": "The single call to action on a marketing page. Allowed here because Hot Tone's landing pages are the product's front door.",
+              "intent": "The single call to action on a marketing page.",
               "libraries": { "bootstrap": ["btn-lg"] }
             }
           }
@@ -33,55 +33,125 @@
 
       "patterns": {
         "primary": {
-          "intent": "The one action a screen most wants. At most one per view.",
+          "intent": "The main action on a screen.",
           "state": "raw",
           "raw": { "bootstrap": ["btn", "btn-primary"] }
         },
         "secondary": {
-          "intent": "A supporting action beside a primary one — cancel, go back. Outline, so it never competes for attention.",
+          "intent": "A supporting action beside a primary one.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-secondary"] }
+        },
+        "success": {
+          "intent": "An action that completes or approves something — confirm, publish, mark delivered.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-success"] }
+        },
+        "warning": {
+          "intent": "An action that needs a second look before it happens — put on hold, flag for review.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-warning"] }
+        },
+        "danger": {
+          "intent": "An action that is hard to undo: delete, revoke, cancel an order.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-danger"] }
+        },
+        "info": {
+          "intent": "An action that reveals more without changing anything — details, help, preview.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-info"] }
+        },
+        "primary-outline": {
+          "intent": "Primary emphasis without a fill, for when several actions sit together and one filled button per group is enough.",
+          "state": "raw",
+          "raw": { "bootstrap": ["btn", "btn-outline-primary"] },
+          "notes": "Outline is a separate PATTERN here, not a modifier, because Bootstrap renames the class (`btn-outline-primary`) rather than adding one. Bulma adds `is-outlined` alongside, so the same visual idea is a modifier there. This is the sort of difference `intent` exists to carry across a library change."
+        },
+        "secondary-outline": {
+          "intent": "The quietest bordered action. Cancel, back, dismiss.",
           "state": "raw",
           "raw": { "bootstrap": ["btn", "btn-outline-secondary"] }
         },
-        "destructive": {
-          "intent": "An action that cannot be undone easily: delete an order, revoke access. Filled, because the weight IS the warning.",
+        "danger-outline": {
+          "intent": "A destructive action that should not shout — a delete sitting in a row of other actions.",
           "state": "raw",
-          "raw": { "bootstrap": ["btn", "btn-danger"] },
-          "notes": "Named `destructive`, not `danger`, so the name says what it does rather than which colour it borrows. The colour can change; the meaning cannot."
+          "raw": { "bootstrap": ["btn", "btn-outline-danger"] }
         },
-        "quiet": {
-          "intent": "A tertiary action inside a dense surface — 'show more', 'edit' on a table row. Reads as text until hovered.",
+        "link": {
+          "intent": "An action styled as text, for tertiary placement inside dense surfaces.",
           "state": "raw",
-          "raw": { "bootstrap": ["btn", "btn-link"] },
-          "notes": "Allowed here and forbidden in the Cyberpunk example. Both are defensible: the risk is that it reads as a link, and this product accepts it because it only appears inside table rows where the affordance is established."
+          "raw": { "bootstrap": ["btn", "btn-link"] }
         },
 
-        "success": {
-          "intent": "A green button.",
-          "state": "forbidden",
-          "reason": "Status colours report an outcome; a button proposes an action that has not happened. A green Save reads as 'saved'. Green belongs to the confirmation that follows the click.",
-          "instead": "primary",
-          "matches": { "bootstrap": ["btn-success", "btn-outline-success"] }
-        },
-        "warning": {
-          "intent": "An amber button.",
-          "state": "forbidden",
-          "reason": "Amber is feedback, not intent — and in a warm palette it is nearly indistinguishable from primary, so emphasis stops being readable.",
-          "instead": "destructive",
-          "matches": { "bootstrap": ["btn-warning", "btn-outline-warning"] }
-        },
-        "info": {
-          "intent": "A blue informational button.",
-          "state": "forbidden",
-          "reason": "Blue is outside this brand's palette entirely; it appears on screen as a foreign element rather than a level of emphasis.",
-          "instead": "secondary",
-          "matches": { "bootstrap": ["btn-info", "btn-outline-info"] }
-        },
         "neutral": {
-          "intent": "A button coloured by an absolute palette name.",
+          "intent": "A button coloured by an absolute palette name rather than a role.",
           "state": "forbidden",
-          "reason": "`light` and `dark` are fixed palette entries, not theme roles — they do not invert, so a light button stays light on a dark theme. Emphasis named by shade breaks the moment a second theme exists.",
-          "instead": "secondary",
+          "reason": "`light` and `dark` are fixed palette entries, not theme roles. They do not invert, so a light button stays light on a dark theme — this is a measured fact about the library, not a matter of taste, which is why it is the one refusal recorded this early.",
+          "instead": "secondary-outline",
           "matches": { "bootstrap": ["btn-light", "btn-dark", "btn-outline-light", "btn-outline-dark"] }
+        }
+      }
+    },
+
+    "card": {
+      "intent": "A bounded surface grouping related content. Anatomy — header, body, footer, images — belongs to Bootstrap; this records only which kinds of card exist.",
+      "namespace": { "bootstrap": "^card$" },
+      "namespaceNote": "Only the ROOT class is governed. `card-body`, `card-title` and the rest are the library's anatomy, and a ledger that enumerated them would be redocumenting Bootstrap. The rule across this file: the ledger owns the variant, the library owns the parts.",
+      "patterns": {
+        "default": {
+          "intent": "The ordinary card.",
+          "state": "raw",
+          "raw": { "bootstrap": ["card"] }
+        }
+      }
+    },
+
+    "nav": {
+      "intent": "Navigation surfaces: the top bar and the sidebar. Which links they hold is the application's business.",
+      "namespace": { "bootstrap": "^navbar$|^nav$|^list-group$" },
+      "patterns": {
+        "bar": {
+          "intent": "The top-level navigation bar.",
+          "state": "raw",
+          "raw": { "bootstrap": ["navbar"] }
+        },
+        "menu": {
+          "intent": "A vertical menu of destinations, in a sidebar. The primary way this product moves between sections.",
+          "state": "raw",
+          "raw": { "bootstrap": ["list-group"] }
+        },
+        "tabs": {
+          "intent": "Switching between views of the same thing, without leaving the page.",
+          "state": "raw",
+          "raw": { "bootstrap": ["nav"] }
+        }
+      }
+    },
+
+    "field": {
+      "intent": "A form control and its label.",
+      "namespace": { "bootstrap": "^form-control$|^form-select$|^form-label$|^form-check-input$" },
+      "patterns": {
+        "text": {
+          "intent": "Single-line or multi-line text entry.",
+          "state": "raw",
+          "raw": { "bootstrap": ["form-control"] }
+        },
+        "select": {
+          "intent": "A choice from a known list.",
+          "state": "raw",
+          "raw": { "bootstrap": ["form-select"] }
+        },
+        "check": {
+          "intent": "A boolean, or one of a set.",
+          "state": "raw",
+          "raw": { "bootstrap": ["form-check-input"] }
+        },
+        "label": {
+          "intent": "The name of a field. Always present — a placeholder is not a label.",
+          "state": "raw",
+          "raw": { "bootstrap": ["form-label"] }
         }
       }
     }

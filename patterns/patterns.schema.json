@@ -70,6 +70,25 @@
         "namespaceNote": {
           "type": "string",
           "description": "Why the namespace regex is drawn where it is. A prefix is rarely exactly one component."
+        },
+        "root": {
+          "type": "object",
+          "description": "Per library, a regex matching the class that MAKES an element this component. Optional, and only needed when a library shares modifier classes across components: Bulma's `is-fullwidth` belongs to buttons, selects, tags and files alike, so a namespace alone would claim it wherever it appears. With `root` declared, the namespace is only consulted on elements that actually are this component. Defaults to `namespace`, which is right for libraries like Bootstrap whose prefixes are unambiguous.",
+          "additionalProperties": {
+            "type": "string",
+            "format": "regex"
+          }
+        },
+        "docs": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Where to send a reader for everything this ledger does NOT redocument.",
+          "properties": {
+            "library": {
+              "type": "string",
+              "description": "URL of the library's own documentation for this component."
+            }
+          }
         }
       }
     },
@@ -175,6 +194,21 @@
         },
         "notes": {
           "type": "string"
+        },
+        "example": {
+          "type": "string",
+          "description": "A minimal markup snippet showing the pattern in use. Read by the documentation generator, which renders it live next to the source — a docs page whose examples are screenshots goes stale without anyone noticing. Required in practice for anything a reader cannot look up in the library's own docs."
+        },
+        "parts": {
+          "type": "object",
+          "description": "For a COMPOSITION: the element classes it is made of, each with what it holds. A composition is the only place these are written down, since the library has no such component — so the ledger has to carry the anatomy that `namespaceNote` otherwise leaves to the library.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "diverges": {
+          "type": "string",
+          "description": "For an OVERRIDE: what this changes about the library's component, and why. The documentation generator prints exactly this and links the rest to the library's docs, which is what keeps the page a delta rather than a second catalogue."
         }
       },
       "allOf": [

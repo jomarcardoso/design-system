@@ -1,0 +1,89 @@
+// =============================================================================
+// CARMAGEDDON — a project-defined theme
+// =============================================================================
+//
+// Rust, blood and bone on scorched asphalt. One theme, dark, no light
+// counterpart — the product is a race HUD and a race HUD is not read outdoors.
+//
+// The constraint that shaped this palette: NES.css draws everything at four
+// pixels with hard edges and no antialiasing, so mid-tones disappear. Every
+// role here is either clearly bright or clearly dark, with nothing in the
+// middle where a pixel border would turn to mud.
+// =============================================================================
+
+@use '../../src/base';
+
+$carmageddon: (
+  // Asphalt. `raised` lifts rather than darkens, because on near-black a
+  // shadow is invisible — the same rule the Cyberpunk theme follows.
+  page: base.color(stone, 950),
+  surface: base.color(stone, 900),
+  raised: base.color(stone, 800),
+  sunken: base.color(black),
+  overlay: rgba(0, 0, 0, 0.8),
+
+  // Bone.
+  text: base.color(stone, 100),
+  'text-muted': base.color(stone, 400),
+  'text-subtle': base.color(stone, 500),
+  heading: base.color(orange, 300),
+
+  // Blood — the primary action, and the colour the whole product is named for.
+  // A bright step with dark text, because a 600-step red under a pixel border
+  // reads as brown.
+  action: base.color(red, 500),
+  'on-action': base.color(stone, 950),
+  'action-hover': base.color(red, 400),
+  'action-active': base.color(red, 300),
+  'action-subtle': base.color(red, 950),
+  'action-text': base.color(red, 400),
+
+  // Rust — the second emphasis. Used for the opponent list and anything the
+  // player selects rather than triggers.
+  selected: base.color(orange, 400),
+  'on-selected': base.color(stone, 950),
+  'selected-hover': base.color(orange, 300),
+  'selected-subtle': base.color(orange, 950),
+  'selected-text': base.color(orange, 300),
+
+  link: base.color(orange, 300),
+  'link-hover': base.color(orange, 200),
+  'link-visited': base.color(amber, 300),
+
+  border: base.color(stone, 600),
+  'border-subtle': base.color(stone, 700),
+  'border-strong': base.color(stone, 400),
+  ring: base.color(orange, 400),
+
+  'shadow-raised': base.scale(shadow, xs),
+  'shadow-overlay': base.scale(shadow, md),
+
+  // Toxic green for anything intact or completed.
+  success: base.color(lime, 400),
+  'on-success': base.color(stone, 950),
+  'success-hover': base.color(lime, 300),
+  'success-subtle': base.color(lime, 950),
+  'success-text': base.color(lime, 300),
+  'success-border': base.color(lime, 700),
+
+  warning: base.color(amber, 400),
+  'on-warning': base.color(stone, 950),
+  'warning-hover': base.color(amber, 300),
+  'warning-subtle': base.color(amber, 950),
+  'warning-text': base.color(amber, 300),
+  'warning-border': base.color(amber, 700),
+
+  danger: base.color(red, 500),
+  'on-danger': base.color(stone, 950),
+  'danger-hover': base.color(red, 400),
+  'danger-subtle': base.color(red, 950),
+  'danger-text': base.color(red, 400),
+  'danger-border': base.color(red, 700),
+
+  info: base.color(sky, 400),
+  'on-info': base.color(sky, 950),
+  'info-hover': base.color(sky, 300),
+  'info-subtle': base.color(sky, 950),
+  'info-text': base.color(sky, 300),
+  'info-border': base.color(sky, 700)
+);

@@ -1,0 +1,67 @@
+// =============================================================================
+// CARMAGEDDON — the project's design system build
+// =============================================================================
+//
+//     sass --load-path=. --load-path=node_modules \
+//       example/ds-carmageddon-nescss-phase3/ds.scss out.css
+//
+// Same shape as the other two example products, with one addition forced by the
+// library: NES.css is compiled FROM SOURCE here, because its only theming
+// surface is Sass variables and because `patterns.scss` extends its selectors.
+//
+// The library's own colour variables are set before the import. What they do
+// NOT reach is the pixel border — the adapter explains why and regenerates it —
+// so this file sets the ones that work and leaves the rest to the adapter.
+// =============================================================================
+
+@use 'sass:map';
+@use '../../src/config' with ($themes: (), $adapters: (nescss));
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/themes';
+@use '../../src/component';
+@use '../../src/adapters/nescss' as nescss-adapter;
+@use 'theme';
+
+// --- The library's build-time configuration ----------------------------
+$_c: theme.$carmageddon;
+
+$base-color: nescss-adapter.srgb-of($_c, text);
+$background-color: nescss-adapter.srgb-of($_c, page);
+
+$default-colors: (
+  normal: nescss-adapter.srgb-of($_c, surface),
+  hover: nescss-adapter.srgb-of($_c, raised),
+  shadow: nescss-adapter.srgb-of($_c, 'border-strong')
+);
+
+$primary-colors: nescss-adapter.variant-colors($_c, 'action');
+$success-colors: nescss-adapter.variant-colors($_c, 'success');
+$warning-colors: nescss-adapter.variant-colors($_c, 'warning');
+$error-colors: nescss-adapter.variant-colors($_c, 'danger');
+
+// The library, wrapped so the adapter — declared later — wins over it. A nested
+// legacy `@import` rather than `@use`, because NES.css is not a Sass module and
+// because `@extend` in `patterns.scss` needs to share this scope.
+@layer vendor {
+  @import 'nes.css/scss/nes';
+}
+
+// Layer 1 — compiles away.
+@include base.emit();
+
+// Layer 2 — structure, this product's only theme, then contexts.
+@include semantic.emit-structure();
+@include themes.check-contrast('carmageddon', theme.$carmageddon);
+@include semantic.emit-theme('carmageddon', theme.$carmageddon, $default: true);
+@include themes.emit-contexts();
+
+// Layer 3 — names only.
+@include component.emit();
+
+// Layer 3.5 — the adapter, receiving this product's theme so it can generate
+// the pixel borders in the right colour.
+@include nescss-adapter.emit(('carmageddon': theme.$carmageddon));
+
+// The product's own layer: overrides and compositions.
+@import 'patterns';

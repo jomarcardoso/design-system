@@ -1,0 +1,240 @@
+// =============================================================================
+// CARMAGEDDON — phase 3: overrides and compositions
+// =============================================================================
+//
+// Two different jobs live here, and the ledger records them differently.
+//
+// OVERRIDES — a NES.css component that needed to look different. There are
+// fewer than expected, because NES.css is already close to a design system: it
+// has one look, applies it consistently, and exposes variants by intent rather
+// than by colour. Most of what a product would normally restyle is already
+// decided, and the adapter had already re-pointed the colours.
+//
+// COMPOSITIONS — components NES.css does NOT have. A race HUD needs a labelled
+// counter, an opponent card and a damage meter, and none of those exist in a
+// library built for menus and dialogues. These are the entries that make a
+// phase 3 documentation page worth generating: nobody can look them up in the
+// library's docs, because they are not there.
+//
+// The line between the two matters. An override is a divergence and belongs in
+// the docs as a delta. A composition is a new thing and belongs in the docs in
+// full — it is the only place it is written down.
+// =============================================================================
+
+// No `@use`: this file is `@import`ed into the same scope as NES.css so that
+// `@extend` can reach the library's selectors. Every value it reads is a
+// layer 2 custom property, which is what layer 2 being public means.
+
+@layer components {
+  // ---------------------------------------------------------------------
+  // LAYOUT — and why there is any at all
+  // ---------------------------------------------------------------------
+  //
+  // The other two example products write no layout CSS, because Bootstrap and
+  // Bulma both ship grid and spacing utilities. NES.css ships none: it is a
+  // component library, not a framework, and it has no opinion about how two
+  // panels sit next to each other.
+  //
+  // So a product built on it has to supply its own layout, and this is where
+  // that lives. Every value comes from layer 2, so the spacing scale here is
+  // the same one the components use — which is the only thing that keeps
+  // hand-written layout from drifting away from the system.
+  //
+  // These are NOT in the pattern ledger. The ledger governs components, and a
+  // page skeleton is not a component: nobody reaches for "the shell" the way
+  // they reach for "a button", and recording it would grow the vocabulary
+  // without closing anything.
+  .cm-shell {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: var(--app-space-lg) var(--app-space-md);
+  }
+
+  .cm-topbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-space-md);
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--app-space-xl);
+  }
+
+  .cm-wordmark {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--app-fg-danger);
+  }
+
+  .cm-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-space-sm);
+  }
+
+  .cm-screen {
+    margin-bottom: var(--app-space-2xl);
+  }
+
+  .cm-screen__title {
+    margin: 0 0 var(--app-space-lg);
+    font-size: 0.8rem;
+    color: var(--app-fg-heading);
+  }
+
+  .cm-hud {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: var(--app-space-md);
+    margin-bottom: var(--app-space-lg);
+  }
+
+  .cm-columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    gap: var(--app-space-lg);
+  }
+
+  .cm-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--app-space-md);
+    margin-bottom: var(--app-space-lg);
+  }
+
+  .cm-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-space-md);
+  }
+
+  .cm-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-space-sm);
+    margin-top: var(--app-space-sm);
+  }
+
+  .cm-footer {
+    padding-top: var(--app-space-lg);
+    margin-top: var(--app-space-xl);
+    font-size: 0.5rem;
+    color: var(--app-fg-muted);
+    border-top: var(--app-border-width) solid var(--app-border-color-subtle);
+  }
+
+  // ---------------------------------------------------------------------
+  // OVERRIDES
+  // ---------------------------------------------------------------------
+
+  // NES.css centres the container title over the border, which is right for a
+  // dialogue and wrong for a HUD panel that has to sit flush in a grid. This is
+  // a STRUCTURAL divergence, which is what justifies the override — a colour
+  // change would have been the adapter's job.
+  // Extends the plain container and supplies its own surface, rather than
+  // extending the library's `.is-dark`. That modifier is an absolute colour
+  // name — see the adapter — so on a dark theme it means nothing useful and on
+  // a light one it would fight the theme instead of following it.
+  .cm-panel {
+    @extend .nes-container;
+
+    background: var(--app-bg-surface);
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-space-sm);
+    padding: var(--app-space-md);
+  }
+
+  .cm-panel__title {
+    margin: 0;
+    font-size: 0.6rem;
+    color: var(--app-fg-selected);
+    letter-spacing: 0.06em;
+  }
+
+  // ---------------------------------------------------------------------
+  // COMPOSITIONS — not in NES.css at any spelling
+  // ---------------------------------------------------------------------
+
+  // A labelled counter: the credits, the timer, the pedestrian tally. The whole
+  // HUD is made of these, and before this class existed each one was a
+  // container plus two spans plus three utility decisions repeated by hand.
+  .cm-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-space-2xs);
+    padding: var(--app-space-sm) var(--app-space-md);
+    background: var(--app-bg-sunken);
+    border: var(--app-border-width) solid var(--app-border-color);
+  }
+
+  .cm-stat__label {
+    font-size: 0.5rem;
+    color: var(--app-fg-muted);
+    letter-spacing: 0.08em;
+  }
+
+  .cm-stat__value {
+    font-size: 1rem;
+    color: var(--app-fg-heading);
+  }
+
+  // The same counter when its number is bad news. A modifier rather than a
+  // second pattern, because it is the same component in a different state.
+  .cm-stat--critical .cm-stat__value {
+    color: var(--app-fg-danger);
+  }
+
+  // An opponent: portrait block, name, and how wrecked they are. NES.css has
+  // avatars and it has progress bars; it has no notion of the two together
+  // meaning one entity, which is exactly what a composition records.
+  .cm-driver {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--app-space-md);
+    align-items: center;
+    padding: var(--app-space-md);
+    background: var(--app-bg-surface);
+    border: var(--app-border-width) solid var(--app-border-color-subtle);
+  }
+
+  .cm-driver__name {
+    margin: 0 0 var(--app-space-2xs);
+    font-size: 0.7rem;
+    color: var(--app-fg-heading);
+  }
+
+  .cm-driver__meta {
+    margin: 0;
+    font-size: 0.5rem;
+    color: var(--app-fg-muted);
+  }
+
+  // Selected opponent. Uses the `selected` role rather than `action`, which is
+  // the distinction layer 2 draws and most products collapse: this is a state,
+  // not an invitation.
+  .cm-driver.is-selected {
+    border-color: var(--app-bg-selected);
+    background: var(--app-bg-selected-subtle);
+  }
+
+  // A damage meter — a labelled progress bar with the reading beside it. Built
+  // ON `.nes-progress` rather than replacing it, so the pixel bar, the border
+  // and the browser-specific pseudo-elements stay the library's problem.
+  .cm-damage {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: var(--app-space-xs);
+    align-items: center;
+  }
+
+  .cm-damage__label {
+    grid-column: 1 / -1;
+    font-size: 0.5rem;
+    color: var(--app-fg-muted);
+  }
+
+  .cm-damage__value {
+    font-size: 0.5rem;
+    color: var(--app-fg-default);
+  }
+}

@@ -133,6 +133,7 @@ if (ledgerErrors.length) {
 
 const components = Object.entries(ledger.components).map(([name, c]) => {
   const nsSource = c.namespace?.[lib];
+  const rootSource = c.root?.[lib];
   const allowed = [];
   const forbidden = [];
 
@@ -153,8 +154,11 @@ const components = Object.entries(ledger.components).map(([name, c]) => {
 
     let expected = null;
     if (p.state === 'raw') expected = p.raw?.[lib];
-    else if (p.state === 'styled') expected = p.styled ? [p.styled] : null;
-    else if (p.state === 'wrapped') expected = p.styled ? [p.styled] : p.raw?.[lib];
+    // `styled` may name more than one class: a base plus its modifier
+    // (`cm-stat cm-stat--critical`) is one pattern, not two, and forcing it
+    // into a single class would push products toward inventing a second base.
+    else if (p.state === 'styled') expected = p.styled ? p.styled.trim().split(/\s+/) : null;
+    else if (p.state === 'wrapped') expected = p.styled ? p.styled.trim().split(/\s+/) : p.raw?.[lib];
 
     if (expected) allowed.push({ pattern: patternName, state: p.state, set: new Set(expected) });
 
@@ -180,6 +184,9 @@ const components = Object.entries(ledger.components).map(([name, c]) => {
   return {
     name,
     namespace: nsSource ? new RegExp(nsSource) : null,
+    // Falls back to the namespace: with an unambiguous prefix the two are the
+    // same question, and only shared-modifier libraries need them separated.
+    root: new RegExp(rootSource ?? nsSource ?? '$^'),
     allowed,
     forbidden,
     stale,
@@ -229,6 +236,11 @@ for (const file of files) {
     const line = src.slice(0, m.index).split('\n').length;
 
     for (const c of components) {
+      // Is this element the component at all? Without this check a shared
+      // modifier — Bulma's `is-fullwidth` on a `.select` — reads as a button
+      // with an unknown variant.
+      if (!classes.some((cl) => c.root.test(cl))) continue;
+
       const ns = classes.filter((cl) => c.namespace.test(cl));
       if (!ns.length) continue;
 
