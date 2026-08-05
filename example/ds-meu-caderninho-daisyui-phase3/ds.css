@@ -83,7 +83,7 @@
       border-right: var(--app-border-width) solid var(--app-border-color);
     }
     .mc-hand {
-      font-family: var(--app-font-display, var(--app-font-heading));
+      font-family: var(--app-font-display);
       font-size: var(--app-text-size-lg);
       color: var(--app-fg-heading);
     }
@@ -187,6 +187,7 @@
     --app-gap-stack: var(--app-space-md);
     --app-font-body: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
     --app-font-heading: ui-serif, Georgia, Cambria, Times New Roman, serif;
+    --app-font-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
     --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
     --app-text-size: 1rem;
     --app-text-leading: 1.6;
@@ -307,10 +308,6 @@
     --app-fg-inverted-base: #fff;
   }
 }
-:root {
-  --app-font-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
-}
-
 @layer vendor-config {
   :root,
   [data-theme],
@@ -336,6 +333,8 @@
     --color-warning-content: var(--app-fg-on-warning);
     --color-error: var(--app-bg-danger);
     --color-error-content: var(--app-fg-on-danger);
+    --font-sans: var(--app-font-body);
+    --font-mono: var(--app-font-mono);
     --radius-selector: var(--app-radius-control);
     --radius-field: var(--app-radius-control);
     --radius-box: var(--app-radius-surface);

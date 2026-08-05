@@ -110,8 +110,26 @@
     'gap-stack': core.ref('space-md'),
 
     // --- Typography -----------------------------------------------------
+    //
+    // Four faces, and `display` is here rather than in layer 3 after being put
+    // in the wrong place once. The argument for a hook was that it costs
+    // nothing for products with no signature typeface — but `font-heading`
+    // already defaults to the SAME value as `font-body`, and nobody proposed
+    // making that a hook. The asymmetry was the giveaway.
+    //
+    // The deciding question is what layer 3 is for: COMPONENT tokens, whose
+    // admission test asks whether a value encodes a component's anatomy. A
+    // typeface encodes a document's voice, not a component's — it belongs on
+    // the same shelf as `font-heading`, and putting it a layer down was a
+    // category error rather than a saving.
+    //
+    // `display` is the face a product writes in when it wants to sound like a
+    // person: a wordmark, a pull quote, an author's note, the confirmation
+    // after someone saves something of their own. It defaults to the heading
+    // face, so products without one see no difference and pay one token.
     'font-body': base.scale(font, sans),
     'font-heading': base.scale(font, sans),
+    'font-display': base.scale(font, sans),
     'font-mono': base.scale(font, mono),
     'text-size': base.scale(text, base),
     'text-leading': base.scale(leading, normal),

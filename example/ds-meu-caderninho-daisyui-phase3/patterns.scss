@@ -174,7 +174,7 @@
     }
 
     // The pen flourish under a section heading. Pure brand, no library
-    // equivalent, and the reason `font-display` had to become a real hook.
+    // equivalent.
     .mc-flourish {
       display: block;
       width: 5.5rem;
@@ -200,7 +200,7 @@
 
     // A handwritten note. The wordmark and the footer line.
     .mc-hand {
-      font-family: var(--app-font-display, var(--app-font-heading));
+      font-family: var(--app-font-display);
       font-size: var(--app-text-size-lg);
       color: var(--app-fg-heading);
     }

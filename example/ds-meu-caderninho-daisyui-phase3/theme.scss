@@ -97,9 +97,11 @@ $caderninho: (
 // product is a notebook: headings are set in a serif, and the wordmark and the
 // footer note are handwritten.
 //
-// `font-display` is a layer 3 hook, not a layer 2 token — it costs nothing
-// until a product sets it, and defaults to the heading face for everyone else.
-// Setting it here is what makes the script face available to `ref-chain`.
+// `font-display` is a layer 2 token like the other three. It was briefly a
+// layer 3 hook, on the theory that a hook costs nothing — but `font-heading`
+// already defaults to the same value as `font-body` and nobody argued it should
+// be a hook. Layer 3 holds COMPONENT tokens; a typeface is a document's voice,
+// not a component's anatomy.
 $typography: (
   'font-body': (
     ui-sans-serif,
@@ -109,7 +111,12 @@ $typography: (
     sans-serif
   ),
   'font-heading': (ui-serif, Georgia, Cambria, 'Times New Roman', serif),
+
+  // The product's own voice. Used for the wordmark and the closing note, and
+  // the place it will grow is the user's own writing — a recipe they saved, a
+  // note they left themselves — so the interface sounds like their notebook
+  // rather than like software.
+  'font-display': ('Segoe Script', 'Bradley Hand', 'Brush Script MT', cursive),
+
   'text-leading': 1.6
 );
-
-$display-face: ('Segoe Script', 'Bradley Hand', 'Brush Script MT', cursive);

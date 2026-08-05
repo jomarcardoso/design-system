@@ -109,6 +109,26 @@
       --color-error: #{core.ref('bg-danger')};
       --color-error-content: #{core.ref('fg-on-danger')};
 
+      // --- Typography -------------------------------------------------
+      //
+      // Tailwind derives `--default-font-family: var(--font-sans)`, and its
+      // preflight applies that to the document. Binding the two theme faces is
+      // what makes the LIBRARY follow the design system's typography instead of
+      // Tailwind's defaults.
+      //
+      // Missing until a product wanted a serif heading and found its headings
+      // still rendering in Tailwind's stack. The tokens were right and nothing
+      // read them, which is the same shape as the `--bs-link-color-rgb` bug:
+      // an adapter that sets a variable the library does not consume.
+      //
+      // `--font-serif` is deliberately absent. Tailwind ships it as a utility
+      // face, and layer 2 does not model "the serif one" — it models the role a
+      // face plays. A product mapping `font-serif` to its heading token would
+      // be asserting that its headings are serif, which is its business and not
+      // this adapter's.
+      --font-sans: #{core.ref('font-body')};
+      --font-mono: #{core.ref('font-mono')};
+
       // --- Shape ------------------------------------------------------
       // `selector` is checkboxes and toggles, `field` is inputs and buttons,
       // `box` is cards and modals. Layer 2 has one control radius, so the first

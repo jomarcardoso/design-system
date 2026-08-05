@@ -34,17 +34,9 @@
 @include semantic.emit-theme('caderninho', theme.$caderninho, $default: true);
 @include themes.emit-contexts();
 
-// Layer 3 — the naming contract. Emission stays off; the one hook this product
-// uses is set explicitly below.
+// Layer 3 — the naming contract. Emission stays off; this product needs no
+// component-level override.
 @include component.emit();
-
-// The display face. A layer 3 hook rather than a layer 2 token: it costs
-// nothing for the products that have no signature typeface, and resolves
-// through `var(--app-font-display, var(--app-font-heading))` for the ones that
-// do. `.mc-hand` in `patterns.scss` is what reads it.
-:root {
-  --app-font-display: #{theme.$display-face};
-}
 
 // Layer 3.5 — the adapter, receiving this product's theme.
 @include daisyui-adapter.emit();
