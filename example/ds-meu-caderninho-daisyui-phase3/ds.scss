@@ -1,0 +1,50 @@
+// =============================================================================
+// MEU CADERNINHO — the project's design system build
+// =============================================================================
+//
+//     sass --load-path=. example/ds-meu-caderninho-daisyui-phase3/ds.scss out.css
+//
+// daisyUI is NOT compiled here: it is a Tailwind plugin and arrives as built
+// CSS, imported by `app.css` before this file's output. That is also why the
+// product layer uses a nested sublayer instead of `@extend` — there are no Sass
+// selectors to extend. See `patterns.scss`.
+// =============================================================================
+
+@use 'sass:map';
+@use '../../src/config' with ($themes: (), $adapters: (daisyui));
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/themes';
+@use '../../src/component';
+@use '../../src/adapters/daisyui' as daisyui-adapter;
+@use 'theme';
+@use 'patterns';
+
+// Layer 1 — compiles away.
+@include base.emit();
+
+// Layer 2 — structure with this product's typography merged in, then its only
+// theme, then the surface contexts.
+//
+// The typography map is the reason `emit-structure()` takes an argument at all.
+// Before that, a product wanting a serif heading had to edit `_semantic.scss`
+// inside the vendored tool — a fork, for a decision that is purely its own.
+@include semantic.emit-structure(theme.$typography);
+@include themes.check-contrast('caderninho', theme.$caderninho);
+@include semantic.emit-theme('caderninho', theme.$caderninho, $default: true);
+@include themes.emit-contexts();
+
+// Layer 3 — the naming contract. Emission stays off; the one hook this product
+// uses is set explicitly below.
+@include component.emit();
+
+// The display face. A layer 3 hook rather than a layer 2 token: it costs
+// nothing for the products that have no signature typeface, and resolves
+// through `var(--app-font-display, var(--app-font-heading))` for the ones that
+// do. `.mc-hand` in `patterns.scss` is what reads it.
+:root {
+  --app-font-display: #{theme.$display-face};
+}
+
+// Layer 3.5 — the adapter, receiving this product's theme.
+@include daisyui-adapter.emit();

@@ -42,7 +42,9 @@ const PAGES = [
   // The generated documentation is audited too: it renders every composition
   // live, so a contrast bug in a component nobody put on the main page still
   // gets caught.
-  { path: 'ds-carmageddon-nescss-phase3/docs.html', themes: ['carmageddon'] }
+  { path: 'ds-carmageddon-nescss-phase3/docs.html', themes: ['carmageddon'] },
+  { path: 'ds-meu-caderninho-daisyui-phase3/', themes: ['caderninho'] },
+  { path: 'ds-meu-caderninho-daisyui-phase3/docs.html', themes: ['caderninho'] }
 ];
 
 export const SNIPPET = `(() => {

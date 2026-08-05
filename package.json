@@ -31,11 +31,13 @@
     "verify:patterns": "node scripts/verify-patterns.mjs",
     "build:example-hot-tone": "sass --no-source-map --load-path=. example/ds-hot-tone-bootstrap-phase1/ds.scss example/ds-hot-tone-bootstrap-phase1/ds.css",
     "build:example-cyberpunk": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-cyberpunk-bulma-phase2/ds.scss example/ds-cyberpunk-bulma-phase2/ds.css",
-    "demo:examples": "npm run build:bootstrap && npm run build:example-hot-tone && npm run build:example-cyberpunk && npm run build:example-carmageddon && npm run docs:carmageddon",
-    "verify:examples": "node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json && node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 --ledger example/ds-cyberpunk-bulma-phase2/patterns.json && node scripts/verify-patterns.mjs example/ds-carmageddon-nescss-phase3 --ledger example/ds-carmageddon-nescss-phase3/patterns.json",
+    "demo:examples": "npm run build:bootstrap && npm run build:daisyui && npm run build:example-hot-tone && npm run build:example-cyberpunk && npm run build:example-carmageddon && npm run build:example-caderninho && npm run docs:carmageddon && npm run docs:caderninho",
+    "verify:examples": "node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json && node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 --ledger example/ds-cyberpunk-bulma-phase2/patterns.json && node scripts/verify-patterns.mjs example/ds-carmageddon-nescss-phase3 --ledger example/ds-carmageddon-nescss-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-meu-caderninho-daisyui-phase3 --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json",
     "build:nescss": "sass --no-source-map --quiet-deps --silence-deprecation=import --load-path=. --load-path=node_modules nescss-entry.scss dist/nescss.css",
     "build:example-carmageddon": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-carmageddon-nescss-phase3/ds.scss example/ds-carmageddon-nescss-phase3/ds.css",
-    "docs:carmageddon": "node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html --stylesheet ./ds.css --title \"DS Carmageddon\""
+    "docs:carmageddon": "node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html --stylesheet ./ds.css --title \"DS Carmageddon\"",
+    "build:example-caderninho": "sass --no-source-map --load-path=. example/ds-meu-caderninho-daisyui-phase3/ds.scss example/ds-meu-caderninho-daisyui-phase3/ds.css",
+    "docs:caderninho": "node scripts/generate-pattern-docs.mjs --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json --out example/ds-meu-caderninho-daisyui-phase3/docs.html --stylesheet ./app.css --title \"Meu Caderninho\""
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

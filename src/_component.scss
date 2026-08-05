@@ -191,6 +191,16 @@ $contract: (
   'accent-bg-subtle': 'bg-selected-subtle',
   'accent-fg-on-subtle': 'fg-selected',
 
+  // A fourth typeface. Layer 2 models three roles — body, heading, mono —
+  // which covers most products and is wrong for any brand with a signature
+  // face used for a wordmark, a pull quote or a section flourish. Material and
+  // Tailwind both name this role `display`, so it is ecosystem vocabulary
+  // rather than one library's shape.
+  //
+  // Defaults to the heading face, so a product that has no such typeface pays
+  // nothing and sees no difference.
+  'font-display': 'font-heading',
+
   // Per-level heading colour. Layer 2 makes one decision — a heading is a
   // heading — but Pico steps six levels down a ramp and some brands do too.
   'heading-1-fg': 'fg-heading',

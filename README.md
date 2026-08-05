@@ -225,11 +225,20 @@ Three worked examples live in `example/`, one per phase:
 | **DS Hot Tone with Bootstrap** | 1 | vocabulary recorded and enforced, no abstraction written |
 | **DS Cyberpunk with Bulma** | 2 | promoted to semantic classes, mixed maturity across components |
 | **DS Carmageddon with NES.css** | 3 | documentation generated from the ledger as a delta |
+| **DS Meu Caderninho with daisyUI** | 3 | built to match a supplied design — where tokens stop and the product's layer starts |
 
 They are products built *with* the tool, and they disagree with each other — one
 allows a borderless button, another forbids it; one allows status-coloured
 buttons, another does not. That disagreement is the argument for keeping the
 vocabulary out of the foundation.
+
+The Meu Caderninho example is the one that pushed hardest on customisation. It
+added two things to the tool — `emit-structure()` overrides, so a product can
+set its own typography without editing a vendored file, and a `font-display`
+layer 3 hook for brands with a signature typeface — and it established where a
+product overrides a library that nests itself inside `utilities`: a sublayer at
+`utilities.mc`, which beats the component library while a utility at the call
+site still beats it.
 
 Phase 3 adds `npm run docs:carmageddon`, which generates a documentation page
 from the ledger. It documents in full only what a reader cannot look up — the

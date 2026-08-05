@@ -1,0 +1,50 @@
+/* =============================================================================
+ * MEU CADERNINHO — the application entry
+ * =============================================================================
+ *
+ * Import ORDER is load-bearing here, not stylistic.
+ *
+ * daisyUI registers a `daisyui` sublayer inside `utilities`; this product's
+ * `ds.css` registers an `mc` sublayer in the same place. Sublayers rank in the
+ * order they first appear, so daisyUI must arrive first for `mc` to be able to
+ * override it. Swap these two lines and every product override silently stops
+ * winning — with no error, because the CSS is still valid.
+ * ========================================================================== */
+
+@layer legacy, theme, base, ds.base, ds.semantic, ds.component, vendor,
+  vendor-config, components, ds.overrides, utilities;
+
+@import '../../dist/daisyui.css';
+@import './ds.css';
+
+/* -----------------------------------------------------------------------------
+ * Baseline
+ * -------------------------------------------------------------------------- */
+/*
+ * Layer 2 publishes `--app-font-heading`; something still has to APPLY it. The
+ * first build of this page had no baseline and every heading inherited
+ * Tailwind's preflight sans — the tokens were correct and nothing read them.
+ *
+ * `:where()` keeps specificity at zero so a utility at the call site still
+ * wins.
+ */
+
+@layer base {
+  html {
+    background: var(--app-bg-page);
+    color: var(--app-fg-default);
+    font-family: var(--app-font-body);
+    font-size: var(--app-text-size);
+    line-height: var(--app-text-leading);
+  }
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    color: var(--app-fg-heading);
+    font-family: var(--app-font-heading);
+    font-weight: var(--app-weight-heading);
+    line-height: var(--app-text-leading-heading);
+  }
+
+  :where(h1) { font-size: var(--app-text-size-heading); }
+  :where(h2) { font-size: var(--app-text-size-lg); }
+}

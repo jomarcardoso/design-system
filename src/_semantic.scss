@@ -277,10 +277,23 @@
 // Emission
 // -----------------------------------------------------------------------------
 
-@mixin emit-structure() {
+// `$overrides` exists because typography had no customisation path at all.
+//
+// Colour is supplied by a project as a theme map. Structure — spacing, radius,
+// typography — was hardcoded in `structure()` above, so a product wanting a
+// serif heading or its own spacing rhythm had to edit a vendored file, which is
+// the fork this architecture is supposed to make unnecessary.
+//
+// A project can always redeclare a layer 2 custom property in a later cascade
+// layer, and that works, but it lands outside `ds.semantic` where the rest of
+// the contract lives — two places holding the same kind of decision. Passing a
+// map keeps it in one.
+//
+// Keys are layer 2 token names without the prefix: `('font-heading': …)`.
+@mixin emit-structure($overrides: ()) {
   @include core.in-layer(config.$layer-semantic) {
     :root {
-      @include core.emit(structure());
+      @include core.emit(map.merge(structure(), $overrides));
     }
   }
 }

@@ -1,0 +1,340 @@
+{
+  "$schema": "../../patterns/patterns.schema.json",
+  "version": 1,
+  "libraries": [
+    "daisyui"
+  ],
+  "components": {
+    "button": {
+      "intent": "A control that performs an action. Untouched — daisyUI decided what a button is, and the theme decided what colour it is.",
+      "namespace": {
+        "daisyui": "^btn$|^btn-(primary|secondary|accent|neutral|info|success|warning|error|outline|ghost|link|soft|dash|square|circle|wide|block|xs|sm|lg|xl)$"
+      },
+      "root": {
+        "daisyui": "^btn$"
+      },
+      "namespaceNote": "daisyUI prefixes its button modifiers, so the namespace is unambiguous. `root` narrows it to elements carrying `.btn`. `join-item` is deliberately OUT: it belongs to the `join` container's anatomy and says nothing about which button this is — claiming it made every button inside a toggle group read as an unknown variant.",
+      "docs": {
+        "library": "https://daisyui.com/components/button/"
+      },
+      "patterns": {
+        "primary": {
+          "intent": "The action a screen exists for: create a recipe, apply the filters.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "btn",
+              "btn-primary"
+            ]
+          },
+          "example": "<button class=\"btn btn-primary\">Nova receita</button>"
+        },
+        "secondary": {
+          "intent": "A supporting action beside a primary one. Outlined, so a pair of buttons has one obvious answer.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "btn",
+              "btn-outline"
+            ]
+          },
+          "example": "<button class=\"btn btn-outline\">Limpar filtros</button>"
+        },
+        "icon": {
+          "intent": "An action with no label: the overflow menu, the view toggle, closing a panel.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "btn",
+              "btn-square",
+              "btn-outline"
+            ]
+          },
+          "example": "<button class=\"btn btn-square btn-outline\" aria-label=\"Mais opções\">⋯</button>"
+        },
+        "favourite": {
+          "intent": "The heart on a recipe photograph. Round because it sits over an image and needs to read as a token rather than a control bar.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "btn",
+              "btn-circle"
+            ]
+          },
+          "example": "<button class=\"btn btn-circle btn-sm\" aria-label=\"Favoritar\">♥</button>"
+        },
+        "icon-selected": {
+          "intent": "The chosen option in a group of icon toggles, such as grid versus list.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "btn",
+              "btn-square",
+              "btn-primary"
+            ]
+          },
+          "example": "<div class=\"join\"><button class=\"btn btn-square join-item btn-primary\" aria-label=\"Grade\">▦</button><button class=\"btn btn-square join-item btn-outline\" aria-label=\"Lista\">≡</button></div>",
+          "notes": "Added because the verifier refused the markup. The vocabulary had `icon` but no way to say which icon button is active — a gap nobody notices while writing the page and the check finds immediately."
+        }
+      },
+      "modifiers": {
+        "size": {
+          "intent": "Physical size. Orthogonal to emphasis — an icon button can be small without becoming a different pattern.",
+          "options": {
+            "medium": {
+              "intent": "The default. Adds nothing.",
+              "libraries": {
+                "daisyui": []
+              }
+            },
+            "small": {
+              "intent": "Controls that sit inside another surface: a card photograph, a panel header.",
+              "libraries": {
+                "daisyui": [
+                  "btn-sm"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "intent": "A recipe in a list: photograph, title, summary, meta and tags.",
+      "namespace": {
+        "daisyui": "^card$|^card-(side|body|title|actions|border|dash)$"
+      },
+      "root": {
+        "daisyui": "^card$"
+      },
+      "docs": {
+        "library": "https://daisyui.com/components/card/"
+      },
+      "patterns": {
+        "recipe": {
+          "intent": "The horizontal recipe row. The only card shape this product has.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "card",
+              "card-side"
+            ]
+          },
+          "diverges": "daisyUI lets a side card's image size itself from its content, which gives a ragged left edge down a list. This product's list is scanned vertically, so the images are pinned to a fixed column and cropped to fill. Geometry only — the card's colour, radius, border and padding all still come from the theme.",
+          "example": "<article class=\"card card-side bg-base-100 border border-base-300\"><figure style=\"background:var(--app-bg-sunken);min-width:6rem\"></figure><div class=\"card-body\"><h3 class=\"card-title\">Sopa de Abóbora</h3><p>Aconchegante e cremosa.</p></div></article>"
+        }
+      }
+    },
+    "nav": {
+      "intent": "The sidebar menu and the section tabs.",
+      "namespace": {
+        "daisyui": "^menu$|^menu-(active|title|disabled|dropdown)$|^tabs$|^tabs-(border|box|lift)$|^tab$|^tab-active$|^breadcrumbs$"
+      },
+      "root": {
+        "daisyui": "^menu$|^tabs$|^breadcrumbs$"
+      },
+      "docs": {
+        "library": "https://daisyui.com/components/menu/"
+      },
+      "patterns": {
+        "menu": {
+          "intent": "The primary sidebar. How the product moves between sections.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "menu"
+            ]
+          },
+          "diverges": "daisyUI paints the active item with `neutral` — the library treating navigation as chrome. This product's navigation carries its only brand colour, so the active item takes `action` instead. Not a colour correction: the theme was right and the ROLE assignment was the library's, which is a decision only the product can make.",
+          "example": "<ul class=\"menu w-56\"><li><a class=\"menu-active\">Meu Caderninho</a></li><li><a>Explorar</a></li></ul>"
+        },
+        "tabs": {
+          "intent": "Switching between views of the same collection without leaving the page.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "tabs",
+              "tabs-border"
+            ]
+          },
+          "diverges": "The underline is pulled away from the label so the rule reads as a line under the whole row that the active tab interrupts — a printed index rather than a browser tab.",
+          "example": "<div role=\"tablist\" class=\"tabs tabs-border\"><a role=\"tab\" class=\"tab tab-active\">Todas</a><a role=\"tab\" class=\"tab\">Recentes</a></div>"
+        },
+        "breadcrumb": {
+          "intent": "Where the current screen sits. Used as the library ships it.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "breadcrumbs"
+            ]
+          },
+          "example": "<div class=\"breadcrumbs text-sm\"><ul><li><a>Meu Caderninho</a></li><li>Receitas</li></ul></div>"
+        }
+      }
+    },
+    "chip": {
+      "intent": "A selectable filter token. daisyUI has a button and it has a badge; it has no control that is clickable, carries a selected state and reads as a label.",
+      "namespace": {
+        "daisyui": "^mc-chip$|^mc-chip-group$"
+      },
+      "root": {
+        "daisyui": "^mc-chip$|^mc-chip-group$"
+      },
+      "namespaceNote": "Entirely the product's namespace — there is no daisyUI class to govern here, which is what makes this a composition rather than an override.",
+      "patterns": {
+        "chip": {
+          "intent": "One filter value. Pressed state carried by `aria-pressed`, so the accessible name and the visual state cannot drift apart.",
+          "state": "styled",
+          "styled": "mc-chip",
+          "example": "<div class=\"mc-chip-group\"><button class=\"mc-chip\" aria-pressed=\"true\">Todas</button><button class=\"mc-chip\" aria-pressed=\"false\">Almoço</button><button class=\"mc-chip\" aria-pressed=\"false\">Jantar</button></div>",
+          "notes": "Built from tokens rather than from `.btn`. Inheriting a button's height and padding is what makes a filter row look like a toolbar, which is the opposite of what a filter row should look like."
+        },
+        "group": {
+          "intent": "A wrapping row of chips.",
+          "state": "styled",
+          "styled": "mc-chip-group",
+          "example": "<div class=\"mc-chip-group\"><button class=\"mc-chip\" aria-pressed=\"false\">Vegana</button><button class=\"mc-chip\" aria-pressed=\"false\">Sem glúten</button></div>"
+        }
+      }
+    },
+    "range": {
+      "intent": "A slider with its scale written out.",
+      "namespace": {
+        "daisyui": "^range$|^range-(primary|secondary|accent|neutral|xs|sm|md|lg)$|^mc-range-field$"
+      },
+      "root": {
+        "daisyui": "^range$|^mc-range-field$"
+      },
+      "docs": {
+        "library": "https://daisyui.com/components/range/"
+      },
+      "patterns": {
+        "field": {
+          "intent": "A range with min, current and max labelled underneath.",
+          "state": "styled",
+          "styled": "mc-range-field",
+          "parts": {
+            "mc-range-field__scale": "The three labels: minimum, current range, maximum."
+          },
+          "example": "<div class=\"mc-range-field\"><input type=\"range\" class=\"range range-primary\" min=\"0\" max=\"120\" value=\"120\" aria-label=\"Tempo de preparo\"><span class=\"mc-range-field__scale\"><span>0 min</span><span>0 – 120+ min</span><span>120+ min</span></span></div>",
+          "notes": "Wraps daisyUI's `range` rather than replacing it — the track, the thumb and the browser-specific pseudo-elements stay the library's problem. Every product that ships a range writes these three labels; this one wrote them once."
+        },
+        "bare": {
+          "intent": "daisyUI's slider on its own, for places where surrounding text already states the scale.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "range",
+              "range-primary"
+            ]
+          },
+          "example": "<input type=\"range\" class=\"range range-primary\" min=\"0\" max=\"100\" value=\"60\" aria-label=\"Exemplo\">",
+          "notes": "`field` wraps this rather than replacing it, so the track and the browser-specific pseudo-elements stay the library's problem."
+        }
+      }
+    },
+    "meta": {
+      "intent": "An icon-and-value strip: preparation time, servings, calories. Generic enough that daisyUI could have it and specific enough that it does not.",
+      "namespace": {
+        "daisyui": "^mc-meta$"
+      },
+      "root": {
+        "daisyui": "^mc-meta$"
+      },
+      "patterns": {
+        "default": {
+          "intent": "The facts under a recipe title.",
+          "state": "styled",
+          "styled": "mc-meta",
+          "parts": {
+            "mc-meta__item": "One icon plus its value."
+          },
+          "example": "<p class=\"mc-meta\"><span class=\"mc-meta__item\">⏱ 35 min</span><span class=\"mc-meta__item\">👥 2 porções</span><span class=\"mc-meta__item\">📊 520 kcal</span></p>"
+        }
+      }
+    },
+    "flourish": {
+      "intent": "The brand's handwriting: the wordmark, the pen stroke under a section heading, the closing note. Pure identity, with no library equivalent anywhere.",
+      "namespace": {
+        "daisyui": "^mc-hand$|^mc-flourish$"
+      },
+      "root": {
+        "daisyui": "^mc-hand$|^mc-flourish$"
+      },
+      "patterns": {
+        "hand": {
+          "intent": "Text set in the product's script face.",
+          "state": "styled",
+          "styled": "mc-hand",
+          "example": "<p class=\"mc-hand\">Comida boa, feita com intenção, nutre corpo e alma.</p>",
+          "notes": "Reads `--app-font-display`, a layer 3 hook added for this product. Layer 2 models body, heading and mono; a fourth face is a real gap for any brand with a signature typeface, and a hook costs nothing for the products that have none."
+        },
+        "rule": {
+          "intent": "The pen stroke under a section heading.",
+          "state": "styled",
+          "styled": "mc-flourish",
+          "example": "<svg class=\"mc-flourish\" viewBox=\"0 0 90 8\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" stroke-linecap=\"round\"><path d=\"M2 5c14-5 28 4 42 0s26-4 44 1\"/></svg>"
+        }
+      }
+    },
+    "field": {
+      "intent": "Form controls. Used exactly as daisyUI ships them.",
+      "namespace": {
+        "daisyui": "^input$|^select$|^textarea$|^checkbox$|^toggle$"
+      },
+      "root": {
+        "daisyui": "^input$|^select$|^textarea$|^checkbox$|^toggle$"
+      },
+      "docs": {
+        "library": "https://daisyui.com/components/input/"
+      },
+      "patterns": {
+        "text": {
+          "intent": "Text and search entry.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "input"
+            ]
+          },
+          "example": "<label class=\"input\"><input type=\"search\" placeholder=\"Buscar receitas...\"></label>"
+        },
+        "select": {
+          "intent": "A choice from a known list.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "select"
+            ]
+          },
+          "example": "<select class=\"select\"><option>Mais recentes</option></select>"
+        }
+      }
+    },
+    "badge": {
+      "intent": "A recipe tag. Read-only — the selectable version is `chip`, and keeping them apart is what stops a tag from looking clickable.",
+      "namespace": {
+        "daisyui": "^badge$|^badge-(soft|outline|dash|ghost|primary|secondary|accent|neutral|info|success|warning|error|xs|sm|md|lg|xl)$"
+      },
+      "root": {
+        "daisyui": "^badge$"
+      },
+      "docs": {
+        "library": "https://daisyui.com/components/badge/"
+      },
+      "patterns": {
+        "tag": {
+          "intent": "A category or dietary tag on a recipe.",
+          "state": "raw",
+          "raw": {
+            "daisyui": [
+              "badge",
+              "badge-soft"
+            ]
+          },
+          "example": "<span class=\"badge badge-soft\">Sem glúten</span>"
+        }
+      }
+    }
+  }
+}

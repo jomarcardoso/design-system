@@ -1,0 +1,308 @@
+// =============================================================================
+// MEU CADERNINHO — the product's own layer
+// =============================================================================
+//
+// THE LAYER POSITION IS THE WHOLE TRICK, so read this before copying the file.
+//
+// daisyUI nests its components inside Tailwind's `utilities` layer:
+//
+//     utilities.daisyui.l1.l2.l3   ->   .card { … }
+//
+// `utilities` is deliberately last in the cascade order, so a product writing
+// its overrides in `components` — the obvious place — loses to daisyUI at every
+// specificity. The adapter documents this and works around it by only setting
+// variables, which is correct for an ADAPTER.
+//
+// A product has a better option, and it is a nested sublayer:
+//
+//     @layer utilities { @layer daisyui, mc; }
+//
+// Measured, not assumed. Within one layer, declarations nested in a sublayer
+// lose to declarations made directly in that layer, and sublayers rank among
+// themselves in declaration order. So `utilities.mc` lands exactly where a
+// product wants to be:
+//
+//     utilities.daisyui   <   utilities.mc   <   utilities (Tailwind's own)
+//
+// It beats the component library; a Tailwind utility written at the call site
+// still beats it. Anything else — `!important`, unlayered CSS, raising
+// specificity — would have broken that second half.
+//
+// The sublayer order needs no declaration here: `daisyui.css` is imported
+// before `ds.css`, so `daisyui` registers first and `mc` second.
+//
+// -----------------------------------------------------------------------------
+// WHAT IS IN HERE, AND WHAT THAT SAYS ABOUT THE LAYERS BELOW
+// -----------------------------------------------------------------------------
+//
+// Three overrides and six compositions. The ratio is the point: after the theme
+// and the adapter had done their work, almost nothing about daisyUI's
+// components needed changing — what the product was missing were components
+// daisyUI does not have.
+//
+// The three overrides fall into two kinds, and NEITHER is "the colour was
+// wrong". A colour override here would have meant the theme or the adapter had
+// failed, which is the useful thing this file measures.
+//
+//   STRUCTURAL   the image column and the tab rule — geometry the library had
+//                no reason to guess right for this product.
+//   ROLE         which semantic role a component reaches for. daisyUI paints
+//                the active menu item as neutral chrome; this product's
+//                navigation carries its brand colour. The adapter cannot
+//                decide that: it maps roles to variables, and which variable a
+//                component uses is the library's anatomy.
+// =============================================================================
+
+@layer utilities {
+  @layer mc {
+    // -----------------------------------------------------------------
+    // OVERRIDES — structural only
+    // -----------------------------------------------------------------
+
+    // daisyUI's `card-side` lets the image size itself from its content, which
+    // gives a ragged left edge down a list of recipes. This product's list is
+    // scanned vertically, so the images have to form a column.
+    .card.card-side > figure {
+      flex: 0 0 auto;
+      width: 13.5rem;
+      align-self: stretch;
+    }
+
+    .card.card-side > figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    // The tab underline sits directly under the label in daisyUI. The design
+    // wants it under the whole tab row, as a rule the active tab interrupts —
+    // a printed-index look rather than a browser-tab look.
+    .tabs-border .tab {
+      padding-bottom: var(--app-space-sm);
+    }
+
+    // A THIRD kind of override, and the one worth naming: neither colour nor
+    // structure, but which ROLE a component takes.
+    //
+    // daisyUI paints the active menu item with `--color-neutral`, which the
+    // adapter maps to the foreground tone — a near-black brown. That is the
+    // library deciding that navigation is neutral chrome. This product's
+    // navigation is where its single brand colour lives, so it takes `action`.
+    //
+    // The adapter cannot make this call: it maps roles to library variables,
+    // and WHICH role a component reaches for is the library's anatomy. Deciding
+    // to disagree is the product's job, and this is the right place for it.
+    .menu :where(li > .menu-active) {
+      color: var(--app-fg-on-action);
+      background-color: var(--app-bg-action);
+    }
+
+    // -----------------------------------------------------------------
+    // COMPOSITIONS — not in daisyUI at any spelling
+    // -----------------------------------------------------------------
+
+    // A filter chip. daisyUI has `btn` and it has `badge`; it has no selectable
+    // filter token, which is a control (clickable, has a selected state) that
+    // reads as a label. Built from tokens rather than from `btn`, because
+    // inheriting a button's height and padding is what makes filter rows look
+    // like toolbars.
+    .mc-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: var(--app-space-xs) var(--app-space-md);
+      font-size: var(--app-text-size-sm);
+      color: var(--app-fg-default);
+      cursor: pointer;
+      background: var(--app-bg-surface);
+      border: var(--app-border-width) solid var(--app-border-color);
+      border-radius: var(--app-radius-pill);
+    }
+
+    .mc-chip:hover {
+      background: var(--app-bg-sunken);
+    }
+
+    .mc-chip[aria-pressed='true'] {
+      color: var(--app-fg-on-action);
+      background: var(--app-bg-action);
+      border-color: var(--app-bg-action);
+    }
+
+    .mc-chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--app-space-xs);
+    }
+
+    // A range with its scale written out. daisyUI's `range` is the track and
+    // the thumb; every product that uses one then writes the same three labels
+    // underneath by hand.
+    .mc-range-field {
+      display: grid;
+      gap: var(--app-space-xs);
+    }
+
+    .mc-range-field__scale {
+      display: flex;
+      justify-content: space-between;
+      font-size: var(--app-text-size-sm);
+      color: var(--app-fg-muted);
+    }
+
+    // The meta strip on a recipe: time, servings, calories. An icon-and-value
+    // list is generic enough that daisyUI could have it and specific enough
+    // that it does not.
+    .mc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--app-space-md);
+      margin: 0;
+      font-size: var(--app-text-size-sm);
+      color: var(--app-fg-muted);
+    }
+
+    .mc-meta__item {
+      display: inline-flex;
+      gap: var(--app-space-2xs);
+      align-items: center;
+    }
+
+    .mc-meta__item svg {
+      width: 1em;
+      height: 1em;
+      opacity: 0.7;
+    }
+
+    // The pen flourish under a section heading. Pure brand, no library
+    // equivalent, and the reason `font-display` had to become a real hook.
+    .mc-flourish {
+      display: block;
+      width: 5.5rem;
+      height: 0.5rem;
+      margin-top: var(--app-space-2xs);
+      color: var(--app-fg-muted);
+    }
+
+    // The notebook's spiral binding. Decorative, and the single most
+    // recognisable thing about the product.
+    .mc-rail {
+      flex: 0 0 auto;
+      width: 1.75rem;
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0 0.75rem,
+          var(--app-border-color-strong) 0.75rem 1.05rem,
+          transparent 1.05rem 1.75rem
+        );
+      border-right: var(--app-border-width) solid var(--app-border-color);
+    }
+
+    // A handwritten note. The wordmark and the footer line.
+    .mc-hand {
+      font-family: var(--app-font-display, var(--app-font-heading));
+      font-size: var(--app-text-size-lg);
+      color: var(--app-fg-heading);
+    }
+
+    // -----------------------------------------------------------------
+    // Page skeleton — deliberately NOT in the ledger
+    // -----------------------------------------------------------------
+    //
+    // Nobody reaches for "the shell" the way they reach for "a chip", so
+    // recording it would grow the vocabulary without closing anything. Same
+    // decision as the Carmageddon example.
+    .mc-app {
+      display: flex;
+      min-height: 100vh;
+      background: var(--app-bg-page);
+    }
+
+    .mc-sidebar {
+      display: flex;
+      flex-direction: column;
+      width: 15rem;
+      padding: var(--app-space-lg) var(--app-space-md);
+      border-right: var(--app-border-width) solid var(--app-border-color);
+    }
+
+    .mc-main {
+      flex: 1 1 auto;
+      min-width: 0;
+      padding: var(--app-space-lg) var(--app-space-xl);
+    }
+
+    .mc-aside {
+      flex: 0 0 22rem;
+      padding: var(--app-space-lg);
+      background: var(--app-bg-surface);
+      border-left: var(--app-border-width) solid var(--app-border-color);
+    }
+
+    .mc-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--app-space-sm);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mc-stack {
+      display: flex;
+      flex-direction: column;
+      gap: var(--app-space-md);
+    }
+
+    .mc-field {
+      display: grid;
+      gap: var(--app-space-xs);
+      margin-bottom: var(--app-space-lg);
+    }
+
+    .mc-field__label {
+      font-size: var(--app-text-size-sm);
+      font-weight: var(--app-weight-heading);
+      color: var(--app-fg-default);
+    }
+
+    // Three columns is a desktop shape. Below that the filter panel becomes a
+    // section under the list and the binding disappears, because a spiral down
+    // the side of a phone is a decoration nobody asked to pay for.
+    @media (width < 78rem) {
+      .mc-app {
+        flex-wrap: wrap;
+      }
+
+      .mc-aside {
+        flex: 1 1 100%;
+        border-left: 0;
+        border-top: var(--app-border-width) solid var(--app-border-color);
+      }
+    }
+
+    @media (width < 52rem) {
+      .mc-rail {
+        display: none;
+      }
+
+      .mc-sidebar {
+        width: 100%;
+        border-right: 0;
+        border-bottom: var(--app-border-width) solid var(--app-border-color);
+      }
+
+      .mc-main {
+        padding: var(--app-space-lg) var(--app-space-md);
+      }
+
+      .card.card-side {
+        flex-direction: column;
+      }
+
+      .card.card-side > figure {
+        width: 100%;
+        height: 10rem;
+      }
+    }
+  }
+}

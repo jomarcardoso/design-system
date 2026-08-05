@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="caderninho">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meu Caderninho — Receitas</title>
+
+<!--
+  Run `npm run demo:examples`, then open with a TRAILING SLASH:
+  http://localhost:4173/example/ds-meu-caderninho-daisyui-phase3/
+
+  No stylesheet of its own. Components are daisyUI's, colour and typography are
+  this product's theme, and the six things daisyUI does not have are in
+  patterns.scss. Generated documentation: ./docs.html
+-->
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0M17 11a3 3 0 0 0 0-6M21 20a5 5 0 0 0-4-4.9"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20s-7-4.5-7-9a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 4.5-7 9-7 9z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 4h11a3 3 0 0 1 3 3v13H7a3 3 0 0 1-3-3z"/><path d="M18 7h2v13H7"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 5-5 2 2-5z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 7h6l2 2h10v10H3z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
+  <symbol id="i-sort" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h10M4 12h7M4 17h4M17 5v14M17 19l3-3M17 19l-3-3"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m3 11 9-7 9 7v9H3z"/></symbol>
+  <symbol id="i-flourish" viewBox="0 0 90 8" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 5c14-5 28 4 42 0s26-4 44 1"/></symbol>
+</svg>
+
+<div class="mc-app">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <div class="mc-rail" aria-hidden="true"></div>
+
+  <aside class="mc-sidebar">
+    <p class="mc-hand" style="margin:0 0 var(--app-space-xl)">Meu<br>Caderninho</p>
+
+    <ul class="menu w-full gap-1 p-0">
+      <li><a class="menu-active"><svg width="18" height="18"><use href="#i-book"/></svg> Meu Caderninho</a></li>
+      <li><a><svg width="18" height="18"><use href="#i-compass"/></svg> Explorar</a></li>
+      <li><a><svg width="18" height="18"><use href="#i-search"/></svg> Buscar</a></li>
+      <li><a><svg width="18" height="18"><use href="#i-user"/></svg> Perfil</a></li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <ul class="menu w-full gap-1 p-0">
+      <li><a><svg width="18" height="18"><use href="#i-heart"/></svg> Favoritos</a></li>
+      <li><a><svg width="18" height="18"><use href="#i-folder"/></svg> Coleções</a></li>
+      <li><a><svg width="18" height="18"><use href="#i-chart"/></svg> Relatórios</a></li>
+    </ul>
+
+    <ul class="menu w-full gap-1 p-0 mt-auto">
+      <li><a><svg width="18" height="18"><use href="#i-gear"/></svg> Configurações</a></li>
+    </ul>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="mc-main">
+    <div class="breadcrumbs text-sm">
+      <ul>
+        <li><a><svg width="14" height="14"><use href="#i-home"/></svg></a></li>
+        <li><a>Meu Caderninho</a></li>
+        <li>Receitas</li>
+      </ul>
+    </div>
+
+    <div class="mc-toolbar" style="margin-block: var(--app-space-md) var(--app-space-lg)">
+      <h1 style="margin:0;display:flex;gap:var(--app-space-sm);align-items:center">
+        <svg width="28" height="28" style="color:var(--app-fg-action)"><use href="#i-book"/></svg>
+        Receitas
+      </h1>
+      <div style="display:flex;gap:var(--app-space-sm)">
+        <button class="btn btn-primary"><svg width="16" height="16"><use href="#i-plus"/></svg> Nova receita</button>
+        <button class="btn btn-square btn-outline" aria-label="Mais opções"><svg width="18" height="18"><use href="#i-dots"/></svg></button>
+      </div>
+    </div>
+
+    <div role="tablist" class="tabs tabs-border" style="margin-bottom: var(--app-space-lg)">
+      <a role="tab" class="tab tab-active">Todas as receitas</a>
+      <a role="tab" class="tab">Recentes</a>
+      <a role="tab" class="tab">Favoritas</a>
+      <a role="tab" class="tab">Minhas coleções</a>
+    </div>
+
+    <div class="mc-toolbar" style="margin-bottom: var(--app-space-lg)">
+      <label class="input" style="flex:1 1 20rem">
+        <svg width="16" height="16" style="opacity:.6"><use href="#i-search"/></svg>
+        <input type="search" placeholder="Buscar receitas..." aria-label="Buscar receitas">
+      </label>
+      <div style="display:flex;gap:var(--app-space-sm)">
+        <button class="btn btn-outline"><svg width="16" height="16"><use href="#i-sort"/></svg> Mais recentes</button>
+        <div class="join">
+          <button class="btn btn-square join-item btn-primary" aria-label="Grade"><svg width="18" height="18"><use href="#i-grid"/></svg></button>
+          <button class="btn btn-square join-item btn-outline" aria-label="Lista"><svg width="18" height="18"><use href="#i-list"/></svg></button>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-size:var(--app-text-size-lg);margin:0 0 var(--app-space-md)">Recentes</h2>
+
+    <div class="mc-stack">
+
+      <article class="card card-side bg-base-100 border border-base-300">
+        <figure style="position:relative;background:var(--app-bg-sunken)">
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 140'%3E%3Crect width='200' height='140' fill='%23c9a227'/%3E%3Ccircle cx='100' cy='70' r='46' fill='%23e8d9a0'/%3E%3Crect x='72' y='58' width='56' height='24' rx='6' fill='%23e07a3f'/%3E%3Ccircle cx='60' cy='44' r='9' fill='%237f9c52'/%3E%3Ccircle cx='140' cy='96' r='8' fill='%23b23b2e'/%3E%3C/svg%3E" alt="Salmão com quinoa e legumes">
+          <button class="btn btn-circle btn-sm" style="position:absolute;top:.6rem;left:.6rem" aria-label="Favoritar">
+            <svg width="16" height="16"><use href="#i-heart"/></svg>
+          </button>
+        </figure>
+        <div class="card-body">
+          <h3 class="card-title">Salmão com Quinoa e Legumes</h3>
+          <p>Uma refeição completa, leve e nutritiva para o dia a dia.</p>
+          <p class="mc-meta">
+            <span class="mc-meta__item"><svg><use href="#i-clock"/></svg> 35 min</span>
+            <span class="mc-meta__item"><svg><use href="#i-users"/></svg> 2 porções</span>
+            <span class="mc-meta__item"><svg><use href="#i-chart"/></svg> 520 kcal</span>
+          </p>
+          <div class="card-actions">
+            <span class="badge badge-soft">Almoço</span>
+            <span class="badge badge-soft">Proteica</span>
+            <span class="badge badge-soft">Sem glúten</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card card-side bg-base-100 border border-base-300">
+        <figure style="position:relative;background:var(--app-bg-sunken)">
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 140'%3E%3Crect width='200' height='140' fill='%23d9b382'/%3E%3Cellipse cx='100' cy='92' rx='58' ry='16' fill='%23b8763c'/%3E%3Cellipse cx='100' cy='76' rx='58' ry='16' fill='%23c98b4b'/%3E%3Cellipse cx='100' cy='60' rx='58' ry='16' fill='%23d99c5b'/%3E%3Ccircle cx='86' cy='50' r='10' fill='%23e8d9a0'/%3E%3Ccircle cx='114' cy='50' r='10' fill='%23e8d9a0'/%3E%3C/svg%3E" alt="Panqueca de banana">
+          <button class="btn btn-circle btn-sm" style="position:absolute;top:.6rem;left:.6rem" aria-label="Favoritar">
+            <svg width="16" height="16"><use href="#i-heart"/></svg>
+          </button>
+        </figure>
+        <div class="card-body">
+          <h3 class="card-title">Panqueca de Banana</h3>
+          <p>Fácil, rápida e perfeita para um café da manhã saudável.</p>
+          <p class="mc-meta">
+            <span class="mc-meta__item"><svg><use href="#i-clock"/></svg> 20 min</span>
+            <span class="mc-meta__item"><svg><use href="#i-users"/></svg> 1 porção</span>
+            <span class="mc-meta__item"><svg><use href="#i-chart"/></svg> 320 kcal</span>
+          </p>
+          <div class="card-actions">
+            <span class="badge badge-soft">Café da manhã</span>
+            <span class="badge badge-soft">Vegetariana</span>
+            <span class="badge badge-soft">Sem açúcar</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card card-side bg-base-100 border border-base-300">
+        <figure style="position:relative;background:var(--app-bg-sunken)">
+          <img src="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 140'%3E%3Crect width='200' height='140' fill='%23c98b4b'/%3E%3Ccircle cx='100' cy='72' r='50' fill='%23e8e3d8'/%3E%3Ccircle cx='100' cy='72' r='42' fill='%23e8952e'/%3E%3Ccircle cx='92' cy='64' r='6' fill='%23f6c96b'/%3E%3Ccircle cx='114' cy='80' r='5' fill='%237f9c52'/%3E%3C/svg%3E" alt="Sopa de abóbora com gengibre">
+          <button class="btn btn-circle btn-sm" style="position:absolute;top:.6rem;left:.6rem" aria-label="Favoritar">
+            <svg width="16" height="16"><use href="#i-heart"/></svg>
+          </button>
+        </figure>
+        <div class="card-body">
+          <h3 class="card-title">Sopa de Abóbora com Gengibre</h3>
+          <p>Aconchegante, cremosa e cheia de sabor.</p>
+          <p class="mc-meta">
+            <span class="mc-meta__item"><svg><use href="#i-clock"/></svg> 40 min</span>
+            <span class="mc-meta__item"><svg><use href="#i-users"/></svg> 4 porções</span>
+            <span class="mc-meta__item"><svg><use href="#i-chart"/></svg> 280 kcal</span>
+          </p>
+          <div class="card-actions">
+            <span class="badge badge-soft">Jantar</span>
+            <span class="badge badge-soft">Vegana</span>
+            <span class="badge badge-soft">Sem glúten</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="mc-hand" style="margin-top:var(--app-space-2xl);text-align:center">
+      <svg width="16" height="16" style="vertical-align:-2px"><use href="#i-heart"/></svg>
+      Comida boa, feita com intenção, nutre corpo e alma.
+    </p>
+  </main>
+
+  <!-- ===================== FILTERS ===================== -->
+  <aside class="mc-aside">
+    <div class="mc-toolbar" style="margin-bottom: var(--app-space-lg)">
+      <div>
+        <h2 style="margin:0">Filtros de receitas</h2>
+        <svg class="mc-flourish"><use href="#i-flourish"/></svg>
+      </div>
+      <button class="btn btn-square btn-outline btn-sm" aria-label="Fechar filtros"><svg width="16" height="16"><use href="#i-close"/></svg></button>
+    </div>
+
+    <div class="mc-field">
+      <span class="mc-field__label">Busca rápida</span>
+      <label class="input w-full">
+        <svg width="16" height="16" style="opacity:.6"><use href="#i-search"/></svg>
+        <input type="search" placeholder="Buscar ingredientes, receitas, tags..." aria-label="Busca rápida">
+      </label>
+    </div>
+
+    <div class="mc-field">
+      <span class="mc-field__label">Categoria</span>
+      <div class="mc-chip-group">
+        <button class="mc-chip" aria-pressed="true">Todas</button>
+        <button class="mc-chip" aria-pressed="false">Café da manhã</button>
+        <button class="mc-chip" aria-pressed="false">Almoço</button>
+        <button class="mc-chip" aria-pressed="false">Jantar</button>
+        <button class="mc-chip" aria-pressed="false">Lanches</button>
+        <button class="mc-chip" aria-pressed="false">Sobremesas</button>
+        <button class="mc-chip" aria-pressed="false">Bebidas</button>
+      </div>
+    </div>
+
+    <div class="mc-field">
+      <span class="mc-field__label">Preferências alimentares</span>
+      <div class="mc-chip-group">
+        <button class="mc-chip" aria-pressed="false">Vegetariana</button>
+        <button class="mc-chip" aria-pressed="false">Vegana</button>
+        <button class="mc-chip" aria-pressed="false">Sem glúten</button>
+        <button class="mc-chip" aria-pressed="false">Sem lactose</button>
+        <button class="mc-chip" aria-pressed="false">Low carb</button>
+        <button class="mc-chip" aria-pressed="false">Proteica</button>
+        <button class="mc-chip" aria-pressed="false">Cetogênica</button>
+        <button class="mc-chip" aria-pressed="false">Paleo</button>
+        <button class="mc-chip" aria-pressed="false">Whole30</button>
+      </div>
+    </div>
+
+    <div class="mc-field">
+      <span class="mc-field__label">Tempo de preparo</span>
+      <div class="mc-range-field">
+        <input type="range" class="range range-primary" min="0" max="120" value="120" aria-label="Tempo de preparo">
+        <span class="mc-range-field__scale"><span>0 min</span><span>0 – 120+ min</span><span>120+ min</span></span>
+      </div>
+    </div>
+
+    <div class="mc-field">
+      <span class="mc-field__label">Valor calórico (por porção)</span>
+      <div class="mc-range-field">
+        <input type="range" class="range range-primary" min="0" max="1000" value="1000" aria-label="Valor calórico">
+        <span class="mc-range-field__scale"><span>0 kcal</span><span>0 – 1000+ kcal</span><span>1000+ kcal</span></span>
+      </div>
+    </div>
+
+    <div class="mc-field">
+      <span class="mc-field__label">Ordenar por</span>
+      <select class="select w-full" aria-label="Ordenar por">
+        <option>Mais recentes</option>
+        <option>Mais antigas</option>
+        <option>Menor tempo de preparo</option>
+      </select>
+    </div>
+
+    <div style="display:flex;gap:var(--app-space-sm)">
+      <button class="btn btn-outline" style="flex:1">Limpar filtros</button>
+      <button class="btn btn-primary" style="flex:1">Aplicar filtros</button>
+    </div>
+  </aside>
+
+</div>
+</body>
+</html>
