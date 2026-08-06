@@ -1,0 +1,99 @@
+// =============================================================================
+// COREUI BUILD ENTRY  (OPTIONAL)
+// =============================================================================
+//
+//     sass --load-path=. --load-path=node_modules coreui-entry.scss dist/coreui.css
+//
+// The CoreUI counterpart to `bootstrap-entry.scss`, and structurally identical
+// because CoreUI is a Bootstrap fork: 1161 Sass `!default` variables, and every
+// variant compiled to a literal. Setting the Sass variables here gives several
+// hundred component values correct results with nothing mapped by hand.
+//
+// -----------------------------------------------------------------------------
+// PICK ONE: COREUI OR BOOTSTRAP
+// -----------------------------------------------------------------------------
+//
+// Both declare `.btn`, `.card`, `.navbar` and `.form-control`. CoreUI is not a
+// layer on top of Bootstrap — it ships its own implementation and renames every
+// custom property to `--cui-*`, with zero `--bs-*` anywhere. Loading both means
+// whichever comes last wins, component by component.
+//
+// The corollary for anyone migrating: the MARKUP is portable, because the class
+// vocabulary is shared. What is not portable is any CSS that references
+// `--bs-*`, which includes the Bootstrap adapter in this repository.
+//
+// -----------------------------------------------------------------------------
+// WHAT THIS FILE DELIBERATELY DOES NOT SET
+// -----------------------------------------------------------------------------
+//
+// Nothing that changes between themes. Surfaces, text, links and the six theme
+// colours are runtime concerns and belong to `src/adapters/_coreui.scss`; the
+// values below are the ones a theme never moves.
+//
+// The exception is the six `$primary`-style variables, which have to be set
+// here as well: CoreUI derives hundreds of compiled component values from them
+// at Sass time, and leaving them at CoreUI's defaults would produce a library
+// whose unthemed corners are indigo-and-teal while the themed ones are not.
+// =============================================================================
+
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'src/base';
+@use 'src/config';
+@use 'src/themes';
+
+// CoreUI inherits Bootstrap's `shade-color()` / `tint-color()`, which call the
+// legacy `mix()` and hard-error on an oklch value. Every colour goes through
+// this first.
+@function srgb($c) {
+  @return color.to-space(color.to-gamut($c, $space: rgb, $method: local-minde), rgb);
+}
+
+$_choices: map.get(themes.$registry, list.nth(config.$themes, 1));
+
+@function _c($key) {
+  @return srgb(map.get($_choices, $key));
+}
+
+// --- Theme colours ------------------------------------------------------
+$primary: _c(action);
+$secondary: _c(selected);
+$success: _c(success);
+$info: _c(info);
+$warning: _c(warning);
+$danger: _c(danger);
+
+// `light` and `dark` are Bootstrap's — and CoreUI's — absolute surface
+// aliases, not theme roles. They take their value from the palette so they are
+// on-brand, and they do not invert, which is what the names promise.
+$light: srgb(base.color(zinc, 50));
+$dark: srgb(base.color(zinc, 900));
+
+$body-bg: _c(page);
+$body-color: _c(text);
+$body-secondary-color: _c('text-muted');
+$body-tertiary-bg: _c(sunken);
+
+$link-color: _c(link);
+$link-hover-color: _c('link-hover');
+
+$border-color: _c(border);
+
+// --- Shape and type: constants, never runtime ---------------------------
+$border-width: 1px;
+$border-style: solid;
+$border-radius: base.scale(radius, md);
+$border-radius-sm: base.scale(radius, sm);
+$border-radius-lg: base.scale(radius, xl);
+$border-radius-pill: base.scale(radius, full);
+
+$font-family-sans-serif: base.scale(font, sans);
+$font-family-monospace: base.scale(font, mono);
+$font-size-base: base.scale(text, base);
+
+// The library, wrapped so the adapter — declared later in `vendor-config` —
+// wins over it. CoreUI ships unlayered, like Bootstrap.
+@layer vendor {
+  @import 'node_modules/@coreui/coreui/scss/coreui';
+}

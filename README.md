@@ -17,17 +17,17 @@ is exactly one place — the semantic layer — and everything else derives from
   nothing depends on.
 - **Sass first.** A value becomes a CSS custom property only if it changes at
   runtime. Layer 1's 28 colour ramps cost **0 bytes**; the whole token layer is
-  110 custom properties.
+  111 custom properties.
 - **Theme and context switching** via `data-theme` and `data-surface`, with two
   build-time guarantees: a context cannot change a background without its
   foreground, and **every bg/fg pair in every theme is measured against WCAG** —
   error below 3:1, warning below 4.5:1. The pair list is generated, not curated:
   every surface against every foreground that can land on one, so it cannot
   quietly omit a combination. Both cost zero runtime bytes.
-- **Nine adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
-  Preline, Water.css, MVP.css and NES.css — from a 1416-variable library down to
-  one with **zero**, all driven by the same 110 tokens. Plus a Tailwind bridge,
-  which is not an adapter.
+- **Ten adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
+  Preline, Water.css, MVP.css, NES.css and CoreUI — from a 1416-variable library
+  down to one with **zero**, all driven by the same 111 tokens. Plus a Tailwind
+  bridge, which is not an adapter.
 - **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
   every theme through a real browser and measures what is actually rendered —
   both filled elements and coloured text on a transparent background, which is
@@ -80,7 +80,7 @@ both behave differently under `file://`.
 | Layer | Lives in | Ships as | Runtime cost |
 |---|---|---|---|
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
-| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 110, the public contract |
+| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 111, the public contract |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
 | 3.5 — adapter | `src/adapters/*.scss` | custom properties | 28–64, whichever one is selected |
 
@@ -251,7 +251,7 @@ the semantic class rather than the library composition, and projects with no
 component framework are protected too. Dropping the library then changes one
 SCSS body instead of every call site.
 
-## What nine adapters are for
+## What ten adapters are for
 
 Each library was picked because it breaks a different assumption, and together
 they are the evidence that the layering holds:
@@ -266,6 +266,7 @@ they are the evidence that the layering holds:
 | **Preline UI** | Already had this architecture — semantic layer + inline bridge | ~170 lines |
 | **Water.css** | 21 variables, no brand fill, no text-on-fill | ~100 lines |
 | **NES.css** | The floor: **zero** variables, and colour encoded inside an SVG asset | ~230 lines |
+| **CoreUI** | Bootstrap's classes with a different prefix, and `!important` on its utilities | ~290 lines |
 | **MVP.css** | Derives interaction with a `filter`, not a colour | ~120 lines |
 
 The generalisation worth keeping: **an adapter's cost is set by how a library is

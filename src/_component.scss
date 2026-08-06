@@ -202,6 +202,54 @@ $contract: (
   'chip-bg-selected': 'bg-selected',
   'chip-fg-selected': 'fg-on-selected',
 
+  // --- Progress ----------------------------------------------------------
+  //
+  // Six of six libraries checked ship one — Bootstrap, Bulma, Pico, CoreUI,
+  // NES.css and daisyUI — which makes it the most universal component that had
+  // no entry here.
+  //
+  // The signal that it was missing came from the NES.css adapter, where the
+  // track and the fill were bound to `bg-sunken` and `bg-action` by hand. An
+  // adapter choosing a value with no contract entry behind it is the same
+  // symptom as an adapter reaching for `color-mix`: a decision escaping into a
+  // place no theme can reach and no hand-written component can match.
+  'progress-track-bg': 'bg-sunken',
+  'progress-fill-bg': 'bg-action',
+  'progress-radius': 'radius-pill',
+
+  // --- Tooltip -----------------------------------------------------------
+  //
+  // Four of six ship one, and it is the only component in this contract that
+  // is INVERTED by definition: dark on a light theme, light on a dark one, in
+  // every library that has it.
+  //
+  // Layer 2 models inversion as a context (`data-surface="inverted"`), not as
+  // a pair of tokens, so there is no "inverted surface" token to point at.
+  // Pointing the background at `fg-default` and the text at `bg-surface` gets
+  // the inversion for free in every theme, because those two already swap.
+  //
+  // This is NOT the `.is-dark` mistake. There, a library's absolutely-named
+  // modifier was bound to a role, and the name promised something a theme must
+  // not move. Here the component's MEANING is inverted, so following the theme
+  // is what the component asks for.
+  'tooltip-bg': 'fg-default',
+  'tooltip-fg': 'bg-surface',
+  'tooltip-radius': 'radius-control',
+
+  // --- Switch ------------------------------------------------------------
+  //
+  // Four of six. The track and the thumb are pure component anatomy with no
+  // semantic equivalent anywhere — admission test 3, the clearest case of it
+  // in this file.
+  'switch-track-bg': 'bg-sunken',
+  'switch-track-bg-checked': 'bg-action',
+  'switch-thumb-bg': 'bg-surface',
+
+  // Deliberately NOT reserved: `avatar`. Three of six ship one, and what they
+  // ship is a size and a border radius with no colour role — a consumer
+  // wanting a square avatar reaches for `radius-control` directly. It fails
+  // admission tests 1 and 2 and only weakly passes 3, which is not enough.
+
   // --- Feedback: alert / badge ------------------------------------------
   'alert-radius': 'radius-control',
   'alert-pad': 'pad-surface',
@@ -318,6 +366,46 @@ $contract: (
     #{core.var-name($part)},
     var(#{core.var-name($semantic)}, #{$lib-default})
   );
+}
+
+// The SECOND chain, for values the library varies by itself.
+//
+// `ref-chain()` above always routes through the semantic token, and that is
+// right for a value the library holds still. It is wrong — silently, and in a
+// way that looks fine in devtools — for a value the library drives per variant.
+//
+// The mechanism is one rule about `var()`: a fallback fires only when the
+// variable is UNDEFINED. Layer 2 emits its tokens unconditionally, so a
+// semantic level in the middle of a chain is always defined and everything
+// after it is dead code:
+//
+//     var(--app-chip-bg, var(--app-bg-surface, var(--cui-bg-subtle)))
+//                        ^ always defined      ^ never reached
+//
+// CoreUI resolves a chip's colour through a generic variable that each variant
+// re-points:
+//
+//     .chip         { --cui-chip-bg: var(--cui-bg-subtle, …) }
+//     .chip-primary { --cui-bg-subtle: var(--cui-primary-bg-subtle) }
+//
+// so a chain that never reaches `--cui-bg-subtle` makes every variant collapse
+// into one colour. That is the same failure the Bootstrap adapter documents for
+// `--bs-btn-bg`, arriving through a component token instead of a library one.
+//
+// `hook()` is the two-level chain for exactly this case: the product's override
+// first, the LIBRARY'S own chain second, and no semantic level in between —
+// because the adapter has already themed that library variable one indirection
+// further down, so the theme still reaches it.
+//
+// Rule of thumb: if the library sets this value differently per variant, use
+// `hook()`. If the library holds it constant, use `ref-chain()`.
+@function hook($part, $library-chain) {
+  @if map.get($contract, $part) == null {
+    @error 'hook("#{$part}") is not in $contract — reserve the name first, so '
+         + 'every adapter spells it the same way.';
+  }
+
+  @return var(#{core.var-name($part)}, #{$library-chain});
 }
 
 // -----------------------------------------------------------------------------

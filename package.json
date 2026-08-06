@@ -13,7 +13,7 @@
   },
   "scripts": {
     "build:tokens": "sass --no-source-map --style=compressed src/ds.scss dist/ds.css && node scripts/check-collisions.mjs dist/ds.css",
-    "build:adapters": "sass --no-source-map --style=compressed src/adapter-bootstrap.scss:dist/adapter-bootstrap.css src/adapter-daisyui.scss:dist/adapter-daisyui.css src/adapter-pico.scss:dist/adapter-pico.css src/adapter-bulma.scss:dist/adapter-bulma.css src/adapter-flowbite.scss:dist/adapter-flowbite.css src/adapter-preline.scss:dist/adapter-preline.css src/adapter-water.scss:dist/adapter-water.css src/adapter-mvp.scss:dist/adapter-mvp.css src/adapter-nescss.scss:dist/adapter-nescss.css",
+    "build:adapters": "sass --no-source-map --style=compressed src/adapter-bootstrap.scss:dist/adapter-bootstrap.css src/adapter-daisyui.scss:dist/adapter-daisyui.css src/adapter-pico.scss:dist/adapter-pico.css src/adapter-bulma.scss:dist/adapter-bulma.css src/adapter-flowbite.scss:dist/adapter-flowbite.css src/adapter-preline.scss:dist/adapter-preline.css src/adapter-water.scss:dist/adapter-water.css src/adapter-mvp.scss:dist/adapter-mvp.css src/adapter-nescss.scss:dist/adapter-nescss.css src/adapter-coreui.scss:dist/adapter-coreui.css",
     "build:bootstrap": "sass --no-source-map --style=compressed --quiet-deps --silence-deprecation=import --load-path=node_modules bootstrap-entry.scss dist/bootstrap.css",
     "watch:tokens": "sass --watch src/ds.scss dist/ds.css",
     "lint": "stylelint \"src/**/*.scss\" \"app.css\"",
@@ -27,7 +27,7 @@
     "build:preline": "tailwindcss -i preline-entry.css -o dist/preline.css",
     "build:water": "tailwindcss -i water-entry.css -o dist/water.css",
     "build:mvp": "tailwindcss -i mvp-entry.css -o dist/mvp.css",
-    "demo": "npm run build:tokens && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline && npm run build:water && npm run build:mvp && npm run build:nescss",
+    "demo": "npm run build:tokens && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline && npm run build:water && npm run build:mvp && npm run build:nescss && npm run build:coreui",
     "verify:patterns": "node scripts/verify-patterns.mjs",
     "build:example-hot-tone": "sass --no-source-map --load-path=. example/ds-hot-tone-bootstrap-phase1/ds.scss example/ds-hot-tone-bootstrap-phase1/ds.css",
     "build:example-cyberpunk": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-cyberpunk-bulma-phase2/ds.scss example/ds-cyberpunk-bulma-phase2/ds.css",
@@ -37,7 +37,8 @@
     "build:example-carmageddon": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-carmageddon-nescss-phase3/ds.scss example/ds-carmageddon-nescss-phase3/ds.css",
     "docs:carmageddon": "node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html --stylesheet ./ds.css --title \"DS Carmageddon\"",
     "build:example-caderninho": "sass --no-source-map --load-path=. example/ds-meu-caderninho-daisyui-phase3/ds.scss example/ds-meu-caderninho-daisyui-phase3/ds.css",
-    "docs:caderninho": "node scripts/generate-pattern-docs.mjs --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json --out example/ds-meu-caderninho-daisyui-phase3/docs.html --stylesheet ./app.css --title \"Meu Caderninho\""
+    "docs:caderninho": "node scripts/generate-pattern-docs.mjs --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json --out example/ds-meu-caderninho-daisyui-phase3/docs.html --stylesheet ./app.css --title \"Meu Caderninho\"",
+    "build:coreui": "sass --no-source-map --quiet-deps --silence-deprecation=import,global-builtin,color-functions --load-path=. --load-path=node_modules coreui-entry.scss dist/coreui.css"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",
@@ -68,6 +69,7 @@
     }
   },
   "dependencies": {
+    "@coreui/coreui": "^5.9.0",
     "nes.css": "^2.2.1"
   }
 }

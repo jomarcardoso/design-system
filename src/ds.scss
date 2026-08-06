@@ -24,6 +24,7 @@
 @use 'adapters/water';
 @use 'adapters/mvp';
 @use 'adapters/nescss';
+@use 'adapters/coreui';
 
 // Layer 1 — normally emits nothing (see _base.scss).
 @include base.emit();
@@ -71,4 +72,8 @@
 
 @if list.index(config.$adapters, nescss) {
   @include nescss.emit();
+}
+
+@if list.index(config.$adapters, coreui) {
+  @include coreui.emit();
 }

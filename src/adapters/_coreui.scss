@@ -1,0 +1,399 @@
+// =============================================================================
+// ADAPTER — CoreUI 5
+// =============================================================================
+//
+// The tenth library, and the one that answers a question the other nine could
+// not: what happens when a product needs a component no library ships?
+//
+// CoreUI is an MIT extension of Bootstrap. It keeps Bootstrap's CLASS
+// vocabulary — `.btn`, `.card`, `.navbar`, `.form-control` are all there and
+// markup is portable — and adds the components Bootstrap stops short of,
+// including a real `.chip`.
+//
+// -----------------------------------------------------------------------------
+// WHY THIS IS A SEPARATE ADAPTER AND NOT A BOOTSTRAP OPTION
+// -----------------------------------------------------------------------------
+//
+// Measured before writing a line: CoreUI's compiled CSS contains **3979**
+// `--cui-*` custom properties and **zero** `--bs-*`. So the Bootstrap adapter
+// themes it not at all — every variable it sets is ignored, silently, while the
+// markup keeps working and looking wrong.
+//
+// That is worth stating plainly for anyone choosing between them: CoreUI
+// REPLACES Bootstrap rather than sitting on top of it. Both declare `.btn`,
+// `.card` and `.navbar`, so `check-collisions` applies and a project picks one.
+//
+// -----------------------------------------------------------------------------
+// SAME ARCHITECTURE, DIFFERENT PREFIX
+// -----------------------------------------------------------------------------
+//
+// CoreUI is a Bootstrap fork and behaves like one: 1161 Sass `!default`
+// variables, and variants compiled to LITERALS —
+//
+//     .btn-primary { --cui-btn-bg: #5856d6 }
+//
+// so the same two halves apply. `coreui-entry.scss` sets the Sass variables
+// before the import and several hundred component values fall out correctly;
+// this file handles only what a theme swaps at runtime, and binds variants on
+// the PROPERTY because a variable written on `.btn` from a later layer would
+// flatten every variant into one colour.
+//
+// The duplication with `_bootstrap.scss` is deliberate rather than lazy. An
+// adapter is a LEAF — nothing depends on it, and deleting one changes nothing
+// else. Sharing an implementation between two of them would make that false,
+// and the day CoreUI's fork diverges further the shared file becomes a knot.
+// Every adapter here carries its own colour conversion for the same reason.
+// =============================================================================
+
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use '../core';
+@use '../themes';
+@use '../config';
+@use '../component';
+
+// Gamut-map before converting: an oklch colour outside sRGB yields channels
+// beyond 0–255, and a browser clamps them silently. See `_bootstrap.scss`,
+// where a vivid orange produced `202, 53, -25`.
+@function rgb-triplet($c) {
+  $srgb: color.to-space(color.to-gamut($c, $space: rgb, $method: local-minde), rgb);
+  @return #{math.round(color.channel($srgb, 'red', $space: rgb))},
+    #{math.round(color.channel($srgb, 'green', $space: rgb))},
+    #{math.round(color.channel($srgb, 'blue', $space: rgb))};
+}
+
+// CoreUI theme-colour name -> the semantic role that drives it.
+// `light` and `dark` are absent on purpose: absolute colour names are fixed
+// palette entries, not theme roles. Three adapters have now been broken by
+// binding one.
+$_map: (
+  primary: 'action',
+  secondary: 'selected',
+  success: 'success',
+  info: 'info',
+  warning: 'warning',
+  danger: 'danger'
+);
+
+// -----------------------------------------------------------------------------
+// ROOT — colour only
+// -----------------------------------------------------------------------------
+
+@mixin _refs() {
+  // --- Surfaces and text -------------------------------------------------
+  --cui-body-bg: #{core.ref('bg-page')};
+  --cui-body-color: #{core.ref('fg-default')};
+  --cui-emphasis-color: #{core.ref('fg-heading')};
+  --cui-heading-color: #{core.ref('fg-heading')};
+  --cui-secondary-color: #{core.ref('fg-muted')};
+  --cui-secondary-bg: #{core.ref('bg-sunken')};
+  --cui-tertiary-color: #{core.ref('fg-subtle')};
+  --cui-tertiary-bg: #{core.ref('bg-sunken')};
+
+  // --- Links -------------------------------------------------------------
+  --cui-link-color: #{core.ref('fg-link')};
+  --cui-link-hover-color: #{core.ref('fg-link-hover')};
+
+  // --- Lines and focus ---------------------------------------------------
+  --cui-border-color: #{core.ref('border-color')};
+  --cui-focus-ring-color: #{core.ref('ring-color')};
+
+  // --- Theme colour family, generated ------------------------------------
+  @each $cui, $role in $_map {
+    --cui-#{$cui}: #{core.ref('bg-#{$role}')};
+    --cui-#{$cui}-bg-subtle: #{core.ref('bg-#{$role}-subtle')};
+    --cui-#{$cui}-border-subtle: #{core.ref('border-#{$role}')};
+    --cui-#{$cui}-text-emphasis: #{core.ref('fg-#{$role}')};
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Triplets — the part that cannot be a reference
+// -----------------------------------------------------------------------------
+//
+// CoreUI's opacity utilities do `rgba(var(--cui-primary-rgb), …)`, which needs
+// three bare numbers. Computed per theme at build time.
+//
+// The four non-family triplets are here because of a bug the Bootstrap adapter
+// shipped for months: `--cui-link-color` is bound above and looked right in
+// devtools, but the anchor rule reads `rgba(var(--cui-link-color-rgb), …)` and
+// never consumes it. Grep the built CSS for who CONSUMES a variable, not for
+// who declares it.
+
+@mixin _triplets($choices) {
+  @each $cui, $role in $_map {
+    --cui-#{$cui}-rgb: #{rgb-triplet(map.get($choices, $role))};
+  }
+
+  --cui-body-bg-rgb: #{rgb-triplet(map.get($choices, page))};
+  --cui-body-color-rgb: #{rgb-triplet(map.get($choices, text))};
+  --cui-emphasis-color-rgb: #{rgb-triplet(map.get($choices, heading))};
+  --cui-link-color-rgb: #{rgb-triplet(map.get($choices, link))};
+  --cui-link-hover-color-rgb: #{rgb-triplet(map.get($choices, 'link-hover'))};
+}
+
+// -----------------------------------------------------------------------------
+// Components
+// -----------------------------------------------------------------------------
+
+@mixin _components() {
+  // --- Buttons, bound per variant ---------------------------------------
+  //
+  // CoreUI compiles `.btn-primary { --cui-btn-bg: #5856d6 }` as a literal, so
+  // this binds on the PROPERTY. Writing `--cui-btn-bg` on `.btn` from
+  // `vendor-config` would beat every variant and collapse them into one colour.
+  @each $cui, $role in $_map {
+    .btn-#{$cui} {
+      background-color: #{core.ref('button-bg', core.ref('bg-#{$role}'))};
+      border-color: #{core.ref('button-border-color', core.ref('bg-#{$role}'))};
+      color: #{core.ref('button-fg', core.ref('fg-on-#{$role}'))};
+    }
+
+    .btn-#{$cui}:hover {
+      background-color: #{core.ref('bg-#{$role}-hover')};
+      border-color: #{core.ref('bg-#{$role}-hover')};
+    }
+
+    // Outline draws the LABEL in the variant colour over the page, so it takes
+    // the text tone rather than the fill. A fill is chosen to carry white text;
+    // reusing it as text on a light page is the most common way this goes
+    // wrong, and it is invisible to a check that only measures filled elements.
+    .btn-outline-#{$cui} {
+      color: #{core.ref('fg-#{$role}')};
+      border-color: #{core.ref('border-#{$role}')};
+    }
+
+    .btn-outline-#{$cui}:hover {
+      background-color: #{core.ref('bg-#{$role}')};
+      border-color: #{core.ref('bg-#{$role}')};
+      color: #{core.ref('fg-on-#{$role}')};
+    }
+
+  }
+
+  // --- CHIP — the reason this adapter exists ----------------------------
+  //
+  // CoreUI is the only library of the ten that ships a selectable filter chip,
+  // and its variables line up one-for-one with the layer 3 contract. That
+  // correspondence is what made the contract's naming defensible in the first
+  // place, and binding it here is what pays it off: a product that wrote its
+  // own chip against `--app-chip-*` gets CoreUI's for free, with no markup
+  // change beyond the class name.
+  // The SHAPE half is safe to bind on the base class: no variant touches it.
+  .chip {
+    --cui-chip-border-radius: #{component.ref-chain('chip-radius')};
+    --cui-chip-min-height: #{component.ref-chain('chip-height')};
+    --cui-chip-padding-x: #{component.ref-chain('chip-pad-x')};
+    --cui-chip-border-color: #{component.ref-chain('chip-border-color')};
+
+    // The COLOUR half needs a different chain, and getting it wrong flattened
+    // every variant on the first attempt.
+    //
+    // CoreUI resolves a chip's colours through GENERIC variables rather than
+    // chip-specific ones:
+    //
+    //     .chip          { --cui-chip-bg: var(--cui-bg-subtle, var(--cui-secondary-bg)) }
+    //     .chip-primary  { --cui-bg-subtle: var(--cui-primary-bg-subtle); --cui-color: … }
+    //
+    // so a variant works by setting the generic name. Writing `--cui-chip-bg`
+    // on `.chip` from `vendor-config` replaces the whole chain and every
+    // variant collapses to one colour — the same trap the Bootstrap adapter
+    // documents for `.btn`, arriving this time through a component token.
+    //
+    // The chain below terminates on the LIBRARY'S OWN variable rather than on
+    // our semantic token, and that is deliberate. Routing through
+    // `--app-chip-bg → --app-bg-surface → …` would make the library level
+    // unreachable, because layer 2 is always defined: the fallback would never
+    // reach the variant. Two levels only — the product's override, then the
+    // library's variant chain, which `_refs()` has already themed one
+    // indirection further down.
+    --cui-chip-bg: #{component.hook('chip-bg', var(--cui-bg-subtle, var(--cui-secondary-bg)))};
+    --cui-chip-color: #{component.hook('chip-fg', var(--cui-text-emphasis, var(--cui-body-color)))};
+    --cui-chip-active-bg: #{component.hook('chip-bg-selected', var(--cui-color, var(--cui-primary)))};
+    --cui-chip-active-color: #{component.hook('chip-fg-selected', var(--cui-contrast, var(--cui-body-bg)))};
+
+    // Hover has no contract entry — it reads layer 2 directly, which is the
+    // documented reason the contract stopped at eight names.
+    --cui-chip-hover-bg: #{core.ref('bg-sunken')};
+    --cui-chip-hover-color: #{core.ref('fg-default')};
+  }
+
+  // --- Tooltip ----------------------------------------------------------
+  // Inverted by definition, and the contract's defaults give that for free:
+  // the background takes the text tone and the text takes the surface, so both
+  // swap when the theme does.
+  .tooltip {
+    --cui-tooltip-bg: #{component.ref-chain('tooltip-bg')};
+    --cui-tooltip-color: #{component.ref-chain('tooltip-fg')};
+    --cui-tooltip-border-radius: #{component.ref-chain('tooltip-radius')};
+  }
+
+  // --- Progress ---------------------------------------------------------
+  //
+  // `--cui-progress-bar-color` is the label drawn ON the fill, and it is a
+  // real variable — so unlike `.text-bg-*` below, this one binds normally.
+  // Without it the label keeps CoreUI's compiled `#fff` while the fill follows
+  // the theme, which is the baked-foreground bug in its usual form.
+  .progress,
+  .progress-stacked {
+    --cui-progress-bg: #{component.ref-chain('progress-track-bg')};
+    --cui-progress-bar-bg: #{component.ref-chain('progress-fill-bg')};
+    --cui-progress-bar-color: #{core.ref('fg-on-action')};
+    --cui-progress-border-radius: #{component.ref-chain('progress-radius')};
+  }
+
+  // --- Switch -----------------------------------------------------------
+  //
+  // Only the track binds. `--cui-form-switch-bg` is an SVG data URI with the
+  // thumb colour written inside it — the same shape as NES.css's pixel border,
+  // and unreachable for the same reason: a colour encoded in an asset is not
+  // addressable by CSS.
+  //
+  // Regenerating the URI per theme is possible (the NES.css adapter does
+  // exactly that) and is not done here, because CoreUI's thumb is white on
+  // every fill this system produces and the bytes would buy nothing. The
+  // contract entry stays reserved so a product with a different opinion has a
+  // name to set.
+  .form-switch .form-check-input {
+    background-color: #{component.ref-chain('switch-track-bg')};
+  }
+
+  .form-switch .form-check-input:checked {
+    background-color: #{component.ref-chain('switch-track-bg-checked')};
+    border-color: #{component.ref-chain('switch-track-bg-checked')};
+  }
+
+  // --- Surfaces ---------------------------------------------------------
+  .card {
+    --cui-card-bg: #{component.ref-chain('surface-bg', var(--cui-body-bg))};
+    --cui-card-color: #{component.ref-chain('surface-fg', var(--cui-body-color))};
+    --cui-card-border-color: #{component.ref-chain('surface-border-color', var(--cui-border-color))};
+    --cui-card-border-radius: #{component.ref-chain('surface-radius', var(--cui-border-radius))};
+  }
+
+  .modal {
+    --cui-modal-bg: #{component.ref-chain('overlay-bg', var(--cui-body-bg))};
+    --cui-modal-color: #{component.ref-chain('overlay-fg', var(--cui-body-color))};
+    --cui-modal-border-color: #{component.ref-chain('overlay-border-color', var(--cui-border-color))};
+  }
+
+  .table {
+    --cui-table-color: #{component.ref-chain('table-fg', var(--cui-body-color))};
+    --cui-table-border-color: #{component.ref-chain('table-border-color', var(--cui-border-color))};
+    --cui-table-striped-bg: #{component.ref-chain('table-row-bg-striped', var(--cui-secondary-bg))};
+    --cui-table-hover-bg: #{component.ref-chain('table-row-bg-hover', var(--cui-secondary-bg))};
+  }
+
+  .form-control,
+  .form-select {
+    background-color: #{core.ref('field-bg', core.ref('bg-surface'))};
+    color: #{core.ref('field-fg', core.ref('fg-default'))};
+    border-color: #{core.ref('field-border-color', core.ref('border-color'))};
+  }
+}
+
+// -----------------------------------------------------------------------------
+// The `!important` half, which has to live EARLIER in the cascade
+// -----------------------------------------------------------------------------
+//
+// This is the strangest-looking block in any adapter here, and it is correct.
+//
+// CoreUI compiles its colour utilities with `!important`:
+//
+//     .text-bg-success { color: #fff !important; background-color: rgba(var(--cui-success-rgb), …) !important }
+//
+// The background follows the theme, because it reads a triplet this adapter
+// emits. The COLOUR does not: `#fff` is picked by `color-contrast()` at Sass
+// time against the build colour. In the dark theme, where fills brighten to a
+// 400 step, white text on `text-bg-success` measures 2.22:1.
+//
+// The usual fix — bind it from `vendor-config`, which is declared after
+// `vendor` — does not work, and the reason is a rule that catches everyone
+// once: **for `!important` declarations the layer order is REVERSED.** Normal
+// declarations get stronger in later layers; important ones get stronger in
+// EARLIER ones. Measured rather than assumed:
+//
+//     late  !important  vs  vendor !important   ->  vendor wins
+//     early !important  vs  vendor !important   ->  early wins
+//
+// So the only place that can beat a library's `!important` is a layer declared
+// before it. `ds.component` is the last one before `vendor`, which makes it the
+// right home — an adapter reaching backwards past the library it configures,
+// because the library reached for `!important` first.
+//
+// Bootstrap does NOT do this: its `.text-bg-*` has no `!important` and the
+// normal binding works. The difference is one word in a fork, and it changes
+// which layer the fix has to live in.
+@mixin _important-overrides() {
+  @each $cui, $role in $_map {
+    .text-bg-#{$cui} {
+      color: #{core.ref('fg-on-#{$role}')} !important;
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Emission
+// -----------------------------------------------------------------------------
+
+// `$themes` is a map of `name: choices` — see the Bootstrap adapter's `emit()`.
+// The triplets are computed from a theme's actual colours, so a product that
+// defines its own theme has to be able to pass it in.
+@mixin emit($themes: null) {
+  $set: $themes;
+
+  @if $set == null {
+    $set: ();
+    @each $name in config.$themes {
+      $set: map.merge($set, ($name: map.get(themes.$registry, $name)));
+    }
+  }
+
+  @include core.in-layer(config.$layer-adapter) {
+    // Re-declared at every boundary that can change a token, so a themed or
+    // inverted band propagates into the library instead of freezing at `:root`.
+    :root,
+    [data-theme],
+    [data-coreui-theme],
+    [data-surface] {
+      @include _refs();
+    }
+
+    $names: map.keys($set);
+    $default-theme: null;
+
+    @if list.length($names) > 0 {
+      $default-theme: list.nth($names, 1);
+    }
+
+    @each $name, $choices in $set {
+      @if $name == $default-theme {
+        :root,
+        [data-theme='#{$name}'] {
+          @include _triplets($choices);
+        }
+      } @else {
+        [data-theme='#{$name}'] {
+          @include _triplets($choices);
+        }
+      }
+
+      // CoreUI keys dark mode off its own attribute, like Bootstrap. Aliasing
+      // it keeps `data-theme` the single switch a product toggles.
+      @if $name == dark {
+        [data-coreui-theme='dark'] {
+          @include _triplets($choices);
+        }
+      }
+    }
+
+    @include _components();
+  }
+
+  // Outside the adapter layer on purpose — see `_important-overrides()`.
+  @include core.in-layer(config.$layer-component) {
+    @include _important-overrides();
+  }
+}

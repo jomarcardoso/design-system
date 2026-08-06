@@ -30,7 +30,7 @@ const THEMES = ['light', 'dark', 'brand'];
 // are where a contrast bug would actually reach a user.
 const PAGES = [
   'coexistence', 'theme-brand', 'daisyui', 'pico', 'bulma',
-  'tailwind', 'flowbite', 'preline', 'water', 'mvp',
+  'tailwind', 'flowbite', 'preline', 'water', 'mvp', 'coreui',
   // Trailing slash, not `/index.html`. The dev server rewrites an explicit
   // index to an extensionless directory URL WITHOUT a slash, at which point
   // every relative href loses a path segment and the page loads with no CSS
