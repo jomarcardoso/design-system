@@ -13,13 +13,43 @@
 // =============================================================================
 
 @use 'sass:map';
+@use 'sass:string';
 @use 'config';
 
 // -----------------------------------------------------------------------------
 // Naming
 // -----------------------------------------------------------------------------
 
+// Characters the W3C Design Tokens format forbids in a token or group name.
+//
+// The spec's rules are: a name MUST NOT begin with `$`, and MUST NOT contain
+// `{`, `}` or `.` — the first because `$` is reserved for the format's own
+// properties, the other three because they are the reference syntax
+// (`{group.token}`) and would make an alias unparseable.
+//
+// Enforcing them here rather than in a lint rule is deliberate. This function
+// is the single place a token name becomes real, so nothing can reach the
+// output without passing through it — including names built by interpolation
+// inside a loop, which is exactly where a stray character would come from and
+// exactly what a regex over the source would miss.
+$_forbidden: ('{', '}', '.');
+
 @function var-name($name) {
+  $n: '#{$name}';
+
+  @if string.slice($n, 1, 1) == '$' {
+    @error 'Token name "#{$n}" starts with "$", which the Design Tokens format '
+         + 'reserves for its own properties. Rename it.';
+  }
+
+  @each $char in $_forbidden {
+    @if string.index($n, $char) {
+      @error 'Token name "#{$n}" contains "#{$char}", which the Design Tokens '
+           + 'format forbids — it is part of the {group.token} reference '
+           + 'syntax. Use "-" to separate words.';
+    }
+  }
+
   @return --#{config.$prefix}-#{$name};
 }
 

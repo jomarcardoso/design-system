@@ -3,10 +3,10 @@
     --app-border-width: 1px;
     --app-border-style: solid;
     --app-border: var(--app-border-width) var(--app-border-style) var(--app-border-color);
-    --app-radius-control: 0.375rem;
-    --app-radius-surface: 0.75rem;
+    --app-radius-control: 6px;
+    --app-radius-surface: 12px;
     --app-radius-pill: 9999px;
-    --app-space-unit: 0.25rem;
+    --app-space-unit: 4px;
     --app-space-2xs: calc(var(--app-space-unit) * 1);
     --app-space-xs: calc(var(--app-space-unit) * 2);
     --app-space-sm: calc(var(--app-space-unit) * 3);
@@ -34,8 +34,8 @@
     --app-ring-width: 2px;
     --app-ring-offset: 2px;
     --app-ring: var(--app-ring-width) solid var(--app-ring-color);
-    --app-radius-control-sm: 0.25rem;
-    --app-radius-surface-lg: 1rem;
+    --app-radius-control-sm: 4px;
+    --app-radius-surface-lg: 16px;
     --app-text-size-sm: 0.875rem;
     --app-text-size-lg: 1.125rem;
     --app-text-size-heading: 1.5rem;
