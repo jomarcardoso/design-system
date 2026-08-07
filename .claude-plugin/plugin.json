@@ -1,6 +1,6 @@
 {
   "name": "design-system",
-  "description": "A framework-independent CSS token foundation plus the pattern ledger that restricts which component variants a project may use. Installs the token layers, wires Bootstrap or Tailwind to them, keeps application code reading only the semantic contract, and holds the vocabulary closed as the library is scaffolded away.",
+  "description": "Conducts the creation of a design system end to end: a discovery interview that writes the design language, a framework-independent CSS token foundation that turns those decisions into values, and a pattern ledger that closes the component vocabulary as the library is scaffolded away.",
   "version": "0.1.0",
   "author": {
     "name": "Jomar Cardoso"

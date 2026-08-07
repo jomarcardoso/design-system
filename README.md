@@ -1,9 +1,10 @@
 # design-system
 
-A framework-independent CSS token foundation, packaged as a Claude Code plugin.
-It gives a project one set of design decisions that Bootstrap, Tailwind and
-hand-written components all read from, and it ships the skill that teaches an
-agent to apply those decisions instead of guessing.
+A Claude Code plugin that conducts the creation of a design system end to end:
+an interview that defines the design language, a framework-independent CSS token
+foundation that turns those decisions into values, and a pattern ledger that
+closes the component vocabulary. Bootstrap, Tailwind and hand-written components
+all read from the same contract.
 
 The problem it solves: a product accumulates a design system, plus Bootstrap's
 variables, plus whatever the last three developers hardcoded. Nothing agrees,
@@ -67,9 +68,9 @@ Install as a plugin, and the skill handles the rest:
 claude plugin marketplace add /path/to/design-system
 ```
 
-Then ask Claude to install it into a project. The skill runs a short interview —
-foundation options, Tailwind bridge yes/no, which adapter — and copies in only
-what you chose.
+Then ask Claude to start a design system in a project. It runs the discovery
+interview first, writes `DESIGN-LANGUAGE.md`, and only then installs the token
+layers and asks which library to adapt.
 
 To work on the design system itself:
 
@@ -368,6 +369,47 @@ generated utility, so `bg-surface` follows every theme and context at runtime
 and publishes no additional variable. Layer 1 is deliberately **not** published
 to `@theme` — that would cost ~260 custom properties and hand application code a
 way around layer 2.
+
+## Three skills, in order
+
+The plugin conducts the creation of a design system rather than just supplying
+parts. Each skill needs the previous one's output.
+
+| | Skill | Produces | Question it answers |
+|---|---|---|---|
+| 1 | **design-language** | `DESIGN-LANGUAGE.md` at the project root | why does it look and sound like this |
+| 2 | **design-system** | `src/`, the theme, `dist/theme-*.css` | what are the values |
+| 3 | **design-patterns** | `patterns.json` | which components may be built |
+
+**Start at 1.** A discovery interview — fourteen questions in six blocks — that
+picks an archetype, settles density, geometry, elevation, colour rigour and
+voice, and writes them down. Starting at 2 instead produces a palette nobody can
+defend six months later; starting at 3 produces a vocabulary with no basis for
+its refusals.
+
+The rule that keeps the interview from becoming a form: **every question decides
+something concrete** — a token value, a build threshold, or a rule the build can
+check. A question whose answer changes nothing is dropped rather than kept for
+symmetry.
+
+The five archetypes are not moodboards. Each one lands on real values:
+
+| | Tech Minimalist | Enterprise Solid | Playful | Editorial | Utilitarian |
+|---|---|---|---|---|---|
+| `radius-control` | 6px | 4px | 16px | 4px | 2px |
+| `shadow-raised` | `xs` | `sm` | `lg` | `2xs` | `none` |
+| `size-control` | 36px | 36px | 44px | 40px | 28px |
+| `text-leading` | 1.5 | 1.5 | 1.6–1.7 | 1.7 | 1.4 |
+| heading face | geometric sans | humanist sans | rounded / display | **serif** | condensed sans |
+
+Colour is deliberately absent from that table. An archetype suggests a mood; the
+brand colour comes from the brand, and the interview asks for it directly.
+
+**The strongest link between the interview and the build is block 6.** Every
+restriction is followed by "how would we know it was broken?" — a restriction
+with a detectable signature becomes a `forbidden` entry in `patterns.json` and
+fails `npm run verify:patterns` with the alternative named. One without stays a
+line in the document, marked as advice rather than a guarantee.
 
 ## Standards: the W3C Design Tokens format
 
@@ -889,6 +931,9 @@ a different job.
 
 ```
 .claude-plugin/         plugin + marketplace manifests
+skills/design-language/ SKILL.md — the discovery interview, run FIRST
+  references/           the 14 questions and the 5 archetypes as token values
+  templates/            the DESIGN-LANGUAGE.md a project ends up with
 skills/design-system/   SKILL.md and references — the CSS token side
 skills/design-patterns/ SKILL.md — the markup side: what may be built
 patterns/

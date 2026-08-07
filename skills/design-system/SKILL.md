@@ -6,6 +6,14 @@ license: MPL-2.0
 
 # Design System
 
+**Second of three skills.** `design-language` decides why the system looks and
+sounds the way it does and writes `DESIGN-LANGUAGE.md`; this skill turns those
+decisions into values; `design-patterns` closes the component vocabulary. If
+`DESIGN-LANGUAGE.md` exists at the project root, read it first — its front
+matter fixes the archetype, density, radius, elevation strategy and the
+accessibility level this build must satisfy. If it does not exist and the
+project is starting fresh, run `design-language` before this one.
+
 A four-layer CSS token foundation. Layer 1 compiles away, layer 2 is the only
 public contract, layer 3 reserves names, and adapters are leaves that nothing
 depends on.
