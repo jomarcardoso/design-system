@@ -125,7 +125,11 @@ $contract: (
   'table-border-color': 'border-color-subtle',
   'table-header-bg': 'bg-sunken',
   'table-header-fg': 'fg-heading',
-  'table-row-bg-hover': 'bg-sunken',
+  // Hover is a STATE and striping is a resting tint, so they no longer share
+  // a source. Both pointed at `bg-sunken` while layer 2 had no interaction
+  // token, which is what made a hovered row and a striped row identical —
+  // and in the dark theme made the hover invisible outright.
+  'table-row-bg-hover': 'bg-surface-hover',
   'table-row-bg-striped': 'bg-sunken',
 
   // --- Overlay / modal / dropdown ---------------------------------------
@@ -181,7 +185,7 @@ $contract: (
   //     chip-fg-selected  --cui-chip-active-color
   //
   // That correspondence is the evidence this is ecosystem vocabulary rather
-  // than one product's shape — the same bar `accent` and `font-display` had to
+  // than one product's shape — the same bar `accent` and `font-family-display` had to
   // clear.
   //
   // The SELECTED pair points at `selected`, not `action`. Layer 2 draws that
@@ -189,7 +193,8 @@ $contract: (
   // is a state the interface is in, not an invitation to act. A chip is the
   // clearest case for the distinction existing at all.
   //
-  // No hover entry, on purpose. Hover reads `bg-sunken` straight from layer 2,
+  // No hover entry, on purpose. Hover reads `bg-surface-hover` straight from
+  // layer 2,
   // and the admission test asks whether a consumer would plausibly override
   // this ONE part for ONE instance — which is true of the resting and selected
   // fills and not of the hover.

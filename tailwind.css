@@ -53,10 +53,25 @@
   --color-fg-muted: var(--app-fg-muted);
   --color-fg-heading: var(--app-fg-heading);
 
+  /* The hovered surface is bridged because Tailwind's variant syntax makes it
+   * free: `hover:bg-surface-hover` is the whole row-hover rule. Without it a
+   * Tailwind project has to reach past layer 2 with an arbitrary value. */
+  --color-surface-hover: var(--app-bg-surface-hover);
+
   --color-action: var(--app-bg-action);
   --color-on-action: var(--app-fg-on-action);
   --color-selected: var(--app-bg-selected);
   --color-link: var(--app-fg-link);
+
+  /* `neutral` here is the semantic ROLE — the filled grey control — and it
+   * does not shadow Tailwind's `neutral-50`…`neutral-950` palette, which is
+   * a different set of variables. `bg-neutral` is our button; `bg-neutral-500`
+   * is still the primitive, and stylelint still refuses it in product code. */
+  --color-neutral: var(--app-bg-neutral);
+  --color-on-neutral: var(--app-fg-on-neutral);
+
+  --color-disabled: var(--app-bg-disabled);
+  --color-fg-disabled: var(--app-fg-disabled);
 
   --color-success: var(--app-bg-success);
   --color-warning: var(--app-bg-warning);

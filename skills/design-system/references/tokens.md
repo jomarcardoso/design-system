@@ -1,7 +1,7 @@
 # Layer 2 vocabulary
 
 Every token layer 2 emits, what it means, and when to reach for it. This is the
-complete public contract — 111 names: 53 theme-independent structure tokens, 56
+complete public contract — 126 names: 56 theme-independent structure tokens, 68
 colour tokens per theme, and 2 anchors the inverted context leans on. If
 something you need is not here, add it to `src/_semantic.scss` rather than
 reaching past the layer.
@@ -29,10 +29,13 @@ reads `--ds-bg-page` instead; the grammar is identical.
 ```
 
 - **property** — `bg` `fg` `border` `ring` `shadow` `radius` `space` `pad` `gap`
-  `size` `font` `text` `weight` `duration` `ease` `z` `opacity`
+  `size` `duration` `ease` `z` `opacity`, plus the typography group, which names
+  itself after the CSS property it sets: `font-family` `font-size`
+  `font-weight` `line-height` `letter-spacing`
 - **role** — what it is *for*, never what it looks like
-- **prominence** — `subtle`, or omitted for the default, or `strong`
-- **state** — `hover` `active` `disabled` `selected` `visited`
+- **prominence** — `subtle` (one step below the default), `subtlest` (two), or
+  omitted for the default, or `strong` (one above)
+- **state** — `hover` `active` `visited`
 
 Prominence and state are optional suffixes, which is what lets the system grow
 without renaming: adding `--app-bg-action-hover` never disturbs
@@ -47,7 +50,10 @@ guess.
 declaring a readable one, so every pair of every theme is checked against WCAG
 on each build — error below 3.0, warning below 4.5. The one role where the pair
 inverts is `warning`: amber reads light enough that it takes dark text in every
-theme.
+theme — and because the pair inverts, so does the direction of its states. Every
+other role darkens on interaction; warning BRIGHTENS, because darkening moves
+the fill towards its own dark label. Measured on the stock ramp, the dark label
+reads 6.99:1 on amber-500, 4.70:1 on amber-600 and 2.97:1 on amber-700.
 
 ## Surfaces and backgrounds
 
@@ -60,6 +66,9 @@ theme.
 | `--app-bg-raised` | Popovers, dropdowns, modals — above the surface. |
 | `--app-bg-sunken` | Wells, table headers, sidebars — inset below the surface. |
 | `--app-bg-overlay` | The scrim behind a modal. Semi-transparent by design. |
+| `--app-bg-surface-hover` | Hover on a neutral surface: a table row, a menu item, a list entry. |
+| `--app-bg-surface-active` | The same surface while it is being pressed. |
+| `--app-bg-disabled` / `--app-fg-disabled` | An inactive control. Exempt from the AA gate — WCAG excludes inactive components — but still visibly separated from its surface. |
 
 The hierarchy exists because a single "background colour" makes a card on a
 card impossible to express.
@@ -72,11 +81,29 @@ card impossible to express.
 |---|---|
 | `--app-fg-default` | Body text. The default foreground for every surface. |
 | `--app-fg-muted` | Captions, placeholders, secondary labels. |
-| `--app-fg-subtle` | Disabled text, watermarks. The quietest readable level. |
+| `--app-fg-subtlest` | Disabled text, watermarks. The quietest readable level. |
 | `--app-fg-heading` | Headings. Often higher contrast than body text. |
-| `--app-fg-on-surface` | Explicit alias of `fg-default` for surface contexts. |
 
 ## Action and selection
+
+> **The four roles are four different jobs, and mixing them is the most common
+> way a design system stops meaning anything.**
+>
+> - `action` — an INVITATION. Something happens when you press it.
+> - `selected` — a STATE the interface is currently in.
+> - `link` — NAVIGATION.
+> - `neutral` — a filled control carrying no opinion.
+>
+> **Never reach for `selected` because nothing else was available.** Four
+> adapters were doing exactly that with their libraries' grey secondary
+> buttons, so a cancel button rendered in the colour of an active menu item.
+>
+> `selected` is also often NOT a fill — a checkbox is an empty box that fills
+> when chosen, and that signal only works if the colour is not already on half
+> the screen doing other jobs.
+>
+> A monochrome brand is fine: use two or three steps of one hue. Two roles
+> resolving to the SAME value is not, and `check-roles()` warns on it.
 
 > **DTCG `$type`:** color
 
@@ -95,7 +122,10 @@ roles precisely so they can diverge; they currently share a hue.
 | `--app-bg-selected` / `--app-fg-on-selected` | Selected item fill and label. |
 | `--app-bg-selected-hover` | Hover on a selected item. |
 | `--app-bg-selected-subtle` | Tinted selected row. |
+| `--app-bg-selected-active` | The same item while it is being pressed. |
 | `--app-fg-selected` / `--app-border-selected` | Selected as text / as outline. |
+| `--app-bg-neutral` / `--app-fg-on-neutral` | The filled **grey** control — a cancel button, a secondary action carrying no opinion. Not a third brand colour; that is `accent`, in layer 3. |
+| `--app-bg-neutral-hover` | Hover on it. |
 
 **Navigation** is modelled as a foreground role, because navigation is
 overwhelmingly links:
@@ -118,6 +148,7 @@ tokens, generated by a loop so none can drift out of shape:
 | `--app-bg-{role}` | Solid fill: a filled badge, a solid alert. |
 | `--app-fg-on-{role}` | Text on that solid fill. |
 | `--app-bg-{role}-hover` | Hover on that fill — a danger button, a dismiss action. |
+| `--app-bg-{role}-active` | Pressed. |
 | `--app-bg-{role}-subtle` | Tinted background: the usual alert body. |
 | `--app-fg-{role}` | The role as text, on a normal surface. |
 | `--app-border-{role}` | The role as an outline. |
@@ -190,15 +221,15 @@ re-decide which size a button is; `radius-control` decides once.
 
 | Token | Use for |
 |---|---|
-| `--app-font-body` / `--app-font-heading` / `--app-font-mono` | Families. |
-| `--app-text-size` | Body size. |
-| `--app-text-size-sm` / `--app-text-size-lg` | Small print / lead text. |
-| `--app-text-size-heading` | Heading size. |
-| `--app-text-leading` / `--app-text-leading-heading` | Line height. |
-| `--app-text-tracking-heading` | Heading letter-spacing. |
-| `--app-weight-body` / `--app-weight-heading` | Weights. |
+| `--app-font-family-body` / `--app-font-family-heading` / `--app-font-family-display` / `--app-font-family-mono` | Families. `display` is the voice face — a wordmark, a pull quote, a handwritten note — and defaults to the heading face. |
+| `--app-font-size` | Body size. |
+| `--app-font-size-sm` / `--app-font-size-lg` | Small print / lead text. |
+| `--app-font-size-heading-sm` / `--app-font-size-heading` / `--app-font-size-heading-lg` / `--app-font-size-heading-xl` | The heading scale. Named by prominence, not by tag: an `h3` inside a card is often the `-sm` step. |
+| `--app-line-height` / `--app-line-height-heading` | Line height. |
+| `--app-letter-spacing-heading` | Heading letter-spacing. |
+| `--app-font-weight-body` / `--app-font-weight-heading` | Weights. |
 
-`font-body` and `font-heading` both point at the system sans stack today. Real
+`font-family-body` and `font-family-heading` both point at the system sans stack today. Real
 faces are a brand decision and are deliberately left unset.
 
 ## Control sizing
@@ -234,7 +265,7 @@ and are usually replaced by a lighter raised surface, so these are theme tokens.
 |---|---|
 | `--app-duration-fast` / `-base` / `-slow` | Transition durations. |
 | `--app-ease` | The standard easing curve. |
-| `--app-opacity-disabled` | Disabled control opacity. |
+| `--app-opacity-disabled` | For fading a whole **composite** — a fieldset, a card mid-save. For a single control use the `bg-disabled` / `fg-disabled` pair instead: a multiplied alpha cannot be read back from a computed style, so an opacity-only disabled state is invisible to both contrast gates. |
 
 ## Layering
 

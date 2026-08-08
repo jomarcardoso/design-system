@@ -129,10 +129,26 @@ $_pairs: (
   'bg-surface': 'fg-default',
   'bg-raised': 'fg-default',
   'bg-sunken': 'fg-default',
+  // The hover and pressed states of a neutral surface carry ordinary body
+  // text — a table row does not change its text colour when the pointer
+  // enters it. Listing them means a context that tints its row hover cannot
+  // forget that the row still has to be readable.
+  'bg-surface-hover': 'fg-default',
+  'bg-surface-active': 'fg-default',
   'bg-action': 'fg-on-action',
   'bg-action-hover': 'fg-on-action',
+  'bg-action-active': 'fg-on-action',
   'bg-selected': 'fg-on-selected',
   'bg-selected-hover': 'fg-on-selected',
+  'bg-selected-active': 'fg-on-selected',
+  'bg-neutral': 'fg-on-neutral',
+  'bg-neutral-hover': 'fg-on-neutral',
+  'bg-neutral-active': 'fg-on-neutral',
+  // `bg-disabled` is deliberately ABSENT. Its foreground is `fg-disabled` and
+  // the two do move together, but listing it here would push adapters to
+  // treat a disabled control as an ordinary readable pair — and WCAG 2.2
+  // exempts inactive components from 1.4.3 precisely because forcing the
+  // contrast erases the signal that the control is off.
   'bg-success': 'fg-on-success',
   'bg-warning': 'fg-on-warning',
   'bg-danger': 'fg-on-danger',

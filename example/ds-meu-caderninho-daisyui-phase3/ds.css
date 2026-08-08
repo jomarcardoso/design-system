@@ -22,7 +22,7 @@
       align-items: center;
       min-height: var(--app-chip-height, var(--app-size-control-sm));
       padding-inline: var(--app-chip-pad-x, var(--app-pad-control-x));
-      font-size: var(--app-text-size-sm);
+      font-size: var(--app-font-size-sm);
       color: var(--app-chip-fg, var(--app-fg-default));
       cursor: pointer;
       background: var(--app-chip-bg, var(--app-bg-surface));
@@ -49,7 +49,7 @@
     .mc-range-field__scale {
       display: flex;
       justify-content: space-between;
-      font-size: var(--app-text-size-sm);
+      font-size: var(--app-font-size-sm);
       color: var(--app-fg-muted);
     }
     .mc-meta {
@@ -57,7 +57,7 @@
       flex-wrap: wrap;
       gap: var(--app-space-md);
       margin: 0;
-      font-size: var(--app-text-size-sm);
+      font-size: var(--app-font-size-sm);
       color: var(--app-fg-muted);
     }
     .mc-meta__item {
@@ -84,8 +84,8 @@
       border-right: var(--app-border-width) solid var(--app-border-color);
     }
     .mc-hand {
-      font-family: var(--app-font-display);
-      font-size: var(--app-text-size-lg);
+      font-family: var(--app-font-family-display);
+      font-size: var(--app-font-size-lg);
       color: var(--app-fg-heading);
     }
     .mc-app {
@@ -129,8 +129,8 @@
       margin-bottom: var(--app-space-lg);
     }
     .mc-field__label {
-      font-size: var(--app-text-size-sm);
-      font-weight: var(--app-weight-heading);
+      font-size: var(--app-font-size-sm);
+      font-weight: var(--app-font-weight-heading);
       color: var(--app-fg-default);
     }
     @media (width < 78rem) {
@@ -186,14 +186,22 @@
     --app-pad-surface: var(--app-space-lg);
     --app-gap-inline: var(--app-space-xs);
     --app-gap-stack: var(--app-space-md);
-    --app-font-body: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
-    --app-font-heading: ui-serif, Georgia, Cambria, Times New Roman, serif;
-    --app-font-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
-    --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-    --app-text-size: 1rem;
-    --app-text-leading: 1.6;
-    --app-weight-body: 400;
-    --app-weight-heading: 600;
+    --app-font-family-body: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
+    --app-font-family-heading: ui-serif, Georgia, Cambria, Times New Roman, serif;
+    --app-font-family-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
+    --app-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-font-size-sm: 0.875rem;
+    --app-font-size: 1rem;
+    --app-font-size-lg: 1.125rem;
+    --app-font-size-heading-sm: 1.125rem;
+    --app-font-size-heading: 1.5rem;
+    --app-font-size-heading-lg: 1.875rem;
+    --app-font-size-heading-xl: 2.25rem;
+    --app-font-weight-body: 400;
+    --app-font-weight-heading: 600;
+    --app-line-height: 1.6;
+    --app-line-height-heading: 1.25;
+    --app-letter-spacing-heading: -0.025em;
     --app-size-control: calc(var(--app-space-unit) * 9);
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);
@@ -203,11 +211,6 @@
     --app-ring: var(--app-ring-width) solid var(--app-ring-color);
     --app-radius-control-sm: 4px;
     --app-radius-surface-lg: 16px;
-    --app-text-size-sm: 0.875rem;
-    --app-text-size-lg: 1.125rem;
-    --app-text-size-heading: 1.5rem;
-    --app-text-leading-heading: 1.25;
-    --app-text-tracking-heading: -0.025em;
     --app-duration-fast: 120ms;
     --app-duration-base: 200ms;
     --app-duration-slow: 320ms;
@@ -237,8 +240,15 @@
     --app-border-color: oklch(86.5% 0.013 74deg);
     --app-bg-sunken: oklch(92.5% 0.012 80deg);
     --app-bg-overlay: rgba(40, 33, 28, 0.5);
-    --app-fg-subtle: oklch(60% 0.014 64deg);
-    --app-fg-on-surface: oklch(25.4% 0.014 57.6deg);
+    --app-fg-subtlest: oklch(60% 0.014 64deg);
+    --app-bg-surface-hover: oklch(96.8% 0.011 84.6deg);
+    --app-bg-surface-active: oklch(92.5% 0.012 80deg);
+    --app-bg-neutral: oklch(39% 0.014 60deg);
+    --app-fg-on-neutral: oklch(98.3% 0.005 78.3deg);
+    --app-bg-neutral-hover: oklch(31.5% 0.014 58deg);
+    --app-bg-neutral-active: oklch(25.4% 0.014 57.6deg);
+    --app-bg-disabled: oklch(92.5% 0.012 80deg);
+    --app-fg-disabled: oklch(60% 0.014 64deg);
     --app-bg-action-hover: oklch(25.5% 0.054 51deg);
     --app-bg-action-active: oklch(17% 0.036 50deg);
     --app-bg-action-subtle: oklch(94% 0.018 58deg);
@@ -247,11 +257,12 @@
     --app-bg-selected: oklch(36.9% 0.079 52.7deg);
     --app-fg-on-selected: oklch(98.3% 0.005 78.3deg);
     --app-bg-selected-hover: oklch(30.5% 0.066 52deg);
+    --app-bg-selected-active: oklch(25.5% 0.054 51deg);
     --app-bg-selected-subtle: oklch(94% 0.018 58deg);
     --app-fg-selected: oklch(30.5% 0.066 52deg);
     --app-border-selected: oklch(36.9% 0.079 52.7deg);
-    --app-fg-link: oklch(30.5% 0.066 52deg);
-    --app-fg-link-hover: oklch(25.5% 0.054 51deg);
+    --app-fg-link: oklch(25.5% 0.054 51deg);
+    --app-fg-link-hover: oklch(17% 0.036 50deg);
     --app-fg-link-visited: oklch(31% 0.03 247deg);
     --app-border-color-subtle: oklch(92.5% 0.012 80deg);
     --app-border-color-strong: oklch(74% 0.014 68deg);
@@ -261,24 +272,28 @@
     --app-bg-success: oklch(44.8% 0.119 151.328deg);
     --app-fg-on-success: oklch(98.3% 0.005 78.3deg);
     --app-bg-success-hover: oklch(39.3% 0.095 152.535deg);
+    --app-bg-success-active: oklch(26.6% 0.065 152.934deg);
     --app-bg-success-subtle: oklch(98.2% 0.018 155.826deg);
     --app-fg-success: oklch(44.8% 0.119 151.328deg);
     --app-border-success: oklch(92.5% 0.084 155.995deg);
     --app-bg-warning: oklch(76.9% 0.188 70.08deg);
     --app-fg-on-warning: oklch(27.9% 0.077 45.635deg);
-    --app-bg-warning-hover: oklch(66.6% 0.179 58.318deg);
+    --app-bg-warning-hover: oklch(82.8% 0.189 84.429deg);
+    --app-bg-warning-active: oklch(87.9% 0.169 91.605deg);
     --app-bg-warning-subtle: oklch(98.7% 0.022 95.277deg);
     --app-fg-warning: oklch(47.3% 0.137 46.201deg);
     --app-border-warning: oklch(92.4% 0.12 95.746deg);
     --app-bg-danger: oklch(50.5% 0.213 27.518deg);
     --app-fg-on-danger: oklch(98.3% 0.005 78.3deg);
     --app-bg-danger-hover: oklch(44.4% 0.177 26.899deg);
+    --app-bg-danger-active: oklch(39.6% 0.141 25.723deg);
     --app-bg-danger-subtle: oklch(97.1% 0.013 17.38deg);
     --app-fg-danger: oklch(44.4% 0.177 26.899deg);
     --app-border-danger: oklch(88.5% 0.062 18.334deg);
     --app-bg-info: oklch(38% 0.036 246deg);
     --app-fg-on-info: oklch(98.3% 0.005 78.3deg);
     --app-bg-info-hover: oklch(31% 0.03 247deg);
+    --app-bg-info-active: oklch(25% 0.024 248deg);
     --app-bg-info-subtle: oklch(93.5% 0.01 242deg);
     --app-fg-info: oklch(31% 0.03 247deg);
     --app-border-info: oklch(78% 0.026 245deg);
@@ -324,8 +339,8 @@
     --color-secondary-content: var(--app-fg-on-selected);
     --color-accent: var(--app-accent-bg, var(--app-bg-selected));
     --color-accent-content: var(--app-accent-fg, var(--app-fg-on-selected));
-    --color-neutral: var(--app-fg-default);
-    --color-neutral-content: var(--app-bg-surface);
+    --color-neutral: var(--app-bg-neutral);
+    --color-neutral-content: var(--app-fg-on-neutral);
     --color-info: var(--app-bg-info);
     --color-info-content: var(--app-fg-on-info);
     --color-success: var(--app-bg-success);
@@ -334,8 +349,8 @@
     --color-warning-content: var(--app-fg-on-warning);
     --color-error: var(--app-bg-danger);
     --color-error-content: var(--app-fg-on-danger);
-    --font-sans: var(--app-font-body);
-    --font-mono: var(--app-font-mono);
+    --font-sans: var(--app-font-family-body);
+    --font-mono: var(--app-font-family-mono);
     --radius-selector: var(--app-radius-control);
     --radius-field: var(--app-radius-control);
     --radius-box: var(--app-radius-surface);

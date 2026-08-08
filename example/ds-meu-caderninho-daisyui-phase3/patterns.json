@@ -267,7 +267,7 @@
           "state": "styled",
           "styled": "mc-hand",
           "example": "<p class=\"mc-hand\">Comida boa, feita com intenção, nutre corpo e alma.</p>",
-          "notes": "Reads `--app-font-display`, a layer 3 hook added for this product. Layer 2 models body, heading and mono; a fourth face is a real gap for any brand with a signature typeface, and a hook costs nothing for the products that have none."
+          "notes": "Reads `--app-font-family-display`, a layer 3 hook added for this product. Layer 2 models body, heading and mono; a fourth face is a real gap for any brand with a signature typeface, and a hook costs nothing for the products that have none."
         },
         "rule": {
           "intent": "The pen stroke under a section heading.",

@@ -29,13 +29,23 @@
 //
 //   --app-{property}-{role}[-{prominence}][-{state}]
 //
-//   property    bg fg border ring shadow radius space size font text
-//               weight leading duration ease z opacity
-//   role        page surface raised sunken overlay | default muted subtle
-//               heading | action selected link | success warning danger info
-//               | on-<role>
+//   property    bg fg border ring shadow radius space size duration ease z
+//               opacity | font-family font-size font-weight line-height
+//               letter-spacing
+//   role        page surface raised sunken overlay | default muted subtlest
+//               heading | action selected neutral link | success warning
+//               danger info | disabled | on-<role>
 //   prominence  subtle | (omitted = default) | strong
-//   state       hover | active | disabled | selected | visited
+//   state       hover | active | visited
+//
+// Typography names itself after the CSS property it sets, like every other
+// group here. `font-body` / `text-size` / `weight-body` was the one place that
+// did not, and nothing in the file explained why.
+//
+// PROMINENCE is a real ladder, not decoration: `-subtle` is one step below the
+// default and `-subtlest` is two. `fg-subtle` used to be the third step while
+// `border-color-subtle` was the second, which made this grammar untrue for the
+// one property most people read first.
 //
 // Prominence and state are OPTIONAL SUFFIXES. That is what lets the system
 // grow without renaming: adding `--app-bg-action-hover` never disturbs
@@ -52,6 +62,7 @@
 // idea, and keeping it is precisely why the daisyUI adapter is thirty lines.
 // =============================================================================
 
+@use 'sass:list';
 @use 'sass:map';
 @use 'base';
 @use 'core';
@@ -111,30 +122,67 @@
 
     // --- Typography -----------------------------------------------------
     //
-    // Four faces, and `display` is here rather than in layer 3 after being put
-    // in the wrong place once. The argument for a hook was that it costs
-    // nothing for products with no signature typeface — but `font-heading`
-    // already defaults to the SAME value as `font-body`, and nobody proposed
-    // making that a hook. The asymmetry was the giveaway.
+    // ONE ROOT PER CSS PROPERTY: `font-family-*`, `font-size-*`,
+    // `font-weight-*`, `line-height-*`, `letter-spacing-*`.
+    //
+    // These were split three ways for a long time — `font-*` for the face,
+    // `text-*` for size and leading, `weight-*` for weight. That made
+    // `font-body` and `weight-body` the same concept under two prefixes, and
+    // `text-leading` and `weight-body` two type properties under two more. Every
+    // other category in this file names itself after the CSS property it sets,
+    // and so does the W3C format (`fontFamily`, `fontSize`, `fontWeight`). This
+    // was the one group that did not, and no comment anywhere gave a reason —
+    // which is the test for whether a divergence is a decision or an accident.
+    //
+    // FOUR FACES. `display` is here rather than in layer 3 after being put in
+    // the wrong place once. The argument for a hook was that it costs nothing
+    // for products with no signature typeface — but `font-family-heading`
+    // already defaults to the SAME value as `font-family-body`, and nobody
+    // proposed making that a hook. The asymmetry was the giveaway.
     //
     // The deciding question is what layer 3 is for: COMPONENT tokens, whose
     // admission test asks whether a value encodes a component's anatomy. A
     // typeface encodes a document's voice, not a component's — it belongs on
-    // the same shelf as `font-heading`, and putting it a layer down was a
+    // the same shelf as `font-family-heading`, and putting it a layer down was a
     // category error rather than a saving.
     //
     // `display` is the face a product writes in when it wants to sound like a
     // person: a wordmark, a pull quote, an author's note, the confirmation
     // after someone saves something of their own. It defaults to the heading
     // face, so products without one see no difference and pay one token.
-    'font-body': base.scale(font, sans),
-    'font-heading': base.scale(font, sans),
-    'font-display': base.scale(font, sans),
-    'font-mono': base.scale(font, mono),
-    'text-size': base.scale(text, base),
-    'text-leading': base.scale(leading, normal),
-    'weight-body': base.scale(weight, normal),
-    'weight-heading': base.scale(weight, semibold),
+    'font-family-body': base.scale(font, sans),
+    'font-family-heading': base.scale(font, sans),
+    'font-family-display': base.scale(font, sans),
+    'font-family-mono': base.scale(font, mono),
+
+    // BODY SIZES. Three steps is enough: anything smaller than `sm` fails
+    // 1.4.4 at the first zoom step, and anything larger is a heading.
+    'font-size-sm': base.scale(text, sm),
+    'font-size': base.scale(text, base),
+    'font-size-lg': base.scale(text, lg),
+
+    // HEADING SIZES — four steps, and the reason they exist is that until now
+    // there was ONE. A page has h1 through h4, so every product fell back to
+    // whatever its library shipped: typography was the only foundation still
+    // owned by the library while radius, spacing, colour and motion were not.
+    //
+    // Named by prominence rather than by level, deliberately. `h3` inside a
+    // card is often the `-sm` step and `h2` opening a page is often `-lg`;
+    // tying the token to the tag would force the markup to choose between
+    // correct document structure and correct visual weight.
+    //
+    // The suffix ladder is the same one `size-control` and `radius-*` already
+    // use, so a reader who knows one knows all three.
+    'font-size-heading-sm': base.scale(text, lg),
+    'font-size-heading': base.scale(text, '2xl'),
+    'font-size-heading-lg': base.scale(text, '3xl'),
+    'font-size-heading-xl': base.scale(text, '4xl'),
+
+    'font-weight-body': base.scale(weight, normal),
+    'font-weight-heading': base.scale(weight, semibold),
+    'line-height': base.scale(leading, normal),
+    'line-height-heading': base.scale(leading, tight),
+    'letter-spacing-heading': base.scale(tracking, tight),
 
     // --- Control sizing -------------------------------------------------
     // Without this, an input and a button next to each other are never the
@@ -156,13 +204,6 @@
     'radius-control-sm': base.scale(radius, sm),
     'radius-surface-lg': base.scale(radius, '2xl'),
 
-    // --- Typography scale -----------------------------------------------
-    'text-size-sm': base.scale(text, sm),
-    'text-size-lg': base.scale(text, lg),
-    'text-size-heading': base.scale(text, '2xl'),
-    'text-leading-heading': base.scale(leading, tight),
-    'text-tracking-heading': base.scale(tracking, tight),
-
     // --- Motion ---------------------------------------------------------
     'duration-fast': base.scale(duration, fast),
     'duration-base': base.scale(duration, base),
@@ -180,6 +221,12 @@
     'z-tooltip': 1090,
 
     // --- States ---------------------------------------------------------
+    //
+    // Kept, but no longer the ONLY way to express a disabled control — see
+    // `bg-disabled` / `fg-disabled` below. Opacity is the right tool for
+    // fading a whole composite (an entire fieldset, a card mid-save); it is
+    // the wrong tool for a single control, because a multiplied alpha is
+    // invisible to every contrast check that reads computed colour.
     'opacity-disabled': 0.55
   );
 }
@@ -199,69 +246,156 @@
 //
 // Expected keys in $c are documented in _themes.scss.
 
-@function colors($c) {
+// Reads one decision out of a theme map, and REFUSES a theme that does not
+// make it.
+//
+// This exists because the file header two doors down claimed "a theme must
+// define every key below or the build fails on a null" and that was simply
+// untrue: `core.emit()` skips nulls, deliberately, because a context uses
+// `null` to mean "checked, unchanged". A theme has no such state — it is a
+// complete set by definition — so the same leniency turned a missing decision
+// into a silently undefined custom property.
+//
+// It was found the way these things usually are: adding tokens to layer 2 left
+// all four example products missing eight of them, every build green.
+//
+// The check IS the read, so it cannot drift out of sync with the map below.
+// A list of required keys maintained beside the function would be one more
+// thing to forget to update — which is the bug this is fixing, one level up.
+@function _req($c, $key, $name) {
+  @if not map.has-key($c, $key) {
+    @error 'theme "#{$name}" has no "#{$key}". A theme is a COMPLETE set of '
+         + 'colour decisions — unlike a context, it may not leave one out, '
+         + 'because there is nothing above it to inherit from. If the value is '
+         + 'genuinely the same as another role, alias it explicitly.';
+  }
+  @return map.get($c, $key);
+}
+
+@function colors($c, $name: 'unnamed') {
   $tokens: (
     // Surfaces. The original sketch had a single "background colour"; a real
     // UI needs a hierarchy or a card on a card is impossible to express.
-    'bg-page': map.get($c, page),
-    'bg-surface': map.get($c, surface),
-    'bg-raised': map.get($c, raised),
+    'bg-page': _req($c, page, $name),
+    'bg-surface': _req($c, surface, $name),
+    'bg-raised': _req($c, raised, $name),
 
     // Text. "text colour" and "heading colour" from the sketch, plus the muted
     // level every product needs within a week for captions and placeholders.
-    'fg-default': map.get($c, text),
-    'fg-muted': map.get($c, text-muted),
-    'fg-heading': map.get($c, heading),
+    'fg-default': _req($c, text, $name),
+    'fg-muted': _req($c, text-muted, $name),
+    'fg-heading': _req($c, heading, $name),
 
     // Action — the sketch's "cor de ação". Buttons, primary CTAs.
-    'bg-action': map.get($c, action),
-    'fg-on-action': map.get($c, on-action),
+    'bg-action': _req($c, action, $name),
+    'fg-on-action': _req($c, on-action, $name),
 
-    'border-color': map.get($c, border),
+    'border-color': _req($c, border, $name),
 
-    'bg-sunken': map.get($c, sunken),
-    'bg-overlay': map.get($c, overlay),
+    'bg-sunken': _req($c, sunken, $name),
+    'bg-overlay': _req($c, overlay, $name),
 
-    'fg-subtle': map.get($c, text-subtle),
-    'fg-on-surface': map.get($c, text),
+    // The third step down. Named `subtlest`, not `subtle`, because `-subtle`
+    // already means "one step below default" everywhere else in the contract
+    // (`border-color-subtle`) and this is two. Atlassian draws the same
+    // distinction with the same two words; we were using one of them for both
+    // jobs, which made the prominence grammar in the header untrue.
+    'fg-subtlest': _req($c, 'text-subtlest', $name),
+
+    // Interaction on a NEUTRAL surface: a table row, a menu item, a list
+    // entry, an option in a dropdown. Every library models this and layer 2
+    // did not, so six adapters pointed it at `bg-sunken` — Pico's dropdown
+    // hover, Preline's `surface-hover` and `layer-hover`, CoreUI's chip and
+    // table hovers, Bootstrap's striped tables.
+    //
+    // Borrowing the sunken SURFACE for an interaction STATE looked harmless
+    // and was not: in the stock dark theme `sunken` and `page` are the same
+    // value, so a hover on a page-level row was already resolving to no
+    // visible change at all. The two tokens may share a value — they must not
+    // share a NAME, because the moment a product tints its wells the hover
+    // follows it somewhere it was never meant to go.
+    //
+    // Atlassian: `color.background.neutral.hovered` / `.pressed`. Material
+    // expresses the same thing as a state layer over `on-surface`.
+    'bg-surface-hover': _req($c, 'surface-hover', $name),
+    'bg-surface-active': _req($c, 'surface-active', $name),
+
+    // NEUTRAL EMPHASIS — a grey that is a filled CONTROL, not a surface.
+    //
+    // Every library ships one (daisyUI `btn-neutral`, Bootstrap and CoreUI
+    // `btn-secondary`, Bulma `is-dark`, Flowbite's neutral family) and layer 2
+    // had no role for it, because it models surfaces and it models intents and
+    // this is neither. What the gap cost is visible in the daisyUI adapter:
+    //
+    //     --color-neutral: var(--app-fg-default);         // text as a fill
+    //     --color-neutral-content: var(--app-bg-surface); // surface as text
+    //     --color-base-300: var(--app-border-color);      // a line as a fill
+    //
+    // Correct in effect, and precisely the inversion this project sweeps other
+    // people's libraries for. One role removes all three.
+    //
+    // It is NOT a third brand colour — that is `accent`, in layer 3. Neutral
+    // is the deliberate ABSENCE of brand: the button for an action that
+    // carries no opinion.
+    'bg-neutral': _req($c, neutral, $name),
+    'fg-on-neutral': _req($c, 'on-neutral', $name),
+    'bg-neutral-hover': _req($c, 'neutral-hover', $name),
+    'bg-neutral-active': _req($c, 'neutral-active', $name),
+
+    // DISABLED. The contract used to offer `opacity-disabled` and nothing
+    // else, so adapters invented a pair: Flowbite reached for `fg-subtlest`
+    // and `bg-sunken`, two tokens borrowed for a third meaning.
+    //
+    // Deliberately absent from `check-contrast()`. WCAG 2.2 exempts inactive
+    // controls from 1.4.3, and gating them at 4.5:1 would force a disabled
+    // state indistinguishable from an enabled one — which is the real
+    // usability failure. It must still be VISIBLE against the surface behind
+    // it; it just does not owe body-text contrast.
+    //
+    // Colour rather than opacity is the point. A multiplied alpha cannot be
+    // read back from a computed style, so an opacity-only disabled state is
+    // invisible to both of this project's contrast gates.
+    'bg-disabled': _req($c, disabled, $name),
+    'fg-disabled': _req($c, 'disabled-text', $name),
 
     // Interaction states. The sketch had "active colour" but not hover —
     // they are different states and both are needed.
-    'bg-action-hover': map.get($c, action-hover),
-    'bg-action-active': map.get($c, action-active),
-    'bg-action-subtle': map.get($c, action-subtle),
-    'fg-action': map.get($c, 'action-text'),
-    'border-action': map.get($c, action),
+    'bg-action-hover': _req($c, action-hover, $name),
+    'bg-action-active': _req($c, action-active, $name),
+    'bg-action-subtle': _req($c, action-subtle, $name),
+    'fg-action': _req($c, 'action-text', $name),
+    'border-action': _req($c, action, $name),
 
     // Selected — the sketch's "cor ativa": chips, menu items, tabs, anything
     // with a persistent selected state. Distinct from hover, which is
     // transient, and from action, which is an invitation rather than a status.
-    'bg-selected': map.get($c, selected),
-    'fg-on-selected': map.get($c, on-selected),
-    'bg-selected-hover': map.get($c, selected-hover),
-    'bg-selected-subtle': map.get($c, selected-subtle),
-    'fg-selected': map.get($c, 'selected-text'),
-    'border-selected': map.get($c, selected),
+    'bg-selected': _req($c, selected, $name),
+    'fg-on-selected': _req($c, on-selected, $name),
+    'bg-selected-hover': _req($c, selected-hover, $name),
+    'bg-selected-active': _req($c, 'selected-active', $name),
+    'bg-selected-subtle': _req($c, selected-subtle, $name),
+    'fg-selected': _req($c, 'selected-text', $name),
+    'border-selected': _req($c, selected, $name),
 
     // Navigation — the sketch's "cor de navegação". Modelled as a FOREGROUND
     // role, because navigation is overwhelmingly links and anchors. A "next"
     // button is an action with a different label, not a different colour role;
     // giving it its own background role would create a token nobody sets.
-    'fg-link': map.get($c, link),
-    'fg-link-hover': map.get($c, link-hover),
-    'fg-link-visited': map.get($c, link-visited),
+    'fg-link': _req($c, link, $name),
+    'fg-link-hover': _req($c, link-hover, $name),
+    'fg-link-visited': _req($c, link-visited, $name),
 
     // Borders at three prominences. `subtle` for dividers inside a card,
     // default for component outlines, `strong` for hover and emphasis.
-    'border-color-subtle': map.get($c, border-subtle),
-    'border-color-strong': map.get($c, border-strong),
+    'border-color-subtle': _req($c, border-subtle, $name),
+    'border-color-strong': _req($c, border-strong, $name),
 
-    'ring-color': map.get($c, ring),
+    'ring-color': _req($c, ring, $name),
 
     // Elevation is a colour-layer concern: shadows are near-invisible in dark
     // themes and usually get replaced by a lighter raised surface.
-    'shadow-raised': map.get($c, shadow-raised),
-    'shadow-overlay': map.get($c, shadow-overlay)
+    'shadow-raised': _req($c, shadow-raised, $name),
+    'shadow-overlay': _req($c, shadow-overlay, $name)
   );
 
   // --- Status family, generated ------------------------------------------
@@ -274,16 +408,24 @@
   // contract does not remove the need — it just pushes each consumer to invent
   // its own darkening, which is a design decision escaping layer 2. An adapter
   // reaching for `color-mix()` here is the symptom to watch for.
+  //
+  // `-active` is here for the same argument, applied consistently. It was
+  // missing while `bg-action-active` existed, so `.btn-danger:active` had
+  // nowhere to resolve and every library's pressed state fell back to its own
+  // compiled value. Seven tokens per role, and the loop is what stops the set
+  // drifting — hand-writing them is how a system ends up with
+  // `bg-danger-active` and no `bg-warning-active`.
   @each $role in (success, warning, danger, info) {
     $tokens: map.merge(
       $tokens,
       (
-        'bg-#{$role}': map.get($c, $role),
-        'fg-on-#{$role}': map.get($c, 'on-#{$role}'),
-        'bg-#{$role}-hover': map.get($c, '#{$role}-hover'),
-        'bg-#{$role}-subtle': map.get($c, '#{$role}-subtle'),
-        'fg-#{$role}': map.get($c, '#{$role}-text'),
-        'border-#{$role}': map.get($c, '#{$role}-border')
+        'bg-#{$role}': _req($c, $role, $name),
+        'fg-on-#{$role}': _req($c, 'on-#{$role}', $name),
+        'bg-#{$role}-hover': _req($c, '#{$role}-hover', $name),
+        'bg-#{$role}-active': _req($c, '#{$role}-active', $name),
+        'bg-#{$role}-subtle': _req($c, '#{$role}-subtle', $name),
+        'fg-#{$role}': _req($c, '#{$role}-text', $name),
+        'border-#{$role}': _req($c, '#{$role}-border', $name)
       )
     );
   }
@@ -307,7 +449,7 @@
 // the contract lives — two places holding the same kind of decision. Passing a
 // map keeps it in one.
 //
-// Keys are layer 2 token names without the prefix: `('font-heading': …)`.
+// Keys are layer 2 token names without the prefix: `('font-family-heading': …)`.
 @mixin emit-structure($overrides: ()) {
   @include core.in-layer(config.$layer-semantic) {
     :root {
@@ -316,10 +458,170 @@
   }
 }
 
+// -----------------------------------------------------------------------------
+// CONTRAST — measured on every theme, by construction
+// -----------------------------------------------------------------------------
+//
+// This used to live in `_themes.scss` and be a mixin a caller REMEMBERED to
+// invoke. That was the largest hole in the whole system, and it was invisible
+// because every caller in this repository happened to remember.
+//
+// The proof was a theme map with white on amber-400 — 1.72:1, unreadable — that
+// called `emit-theme()` and nothing else. It compiled clean. Any agent writing
+// a theme without knowing the convention shipped an unmeasured palette, and the
+// build told it everything was fine.
+//
+// So the check moved here, next to the contract it measures, and `emit-theme()`
+// runs it unconditionally. There is no argument to skip it. A guarantee you can
+// forget to ask for is not a guarantee — it is documentation.
+
+// Every foreground that can legitimately land on a plain surface. A curated
+// list of pairs only ever checks what someone remembered to write down, and
+// what got forgotten was consistent: `text` was checked against all four
+// surfaces, but `text-muted` only against `surface`, and `link` only against
+// `action-subtle`. So muted text on a sunken panel and a link on a raised card
+// — both extremely common — were never measured, and both were failing in the
+// rendered audit at 4.31:1 and 2.46:1 while the build said nothing.
+//
+// The status `*-text` tones belong here too, not just on their own tint. Every
+// library's outline/ghost/link button variant paints them straight onto the
+// page, which is precisely where they are least likely to pass.
+$_surfaces: (page, surface, raised, sunken, 'surface-hover', 'surface-active');
+$_surface-foregrounds: (
+  text, 'text-muted', heading, link, 'link-hover', 'link-visited',
+  'action-text', 'selected-text',
+  'success-text', 'warning-text', 'danger-text', 'info-text'
+);
+
+$_contrast-pairs: (
+  (action, 'on-action'),
+  ('action-hover', 'on-action'),
+  ('action-active', 'on-action'),
+  (selected, 'on-selected'),
+  ('selected-hover', 'on-selected'),
+  ('selected-active', 'on-selected'),
+  (neutral, 'on-neutral'),
+  ('neutral-hover', 'on-neutral'),
+  ('neutral-active', 'on-neutral'),
+  (success, 'on-success'),
+  (warning, 'on-warning'),
+  (danger, 'on-danger'),
+  (info, 'on-info'),
+
+  // The SUBTLE pairs, the second most common colour combination in any
+  // interface. Every tinted alert is one, and so is every "soft" button
+  // variant — daisyUI, Flowbite and Bulma all ship one, and they all put the
+  // status TEXT colour on the status TINT.
+  ('action-subtle', 'link'),
+  ('success-subtle', 'success-text'),
+  ('warning-subtle', 'warning-text'),
+  ('danger-subtle', 'danger-text'),
+  ('info-subtle', 'info-text')
+);
+
+// The surface matrix, generated rather than typed. 6 surfaces x 12 foregrounds
+// is 72 pairs nobody would maintain by hand, and the whole point is that it
+// cannot silently miss one.
+@each $_bg in $_surfaces {
+  @each $_fg in $_surface-foregrounds {
+    $_contrast-pairs: list.append($_contrast-pairs, ($_bg, $_fg), comma) !global;
+  }
+}
+
+// The status STATES, generated for the same reason. `action-hover` was checked
+// by hand and the four status roles were not, so `.btn-danger:hover` had a
+// foreground nobody had ever measured — and hover is where a fill moves
+// closest to its own text tone.
+@each $_role in (success, warning, danger, info) {
+  @each $_state in ('#{$_role}-hover', '#{$_role}-active') {
+    $_contrast-pairs: list.append(
+      $_contrast-pairs,
+      ($_state, 'on-#{$_role}'),
+      comma
+    ) !global;
+  }
+}
+
+// Public: `emit-theme()` calls it, and it is also usable standalone to measure
+// a theme map without emitting it.
+@mixin check-contrast($name, $choices) {
+  @each $pair in $_contrast-pairs {
+    $bg-key: list.nth($pair, 1);
+    $fg-key: list.nth($pair, 2);
+    $bg: map.get($choices, $bg-key);
+    $fg: map.get($choices, $fg-key);
+
+    @if $bg != null and $fg != null {
+      $ratio: base.contrast($fg, $bg);
+
+      // One threshold, and it ERRORS. The old ladder warned between 3.0 and
+      // 4.5 on the grounds that large text may legitimately sit there — true,
+      // and it meant a build could print a warning nobody read and succeed.
+      // `brand`'s warning hover sat at 3.79:1 that way.
+      //
+      // A project that genuinely needs the large-text band lowers
+      // `config.$contrast-min` once, deliberately, and writes down why.
+      @if $ratio < config.$contrast-min {
+        @error 'theme "#{$name}": #{$fg-key} on #{$bg-key} is #{$ratio}:1, '
+             + 'below the #{config.$contrast-min}:1 floor. Move the background '
+             + 'along its ramp, or pick a lighter/darker foreground. If this '
+             + 'pair is genuinely large-text-only, lower $contrast-min in '
+             + 'config and record the reason.';
+      }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// ROLE DISTINCTION — the thing this foundation claims as its difference
+// -----------------------------------------------------------------------------
+//
+// `action` (an invitation), `selected` (a state the interface is in) and `link`
+// (navigation) are three separate roles here, where Material and Atlassian ship
+// one brand slot plus variants. That distinction is only worth anything if a
+// theme actually keeps them apart — and the failure is silent, because a theme
+// that points two of them at the same colour is perfectly valid CSS.
+//
+// It has happened twice in this repository: `action` and `selected` were the
+// same indigo for months, and the brand theme pointed `info` at the same steel
+// as `selected`, which made Bulma's `is-link` and `is-info` render identically.
+//
+// A WARNING, not an error, and that is deliberate. A genuinely monochrome brand
+// is a legitimate choice — but it should be a choice someone made, not a
+// default nobody noticed. The threshold is deliberately low: this is asking
+// "are these two colours distinguishable at all", not "are they harmonious".
+@mixin check-roles($name, $choices) {
+  $checks: (
+    (action, selected, 'a button and a selected chip'),
+    (action, link, 'a button and an inline link'),
+    (selected, info, 'a selected item and an informational badge')
+  );
+
+  @each $c in $checks {
+    $a-key: list.nth($c, 1);
+    $b-key: list.nth($c, 2);
+    $a: map.get($choices, $a-key);
+    $b: map.get($choices, $b-key);
+
+    @if $a != null and $b != null and $a == $b {
+      @warn 'theme "#{$name}": "#{$a-key}" and "#{$b-key}" are the SAME colour, '
+          + 'so #{list.nth($c, 3)} are indistinguishable. That is legal and '
+          + 'sometimes intended for a single-brand product — but this system '
+          + 'models them as separate roles on purpose, and a library with '
+          + 'several brand intents will render them as one. If it is '
+          + 'deliberate, record it; if not, move one a step or two.';
+    }
+  }
+}
+
 @mixin emit-theme($name, $choices, $default: false) {
+  // Not optional, and not a separate call a caller can forget. See above.
+  @include check-contrast($name, $choices);
+  @include check-roles($name, $choices);
+
   @include core.in-layer(config.$layer-semantic) {
     @include core.theme($name, $default) {
-      @include core.emit(colors($choices));
+      @include core.emit(colors($choices, $name));
     }
   }
 }

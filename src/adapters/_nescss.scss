@@ -209,7 +209,7 @@ $_map: (
     body {
       color: #{core.ref('fg-default')};
       background-color: #{core.ref('bg-page')};
-      font-family: #{core.ref('font-body')};
+      font-family: #{core.ref('font-family-body')};
     }
 
     .nes-container {

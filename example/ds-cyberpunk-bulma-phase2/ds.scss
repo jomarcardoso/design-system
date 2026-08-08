@@ -46,7 +46,6 @@
 
 // Layer 2 — structure, then this product's only theme, then contexts.
 @include semantic.emit-structure();
-@include themes.check-contrast('cyberpunk', theme.$cyberpunk);
 @include semantic.emit-theme('cyberpunk', theme.$cyberpunk, $default: true);
 @include themes.emit-contexts();
 

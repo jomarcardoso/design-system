@@ -73,6 +73,40 @@ colour family would force renaming the token, the token is misnamed.
 Every `bg-X` has a matching `fg-on-X`. Use the pair. Contrast is then guaranteed
 by construction rather than by review.
 
+## `action`, `selected`, `link` and `neutral` are four different jobs
+
+This is the system's main departure from Material and Atlassian, which ship one
+brand slot with variants. Getting it wrong is easy, invisible, and the single
+most common way a design system stops meaning anything to the person using it.
+
+| role | means | belongs on |
+|---|---|---|
+| `action` | **an invitation.** Something will happen if you press it | primary buttons, CTAs, submit |
+| `selected` | **a state the interface is currently in** | chips, checkboxes, radios, the active nav item, the current breadcrumb, a selected row or tab |
+| `link` | **navigation.** You will go somewhere | anchors |
+| `neutral` | **a filled control with no opinion attached** | cancel, secondary/grey buttons, `btn-secondary` |
+
+**The rule: never reach for `selected` because nothing else was available.**
+
+That is not hypothetical — it is what four adapters were doing. Bootstrap,
+CoreUI, Pico and Preline all ship a **grey** secondary button, and all four were
+bound to `selected`, so a cancel button rendered in exactly the colour of an
+active menu entry. There was no neutral role, so `selected` got used as
+"the other brand colour", and the reader learns that the colour means nothing.
+
+`selected` is also the one role that is frequently **not a fill**. A checkbox is
+an empty box that fills when chosen; the colour is the whole signal that
+something changed. That only works if the colour is not already on half the
+screen doing other jobs.
+
+**Monochrome is fine; collapsing is not.** A single-brand product using three
+steps of one hue for `action` / `selected` / `link` is a legitimate and common
+choice. Two roles resolving to the *same value* is not, and `check-roles()`
+warns at build time when it happens — it caught `action` and `link` sharing a
+value in one of this repository's own example products the first time it ran.
+The warning is not an error, because a deliberate monochrome is allowed. It just
+has to be deliberate.
+
 ## The emission policy
 
 This is the decision that shapes every other one, and it is easy to violate by
@@ -437,12 +471,27 @@ state rule the adapter clobbered, or a filter. It finds filled elements
 its own) rather than by class name, because a class-based scan measured five
 elements on a utility-composed page and reported "all pass" on almost nothing.
 
-The build-time check is the cheaper one. `base.contrast($fg, $bg)` returns the
-WCAG ratio, and `_themes.scss` measures every pair of every theme on each build:
+The build-time check is the cheaper one, and it is **not optional and not a
+separate call.** `semantic.emit-theme()` runs it on every theme it emits, so
+there is no way to ship a theme that was not measured. Anything below
+`config.$contrast-min` (default `4.5`, WCAG AA) is an `@error` that stops the
+build.
 
-- below **3.0** → `@error`. Unreadable at any size.
-- **3.0–4.5** → `@warn`. Large text only, which is a real choice for a badge.
-- **4.5+** → silent.
+That wiring replaced a real hole, and the hole is worth knowing about because it
+is the shape these bugs take. `check-contrast()` used to be a mixin a caller had
+to *remember* to invoke — and every caller in this repository happened to
+remember, so nothing ever looked wrong. A theme map with white on amber-400
+(1.72:1, unreadable) that called only `emit-theme()` compiled clean. Any agent
+writing a theme without knowing the convention shipped an unmeasured palette and
+got a green build. **A guarantee you can forget to ask for is documentation, not
+a guarantee.**
+
+There is also no warning tier any more. A `@warn` between 3.0 and 4.5 was
+defensible in principle — large text may legitimately sit there — and in
+practice it meant a build printed something nobody read and then succeeded. The
+`brand` theme's warning hover sat at 3.79:1 that way. A project that genuinely
+needs the large-text band lowers `$contrast-min` once, deliberately, and records
+why.
 
 It costs nothing at runtime — pure Sass arithmetic, no CSS emitted. When adding
 or editing a theme, let the build tell you rather than eyeballing swatches. The
@@ -701,10 +750,32 @@ borrows Tailwind's *naming*; it is not published to it.
 
 ## Verifying a change
 
+**Run this. It is the whole check, and it needs no setup.**
+
 ```bash
-npm run build     # compiles src/ds.scss and lints
-npm run demo      # also compiles Bootstrap, for example/coexistence.html
+npm run verify
 ```
+
+That is `build:tokens` → `lint` → `verify:examples` → `audit:contrast`, and the
+audit starts its own static server if nothing is listening, so there is no
+two-step ritual to forget. Any failure exits non-zero.
+
+What each link catches, so you know what a green run does and does not prove:
+
+| | catches | cannot see |
+|---|---|---|
+| `build:tokens` | every bg/fg pair below AA, in every theme; a theme missing a key; a token name the W3C format forbids; two adapters colliding on a variable | anything about rendered markup |
+| `lint` | a literal colour in product CSS; application code reaching past layer 2 into `--app-base-*`, `--color-*` or `--bs-*` | a token used with the wrong *meaning* |
+| `verify:examples` | markup using a class combination the product's ledger does not allow | anything not in the ledger |
+| `audit:contrast` | what the browser actually paints — a foreground the library baked in, a state rule the adapter clobbered, an outline variant | a page not listed in the script |
+
+Then, for anything visual:
+
+```bash
+npm run demo      # compiles every library, for the example/ pages
+```
+
+Open `example/coexistence.html` over HTTP, not `file://`.
 
 Open `example/coexistence.html` over HTTP, not `file://` — it renders Bootstrap
 markup and library-free markup side by side off the same tokens. The things

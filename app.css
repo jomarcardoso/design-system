@@ -95,16 +95,16 @@
   html {
     background: var(--app-bg-page);
     color: var(--app-fg-default);
-    font-family: var(--app-font-body);
-    font-size: var(--app-text-size);
-    line-height: var(--app-text-leading);
+    font-family: var(--app-font-family-body);
+    font-size: var(--app-font-size);
+    line-height: var(--app-line-height);
   }
 
   :where(h1, h2, h3, h4, h5, h6) {
     color: var(--app-fg-heading);
-    font-family: var(--app-font-heading);
-    font-weight: var(--app-weight-heading);
-    line-height: var(--app-text-leading-heading);
+    font-family: var(--app-font-family-heading);
+    font-weight: var(--app-font-weight-heading);
+    line-height: var(--app-line-height-heading);
   }
 
   :where(a) {

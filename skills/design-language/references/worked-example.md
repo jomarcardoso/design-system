@@ -104,7 +104,7 @@ what separates a decision from an oversight.
 
 - **Heading:** `ui-serif, Georgia` · **Body:** system sans ·
   **Display:** `Segoe Script, Bradley Hand` · **Mono:** system mono
-- `font-display` is the product's voice: the wordmark and the closing note
+- `font-family-display` is the product's voice: the wordmark and the closing note
   today, and the user's own annotations as the product grows.
 - **Leading:** 1.6 — a recipe is read, not scanned.
 

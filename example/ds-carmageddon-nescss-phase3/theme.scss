@@ -20,13 +20,30 @@ $carmageddon: (
   surface: base.color(stone, 900),
   raised: base.color(stone, 800),
   sunken: base.color(black),
+
+  // Interaction on a neutral surface. New in layer 2 — until now every library
+  // asking for a row or menu hover was pointed at `bg-sunken`.
+  'surface-hover': base.color(stone, 800),
+  'surface-active': base.color(stone, 950),
   overlay: rgba(0, 0, 0, 0.8),
 
   // Bone.
   text: base.color(stone, 100),
   'text-muted': base.color(stone, 400),
-  'text-subtle': base.color(stone, 500),
+  'text-subtlest': base.color(stone, 500),
   heading: base.color(orange, 300),
+
+  // Neutral emphasis — the grey filled control. Replaces the inversion where a
+  // library's neutral button was fed a TEXT token as its background.
+  neutral: base.color(stone, 700),
+  'on-neutral': base.color(stone, 100),
+  'neutral-hover': base.color(stone, 600),
+  'neutral-active': base.color(stone, 800),
+
+  // Disabled. Exempt from the contrast gate (WCAG 1.4.3 excludes inactive
+  // controls) but still clearly separated from the surface.
+  disabled: base.color(stone, 800),
+  'disabled-text': base.color(stone, 500),
 
   // Blood — the primary action, and the colour the whole product is named for.
   // A bright step with dark text, because a 600-step red under a pixel border
@@ -43,6 +60,7 @@ $carmageddon: (
   selected: base.color(orange, 400),
   'on-selected': base.color(stone, 950),
   'selected-hover': base.color(orange, 300),
+  'selected-active': base.color(orange, 200),
   'selected-subtle': base.color(orange, 950),
   'selected-text': base.color(orange, 300),
 
@@ -62,6 +80,7 @@ $carmageddon: (
   success: base.color(lime, 400),
   'on-success': base.color(stone, 950),
   'success-hover': base.color(lime, 300),
+  'success-active': base.color(lime, 200),
   'success-subtle': base.color(lime, 950),
   'success-text': base.color(lime, 300),
   'success-border': base.color(lime, 700),
@@ -69,6 +88,7 @@ $carmageddon: (
   warning: base.color(amber, 400),
   'on-warning': base.color(stone, 950),
   'warning-hover': base.color(amber, 300),
+  'warning-active': base.color(amber, 200),
   'warning-subtle': base.color(amber, 950),
   'warning-text': base.color(amber, 300),
   'warning-border': base.color(amber, 700),
@@ -76,6 +96,7 @@ $carmageddon: (
   danger: base.color(red, 500),
   'on-danger': base.color(stone, 950),
   'danger-hover': base.color(red, 400),
+  'danger-active': base.color(red, 300),
   'danger-subtle': base.color(red, 950),
   'danger-text': base.color(red, 400),
   'danger-border': base.color(red, 700),
@@ -83,6 +104,7 @@ $carmageddon: (
   info: base.color(sky, 400),
   'on-info': base.color(sky, 950),
   'info-hover': base.color(sky, 300),
+  'info-active': base.color(sky, 200),
   'info-subtle': base.color(sky, 950),
   'info-text': base.color(sky, 300),
   'info-border': base.color(sky, 700)

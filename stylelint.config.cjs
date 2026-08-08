@@ -11,7 +11,16 @@ module.exports = {
     'color-no-hex': true,
     'declaration-property-value-disallowed-list': {
       '/^(color|background|background-color|border-color|fill|stroke)$/': [
-        /^#/,
+        /* `#` starts a hex colour AND a Sass interpolation. `(?!\{)` keeps the
+         * rule pointed at `#fff` and off `#{component.ref-chain('chip-bg')}`,
+         * which is the correct way to write a value in product SCSS.
+         *
+         * The bug was invisible while the lint glob only covered `src/` and
+         * `app.css`: adapters interpolate constantly, but always into CUSTOM
+         * PROPERTIES, and this rule only inspects real ones. The first product
+         * stylesheet to set `color:` from a token tripped it — five false
+         * positives, on the file that was doing it right. */
+        /^#(?!\{)/,
         /^rgb/,
         /^hsl/,
         /^oklch/

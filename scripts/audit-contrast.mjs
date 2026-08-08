@@ -173,6 +173,51 @@ if (!puppeteer) {
   process.exit(0);
 }
 
+// Serve the repo ourselves when nothing is already listening.
+//
+// This used to be a two-step ritual documented in the header: start a server,
+// then run the script. Anyone who ran only the second step got
+// ERR_CONNECTION_REFUSED, and anyone automating it had to know about the first.
+// A verification step with a setup ritual is a verification step that gets
+// skipped, so the ritual is gone.
+const PORT = 4173;
+const ROOT = new URL('..', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1');
+
+const alreadyServing = await fetch(`http://localhost:${PORT}/`)
+  .then(() => true)
+  .catch(() => false);
+
+let server = null;
+
+if (!alreadyServing) {
+  const { createServer } = await import('node:http');
+  const { readFile } = await import('node:fs/promises');
+  const { join, extname, normalize } = await import('node:path');
+
+  const TYPES = {
+    '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
+    '.mjs': 'text/javascript', '.json': 'application/json', '.svg': 'image/svg+xml',
+    '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2': 'font/woff2'
+  };
+
+  server = createServer(async (req, res) => {
+    // Strip the query and refuse to escape the repo root.
+    let path = decodeURIComponent(req.url.split('?')[0]);
+    if (path.endsWith('/')) path += 'index.html';
+    const file = join(ROOT, normalize(path).replace(/^(\.\.[/\\])+/, ''));
+
+    try {
+      const body = await readFile(file);
+      res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
+      res.end(body);
+    } catch {
+      res.writeHead(404).end('not found');
+    }
+  });
+
+  await new Promise((r) => server.listen(PORT, r));
+}
+
 const browser = await puppeteer.launch();
 const page = await browser.newPage();
 let failures = 0;
@@ -234,5 +279,6 @@ for (const entry of PAGES) {
 }
 
 await browser.close();
+if (server) await new Promise((r) => server.close(r));
 console.log(failures ? `\n${failures} page/theme combinations below AA.` : '\nAll pages pass AA in all themes.');
 process.exit(failures ? 1 : 0);

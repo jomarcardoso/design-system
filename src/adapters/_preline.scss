@@ -108,21 +108,23 @@
       --primary-950: #{component.ref-chain('action-950')};
 
       // --- Secondary --------------------------------------------------
-      --secondary: #{core.ref('bg-selected')};
-      --secondary-foreground: #{core.ref('fg-on-selected')};
-      --secondary-hover: #{core.ref('bg-selected-hover')};
-      --secondary-active: #{core.ref('bg-selected-hover')};
+      // Preline's secondary is the grey button beside the primary one. Bound
+      // to `selected` it rendered in the same colour as an active nav item.
+      --secondary: #{core.ref('bg-neutral')};
+      --secondary-foreground: #{core.ref('fg-on-neutral')};
+      --secondary-hover: #{core.ref('bg-neutral-hover')};
+      --secondary-active: #{core.ref('bg-neutral-active')};
       --secondary-focus: #{core.ref('ring-color')};
-      --secondary-line: #{core.ref('border-selected')};
+      --secondary-line: #{core.ref('border-color-strong')};
 
       // --- Muted ------------------------------------------------------
       --muted: #{core.ref('bg-sunken')};
       --muted-foreground: #{core.ref('fg-muted')};
       --muted-foreground-1: #{core.ref('fg-muted')};
-      --muted-foreground-2: #{core.ref('fg-subtle')};
-      --muted-hover: #{core.ref('bg-sunken')};
-      --muted-focus: #{core.ref('bg-sunken')};
-      --muted-active: #{core.ref('bg-sunken')};
+      --muted-foreground-2: #{core.ref('fg-subtlest')};
+      --muted-hover: #{core.ref('bg-surface-hover')};
+      --muted-focus: #{core.ref('bg-surface-hover')};
+      --muted-active: #{core.ref('bg-surface-active')};
 
       // --- Destructive ------------------------------------------------
       // Preline models exactly one status. Success, warning and info have no
@@ -139,16 +141,20 @@
       --surface-2: #{core.ref('bg-sunken')};
       --surface-foreground: #{core.ref('fg-default')};
       --surface-line: #{core.ref('border-color')};
-      --surface-hover: #{core.ref('bg-sunken')};
-      --surface-focus: #{core.ref('bg-sunken')};
-      --surface-active: #{core.ref('bg-sunken')};
+      // These three were the clearest evidence that layer 2 was missing an
+      // interaction state: Preline names them 'hover', 'focus' and 'active'
+      // and all three resolved to the SUNKEN SURFACE, which in the stock dark
+      // theme is the same value as the page. A hover that changes nothing.
+      --surface-hover: #{core.ref('bg-surface-hover')};
+      --surface-focus: #{core.ref('bg-surface-hover')};
+      --surface-active: #{core.ref('bg-surface-active')};
 
       --layer: #{core.ref('bg-raised')};
       --layer-foreground: #{core.ref('fg-default')};
       --layer-line: #{core.ref('border-color')};
-      --layer-hover: #{core.ref('bg-sunken')};
-      --layer-focus: #{core.ref('bg-sunken')};
-      --layer-active: #{core.ref('bg-sunken')};
+      --layer-hover: #{core.ref('bg-surface-hover')};
+      --layer-focus: #{core.ref('bg-surface-hover')};
+      --layer-active: #{core.ref('bg-surface-active')};
 
       --card: #{core.ref('bg-surface')};
       --card-line: #{core.ref('border-color')};
@@ -171,8 +177,8 @@
 
       // --- Shape and type ---------------------------------------------
       --radius: #{core.ref('radius-control')};
-      --font-custom-default: #{core.ref('font-body')};
-      --font-custom-mono: #{core.ref('font-mono')};
+      --font-custom-default: #{core.ref('font-family-body')};
+      --font-custom-mono: #{core.ref('font-family-mono')};
     }
   }
 }

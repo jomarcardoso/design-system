@@ -74,6 +74,26 @@ $themes: (light, dark, brand) !default;
 $adapters: () !default;
 
 // -----------------------------------------------------------------------------
+// Accessibility floor
+// -----------------------------------------------------------------------------
+//
+// The minimum WCAG contrast ratio every declared bg/fg pair must reach.
+// `emit-theme()` measures every pair of every theme against this and ERRORS
+// below it. There is no warning tier and no way to emit a theme without the
+// check — both were holes, and both were found by writing a deliberately bad
+// theme and watching the build succeed.
+//
+//   4.5  WCAG AA for body text. The default.
+//   7    WCAG AAA. Government, health, anything with a legal requirement.
+//   3    AA for LARGE text only (>=24px, or >=18.66px bold).
+//
+// Lowering this is a real decision, not a workaround: it says the product
+// accepts pairs that only work at large sizes. If a project does it, the
+// `deviations` block in DESIGN-LANGUAGE.md is where the reason belongs — a
+// threshold nobody wrote down reads as an accident to the next person.
+$contrast-min: 4.5 !default;
+
+// -----------------------------------------------------------------------------
 // Cascade layer names
 // -----------------------------------------------------------------------------
 // Kept configurable because the layer ORDER lives in the application entry

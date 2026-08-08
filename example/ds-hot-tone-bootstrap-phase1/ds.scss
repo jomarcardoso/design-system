@@ -28,7 +28,6 @@
 // Layer 2 — structure first (spacing, radius, typography: theme-independent),
 // then this product's single theme, then the surface contexts.
 @include semantic.emit-structure();
-@include themes.check-contrast('hot-tone', theme.$hot-tone);
 @include semantic.emit-theme('hot-tone', theme.$hot-tone, $default: true);
 @include themes.emit-contexts();
 

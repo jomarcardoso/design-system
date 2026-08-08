@@ -833,7 +833,7 @@
     bottom: -4px;
     left: -4px;
     content: "";
-    box-shadow: inset -4px -4px rgb(73.2936831613%, 95.5159479196%, 31.7804008903%);
+    box-shadow: inset -4px -4px rgb(84.776438425%, 97.8304650548%, 59.990084117%);
   }
   .nes-btn.is-success:hover {
     color: rgb(4.6959212395%, 3.9356111711%, 3.5544484014%);
@@ -841,13 +841,13 @@
     background-color: rgb(73.2936831613%, 95.5159479196%, 31.7804008903%);
   }
   .nes-btn.is-success:hover::after {
-    box-shadow: inset -6px -6px rgb(73.2936831613%, 95.5159479196%, 31.7804008903%);
+    box-shadow: inset -6px -6px rgb(84.776438425%, 97.8304650548%, 59.990084117%);
   }
   .nes-btn.is-success:focus {
-    box-shadow: 0 0 0 6px rgba(73.2936831613%, 95.5159479196%, 31.7804008903%, 0.3);
+    box-shadow: 0 0 0 6px rgba(84.776438425%, 97.8304650548%, 59.990084117%, 0.3);
   }
   .nes-btn.is-success:active:not(.is-disabled)::after {
-    box-shadow: inset 4px 4px rgb(73.2936831613%, 95.5159479196%, 31.7804008903%);
+    box-shadow: inset 4px 4px rgb(84.776438425%, 97.8304650548%, 59.990084117%);
   }
   .nes-btn.is-warning {
     color: rgb(96.0863086166%, 96.0863455723%, 95.7901856151%);
@@ -860,7 +860,7 @@
     bottom: -4px;
     left: -4px;
     content: "";
-    box-shadow: inset -4px -4px rgb(100%, 82.3849863266%, 18.7605403653%);
+    box-shadow: inset -4px -4px rgb(99.5729922588%, 90.1204825961%, 52.2189075016%);
   }
   .nes-btn.is-warning:hover {
     color: rgb(96.0863086166%, 96.0863455723%, 95.7901856151%);
@@ -868,13 +868,13 @@
     background-color: rgb(100%, 82.3849863266%, 18.7605403653%);
   }
   .nes-btn.is-warning:hover::after {
-    box-shadow: inset -6px -6px rgb(100%, 82.3849863266%, 18.7605403653%);
+    box-shadow: inset -6px -6px rgb(99.5729922588%, 90.1204825961%, 52.2189075016%);
   }
   .nes-btn.is-warning:focus {
-    box-shadow: 0 0 0 6px rgba(100%, 82.3849863266%, 18.7605403653%, 0.3);
+    box-shadow: 0 0 0 6px rgba(99.5729922588%, 90.1204825961%, 52.2189075016%, 0.3);
   }
   .nes-btn.is-warning:active:not(.is-disabled)::after {
-    box-shadow: inset 4px 4px rgb(100%, 82.3849863266%, 18.7605403653%);
+    box-shadow: inset 4px 4px rgb(99.5729922588%, 90.1204825961%, 52.2189075016%);
   }
   .nes-btn.is-error {
     color: rgb(4.6959212395%, 3.9356111711%, 3.5544484014%);
@@ -887,7 +887,7 @@
     bottom: -4px;
     left: -4px;
     content: "";
-    box-shadow: inset -4px -4px rgb(100%, 39.1152722255%, 40.3856798746%);
+    box-shadow: inset -4px -4px rgb(100%, 63.4679790944%, 63.6371379046%);
   }
   .nes-btn.is-error:hover {
     color: rgb(4.6959212395%, 3.9356111711%, 3.5544484014%);
@@ -895,13 +895,13 @@
     background-color: rgb(100%, 39.1152722255%, 40.3856798746%);
   }
   .nes-btn.is-error:hover::after {
-    box-shadow: inset -6px -6px rgb(100%, 39.1152722255%, 40.3856798746%);
+    box-shadow: inset -6px -6px rgb(100%, 63.4679790944%, 63.6371379046%);
   }
   .nes-btn.is-error:focus {
-    box-shadow: 0 0 0 6px rgba(100%, 39.1152722255%, 40.3856798746%, 0.3);
+    box-shadow: 0 0 0 6px rgba(100%, 63.4679790944%, 63.6371379046%, 0.3);
   }
   .nes-btn.is-error:active:not(.is-disabled)::after {
-    box-shadow: inset 4px 4px rgb(100%, 39.1152722255%, 40.3856798746%);
+    box-shadow: inset 4px 4px rgb(100%, 63.4679790944%, 63.6371379046%);
   }
   .nes-container, .cm-panel {
     position: relative;
@@ -2409,14 +2409,22 @@
     --app-pad-surface: var(--app-space-lg);
     --app-gap-inline: var(--app-space-xs);
     --app-gap-stack: var(--app-space-md);
-    --app-font-body: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    --app-font-heading: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    --app-font-display: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-    --app-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
-    --app-text-size: 1rem;
-    --app-text-leading: 1.5;
-    --app-weight-body: 400;
-    --app-weight-heading: 600;
+    --app-font-family-body: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --app-font-family-heading: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --app-font-family-display: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    --app-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-font-size-sm: 0.875rem;
+    --app-font-size: 1rem;
+    --app-font-size-lg: 1.125rem;
+    --app-font-size-heading-sm: 1.125rem;
+    --app-font-size-heading: 1.5rem;
+    --app-font-size-heading-lg: 1.875rem;
+    --app-font-size-heading-xl: 2.25rem;
+    --app-font-weight-body: 400;
+    --app-font-weight-heading: 600;
+    --app-line-height: 1.5;
+    --app-line-height-heading: 1.25;
+    --app-letter-spacing-heading: -0.025em;
     --app-size-control: calc(var(--app-space-unit) * 9);
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);
@@ -2426,11 +2434,6 @@
     --app-ring: var(--app-ring-width) solid var(--app-ring-color);
     --app-radius-control-sm: 4px;
     --app-radius-surface-lg: 16px;
-    --app-text-size-sm: 0.875rem;
-    --app-text-size-lg: 1.125rem;
-    --app-text-size-heading: 1.5rem;
-    --app-text-leading-heading: 1.25;
-    --app-text-tracking-heading: -0.025em;
     --app-duration-fast: 120ms;
     --app-duration-base: 200ms;
     --app-duration-slow: 320ms;
@@ -2460,8 +2463,15 @@
     --app-border-color: oklch(44.4% 0.011 73.639deg);
     --app-bg-sunken: #000;
     --app-bg-overlay: rgba(0, 0, 0, 0.8);
-    --app-fg-subtle: oklch(55.3% 0.013 58.071deg);
-    --app-fg-on-surface: oklch(97% 0.001 106.424deg);
+    --app-fg-subtlest: oklch(55.3% 0.013 58.071deg);
+    --app-bg-surface-hover: oklch(26.8% 0.007 34.298deg);
+    --app-bg-surface-active: oklch(14.7% 0.004 49.25deg);
+    --app-bg-neutral: oklch(37.4% 0.01 67.558deg);
+    --app-fg-on-neutral: oklch(97% 0.001 106.424deg);
+    --app-bg-neutral-hover: oklch(44.4% 0.011 73.639deg);
+    --app-bg-neutral-active: oklch(26.8% 0.007 34.298deg);
+    --app-bg-disabled: oklch(26.8% 0.007 34.298deg);
+    --app-fg-disabled: oklch(55.3% 0.013 58.071deg);
     --app-bg-action-hover: oklch(70.4% 0.191 22.216deg);
     --app-bg-action-active: oklch(80.8% 0.114 19.571deg);
     --app-bg-action-subtle: oklch(25.8% 0.092 26.042deg);
@@ -2470,6 +2480,7 @@
     --app-bg-selected: oklch(75% 0.183 55.934deg);
     --app-fg-on-selected: oklch(14.7% 0.004 49.25deg);
     --app-bg-selected-hover: oklch(83.7% 0.128 66.29deg);
+    --app-bg-selected-active: oklch(90.1% 0.076 70.697deg);
     --app-bg-selected-subtle: oklch(26.6% 0.079 36.259deg);
     --app-fg-selected: oklch(83.7% 0.128 66.29deg);
     --app-border-selected: oklch(75% 0.183 55.934deg);
@@ -2484,24 +2495,28 @@
     --app-bg-success: oklch(84.1% 0.238 128.85deg);
     --app-fg-on-success: oklch(14.7% 0.004 49.25deg);
     --app-bg-success-hover: oklch(89.7% 0.196 126.665deg);
+    --app-bg-success-active: oklch(93.8% 0.127 124.321deg);
     --app-bg-success-subtle: oklch(27.4% 0.072 132.109deg);
     --app-fg-success: oklch(89.7% 0.196 126.665deg);
     --app-border-success: oklch(53.2% 0.157 131.589deg);
     --app-bg-warning: oklch(82.8% 0.189 84.429deg);
     --app-fg-on-warning: oklch(14.7% 0.004 49.25deg);
     --app-bg-warning-hover: oklch(87.9% 0.169 91.605deg);
+    --app-bg-warning-active: oklch(92.4% 0.12 95.746deg);
     --app-bg-warning-subtle: oklch(27.9% 0.077 45.635deg);
     --app-fg-warning: oklch(87.9% 0.169 91.605deg);
     --app-border-warning: oklch(55.5% 0.163 48.998deg);
     --app-bg-danger: oklch(63.7% 0.237 25.331deg);
     --app-fg-on-danger: oklch(14.7% 0.004 49.25deg);
     --app-bg-danger-hover: oklch(70.4% 0.191 22.216deg);
+    --app-bg-danger-active: oklch(80.8% 0.114 19.571deg);
     --app-bg-danger-subtle: oklch(25.8% 0.092 26.042deg);
     --app-fg-danger: oklch(70.4% 0.191 22.216deg);
     --app-border-danger: oklch(50.5% 0.213 27.518deg);
     --app-bg-info: oklch(74.6% 0.16 232.661deg);
     --app-fg-on-info: oklch(29.3% 0.066 243.157deg);
     --app-bg-info-hover: oklch(82.8% 0.111 230.318deg);
+    --app-bg-info-active: oklch(90.1% 0.058 230.902deg);
     --app-bg-info-subtle: oklch(29.3% 0.066 243.157deg);
     --app-fg-info: oklch(82.8% 0.111 230.318deg);
     --app-border-info: oklch(50% 0.134 242.749deg);
@@ -2536,7 +2551,7 @@
   body {
     color: var(--app-fg-default);
     background-color: var(--app-bg-page);
-    font-family: var(--app-font-body);
+    font-family: var(--app-font-family-body);
   }
   .nes-container, .cm-panel {
     color: var(--app-fg-default);

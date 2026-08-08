@@ -89,7 +89,7 @@ worth recording as one.
 
 ## Block 2 — Use context and ergonomics
 
-> Decides `size-control`, `text-leading`, and which end of the spacing scale
+> Decides `size-control`, `line-height`, and which end of the spacing scale
 > components reach for.
 
 **4. How often is it used, and for what kind of task?**

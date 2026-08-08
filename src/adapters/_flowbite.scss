@@ -64,7 +64,11 @@
       --color-body: #{core.ref('fg-default')};
       --color-body-subtle: #{core.ref('fg-muted')};
       --color-heading: #{core.ref('fg-heading')};
-      --color-fg-disabled: #{core.ref('fg-subtle')};
+      // Was `fg-subtlest` — the faintest READABLE text tone borrowed for a
+      // state that is not text prominence at all. Flowbite names the pair
+      // itself (`fg-disabled` / `disabled`), which is the clearest evidence
+      // that layer 2 was the side missing it.
+      --color-fg-disabled: #{core.ref('fg-disabled')};
 
       // --- Foreground intents -----------------------------------------
       --color-fg-brand: #{core.ref('fg-action')};
@@ -100,7 +104,7 @@
       --color-buffer-medium: #{core.ref('bg-surface')};
       --color-buffer-strong: #{core.ref('bg-raised')};
       --color-muted: #{core.ref('bg-sunken')};
-      --color-disabled: #{core.ref('bg-sunken')};
+      --color-disabled: #{core.ref('bg-disabled')};
 
       // --- Fills ------------------------------------------------------
       --color-brand: #{core.ref('bg-action')};
@@ -163,9 +167,9 @@
       --radius-base: #{core.ref('radius-surface')};
       --radius-lg: #{core.ref('radius-surface-lg')};
       --default-border-width: #{core.ref('border-width')};
-      --font-sans: #{core.ref('font-body')};
-      --font-body: #{core.ref('font-body')};
-      --font-mono: #{core.ref('font-mono')};
+      --font-sans: #{core.ref('font-family-body')};
+      --font-body: #{core.ref('font-family-body')};
+      --font-mono: #{core.ref('font-family-mono')};
     }
   }
 }

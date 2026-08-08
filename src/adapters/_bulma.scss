@@ -119,14 +119,14 @@ $_map: (
   --bulma-radius-large: #{core.ref('radius-surface')};
   --bulma-radius-rounded: #{core.ref('radius-pill')};
 
-  --bulma-family-primary: #{core.ref('font-body')};
-  --bulma-family-secondary: #{core.ref('font-heading')};
-  --bulma-family-code: #{core.ref('font-mono')};
+  --bulma-family-primary: #{core.ref('font-family-body')};
+  --bulma-family-secondary: #{core.ref('font-family-heading')};
+  --bulma-family-code: #{core.ref('font-family-mono')};
 
-  --bulma-body-size: #{core.ref('text-size')};
-  --bulma-body-line-height: #{core.ref('text-leading')};
-  --bulma-weight-normal: #{core.ref('weight-body')};
-  --bulma-weight-semibold: #{core.ref('weight-heading')};
+  --bulma-body-size: #{core.ref('font-size')};
+  --bulma-body-line-height: #{core.ref('line-height')};
+  --bulma-weight-normal: #{core.ref('font-weight-body')};
+  --bulma-weight-semibold: #{core.ref('font-weight-heading')};
 
   --bulma-block-spacing: #{core.ref('gap-stack')};
   --bulma-duration: #{core.ref('duration-base')};
@@ -154,7 +154,7 @@ $_map: (
   $invert: map.get($c, text);
   --bulma-scheme-invert-l: #{_l($invert)};
   --bulma-scheme-invert-bis-l: #{_l(map.get($c, 'text-muted'))};
-  --bulma-scheme-invert-ter-l: #{_l(map.get($c, 'text-subtle'))};
+  --bulma-scheme-invert-ter-l: #{_l(map.get($c, 'text-subtlest'))};
 
   // --- Text ----------------------------------------------------------
   --bulma-text-h: #{_h($invert)};

@@ -22,11 +22,12 @@ rather than a feeling.
 | **`shadow-raised`** | `xs` — a hairline lift | `sm` — soft, traditional | `lg` — projected and visible | `2xs` — barely there | `none` — borders only |
 | **`shadow-overlay`** | `md` | `lg` | `xl` | `sm` | `sm` |
 | **Elevation strategy** | thin borders carry hierarchy | shadows carry hierarchy | shadows are decorative too | whitespace carries hierarchy | borders only |
-| **`font-heading`** | geometric / neo-grotesque sans | humanist sans | rounded or display | **serif** | condensed sans |
-| **`font-body`** | same sans | same humanist sans | rounded sans | sans | sans |
-| **`font-display`** | unset | unset | display face | serif or a display serif | `font-mono` |
-| **`font-mono` prominence** | code blocks | code blocks | rare | rare | **data tables and figures** |
-| **`text-leading`** | `1.5` | `1.5` | `1.6`–`1.7` | `1.7` | `1.4` |
+| **`font-family-heading`** | geometric / neo-grotesque sans | humanist sans | rounded or display | **serif** | condensed sans |
+| **`font-family-body`** | same sans | same humanist sans | rounded sans | sans | sans |
+| **`font-family-display`** | unset | unset | display face | serif or a display serif | `font-family-mono` |
+| **`font-family-mono` prominence** | code blocks | code blocks | rare | rare | **data tables and figures** |
+| **`line-height`** | `1.5` | `1.5` | `1.6`–`1.7` | `1.7` | `1.4` |
+| **Heading step** | `2xl`→`4xl` — a clear jump | `xl`→`3xl` — restrained | `2xl`→`5xl` — headings shout | `2xl`→`5xl`, with tighter tracking | `lg`→`2xl` — headings are labels |
 | **`size-control`** | 36px (`unit * 9`) | 36px | 44px (`unit * 11`) | 40px | 28px (`unit * 7`) |
 | **Contrast target** | AA, high | AA | AA | AA, subtle by design — watch the check | AA, very high |
 | **Reference products** | Vercel, Linear, Raycast | IBM Carbon, Salesforce, SAP Fiori | Duolingo, Headspace, Mailchimp | Stripe Press, Notion, Medium | GitHub, AWS Console, Grafana |
@@ -44,7 +45,7 @@ and keeps a weak border ends up with surfaces nobody can tell apart. Whichever
 carries hierarchy must be the one that is strong.
 
 **Density is spacing plus control height plus leading**, and the three have to
-move together. Raising `size-control` while leaving `text-leading` at 1.4 gives
+move together. Raising `size-control` while leaving `line-height` at 1.4 gives
 tall buttons full of cramped text. The presets above move all three.
 
 **Editorial is the one to watch on contrast.** "Subtle contrast" and "refined
@@ -54,8 +55,8 @@ has to be muted in *chroma*, not in lightness distance. If the build errors here
 the archetype is not wrong, the specific step is.
 
 **Utilitarian earns monospace as a body-adjacent face**, which is the only
-archetype where `font-mono` is a design decision rather than a code-block
-default. That is what `font-display` is for: set it to the mono stack and the
+archetype where `font-family-mono` is a design decision rather than a code-block
+default. That is what `font-family-display` is for: set it to the mono stack and the
 figures in tables inherit it.
 
 ## Applying a preset
@@ -65,8 +66,8 @@ The archetype writes three things, and nothing else:
 ```scss
 // 1. Structural scales — passed to emit-structure()
 $typography: (
-  'font-heading': (ui-serif, Georgia, serif),   // Editorial
-  'text-leading': 1.7
+  'font-family-heading': (ui-serif, Georgia, serif),   // Editorial
+  'line-height': 1.7
 );
 
 // 2. Radius and control size — edited in the project's copy of _base.scss,

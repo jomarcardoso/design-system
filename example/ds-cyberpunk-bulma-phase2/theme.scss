@@ -24,12 +24,29 @@ $cyberpunk: (
   surface: base.color(zinc, 900),
   raised: base.color(zinc, 800),
   sunken: base.color(black),
+
+  // Interaction on a neutral surface. New in layer 2 — until now every library
+  // asking for a row or menu hover was pointed at `bg-sunken`.
+  'surface-hover': base.color(zinc, 800),
+  'surface-active': base.color(zinc, 950),
   overlay: rgba(0, 0, 0, 0.72),
 
   text: base.color(zinc, 100),
   'text-muted': base.color(zinc, 400),
-  'text-subtle': base.color(zinc, 500),
+  'text-subtlest': base.color(zinc, 500),
   heading: base.color(white),
+
+  // Neutral emphasis — the grey filled control. Replaces the inversion where a
+  // library's neutral button was fed a TEXT token as its background.
+  neutral: base.color(zinc, 700),
+  'on-neutral': base.color(zinc, 100),
+  'neutral-hover': base.color(zinc, 600),
+  'neutral-active': base.color(zinc, 800),
+
+  // Disabled. Exempt from the contrast gate (WCAG 1.4.3 excludes inactive
+  // controls) but still clearly separated from the surface.
+  disabled: base.color(zinc, 800),
+  'disabled-text': base.color(zinc, 500),
 
   // Action — neon cyan. Bright fill, dark text: the inversion the header
   // mentions. `action-text` is a separate, lighter tone for when the colour is
@@ -45,6 +62,7 @@ $cyberpunk: (
   selected: base.color(fuchsia, 400),
   'on-selected': base.color(fuchsia, 950),
   'selected-hover': base.color(fuchsia, 300),
+  'selected-active': base.color(fuchsia, 200),
   'selected-subtle': base.color(fuchsia, 950),
   'selected-text': base.color(fuchsia, 300),
 
@@ -64,6 +82,7 @@ $cyberpunk: (
   success: base.color(lime, 400),
   'on-success': base.color(lime, 950),
   'success-hover': base.color(lime, 300),
+  'success-active': base.color(lime, 200),
   'success-subtle': base.color(lime, 950),
   'success-text': base.color(lime, 300),
   'success-border': base.color(lime, 800),
@@ -71,6 +90,7 @@ $cyberpunk: (
   warning: base.color(amber, 400),
   'on-warning': base.color(amber, 950),
   'warning-hover': base.color(amber, 300),
+  'warning-active': base.color(amber, 200),
   'warning-subtle': base.color(amber, 950),
   'warning-text': base.color(amber, 300),
   'warning-border': base.color(amber, 800),
@@ -78,6 +98,7 @@ $cyberpunk: (
   danger: base.color(rose, 400),
   'on-danger': base.color(rose, 950),
   'danger-hover': base.color(rose, 300),
+  'danger-active': base.color(rose, 200),
   'danger-subtle': base.color(rose, 950),
   'danger-text': base.color(rose, 300),
   'danger-border': base.color(rose, 800),
@@ -85,6 +106,7 @@ $cyberpunk: (
   info: base.color(sky, 400),
   'on-info': base.color(sky, 950),
   'info-hover': base.color(sky, 300),
+  'info-active': base.color(sky, 200),
   'info-subtle': base.color(sky, 950),
   'info-text': base.color(sky, 300),
   'info-border': base.color(sky, 800)

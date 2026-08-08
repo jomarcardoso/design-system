@@ -51,7 +51,7 @@
       --text-muted: #{core.ref('fg-muted')};
       --code: #{core.ref('fg-default')};
       --form-text: #{core.ref('fg-default')};
-      --form-placeholder: #{core.ref('fg-subtle')};
+      --form-placeholder: #{core.ref('fg-subtlest')};
 
       // --- Accent -----------------------------------------------------
       --links: #{core.ref('fg-link')};

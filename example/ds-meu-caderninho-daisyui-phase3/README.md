@@ -27,7 +27,7 @@ so a serif heading meant editing `_semantic.scss` inside the vendored tool. That
 is the fork the whole architecture exists to avoid, and it survived this long
 because no example had ever wanted a different typeface.
 
-**`font-display` is a new layer 3 hook.** Layer 2 models body, heading and mono.
+**`font-family-display` is a new layer 3 hook.** Layer 2 models body, heading and mono.
 A fourth face is a real gap for any brand with a signature typeface, and the fix
 is the one already used for `accent`: reserve a name, default it to the heading
 face, emit nothing. Token count is unchanged at 110.
@@ -84,7 +84,7 @@ What the product actually lacked was components daisyUI does not have:
   `range` rather than replacing it, so the track and the browser-specific
   pseudo-elements stay the library's problem.
 - `mc-meta` — the icon-and-value strip under a recipe title.
-- `mc-hand` — text in the product's script face; the reason `font-display` had
+- `mc-hand` — text in the product's script face; the reason `font-family-display` had
   to become a real hook.
 - `mc-flourish` — the pen stroke under a section heading.
 - `mc-rail` — the notebook's spiral binding, and the single most recognisable

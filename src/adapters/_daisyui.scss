@@ -64,9 +64,12 @@
       --root-bg: #{core.ref('bg-page')};
       --color-base-100: #{core.ref('bg-surface')};
       --color-base-200: #{core.ref('bg-sunken')};
-      // base-300 is daisyUI's deepest neutral — dividers, inactive fills. Layer
-      // 2 stops at two surfaces, so the next step down the neutral ramp is the
-      // line colour, which is where it sits anyway.
+      // base-300 is daisyUI's deepest neutral — dividers and inactive fills.
+      // It stays on the line colour rather than moving to `bg-surface-active`,
+      // and the distinction is the point: `-active` is a STATE, applied while
+      // a pointer is down, and base-300 is a resting tone. Binding a state
+      // token to a resting value is the same class of error as the hover
+      // bindings that motivated adding the state in the first place.
       --color-base-300: #{core.ref('border-color')};
       --color-base-content: #{core.ref('fg-default')};
 
@@ -93,9 +96,13 @@
       --color-accent-content: #{component.ref-chain('accent-fg')};
 
       // `neutral` is daisyUI's dark solid (`btn-neutral`), not a grey text
-      // colour — hence the foreground token as its background.
-      --color-neutral: #{core.ref('fg-default')};
-      --color-neutral-content: #{core.ref('bg-surface')};
+      // colour. It used to be bound to `fg-default` with `bg-surface` as its
+      // label — a TEXT token used as a fill and a SURFACE token used as text.
+      // It rendered correctly and it was the exact inversion this project
+      // sweeps other people's libraries for, present because layer 2 modelled
+      // surfaces and intents and had no role for a neutral FILL.
+      --color-neutral: #{core.ref('bg-neutral')};
+      --color-neutral-content: #{core.ref('fg-on-neutral')};
 
       // --- Status -----------------------------------------------------
       // Note `error` -> `danger`. Vocabulary translation is exactly what an
@@ -126,8 +133,8 @@
       // face plays. A product mapping `font-serif` to its heading token would
       // be asserting that its headings are serif, which is its business and not
       // this adapter's.
-      --font-sans: #{core.ref('font-body')};
-      --font-mono: #{core.ref('font-mono')};
+      --font-sans: #{core.ref('font-family-body')};
+      --font-mono: #{core.ref('font-family-mono')};
 
       // --- Shape ------------------------------------------------------
       // `selector` is checkboxes and toggles, `field` is inputs and buttons,

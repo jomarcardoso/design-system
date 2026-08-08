@@ -30,7 +30,6 @@
 // Before that, a product wanting a serif heading had to edit `_semantic.scss`
 // inside the vendored tool — a fork, for a decision that is purely its own.
 @include semantic.emit-structure(theme.$typography);
-@include themes.check-contrast('caderninho', theme.$caderninho);
 @include semantic.emit-theme('caderninho', theme.$caderninho, $default: true);
 @include themes.emit-contexts();
 

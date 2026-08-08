@@ -128,7 +128,7 @@ The interview is only worth running if its answers reach code. Three
 destinations:
 
 **Archetype → structural tokens.** The matrix in `archetypes.md` gives concrete
-values for `radius-control`, `radius-surface`, `size-control`, `text-leading`,
+values for `radius-control`, `radius-surface`, `size-control`, `line-height`,
 `shadow-raised` and `shadow-overlay`. They go into the project's theme map and
 its `semantic.emit-structure()` call — not into the vendored `src/` files, which
 stay upstream.

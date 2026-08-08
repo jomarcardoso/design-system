@@ -52,7 +52,6 @@ $error-colors: nescss-adapter.variant-colors($_c, 'danger');
 
 // Layer 2 — structure, this product's only theme, then contexts.
 @include semantic.emit-structure();
-@include themes.check-contrast('carmageddon', theme.$carmageddon);
 @include semantic.emit-theme('carmageddon', theme.$carmageddon, $default: true);
 @include themes.emit-contexts();
 

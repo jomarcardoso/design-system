@@ -68,14 +68,34 @@
 // `light` and `dark` are absent on purpose: absolute colour names are fixed
 // palette entries, not theme roles. Three adapters have now been broken by
 // binding one.
+// `secondary` is CoreUI's grey button, not a second brand colour. It was bound
+// to `selected`, which is the role for something a user can MARK as chosen — a
+// chip, a checkbox, an active nav item. Same correction as the Bootstrap
+// adapter, and the same reason: reaching for `selected` when no other colour
+// was available is how the colour stops meaning anything.
 $_map: (
   primary: 'action',
-  secondary: 'selected',
+  secondary: 'neutral',
   success: 'success',
   info: 'info',
   warning: 'warning',
   danger: 'danger'
 );
+
+// The slots `neutral` spells differently, because it IS the surface family
+// wearing a fill. See the Bootstrap adapter for why these are not aliased into
+// `bg-neutral-subtle` and friends.
+$_derived: (
+  'neutral': (subtle: 'bg-sunken', border: 'border-color-strong', text: 'fg-muted'),
+);
+
+@function _slot($role, $slot) {
+  $o: map.get($_derived, $role);
+  @if $o != null and map.get($o, $slot) != null { @return map.get($o, $slot); }
+  @if $slot == subtle { @return 'bg-#{$role}-subtle'; }
+  @if $slot == border { @return 'border-#{$role}'; }
+  @return 'fg-#{$role}';
+}
 
 // -----------------------------------------------------------------------------
 // ROOT — colour only
@@ -89,7 +109,7 @@ $_map: (
   --cui-heading-color: #{core.ref('fg-heading')};
   --cui-secondary-color: #{core.ref('fg-muted')};
   --cui-secondary-bg: #{core.ref('bg-sunken')};
-  --cui-tertiary-color: #{core.ref('fg-subtle')};
+  --cui-tertiary-color: #{core.ref('fg-subtlest')};
   --cui-tertiary-bg: #{core.ref('bg-sunken')};
 
   // --- Links -------------------------------------------------------------
@@ -103,9 +123,9 @@ $_map: (
   // --- Theme colour family, generated ------------------------------------
   @each $cui, $role in $_map {
     --cui-#{$cui}: #{core.ref('bg-#{$role}')};
-    --cui-#{$cui}-bg-subtle: #{core.ref('bg-#{$role}-subtle')};
-    --cui-#{$cui}-border-subtle: #{core.ref('border-#{$role}')};
-    --cui-#{$cui}-text-emphasis: #{core.ref('fg-#{$role}')};
+    --cui-#{$cui}-bg-subtle: #{core.ref(_slot($role, subtle))};
+    --cui-#{$cui}-border-subtle: #{core.ref(_slot($role, border))};
+    --cui-#{$cui}-text-emphasis: #{core.ref(_slot($role, text))};
   }
 }
 
@@ -161,8 +181,8 @@ $_map: (
     // reusing it as text on a light page is the most common way this goes
     // wrong, and it is invisible to a check that only measures filled elements.
     .btn-outline-#{$cui} {
-      color: #{core.ref('fg-#{$role}')};
-      border-color: #{core.ref('border-#{$role}')};
+      color: #{core.ref(_slot($role, text))};
+      border-color: #{core.ref(_slot($role, border))};
     }
 
     .btn-outline-#{$cui}:hover {
@@ -216,7 +236,7 @@ $_map: (
 
     // Hover has no contract entry — it reads layer 2 directly, which is the
     // documented reason the contract stopped at eight names.
-    --cui-chip-hover-bg: #{core.ref('bg-sunken')};
+    --cui-chip-hover-bg: #{core.ref('bg-surface-hover')};
     --cui-chip-hover-color: #{core.ref('fg-default')};
   }
 

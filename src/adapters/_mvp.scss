@@ -81,8 +81,8 @@
 
       // --- Shape and type ---------------------------------------------
       --border-radius: #{core.ref('radius-control')};
-      --font-family: #{core.ref('font-body')};
-      --line-height: #{core.ref('text-leading')};
+      --font-family: #{core.ref('font-family-body')};
+      --line-height: #{core.ref('line-height')};
 
       // --- Interaction, moved from filter to colour --------------------
       // See the header for why. 1 is the identity multiplier, so the filters

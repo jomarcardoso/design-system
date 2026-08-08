@@ -127,12 +127,52 @@
 // `light` and `dark` are Bootstrap's own surface aliases, not themes.
 $_map: (
   primary: 'action',
-  secondary: 'selected',
+  // `secondary` is Bootstrap's GREY button (#6c757d in stock), and it was bound
+  // to `selected` — the role that means "this item is currently chosen". So a
+  // cancel button rendered in the same colour as an active menu entry, and a
+  // Bootstrap user lost the grey button the library ships.
+  //
+  // The rule this now follows: `selected` may only drive something a user can
+  // actually mark as selected — a chip, a checkbox, a radio, an active nav
+  // item, the current breadcrumb. Reaching for it because no other colour was
+  // available is precisely how a reader learns that the colour means nothing.
+  secondary: 'neutral',
   success: 'success',
   info: 'info',
   warning: 'warning',
   danger: 'danger',
 );
+
+// The derived slots a role provides. Every intent role spells them the same way
+// (`bg-X-subtle`, `border-X`, `fg-X`), and `neutral` is the exception: it is
+// the SURFACE family wearing a fill, so its subtle, line and text levels
+// already exist under surface names.
+//
+// Aliasing them into `bg-neutral-subtle` / `border-neutral` / `fg-neutral`
+// would have kept this loop uniform at the cost of three tokens that are
+// duplicates of tokens one line away — the exact mistake `fg-on-surface` was.
+$_derived: (
+  'neutral': (
+    subtle: 'bg-sunken',
+    border: 'border-color-strong',
+    text: 'fg-muted',
+  ),
+);
+
+@function _slot($role, $slot) {
+  $override: map.get($_derived, $role);
+
+  @if $override != null and map.get($override, $slot) != null {
+    @return map.get($override, $slot);
+  }
+  @if $slot == subtle {
+    @return 'bg-#{$role}-subtle';
+  }
+  @if $slot == border {
+    @return 'border-#{$role}';
+  }
+  @return 'fg-#{$role}';
+}
 
 // -----------------------------------------------------------------------------
 // ROOT — colour only, because colour is the only thing a theme swaps
@@ -154,7 +194,7 @@ $_map: (
   --bs-emphasis-color: #{core.ref('fg-heading')};
   --bs-secondary-color: #{core.ref('fg-muted')};
   --bs-secondary-bg: #{core.ref('bg-sunken')};
-  --bs-tertiary-color: #{core.ref('fg-subtle')};
+  --bs-tertiary-color: #{core.ref('fg-subtlest')};
   --bs-tertiary-bg: #{core.ref('bg-sunken')};
   --bs-heading-color: #{core.ref('fg-heading')};
 
@@ -190,9 +230,9 @@ $_map: (
   // twenty-four lines that drift; here it is one loop that cannot.
   @each $bs, $role in $_map {
     --bs-#{$bs}: #{core.ref('bg-#{$role}')};
-    --bs-#{$bs}-bg-subtle: #{core.ref('bg-#{$role}-subtle')};
-    --bs-#{$bs}-border-subtle: #{core.ref('border-#{$role}')};
-    --bs-#{$bs}-text-emphasis: #{core.ref('fg-#{$role}')};
+    --bs-#{$bs}-bg-subtle: #{core.ref(_slot($role, subtle))};
+    --bs-#{$bs}-border-subtle: #{core.ref(_slot($role, border))};
+    --bs-#{$bs}-text-emphasis: #{core.ref(_slot($role, text))};
   }
 }
 
@@ -351,8 +391,8 @@ $_map: (
   // checks it against all four.
   @each $bs, $role in $_map {
     .btn-outline-#{$bs} {
-      color: #{core.ref('fg-#{$role}')};
-      border-color: #{core.ref('border-#{$role}')};
+      color: #{core.ref(_slot($role, text))};
+      border-color: #{core.ref(_slot($role, border))};
     }
 
     // Hover fills with the variant colour, so the label flips to the paired

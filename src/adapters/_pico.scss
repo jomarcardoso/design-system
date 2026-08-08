@@ -87,12 +87,15 @@
       --pico-primary-focus: #{core.ref('ring-color')};
 
       // --- Secondary --------------------------------------------------
-      --pico-secondary: #{core.ref('fg-selected')};
-      --pico-secondary-background: #{core.ref('bg-selected')};
-      --pico-secondary-hover: #{core.ref('fg-selected')};
-      --pico-secondary-hover-background: #{core.ref('bg-selected-hover')};
-      --pico-secondary-border: #{core.ref('bg-selected')};
-      --pico-secondary-inverse: #{core.ref('fg-on-selected')};
+      // Pico's secondary is its muted button, not a second brand colour, so it
+      // reads the NEUTRAL role. It was bound to `selected`, which belongs to
+      // things a user marks as chosen.
+      --pico-secondary: #{core.ref('fg-muted')};
+      --pico-secondary-background: #{core.ref('bg-neutral')};
+      --pico-secondary-hover: #{core.ref('fg-default')};
+      --pico-secondary-hover-background: #{core.ref('bg-neutral-hover')};
+      --pico-secondary-border: #{core.ref('bg-neutral')};
+      --pico-secondary-inverse: #{core.ref('fg-on-neutral')};
       --pico-secondary-focus: #{core.ref('ring-color')};
 
       // --- Contrast ---------------------------------------------------
@@ -112,14 +115,14 @@
       --pico-card-box-shadow: #{core.ref('shadow-raised')};
       --pico-dropdown-background-color: #{core.ref('bg-raised')};
       --pico-dropdown-border-color: #{core.ref('border-color')};
-      --pico-dropdown-hover-background-color: #{core.ref('bg-sunken')};
+      --pico-dropdown-hover-background-color: #{core.ref('bg-surface-hover')};
       --pico-modal-overlay-background-color: #{core.ref('bg-overlay')};
 
       // --- Form elements ----------------------------------------------
       --pico-form-element-background-color: #{core.ref('bg-surface')};
       --pico-form-element-border-color: #{core.ref('border-color')};
       --pico-form-element-color: #{core.ref('fg-default')};
-      --pico-form-element-placeholder-color: #{core.ref('fg-subtle')};
+      --pico-form-element-placeholder-color: #{core.ref('fg-subtlest')};
       --pico-form-element-focus-color: #{core.ref('border-action')};
       --pico-form-element-active-border-color: #{core.ref('border-action')};
       --pico-form-element-active-background-color: #{core.ref('bg-surface')};
@@ -149,11 +152,11 @@
       --pico-spacing: #{core.ref('pad-surface')};
       --pico-form-element-spacing-vertical: #{core.ref('pad-control-y')};
       --pico-form-element-spacing-horizontal: #{core.ref('pad-control-x')};
-      --pico-font-family-sans-serif: #{core.ref('font-body')};
-      --pico-font-family-monospace: #{core.ref('font-mono')};
-      --pico-font-size: #{core.ref('text-size')};
-      --pico-line-height: #{core.ref('text-leading')};
-      --pico-font-weight: #{core.ref('weight-body')};
+      --pico-font-family-sans-serif: #{core.ref('font-family-body')};
+      --pico-font-family-monospace: #{core.ref('font-family-mono')};
+      --pico-font-size: #{core.ref('font-size')};
+      --pico-line-height: #{core.ref('line-height')};
+      --pico-font-weight: #{core.ref('font-weight-body')};
     }
   }
 }

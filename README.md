@@ -18,7 +18,7 @@ is exactly one place — the semantic layer — and everything else derives from
   nothing depends on.
 - **Sass first.** A value becomes a CSS custom property only if it changes at
   runtime. Layer 1's 28 colour ramps cost **0 bytes**; the whole token layer is
-  111 custom properties.
+  126 custom properties.
 - **px for the frame, rem for the words.** Spacing and radius are px, so turning
   up a phone's font size enlarges the text without inflating every gap until the
   layout stops fitting. Font sizes and breakpoints stay rem, so text still
@@ -38,7 +38,7 @@ is exactly one place — the semantic layer — and everything else derives from
   quietly omit a combination. Both cost zero runtime bytes.
 - **Ten adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
   Preline, Water.css, MVP.css, NES.css and CoreUI — from a 1416-variable library
-  down to one with **zero**, all driven by the same 111 tokens. Plus a Tailwind
+  down to one with **zero**, all driven by the same 126 tokens. Plus a Tailwind
   bridge, which is not an adapter.
 - **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
   every theme through a real browser and measures what is actually rendered —
@@ -92,7 +92,7 @@ both behave differently under `file://`.
 | Layer | Lives in | Ships as | Runtime cost |
 |---|---|---|---|
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
-| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 111, the public contract |
+| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 126, the public contract |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
 | 3.5 — adapter | `src/adapters/*.scss` | custom properties | 28–64, whichever one is selected |
 
@@ -246,7 +246,7 @@ vocabulary out of the foundation.
 
 The Meu Caderninho example is the one that pushed hardest on customisation. It
 added two things to the tool — `emit-structure()` overrides, so a product can
-set its own typography without editing a vendored file, and a `font-display`
+set its own typography without editing a vendored file, and a `font-family-display`
 layer 3 hook for brands with a signature typeface — and it established where a
 product overrides a library that nests itself inside `utilities`: a sublayer at
 `utilities.mc`, which beats the component library while a utility at the call
@@ -399,7 +399,7 @@ The five archetypes are not moodboards. Each one lands on real values:
 | `radius-control` | 6px | 4px | 16px | 4px | 2px |
 | `shadow-raised` | `xs` | `sm` | `lg` | `2xs` | `none` |
 | `size-control` | 36px | 36px | 44px | 40px | 28px |
-| `text-leading` | 1.5 | 1.5 | 1.6–1.7 | 1.7 | 1.4 |
+| `line-height` | 1.5 | 1.5 | 1.6–1.7 | 1.7 | 1.4 |
 | heading face | geometric sans | humanist sans | rounded / display | **serif** | condensed sans |
 
 Colour is deliberately absent from that table. An archetype suggests a mood; the
@@ -456,7 +456,7 @@ is exactly one place — the semantic layer — and everything else derives from
   nothing depends on.
 - **Sass first.** A value becomes a CSS custom property only if it changes at
   runtime. Layer 1's 28 colour ramps cost **0 bytes**; the whole token layer is
-  111 custom properties.
+  126 custom properties.
 - **Theme and context switching** via `data-theme` and `data-surface`, with two
   build-time guarantees: a context cannot change a background without its
   foreground, and **every bg/fg pair in every theme is measured against WCAG** —
@@ -465,7 +465,7 @@ is exactly one place — the semantic layer — and everything else derives from
   quietly omit a combination. Both cost zero runtime bytes.
 - **Ten adapters, one contract.** Bootstrap, daisyUI, Pico, Bulma, Flowbite,
   Preline, Water.css, MVP.css, NES.css and CoreUI — from a 1416-variable library
-  down to one with **zero**, all driven by the same 111 tokens. Plus a Tailwind
+  down to one with **zero**, all driven by the same 126 tokens. Plus a Tailwind
   bridge, which is not an adapter.
 - **Verified, not asserted.** `npm run audit:contrast` drives every demo page in
   every theme through a real browser and measures what is actually rendered —
@@ -519,7 +519,7 @@ both behave differently under `file://`.
 | Layer | Lives in | Ships as | Runtime cost |
 |---|---|---|---|
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
-| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 111, the public contract |
+| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 126, the public contract |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
 | 3.5 — adapter | `src/adapters/*.scss` | custom properties | 28–64, whichever one is selected |
 
@@ -673,7 +673,7 @@ vocabulary out of the foundation.
 
 The Meu Caderninho example is the one that pushed hardest on customisation. It
 added two things to the tool — `emit-structure()` overrides, so a product can
-set its own typography without editing a vendored file, and a `font-display`
+set its own typography without editing a vendored file, and a `font-family-display`
 layer 3 hook for brands with a signature typeface — and it established where a
 product overrides a library that nests itself inside `utilities`: a sublayer at
 `utilities.mc`, which beats the component library while a utility at the call
@@ -986,7 +986,7 @@ foundation is decoration.
 
 Deliberately left rather than guessed:
 
-- **Typography.** `font-body` and `font-heading` both point at the system sans
+- **Typography.** `font-family-body` and `font-family-heading` both point at the system sans
   stack. Real faces are a brand decision.
 - **`selected` vs `action`.** Currently the same hue. They are separate roles so
   they *can* diverge; if they never do, collapsing them removes six tokens.

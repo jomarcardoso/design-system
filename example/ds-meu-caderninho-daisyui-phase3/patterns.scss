@@ -123,7 +123,7 @@
       align-items: center;
       min-height: #{component.ref-chain('chip-height')};
       padding-inline: #{component.ref-chain('chip-pad-x')};
-      font-size: var(--app-text-size-sm);
+      font-size: var(--app-font-size-sm);
       color: #{component.ref-chain('chip-fg')};
       cursor: pointer;
       background: #{component.ref-chain('chip-bg')};
@@ -162,7 +162,7 @@
     .mc-range-field__scale {
       display: flex;
       justify-content: space-between;
-      font-size: var(--app-text-size-sm);
+      font-size: var(--app-font-size-sm);
       color: var(--app-fg-muted);
     }
 
@@ -174,7 +174,7 @@
       flex-wrap: wrap;
       gap: var(--app-space-md);
       margin: 0;
-      font-size: var(--app-text-size-sm);
+      font-size: var(--app-font-size-sm);
       color: var(--app-fg-muted);
     }
 
@@ -217,8 +217,8 @@
 
     // A handwritten note. The wordmark and the footer line.
     .mc-hand {
-      font-family: var(--app-font-display);
-      font-size: var(--app-text-size-lg);
+      font-family: var(--app-font-family-display);
+      font-size: var(--app-font-size-lg);
       color: var(--app-fg-heading);
     }
 
@@ -277,8 +277,8 @@
     }
 
     .mc-field__label {
-      font-size: var(--app-text-size-sm);
-      font-weight: var(--app-weight-heading);
+      font-size: var(--app-font-size-sm);
+      font-weight: var(--app-font-weight-heading);
       color: var(--app-fg-default);
     }
 
