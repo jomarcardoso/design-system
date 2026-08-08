@@ -307,6 +307,25 @@ $contract: (
   'heading-5-fg': 'fg-heading',
   'heading-6-fg': 'fg-heading',
 
+  // A CATEGORICAL scale, for charts. Reserved because shadcn asks for
+  // `--chart-1` … `--chart-5` and every dashboard library asks for something
+  // like it, and because layer 2 correctly refuses to grow one: a chart series
+  // is not a ROLE. "Series 3" carries no intent — it is whatever the third
+  // thing in the legend happens to be — so it fails the layer 2 admission test
+  // that every token must mean something.
+  //
+  // The defaults walk the roles a theme already decided, which produces a
+  // usable and theme-following chart with nothing emitted. A product with a
+  // real data-visualisation palette sets five variables and has it. Note that
+  // these defaults are NOT chosen for categorical distinguishability — that is
+  // a different design problem, and pretending otherwise would be the kind of
+  // silent half-answer this layer exists to avoid.
+  'chart-1': 'bg-action',
+  'chart-2': 'bg-selected',
+  'chart-3': 'bg-info',
+  'chart-4': 'bg-warning',
+  'chart-5': 'bg-success',
+
   // A brand ramp. Layer 1 has one and keeps it private, on purpose: a ramp is a
   // primitive, and application code reaching for `--app-base-indigo-300` is the
   // exact failure the stylelint rules exist to prevent. But Preline asks for

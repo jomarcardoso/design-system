@@ -1,0 +1,248 @@
+{
+  "$schema": "../../patterns/patterns.schema.json",
+  "version": 1,
+  "libraries": [
+    "shadcn"
+  ],
+  "notes": [
+    "THE LEDGER GOVERNS THE PRODUCT LAYER, NOT THE LIBRARY — and that is not a",
+    "shortcut, it is what a utility-composed library forces.",
+    "",
+    "Every other product in this repository sits on a library with component",
+    "class names: `.btn-primary`, `.is-danger`, `.nes-btn`. The verifier reads",
+    "`class` attributes, so those vocabularies are governable by construction.",
+    "shadcn has no component classes at all. A Button is a string of Tailwind",
+    "utilities, and there is nothing stable in the markup for a regex to hold.",
+    "",
+    "So the vocabulary this ledger can enforce is the vocabulary this product",
+    "NAMED — the `ids-*` classes in patterns.scss. That turns out to be the",
+    "right half to govern: those are exactly the places where iDS diverges from",
+    "shadcn, which are the places worth counting. A divergence written as inline",
+    "utilities at each call site would be invisible to any check, and nobody",
+    "would know how many navy outline buttons the product had grown.",
+    "",
+    "Naming your divergences is what makes them governable. That is the lesson",
+    "this example produced, and it is why patterns.scss defines classes instead",
+    "of repeating utility strings.",
+    "",
+    "shadcn's own components carry `data-slot` attributes in the markup, which",
+    "IS a stable seam — the verifier cannot read attributes today, and that is",
+    "a known limit rather than a decision.",
+    "",
+    "ONE MORE LIMIT, found by trying to forbid something. A filled neutral button",
+    "is out of pattern here, and the ledger can only refuse it under a NAME —",
+    "`ids-btn-neutral`, which this product deliberately does not define. Written",
+    "at a call site as the raw utility `bg-neutral`, it escapes the check",
+    "entirely. Governing a utility-composed page means naming the things you want",
+    "governed; there is no way around that, and it is the same reason the",
+    "divergences got class names in the first place."
+  ],
+  "components": {
+    "button": {
+      "intent": "A control that performs an action. The filled primary is shadcn's own Button with `bg-primary`; only the two treatments iDS adds are named here.",
+      "namespace": {
+        "shadcn": "^ids-btn-"
+      },
+      "root": {
+        "shadcn": "^ids-btn-"
+      },
+      "namespaceNote": "Scoped to `ids-btn-`, so it never claims a Tailwind utility. The primary button is deliberately OUT of the ledger: it is unmodified shadcn, and a ledger entry for a pattern the product did not change would be a promise the product is not keeping.",
+      "docs": {
+        "library": "https://ui.shadcn.com/docs/components/button",
+        "source": "https://itau.com.br — .ids-main-button, .ids-action-button"
+      },
+      "patterns": {
+        "secondary": {
+          "intent": "The supporting action beside a primary one. An outline in the brand's second colour.",
+          "state": "styled",
+          "styled": "ids-btn-secondary",
+          "diverges": "shadcn's `variant=\"outline\"` draws a neutral line in body text. iDS draws navy, on both the line and the label. That is a ROLE difference rather than a geometry one: the outline reads `border-action` and `fg-action`, which this theme points at the brand's navy while the solid fill stays orange. It is also the reason `border-action` stopped being a hardcoded alias of the fill in layer 2 — Itaú was the first theme that needed to say them separately.",
+          "example": "<button data-slot=\"button\" class=\"ids-btn-secondary inline-flex h-12 items-center justify-center rounded-lg px-6 text-base font-bold\">Conhecer os produtos</button>",
+          "notes": "Inside `[data-surface=\"brand\"]` it flips to the inverted ink with no extra class — the context does it. That is iDS's `--on-brand` modifier, expressed as a context rather than a variant."
+        },
+        "text": {
+          "intent": "The lowest-emphasis action: 'Esqueci minha senha', 'Já sou cliente'. No fill, no line.",
+          "state": "styled",
+          "styled": "ids-btn-text",
+          "diverges": "shadcn's `variant=\"ghost\"` is neutral and hover-filled. iDS's text button is navy and underlines on hover, which makes it read as a sibling of a link rather than of a button — correct for this brand, where navy IS the interactive ink whether the thing navigates or acts.",
+          "example": "<button data-slot=\"button\" class=\"ids-btn-text h-9 text-sm font-bold\">Esqueci minha senha</button>"
+        },
+        "neutral": {
+          "intent": "A filled dark-grey button.",
+          "state": "forbidden",
+          "reason": "iDS has no filled neutral control. `action_neutral_base` (#3B3B3B) is an INK there — it colours `.ids-icon-button--neutral` and `.ids-action-button--neutral`, both of which are transparent. A solid dark-grey button was invented by the reconstruction and read as out of pattern immediately, which is the useful kind of mistake: the theme still has to DEFINE `neutral` (a theme is a complete set), but this product never fills with it.",
+          "instead": "text",
+          "matches": {
+            "shadcn": [
+              "ids-btn-neutral"
+            ]
+          }
+        }
+      }
+    },
+    "field": {
+      "intent": "A labelled text input. The underline field iDS uses everywhere.",
+      "namespace": {
+        "shadcn": "^ids-field"
+      },
+      "root": {
+        "shadcn": "^ids-field$"
+      },
+      "namespaceNote": "`root` is the wrapper only. The BEM parts (`__label`, `__input`, `__message`) are anatomy, not variants — an element carrying one is never itself a field, so it never reaches the pattern check.",
+      "docs": {
+        "library": "https://ui.shadcn.com/docs/components/input",
+        "source": "https://itau.com.br — .ids-form-field, .ids-input"
+      },
+      "patterns": {
+        "default": {
+          "intent": "The resting field.",
+          "state": "styled",
+          "styled": "ids-field",
+          "diverges": "shadcn's Input is a bordered box. iDS draws a single bottom rule with a 4px top-corner radius — the filled-field shape. Focus THICKENS the rule to 2px and takes the ring colour, because an underline cannot signal focus by moving a border colour alone: two adjacent greys are not a state change for anyone who cannot separate them.",
+          "example": "<div class=\"ids-field\"><label class=\"ids-field__label\" for=\"ag\">Agência</label><input class=\"ids-field__input\" id=\"ag\" placeholder=\"0000\"></div>"
+        },
+        "invalid": {
+          "intent": "A field whose value was rejected.",
+          "state": "styled",
+          "styled": "ids-field ids-field--invalid",
+          "diverges": "The rule turns `border-danger` and thickens. Carried on the WRAPPER rather than the input so the message text moves with it — the colour and the explanation are one state, and splitting them is how a red border ends up with grey helper text.",
+          "example": "<div class=\"ids-field ids-field--invalid\"><label class=\"ids-field__label\" for=\"op\">Código do operador</label><input class=\"ids-field__input\" id=\"op\" aria-invalid=\"true\" aria-describedby=\"op-msg\"><p class=\"ids-field__message\" id=\"op-msg\">Informe os 3 dígitos do operador.</p></div>",
+          "notes": "`aria-invalid` and `aria-describedby` are required alongside the class. The class is the appearance; those two are the state."
+        }
+      }
+    },
+    "tabs": {
+      "intent": "Switching between views of the same thing. Used for the access card's 'Agência e conta' / 'CPF' choice.",
+      "namespace": {
+        "shadcn": "^ids-tabs?$"
+      },
+      "root": {
+        "shadcn": "^ids-tabs?$"
+      },
+      "docs": {
+        "library": "https://ui.shadcn.com/docs/components/tabs",
+        "source": "https://itau.com.br"
+      },
+      "patterns": {
+        "list": {
+          "intent": "The container, which draws the rule the active tab interrupts.",
+          "state": "styled",
+          "styled": "ids-tabs",
+          "diverges": "shadcn's Tabs is a segmented pill on a muted track. iDS underlines.",
+          "example": "<div role=\"tablist\" class=\"ids-tabs\" aria-label=\"Opções de acesso\">…</div>"
+        },
+        "tab": {
+          "intent": "One tab. The active one is the ONLY place on this page where the selection role is visible as itself.",
+          "state": "styled",
+          "styled": "ids-tab",
+          "diverges": "The indicator is a 3px underline in `border-selected`. Worth noting what that means in this theme: `selected` and `action` are the same orange, so the underline is the same colour a primary button would be. That is the brand's decision, recorded in theme.scss and warned about by `check-roles()` at build time — not an accident this ledger is papering over.",
+          "example": "<button role=\"tab\" class=\"ids-tab text-sm\" aria-selected=\"true\">Agência e conta</button>",
+          "notes": "`aria-selected` drives the appearance, so the accessible state and the visual state cannot drift apart."
+        }
+      }
+    },
+    "pagination": {
+      "intent": "Which page of a carousel is showing.",
+      "namespace": {
+        "shadcn": "^ids-dots?$"
+      },
+      "root": {
+        "shadcn": "^ids-dots?$"
+      },
+      "docs": {
+        "source": "https://itau.com.br — .ids-pagination-dots"
+      },
+      "patterns": {
+        "group": {
+          "intent": "The row of dots.",
+          "state": "styled",
+          "styled": "ids-dots",
+          "example": "<div class=\"ids-dots\" role=\"tablist\" aria-label=\"Página de cartões\">…</div>",
+          "notes": "`styled` even though shadcn ships nothing like it. `wrapped` would be the honest state for a component the product built itself — the ledger reserves that word for wrapping a LIBRARY component, and reports the mismatch. Worth knowing the vocabulary has no word for 'ours, from scratch'."
+        },
+        "dot": {
+          "intent": "One page marker.",
+          "state": "styled",
+          "styled": "ids-dot",
+          "example": "<button class=\"ids-dot\" role=\"tab\" aria-selected=\"true\" aria-label=\"Página 1\"></button>",
+          "notes": "Fills with `fg-default` rather than with a brand colour. Measured on the live site: the chosen dot is white on the brand band and black on a light section, which makes it a CONTEXT decision — the inverted and brand contexts already flip `fg-default`, so it follows for free."
+        }
+      }
+    },
+    "divider": {
+      "intent": "A section break.",
+      "namespace": {
+        "shadcn": "^ids-divider$"
+      },
+      "root": {
+        "shadcn": "^ids-divider$"
+      },
+      "docs": {
+        "library": "https://ui.shadcn.com/docs/components/separator",
+        "source": "https://itau.com.br — .ids-divider"
+      },
+      "patterns": {
+        "default": {
+          "intent": "The rule between sections.",
+          "state": "styled",
+          "styled": "ids-divider",
+          "diverges": "2px, not a hairline — iDS `size_border_medium`. A class rather than a `border-t-2` utility because the weight is a brand decision, and a utility would scatter it across every call site with nothing to change if it moved.",
+          "example": "<hr class=\"ids-divider\">"
+        }
+      }
+    },
+    "card": {
+      "intent": "A surface holding one thing. Two interactive states, and they are different roles.",
+      "namespace": {
+        "shadcn": "^ids-card"
+      },
+      "root": {
+        "shadcn": "^ids-card(-interactive|--selected)$"
+      },
+      "namespaceNote": "`ids-card-icon` is anatomy — it marks the glyph the hover rule reaches into — so it is inside the namespace but never a root.",
+      "docs": {
+        "library": "https://ui.shadcn.com/docs/components/card",
+        "source": "https://itau.com.br — .ids-card, .ids-card.-selected"
+      },
+      "patterns": {
+        "interactive": {
+          "intent": "A card that is itself a link or a button.",
+          "state": "styled",
+          "styled": "ids-card-interactive",
+          "diverges": "Hover is a NEUTRAL wash, not a brand colour. Read from iDS: `a.ids-card:hover { background: action_neutral_base_soft }`. The icon inside does take the brand ink, which is why the rule reaches one level in. Keeping the surface neutral and the accent local is what stops a grid of cards flashing orange as the pointer crosses it.",
+          "example": "<a href=\"#\" data-slot=\"card\" class=\"ids-card-interactive rounded-xl border border-border bg-card p-5\">…</a>"
+        },
+        "selected": {
+          "intent": "The chosen card in a set — the recommended product.",
+          "state": "styled",
+          "styled": "ids-card--selected",
+          "diverges": "A 2px border in `border-selected`, from iDS `.ids-card.-selected`. This is the one card state that takes the brand colour, and the split is the point: HOVER means the pointer is here, SELECTED means this one is chosen. Painting both with the brand colour would erase the difference — the same discipline this foundation argues for, shipped by a bank.",
+          "example": "<article data-slot=\"card\" class=\"ids-card--selected rounded-xl border bg-card p-5\" aria-current=\"true\">…</article>",
+          "notes": "`aria-current` carries the state; the class carries the appearance."
+        }
+      }
+    },
+    "disclosure": {
+      "intent": "A question that opens. The FAQ list.",
+      "namespace": {
+        "shadcn": "^ids-disclosure"
+      },
+      "root": {
+        "shadcn": "^ids-disclosure$"
+      },
+      "docs": {
+        "library": "https://ui.shadcn.com/docs/components/accordion",
+        "source": "https://itau.com.br"
+      },
+      "patterns": {
+        "default": {
+          "intent": "One row of the list.",
+          "state": "styled",
+          "styled": "ids-disclosure",
+          "diverges": "The rule UNDER a hovered row darkens to `border-color-strong`, which shadcn does not do at all. Worth noting which token: the third step of the line ladder, not a brand colour. A disclosure has no claim to the brand — it is emphasis on a divider, and the ladder exists so that emphasis has somewhere to go that is not the accent.",
+          "example": "<details data-slot=\"accordion-item\" class=\"ids-disclosure\"><summary class=\"ids-disclosure__trigger\">…</summary></details>"
+        }
+      }
+    }
+  }
+}

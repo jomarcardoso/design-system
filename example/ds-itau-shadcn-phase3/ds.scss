@@ -1,0 +1,83 @@
+// =============================================================================
+// ITAÚ — the project's design system build
+// =============================================================================
+//
+//     sass --load-path=. example/ds-itau-shadcn-phase3/ds.scss ds.css
+//
+// shadcn/ui is not compiled here. It is copied source, not a dependency: its
+// components are Tailwind class strings over Radix primitives, and its theming
+// surface is a set of unprefixed custom properties. `entry.css` compiles the
+// Tailwind utilities; this file drives the variables those utilities read.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// THE CONTRAST FLOOR, LOWERED ON PURPOSE
+// -----------------------------------------------------------------------------
+//
+// The brand's primary fill is #FF6200 and its label is #FFFFFF. Measured:
+// **3.00:1** — below the 4.5:1 body-text floor this foundation defaults to, and
+// exactly on the 3:1 threshold WCAG sets for large text.
+//
+// That is not a transcription error and it is not something to quietly fix. It
+// is a decision a bank shipped, and the live button carries it legitimately:
+// `.ids-main-button` renders its label at 20px/700, which is large text by
+// WCAG's definition (>=18.66px bold), where 3:1 is the correct bar.
+//
+// So the floor moves to 3, and the reason is recorded here rather than in
+// someone's memory. Two things make that honest rather than a way to silence
+// the check:
+//
+//   - It is ONE known pair. Every other pair in this theme measures well
+//     clear of AA: navy on white 17.62, neutral 11.20, info 10.88, success
+//     8.18, muted text 8.59, error 5.89, subtlest text 5.10. The floor is not
+//     hiding anything unknown.
+//   - It stays a hard gate. Anything below 3.0 still fails the build, so a
+//     future edit that pushes a pair into genuinely unreadable territory is
+//     caught.
+//
+// This is the thing the tool is for. Nobody asked it whether the brand's
+// primary button passed AA; it measured, refused to compile, and made someone
+// decide. The alternative — a system that renders whatever it is given — would
+// have shipped the same button and said nothing.
+@use '../../src/config' with (
+  $themes: (),
+  $adapters: (),
+  $contrast-min: 3
+);
+
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/themes';
+@use '../../src/component';
+@use '../../src/adapters/shadcn' as shadcn-adapter;
+@use 'theme';
+@use 'patterns';
+
+// Layer 1 — the tool's palette compiles away. The PRODUCT's palette lives in
+// `palette.scss` and is read by `theme.scss` at build time, so it compiles away
+// too: neither emits a byte.
+@include base.emit();
+
+// Layer 2 — structure with this product's typography and shape merged in, then
+// its only theme. `emit-theme()` runs the contrast gate and the role-distinction
+// check itself; there is nothing to remember to call.
+@include semantic.emit-structure(theme.$typography);
+@include semantic.emit-theme('itau', theme.$itau, $default: true);
+@include themes.emit-contexts();
+
+// …and this product's own. The brand band is a context, not a set of variants:
+// see patterns.scss.
+@include patterns.contexts();
+
+// Layer 3 — the naming contract, plus this product's overrides. Unlike the
+// other examples this one DOES emit: iDS gives its chart series a fixed
+// categorical palette, which is a decision layer 2 correctly refuses to hold.
+@include component.emit();
+@include patterns.component-tokens();
+
+// Layer 3.5 — the adapter.
+@include shadcn-adapter.emit();
+
+// Layer 4 — the product's own components, for the parts shadcn does not ship
+// and the parts iDS shapes differently.
+@include patterns.emit();

@@ -1,0 +1,87 @@
+/* =============================================================================
+ * ITAÚ — the application entry
+ * =============================================================================
+ *
+ * Loaded FIRST, before `ds.css` and `tw.css`, and it exists for one statement.
+ *
+ * -----------------------------------------------------------------------------
+ * WHY THIS FILE EXISTS: A BUG THIS EXAMPLE ACTUALLY HIT
+ * -----------------------------------------------------------------------------
+ *
+ * Cascade layer order is fixed by the FIRST declaration that names a layer, not
+ * by where its rules appear. Without the line below, the order was inferred
+ * from load order and came out like this:
+ *
+ *     ds.semantic, ds.component, vendor-config, components, theme, base, utilities
+ *                                               ^^^^^^^^^^  ^^^^^^^^^^^^
+ *
+ * `ds.css` loads first and names `components` (the product layer), so
+ * `components` was registered fourth. `tw.css` then declares
+ * `@layer theme, base, components, utilities` — but `components` already had a
+ * position, so only `theme`, `base` and `utilities` were appended, AFTER it.
+ *
+ * The product layer therefore sat before Tailwind's preflight, and preflight's
+ * `button { color: inherit }` beat `.ids-btn-text { color: var(--app-fg-action) }`.
+ * The navy text button rendered black. Valid CSS, no warning, and invisible
+ * unless you measure the computed colour — which is how it was found.
+ *
+ * The rule to take away: an application declares its layer order explicitly, in
+ * one place, before any stylesheet that fills a layer. Load order is not an
+ * ordering mechanism.
+ * ============================================================================= */
+
+@layer ds.base, ds.semantic, ds.component, vendor-config, theme, base, components, utilities;
+
+/* The three positions that matter, read left to right:
+ *
+ *   ds.semantic     the tokens
+ *   vendor-config   the shadcn adapter, pointing shadcn's variables at them
+ *   base            Tailwind's preflight
+ *   components      THIS PRODUCT's own components — after preflight, so they
+ *                   win; before utilities, so a utility at the call site still
+ *                   wins over them, which is what a Tailwind user expects
+ *   utilities       Tailwind
+ *
+ * Note what is NOT here: an `unlayered` escape. Unlayered CSS beats every
+ * layer regardless of order, so writing product rules outside a layer would
+ * win against Tailwind utilities too — and then `class="text-fg-muted"` on a
+ * `.ids-btn-text` would silently do nothing. */
+
+/* The document baseline. Deliberately tiny: everything else is a token or a
+ * utility. `font-optical-sizing` and the two font-feature settings are here
+ * rather than in the theme because they are rendering hints, not decisions a
+ * theme would swap. */
+:root {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--app-font-family-body);
+  font-size: var(--app-font-size);
+  line-height: var(--app-line-height);
+  color: var(--app-fg-default);
+  background: var(--app-bg-page);
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--app-font-family-heading);
+  color: var(--app-fg-heading);
+  line-height: var(--app-line-height-heading);
+  letter-spacing: var(--app-letter-spacing-heading);
+}
+
+/* Focus is never removed, only replaced. iDS uses the navy ring, which is
+ * `ring-color` in this theme. */
+:where(a, button, input, summary, [role='tab'], [role='switch'], [role='checkbox']):focus-visible {
+  outline: var(--app-ring-width) solid var(--app-ring-color);
+  outline-offset: var(--app-ring-offset);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

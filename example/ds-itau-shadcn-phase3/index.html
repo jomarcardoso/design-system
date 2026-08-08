@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="itau">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iDS reconstruído — shadcn/ui + Radix + Tailwind</title>
+<!-- app.css FIRST: it declares the cascade layer order, and load order is not
+     an ordering mechanism. Without it the product layer lands before Tailwind's
+     preflight and loses to it — see the comment in app.css. -->
+<link rel="stylesheet" href="app.css">
+<link rel="stylesheet" href="ds.css">
+<link rel="stylesheet" href="tw.css">
+</head>
+<body class="bg-page text-fg font-sans antialiased">
+
+<!-- =========================================================================
+     HEADER — the brand band
+     `data-surface="brand"` is a CONTEXT, not a theme: it flips the surface and
+     its foreground and inherits everything else. The outline button inside it
+     picks up the on-brand treatment from `patterns.scss` without a variant
+     class of its own.
+     ========================================================================= -->
+<header data-surface="brand" class="bg-primary text-primary-foreground">
+  <div class="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3">
+    <span class="font-heading text-xl font-bold tracking-tight">itaú</span>
+
+    <nav aria-label="Principal" class="hidden items-center gap-5 text-sm font-bold md:flex">
+      <a href="#" class="hover:underline">Conta-corrente</a>
+      <a href="#" class="hover:underline">Cartões de crédito</a>
+      <a href="#" class="hover:underline">Empréstimos</a>
+      <a href="#" class="hover:underline">Investimentos</a>
+      <a href="#" class="hover:underline">Seguros</a>
+    </nav>
+
+    <div class="ml-auto flex items-center gap-2">
+      <button data-slot="button" class="ids-btn-secondary inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-bold">
+        Abra sua conta
+      </button>
+      <button data-slot="button" aria-label="Buscar"
+              class="inline-flex size-9 items-center justify-center rounded-md hover:bg-white/15">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-6xl px-4 py-10">
+
+  <!-- =======================================================================
+       ACCESS CARD + HERO
+       ======================================================================= -->
+  <section class="grid gap-8 md:grid-cols-[1fr_380px]">
+    <div class="flex flex-col justify-center">
+      <h1 class="font-heading text-4xl font-bold tracking-tight text-heading">
+        Resolva as questões do dia a dia
+      </h1>
+      <p class="mt-4 max-w-prose text-lg text-fg-muted">
+        Emita boletos, gere comprovantes, desbloqueie o cartão e acompanhe suas
+        faturas — tudo sem sair do lugar.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button data-slot="button" class="inline-flex h-12 items-center justify-center rounded-lg bg-primary px-6 text-base font-bold text-primary-foreground hover:bg-primary-hover active:bg-primary-active">
+          Abrir minha conta
+        </button>
+        <button data-slot="button" class="ids-btn-secondary inline-flex h-12 items-center justify-center rounded-lg px-6 text-base font-bold">
+          Conhecer os produtos
+        </button>
+        <button data-slot="button" class="ids-btn-text inline-flex h-12 items-center justify-center px-2 text-base font-bold">
+          Já sou cliente
+        </button>
+      </div>
+    </div>
+
+    <!-- The access card. `data-slot="card"` is what shadcn emits; the
+         underline fields are the product's own, because shadcn's Input is a
+         bordered box and iDS draws a single rule. -->
+    <div data-slot="card" class="rounded-xl border border-border bg-card p-6 text-card-foreground">
+      <h2 data-slot="card-title" class="font-heading text-xl font-bold">Acesse sua conta</h2>
+
+      <div role="tablist" class="ids-tabs mt-4" aria-label="Opções de acesso">
+        <button role="tab" class="ids-tab text-sm" aria-selected="true">Agência e conta</button>
+        <button role="tab" class="ids-tab text-sm" aria-selected="false">CPF</button>
+      </div>
+
+      <form class="mt-5 flex flex-col gap-4">
+        <div class="grid grid-cols-[96px_1fr] gap-3">
+          <div class="ids-field">
+            <label class="ids-field__label" for="ag">Agência</label>
+            <input class="ids-field__input" id="ag" inputmode="numeric" placeholder="0000">
+          </div>
+          <div class="ids-field">
+            <label class="ids-field__label" for="cc">Conta</label>
+            <input class="ids-field__input" id="cc" inputmode="numeric" placeholder="00000-0">
+          </div>
+        </div>
+
+        <div class="ids-field ids-field--invalid">
+          <label class="ids-field__label" for="op">Código do operador</label>
+          <input class="ids-field__input" id="op" inputmode="numeric" placeholder="000" aria-invalid="true" aria-describedby="op-msg">
+          <p class="ids-field__message" id="op-msg">Informe os 3 dígitos do operador.</p>
+        </div>
+
+        <label class="flex items-center gap-2 text-sm">
+          <button data-slot="checkbox" type="button" role="checkbox" aria-checked="true" data-state="checked"
+                  class="inline-flex size-4 items-center justify-center rounded-sm border border-line-ink bg-selected text-on-selected">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
+          </button>
+          Salvar agência e conta neste dispositivo
+        </label>
+
+        <button data-slot="button" class="inline-flex h-12 items-center justify-center rounded-lg bg-primary text-base font-bold text-primary-foreground hover:bg-primary-hover active:bg-primary-active">
+          Acessar
+        </button>
+
+        <button data-slot="button" class="ids-btn-text h-9 text-sm font-bold" type="button">
+          Esqueci minha senha
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <hr class="ids-divider">
+
+  <!-- =======================================================================
+       SHORTCUT CARDS — the "Resolva as questões do dia a dia" grid
+       ======================================================================= -->
+  <section aria-labelledby="atalhos">
+    <h2 id="atalhos" class="font-heading text-2xl font-bold tracking-tight text-heading">Atalhos do dia a dia</h2>
+    <div class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+      <a href="#" data-slot="card" class="ids-card-interactive rounded-xl border border-border bg-card p-5">
+        <span class="ids-card-icon inline-flex size-10 items-center justify-center rounded-md bg-selected-subtle text-fg-selected transition-colors" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5v14M7 5v14M11 5v14M15 5v14M19 5v14"/></svg>
+        </span>
+        <h3 class="mt-3 font-heading font-bold">Boleto</h3>
+        <p class="mt-1 text-sm text-fg-muted">Emita a 2ª via de boletos Itaú</p>
+        <span class="mt-3 inline-block text-sm font-bold text-ink">Emitir agora</span>
+      </a>
+
+      <a href="#" data-slot="card" class="ids-card-interactive rounded-xl border border-border bg-card p-5">
+        <span class="ids-card-icon inline-flex size-10 items-center justify-center rounded-md bg-selected-subtle text-fg-selected transition-colors" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>
+        </span>
+        <h3 class="mt-3 font-heading font-bold">Desbloqueio de cartão</h3>
+        <p class="mt-1 text-sm text-fg-muted">Saiba como fazer pelo app</p>
+        <span class="mt-3 inline-block text-sm font-bold text-ink">Ver o passo a passo</span>
+      </a>
+
+      <a href="#" data-slot="card" class="ids-card-interactive rounded-xl border border-border bg-card p-5">
+        <span class="ids-card-icon inline-flex size-10 items-center justify-center rounded-md bg-selected-subtle text-fg-selected transition-colors" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6"/></svg>
+        </span>
+        <h3 class="mt-3 font-heading font-bold">Comprovantes</h3>
+        <p class="mt-1 text-sm text-fg-muted">Gere a 2ª via do comprovante</p>
+        <span class="mt-3 inline-block text-sm font-bold text-ink">Gerar comprovante</span>
+      </a>
+    </div>
+  </section>
+
+  <hr class="ids-divider">
+
+  <!-- =======================================================================
+       CARD PRODUCTS — carousel-ish row with the iDS pagination dots
+       ======================================================================= -->
+  <section aria-labelledby="cartoes">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <h2 id="cartoes" class="font-heading text-2xl font-bold tracking-tight text-heading">
+        Cartões de crédito mais pedidos
+      </h2>
+      <div class="ids-dots" role="tablist" aria-label="Página de cartões">
+        <button class="ids-dot" role="tab" aria-selected="true" aria-label="Página 1"></button>
+        <button class="ids-dot" role="tab" aria-selected="false" aria-label="Página 2"></button>
+        <button class="ids-dot" role="tab" aria-selected="false" aria-label="Página 3"></button>
+      </div>
+    </div>
+
+    <div class="mt-5 grid gap-4 md:grid-cols-3">
+      <article data-slot="card" class="ids-card--selected flex flex-col rounded-xl border bg-card p-5" aria-current="true">
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="font-heading text-lg font-bold">Azul Infinite</h3>
+          <!-- A selected badge: the ONE place `selected` earns its own colour
+               on this page, marking the recommended card. -->
+          <span data-slot="badge" class="rounded-sm bg-selected px-2 py-0.5 text-xs font-bold text-on-selected">mais pedido</span>
+        </div>
+        <p class="mt-2 text-sm text-fg-muted">Acúmulo de pontos no programa TudoAzul e sala VIP.</p>
+        <dl class="mt-4 space-y-1 text-sm">
+          <div class="flex justify-between"><dt class="text-fg-muted">Anuidade</dt><dd class="font-bold">12x R$ 96,00</dd></div>
+          <div class="flex justify-between"><dt class="text-fg-muted">Pontos</dt><dd class="font-bold">2,2 por dólar</dd></div>
+        </dl>
+        <button data-slot="button" class="mt-5 inline-flex h-11 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground hover:bg-primary-hover active:bg-primary-active">
+          Pedir cartão
+        </button>
+      </article>
+
+      <article data-slot="card" class="flex flex-col rounded-xl border border-border bg-card p-5">
+        <h3 class="font-heading text-lg font-bold">LATAM Pass Black</h3>
+        <p class="mt-2 text-sm text-fg-muted">Pontos que não expiram e prioridade no embarque.</p>
+        <dl class="mt-4 space-y-1 text-sm">
+          <div class="flex justify-between"><dt class="text-fg-muted">Anuidade</dt><dd class="font-bold">12x R$ 128,00</dd></div>
+          <div class="flex justify-between"><dt class="text-fg-muted">Pontos</dt><dd class="font-bold">2,5 por dólar</dd></div>
+        </dl>
+        <button data-slot="button" class="ids-btn-secondary mt-5 inline-flex h-11 items-center justify-center rounded-lg text-sm font-bold">
+          Comparar
+        </button>
+      </article>
+
+      <article data-slot="card" class="flex flex-col rounded-xl border border-border bg-card p-5">
+        <h3 class="font-heading text-lg font-bold">Azul Visa Platinum</h3>
+        <p class="mt-2 text-sm text-fg-muted">Entrada no programa com anuidade reduzida.</p>
+        <dl class="mt-4 space-y-1 text-sm">
+          <div class="flex justify-between"><dt class="text-fg-muted">Anuidade</dt><dd class="font-bold">12x R$ 47,00</dd></div>
+          <div class="flex justify-between"><dt class="text-fg-muted">Pontos</dt><dd class="font-bold">1,5 por dólar</dd></div>
+        </dl>
+        <button data-slot="button" class="ids-btn-secondary mt-5 inline-flex h-11 items-center justify-center rounded-lg text-sm font-bold">
+          Comparar
+        </button>
+      </article>
+    </div>
+  </section>
+
+  <hr class="ids-divider">
+
+  <!-- =======================================================================
+       STATUS — the four feedback roles, verbatim from ids feedback_*
+       ======================================================================= -->
+  <section aria-labelledby="avisos">
+    <h2 id="avisos" class="font-heading text-2xl font-bold tracking-tight text-heading">Avisos da conta</h2>
+    <div class="mt-5 grid gap-3">
+      <div data-slot="alert" role="status" class="flex gap-3 rounded-lg border border-l-4 border-border border-l-info bg-info-subtle p-4">
+        <span class="font-bold text-fg-info">Informação</span>
+        <p class="text-sm">Sua fatura de agosto fecha em 3 dias.</p>
+      </div>
+      <div data-slot="alert" role="status" class="flex gap-3 rounded-lg border border-l-4 border-border border-l-success bg-success-subtle p-4">
+        <span class="font-bold text-fg-success">Tudo certo</span>
+        <p class="text-sm">Pagamento de R$ 1.240,00 confirmado.</p>
+      </div>
+      <div data-slot="alert" role="status" class="flex gap-3 rounded-lg border border-l-4 border-border border-l-warning bg-warning-subtle p-4">
+        <span class="font-bold text-fg-warning">Atenção</span>
+        <p class="text-sm">Seu limite disponível está abaixo de 20%.</p>
+      </div>
+      <div data-slot="alert" role="alert" class="flex gap-3 rounded-lg border border-l-4 border-border border-l-destructive bg-danger-subtle p-4">
+        <span class="font-bold text-fg-danger">Não foi possível</span>
+        <p class="text-sm">O débito automático de ontem não foi processado.</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="ids-divider">
+
+  <!-- =======================================================================
+       TABLE — a statement
+       ======================================================================= -->
+  <section aria-labelledby="extrato">
+    <h2 id="extrato" class="font-heading text-2xl font-bold tracking-tight text-heading">Extrato</h2>
+    <div class="mt-5 overflow-x-auto rounded-xl border border-border bg-card">
+      <table data-slot="table" class="w-full text-sm">
+        <thead class="bg-sunken text-left">
+          <tr>
+            <th class="px-4 py-3 font-bold">Data</th>
+            <th class="px-4 py-3 font-bold">Descrição</th>
+            <th class="px-4 py-3 font-bold">Categoria</th>
+            <th class="px-4 py-3 text-right font-bold">Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-t border-border hover:bg-surface-hover">
+            <td class="px-4 py-3 tabular-nums">06/08</td>
+            <td class="px-4 py-3">Pix enviado — M. Almeida</td>
+            <td class="px-4 py-3"><span class="rounded-sm bg-sunken px-2 py-0.5 text-xs">Transferência</span></td>
+            <td class="px-4 py-3 text-right tabular-nums text-fg-danger">−R$ 320,00</td>
+          </tr>
+          <tr class="border-t border-border hover:bg-surface-hover">
+            <td class="px-4 py-3 tabular-nums">05/08</td>
+            <td class="px-4 py-3">Salário</td>
+            <td class="px-4 py-3"><span class="rounded-sm bg-sunken px-2 py-0.5 text-xs">Provento</span></td>
+            <td class="px-4 py-3 text-right tabular-nums text-fg-success">+R$ 8.400,00</td>
+          </tr>
+          <tr class="border-t border-border hover:bg-surface-hover">
+            <td class="px-4 py-3 tabular-nums">04/08</td>
+            <td class="px-4 py-3">Fatura cartão Azul Infinite</td>
+            <td class="px-4 py-3"><span class="rounded-sm bg-sunken px-2 py-0.5 text-xs">Cartão</span></td>
+            <td class="px-4 py-3 text-right tabular-nums text-fg-danger">−R$ 2.115,49</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="ids-divider">
+
+  <!-- =======================================================================
+       CONTROLS — the states a bank form actually needs
+       ======================================================================= -->
+  <section aria-labelledby="controles">
+    <h2 id="controles" class="font-heading text-2xl font-bold tracking-tight text-heading">Preferências</h2>
+
+    <div class="mt-5 grid gap-6 md:grid-cols-2">
+      <div data-slot="card" class="rounded-xl border border-border bg-card p-5">
+        <h3 class="font-heading font-bold">Notificações</h3>
+
+        <div class="mt-4 flex items-center justify-between gap-4">
+          <span class="text-sm">Avisos de compra no cartão</span>
+          <button data-slot="switch" type="button" role="switch" aria-checked="true" data-state="checked"
+                  class="inline-flex h-6 w-11 items-center rounded-full bg-selected p-0.5">
+            <span class="size-5 rounded-full bg-card transition-transform translate-x-5"></span>
+          </button>
+        </div>
+
+        <div class="mt-3 flex items-center justify-between gap-4">
+          <span class="text-sm">Resumo semanal por e-mail</span>
+          <button data-slot="switch" type="button" role="switch" aria-checked="false" data-state="unchecked"
+                  class="inline-flex h-6 w-11 items-center rounded-full bg-sunken p-0.5">
+            <span class="size-5 rounded-full bg-card transition-transform"></span>
+          </button>
+        </div>
+
+        <!-- aria-disabled on the ROW, not just the control. The label is part of
+             the inactive component, and WCAG exempts the component. -->
+        <div class="mt-3 flex items-center justify-between gap-4" aria-disabled="true">
+          <span class="text-sm text-fg-disabled">Extrato impresso</span>
+          <button data-slot="switch" type="button" role="switch" aria-checked="false" data-state="unchecked" disabled
+                  class="inline-flex h-6 w-11 items-center rounded-full bg-disabled p-0.5">
+            <span class="size-5 rounded-full bg-card"></span>
+          </button>
+        </div>
+      </div>
+
+      <div data-slot="card" class="rounded-xl border border-border bg-card p-5">
+        <h3 class="font-heading font-bold">Limite do Pix por transação</h3>
+
+        <div class="ids-field mt-4">
+          <label class="ids-field__label" for="limite">Valor</label>
+          <input class="ids-field__input" id="limite" inputmode="decimal" value="5.000,00">
+        </div>
+
+        <div class="ids-field mt-4">
+          <label class="ids-field__label" for="periodo">Período</label>
+          <input class="ids-field__input" id="periodo" value="Das 20h às 6h" disabled>
+          <p class="ids-field__message">Alterável apenas pelo app, por segurança.</p>
+        </div>
+
+        <div class="mt-5 flex gap-3">
+          <button data-slot="button" class="inline-flex h-11 items-center justify-center rounded-lg bg-primary px-5 text-sm font-bold text-primary-foreground hover:bg-primary-hover active:bg-primary-active">
+            Salvar
+          </button>
+          <button data-slot="button" class="ids-btn-text inline-flex h-11 items-center justify-center rounded-lg px-5 text-sm font-bold">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="ids-divider">
+
+  <!-- =======================================================================
+       ACCORDION — Radix's data-state on a disclosure
+       ======================================================================= -->
+  <section aria-labelledby="duvidas">
+    <h2 id="duvidas" class="font-heading text-2xl font-bold tracking-tight text-heading">Dúvidas frequentes</h2>
+    <div data-slot="accordion" class="mt-5 rounded-xl border border-border bg-card">
+      <details data-slot="accordion-item" class="ids-disclosure" open>
+        <summary data-slot="accordion-trigger" class="ids-disclosure__trigger">
+          Como emito a 2ª via de um boleto?
+        </summary>
+        <div data-slot="accordion-content" class="px-5 pb-4 text-sm text-fg-muted">
+          No app, entre em <span class="font-bold text-fg">Pagamentos &rsaquo; Boletos</span> e escolha o boleto
+          desejado. A 2ª via é gerada com a data de vencimento atualizada.
+        </div>
+      </details>
+      <details data-slot="accordion-item" class="ids-disclosure">
+        <summary data-slot="accordion-trigger" class="ids-disclosure__trigger">
+          Onde encontro o código do operador?
+        </summary>
+        <div data-slot="accordion-content" class="px-5 pb-4 text-sm text-fg-muted">
+          É o número de três dígitos definido na abertura da conta. Se não lembrar,
+          use o acesso por CPF.
+        </div>
+      </details>
+      <details data-slot="accordion-item" class="ids-disclosure">
+        <summary data-slot="accordion-trigger" class="ids-disclosure__trigger">
+          Posso alterar o limite do Pix pelo site?
+        </summary>
+        <div data-slot="accordion-content" class="px-5 pb-4 text-sm text-fg-muted">
+          O valor sim; a janela de horário só pelo app, por exigência de segurança.
+        </div>
+      </details>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================================
+     FOOTER — the neutral surface
+     ========================================================================= -->
+<footer data-surface="sunken" class="mt-12 border-t border-border bg-sunken">
+  <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
+    <div>
+      <span class="font-heading text-lg font-bold">itaú</span>
+      <p class="mt-2 text-sm text-fg-muted">
+        Reprodução de estudo do iDS. Não é um site do Itaú Unibanco.
+      </p>
+    </div>
+    <nav aria-label="Produtos">
+      <h3 class="font-bold">Produtos</h3>
+      <ul class="mt-2 space-y-1 text-sm">
+        <li><a href="#" class="text-ink hover:underline">Conta-corrente</a></li>
+        <li><a href="#" class="text-ink hover:underline">Cartões</a></li>
+        <li><a href="#" class="text-ink hover:underline">Investimentos</a></li>
+        <li><a href="#" class="text-ink hover:underline">Consórcio</a></li>
+      </ul>
+    </nav>
+    <nav aria-label="Ajuda">
+      <h3 class="font-bold">Ajuda</h3>
+      <ul class="mt-2 space-y-1 text-sm">
+        <li><a href="#" class="text-ink hover:underline">Atendimento</a></li>
+        <li><a href="#" class="text-ink hover:underline">Renegociação</a></li>
+        <li><a href="#" class="text-ink hover:underline">Ouvidoria</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h3 class="font-bold">Aplicativos</h3>
+      <p class="mt-2 text-sm text-fg-muted">Resolva tudo pelos apps do banco.</p>
+      <button data-slot="button" class="ids-btn-secondary mt-3 inline-flex h-10 items-center justify-center rounded-lg px-4 text-sm font-bold">
+        Baixar app
+      </button>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

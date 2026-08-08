@@ -1,0 +1,356 @@
+// =============================================================================
+// ITAÚ — the product's own layer
+// =============================================================================
+//
+// shadcn is copied source, not a dependency, so this file is in an unusual
+// position for a phase 3 product: there is no vendor CSS to lose a specificity
+// fight with. Everything below either COMPOSES shadcn's class strings into a
+// shape iDS has and shadcn does not, or reaches a semantic role shadcn's own
+// variables cannot name.
+//
+// -----------------------------------------------------------------------------
+// THREE MECHANISMS, IN ORDER OF PREFERENCE
+// -----------------------------------------------------------------------------
+//
+// The interesting thing this file demonstrates is not the CSS — it is which
+// mechanism each problem got solved with, because reaching for the wrong one is
+// how a product layer turns into a second design system.
+//
+//   1. A THEME VALUE. Preferred, always. `bg-action-subtle` is navy here rather
+//      than a pale orange, and that one line gives every quiet action in the
+//      product its hover without a rule being written.
+//
+//   2. A CONTEXT. The on-brand band is not a button variant — it is a region
+//      where the interactive ink becomes white. Written as a context, ONE set
+//      of token overrides re-colours every control inside it. Written as
+//      variants, it would be a `--on-brand` class on every component, which is
+//      what iDS itself had to do and what this foundation exists to avoid.
+//
+//   3. A LAYER 3 HOOK. Only where the value is component ANATOMY with no
+//      semantic equivalent: the focused field's rule is orange while every
+//      other action outline in this brand is navy, so `field-border-color-focus`
+//      earns its reserved name.
+//
+// What is NOT in here: a colour override. Not one. If a rule below had to name
+// a colour that the theme could not supply, the theme would be wrong.
+// =============================================================================
+
+@use '../../src/core';
+@use '../../src/component';
+@use 'palette';
+
+// -----------------------------------------------------------------------------
+// Layer 3 — two reserved names, both earned
+// -----------------------------------------------------------------------------
+//
+// Every other example leaves layer 3 emitting nothing. This one sets two
+// groups, and each has to pass the admission test rather than being convenient.
+//
+// THE FOCUSED FIELD RULE. iDS turns the underline ORANGE on focus — measured:
+// `.ids-input:focus { --ids-input-border-color: var(--ids_color_action_primary_base) }`.
+// Every other outline in this brand is navy, so the semantic default
+// (`border-action`) is wrong for exactly this one part. That is admission test
+// 3: component anatomy with no semantic equivalent. The name was already
+// reserved, which is the whole point of reserving names before they are needed.
+//
+// THE CHART SERIES. iDS publishes a fixed categorical palette. Layer 2 rightly
+// has no scale for it — "series 3" carries no intent — so the values belong
+// here.
+@mixin component-tokens() {
+  @include core.in-layer('ds.component') {
+    :root {
+      #{core.var-name('field-border-color-focus')}: #{core.ref('bg-action')};
+
+      #{core.var-name('chart-1')}: #{palette.chart(1)};
+      #{core.var-name('chart-2')}: #{palette.chart(2)};
+      #{core.var-name('chart-3')}: #{palette.chart(3)};
+      #{core.var-name('chart-4')}: #{palette.chart(4)};
+      #{core.var-name('chart-5')}: #{palette.chart(5)};
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// The brand context
+// -----------------------------------------------------------------------------
+//
+// iDS ships an `--on-brand` modifier on every interactive component:
+// `.ids-main-button--on-brand`, `.ids-action-button--on-brand`,
+// `.ids-contextual-button--on-brand`, `.ids-icon-button--on-brand`. Four
+// classes saying the same thing, and a fifth needed the day a fifth component
+// appears.
+//
+// It is one statement here. Inside the orange band the interactive ink is
+// white and its wash is a 10% white; everything else — radius, spacing, type,
+// the status roles — inherits. Nothing below has an on-brand variant, and
+// nothing will need one.
+//
+// This is also the fix for a bug the reviewer caught: the on-brand hover was
+// going DARKER (a deeper orange) when iDS goes lighter (a white wash). Written
+// as a variant it was a second place to get the direction wrong. Written as a
+// context there is only one direction, and it belongs to the token.
+@mixin contexts() {
+  @include core.in-layer('ds.semantic') {
+    @include core.context(
+      '[data-surface="brand"]',
+      (
+        'fg-default': palette.grey(0),
+        'fg-heading': palette.grey(0),
+        // The action role's INK and LINE go white; its solid fill is not used
+        // on top of itself, so `bg-action` is deliberately left alone.
+        'fg-action': palette.grey(0),
+        'border-action': palette.grey(0),
+        // ids contrast_onBrand_primary_soft. Stays translucent: a context is
+        // not measured by the pair gate, and over a known band an alpha is
+        // more faithful than a flattened guess.
+        'bg-action-subtle': palette.$on-brand-soft,
+        'fg-link': palette.grey(0),
+        'fg-link-hover': palette.grey(0)
+      )
+    );
+  }
+}
+
+@mixin emit() {
+  @layer components {
+    // -----------------------------------------------------------------
+    // The field — an underline, not a box
+    // -----------------------------------------------------------------
+    //
+    // Measured on the live page: `.ids-input` has a single bottom rule and a
+    // 4px top-corner radius. On focus iDS thickens it AND turns it orange,
+    // through its own component variable — the same mechanism as layer 3,
+    // arrived at independently.
+    .ids-field {
+      display: flex;
+      flex-direction: column;
+      gap: var(--app-space-2xs);
+    }
+
+    .ids-field__label {
+      font-size: var(--app-font-size-sm);
+      color: var(--app-fg-muted);
+    }
+
+    .ids-field__input {
+      width: 100%;
+      background: transparent;
+      color: var(--app-fg-default);
+      font: inherit;
+      padding: var(--app-space-xs) var(--app-space-xs) var(--app-space-sm);
+      border: 0;
+      border-bottom: var(--app-border-width) solid var(--app-border-color-strong);
+      border-radius: var(--app-radius-control-sm) var(--app-radius-control-sm) 0 0;
+      outline: none;
+      // The caret is the brand's attention colour, not the text colour. Reads
+      // layer 2 directly rather than taking a reserved name: nobody overrides
+      // one field's caret, so it fails the layer 3 admission test.
+      caret-color: var(--app-bg-action);
+    }
+
+    .ids-field__input::placeholder {
+      color: var(--app-fg-subtlest);
+    }
+
+    // Thicker AND orange. The colour comes from the layer 3 hook, so a product
+    // that wants the navy back changes one variable instead of this rule.
+    .ids-field__input:focus-visible {
+      border-bottom-width: 2px;
+      border-bottom-color: var(--app-field-border-color-focus, var(--app-border-action));
+      background: var(--app-bg-surface-hover);
+    }
+
+    .ids-field__input:disabled {
+      background: var(--app-bg-disabled);
+      color: var(--app-fg-disabled);
+      border-bottom-color: var(--app-border-color);
+      cursor: not-allowed;
+    }
+
+    .ids-field__message {
+      font-size: var(--app-font-size-sm);
+      color: var(--app-fg-muted);
+    }
+
+    .ids-field--invalid .ids-field__input {
+      border-bottom-color: var(--app-border-danger);
+      border-bottom-width: 2px;
+    }
+
+    .ids-field--invalid .ids-field__message {
+      color: var(--app-fg-danger);
+    }
+
+    // -----------------------------------------------------------------
+    // The secondary and text actions
+    // -----------------------------------------------------------------
+    //
+    // Three ways a brand can render a secondary action, all legitimate, and a
+    // generator has to reach all three rather than pick one:
+    //
+    //   a  a lighter tone of the primary  ->  bg-action-subtle + fg-action
+    //   b  a neutral                      ->  bg-neutral + fg-on-neutral
+    //   c  the brand's second colour      ->  the same two tokens, pointed at
+    //                                         a different hue in the theme
+    //
+    // Itaú is (c), and the rules below are IDENTICAL to what (a) would be. The
+    // difference lives entirely in `theme.scss`, where `action-subtle` is navy
+    // and `action-text` is navy. That is the test this example was built to
+    // run: swapping between the three approaches must not touch the product
+    // layer, and it does not.
+    //
+    // `currentColor` on the border is how iDS does it and why its hover rule is
+    // one declaration: change the ink and the line follows. Writing the border
+    // colour separately would be two places to keep in step.
+    .ids-btn-secondary {
+      background: transparent;
+      color: var(--app-fg-action);
+      border: var(--app-border-width) solid currentColor;
+    }
+
+    .ids-btn-secondary:hover,
+    .ids-btn-secondary:focus-visible {
+      background: var(--app-bg-action-subtle);
+      color: var(--app-fg-link-hover);
+    }
+
+    .ids-btn-text {
+      background: transparent;
+      color: var(--app-fg-action);
+      border: 0;
+    }
+
+    .ids-btn-text:hover,
+    .ids-btn-text:focus-visible {
+      color: var(--app-fg-link-hover);
+      text-decoration: underline;
+    }
+
+    // No on-brand variant for either. The context above already re-pointed
+    // `fg-action`, `fg-link-hover` and `bg-action-subtle`, so both rules render
+    // white ink over a white wash inside the band with nothing added here.
+
+    // -----------------------------------------------------------------
+    // Cards
+    // -----------------------------------------------------------------
+    //
+    // Two states, and they are DIFFERENT roles — which is the correction the
+    // reviewer's note prompted. Reading iDS:
+    //
+    //     a.ids-card:hover      { background: action_neutral_base_soft }   grey
+    //     .ids-card.-selected   { border: 2px solid action_primary_base }  orange
+    //
+    // So hover is a neutral wash and only SELECTION takes the brand colour. A
+    // hovered card and a chosen card mean different things, and painting both
+    // orange would erase the difference — which is exactly the `selected`
+    // discipline this foundation argues for, shipped by a bank.
+    .ids-card-interactive {
+      transition: background-color var(--app-duration-fast) var(--app-ease);
+    }
+
+    .ids-card-interactive:hover,
+    .ids-card-interactive:focus-visible {
+      background: var(--app-bg-surface-hover);
+    }
+
+    // The brand's attention ink, on the icon inside a hovered card. iDS turns
+    // its icons `action_primary_variant`; `fg-selected` is that role's readable
+    // ink step, and it is already AA on every surface in this theme.
+    .ids-card-interactive:hover .ids-card-icon {
+      color: var(--app-fg-selected);
+    }
+
+    .ids-card--selected {
+      border-width: 2px;
+      border-color: var(--app-border-selected);
+    }
+
+    // -----------------------------------------------------------------
+    // Tabs
+    // -----------------------------------------------------------------
+    .ids-tabs {
+      display: flex;
+      gap: var(--app-space-lg);
+      border-bottom: var(--app-border-width) solid var(--app-border-color);
+    }
+
+    .ids-tab {
+      padding: var(--app-space-sm) 0;
+      color: var(--app-fg-muted);
+      font-weight: var(--app-font-weight-heading);
+      background: none;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      margin-bottom: calc(var(--app-border-width) * -1);
+      cursor: pointer;
+    }
+
+    .ids-tab:hover {
+      color: var(--app-fg-default);
+    }
+
+    .ids-tab[aria-selected='true'] {
+      color: var(--app-fg-default);
+      border-bottom-color: var(--app-border-selected);
+    }
+
+    // -----------------------------------------------------------------
+    // Disclosure
+    // -----------------------------------------------------------------
+    //
+    // The rule under a hovered row darkens. `border-color-strong` is the third
+    // step of the line ladder and exists for exactly this — emphasis on a
+    // divider, without reaching for a brand colour a disclosure has no claim to.
+    .ids-disclosure {
+      border-bottom: var(--app-border-width) solid var(--app-border-color);
+    }
+
+    .ids-disclosure:last-child {
+      border-bottom: 0;
+    }
+
+    .ids-disclosure__trigger {
+      cursor: pointer;
+      padding: var(--app-space-md) var(--app-space-lg);
+      font-weight: var(--app-font-weight-heading);
+    }
+
+    .ids-disclosure:hover {
+      border-bottom-color: var(--app-border-color-strong);
+    }
+
+    .ids-disclosure__trigger:hover {
+      background: var(--app-bg-surface-hover);
+    }
+
+    // -----------------------------------------------------------------
+    // Components shadcn does not ship
+    // -----------------------------------------------------------------
+    .ids-dots {
+      display: flex;
+      gap: var(--app-space-xs);
+      align-items: center;
+    }
+
+    .ids-dot {
+      width: 6px;
+      height: 6px;
+      padding: 0;
+      border-radius: var(--app-radius-pill);
+      background: transparent;
+      border: var(--app-border-width) solid var(--app-fg-default);
+      cursor: pointer;
+    }
+
+    .ids-dot[aria-selected='true'] {
+      background: var(--app-fg-default);
+    }
+
+    // 2px, not a hairline — iDS `size_border_medium`.
+    .ids-divider {
+      border: 0;
+      border-top: 2px solid var(--app-border-color);
+      margin: var(--app-space-lg) 0;
+    }
+  }
+}

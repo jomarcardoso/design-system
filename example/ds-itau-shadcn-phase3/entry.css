@@ -1,0 +1,160 @@
+/* =============================================================================
+ * ITAÚ — Tailwind entry, with shadcn/ui's theme bridge
+ * =============================================================================
+ *
+ *     npx @tailwindcss/cli -i example/ds-itau-shadcn-phase3/entry.css \
+ *                          -o example/ds-itau-shadcn-phase3/tw.css
+ *
+ * This is shadcn's own `globals.css` with one difference: the `:root` block
+ * that normally holds ~30 literal oklch values is GONE. Those values arrive
+ * from `ds.css`, emitted by `src/adapters/_shadcn.scss`, so this file holds
+ * only the bridge.
+ *
+ * That deletion is the whole integration. A stock shadcn project has its
+ * palette written twice — once in `:root` for light, once in `.dark` — and
+ * every theme is a fork of both blocks. Here there is one source, it is
+ * `theme.scss`, and adding a second theme changes nothing in this file.
+ *
+ * -----------------------------------------------------------------------------
+ * WHY `@theme inline` AND NOT `@theme`
+ * -----------------------------------------------------------------------------
+ *
+ * With plain `@theme`, Tailwind resolves the value at BUILD time and bakes it
+ * into every utility — so `bg-primary` would freeze whatever `--primary` was
+ * when the CSS compiled, and a runtime theme swap would move nothing. With
+ * `inline`, the generated utility keeps the `var()` reference:
+ *
+ *     .bg-primary { background-color: var(--primary) }
+ *
+ * …so it follows `[data-theme]` and every nested context. shadcn uses `inline`
+ * for exactly this reason, and it is the same reason `tailwind.css` at the repo
+ * root does.
+ * ============================================================================= */
+
+@import 'tailwindcss';
+
+/* shadcn's contract. Every name here is one its components read; the values
+ * come from the adapter, which points them at layer 2. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  /* THE HOVER AND PRESSED STEPS, and the reason they are here is a bug.
+   *
+   * shadcn's own Button writes `hover:bg-primary/90` — an OPACITY on the fill,
+   * because its contract publishes no hover token. That is a fake hover: it
+   * fades the button towards whatever is behind it rather than moving it along
+   * a ramp somebody chose, and on a coloured surface it goes the wrong way
+   * entirely.
+   *
+   * Layer 2 has had `bg-action-hover` and `bg-action-active` all along. All
+   * that was missing was a utility to reach them, so the markup reached for
+   * `/90` instead. Publishing them here is a two-line fix that removes every
+   * opacity hack from the page. */
+  --color-primary-hover: var(--app-bg-action-hover);
+  --color-primary-active: var(--app-bg-action-active);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* shadcn derives its four radii from one value. `--radius` comes from
+   * `radius-control`, so the whole scale follows the product's shape. */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Not part of shadcn, and the reason is worth stating: shadcn has no
+   * typography contract at all — it uses Tailwind's default `font-sans`. A
+   * product with brand faces has nowhere to put them, so these three bridge
+   * layer 2 directly. That is the Tailwind bridge doing its job, not an
+   * adapter overstepping: it publishes OUR vocabulary, it does not translate
+   * shadcn's. */
+  --font-sans: var(--app-font-family-body);
+  --font-heading: var(--app-font-family-heading);
+  --font-mono: var(--app-font-family-mono);
+}
+
+/* Roles shadcn's contract cannot name.
+ *
+ * shadcn models one status (`destructive`) and no selection, no link, no
+ * neutral-as-a-fill. Those are real roles this product uses, so they are
+ * published as utilities straight from layer 2 rather than being squeezed into
+ * a shadcn name that means something else — which is how `--accent` ends up
+ * holding a brand colour and every dropdown turns orange. */
+@theme inline {
+  --color-page: var(--app-bg-page);
+  --color-surface: var(--app-bg-surface);
+  --color-surface-hover: var(--app-bg-surface-hover);
+  --color-sunken: var(--app-bg-sunken);
+
+  --color-fg: var(--app-fg-default);
+  --color-fg-muted: var(--app-fg-muted);
+  --color-fg-subtlest: var(--app-fg-subtlest);
+  --color-heading: var(--app-fg-heading);
+
+  /* The navy. `ink` rather than `secondary`, deliberately: this brand uses one
+   * navy for links, outline buttons and text buttons alike, and naming it
+   * after any one of those jobs would mislead at the other two. */
+  --color-ink: var(--app-fg-action);
+  --color-ink-hover: var(--app-fg-link-hover);
+  --color-line-ink: var(--app-border-action);
+
+  --color-selected: var(--app-bg-selected);
+  --color-on-selected: var(--app-fg-on-selected);
+  --color-selected-subtle: var(--app-bg-selected-subtle);
+  /* The selection role as INK. Missing until an icon that should have turned
+   * orange on card hover rendered black instead — a Tailwind class with no
+   * matching theme key generates no rule and fails silently. */
+  --color-fg-selected: var(--app-fg-selected);
+
+  --color-neutral: var(--app-bg-neutral);
+  --color-on-neutral: var(--app-fg-on-neutral);
+
+  --color-success: var(--app-bg-success);
+  --color-warning: var(--app-bg-warning);
+  --color-info: var(--app-bg-info);
+  --color-success-subtle: var(--app-bg-success-subtle);
+  --color-warning-subtle: var(--app-bg-warning-subtle);
+  --color-danger-subtle: var(--app-bg-danger-subtle);
+  --color-info-subtle: var(--app-bg-info-subtle);
+  --color-fg-success: var(--app-fg-success);
+  --color-fg-warning: var(--app-fg-warning);
+  --color-fg-danger: var(--app-fg-danger);
+  --color-fg-info: var(--app-fg-info);
+
+  --color-disabled: var(--app-bg-disabled);
+  --color-fg-disabled: var(--app-fg-disabled);
+}

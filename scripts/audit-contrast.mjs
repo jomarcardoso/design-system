@@ -44,6 +44,12 @@ const PAGES = [
   // gets caught.
   { path: 'ds-carmageddon-nescss-phase3/docs.html', themes: ['carmageddon'] },
   { path: 'ds-meu-caderninho-daisyui-phase3/', themes: ['caderninho'] },
+  // Floor 3, not 4.5, and it matches `config.$contrast-min` in that
+  // product's ds.scss. The brand's primary fill is #FF6200 with a white label
+  // — 3.00:1, which is AA for the large bold type the button actually uses and
+  // is a decision the bank shipped. Recorded in two places on purpose: a build
+  // gate and a rendered gate that disagree are worse than either alone.
+  { path: 'ds-itau-shadcn-phase3/', themes: ['itau'], min: 3 },
   { path: 'ds-meu-caderninho-daisyui-phase3/docs.html', themes: ['caderninho'] }
 ];
 
@@ -115,7 +121,19 @@ export const SNIPPET = `(() => {
 
     // WCAG 1.4.3 exempts disabled controls, and every library deliberately
     // dims them. Measuring them turns a design decision into a false alarm.
-    if (el.disabled || el.getAttribute('aria-disabled') === 'true') continue;
+    // …and that check has to walk ANCESTORS, not just the element.
+    //
+    // The first version looked only at the element itself, so a disabled
+    // <input> was skipped and the <span> next to it holding the label was not.
+    // The Itaú page has exactly that shape — a switch row where the control is
+    // disabled and the text beside it is styled with the disabled ink — and the
+    // audit reported the LABEL at 2.85:1 as a failure. WCAG exempts the whole
+    // inactive component, not just the focusable node inside it.
+    let inactive = false;
+    for (let n = el; n; n = n.parentElement) {
+      if (n.disabled || n.getAttribute?.('aria-disabled') === 'true') { inactive = true; break; }
+    }
+    if (inactive) continue;
 
     const parent = el.parentElement;
     const parentBg = parent ? getComputedStyle(parent).backgroundColor : '';
@@ -161,7 +179,7 @@ export const SNIPPET = `(() => {
 
   return { theme: document.documentElement.dataset.theme, measured: out.length,
            styled, worst: out.slice(0, 6),
-           allPassAA: styled && out.every((x) => x.ratio >= 4.5) };
+           worstRatio: out.length ? out[0].ratio : null };
 })()`;
 
 let puppeteer;
@@ -264,14 +282,20 @@ for (const entry of PAGES) {
       if (fingerprint === previous) break;
       previous = fingerprint;
     }
-    const mark = r.allPassAA ? 'ok ' : 'FAIL';
-    console.log(`  ${mark} ${label.padEnd(30)} ${theme.padEnd(9)} ${String(r.measured).padStart(3)} fills, worst ${r.worst[0]?.ratio ?? '-'}`);
+    // The floor is the PAGE's, not a constant. A product that lowered
+    // `config.$contrast-min` for a recorded reason would otherwise fail here
+    // for the same pair its own build deliberately accepts — two gates
+    // disagreeing about the same decision, which teaches people to ignore one.
+    const min = (typeof entry === 'string' ? 4.5 : entry.min) ?? 4.5;
+    const pass = r.styled && r.worstRatio !== null && r.worstRatio >= min;
+    const mark = pass ? 'ok ' : 'FAIL';
+    console.log(`  ${mark} ${label.padEnd(30)} ${theme.padEnd(9)} ${String(r.measured).padStart(3)} fills, worst ${r.worst[0]?.ratio ?? '-'}${min !== 4.5 ? ` (floor ${min})` : ''}`);
 
     if (!r.styled) {
       failures++;
       console.log(`        NO STYLESHEET — --app-bg-page is undefined at ${url}.`);
       console.log('        Nothing was measured; an unstyled page is black on white and passes everything.');
-    } else if (!r.allPassAA) {
+    } else if (!pass) {
       failures++;
       console.log('        ' + JSON.stringify(r.worst));
     }

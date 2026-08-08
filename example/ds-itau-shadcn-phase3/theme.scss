@@ -1,0 +1,247 @@
+// =============================================================================
+// ITAÚ — a theme reconstructed from a design system in production
+// =============================================================================
+//
+// Every value below was read out of iDS at runtime on itau.com.br, not
+// eyeballed from a screenshot. The variable it came from is named beside it.
+//
+// This is the most useful theme in the repository, because it is the first one
+// this foundation did not get to design. Three things it settled:
+//
+//   1. `primary`/`secondary` are not roles. iDS calls its category `action` —
+//      the same word this foundation uses — and primary/secondary/neutral/
+//      disabled are EMPHASIS RANKS inside it. See the mapping below.
+//
+//   2. iDS has NO selection token. Nothing in its 383 published variables
+//      matches select/active/checked/current. Selection is drawn with the
+//      primary orange, which is also what `text_highlight` is.
+//
+//   3. The brand's primary fill measures 3.00:1 against its own white label.
+//      That is a real, deliberate, shipped decision by a bank, and it is why
+//      `ds.scss` lowers the contrast floor with the reason recorded. See there.
+//
+// -----------------------------------------------------------------------------
+// THE MAPPING, AND WHY "SECONDARY" NEEDED NO NEW TOKEN
+// -----------------------------------------------------------------------------
+//
+//     iDS                              this contract
+//     ------------------------------   -----------------------------
+//     action.primary.base   #FF6200    bg-action          the FILL
+//     action.primary.variant #E55800   bg-action-hover
+//     action.primary.contrast #FFF     fg-on-action
+//     action.secondary.base #000066    fg-action + border-action   the INK
+//     action.secondary.variant #000D3C fg-link-hover
+//     text.link.base        #000066    fg-link
+//     action.neutral.base   #3B3B3B    bg-neutral
+//     action.disabled.*                bg-disabled / fg-disabled
+//     feedback.*                       the status family
+//     text.highlight        #FF6200    bg-selected / fg-selected
+//
+// The line worth stopping on is `action.secondary`. It looks like a second
+// brand colour and it is not: measured on the live page, every control that
+// uses it is TRANSPARENT with navy ink — `.ids-main-button--secondary` and
+// `.ids-contextual-button` are outlines, `.ids-action-button` and `.ids-link`
+// are text. So iDS's "secondary" is the OUTLINE AND TEXT TREATMENT of the
+// action role, which this contract already models as `fg-action` (the action
+// as ink) and `border-action` (the action as a line).
+//
+// `border-action` used to be hardcoded to the fill. Itaú is the first theme
+// where the outline is a different hue from the solid, and unhardcoding it was
+// the only change the foundation needed to express a production bank DS.
+// =============================================================================
+
+@use 'sass:map';
+@use 'palette';
+
+$itau: (
+  // --- Surfaces ---------------------------------------------------------
+  // iDS runs white -> #F1F2F4 -> #E3E5E8. Cards are white ON the light grey,
+  // so `page` is the grey and `surface` is the white — the opposite of the
+  // stock light theme, and the reason `bg-page` exists as its own role.
+  page: palette.grey(50),      // ids bg_variant_01
+  surface: palette.grey(0),    // ids bg_base
+  raised: palette.grey(0),
+  sunken: palette.grey(100),   // ids bg_variant_02
+  overlay: rgba(0, 0, 0, 0.5),
+
+  // A hovered row lands on the page tone; pressed goes one deeper. iDS has no
+  // token for either — it writes the greys inline in the components that need
+  // them, which is precisely the decision this foundation refuses to leave
+  // scattered.
+  'surface-hover': palette.grey(50),
+  'surface-active': palette.grey(100),
+
+  // --- Text -------------------------------------------------------------
+  text: palette.grey(1000),        // ids text_body_01
+  'text-muted': palette.grey(700), // ids text_body_02  (8.59:1 on white)
+  'text-subtlest': palette.grey(500), // 5.10:1 on white — still AA body text
+  heading: palette.grey(1000),     // ids text_heading_01
+
+  // --- Neutral emphasis --------------------------------------------------
+  // ids action_neutral: base #3B3B3B, variant #000000, contrast #FFF. The
+  // variant is pure black, so `-hover` takes an interpolated step and `-active`
+  // takes the published black — otherwise hover and pressed are the same.
+  neutral: palette.grey(800),
+  'on-neutral': palette.grey(0),
+  'neutral-hover': palette.grey(900),
+  'neutral-active': palette.grey(1000),
+
+  // --- Disabled -----------------------------------------------------------
+  disabled: palette.grey(200),      // ids action_disabled_base
+  'disabled-text': palette.grey(400), // ids action_disabled_variant
+
+  // --- Action: orange is the FILL ----------------------------------------
+  action: map.get(palette.$orange, base),
+  'on-action': palette.grey(0),
+  'action-hover': map.get(palette.$orange, variant),
+  'action-active': map.get(palette.$orange, pressed),
+  // NAVY, not a tint of the orange fill — and this is the most interesting
+  // line in the file.
+  //
+  // `bg-action-subtle` is "the quiet treatment of the action role". In most
+  // brands that is a tint of the solid fill. In this one the quiet treatment
+  // is a different HUE: iDS hovers its outline and text buttons with
+  // `action_secondary_base_soft`, a 10% navy, never with a pale orange.
+  //
+  // The contract survives that because these four are independent theme keys
+  // rather than derivations of one another: the action role here has an orange
+  // SOLID (white ink) and a navy QUIET treatment (navy ink). Four joints, four
+  // decisions, no new role.
+  'action-subtle': map.get(palette.$navy, soft),
+
+  // …and navy is the INK. This is iDS `action.secondary`, and it is the whole
+  // answer to "where does a secondary action get its colour" for this brand:
+  // not a second fill, a different treatment of the same role.
+  'action-text': map.get(palette.$navy, base),
+  'action-border': map.get(palette.$navy, base),
+
+  // --- Selected -----------------------------------------------------------
+  // iDS publishes no selection token, so this is the one role the
+  // reconstruction had to decide. `text_highlight` is #FF6200 — the same
+  // orange as the action fill — and the tab underline and chosen card border
+  // on the live site are orange too.
+  //
+  // So `selected` collapses onto `action` here, and `check-roles()` warns at
+  // build time. That warning is correct and the collapse is deliberate: this
+  // brand marks "chosen" with its primary colour. Recorded rather than
+  // silenced, which is the whole point of the check.
+  selected: map.get(palette.$orange, base),
+  'on-selected': palette.grey(0),
+  'selected-hover': map.get(palette.$orange, variant),
+  'selected-active': map.get(palette.$orange, pressed),
+  'selected-subtle': map.get(palette.$orange, tint),
+    // NOT the fill and not `variant`: both are too light to be read as words.
+  // See the `text` step in palette.scss.
+  'selected-text': map.get(palette.$orange, text),
+  // The chosen-item outline is orange, unlike the action outline, which is
+  // navy. Two roles, two lines — which only became sayable when
+  // `border-selected` stopped being an alias of the fill.
+  'selected-border': map.get(palette.$orange, base),
+
+  // --- Navigation ---------------------------------------------------------
+  // ids text_link_base / text_link_variant. Identical to `action-text`, and
+  // that is the brand's decision rather than a collapse this foundation made:
+  // in iDS, navy IS the interactive-ink colour, whether the thing navigates or
+  // acts.
+  link: map.get(palette.$navy, base),
+  'link-hover': map.get(palette.$navy, variant),
+  'link-visited': map.get(palette.$navy, pressed),
+
+  // --- Lines --------------------------------------------------------------
+  border: palette.grey(200),          // ids border_soft
+  'border-subtle': palette.grey(100),
+  'border-strong': palette.grey(600), // ids border_strong
+  ring: map.get(palette.$navy, base),
+
+  // --- Elevation ----------------------------------------------------------
+  // iDS cards are drawn with a 1px #CFD1D3 border and no shadow at rest. The
+  // shadow tokens still have to be defined — a theme is a complete set — so
+  // they take the small steps the floating surfaces use.
+  'shadow-raised': (0 1px 2px 0 rgba(0, 0, 0, 0.06)),
+  'shadow-overlay': (0 8px 24px -4px rgba(0, 0, 0, 0.16)),
+
+  // --- Status: verbatim from ids feedback_* -------------------------------
+  success: map.get(palette.$feedback, success),
+  'on-success': map.get(palette.$feedback, 'on-success'),
+  'success-hover': palette.feedback('success-hover'),
+  'success-active': palette.feedback('success-active'),
+  'success-subtle': palette.feedback('success-subtle'),
+  'success-text': map.get(palette.$feedback, success),
+  'success-border': palette.feedback('success-border'),
+
+  // iDS `feedback_alert` is #FFCC00 with BLACK text — the same inverted pair
+  // this foundation documents for amber in every theme, arrived at
+  // independently. And like every inverted pair, its states brighten rather
+  // than darken: black on #FFCC00 is 13.89:1, and darkening the fill would
+  // walk it towards its own label.
+  warning: map.get(palette.$feedback, alert),
+  'on-warning': map.get(palette.$feedback, 'on-alert'),
+  'warning-hover': palette.feedback('alert-hover'),
+  'warning-active': palette.feedback('alert-active'),
+  'warning-subtle': palette.feedback('alert-subtle'),
+  'warning-text': palette.feedback('alert-text'),
+  'warning-border': palette.feedback('alert-border'),
+
+  danger: map.get(palette.$feedback, error),
+  'on-danger': map.get(palette.$feedback, 'on-error'),
+  'danger-hover': palette.feedback('error-hover'),
+  'danger-active': palette.feedback('error-active'),
+  'danger-subtle': palette.feedback('error-subtle'),
+  'danger-text': map.get(palette.$feedback, error),
+  'danger-border': palette.feedback('error-border'),
+
+  info: map.get(palette.$feedback, information),
+  'on-info': map.get(palette.$feedback, 'on-information'),
+  'info-hover': palette.feedback('information-hover'),
+  'info-active': palette.feedback('information-active'),
+  'info-subtle': palette.feedback('information-subtle'),
+  'info-text': map.get(palette.$feedback, information),
+  'info-border': palette.feedback('information-border')
+);
+
+// -----------------------------------------------------------------------------
+// Structure — the parts of iDS that are not colour
+// -----------------------------------------------------------------------------
+//
+// Read from `--ids_size_cornerRadius_*` and `--ids_textStyle_*`.
+//
+// The two brand faces are "Itau Display" and "Itau Text", which are licensed
+// and not on the open web. The stacks below name them first so a machine with
+// them installed renders the real thing, and fall back to a grotesque with
+// similar metrics everywhere else. Naming a face you cannot serve is not a
+// mistake — pretending the fallback is the brand would be.
+$typography: (
+  'font-family-heading': ('Itau Display', 'Inter', 'Helvetica Neue', Arial, sans-serif),
+  'font-family-body': ('Itau Text', 'Inter', 'Helvetica Neue', Arial, sans-serif),
+  'font-family-display': ('Itau Display', 'Inter', 'Helvetica Neue', Arial, sans-serif),
+
+  // ids textStyle: body_01 16/24, body_02 14/20, caption 12/18.
+  'font-size': 1rem,
+  'font-size-sm': 0.875rem,
+  'line-height': 1.5,
+
+  // iDS headings are tight and heavy: the live h1 is 24px/700 in Itau Display,
+  // and the hero sizes step up from there.
+  'font-size-heading-sm': 1.25rem,
+  'font-size-heading': 1.5rem,
+  'font-size-heading-lg': 2rem,
+  'font-size-heading-xl': 2.5rem,
+  'font-weight-heading': 700,
+  'line-height-heading': 1.2,
+  'letter-spacing-heading': -0.01em,
+
+  // ids size_cornerRadius: button 0.75rem, smallButton 0.5rem, card_01 1rem,
+  // layout_02 1.5rem, tags_01 0.25rem.
+  'radius-control': 12px,
+  'radius-control-sm': 8px,
+  'radius-surface': 16px,
+  'radius-surface-lg': 24px,
+
+  // ids size_border: small 1px, medium 2px, large 4px. The divider uses medium.
+  'border-width': 1px,
+
+  // The live primary button is 48–50px tall with 10px/23px padding.
+  'size-control': 48px,
+  'size-control-sm': 40px,
+  'size-control-lg': 56px
+);

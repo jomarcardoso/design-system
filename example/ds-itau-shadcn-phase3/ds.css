@@ -1,0 +1,362 @@
+@layer ds.semantic {
+  :root {
+    --app-border-width: 1px;
+    --app-border-style: solid;
+    --app-border: var(--app-border-width) var(--app-border-style) var(--app-border-color);
+    --app-radius-control: 12px;
+    --app-radius-surface: 16px;
+    --app-radius-pill: 9999px;
+    --app-space-unit: 4px;
+    --app-space-2xs: calc(var(--app-space-unit) * 1);
+    --app-space-xs: calc(var(--app-space-unit) * 2);
+    --app-space-sm: calc(var(--app-space-unit) * 3);
+    --app-space-md: calc(var(--app-space-unit) * 4);
+    --app-space-lg: calc(var(--app-space-unit) * 6);
+    --app-space-xl: calc(var(--app-space-unit) * 8);
+    --app-space-2xl: calc(var(--app-space-unit) * 12);
+    --app-pad-control-x: var(--app-space-sm);
+    --app-pad-control-y: var(--app-space-xs);
+    --app-pad-surface: var(--app-space-lg);
+    --app-gap-inline: var(--app-space-xs);
+    --app-gap-stack: var(--app-space-md);
+    --app-font-family-body: Itau Text, Inter, Helvetica Neue, Arial, sans-serif;
+    --app-font-family-heading: Itau Display, Inter, Helvetica Neue, Arial, sans-serif;
+    --app-font-family-display: Itau Display, Inter, Helvetica Neue, Arial, sans-serif;
+    --app-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-font-size-sm: 0.875rem;
+    --app-font-size: 1rem;
+    --app-font-size-lg: 1.125rem;
+    --app-font-size-heading-sm: 1.25rem;
+    --app-font-size-heading: 1.5rem;
+    --app-font-size-heading-lg: 2rem;
+    --app-font-size-heading-xl: 2.5rem;
+    --app-font-weight-body: 400;
+    --app-font-weight-heading: 700;
+    --app-line-height: 1.5;
+    --app-line-height-heading: 1.2;
+    --app-letter-spacing-heading: -0.01em;
+    --app-size-control: 48px;
+    --app-size-control-sm: 40px;
+    --app-size-control-lg: 56px;
+    --app-size-icon: calc(var(--app-space-unit) * 4);
+    --app-ring-width: 2px;
+    --app-ring-offset: 2px;
+    --app-ring: var(--app-ring-width) solid var(--app-ring-color);
+    --app-radius-control-sm: 8px;
+    --app-radius-surface-lg: 24px;
+    --app-duration-fast: 120ms;
+    --app-duration-base: 200ms;
+    --app-duration-slow: 320ms;
+    --app-ease: cubic-bezier(0, 0, 0.2, 1);
+    --app-z-base: 0;
+    --app-z-dropdown: 1000;
+    --app-z-sticky: 1020;
+    --app-z-overlay: 1040;
+    --app-z-modal: 1050;
+    --app-z-toast: 1080;
+    --app-z-tooltip: 1090;
+    --app-opacity-disabled: 0.55;
+  }
+}
+@layer ds.semantic {
+  :root,
+  [data-theme=itau] {
+    color-scheme: light;
+    --app-bg-page: #f1f2f4;
+    --app-bg-surface: #ffffff;
+    --app-bg-raised: #ffffff;
+    --app-fg-default: #000000;
+    --app-fg-muted: #4c4c4c;
+    --app-fg-heading: #000000;
+    --app-bg-action: #ff6200;
+    --app-fg-on-action: #ffffff;
+    --app-border-color: #cfd1d3;
+    --app-bg-sunken: #e3e5e8;
+    --app-bg-overlay: rgba(0, 0, 0, 0.5);
+    --app-fg-subtlest: #6e6e6e;
+    --app-bg-surface-hover: #f1f2f4;
+    --app-bg-surface-active: #e3e5e8;
+    --app-bg-neutral: #3b3b3b;
+    --app-fg-on-neutral: #ffffff;
+    --app-bg-neutral-hover: #1f1f1f;
+    --app-bg-neutral-active: #000000;
+    --app-bg-disabled: #cfd1d3;
+    --app-fg-disabled: #999999;
+    --app-bg-action-hover: #e55800;
+    --app-bg-action-active: #cc4d00;
+    --app-bg-action-subtle: #e6e6f0;
+    --app-fg-action: #000066;
+    --app-border-action: #000066;
+    --app-bg-selected: #ff6200;
+    --app-fg-on-selected: #ffffff;
+    --app-bg-selected-hover: #e55800;
+    --app-bg-selected-active: #cc4d00;
+    --app-bg-selected-subtle: #fff1e8;
+    --app-fg-selected: #a83f00;
+    --app-border-selected: #ff6200;
+    --app-fg-link: #000066;
+    --app-fg-link-hover: #000d3c;
+    --app-fg-link-visited: #000524;
+    --app-border-color-subtle: #e3e5e8;
+    --app-border-color-strong: #5d636f;
+    --app-ring-color: #000066;
+    --app-shadow-raised: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --app-shadow-overlay: 0 8px 24px -4px rgba(0, 0, 0, 0.16);
+    --app-bg-success: #0b5b38;
+    --app-fg-on-success: #ffffff;
+    --app-bg-success-hover: #094a2d;
+    --app-bg-success-active: #073923;
+    --app-bg-success-subtle: #e8f3ee;
+    --app-fg-success: #0b5b38;
+    --app-border-success: #a8cfbd;
+    --app-bg-warning: #ffcc00;
+    --app-fg-on-warning: #000000;
+    --app-bg-warning-hover: #ffd633;
+    --app-bg-warning-active: #ffe066;
+    --app-bg-warning-subtle: #fffae6;
+    --app-fg-warning: #6b5500;
+    --app-border-warning: #ffe680;
+    --app-bg-danger: #cc0000;
+    --app-fg-on-danger: #ffffff;
+    --app-bg-danger-hover: #b30000;
+    --app-bg-danger-active: #990000;
+    --app-bg-danger-subtle: #fdeaea;
+    --app-fg-danger: #cc0000;
+    --app-border-danger: #f0b3b3;
+    --app-bg-info: #001fbd;
+    --app-fg-on-info: #ffffff;
+    --app-bg-info-hover: #001a9e;
+    --app-bg-info-active: #001480;
+    --app-bg-info-subtle: #e8ebfb;
+    --app-fg-info: #001fbd;
+    --app-border-info: #b3bcee;
+  }
+}
+@layer ds.semantic {
+  [data-surface=inverted] {
+    --app-bg-page: var(--app-bg-inverted-base);
+    --app-bg-surface: var(--app-bg-inverted-base);
+    --app-fg-default: var(--app-fg-inverted-base);
+    --app-fg-heading: var(--app-fg-inverted-base);
+    --app-fg-muted: oklch(70.5% 0.015 286.067deg);
+    --app-border-color: oklch(37% 0.013 285.805deg);
+  }
+  [data-surface=sunken] {
+    --app-bg-surface: var(--app-bg-sunken);
+    --app-border-color: var(--app-border-color-subtle);
+  }
+  [data-density=compact] {
+    --app-space-unit: 0.2rem;
+  }
+  :root {
+    --app-bg-inverted-base: oklch(21% 0.006 285.885deg);
+    --app-fg-inverted-base: oklch(98.5% 0 0deg);
+  }
+  [data-theme=dark] {
+    --app-bg-inverted-base: oklch(27.4% 0.006 286.033deg);
+    --app-fg-inverted-base: #fff;
+  }
+}
+@layer ds.semantic {
+  [data-surface=brand] {
+    --app-fg-default: #ffffff;
+    --app-fg-heading: #ffffff;
+    --app-fg-action: #ffffff;
+    --app-border-action: #ffffff;
+    --app-bg-action-subtle: rgba(255, 255, 255, 0.1);
+    --app-fg-link: #ffffff;
+    --app-fg-link-hover: #ffffff;
+  }
+}
+@layer ds.component {
+  :root {
+    --app-field-border-color-focus: var(--app-bg-action);
+    --app-chart-1: #ff6200;
+    --app-chart-2: #002766;
+    --app-chart-3: #0131ff;
+    --app-chart-4: #ffba00;
+    --app-chart-5: #008717;
+  }
+}
+@layer vendor-config {
+  :root,
+  [data-theme],
+  [data-surface] {
+    --background: var(--app-bg-page);
+    --foreground: var(--app-fg-default);
+    --card: var(--app-bg-surface);
+    --card-foreground: var(--app-fg-default);
+    --popover: var(--app-bg-raised);
+    --popover-foreground: var(--app-fg-default);
+    --primary: var(--app-bg-action);
+    --primary-foreground: var(--app-fg-on-action);
+    --secondary: var(--app-bg-sunken);
+    --secondary-foreground: var(--app-fg-default);
+    --accent: var(--app-bg-surface-hover);
+    --accent-foreground: var(--app-fg-default);
+    --muted: var(--app-bg-sunken);
+    --muted-foreground: var(--app-fg-muted);
+    --destructive: var(--app-bg-danger);
+    --destructive-foreground: var(--app-fg-on-danger);
+    --border: var(--app-border-color);
+    --input: var(--app-border-color);
+    --ring: var(--app-ring-color);
+    --radius: var(--app-radius-control);
+    --sidebar: var(--app-bg-sunken);
+    --sidebar-foreground: var(--app-fg-default);
+    --sidebar-primary: var(--app-bg-action);
+    --sidebar-primary-foreground: var(--app-fg-on-action);
+    --sidebar-accent: var(--app-bg-surface-hover);
+    --sidebar-accent-foreground: var(--app-fg-default);
+    --sidebar-border: var(--app-border-color-subtle);
+    --sidebar-ring: var(--app-ring-color);
+    --chart-1: var(--app-chart-1, var(--app-bg-action));
+    --chart-2: var(--app-chart-2, var(--app-bg-selected));
+    --chart-3: var(--app-chart-3, var(--app-bg-info));
+    --chart-4: var(--app-chart-4, var(--app-bg-warning));
+    --chart-5: var(--app-chart-5, var(--app-bg-success));
+  }
+}
+@layer components {
+  .ids-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-space-2xs);
+  }
+  .ids-field__label {
+    font-size: var(--app-font-size-sm);
+    color: var(--app-fg-muted);
+  }
+  .ids-field__input {
+    width: 100%;
+    background: transparent;
+    color: var(--app-fg-default);
+    font: inherit;
+    padding: var(--app-space-xs) var(--app-space-xs) var(--app-space-sm);
+    border: 0;
+    border-bottom: var(--app-border-width) solid var(--app-border-color-strong);
+    border-radius: var(--app-radius-control-sm) var(--app-radius-control-sm) 0 0;
+    outline: none;
+    caret-color: var(--app-bg-action);
+  }
+  .ids-field__input::placeholder {
+    color: var(--app-fg-subtlest);
+  }
+  .ids-field__input:focus-visible {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--app-field-border-color-focus, var(--app-border-action));
+    background: var(--app-bg-surface-hover);
+  }
+  .ids-field__input:disabled {
+    background: var(--app-bg-disabled);
+    color: var(--app-fg-disabled);
+    border-bottom-color: var(--app-border-color);
+    cursor: not-allowed;
+  }
+  .ids-field__message {
+    font-size: var(--app-font-size-sm);
+    color: var(--app-fg-muted);
+  }
+  .ids-field--invalid .ids-field__input {
+    border-bottom-color: var(--app-border-danger);
+    border-bottom-width: 2px;
+  }
+  .ids-field--invalid .ids-field__message {
+    color: var(--app-fg-danger);
+  }
+  .ids-btn-secondary {
+    background: transparent;
+    color: var(--app-fg-action);
+    border: var(--app-border-width) solid currentColor;
+  }
+  .ids-btn-secondary:hover,
+  .ids-btn-secondary:focus-visible {
+    background: var(--app-bg-action-subtle);
+    color: var(--app-fg-link-hover);
+  }
+  .ids-btn-text {
+    background: transparent;
+    color: var(--app-fg-action);
+    border: 0;
+  }
+  .ids-btn-text:hover,
+  .ids-btn-text:focus-visible {
+    color: var(--app-fg-link-hover);
+    text-decoration: underline;
+  }
+  .ids-card-interactive {
+    transition: background-color var(--app-duration-fast) var(--app-ease);
+  }
+  .ids-card-interactive:hover,
+  .ids-card-interactive:focus-visible {
+    background: var(--app-bg-surface-hover);
+  }
+  .ids-card-interactive:hover .ids-card-icon {
+    color: var(--app-fg-selected);
+  }
+  .ids-card--selected {
+    border-width: 2px;
+    border-color: var(--app-border-selected);
+  }
+  .ids-tabs {
+    display: flex;
+    gap: var(--app-space-lg);
+    border-bottom: var(--app-border-width) solid var(--app-border-color);
+  }
+  .ids-tab {
+    padding: var(--app-space-sm) 0;
+    color: var(--app-fg-muted);
+    font-weight: var(--app-font-weight-heading);
+    background: none;
+    border: 0;
+    border-bottom: 3px solid transparent;
+    margin-bottom: calc(var(--app-border-width) * -1);
+    cursor: pointer;
+  }
+  .ids-tab:hover {
+    color: var(--app-fg-default);
+  }
+  .ids-tab[aria-selected=true] {
+    color: var(--app-fg-default);
+    border-bottom-color: var(--app-border-selected);
+  }
+  .ids-disclosure {
+    border-bottom: var(--app-border-width) solid var(--app-border-color);
+  }
+  .ids-disclosure:last-child {
+    border-bottom: 0;
+  }
+  .ids-disclosure__trigger {
+    cursor: pointer;
+    padding: var(--app-space-md) var(--app-space-lg);
+    font-weight: var(--app-font-weight-heading);
+  }
+  .ids-disclosure:hover {
+    border-bottom-color: var(--app-border-color-strong);
+  }
+  .ids-disclosure__trigger:hover {
+    background: var(--app-bg-surface-hover);
+  }
+  .ids-dots {
+    display: flex;
+    gap: var(--app-space-xs);
+    align-items: center;
+  }
+  .ids-dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border-radius: var(--app-radius-pill);
+    background: transparent;
+    border: var(--app-border-width) solid var(--app-fg-default);
+    cursor: pointer;
+  }
+  .ids-dot[aria-selected=true] {
+    background: var(--app-fg-default);
+  }
+  .ids-divider {
+    border: 0;
+    border-top: 2px solid var(--app-border-color);
+    margin: var(--app-space-lg) 0;
+  }
+}

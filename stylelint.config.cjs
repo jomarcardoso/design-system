@@ -37,7 +37,10 @@ module.exports = {
     },
     {
       /* Layer 1 is the only place literals are allowed. */
-      files: ['src/_base.scss'],
+      /* A PRODUCT's layer 1 is its own file and gets the same exception the
+       * tool's does. A brand hands over hex; the alternative was editing a
+       * vendored dependency to say what your orange is. */
+      files: ['src/_base.scss', 'example/**/palette.scss'],
       rules: {
         'color-no-hex': null,
         'declaration-property-value-disallowed-list': null

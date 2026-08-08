@@ -1,0 +1,209 @@
+@use "sass:map";
+
+// =============================================================================
+// ITAÚ — THE PRODUCT'S OWN LAYER 1
+// =============================================================================
+//
+// This file is a finding as much as it is a palette.
+//
+// Layer 1 in `src/_base.scss` is the TOOL's palette. Until this example, the
+// only way a product could use brand colours that are not on a Tailwind ramp
+// was to add them to that vendored file — which is what the Meu Caderninho
+// example did, and which is a fork for a decision that belongs entirely to the
+// product. A real client will not accept editing a vendored dependency to say
+// what their orange is.
+//
+// So: a product gets its own layer 1, right here, and it obeys the same three
+// rules as the tool's.
+//
+//   1. Values are LITERAL. Nothing here points at another token.
+//   2. Values are STATIC. A brand colour is the same in dark mode; what changes
+//      is which STEP a role reaches for.
+//   3. Values carry NO MEANING. `orange-500` does not mean "primary". Assigning
+//      meaning is `theme.scss`'s only job.
+//
+// It emits nothing. `theme.scss` reads it at build time and inlines literals,
+// exactly as layer 2 reads `base.color()`.
+//
+// -----------------------------------------------------------------------------
+// WHY HEX AND NOT OKLCH
+// -----------------------------------------------------------------------------
+//
+// These four values are the brand's, transcribed from what iDS publishes at
+// runtime. A brand hands over hex; round-tripping it through oklch to look
+// consistent with the tool's palette would introduce a difference between what
+// the brand said and what the product renders, for no gain — Sass gamut-maps on
+// the way to a contrast measurement anyway.
+//
+// `stylelint.config.cjs` excepts `example/**/palette.scss` for the same reason
+// it excepts `src/_base.scss`: literals are legal in layer 1 and nowhere else.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// The brand
+// -----------------------------------------------------------------------------
+//
+// Four values carry the whole identity. `--ids_color_action_primary_base` and
+// `_variant` are the orange pair; `--ids_color_action_secondary_base` and
+// `_variant` are the navy pair. iDS has no ramp between them — it publishes the
+// two steps and derives translucent tints with `rgba()`.
+$orange: (
+  base: #ff6200,      // ids action_primary_base, text_highlight, bg_brand_primary
+  variant: #e55800,   // ids action_primary_variant
+  // Not published by iDS. One step further along the direction
+  // `base -> variant` takes, so a pressed primary button has somewhere to go.
+  pressed: #cc4d00,
+  // Also invented, and the build found the need rather than a designer. iDS
+  // uses `text_highlight: #FF6200` — the brand orange — as a TEXT colour, which
+  // measures 3.00:1 on white and 2.62:1 on the sunken grey. Readable as a 20px
+  // bold button label; not readable as a word in a sentence.
+  //
+  // So the orange gets a dedicated ink step, dark enough to clear AA on every
+  // surface in this theme (4.93:1 on the worst of the six). The brand FILL is
+  // untouched; what changes is that the fill is no longer reused as text, which
+  // is the single most common mistake this project sweeps libraries for.
+  text: #a83f00,
+  tint: #fff1e8,
+);
+
+// -----------------------------------------------------------------------------
+// Feedback, the derived steps
+// -----------------------------------------------------------------------------
+//
+// iDS publishes ONE step per feedback role plus its contrast. A UI needs more
+// than one: a status fill that never changes on hover reads as a label rather
+// than as something you can press, and a tinted alert body needs a background
+// and an ink that are not the fill.
+//
+// So these are interpolated, and they live HERE rather than in `theme.scss`
+// for a reason the linter enforces: a literal belongs to layer 1. The theme
+// assigns MEANING, and a theme file full of hex is a theme that has quietly
+// become a palette. Twenty-three of these started in the theme and `npm run
+// lint` refused them, which is the rule working rather than getting in the way.
+//
+// Direction follows the pair. Success, error and information carry light text,
+// so they DARKEN on interaction. Alert carries black text, so it BRIGHTENS —
+// darkening would walk the fill towards its own label, which is the same
+// inverted-pair rule every amber in this repository follows.
+$feedback-steps: (
+  'success-hover': #094a2d,
+  'success-active': #073923,
+  'success-subtle': #e8f3ee,
+  'success-border': #a8cfbd,
+
+  'alert-hover': #ffd633,
+  'alert-active': #ffe066,
+  'alert-subtle': #fffae6,
+  'alert-border': #ffe680,
+  // Not the fill. #FFCC00 as TEXT measures 1.6:1 on white; this is the ink
+  // step, dark enough to be read as words on every surface in the theme.
+  'alert-text': #6b5500,
+
+  'error-hover': #b30000,
+  'error-active': #990000,
+  'error-subtle': #fdeaea,
+  'error-border': #f0b3b3,
+
+  'information-hover': #001a9e,
+  'information-active': #001480,
+  'information-subtle': #e8ebfb,
+  'information-border': #b3bcee,
+);
+
+@function feedback($key) {
+  @return map.get($feedback-steps, $key);
+}
+
+$navy: (
+  base: #000066,
+  variant: #000d3c,
+  pressed: #000524,
+  // iDS derives this as `--ids_color_action_secondary_base_soft`:
+  // `rgba(0, 0, 102, 0.1)`. Stored FLATTENED over white rather than as an
+  // alpha, and that is a real trade worth naming.
+  //
+  // `base.contrast()` measures two opaque colours. A translucent token would
+  // make the build-time gate measure the alpha channel as if it were a
+  // colour — quietly wrong, and wrong in the direction that says "this passes".
+  // So the palette flattens it once, here, where a human can see the value.
+  //
+  // The cost: over the grey page tone it is a hair off what iDS renders.
+  // The alternative was a token the contrast gate cannot read, and an
+  // unmeasurable token is worth less than a slightly-off one.
+  soft: #e6e6f0,
+  tint: #e8e8f2,
+);
+
+// The on-brand wash. iDS's `contrast_onBrand_primary_soft` is
+// `rgba(255, 255, 255, 0.1)` — used for the hover of any outline or text
+// control sitting on the orange band. It stays TRANSLUCENT because it is only
+// ever set inside a context, and contexts are not measured by the pair gate.
+$on-brand-soft: rgba(255, 255, 255, 0.1);
+
+// -----------------------------------------------------------------------------
+// Neutrals
+// -----------------------------------------------------------------------------
+//
+// iDS publishes these as separate categories (`bg_variant_01`, `border_soft`,
+// `action_neutral_base`, `text_body_02`) rather than as one ramp. Collecting
+// them into a ramp here is the one interpretive step in this file, and it is
+// what lets `theme.scss` read like every other theme in the repository.
+$grey: (
+  0: #ffffff,
+  50: #f1f2f4,   // ids bg_variant_01
+  100: #e3e5e8,  // ids bg_variant_02
+  200: #cfd1d3,  // ids border_soft, action_disabled_base
+  300: #adb8b3,  // ids border_medium
+  400: #999999,  // ids action_disabled_variant
+  500: #6e6e6e,  // ids chart_03
+  600: #5d636f,  // ids border_strong
+  700: #4c4c4c,  // ids text_body_02, feedback_neutral
+  800: #3b3b3b,  // ids action_neutral_base
+  900: #1f1f1f,
+  1000: #000000, // ids text_body_01, action_neutral_variant
+);
+
+// -----------------------------------------------------------------------------
+// Feedback
+// -----------------------------------------------------------------------------
+//
+// Taken verbatim from `--ids_color_feedback_*`. Note that iDS gives each one a
+// `_contrast` companion, which is the same pair invariant this foundation
+// enforces — arrived at independently, by a bank, which is the best evidence
+// available that the rule is not this project's opinion.
+$feedback: (
+  success: #0b5b38,
+  'on-success': #ffffff,
+  alert: #ffcc00,
+  'on-alert': #000000,
+  error: #cc0000,
+  'on-error': #ffffff,
+  information: #001fbd,
+  'on-information': #ffffff,
+);
+
+// -----------------------------------------------------------------------------
+// Charts — a CATEGORICAL palette, which is not a set of roles
+// -----------------------------------------------------------------------------
+//
+// iDS publishes eight (`--ids_color_chart_01` … `_08`), chosen so that many series
+// stay distinguishable FROM EACH OTHER. That is a different design problem
+// from "what does this colour mean", which is why layer 2 has no scale for it
+// and layer 3 only reserves the names.
+//
+// Five, because that is what shadcn's contract asks for.
+$chart: (
+  1: #ff6200,
+  2: #002766,
+  3: #0131ff,
+  4: #ffba00,
+  5: #008717,
+);
+
+@function chart($n) {
+  @return map.get($chart, $n);
+}
+
+@function grey($step) {
+  @return map.get($grey, $step);
+}
