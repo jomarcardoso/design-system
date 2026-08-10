@@ -131,6 +131,28 @@
     --app-fg-info: #001fbd;
     --app-border-info: #b3bcee;
   }
+  :root,
+  [data-theme=itau] {
+    color-scheme: light;
+  }
+  :root[data-surface=base],
+  :root [data-surface=base],
+  [data-theme=itau][data-surface=base],
+  [data-theme=itau] [data-surface=base] {
+    --app-bg-page: #f1f2f4;
+    --app-bg-surface: #ffffff;
+    --app-bg-surface-hover: #f1f2f4;
+    --app-bg-surface-active: #e3e5e8;
+    --app-fg-default: #000000;
+    --app-fg-heading: #000000;
+    --app-fg-muted: #4c4c4c;
+    --app-border-color: #cfd1d3;
+    --app-fg-link: #000066;
+    --app-fg-link-hover: #000d3c;
+    --app-fg-link-visited: #000524;
+    --app-fg-action: #000066;
+    --app-border-action: #000066;
+  }
 }
 @layer ds.semantic {
   [data-surface=inverted] {
@@ -140,10 +162,20 @@
     --app-fg-heading: var(--app-fg-inverted-base);
     --app-fg-muted: oklch(70.5% 0.015 286.067deg);
     --app-border-color: oklch(37% 0.013 285.805deg);
+    --app-fg-link: oklch(98.5% 0 0deg);
+    --app-fg-link-hover: oklch(98.5% 0 0deg);
+    --app-fg-link-visited: oklch(98.5% 0 0deg);
+    --app-bg-surface-hover: rgba(255, 255, 255, 0.12);
+    --app-bg-surface-active: rgba(255, 255, 255, 0.2);
   }
   [data-surface=sunken] {
     --app-bg-surface: var(--app-bg-sunken);
     --app-border-color: var(--app-border-color-subtle);
+  }
+  [data-surface=inverted],
+  [data-surface=sunken] {
+    background-color: var(--app-bg-surface);
+    color: var(--app-fg-default);
   }
   [data-density=compact] {
     --app-space-unit: 0.2rem;

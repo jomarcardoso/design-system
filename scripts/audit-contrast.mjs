@@ -50,7 +50,8 @@ const PAGES = [
   // is a decision the bank shipped. Recorded in two places on purpose: a build
   // gate and a rendered gate that disagree are worse than either alone.
   { path: 'ds-itau-shadcn-phase3/', themes: ['itau'], min: 3 },
-  { path: 'ds-meu-caderninho-daisyui-phase3/docs.html', themes: ['caderninho'] }
+  { path: 'ds-meu-caderninho-daisyui-phase3/docs.html', themes: ['caderninho'] },
+  { path: 'ds-booking-bulma/', themes: ['booking'] }
 ];
 
 export const SNIPPET = `(() => {

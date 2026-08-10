@@ -298,6 +298,28 @@
     --app-fg-info: oklch(31% 0.03 247deg);
     --app-border-info: oklch(78% 0.026 245deg);
   }
+  :root,
+  [data-theme=caderninho] {
+    color-scheme: light;
+  }
+  :root[data-surface=base],
+  :root [data-surface=base],
+  [data-theme=caderninho][data-surface=base],
+  [data-theme=caderninho] [data-surface=base] {
+    --app-bg-page: oklch(96.8% 0.011 84.6deg);
+    --app-bg-surface: oklch(98.3% 0.005 78.3deg);
+    --app-bg-surface-hover: oklch(96.8% 0.011 84.6deg);
+    --app-bg-surface-active: oklch(92.5% 0.012 80deg);
+    --app-fg-default: oklch(25.4% 0.014 57.6deg);
+    --app-fg-heading: oklch(25.5% 0.054 51deg);
+    --app-fg-muted: oklch(48.5% 0.014 62deg);
+    --app-border-color: oklch(86.5% 0.013 74deg);
+    --app-fg-link: oklch(25.5% 0.054 51deg);
+    --app-fg-link-hover: oklch(17% 0.036 50deg);
+    --app-fg-link-visited: oklch(31% 0.03 247deg);
+    --app-fg-action: oklch(30.5% 0.066 52deg);
+    --app-border-action: oklch(30.5% 0.066 52deg);
+  }
 }
 @layer ds.semantic {
   [data-surface=inverted] {
@@ -307,10 +329,20 @@
     --app-fg-heading: var(--app-fg-inverted-base);
     --app-fg-muted: oklch(70.5% 0.015 286.067deg);
     --app-border-color: oklch(37% 0.013 285.805deg);
+    --app-fg-link: oklch(98.5% 0 0deg);
+    --app-fg-link-hover: oklch(98.5% 0 0deg);
+    --app-fg-link-visited: oklch(98.5% 0 0deg);
+    --app-bg-surface-hover: rgba(255, 255, 255, 0.12);
+    --app-bg-surface-active: rgba(255, 255, 255, 0.2);
   }
   [data-surface=sunken] {
     --app-bg-surface: var(--app-bg-sunken);
     --app-border-color: var(--app-border-color-subtle);
+  }
+  [data-surface=inverted],
+  [data-surface=sunken] {
+    background-color: var(--app-bg-surface);
+    color: var(--app-fg-default);
   }
   [data-density=compact] {
     --app-space-unit: 0.2rem;

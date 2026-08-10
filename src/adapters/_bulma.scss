@@ -123,10 +123,51 @@ $_map: (
   --bulma-family-secondary: #{core.ref('font-family-heading')};
   --bulma-family-code: #{core.ref('font-family-mono')};
 
-  --bulma-body-size: #{core.ref('font-size')};
+  // NOT bound here: --bulma-body-size. It goes on <body> instead — see the
+  // note in emit(), which is the most expensive thing this adapter learned.
   --bulma-body-line-height: #{core.ref('line-height')};
+
+  // THE CONTROL TYPE SCALE, which was not bound at all.
+  //
+  // Bulma sizes every button, input, select and tag from these four, and they
+  // shipped as its own 0.75/1/1.25/1.5rem. So a product whose body text is
+  // 14px got 14px prose and 16px buttons — the type scale split in two, with
+  // the library holding half of it.
+  //
+  // Invisible while a theme keeps the default 1rem body, which every example
+  // here did until Booking, whose product is 14px by design. The measurement
+  // that found it: a filter pill rendered 46px tall against the 43.6px on the
+  // live page, and the 2.4px was the type size, not the padding.
+  --bulma-size-small: #{core.ref('font-size-sm')};
+  --bulma-size-normal: #{core.ref('font-size')};
+  --bulma-size-medium: #{core.ref('font-size-lg')};
+  --bulma-size-large: #{core.ref('font-size-heading-sm')};
   --bulma-weight-normal: #{core.ref('font-weight-body')};
   --bulma-weight-semibold: #{core.ref('font-weight-heading')};
+
+  // --- Anchors, bound to the TOKEN rather than to channels -------------
+  //
+  // The one place this adapter deliberately steps outside the HSL scheme, and
+  // it fixes a structural limit rather than a preference.
+  //
+  // Everything else here is decomposed into `h`, `s` and `l` because that is
+  // the only surface Bulma exposes — and those channels are computed at BUILD
+  // time from the theme map. That is fine for a theme, which is also build
+  // time. It is fatal for a CONTEXT, which is a runtime override of custom
+  // properties: `[data-surface="inverted"]` can move `--app-fg-link` all it
+  // likes and Bulma's composition will never see it, because the composition
+  // reads channels this file baked in.
+  //
+  // Measured: Booking's footer sits on a navy band, the context correctly
+  // repointed `--app-fg-link` to white, and the anchors stayed blue at
+  // **1.2:1**. The tokens were right and the library could not hear them.
+  //
+  // Bulma declares the composed value, so binding it directly bypasses the
+  // channels for anchors specifically. They now follow layer 2 in every
+  // context, which is the whole promise of a context.
+  --bulma-link-text: #{core.ref('fg-link')};
+  --bulma-link-text-hover: #{core.ref('fg-link-hover')};
+  --bulma-link-text-active: #{core.ref('fg-link-hover')};
 
   --bulma-block-spacing: #{core.ref('gap-stack')};
   --bulma-duration: #{core.ref('duration-base')};
@@ -226,6 +267,44 @@ $_map: (
     // text — is what carries across, and that is the part that was wrong.
     --bulma-#{$bulma}-invert-l: #{_l($fg)};
 
+    // …AND the composed value, which is what the components actually read.
+    //
+    // Bulma declares both:
+    //
+    //     --bulma-primary-invert-l: var(--bulma-primary-05-l)
+    //     --bulma-primary-invert: hsla(h, s, var(--bulma-primary-invert-l), 1)
+    //
+    // Setting only the channel leaves the FAMILY hue and saturation in place,
+    // so the label comes out as a tint of the fill rather than the paired
+    // foreground. On a neutral pairing nobody notices. On Booking.com's gold
+    // it is visible: layer 2 says the label is #1a1a1a and Bulma rendered
+    // #332500, a brown, because it recomposed 10% lightness with the gold's
+    // hue at full saturation.
+    //
+    // Same contrast, wrong colour — the kind of drift that is easy to ship and
+    // impossible to explain later.
+    //
+    // Setting the composed variable fixes it WHERE BULMA READS THE COMPOSED
+    // VARIABLE, which is tables (`--bulma-table-color`,
+    // `--bulma-table-row-active-color`). It does NOT fix buttons, tags or
+    // notifications, and that is a limit of the library rather than of this
+    // adapter. Measured in `bulma.css`:
+    //
+    //     .button.is-primary { --bulma-button-color-l: var(--bulma-primary-invert-l) }
+    //
+    // The button takes the LIGHTNESS and recomposes with `--bulma-button-h/s`,
+    // which it also inherits from the family. There is no hue channel for a
+    // label, so a paired foreground can only ever arrive as a tint of the fill.
+    //
+    // The obvious workaround — `color:` on `.button.is-primary` from here — is
+    // the variant-collapse trap one level down: `.is-light`, `.is-outlined` and
+    // `.is-soft` express themselves through the same variable, and a direct
+    // `color` on the parent selector beats all three. So the adapter stops
+    // here, and a product that needs the exact ink sets it on its OWN class,
+    // where no sub-variant is in play. `example/ds-booking-bulma` does exactly
+    // that and records it in its ledger.
+    --bulma-#{$bulma}-invert: #{$fg};
+
     // The FIFTH channel, and the second one this file learned about the hard
     // way. `invert-l` answers "what text goes ON this colour"; this answers the
     // opposite question — "what lightness does this colour take when it IS the
@@ -263,6 +342,29 @@ $_map: (
     [data-theme],
     [data-surface] {
       @include _refs();
+    }
+
+    // THE BODY SIZE GOES ON <body>, NOT ON <html>.
+    //
+    // Bulma declares `--bulma-body-size: 1em` and applies it to `html`. `1em`
+    // there means "whatever the reader chose", so `rem` stays 16px and the
+    // variable never looks load-bearing.
+    //
+    // Binding it to `font-size` looked obviously right. It set `html` to
+    // 0.875rem — 14px, the intended body size — and in doing so made
+    // **1rem = 14px for the whole document**, so every other rem token
+    // silently shrank by 12.5%: `font-size-sm` rendered 10.5px instead of
+    // 12, `font-size-heading` 17.5 instead of 20.
+    //
+    // A feedback loop, and invisible unless a theme sets a body size other
+    // than 1rem — which no example did until Booking, whose product is 14px
+    // by design.
+    //
+    // The root font size belongs to the READER. Keeping type in rem so it
+    // follows their setting is a decision this project makes two layers down
+    // (WCAG 1.4.4), and an adapter that overwrites the root defeats it.
+    body {
+      font-size: #{core.ref('font-size')};
     }
 
     $names: map.keys($set);

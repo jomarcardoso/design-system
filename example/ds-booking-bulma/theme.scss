@@ -1,0 +1,233 @@
+@use 'sass:map';
+@use 'palette';
+
+// =============================================================================
+// BOOKING — a theme reconstructed from a page in production
+// =============================================================================
+//
+// The second real system this foundation did not design, and it was chosen
+// because it looked like it would break the mapping that worked for Itaú.
+//
+// -----------------------------------------------------------------------------
+// THE SHAPE, AND WHY IT IS NOT THE SAME AS ITAÚ'S
+// -----------------------------------------------------------------------------
+//
+// Itaú:    orange FILL + navy INK.        Two colours, one action role.
+// Booking: gold FILL + blue INK + navy SURFACE.  Three colours, three jobs.
+//
+// The third is the new part. `#003b95` paints the header band and nothing is
+// clickable because it is navy — it is a surface, not an action. Layer 2 has no
+// role for "the brand's dark band", and it does not need one: the `inverted`
+// CONTEXT is exactly that, and this theme now supplies its colours through the
+// four keys at the bottom of this file.
+//
+// Getting there required one change to the foundation. `emit-contexts()` had
+// the inverted band hardcoded to zinc, so a brand whose band is navy had to
+// either edit a vendored file or hand-write the band and give up the context.
+// See the note there.
+//
+// -----------------------------------------------------------------------------
+// AND A ROLE SPLIT THE ITAÚ STUDY DID NOT PRODUCE
+// -----------------------------------------------------------------------------
+//
+// Itaú marks a selected thing with its action colour, so `check-roles()` warned
+// and the collapse was recorded. Booking does NOT: the Search button is gold
+// and a chosen category pill is blue. Two roles, two colours, no warning.
+//
+// That is the first evidence from a real system that `action` and `selected`
+// being separate is not this project's invention. One brand collapses them and
+// one does not, and the contract expresses both without changing shape.
+// =============================================================================
+
+$booking: (
+  // --- Surfaces -----------------------------------------------------------
+  // Booking's results pages are white cards on a light grey field, and the
+  // homepage is white on white. `page` takes the grey so a card has something
+  // to sit on; a section that wants white sets `data-surface` instead.
+  page: palette.grey(50),
+  surface: palette.grey(0),
+  raised: palette.grey(0),
+  sunken: palette.grey(100),
+  overlay: rgba(26, 26, 26, 0.6),
+
+  'surface-hover': palette.grey(50),
+  'surface-active': palette.grey(100),
+
+  // --- Text ---------------------------------------------------------------
+  text: palette.grey(1000),        // measured #1a1a1a
+  'text-muted': palette.grey(600), // measured #595959
+  'text-subtlest': palette.grey(500),
+  heading: palette.grey(1000),
+
+  // --- Neutral emphasis ----------------------------------------------------
+  neutral: palette.grey(700),
+  'on-neutral': palette.grey(0),
+  'neutral-hover': palette.grey(800),
+  'neutral-active': palette.grey(900),
+
+  disabled: palette.grey(200),
+  'disabled-text': palette.grey(400),
+
+  // --- Action: the gold, and its INVERTED pair -----------------------------
+  //
+  // Dark text on a light fill, the same shape as `warning` in every theme here
+  // — but with room the ambers did not have. #1a1a1a reads 11.4:1 on the base,
+  // so this one can darken on interaction like a normal role instead of having
+  // to brighten. The direction follows the MEASUREMENT, not the pattern.
+  action: map.get(palette.$gold, base),
+  'on-action': palette.grey(1000),
+  'action-hover': map.get(palette.$gold, variant),
+  'action-active': map.get(palette.$gold, pressed),
+
+  // The quiet treatment is BLUE, not a pale gold — the same split Itaú has, for
+  // the same reason: a brand's outline button and its solid button need not
+  // share a hue, and these four keys are independent so they need not.
+  'action-subtle': map.get(palette.$blue, tint),
+  // The INK is one step darker than the fill, and the build forced it.
+  //
+  // #006ce4 measures 4.92:1 on white — it clears AA as a FILL carrying white
+  // text, and it clears AA as ink on white by 0.42. On anything darker it
+  // fails: 4.41:1 on its own tint, 4.13:1 on the sunken grey. So the brand
+  // blue stays the fill and the border, and the text step goes one down.
+  //
+  // That is the fill/ink split this project keeps finding in other people's
+  // systems, arrived at here from the other direction: not 'the library reused
+  // a fill as text' but 'the build will not let this theme do it'.
+  'action-text': map.get(palette.$blue, variant),
+  // A LINE, not text. WCAG asks 3:1 of a non-text element, and the brand blue
+  // clears that everywhere — so the outline keeps the real brand colour.
+  'action-border': map.get(palette.$blue, base),
+
+  // --- Selected: genuinely a different colour from action ------------------
+  // The chosen category pill and the ticked filter. Booking fills these blue.
+  selected: map.get(palette.$blue, base),
+  'on-selected': palette.grey(0),
+  'selected-hover': map.get(palette.$blue, variant),
+  'selected-active': map.get(palette.$blue, pressed),
+  'selected-subtle': map.get(palette.$blue, tint),
+  'selected-text': map.get(palette.$blue, variant),
+  'selected-border': map.get(palette.$blue, base),
+
+  // --- Navigation ----------------------------------------------------------
+  // Same reason as : a link is words.
+  link: map.get(palette.$blue, variant),
+  'link-hover': map.get(palette.$blue, pressed),
+  'link-visited': map.get(palette.$blue, pressed),
+
+  // --- Lines ---------------------------------------------------------------
+  border: palette.grey(200),
+  'border-subtle': palette.grey(100),
+  'border-strong': palette.grey(400),
+  ring: map.get(palette.$blue, base),
+
+  // --- Elevation -----------------------------------------------------------
+  // Booking's cards are bordered and flat at rest; the shadow appears on the
+  // floating pieces (the date picker, the occupancy dropdown).
+  'shadow-raised': (0 1px 2px 0 rgba(26, 26, 26, 0.08)),
+  'shadow-overlay': (0 2px 8px 0 rgba(26, 26, 26, 0.24)),
+
+  // --- Status --------------------------------------------------------------
+  success: palette.status(success),
+  'on-success': palette.grey(0),
+  'success-hover': palette.status('success-hover'),
+  'success-active': palette.status('success-active'),
+  'success-subtle': palette.status('success-subtle'),
+  'success-text': palette.status('success-text'),
+  'success-border': palette.status('success-border'),
+
+  warning: palette.status(warning),
+  'on-warning': palette.grey(0),
+  'warning-hover': palette.status('warning-hover'),
+  'warning-active': palette.status('warning-active'),
+  'warning-subtle': palette.status('warning-subtle'),
+  'warning-text': palette.status('warning-text'),
+  'warning-border': palette.status('warning-border'),
+
+  danger: palette.status(danger),
+  'on-danger': palette.grey(0),
+  'danger-hover': palette.status('danger-hover'),
+  'danger-active': palette.status('danger-active'),
+  'danger-subtle': palette.status('danger-subtle'),
+  'danger-text': palette.status('danger-text'),
+  'danger-border': palette.status('danger-border'),
+
+  info: palette.status(info),
+  'on-info': palette.grey(0),
+  'info-hover': palette.status('info-hover'),
+  'info-active': palette.status('info-active'),
+  'info-subtle': palette.status('info-subtle'),
+  'info-text': palette.status('info-text'),
+  'info-border': palette.status('info-border'),
+
+  // --- The inverted band ---------------------------------------------------
+  // Read by `themes.emit-contexts($choices)`. Before this example those four
+  // were hardcoded zinc and a navy header was not expressible without a fork.
+  inverted: map.get(palette.$blue, navy),
+  'on-inverted': palette.grey(0),
+  'inverted-muted': map.get(palette.$blue, 'navy-muted'),
+  'inverted-border': map.get(palette.$blue, 'navy-line')
+);
+
+// -----------------------------------------------------------------------------
+// Structure
+// -----------------------------------------------------------------------------
+//
+// The density is the story. Booking's BODY TEXT IS 14px — measured on the live
+// page, with 20px leading — where every other product in this repository sits
+// at 16. It is an information-dense product: a results page is a table of
+// prices wearing cards, and 14px is what lets a listing fit.
+//
+// That single value is why the archetype matrix in the design-language skill
+// treats density as three coupled decisions rather than one. Dropping the body
+// size without dropping control height gives tall buttons full of small text.
+$typography: (
+  // Measured: BlinkMacSystemFont, i.e. the platform UI face. Booking ships no
+  // brand typeface at all, which is a deliberate choice for a product that has
+  // to feel native in forty locales.
+  'font-family-body': (
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif
+  ),
+  'font-family-heading': (
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif
+  ),
+
+  'font-size': 0.875rem,      // 14px — measured
+  'font-size-sm': 0.75rem,    // 12px — badges, meta
+  'font-size-lg': 1rem,       // 16px — lead paragraphs
+  'line-height': 1.43,        // 20/14 — measured
+
+  // Measured: h1 and h2 are both 24/32 bold; h3 is 16/24 bold.
+  'font-size-heading-sm': 1rem,
+  'font-size-heading': 1.25rem,
+  'font-size-heading-lg': 1.5rem,
+  'font-size-heading-xl': 2rem,
+  'font-weight-heading': 700,
+  'line-height-heading': 1.33,
+  'letter-spacing-heading': 0em,
+
+  // Measured: 4px on controls, 8px on cards and the search panel, pills for
+  // the category filters.
+  'radius-control': 4px,
+  'radius-control-sm': 4px,
+  'radius-surface': 8px,
+  'radius-surface-lg': 12px,
+
+  'border-width': 1px,
+
+  // Measured: the Search button is 50px, header buttons 36px, form controls 40.
+  'size-control': 40px,
+  'size-control-sm': 36px,
+  'size-control-lg': 50px
+);

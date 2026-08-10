@@ -106,8 +106,8 @@ for (const [cName, c] of Object.entries(ledger.components)) {
     if (p.state === 'forbidden') {
       if (!p.reason) ledgerErrors.push(`${at}: forbidden without a reason`);
       if (!p.instead) ledgerErrors.push(`${at}: forbidden without an alternative`);
-    } else if (p.state === 'styled' && !p.styled) {
-      ledgerErrors.push(`${at}: state is "styled" but the styled slot is empty`);
+    } else if ((p.state === 'styled' || p.state === 'own') && !p.styled) {
+      ledgerErrors.push(`${at}: state is "${p.state}" but the class slot is empty`);
     } else if (p.state === 'wrapped' && !p.wrapped?.component) {
       ledgerErrors.push(`${at}: state is "wrapped" but no component is named`);
     } else if (p.state === 'raw' && !p.raw?.[lib]) {
@@ -157,7 +157,12 @@ const components = Object.entries(ledger.components).map(([name, c]) => {
     // `styled` may name more than one class: a base plus its modifier
     // (`cm-stat cm-stat--critical`) is one pattern, not two, and forcing it
     // into a single class would push products toward inventing a second base.
-    else if (p.state === 'styled') expected = p.styled ? p.styled.trim().split(/\s+/) : null;
+    // `own` matches exactly like `styled` — the markup carries the project's
+    // class either way. The states differ in what they CLAIM, not in what the
+    // page looks like: `styled` says a library component is underneath and
+    // `own` says nothing is. That distinction is invisible in the HTML and very
+    // visible in the maturity table, which is the point of separating them.
+    else if (p.state === 'styled' || p.state === 'own') expected = p.styled ? p.styled.trim().split(/\s+/) : null;
     else if (p.state === 'wrapped') expected = p.styled ? p.styled.trim().split(/\s+/) : p.raw?.[lib];
 
     if (expected) allowed.push({ pattern: patternName, state: p.state, set: new Set(expected) });
@@ -319,14 +324,15 @@ if (violations.length) {
 // Maturity: the number this whole exercise exists to move.
 console.log(bold('Vocabulary maturity'));
 for (const [name, c] of Object.entries(ledger.components)) {
-  const states = { raw: 0, styled: 0, wrapped: 0, forbidden: 0 };
+  const states = { raw: 0, styled: 0, own: 0, wrapped: 0, forbidden: 0 };
   for (const p of Object.values(c.patterns)) states[p.state]++;
-  const live = states.raw + states.styled + states.wrapped;
+  const live = states.raw + states.styled + states.own + states.wrapped;
   const pct = (n) => (live ? Math.round((n / live) * 100) : 0);
   console.log(
     `  ${name.padEnd(10)} ${live} allowed  ` +
     `${dim('raw')} ${states.raw} (${pct(states.raw)}%)  ` +
     `${dim('styled')} ${states.styled} (${pct(states.styled)}%)  ` +
+    `${dim('own')} ${states.own} (${pct(states.own)}%)  ` +
     `${dim('wrapped')} ${states.wrapped} (${pct(states.wrapped)}%)  ` +
     `${dim('forbidden')} ${states.forbidden}`
   );

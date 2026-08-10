@@ -642,8 +642,43 @@ $_contrast-pairs: (
   @include check-roles($name, $choices);
 
   @include core.in-layer(config.$layer-semantic) {
+    $resolved: colors($choices, $name);
+
     @include core.theme($name, $default) {
-      @include core.emit(colors($choices, $name));
+      @include core.emit($resolved);
+    }
+
+    // RETURNING TO THE BASE SURFACE.
+    //
+    // Contexts nest, and until now there was no way to nest OUT of one. A
+    // white card inside a dark band is ordinary — Booking puts its search
+    // panel there — and every token inside it kept the band values: the
+    // caption read the band muted tone on a white field, 1.55:1.
+    //
+    // The roles below are exactly the ones the shipped contexts override.
+    // Re-emitting them under `[data-surface="base"]` costs about a dozen
+    // declarations per theme and gives back the one thing custom properties
+    // cannot otherwise express: "whatever the theme said, not what my
+    // ancestor said".
+    //
+    // Scoped inside the theme selector rather than written once, because the
+    // values are the theme's and a project may compile several.
+    $contextual: (
+      'bg-page', 'bg-surface', 'bg-surface-hover', 'bg-surface-active',
+      'fg-default', 'fg-heading', 'fg-muted', 'border-color',
+      'fg-link', 'fg-link-hover', 'fg-link-visited', 'fg-action',
+      'border-action'
+    );
+    $base-set: ();
+    @each $key in $contextual {
+      $base-set: map.merge($base-set, ($key: map.get($resolved, $key)));
+    }
+
+    @include core.theme($name, $default) {
+      &[data-surface="base"],
+      [data-surface="base"] {
+        @include core.emit($base-set);
+      }
     }
   }
 }

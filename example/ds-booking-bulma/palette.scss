@@ -1,0 +1,159 @@
+@use 'sass:map';
+
+// =============================================================================
+// BOOKING — THE PRODUCT'S OWN LAYER 1
+// =============================================================================
+//
+// Values measured off booking.com by sampling what the page actually paints,
+// not read from published tokens: Booking serves its CSS cross-origin, so
+// `document.styleSheets` throws and there is no variable table to dump. Every
+// colour below is the computed value of a real rendered element, with the
+// element noted beside it.
+//
+// That difference from the Itaú study is worth stating, because it changes what
+// can be claimed. For iDS the reconstruction could quote the design system. Here
+// it can only quote the RESULT, and a colour used once in a corner looks exactly
+// like a colour used everywhere. So this palette keeps only tones that appeared
+// repeatedly and in a role that was legible from the markup.
+//
+// One colour was deliberately LEFT OUT: `#0000ee`, which 478 sampled elements
+// carried. That is the user-agent default link colour, not a Booking decision —
+// unstyled anchors inside collapsed menus. Sampling a live page finds the
+// browser's defaults as readily as the brand's, and the count is what makes it
+// look authoritative. Frequency is not evidence of intent.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// The brand
+// -----------------------------------------------------------------------------
+//
+// Three colours, and they do three DIFFERENT jobs — which is the whole reason
+// this example is interesting next to Itaú's two.
+//
+//   gold   the one CTA that matters. `Search`, and the AI search panel.
+//   blue   every other interactive thing: links, outline pills, `Show more`.
+//   navy   the header band. A SURFACE, not an action — nothing is clickable
+//          because it is navy.
+$gold: (
+  base: #ffb700,      // the Search button, the AI panel
+  // Not published. Two steps darkened along the same hue; the pair is dark
+  // text on a light fill, so there is room to darken before the label suffers
+  // — unlike Itaú's amber, which ran out after one step. Measured: #1a1a1a
+  // reads 11.4:1 on the base and still 8.9:1 on `pressed`.
+  variant: #e5a400,
+  pressed: #cc9200,
+  tint: #fff4d6,
+  // The ink step, for the rare case the gold has to be read as words.
+  text: #7a5200
+);
+
+$blue: (
+  base: #006ce4,      // `Register`, `Show more`, the selected category pill
+  variant: #00589e,   // one step down; used for hover on the same
+  pressed: #00437a,
+  // #ebf3ff sampled, LIGHTENED to #f2f7ff, and the reason is the sharpest
+  // accessibility finding in this study.
+  //
+  // Booking's action blue measures 4.92:1 on pure white. That is AA by 0.42,
+  // and it means ANY tint under it eats the margin: on the sampled #ebf3ff the
+  // same blue reads 4.41:1 and fails. Darkening the tint makes it worse, which
+  // is the counter-intuitive part — the ink is dark, so the background has to
+  // move towards white, not away from it.
+  //
+  // #f2f7ff is the deepest tint that still clears 4.5 (4.58:1). Two percent
+  // lighter than the brand ships, and the alternative was a selected-filter row
+  // whose label fails AA. The build refused to compile until this moved.
+  tint: #f2f7ff,
+  navy: #003b95,      // the header band. Also Booking's informational tone.
+  // Secondary text and lines ON the navy band. Derived, not sampled — the
+  // band on the live page carries almost no muted text, so these are the
+  // steps that keep the footer's small print readable against it.
+  'navy-muted': #c3d0e8,
+  'navy-line': #1c539f
+);
+
+// -----------------------------------------------------------------------------
+// Neutrals
+// -----------------------------------------------------------------------------
+//
+// Booking paints only four of these; the rest are interpolated to give the
+// theme a ladder to reach for. The four measured ones are marked.
+$grey: (
+  0: #ffffff,   // measured — every card and the page
+  50: #f5f5f5,  // measured — section bands
+  100: #ebebeb,
+  200: #e0e0e0,
+  300: #d9d9d9,
+  400: #949494,
+  500: #767676, // the lightest grey that still clears AA on white (4.54:1)
+  600: #595959, // measured — secondary text
+  700: #444444,
+  800: #333333,
+  900: #262626,
+  1000: #1a1a1a // measured — body text, and the label on the gold
+);
+
+// -----------------------------------------------------------------------------
+// Status
+// -----------------------------------------------------------------------------
+//
+// Green and red are measured: `#008234` fills the "Getaway Deal" badge, and
+// `#d4111e` is the struck-through price on every discounted room. Note that red
+// appears as INK far more than as a fill, which is why the theme gives it a
+// readable text step rather than assuming the fill can be reused.
+//
+// WARNING IS THE INTERESTING ONE. Booking publishes no warning colour that this
+// sampling could find, and the obvious derivation — a step of the brand gold —
+// is exactly wrong: the gold is already the primary CTA, so a gold warning and
+// a Search button would be the same colour doing opposite jobs. A burnt orange
+// keeps the "caution" reading without competing with the action.
+$status: (
+  success: #008234,
+  'success-hover': #006b2b,
+  'success-active': #005522,
+  'success-subtle': #e7f4ec,
+  // A DARKER green than the fill, and the build is what insisted.
+  //
+  // Booking's #008234 was chosen to carry white text on a badge, which makes
+  // it 4.95:1 on white and 4.37:1 on its own tint — a 'Getaway Deal' label
+  // that fails AA the moment it is written as words instead of stamped on a
+  // chip. Reusing a FILL as INK is the single most common mistake this project
+  // sweeps other people's libraries for, and sampling a live page reproduces it
+  // faithfully. The ink step reads 5.91:1 on the tint and 6.14:1 on the page.
+  'success-text': #006b2b,
+  'success-border': #a8d7ba,
+
+  warning: #b35309,
+  'warning-hover': #984507,
+  'warning-active': #7d3906,
+  'warning-subtle': #fdf0e6,
+  'warning-text': #8a4007,
+  'warning-border': #f0c9a8,
+
+  danger: #d4111e,
+  'danger-hover': #b30e19,
+  'danger-active': #920b14,
+  'danger-subtle': #fdecee,
+  // Same correction, smaller margin: the red fill reads 5.39:1 on white, the
+  // ink step 6.43:1 on the page tone.
+  'danger-text': #b30e19,
+  'danger-border': #f4b8bd,
+
+  // The navy, wearing its second hat. Booking's informational banners are the
+  // same tone as its header, which is a real and slightly awkward fact about
+  // the brand rather than a shortcut taken here.
+  info: #003b95,
+  'info-hover': #002f77,
+  'info-active': #00245c,
+  'info-subtle': #e8eefa,
+  'info-text': #003b95,
+  'info-border': #b3c5e5
+);
+
+@function grey($step) {
+  @return map.get($grey, $step);
+}
+
+@function status($key) {
+  @return map.get($status, $key);
+}

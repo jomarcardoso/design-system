@@ -1,0 +1,55 @@
+// =============================================================================
+// BOOKING — the project's design system build
+// =============================================================================
+//
+//     npm run build:example-booking
+//
+// Bulma is compiled FROM SOURCE here, inside `@layer vendor`, for the same
+// reason the Cyberpunk example does it: `@extend` can only reach selectors Sass
+// can see, and a prebuilt stylesheet is invisible to it. `patterns.scss` extends
+// `.button` and `.tag`, so the library has to share its scope.
+//
+// The `@import` is legacy syntax and Sass says so. There is still no
+// module-system replacement for extending a third-party library, so the warning
+// is expected and does not indicate a problem.
+// =============================================================================
+
+@use '../../src/config' with ($themes: (), $adapters: (bulma));
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/themes';
+@use '../../src/component';
+@use '../../src/adapters/bulma' as bulma-adapter;
+@use 'theme';
+
+@layer vendor {
+  @import 'bulma/bulma';
+}
+
+// Layer 1 — the tool's palette compiles away, and so does this product's.
+@include base.emit();
+
+// Layer 2 — structure with Booking's density and shape, then its only theme.
+// `emit-theme()` runs the contrast gate and the role check itself.
+@include semantic.emit-structure(theme.$typography);
+@include semantic.emit-theme('booking', theme.$booking, $default: true);
+
+// The contexts, NOW RECEIVING THE THEME. This is the change this example forced:
+// the inverted band was hardcoded to zinc, and Booking's band is navy. Passing
+// `$booking` lets the theme colour it through four optional keys.
+@include themes.emit-contexts(theme.$booking);
+
+// Layer 3 — names only. This product needs no component-level override, which
+// is worth noting after the Itaú study needed two: the difference is that
+// Booking's focus ring, field rule and chart colours are all just the semantic
+// roles. Not every real system needs the hook layer.
+@include component.emit();
+
+// Layer 3.5 — the adapter, receiving this product's theme rather than the
+// tool's built-ins. Bulma decomposes every colour into HSL channels, so it
+// needs the values and not only the variable names.
+@include bulma-adapter.emit(('booking': theme.$booking));
+
+// Layer 4 — the product's own components. Imported rather than `@use`d so it
+// shares Bulma's scope and can `@extend` it.
+@import 'patterns';

@@ -147,10 +147,11 @@
           "enum": [
             "raw",
             "styled",
+            "own",
             "wrapped",
             "forbidden"
           ],
-          "description": "Maturity, and the instruction to the agent. `raw` emit library classes. `styled` emit the project's semantic class. `wrapped` emit the framework component. `forbidden` refuse and offer the alternative. Promotion is: fill the next slot, then change this field."
+          "description": "Maturity, and the instruction to the agent. `raw` emit library classes. `styled` emit the project's semantic class over a library component. `own` emit the project's class for a component the library does not have — built from tokens, with nothing underneath. `wrapped` emit the framework component. `forbidden` refuse and offer the alternative. Promotion is: fill the next slot, then change this field. `own` is not a rung on that ladder — it is a parallel origin, and a component that starts there never had a library composition to be promoted from."
         },
         "raw": {
           "$ref": "#/$defs/libraryClasses",
@@ -158,7 +159,7 @@
         },
         "styled": {
           "type": "string",
-          "description": "The project's own semantic class, once one exists. Written in SCSS BEFORE any component wrapper, so that code with no component framework is protected too."
+          "description": "The project's own semantic class. Used by both `styled` and `own`: the class is the same shape either way, and what differs is whether a library component sits underneath it."
         },
         "wrapped": {
           "type": "object",
@@ -261,6 +262,23 @@
           "then": {
             "required": [
               "wrapped"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "state": {
+                "const": "own"
+              }
+            },
+            "required": [
+              "state"
+            ]
+          },
+          "then": {
+            "required": [
+              "styled"
             ]
           }
         }

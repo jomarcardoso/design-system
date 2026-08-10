@@ -442,7 +442,42 @@ $registry: (light: $light, dark: $dark, brand: $brand);
 // These are deliberately short. A context that grows past a dozen tokens is a
 // theme wearing a disguise; promote it and stop paying the inheritance tax.
 
-@mixin emit-contexts() {
+// `$choices` is optional and exists because the INVERTED context was the one
+// part of layer 2 a product could not theme.
+//
+// The band's four colours were hardcoded to zinc. That is a reasonable default
+// and it is wrong for any brand whose dark band is not grey — Booking.com's
+// header is navy `#003b95`, and reproducing it meant either editing this
+// vendored file or abandoning the context and hand-writing the band, which is
+// exactly the fork the architecture exists to avoid.
+//
+// Four optional theme keys now cover it, each falling back to what was there:
+//
+//   inverted           the band's surface
+//   on-inverted        its foreground
+//   inverted-muted     secondary text on it
+//   inverted-border    lines on it
+//
+// A theme that says nothing gets the zinc band it always got.
+@mixin emit-contexts($choices: ()) {
+  $inverted: map.get($choices, 'inverted') or base.color(zinc, 900);
+  $on-inverted: map.get($choices, 'on-inverted') or base.color(zinc, 50);
+  $inverted-muted: map.get($choices, 'inverted-muted') or base.color(zinc, 400);
+  $inverted-border: map.get($choices, 'inverted-border') or base.color(zinc, 700);
+  // Defaults to the band's own foreground. A brand that wants a tinted link on
+  // its dark band sets this and gets measured on it like everything else.
+  $inverted-link: map.get($choices, 'inverted-link') or $on-inverted;
+  // The band needs its OWN interaction wash, for the third time this context
+  // has taught the same lesson: a surface that overrides some roles and not
+  // others ships a broken state.
+  //
+  // `bg-surface-hover` is a light-page token by definition — a step DOWN a
+  // light ramp. Inside a dark band it is nearly invisible, so every hoverable
+  // thing on a navy header had no hover at all. A translucent white is the
+  // right default because it composes over whatever the band happens to be.
+  $inverted-hover: map.get($choices, 'inverted-hover') or rgb(255 255 255 / 0.12);
+  $inverted-active: map.get($choices, 'inverted-active') or rgb(255 255 255 / 0.2);
+
   @include core.in-layer(config.$layer-semantic) {
     // Inverted band: hero sections, footers, promotional strips.
     // Works under BOTH themes because it names its own pair explicitly.
@@ -453,8 +488,46 @@ $registry: (light: $light, dark: $dark, brand: $brand);
         'bg-surface': core.ref('bg-inverted-base'),
         'fg-default': core.ref('fg-inverted-base'),
         'fg-heading': core.ref('fg-inverted-base'),
-        'fg-muted': base.color(zinc, 400),
-        'border-color': base.color(zinc, 700)
+        'fg-muted': $inverted-muted,
+        'border-color': $inverted-border,
+
+        // THE INTERACTIVE INKS, and their absence was a real bug for as long
+        // as this context has existed.
+        //
+        // The band flipped its surface and its body text and left `fg-link`,
+        // `fg-action` and `border-action` pointing at values chosen for a light
+        // page. Every footer link inside an inverted band therefore rendered in
+        // the light-theme link colour on a dark ground. The Booking study
+        // measured it at **1.2:1** — invisible, and it had been shipping.
+        //
+        // It survived because none of the earlier demo pages put a LINK inside
+        // an inverted band, which is a reminder that a context is only as
+        // tested as the markup someone happened to write. A footer is the most
+        // common inverted band there is.
+        //
+        // They take the band's own foreground rather than a tinted brand
+        // colour: on a dark ground the underline carries the affordance and the
+        // colour cannot, because any brand hue dark enough to read as a link on
+        // white is too dark to read on navy.
+        'fg-link': $inverted-link,
+        'fg-link-hover': $inverted-link,
+        'fg-link-visited': $inverted-link,
+        'bg-surface-hover': $inverted-hover,
+        'bg-surface-active': $inverted-active
+        //
+        // `fg-action` and `border-action` are DELIBERATELY NOT flipped here,
+        // and the first attempt did flip them — which broke the Booking header
+        // in the opposite direction, to 1:1.
+        //
+        // A link is always inline text directly on the band, so the band can
+        // decide its colour. An ACTION may not be: Booking's header buttons are
+        // white chips that bring their own surface onto the navy, and giving
+        // them white ink made them white-on-white. Itaú's are text buttons
+        // sitting directly on the band and do want the flip.
+        //
+        // The context cannot know which, so it declines to guess. A product
+        // whose actions sit directly on the band adds the two lines to its own
+        // context — `example/ds-itau-shadcn-phase3` does exactly that.
       )
     );
 
@@ -476,17 +549,40 @@ $registry: (light: $light, dark: $dark, brand: $brand);
       )
     );
 
+    // A SURFACE CONTEXT HAS TO PAINT ITSELF.
+    //
+    // `core.context()` emits custom properties and nothing else, which is
+    // right for the general helper — a context may be applied to a wrapper
+    // that should not have a background. These two are different: they are
+    // named SURFACE, and a reader who writes `data-surface="inverted"` expects
+    // a dark band, not a set of variables that something else must remember
+    // to consume.
+    //
+    // Found by forgetting. The Booking study put `data-surface="inverted"` on
+    // its navy header and the header rendered transparent: the tokens were
+    // right and nothing painted them. Worse, every white control inside then
+    // read the overridden `bg-surface` and turned navy on a white page — one
+    // missing declaration producing a bug that looked like a theme error.
+    [data-surface="inverted"],
+    [data-surface="sunken"] {
+      background-color: #{core.ref("bg-surface")};
+      color: #{core.ref("fg-default")};
+    }
+
     // Density, not colour: no pair to honour, just the one knob.
     [data-density='compact'] {
       --#{config.$prefix}-space-unit: 0.2rem;
     }
 
-    // The two anchors the inverted context leans on, defined per theme.
+    // The two anchors the inverted context leans on.
     :root {
-      --#{config.$prefix}-bg-inverted-base: #{base.color(zinc, 900)};
-      --#{config.$prefix}-fg-inverted-base: #{base.color(zinc, 50)};
+      --#{config.$prefix}-bg-inverted-base: #{$inverted};
+      --#{config.$prefix}-fg-inverted-base: #{$on-inverted};
     }
 
+    // Only meaningful when the built-in dark theme is compiled. A product
+    // shipping its own single theme never matches this selector, so the
+    // hardcoded zinc here costs it nothing.
     [data-theme='dark'] {
       --#{config.$prefix}-bg-inverted-base: #{base.color(zinc, 800)};
       --#{config.$prefix}-fg-inverted-base: #{base.color(white)};

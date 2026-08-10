@@ -155,14 +155,14 @@
       "patterns": {
         "group": {
           "intent": "The row of dots.",
-          "state": "styled",
+          "state": "own",
           "styled": "ids-dots",
           "example": "<div class=\"ids-dots\" role=\"tablist\" aria-label=\"Página de cartões\">…</div>",
           "notes": "`styled` even though shadcn ships nothing like it. `wrapped` would be the honest state for a component the product built itself — the ledger reserves that word for wrapping a LIBRARY component, and reports the mismatch. Worth knowing the vocabulary has no word for 'ours, from scratch'."
         },
         "dot": {
           "intent": "One page marker.",
-          "state": "styled",
+          "state": "own",
           "styled": "ids-dot",
           "example": "<button class=\"ids-dot\" role=\"tab\" aria-selected=\"true\" aria-label=\"Página 1\"></button>",
           "notes": "Fills with `fg-default` rather than with a brand colour. Measured on the live site: the chosen dot is white on the brand band and black on a light section, which makes it a CONTEXT decision — the inverted and brand contexts already flip `fg-default`, so it follows for free."

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en" data-theme="booking">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Booking DS reconstructed — Bulma</title>
+<!-- One stylesheet. `ds.scss` compiles Bulma from source alongside the tokens,
+     the adapter and the product layer, which is the normal shape for a real
+     project — the tool keeps them separate elsewhere only so each piece can be
+     demonstrated on its own. -->
+<link rel="stylesheet" href="ds.css">
+<style>
+  /* The page's own layout only. Nothing here is a design decision: every
+     colour, size and radius comes from a token or a Bulma class. */
+  body { background: var(--app-bg-page); }
+  .shell { max-width: 1120px; margin: 0 auto; padding: 0 var(--app-space-md); }
+  .results { display: grid; grid-template-columns: 260px 1fr; gap: var(--app-space-lg); align-items: start; }
+  @media (max-width: 60rem) { .results { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- =========================================================================
+     THE NAVY BAND
+     `data-surface="inverted"` is the TOOL's context, not a product invention.
+     Before this example its colours were hardcoded to zinc; the theme now
+     supplies them, so a navy band needs no CSS of its own.
+     ========================================================================= -->
+<header data-surface="inverted">
+  <div class="shell">
+
+    <!-- Brand row. Bulma's `level` does the layout; nothing here is custom. -->
+    <div class="level pt-4 mb-3">
+      <div class="level-left">
+        <span class="title is-5 has-text-inherit mb-0">Booking<span aria-hidden="true">.</span>com</span>
+      </div>
+      <div class="level-right">
+        <div class="buttons">
+          <button class="bk-btn-secondary">List your property</button>
+          <button class="bk-btn-secondary">Register</button>
+          <button class="bk-btn-secondary">Sign in</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- THE PRODUCT NAV — Booking's `[data-testid="header-xpb"]`.
+         Measured on the live page: pill radius, 43.6px tall, 11px/16px padding,
+         weight 500, a 0.8px WHITE border on the current item and a transparent
+         one on the rest.
+
+         Same class as the category filter row further down. The only thing that
+         differs is the ink, and the inverted context supplies it — there is no
+         on-brand variant here because there does not need to be one. -->
+    <nav class="bk-tabs" aria-label="Product">
+      <a class="bk-tab" href="#" aria-current="page">Stays</a>
+      <a class="bk-tab" href="#">Flights</a>
+      <a class="bk-tab" href="#">Car rental</a>
+      <a class="bk-tab" href="#">Attractions</a>
+      <a class="bk-tab" href="#">Airport taxis</a>
+    </nav>
+
+    <div class="py-5">
+      <h1 class="title has-text-inherit">Find your next stay</h1>
+      <p class="subtitle has-text-inherit">Search deals on hotels, homes and much more…</p>
+    </div>
+  </div>
+</header>
+
+<!-- The search panel straddles the band, which is what makes the gold frame
+     legible: it reads 5.84:1 against the navy and 1.75:1 against white. That
+     is a COMPOSITION rule, recorded in the ledger, because no token can stop
+     someone dropping it onto a white section. -->
+<div data-surface="inverted" style="padding-bottom: var(--app-space-xl)">
+  <div class="shell">
+    <!-- data-surface="base" returns to the theme's own values. The panel sits
+         ON the navy band, but its fields are white islands, and without this
+         every token inside them kept the band values — the captions read the
+         band's muted blue on a white field at 1.55:1. Contexts nest; this is
+         how you nest back out. -->
+    <form class="bk-search" data-surface="base" role="search" aria-label="Search accommodation">
+      <!-- Bulma's own controls. The product class only removes their borders
+           and lets them stretch — it does not redeclare a field. -->
+      <input class="input is-medium bk-search__field" value="Lisbon, Portugal" aria-label="Destination">
+      <button type="button" class="button is-medium bk-search__field">
+        <span class="bk-search__label">Check-in — Check-out</span>
+      </button>
+      <button type="button" class="button is-medium bk-search__field">
+        <span class="bk-search__label">2 adults · 0 children · 1 room</span>
+      </button>
+      <button type="submit" class="bk-search__submit">Search</button>
+    </form>
+  </div>
+</div>
+
+<main class="shell py-6">
+
+  <!-- =====================================================================
+       CATEGORY PILLS — where `selected` earns a colour of its own
+       ===================================================================== -->
+  <section class="mb-5" aria-labelledby="cats">
+    <h2 id="cats" class="is-sr-only">Browse by property type</h2>
+    <!-- Booking's `[data-testid="webcore-filter-carousel-tabs"]`. Identical
+         component to the header nav; here the ink is the blue because the
+         surface is the page rather than the band. -->
+    <div class="bk-tabs" role="tablist">
+      <button class="bk-tab" role="tab" aria-pressed="true">Hotels</button>
+      <button class="bk-tab" role="tab" aria-pressed="false">Apartments</button>
+      <button class="bk-tab" role="tab" aria-pressed="false">Resorts</button>
+      <button class="bk-tab" role="tab" aria-pressed="false">Villas</button>
+      <button class="bk-tab" role="tab" aria-pressed="false">Hostels</button>
+    </div>
+  </section>
+
+  <div class="results">
+
+    <!-- ===================================================================
+         FILTER RAIL
+         =================================================================== -->
+    <aside data-surface="sunken" class="box" aria-labelledby="filters">
+      <h2 id="filters" class="title is-6">Filter by</h2>
+
+      <div class="field">
+        <label class="label is-small" for="budget">Your budget per night</label>
+        <div class="control">
+          <input class="input is-small" id="budget" type="text" value="€ 0 – € 400">
+        </div>
+      </div>
+
+      <hr>
+
+      <fieldset class="field">
+        <legend class="label is-small">Popular filters</legend>
+        <label class="checkbox is-block mb-2"><input type="checkbox" checked> Free cancellation</label>
+        <label class="checkbox is-block mb-2"><input type="checkbox"> Breakfast included</label>
+        <label class="checkbox is-block mb-2"><input type="checkbox"> Hotels</label>
+        <!-- aria-disabled on the ROW: the count beside a disabled filter is part
+             of the inactive component, and WCAG exempts the component, not just
+             the focusable node inside it. -->
+        <label class="checkbox is-block" aria-disabled="true"><input type="checkbox" disabled> Beachfront <span class="has-text-grey">(0)</span></label>
+      </fieldset>
+
+      <hr>
+
+      <fieldset class="field">
+        <legend class="label is-small">Review score</legend>
+        <label class="checkbox is-block mb-2"><input type="checkbox"> Wonderful: 9+</label>
+        <label class="checkbox is-block mb-2"><input type="checkbox"> Very good: 8+</label>
+        <label class="checkbox is-block"><input type="checkbox"> Good: 7+</label>
+      </fieldset>
+    </aside>
+
+    <!-- ===================================================================
+         RESULTS
+         =================================================================== -->
+    <section aria-labelledby="listings">
+      <div class="level mb-4">
+        <div class="level-left">
+          <h2 id="listings" class="title is-5 mb-0">Lisbon: 1,284 properties found</h2>
+        </div>
+        <div class="level-right">
+          <div class="select is-small">
+            <label class="is-sr-only" for="sort">Sort by</label>
+            <select id="sort">
+              <option>Our top picks</option>
+              <option>Price (lowest first)</option>
+              <option>Best reviewed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="notification is-info is-light mb-4">
+        <strong>Sign in to save 10%</strong> or more with a free Genius account.
+      </div>
+
+      <!-- Listing 1 — the full anatomy -->
+      <article class="bk-listing mb-4">
+        <div class="bk-listing__media" role="img" aria-label="Photograph of Baixa Grand Hotel"></div>
+        <div>
+          <h3 class="title is-6 mb-1"><a href="#">Baixa Grand Hotel</a></h3>
+          <p class="is-size-7 mb-2"><a href="#">Baixa, Lisbon</a> · 750 m from centre</p>
+          <p class="mb-2"><span class="bk-deal">Getaway Deal</span></p>
+          <p class="is-size-7 has-text-grey mb-1">Double Room · 1 double bed</p>
+          <p class="is-size-7 has-text-success has-text-weight-bold">Free cancellation · No prepayment needed</p>
+        </div>
+        <div class="bk-listing__rail">
+          <div class="is-flex is-align-items-center" style="gap:var(--app-space-xs)">
+            <div class="has-text-right">
+              <div class="is-size-7 has-text-weight-bold">Wonderful</div>
+              <div class="is-size-7 has-text-grey">1,284 reviews</div>
+            </div>
+            <span class="bk-score" aria-label="Scored 9.1 out of 10">9.1</span>
+          </div>
+          <div>
+            <div class="is-size-7 has-text-grey">2 nights, 2 adults</div>
+            <div><span class="bk-price__was">€ 320</span> <span class="bk-price__now">€ 268</span></div>
+            <div class="bk-price__note">Includes taxes and fees</div>
+            <button class="bk-btn-primary mt-2">See availability</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Listing 2 — urgency, which Booking writes as red INK, never a fill -->
+      <article class="bk-listing mb-4">
+        <div class="bk-listing__media" role="img" aria-label="Photograph of Alfama River View"></div>
+        <div>
+          <h3 class="title is-6 mb-1"><a href="#">Alfama River View</a></h3>
+          <p class="is-size-7 mb-2"><a href="#">Alfama, Lisbon</a> · 1.2 km from centre</p>
+          <p class="is-size-7 has-text-grey mb-1">Studio with balcony · 1 sofa bed</p>
+          <p class="is-size-7 has-text-danger has-text-weight-bold">Only 2 rooms left at this price on our site</p>
+        </div>
+        <div class="bk-listing__rail">
+          <div class="is-flex is-align-items-center" style="gap:var(--app-space-xs)">
+            <div class="has-text-right">
+              <div class="is-size-7 has-text-weight-bold">Very good</div>
+              <div class="is-size-7 has-text-grey">903 reviews</div>
+            </div>
+            <span class="bk-score" aria-label="Scored 8.4 out of 10">8.4</span>
+          </div>
+          <div>
+            <div class="is-size-7 has-text-grey">2 nights, 2 adults</div>
+            <div><span class="bk-price__now">€ 194</span></div>
+            <div class="bk-price__note">Includes taxes and fees</div>
+            <button class="bk-btn-primary mt-2">See availability</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Listing 3 — the quiet action, and a sold-out state -->
+      <article class="bk-listing mb-4">
+        <div class="bk-listing__media" role="img" aria-label="Photograph of Príncipe Real Suites"></div>
+        <div>
+          <h3 class="title is-6 mb-1"><a href="#">Príncipe Real Suites</a></h3>
+          <p class="is-size-7 mb-2"><a href="#">Príncipe Real, Lisbon</a> · 2.0 km from centre</p>
+          <p class="mb-2"><span class="tag is-warning">Sustainable travel</span></p>
+          <p class="is-size-7 has-text-grey">Junior Suite · 1 king bed</p>
+        </div>
+        <div class="bk-listing__rail">
+          <div class="is-flex is-align-items-center" style="gap:var(--app-space-xs)">
+            <div class="has-text-right">
+              <div class="is-size-7 has-text-weight-bold">Superb</div>
+              <div class="is-size-7 has-text-grey">431 reviews</div>
+            </div>
+            <span class="bk-score" aria-label="Scored 9.4 out of 10">9.4</span>
+          </div>
+          <div>
+            <div class="is-size-7 has-text-grey">2 nights, 2 adults</div>
+            <div><span class="bk-price__now">€ 412</span></div>
+            <div class="bk-price__note">Includes taxes and fees</div>
+            <button class="bk-btn-secondary mt-2">Check other dates</button>
+          </div>
+        </div>
+      </article>
+
+      <nav class="pagination is-small" role="navigation" aria-label="pagination">
+        <a class="pagination-previous" href="#">Previous</a>
+        <a class="pagination-next" href="#">Next</a>
+        <ul class="pagination-list">
+          <li><a class="pagination-link is-current" href="#" aria-current="page">1</a></li>
+          <li><a class="pagination-link" href="#">2</a></li>
+          <li><a class="pagination-link" href="#">3</a></li>
+        </ul>
+      </nav>
+    </section>
+  </div>
+
+  <!-- =====================================================================
+       STATUS — the four roles, and what Booking actually uses each for
+       ===================================================================== -->
+  <section class="mt-6" aria-labelledby="msgs">
+    <h2 id="msgs" class="title is-5">Messages</h2>
+    <div class="notification is-success is-light">
+      <strong>Booking confirmed.</strong> A confirmation email is on its way.
+    </div>
+    <div class="notification is-warning is-light">
+      <strong>Check the entry requirements.</strong> Some properties ask for proof of address.
+    </div>
+    <div class="notification is-danger is-light">
+      <strong>Payment failed.</strong> The card was declined by the issuer.
+    </div>
+    <div class="notification is-info is-light">
+      <strong>Prices dropped.</strong> This property is 12% cheaper than the average.
+    </div>
+  </section>
+
+  <!-- =====================================================================
+       A table, because a booking summary is one
+       ===================================================================== -->
+  <section class="mt-6" aria-labelledby="summary">
+    <h2 id="summary" class="title is-5">Your booking</h2>
+    <div class="table-container">
+      <table class="table is-fullwidth is-hoverable">
+        <thead>
+          <tr><th>Room</th><th>Guests</th><th>Cancellation</th><th class="has-text-right">Price</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Double Room</td><td>2 adults</td>
+            <td><span class="has-text-success has-text-weight-bold">Free until 12 Sep</span></td>
+            <td class="has-text-right">€ 268</td>
+          </tr>
+          <tr>
+            <td>Breakfast buffet</td><td>2 adults</td>
+            <td><span class="has-text-grey">Non-refundable</span></td>
+            <td class="has-text-right">€ 36</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr><th colspan="3">Total</th><th class="has-text-right">€ 304</th></tr>
+        </tfoot>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer data-surface="inverted" class="mt-6">
+  <div class="shell py-6">
+    <div class="columns">
+      <div class="column">
+        <h3 class="title is-6 has-text-inherit">Support</h3>
+        <ul class="is-size-7">
+          <li><a href="#">Coronavirus FAQs</a></li>
+          <li><a href="#">Manage your trips</a></li>
+          <li><a href="#">Contact Customer Service</a></li>
+        </ul>
+      </div>
+      <div class="column">
+        <h3 class="title is-6 has-text-inherit">Discover</h3>
+        <ul class="is-size-7">
+          <li><a href="#">Genius loyalty programme</a></li>
+          <li><a href="#">Seasonal and holiday deals</a></li>
+          <li><a href="#">Travel articles</a></li>
+        </ul>
+      </div>
+      <div class="column">
+        <h3 class="title is-6 has-text-inherit">Terms and settings</h3>
+        <ul class="is-size-7">
+          <li><a href="#">Privacy and cookies</a></li>
+          <li><a href="#">Terms and conditions</a></li>
+          <li><a href="#">Accessibility statement</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="is-size-7 mt-4">
+      A study reproducing Booking.com's design language on this foundation.
+      Not affiliated with Booking.com.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+// =============================================================================
+// BOOKING — the product's own layer
+// =============================================================================
+//
+// No `@use` here on purpose: a file containing `@use` cannot be `@import`ed,
+// and this one must share Bulma's scope for `@extend` to resolve.
+//
+// -----------------------------------------------------------------------------
+// THIS FILE WAS TWICE THIS SIZE AND THAT WAS THE BUG
+// -----------------------------------------------------------------------------
+//
+// The first version reimplemented three Bulma components from scratch — the
+// search field, the search submit and the score badge each set their own
+// background, colour, border, radius, padding and font. It rendered correctly
+// and it was brute force: a product layer that redeclares what the library
+// already declares has stopped using the library.
+//
+// Correcting it produced a second, sharper finding.
+//
+// -----------------------------------------------------------------------------
+// EXTEND THE COMPONENT, NEVER A SHARED MODIFIER
+// -----------------------------------------------------------------------------
+//
+// `@extend .button` is cheap and correct: `.bk-listing` extends `.card` and
+// appears 6 times in the output. `@extend .is-primary` is neither, because
+// Bulma's colour modifiers are SHARED across component families — the same
+// `.is-info` appears on `.button`, `.tag`, `.notification` and `.message`.
+// Sass has to generate the cross product. Measured on the previous version:
+//
+//     .bk-score            126 occurrences
+//     .bk-search__submit   261 occurrences
+//     84 nonsense selectors: .bk-tab.bk-score, .bk-btn-primary.bk-deal, …
+//
+// And it was not only bloat. `.bk-score` extended `.is-info`, which pulled in
+// `.button.is-info` — the score badge became a button and lost its type size.
+// A correctness bug, produced by reaching for the library the wrong way.
+//
+// `@extend .button.is-primary` would be exact, and Sass removed support for
+// extending compound selectors. So the rule is:
+//
+//   1. `@extend` the BASE component — its padding, focus, disabled state,
+//      transitions and radius machinery, which is the expensive part.
+//   2. A library VARIABLE for anything the library computes from one.
+//   3. A token for the two or three colours the modifier would have given.
+//
+// Step 3 turns out to be BETTER than the modifier, not a concession: Bulma
+// derives a hover by shifting lightness a fixed delta, where
+// `bg-action-hover` is the value the brand actually chose. #e5a400 is not
+// #ffb700 minus 5%.
+//
+// -----------------------------------------------------------------------------
+// AND ONE COMPONENT DOING TWO JOBS
+// -----------------------------------------------------------------------------
+//
+// Booking's header nav (`[data-testid="header-xpb"]`) and its category filter
+// carousel (`[data-testid="webcore-filter-carousel-tabs"]`) are THE SAME
+// COMPONENT measured: pill radius, 43.6px tall, 11px/16px padding, weight 500,
+// transparent border when idle, a 0.8px border in the current ink when chosen.
+//
+// The only difference is the ink — `#006ce4` on the white page, `#ffffff` on
+// the navy band — and that is not a variant. It is the `inverted` context
+// moving `fg-link`. One class, no modifier, both places.
+// =============================================================================
+
+@layer components {
+  // ---------------------------------------------------------------------
+  // Buttons
+  // ---------------------------------------------------------------------
+
+  // The gold CTA. Bulma's `is-primary` already resolves to it through the
+  // adapter, so this is a rename plus one forced correction.
+  .bk-btn-primary {
+    @extend .button;
+
+    background: var(--app-bg-action);
+    border-color: transparent;
+
+    // Setting the ink directly also settles a Bulma limit the earlier version
+    // had to work around: the library composes a button's label from the
+    // family's hue plus an inverted lightness, with no channel for the label's
+    // own hue, so it rendered #332500 where the theme said #1a1a1a. Naming the
+    // token skips the composition.
+    color: var(--app-fg-on-action);
+  }
+
+  // Register, Sign in, Show more. Measured: white fill, `#006ce4` label, NO
+  // border, 36px, 4px radius, weight 500.
+  //
+  // Bulma's plain `.button` is already a white fill with dark text and a grey
+  // border, so the divergence is two declarations — and the hover is left
+  // entirely to Bulma, which darkens the fill through its own lightness delta.
+  // The previous version wrote its own hover and gained nothing by it.
+  .bk-btn-secondary {
+    @extend .button;
+
+    // `0px`, not `0`. Bulma computes a button's padding as
+    // `calc(0.5em - var(--bulma-button-border-width))`, and a unitless zero
+    // makes that calc invalid — the declaration is dropped and the padding
+    // collapses to nothing. The button rendered 21px tall instead of 35 and
+    // looked like a text link. Valid CSS, silent failure, five minutes to find.
+    --bulma-button-border-width: 0px;
+    color: var(--app-fg-action);
+  }
+
+  .bk-btn-primary:hover {
+    background: var(--app-bg-action-hover);
+  }
+
+  .bk-btn-primary:active {
+    background: var(--app-bg-action-active);
+  }
+
+  .bk-search__submit:hover {
+    background: var(--app-bg-selected-hover);
+  }
+
+  // ---------------------------------------------------------------------
+  // Tabs — the header nav AND the category carousel
+  // ---------------------------------------------------------------------
+  //
+  // Named for what it is rather than for where it sits. Booking calls both of
+  // its instances tabs, and the markup differs only in the element: `<a
+  // aria-current="page">` in the header, `<button aria-pressed>` in the filter
+  // row. Neither is a button emphasis — a tab does not compete with the Search
+  // CTA, it says which of a set you are looking at.
+  //
+  // `@extend .is-rounded` is the pill radius from the library rather than a
+  // `border-radius` written here, which is the correction the review asked for.
+  .bk-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--app-space-2xs);
+  }
+
+  .bk-tab {
+    @extend .button;
+
+    // Idle: no fill, no visible line, and the ink INHERITED from the surface.
+    // That inheritance is what makes one class work on white and on navy —
+    // `fg-default` is `#1a1a1a` on the page and `#ffffff` inside the inverted
+    // context, so the tab needs no on-brand variant.
+    // Booking's tabs are taller than a default button at the same type size:
+    // measured 11px/16px padding, 43.6px tall. Set through Bulma's OWN padding
+    // variables rather than a `padding` property, so the library keeps
+    // computing the border compensation.
+    --bulma-button-padding-vertical: 11px;
+    --bulma-button-padding-horizontal: 16px;
+    --bulma-button-border-width: var(--app-border-width);
+    // `radius-pill` rather than `@extend .is-rounded`: that modifier is shared
+    // with `.tag`, `.input` and `.select`, so extending it drags three more
+    // families in. The token says the same thing and costs one selector.
+    border-radius: var(--app-radius-pill);
+    background: transparent;
+    border-color: transparent;
+    color: inherit;
+  }
+
+  // One rule, both contexts. `bg-surface-hover` is a light grey on the page
+  // and a translucent white inside the inverted band, because the context
+  // supplies it. The first version wrote a second rule scoped to the band with
+  // a literal white in it, and the lint refused the literal — which is how the
+  // missing token got found.
+  .bk-tab:hover {
+    background: var(--app-bg-surface-hover);
+  }
+
+  // Chosen: a line in the interactive ink, and the label in the same ink.
+  // `currentColor` on the border is how Booking does it and why the two never
+  // disagree. `fg-link` is blue on the page and white on the band — the context
+  // supplies it, so this rule is written once and correct in both places.
+  .bk-tab[aria-current='page'],
+  .bk-tab[aria-pressed='true'] {
+    color: var(--app-fg-link);
+    border-color: currentColor;
+  }
+
+  // ---------------------------------------------------------------------
+  // The search panel — Booking's signature, and Bulma has nothing like it
+  // ---------------------------------------------------------------------
+  //
+  // The FRAME is the product's own: a gold band around a row of controls, which
+  // no library ships. What sits inside it is Bulma's — `.input` and `.button`
+  // in the markup — and this file only removes their borders and lets them
+  // stretch.
+  //
+  // The frame reads `bg-action`, the gold, used as a BORDER rather than a fill.
+  // Legitimate as a 4px band, where WCAG asks 3:1 of a non-text element: it
+  // measures 1.75:1 on white and 5.84:1 on the navy. That is a composition
+  // rule, it is in the ledger, and no token can enforce it.
+  .bk-search {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 2px;
+    background: var(--app-bg-action);
+    border-radius: var(--app-radius-surface);
+  }
+
+  // A modifier on `.input` / `.button`, not a reimplementation of either.
+  .bk-search__field {
+    flex: 1 1 200px;
+    justify-content: flex-start;
+    // `--bulma-control-border-width` is the one inputs actually read;
+    // `--bulma-input-border-width` does not exist. Both the input and the
+    // button inside the frame go borderless through the shared control
+    // variable, which is why one line covers two element types.
+    --bulma-control-border-width: 0px;
+    --bulma-button-border-width: 0px;
+  }
+
+  // Bulma's grey utilities (`has-text-grey`) read Bulma's own grey scale, which
+  // the adapter deliberately does not map — those are absolute colour names,
+  // and binding them has broken adapters before. So a themed muted tone inside
+  // a control costs exactly one declaration, and this is it.
+  .bk-search__label {
+    color: var(--app-fg-muted);
+  }
+
+  // Blue, not gold: the frame is already gold and a gold button inside a gold
+  // frame disappears. Bulma's `is-link` family is the `selected` role, which
+  // this theme points at the brand blue — so the colour needs no declaration
+  // here at all. Three extends and two flex properties.
+  .bk-search__submit {
+    @extend .button;
+
+    // Blue, not gold: the frame is already gold and a gold button inside a
+    // gold frame disappears. `selected` is the role Booking paints this with.
+    background: var(--app-bg-selected);
+    color: var(--app-fg-on-selected);
+    border-color: transparent;
+    flex: 0 0 auto;
+    // `size-control-lg` — the theme already names 50px, measured off the live
+    // Search button. A number here would have been an invented one.
+    min-height: var(--app-size-control-lg);
+    font-size: var(--app-font-size-lg);
+    font-weight: 700;
+  }
+
+  // ---------------------------------------------------------------------
+  // The review score
+  // ---------------------------------------------------------------------
+  //
+  // A stamp, not a label: fixed width so a column of them lines up whether the
+  // score is 8.0 or 10, and one corner squared off.
+  //
+  // `@extend .tag` keeps Bulma's display, line-height and padding machinery;
+  // `is-info` supplies the navy through the adapter. What is left is geometry,
+  // and it is expressed in TOKENS rather than in invented rems — 36px is
+  // `size-control-sm`, which is the same rung the small controls on this page
+  // already stand on.
+  .bk-score {
+    @extend .tag;
+
+    background: var(--app-bg-info);
+    color: var(--app-fg-on-info);
+
+    min-width: var(--app-size-control-sm);
+    height: var(--app-size-control-sm);
+    font-size: var(--app-font-size);
+    font-weight: 700;
+    border-radius: var(--app-radius-control) var(--app-radius-control)
+      var(--app-radius-control) 0;
+  }
+
+  // ---------------------------------------------------------------------
+  // The listing — a card that lies on its side
+  // ---------------------------------------------------------------------
+  //
+  // Bulma's `.card` is a vertical stack. A results page is a scan down a column
+  // of prices, so this is a three-column grid with the rail right-aligned.
+  // Geometry only; every colour still comes from `.card` through the adapter.
+  .bk-listing {
+    @extend .card;
+
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: var(--app-space-md);
+    padding: var(--app-space-md);
+  }
+
+  @media (max-width: 48rem) {
+    .bk-listing {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .bk-listing__media {
+    background: var(--app-bg-sunken);
+    border-radius: var(--app-radius-control);
+    min-height: 140px;
+  }
+
+  .bk-listing__rail {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--app-space-sm);
+    text-align: right;
+  }
+
+  // Red as INK, which is how Booking uses it far more than as a fill.
+  .bk-price__was {
+    color: var(--app-fg-danger);
+    text-decoration: line-through;
+    font-size: var(--app-font-size-sm);
+  }
+
+  .bk-price__now {
+    font-size: var(--app-font-size-heading);
+    font-weight: 700;
+  }
+
+  .bk-price__note {
+    color: var(--app-fg-muted);
+    font-size: var(--app-font-size-sm);
+  }
+
+  // ---------------------------------------------------------------------
+  // The deal badge
+  // ---------------------------------------------------------------------
+  //
+  // Square-cornered and bolder than Bulma's pill. Colour untouched.
+  .bk-deal {
+    @extend .tag;
+
+    background: var(--app-bg-success);
+    color: var(--app-fg-on-success);
+
+    border-radius: var(--app-radius-control-sm);
+    font-weight: 700;
+  }
+}
