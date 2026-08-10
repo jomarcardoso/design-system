@@ -9,9 +9,13 @@
     {
       "name": "design-system",
       "source": "./",
-      "description": "A framework-independent CSS token foundation and the skill that applies it. Installs the token layers into a project, wires Bootstrap or Tailwind to them, and keeps application code reading only the semantic contract.",
+      "description": "Conducts the creation of a design system end to end: a discovery interview that writes the design language, a framework-independent CSS token foundation, and a pattern ledger that closes the component vocabulary. Eleven library adapters ship with it.",
       "category": "design",
-      "skills": ["./skills/design-system"]
+      "skills": [
+        "./skills/design-language",
+        "./skills/design-system",
+        "./skills/design-patterns"
+      ]
     }
   ]
 }

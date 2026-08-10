@@ -1075,6 +1075,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  .accent-fg {
+    accent-color: var(--app-fg-default);
+  }
   .opacity-10 {
     opacity: 10%;
   }

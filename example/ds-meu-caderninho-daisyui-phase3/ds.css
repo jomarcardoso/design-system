@@ -369,8 +369,8 @@
     --color-primary-content: var(--app-fg-on-action);
     --color-secondary: var(--app-bg-selected);
     --color-secondary-content: var(--app-fg-on-selected);
-    --color-accent: var(--app-accent-bg, var(--app-bg-selected));
-    --color-accent-content: var(--app-accent-fg, var(--app-fg-on-selected));
+    --color-accent: var(--app-accent-bg, var(--app-bg-neutral));
+    --color-accent-content: var(--app-accent-fg, var(--app-fg-on-neutral));
     --color-neutral: var(--app-bg-neutral);
     --color-neutral-content: var(--app-fg-on-neutral);
     --color-info: var(--app-bg-info);
@@ -399,7 +399,7 @@
     --btn-rest-fg: var(--app-fg-selected);
   }
   .btn-accent {
-    --btn-rest-fg: var(--app-accent-fg-on-subtle, var(--app-fg-selected));
+    --btn-rest-fg: var(--app-accent-fg-on-subtle, var(--app-fg-default));
   }
   .btn-info {
     --btn-rest-fg: var(--app-fg-info);

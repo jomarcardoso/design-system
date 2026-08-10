@@ -7,6 +7,28 @@ boundary to reach across.
 
 Source: `${CLAUDE_PLUGIN_ROOT}`.
 
+## Before this file
+
+Installing is the SECOND step, not the first. The plugin ships three skills
+and they run in order:
+
+| | skill | produces | question it answers |
+|---|---|---|---|
+| 1 | `design-language` | `DESIGN-LANGUAGE.md` | why does it look and sound like this |
+| 2 | `design-system` (this one) | `src/`, the theme, `dist/` | what are the values |
+| 3 | `design-patterns` | `patterns.json` | which components may be built |
+
+**If `DESIGN-LANGUAGE.md` does not exist at the project root, stop and run
+`design-language` first.** Skipping it produces a palette nobody can defend six
+months later — the values get chosen by whoever is typing, and the reasons
+are never written down.
+
+The one exception is a project that already has a design system and wants
+only the token layer under it. Even then the interview is worth running as a
+CONVERSION rather than a discovery: the answers are already in the code, and
+the document is what stops them being re-litigated. See the note in the
+`design-language` skill.
+
 ## Step 1 — Look before asking
 
 Detection tells you what to *recommend*. It does not tell you what the person

@@ -72,6 +72,47 @@ Two consequences worth having in mind while running it:
   saying what this product is, so getting it right is a lookup instead of an
   argument.
 
+## When the project already has a design system
+
+This is the common case, not the exception — most teams arrive with colours,
+faces and spacing already chosen, and want them turned into tokens rather
+than reinvented. The interview still runs. It changes shape.
+
+**Read the code first, then confirm.** An existing system has already
+answered most of the fourteen questions; they are just answered in CSS
+instead of in prose. Find them:
+
+```bash
+# The palette and how often each entry is used
+grep -rho -- "--[a-z-]*color[a-z0-9-]*" src/ styles/ | sort | uniq -c | sort -rn
+
+# Faces, radii, spacing
+grep -rn -- "font-family\|border-radius\|--space\|--gap" src/ styles/ | head -30
+
+# Which library is underneath, and whether more than one is
+grep -iE "\"(bootstrap|bulma|@coreui|daisyui|tailwindcss|flowbite|preline)" package.json
+```
+
+Then run the interview as a REVIEW: *"I read cocoa #5f3212 as your action
+colour and Cinzel as your heading face — confirm?"* One exchange per block
+instead of one per question.
+
+**Three things the code cannot tell you, so they must still be asked:**
+
+1. **Which collapses are deliberate.** Two tokens with the same value look
+   identical to a reader and mean opposite things: a brand that marks
+   selection with its action colour on purpose, versus two roles that drifted
+   together. Only the client knows which.
+2. **Which values are load-bearing and which are accidents.** A colour used
+   once in a corner reads exactly like a colour used everywhere.
+3. **The guardrails.** Nothing in CSS records what the system must never do.
+
+**Expect the build to refuse some of it.** An existing palette has never been
+measured against the contrast gate, and both real systems reconstructed with
+this tool failed it — a fill reused as text is the usual culprit. That is the
+tool working. Record each correction as a deviation rather than quietly
+moving the brand.
+
 ## Running the interview
 
 Fourteen questions, six blocks. Read the questionnaire before starting.
