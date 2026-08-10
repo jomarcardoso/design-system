@@ -612,12 +612,42 @@ $_contrast-pairs: (
 // is a legitimate choice — but it should be a choice someone made, not a
 // default nobody noticed. The threshold is deliberately low: this is asking
 // "are these two colours distinguishable at all", not "are they harmonious".
+// WHICH COLLAPSES COUNT AS MISTAKES DEPENDS ON THE SCHOOL, and pretending
+// otherwise turned a useful check into noise.
+//
+// The first version warned on every collapse and fired on both real systems
+// reconstructed here — Itaú, where `action` and `selected` are deliberately the
+// same orange, and it would fire three times on any monochrome product. A check
+// that always fires teaches people to ignore it, which is worse than not having
+// it: the one collapse that IS a modelling error arrives in the same colour as
+// the two that are not.
+//
+// `config.$colour-strategy` says which school the product belongs to, and the
+// check narrows accordingly. See the note there for why this is a setting
+// rather than a second vocabulary.
 @mixin check-roles($name, $choices) {
-  $checks: (
+  $all: (
     (action, selected, 'a button and a selected chip'),
     (action, link, 'a button and an inline link'),
     (selected, info, 'a selected item and an informational badge')
   );
+
+  $checks: $all;
+
+  @if config.$colour-strategy == 'monochrome' {
+    // One accent by design. Nothing to warn about.
+    $checks: ();
+  } @else if config.$colour-strategy == 'brand' {
+    // The brand hue doing several jobs is the school, not a slip. Navigation
+    // collapsing into it is still worth saying: a system where the button, the
+    // chosen tab AND the link are one colour has stopped distinguishing
+    // anything, and that is a different claim from "our brand colour marks
+    // what is chosen".
+    $checks: ((action, link, 'a button and an inline link'),);
+  } @else if config.$colour-strategy != 'functional' {
+    @error 'config.$colour-strategy must be "functional", "brand" or '
+         + '"monochrome"; got "#{config.$colour-strategy}".';
+  }
 
   @each $c in $checks {
     $a-key: list.nth($c, 1);

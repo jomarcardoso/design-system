@@ -171,6 +171,43 @@ not an error.
 comes from the brand, and guessing at the one thing the client already knows is
 the fastest way to lose their confidence in everything else.
 
+**8b. When something is CHOSEN — a selected tab, a ticked checkbox — does it
+take your main brand colour, or a different one?**
+
+- (A) A different colour → `$colour-strategy: 'functional'`
+- (B) The main brand colour → `$colour-strategy: 'brand'`
+- (C) There is only one colour; everything else is grey → `'monochrome'`
+
+Phrased that way a client answers it without knowing any vocabulary, and it
+is the single most load-bearing decision in the document — it is what a new
+component six months later reads to find out whether "chosen" gets a colour
+of its own.
+
+It sets which collapses `check-roles()` treats as mistakes, and NOT which
+tokens exist: all three schools use one contract. Read
+[`references/colour-strategies.md`](colour-strategies.md) before asking, because
+the follow-ups differ per answer.
+
+**No archetype answers this one either.** Editorial products are as likely to
+be monochrome as Tech Minimalist ones, and a Playful brand may well mark
+selection with its own hue. The two axes are independent.
+
+**8c. Beside your main button, what does the supporting action look like?**
+
+- (A) Outlined
+- (B) A soft tint of the main colour
+- (C) A plain grey
+- (D) A second brand colour, filled
+
+Seven treatments are in use and six of them are the same two or three tokens
+pointed at different values — so the answer changes `theme.scss` and never the
+product layer. Only (D) reaches for a layer 3 hook. The table of recipes is in
+`colour-strategies.md`.
+
+Ask it as an APPEARANCE question, as above, because that is how a client
+thinks about it. Translating the answer into roles is this skill's job, not
+theirs.
+
 **9. What level of accessibility rigour?**
 
 - (A) **WCAG AA** — 4.5:1 body text. The recommended default for every archetype.

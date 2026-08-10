@@ -74,6 +74,39 @@ $themes: (light, dark, brand) !default;
 $adapters: () !default;
 
 // -----------------------------------------------------------------------------
+// Colour strategy — which SCHOOL this product belongs to
+// -----------------------------------------------------------------------------
+//
+// There are three ways real design systems assign colour, and they are three
+// ASSIGNMENT patterns over one vocabulary rather than three vocabularies. This
+// setting does not change which tokens exist. It changes what
+// `semantic.check-roles()` treats as a mistake.
+//
+//   'functional'  action, selected and link are three separate hues.
+//                 Atlassian, Shopify Polaris, and this foundation's default.
+//                 Collapsing any two is worth a warning.
+//
+//   'brand'       the brand's primary hue does several jobs: the primary
+//                 button AND the chosen tab AND the checked box. Material,
+//                 Bootstrap, Tailwind UI — and Itaú, measured. `action` and
+//                 `selected` sharing a hue is the POINT here, not an accident,
+//                 so that pair is not warned about. `link` staying separate
+//                 still is, because a brand system that also collapses
+//                 navigation has stopped distinguishing anything.
+//
+//   'monochrome'  one accent, everything else a grey ramp. Apple HIG, Vercel,
+//                 Radix. Every interactive role is the same hue on purpose and
+//                 the interface reads through weight, shape and space instead.
+//                 Nothing is warned about.
+//
+// Why a setting rather than a second set of tokens: a parallel
+// `brand-primary` / `ui-action` vocabulary would give every decision two names
+// with no way to tell which is authoritative, and the adapters would have to
+// pick one anyway. The translation to `primary`/`secondary` already happens at
+// the adapter boundary, which is the layer whose entire job is translation.
+$colour-strategy: 'functional' !default;
+
+// -----------------------------------------------------------------------------
 // Accessibility floor
 // -----------------------------------------------------------------------------
 //

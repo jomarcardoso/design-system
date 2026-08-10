@@ -42,7 +42,18 @@
 @use '../../src/config' with (
   $themes: (),
   $adapters: (),
-  $contrast-min: 3
+  $contrast-min: 3,
+
+  // iDS is a BRAND-school system: the orange is the primary button AND the
+  // chosen tab AND the highlight. That is the school rather than a slip, and
+  // declaring it is what stops `check-roles()` reporting a decision the brand
+  // made on purpose.
+  //
+  // Navigation stays separate here — the navy — so the one check that remains
+  // active still has something to catch. A brand system that collapses the
+  // link too has stopped distinguishing anything, which is a different claim
+  // from "our brand colour marks what is chosen".
+  $colour-strategy: 'brand'
 );
 
 @use '../../src/base';

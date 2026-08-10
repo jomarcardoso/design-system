@@ -289,14 +289,35 @@ $contract: (
   // the foundation may grow a NAME the ecosystem shares, never a name that only
   // makes sense inside one library.
 
-  // A third brand intent. daisyUI's `accent`, Material's tertiary. Defaults to
-  // the selected role, which is what two-brand-colour products want.
-  'accent-bg': 'bg-selected',
-  'accent-fg': 'fg-on-selected',
-  'accent-bg-hover': 'bg-selected-hover',
+  // A second brand FILL. daisyUI's `accent`, Material's tertiary — and the one
+  // shape of secondary action layer 2 cannot express.
+  //
+  // A survey of how real systems render a secondary action produced seven
+  // treatments, and SIX of them are already sayable with existing tokens:
+  //
+  //   outline in the action hue     border-action + fg-action
+  //   outline in a second hue       the same two, pointed elsewhere  (Itaú)
+  //   a lighter tone of the action  bg-action-subtle + fg-action
+  //   a lighter second tone         the same two, pointed elsewhere
+  //   neutral                       bg-neutral + fg-on-neutral       (Bootstrap)
+  //   ghost                         transparent + fg-action
+  //   a FILLED second brand colour  ← nothing. This.
+  //
+  // Which of the seven a product picks is a product decision, and the whole
+  // point of this entry is that the foundation does not make it.
+  //
+  // DEFAULTS TO `neutral`, NOT `selected`, and that is a correction. Pointing a
+  // button at the selection role means a control that DOES something wears the
+  // colour that means something IS chosen — the reader learns the colour means
+  // nothing. Neutral is the honest default: "no second brand colour was
+  // declared, so this reads as having no opinion". Set two variables and the
+  // capability is back.
+  'accent-bg': 'bg-neutral',
+  'accent-fg': 'fg-on-neutral',
+  'accent-bg-hover': 'bg-neutral-hover',
   // The tinted pair, for the "soft" variant every library ships.
-  'accent-bg-subtle': 'bg-selected-subtle',
-  'accent-fg-on-subtle': 'fg-selected',
+  'accent-bg-subtle': 'bg-sunken',
+  'accent-fg-on-subtle': 'fg-default',
 
   // Per-level heading colour. Layer 2 makes one decision — a heading is a
   // heading — but Pico steps six levels down a ramp and some brands do too.

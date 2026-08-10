@@ -101,6 +101,13 @@ of the system.
 
 ## Writing the file
 
+Two answers decide more of the generated system than the rest put together:
+the COLOUR STRATEGY (does a chosen thing take the brand colour?) and the
+SECONDARY ACTION TREATMENT. Both are in block 4, and
+[`references/colour-strategies.md`](references/colour-strategies.md) has the three
+schools, the seven treatments and the token recipe for each. Read it before
+running block 4 — the follow-up questions differ per answer.
+
 Read [`references/worked-example.md`](references/worked-example.md) first. It is a
 finished document reconstructed from a product in this repository, with every
 value taken from that product's real `theme.scss` — so it calibrates length and

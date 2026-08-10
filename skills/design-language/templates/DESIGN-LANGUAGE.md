@@ -19,6 +19,19 @@ elevationCarrier: border-color    # what carries hierarchy — required when ele
 accessibility: AA                 # AA | AAA — sets the threshold in themes.check-contrast()
 statusColours: traditional        # traditional | brand-adapted
 
+# Which school this product belongs to. Sets config.$colour-strategy, and so
+# which role collapses check-roles() treats as mistakes. It does NOT change
+# which tokens exist — all three use one contract.
+#   functional  a colour per job (Atlassian, Polaris)
+#   brand       the brand hue also marks what is chosen (Material, Itau)
+#   monochrome  one accent, everything else grey (Apple, Vercel, Radix)
+colourStrategy: functional
+
+# outline | tinted | neutral | second-brand. Six of the seven treatments in
+# use are the same tokens pointed elsewhere, so this changes theme.scss and
+# never the product layer.
+secondaryAction: outline
+
 voice: action-oriented            # technical | action-oriented | warm
 voiceExceptions:                  # contexts that drop to a stricter register
   - technical for payment and data-loss failures
