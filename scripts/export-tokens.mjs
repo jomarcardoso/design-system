@@ -26,23 +26,31 @@
 // WHAT IT READS
 // -----------------------------------------------------------------------------
 //
-// `dist/ds.css`, not the Sass source. That is deliberate: the compiled output is
-// what the system actually ships, so an exporter reading it cannot drift from
+// The compiled CSS, not the Sass source. That is deliberate: the compiled output
+// is what the system actually ships, so an exporter reading it cannot drift from
 // reality the way one reading the source could. The cost is that references are
 // already resolved — see the note on `$value` below.
+//
+// TWO files, because the foundation ships no theme. `dist/ds.css` carries
+// structure; `dist/demo-themes.css` carries the demonstration pages' three
+// palettes. An export of structure alone reports zero themes and zero surfaces
+// — true of the tool, and useless as a token file. A product points this at its
+// own build instead.
 // =============================================================================
 
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 
-const CSS = 'dist/ds.css';
+const CSS = ['dist/ds.css', 'dist/demo-themes.css'];
 const PREFIX = '--app-';
 
-if (!existsSync(CSS)) {
-  console.error(`${CSS} not found — run \`npm run build:tokens\` first.`);
-  process.exit(2);
+for (const file of CSS) {
+  if (!existsSync(file)) {
+    console.error(`${file} not found — run \`npm run build:tokens\` first.`);
+    process.exit(2);
+  }
 }
 
-const css = readFileSync(CSS, 'utf8');
+const css = CSS.map((file) => readFileSync(file, 'utf8')).join('\n');
 
 // -----------------------------------------------------------------------------
 // Parse

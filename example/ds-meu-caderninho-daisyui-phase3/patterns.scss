@@ -121,14 +121,14 @@
     .mc-chip {
       display: inline-flex;
       align-items: center;
-      min-height: #{component.ref-chain('chip-height')};
-      padding-inline: #{component.ref-chain('chip-pad-x')};
+      min-height: #{component.$chip-height};
+      padding-inline: #{component.$chip-pad-x};
       font-size: var(--app-font-size-sm);
-      color: #{component.ref-chain('chip-fg')};
+      color: #{component.$chip-fg};
       cursor: pointer;
-      background: #{component.ref-chain('chip-bg')};
-      border: var(--app-border-width) solid #{component.ref-chain('chip-border-color')};
-      border-radius: #{component.ref-chain('chip-radius')};
+      background: #{component.$chip-bg};
+      border: var(--app-border-width) solid #{component.$chip-border-color};
+      border-radius: #{component.$chip-radius};
     }
 
     // Hover has no contract entry on purpose — it reads layer 2 directly.
@@ -140,9 +140,9 @@
     // in, not an invitation to act. This product's two roles are one hue apart,
     // so it looks the same either way — and the next product's will not.
     .mc-chip[aria-pressed='true'] {
-      color: #{component.ref-chain('chip-fg-selected')};
-      background: #{component.ref-chain('chip-bg-selected')};
-      border-color: #{component.ref-chain('chip-bg-selected')};
+      color: #{component.$chip-fg-selected};
+      background: #{component.$chip-bg-selected};
+      border-color: #{component.$chip-bg-selected};
     }
 
     .mc-chip-group {

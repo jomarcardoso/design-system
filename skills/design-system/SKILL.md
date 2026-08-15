@@ -238,6 +238,103 @@ travels with its background:
 Keeping the layer 2 lookup only in the base rule also means the layer 3 hook
 (`--app-button-bg`) applies to every variant automatically.
 
+## Dark mode
+
+A dark theme is a THEME — a second `emit-theme()` call with a second map. There
+is no dark-mode switch in the foundation, no `.dark` class and no inverted
+utility. If layer 2 is the only runtime surface, then swapping layer 2 is the
+whole feature.
+
+```scss
+@include semantic.emit-theme('caderninho', theme.$caderninho, $default: true);
+@include semantic.emit-theme('dark', theme.$caderninho-dark, $auto: true);
+```
+
+`$auto: true` also emits the theme under
+`@media (prefers-color-scheme: dark) { :root:not([data-theme]) }`, so a visitor
+who has never touched a toggle gets their OS setting, and an explicit
+`data-theme` — including an explicit choice of the LIGHT theme on a dark
+machine — always wins. Pass it to exactly one theme per scheme.
+
+`color-scheme` is derived by MEASURING the theme's page colour, never from its
+name. A theme called `midnight` is as dark as one called `dark`.
+
+### Name the two themes `light` and `dark`
+
+A two-theme product calls them `light` and `dark` — `data-bs-theme` in Bootstrap
+5.3, `.dark` in Tailwind and shadcn, `data-theme` in Radix. Libraries that give
+themes product names (daisyUI’s `cupcake`, `dracula`) are the multi-theme case,
+and they pay for it by declaring separately which theme the OS maps to.
+
+The MECHANISM still never reads the name. `:root:not([data-theme])` asks whether
+a choice was MADE; the widely-copied `:root:not([data-theme="light"])` asks
+whether the choice was one particular string. They behave identically for
+exactly two themes named the conventional way, and the second breaks the moment
+a third theme exists: pick `sepia` on a dark-OS machine and the dark tokens win
+over it, 0,2,0 against 0,1,0. Adopt the convention for names; do not build the
+convention into the selector.
+
+### The dark theme can be derived
+
+A product that has written a light theme already has a dark one:
+
+```scss
+@use 'derive';
+
+@include semantic.emit-theme('caderninho', theme.$caderninho, $default: true);
+@include semantic.emit-theme('night', derive.dark(theme.$caderninho), $auto: true);
+```
+
+`derive.dark()` works in OKLCH, preserves hue, and transforms by ROLE rather
+than per colour — which is the whole difference between a usable generator and
+the naive recipe. Inverting each colour's lightness independently preserves each
+state's DIRECTION, so a fill that darkened on hover to move away from its white
+label keeps darkening after it has become a light fill with a dark label. That
+is the 2.39:1 bug, generated confidently and at scale.
+
+Because every derived fill lands at the same lightness, every derived fill needs
+a dark label, so every state brightens — one rule, no exceptions to forget.
+
+The output goes through the same `check-contrast()` gate as a hand-written
+theme. If a brand hue cannot reach its target lightness without dropping below
+4.5:1, the build fails and names the pair. Offer generation only where it is
+verified; a generated theme nobody measured is worse than no generated theme.
+
+Hand-writing still wins where a product has a real palette with intent in it —
+the derived ladder cannot know that a particular warm brown IS the brand. Derive
+first, ship it, and replace it by hand later if it is worth the time.
+
+### Writing the map by hand: every fill becomes an inverted pair
+
+This is the part that is not a colour-picking exercise, and it is where a dark
+theme written by eye fails the contrast gate.
+
+On a light page, `action` is a dark fill carrying white. On a near-black page
+that same dark fill is invisible, so it has to climb the ramp until it
+separates from the page — and by the time it does, it is light enough that its
+label must go DARK. Nearly every role ends up inverted this way: action,
+selected, and all four statuses.
+
+Which reverses the direction of interaction states:
+
+> A fill moves AWAY from its own label on hover and further away when pressed.
+
+Not "darker on light themes, lighter on dark ones" — the label decides, not the
+theme. On the dark theme `bg-action` (light fill, dark label) brightens, while
+`bg-neutral` (still a mid fill carrying light text) still darkens. Writing them
+all the same direction is what produced `2.39:1` on a real hover state, caught
+by the gate rather than by review.
+
+Two more things the gate will teach you the hard way:
+
+- **Tinted ink needs to go higher than neutral ink.** `danger-text` at step 200
+  reads on the page and fails on `bg-surface-active`, the lightest thing on the
+  theme. Choose the status text colours against the LIGHTEST surface, not the
+  page.
+- **`raised` lifts toward the lamp, it does not whiten.** A card on a dark theme
+  is a lighter step of the same warm ramp. Switching to grey there is what makes
+  a dark theme look like a different product.
+
 ## The `@layer` trap
 
 Counter-intuitive and worth internalising, because the intuitive move makes
@@ -374,11 +471,46 @@ cannot collide. One that uses bare names, or borrows a shared namespace like
 Tailwind's `--color-*`, can — and no adapter can prevent it, because the names
 belong to the library.
 
-So: **`$adapters` should name at most one**, and `scripts/check-collisions.mjs`
-fails the build if a bundled set disagrees about a name. To ship several (as
-this repository does, to demonstrate six), compile each on its own from
-`src/adapter-<name>.scss` and load it as a separate file next to the token
-build. Adapters are leaves; building them separately is the honest shape.
+So: **`$adapters` may name as many as `check-collisions.mjs` proves disjoint**,
+which is usually one. The rule used to read "at most one" — the right default
+stated as the wrong kind of claim, because the hazard is collisions and a rule
+phrased as a count cannot be checked. A real product bundles two correctly: it
+loads CoreUI for the grid, buttons and nav, and its own component library for
+cards, tables and modals, with CoreUI imported selectively so the two never
+meet. Measured: 1938 classes against 61, one shared name (`d-none`, identical),
+zero shared custom properties.
+
+To ship several unrelated ones (as this repository does, to demonstrate eleven),
+compile each on its own from `src/adapter-<name>.scss` and load it as a separate
+file next to the token build. Adapters are leaves; building them separately is
+the honest shape.
+
+## An adapter is for a library you do NOT own
+
+This is the most expensive mistake available here, and it was made in this
+repository before it was written down.
+
+**A project's own design system is not a target for an adapter.** If the team
+writes, versions and themes the component library, it is built ON this
+foundation: its components read layer 2 (`--app-*`) directly, its palette is its
+own layer 1 file, its theme is its own `theme.scss`. An adapter for it is a
+translation layer between a system and itself.
+
+The test is **ownership, not size or polish**. A package with 226 custom
+properties, its own themes and a dark mode still is not a library to adapt if
+you can edit its source and ship the change. Adapt Bootstrap, Bulma, CoreUI,
+daisyUI — things whose source you do not control. Build everything else.
+
+The harm goes past redundancy. An adapter written for your own library shims
+your own legacy names, which keeps them RESOLVING — so the old vocabulary looks
+healthy, the lint sees a boundary being respected, and nothing reports how much
+of the library was never migrated. Deleting one such adapter took a component
+library from an apparent zero violations to 99, none of them new.
+
+When a project arrives with an existing in-house system, the move is the
+migration in `references/install.md`: point the old names at the new tokens
+temporarily, then retire them at the call site one role at a time. That is a
+shim with a deletion date, written in the product. It is not an adapter.
 
 ### Writing a new adapter: what to work out first
 
@@ -735,11 +867,14 @@ borrows Tailwind's *naming*; it is not published to it.
 ## Adding to the system
 
 - **New colour, spacing or shape decision** → `src/_semantic.scss`, then let
-  themes supply the value in `src/_themes.scss`. Give every `bg-X` its `fg-on-X`.
-- **New theme** → add a choices map to `src/_themes.scss` and list it in
-  `$themes`. A theme is ~35 colour decisions, not ~110 tokens. The build
-  measures every bg/fg pair for contrast, so add the theme first and let it tell
-  you which pairs need moving.
+  your theme supply the value. Give every `bg-X` its `fg-on-X`.
+- **New theme** → write a choices map in YOUR OWN file and pass it to
+  `semantic.emit-theme()`. The tool ships no theme and there is no registry to
+  register in: a theme is a set of decisions belonging to whoever makes them,
+  and the only one the tool generates is the opposite-scheme counterpart
+  `derive.dark()` produces from yours. A theme is ~35 colour decisions, not ~110
+  tokens. The build measures every bg/fg pair for contrast, so write the theme
+  first and let it tell you which pairs need moving.
 - **A section that overrides part of a theme** (inverted band, sunken well) →
   a **context**, not a theme. Contexts inherit everything they do not mention.
   `core.context()` refuses to compile a context that changes a background

@@ -1,0 +1,33 @@
+// =============================================================================
+// DEMO THEME BUILD — `dist/demo-themes.css`
+// =============================================================================
+//
+//     npm run build:demo-themes
+//
+// The demonstration pages under `example/*.html` load `app.css` (which pulls in
+// `dist/ds.css`: structure and nothing else) and then this file, which supplies
+// the three themes they switch between and the surfaces their markup uses.
+//
+// THE SPLIT IS THE POINT. `dist/ds.css` is what the tool produces, and it now
+// contains no `[data-theme=…]` block at all — a foundation that shipped a theme
+// was telling every consumer what their product looks like. The themes live
+// here, in the demo that uses them, exactly as every product under
+// `example/ds-*/` keeps its own theme in its own `theme.scss`.
+//
+// Structure is deliberately NOT re-emitted: `emit-structure()` already ran in
+// `dist/ds.css`, and emitting it twice would put two copies of the same
+// declarations in the cascade for no benefit.
+// =============================================================================
+
+@use '../../src/semantic';
+@use 'themes';
+@use 'contexts';
+
+// `light` is the default, so it lands on `:root` as well as on its own
+// attribute. Without a default the pages would have no tokens at all until
+// something wrote `data-theme`.
+@include semantic.emit-theme('light', themes.$light, $default: true);
+@include semantic.emit-theme('dark', themes.$dark);
+@include semantic.emit-theme('brand', themes.$brand);
+
+@include contexts.emit-contexts();

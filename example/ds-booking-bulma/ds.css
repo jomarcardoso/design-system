@@ -19942,6 +19942,10 @@
     --app-bg-selected-subtle: #f2f7ff;
     --app-fg-selected: #00589e;
     --app-border-selected: #006ce4;
+    --app-bg-brand: #006ce4;
+    --app-fg-on-brand: #ffffff;
+    --app-fg-brand: #00589e;
+    --app-bg-brand-deep: #00437a;
     --app-fg-link: #00589e;
     --app-fg-link-hover: #00437a;
     --app-fg-link-visited: #00437a;
@@ -19978,6 +19982,7 @@
     --app-bg-info-subtle: #e8eefa;
     --app-fg-info: #003b95;
     --app-border-info: #b3c5e5;
+    --app-blend-ink: multiply;
   }
   :root,
   [data-theme=booking] {
@@ -20004,10 +20009,10 @@
 }
 @layer ds.semantic {
   [data-surface=inverted] {
-    --app-bg-page: var(--app-bg-inverted-base);
-    --app-bg-surface: var(--app-bg-inverted-base);
-    --app-fg-default: var(--app-fg-inverted-base);
-    --app-fg-heading: var(--app-fg-inverted-base);
+    --app-bg-page: #003b95;
+    --app-bg-surface: #003b95;
+    --app-fg-default: #ffffff;
+    --app-fg-heading: #ffffff;
     --app-fg-muted: #c3d0e8;
     --app-border-color: #1c539f;
     --app-fg-link: #ffffff;
@@ -20024,17 +20029,6 @@
   [data-surface=sunken] {
     background-color: var(--app-bg-surface);
     color: var(--app-fg-default);
-  }
-  [data-density=compact] {
-    --app-space-unit: 0.2rem;
-  }
-  :root {
-    --app-bg-inverted-base: #003b95;
-    --app-fg-inverted-base: #ffffff;
-  }
-  [data-theme=dark] {
-    --app-bg-inverted-base: oklch(27.4% 0.006 286.033deg);
-    --app-fg-inverted-base: #fff;
   }
 }
 @layer vendor-config {

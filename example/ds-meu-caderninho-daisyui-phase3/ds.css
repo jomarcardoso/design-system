@@ -20,22 +20,22 @@
     .mc-chip {
       display: inline-flex;
       align-items: center;
-      min-height: var(--app-chip-height, var(--app-size-control-sm));
-      padding-inline: var(--app-chip-pad-x, var(--app-pad-control-x));
+      min-height: var(--app-size-control-sm);
+      padding-inline: var(--app-pad-control-x);
       font-size: var(--app-font-size-sm);
-      color: var(--app-chip-fg, var(--app-fg-default));
+      color: var(--app-fg-default);
       cursor: pointer;
-      background: var(--app-chip-bg, var(--app-bg-surface));
-      border: var(--app-border-width) solid var(--app-chip-border-color, var(--app-border-color));
-      border-radius: var(--app-chip-radius, var(--app-radius-pill));
+      background: var(--app-bg-surface);
+      border: var(--app-border-width) solid var(--app-border-color);
+      border-radius: var(--app-radius-pill);
     }
     .mc-chip:hover {
       background: var(--app-bg-sunken);
     }
     .mc-chip[aria-pressed=true] {
-      color: var(--app-chip-fg-selected, var(--app-fg-on-selected));
-      background: var(--app-chip-bg-selected, var(--app-bg-selected));
-      border-color: var(--app-chip-bg-selected, var(--app-bg-selected));
+      color: var(--app-fg-on-selected);
+      background: var(--app-bg-selected);
+      border-color: var(--app-bg-selected);
     }
     .mc-chip-group {
       display: flex;
@@ -229,74 +229,79 @@
   :root,
   [data-theme=caderninho] {
     color-scheme: light;
-    --app-bg-page: oklch(96.8% 0.011 84.6deg);
-    --app-bg-surface: oklch(98.3% 0.005 78.3deg);
-    --app-bg-raised: #fff;
-    --app-fg-default: oklch(25.4% 0.014 57.6deg);
-    --app-fg-muted: oklch(48.5% 0.014 62deg);
-    --app-fg-heading: oklch(25.5% 0.054 51deg);
-    --app-bg-action: oklch(30.5% 0.066 52deg);
-    --app-fg-on-action: oklch(98.3% 0.005 78.3deg);
-    --app-border-color: oklch(86.5% 0.013 74deg);
-    --app-bg-sunken: oklch(92.5% 0.012 80deg);
+    --app-bg-page: #f8f4ec;
+    --app-bg-surface: #fbf9f6;
+    --app-bg-raised: #ffffff;
+    --app-fg-default: #28211c;
+    --app-fg-muted: #655d57;
+    --app-fg-heading: #371a08;
+    --app-bg-action: #48240b;
+    --app-fg-on-action: #fbf9f6;
+    --app-border-color: #d8d1c9;
+    --app-bg-sunken: #eae5dd;
     --app-bg-overlay: rgba(40, 33, 28, 0.5);
-    --app-fg-subtlest: oklch(60% 0.014 64deg);
-    --app-bg-surface-hover: oklch(96.8% 0.011 84.6deg);
-    --app-bg-surface-active: oklch(92.5% 0.012 80deg);
-    --app-bg-neutral: oklch(39% 0.014 60deg);
-    --app-fg-on-neutral: oklch(98.3% 0.005 78.3deg);
-    --app-bg-neutral-hover: oklch(31.5% 0.014 58deg);
-    --app-bg-neutral-active: oklch(25.4% 0.014 57.6deg);
-    --app-bg-disabled: oklch(92.5% 0.012 80deg);
-    --app-fg-disabled: oklch(60% 0.014 64deg);
-    --app-bg-action-hover: oklch(25.5% 0.054 51deg);
-    --app-bg-action-active: oklch(17% 0.036 50deg);
-    --app-bg-action-subtle: oklch(94% 0.018 58deg);
-    --app-fg-action: oklch(30.5% 0.066 52deg);
-    --app-border-action: oklch(30.5% 0.066 52deg);
-    --app-bg-selected: oklch(36.9% 0.079 52.7deg);
-    --app-fg-on-selected: oklch(98.3% 0.005 78.3deg);
-    --app-bg-selected-hover: oklch(30.5% 0.066 52deg);
-    --app-bg-selected-active: oklch(25.5% 0.054 51deg);
-    --app-bg-selected-subtle: oklch(94% 0.018 58deg);
-    --app-fg-selected: oklch(30.5% 0.066 52deg);
-    --app-border-selected: oklch(36.9% 0.079 52.7deg);
-    --app-fg-link: oklch(25.5% 0.054 51deg);
-    --app-fg-link-hover: oklch(17% 0.036 50deg);
-    --app-fg-link-visited: oklch(31% 0.03 247deg);
-    --app-border-color-subtle: oklch(92.5% 0.012 80deg);
-    --app-border-color-strong: oklch(74% 0.014 68deg);
-    --app-ring-color: oklch(36.9% 0.079 52.7deg);
+    --app-fg-subtlest: #867f78;
+    --app-bg-surface-hover: #f8f4ec;
+    --app-bg-surface-active: #eae5dd;
+    --app-bg-neutral: #4b433e;
+    --app-fg-on-neutral: #fbf9f6;
+    --app-bg-neutral-hover: #37302b;
+    --app-bg-neutral-active: #28211c;
+    --app-bg-disabled: #eae5dd;
+    --app-fg-disabled: #867f78;
+    --app-bg-action-hover: #371a08;
+    --app-bg-action-active: #1c0a02;
+    --app-bg-action-subtle: #f5e9e0;
+    --app-fg-action: #48240b;
+    --app-border-action: #48240b;
+    --app-bg-selected: #5f3212;
+    --app-fg-on-selected: #fbf9f6;
+    --app-bg-selected-hover: #48240b;
+    --app-bg-selected-active: #371a08;
+    --app-bg-selected-subtle: #f5e9e0;
+    --app-fg-selected: #48240b;
+    --app-border-selected: #5f3212;
+    --app-bg-brand: #5f3212;
+    --app-fg-on-brand: #fbf9f6;
+    --app-fg-brand: #48240b;
+    --app-bg-brand-deep: #371a08;
+    --app-fg-link: #371a08;
+    --app-fg-link-hover: #1c0a02;
+    --app-fg-link-visited: #24323f;
+    --app-border-color-subtle: #eae5dd;
+    --app-border-color-strong: #b1a9a2;
+    --app-ring-color: #5f3212;
     --app-shadow-raised: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     --app-shadow-overlay: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --app-bg-success: oklch(44.8% 0.119 151.328deg);
-    --app-fg-on-success: oklch(98.3% 0.005 78.3deg);
-    --app-bg-success-hover: oklch(39.3% 0.095 152.535deg);
-    --app-bg-success-active: oklch(26.6% 0.065 152.934deg);
-    --app-bg-success-subtle: oklch(98.2% 0.018 155.826deg);
-    --app-fg-success: oklch(44.8% 0.119 151.328deg);
-    --app-border-success: oklch(92.5% 0.084 155.995deg);
-    --app-bg-warning: oklch(76.9% 0.188 70.08deg);
-    --app-fg-on-warning: oklch(27.9% 0.077 45.635deg);
-    --app-bg-warning-hover: oklch(82.8% 0.189 84.429deg);
-    --app-bg-warning-active: oklch(87.9% 0.169 91.605deg);
-    --app-bg-warning-subtle: oklch(98.7% 0.022 95.277deg);
-    --app-fg-warning: oklch(47.3% 0.137 46.201deg);
-    --app-border-warning: oklch(92.4% 0.12 95.746deg);
-    --app-bg-danger: oklch(50.5% 0.213 27.518deg);
-    --app-fg-on-danger: oklch(98.3% 0.005 78.3deg);
-    --app-bg-danger-hover: oklch(44.4% 0.177 26.899deg);
-    --app-bg-danger-active: oklch(39.6% 0.141 25.723deg);
-    --app-bg-danger-subtle: oklch(97.1% 0.013 17.38deg);
-    --app-fg-danger: oklch(44.4% 0.177 26.899deg);
-    --app-border-danger: oklch(88.5% 0.062 18.334deg);
-    --app-bg-info: oklch(38% 0.036 246deg);
-    --app-fg-on-info: oklch(98.3% 0.005 78.3deg);
-    --app-bg-info-hover: oklch(31% 0.03 247deg);
-    --app-bg-info-active: oklch(25% 0.024 248deg);
-    --app-bg-info-subtle: oklch(93.5% 0.01 242deg);
-    --app-fg-info: oklch(31% 0.03 247deg);
-    --app-border-info: oklch(78% 0.026 245deg);
+    --app-bg-success: #016630;
+    --app-fg-on-success: #fbf9f6;
+    --app-bg-success-hover: #0d542b;
+    --app-bg-success-active: #032e15;
+    --app-bg-success-subtle: #f0fdf4;
+    --app-fg-success: #016630;
+    --app-border-success: #b9f8cf;
+    --app-bg-warning: #fe9a00;
+    --app-fg-on-warning: #461901;
+    --app-bg-warning-hover: #ffb900;
+    --app-bg-warning-active: #ffd230;
+    --app-bg-warning-subtle: #fffbeb;
+    --app-fg-warning: #973c00;
+    --app-border-warning: #fee685;
+    --app-bg-danger: #c10007;
+    --app-fg-on-danger: #fbf9f6;
+    --app-bg-danger-hover: #9f0712;
+    --app-bg-danger-active: #82181a;
+    --app-bg-danger-subtle: #fef2f2;
+    --app-fg-danger: #9f0712;
+    --app-border-danger: #ffc9c9;
+    --app-bg-info: #324455;
+    --app-fg-on-info: #fbf9f6;
+    --app-bg-info-hover: #24323f;
+    --app-bg-info-active: #18232d;
+    --app-bg-info-subtle: #e4eaf0;
+    --app-fg-info: #24323f;
+    --app-border-info: #aabac7;
+    --app-blend-ink: multiply;
   }
   :root,
   [data-theme=caderninho] {
@@ -306,54 +311,19 @@
   :root [data-surface=base],
   [data-theme=caderninho][data-surface=base],
   [data-theme=caderninho] [data-surface=base] {
-    --app-bg-page: oklch(96.8% 0.011 84.6deg);
-    --app-bg-surface: oklch(98.3% 0.005 78.3deg);
-    --app-bg-surface-hover: oklch(96.8% 0.011 84.6deg);
-    --app-bg-surface-active: oklch(92.5% 0.012 80deg);
-    --app-fg-default: oklch(25.4% 0.014 57.6deg);
-    --app-fg-heading: oklch(25.5% 0.054 51deg);
-    --app-fg-muted: oklch(48.5% 0.014 62deg);
-    --app-border-color: oklch(86.5% 0.013 74deg);
-    --app-fg-link: oklch(25.5% 0.054 51deg);
-    --app-fg-link-hover: oklch(17% 0.036 50deg);
-    --app-fg-link-visited: oklch(31% 0.03 247deg);
-    --app-fg-action: oklch(30.5% 0.066 52deg);
-    --app-border-action: oklch(30.5% 0.066 52deg);
-  }
-}
-@layer ds.semantic {
-  [data-surface=inverted] {
-    --app-bg-page: var(--app-bg-inverted-base);
-    --app-bg-surface: var(--app-bg-inverted-base);
-    --app-fg-default: var(--app-fg-inverted-base);
-    --app-fg-heading: var(--app-fg-inverted-base);
-    --app-fg-muted: oklch(70.5% 0.015 286.067deg);
-    --app-border-color: oklch(37% 0.013 285.805deg);
-    --app-fg-link: oklch(98.5% 0 0deg);
-    --app-fg-link-hover: oklch(98.5% 0 0deg);
-    --app-fg-link-visited: oklch(98.5% 0 0deg);
-    --app-bg-surface-hover: rgba(255, 255, 255, 0.12);
-    --app-bg-surface-active: rgba(255, 255, 255, 0.2);
-  }
-  [data-surface=sunken] {
-    --app-bg-surface: var(--app-bg-sunken);
-    --app-border-color: var(--app-border-color-subtle);
-  }
-  [data-surface=inverted],
-  [data-surface=sunken] {
-    background-color: var(--app-bg-surface);
-    color: var(--app-fg-default);
-  }
-  [data-density=compact] {
-    --app-space-unit: 0.2rem;
-  }
-  :root {
-    --app-bg-inverted-base: oklch(21% 0.006 285.885deg);
-    --app-fg-inverted-base: oklch(98.5% 0 0deg);
-  }
-  [data-theme=dark] {
-    --app-bg-inverted-base: oklch(27.4% 0.006 286.033deg);
-    --app-fg-inverted-base: #fff;
+    --app-bg-page: #f8f4ec;
+    --app-bg-surface: #fbf9f6;
+    --app-bg-surface-hover: #f8f4ec;
+    --app-bg-surface-active: #eae5dd;
+    --app-fg-default: #28211c;
+    --app-fg-heading: #371a08;
+    --app-fg-muted: #655d57;
+    --app-border-color: #d8d1c9;
+    --app-fg-link: #371a08;
+    --app-fg-link-hover: #1c0a02;
+    --app-fg-link-visited: #24323f;
+    --app-fg-action: #48240b;
+    --app-border-action: #48240b;
   }
 }
 @layer vendor-config {
@@ -369,8 +339,8 @@
     --color-primary-content: var(--app-fg-on-action);
     --color-secondary: var(--app-bg-selected);
     --color-secondary-content: var(--app-fg-on-selected);
-    --color-accent: var(--app-accent-bg, var(--app-bg-neutral));
-    --color-accent-content: var(--app-accent-fg, var(--app-fg-on-neutral));
+    --color-accent: var(--app-bg-neutral);
+    --color-accent-content: var(--app-fg-on-neutral);
     --color-neutral: var(--app-bg-neutral);
     --color-neutral-content: var(--app-fg-on-neutral);
     --color-info: var(--app-bg-info);
@@ -399,7 +369,7 @@
     --btn-rest-fg: var(--app-fg-selected);
   }
   .btn-accent {
-    --btn-rest-fg: var(--app-accent-fg-on-subtle, var(--app-fg-default));
+    --btn-rest-fg: var(--app-fg-default);
   }
   .btn-info {
     --btn-rest-fg: var(--app-fg-info);

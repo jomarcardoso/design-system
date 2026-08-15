@@ -2,7 +2,7 @@
 // CONTRAST AUDIT — every demo page, every theme, in a real browser
 // =============================================================================
 //
-// The build-time check in `_themes.scss` measures TOKEN pairs. It cannot see
+// The build-time check in `_semantic.scss` measures TOKEN pairs. It cannot see
 // what a library actually renders: a filter, a state rule the adapter clobbers,
 // or a fill whose foreground comes from markup. Three real bugs in this project
 // were invisible to it and visible here.
@@ -19,11 +19,12 @@
 
 const THEMES = ['light', 'dark', 'brand'];
 
-// A page is either a name under `example/` carrying the tool's demonstration
-// themes, or an object naming its own.
+// A page is either a name under `example/` carrying the DEMO themes (which live
+// in `example/demo/`, not in the tool — the foundation ships none), or an
+// object naming its own.
 //
-// The example PRODUCTS each ship a single theme of their own and compile the
-// built-in ones away, so driving them through `light`/`dark`/`brand` would
+// The example PRODUCTS each ship a single theme of their own and never load the
+// demo ones, so driving them through `light`/`dark`/`brand` would
 // set an attribute nothing defines and measure undefined tokens. They still
 // belong in this audit — they are the most realistic pages here, full of
 // navbars, menus, tables and forms rather than component galleries, and they

@@ -1,0 +1,429 @@
+{
+ "additions": [
+  {
+   "name": "carousel-gap",
+   "value": "var(--app-gap-inline)"
+  },
+  {
+   "name": "carousel-thumbs-gap",
+   "value": "var(--app-gap-inline)"
+  },
+  {
+   "name": "carousel-thumb-border-width",
+   "value": "var(--app-border-width)"
+  },
+  {
+   "name": "checkbox-height",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "checkbox-width",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "chip-radius",
+   "value": "var(--app-radius-surface)",
+   "conflictWith": "var(--app-radius-pill)"
+  },
+  {
+   "name": "choice-radius",
+   "value": "var(--app-radius-surface)"
+  },
+  {
+   "name": "choice-gap",
+   "value": "var(--app-gap-stack)"
+  },
+  {
+   "name": "choice-title-border-width",
+   "value": "var(--app-border-width)"
+  },
+  {
+   "name": "choice-title-radius",
+   "value": "var(--app-radius-control-sm)"
+  },
+  {
+   "name": "choice-title-bg",
+   "value": "var(--app-bg-raised)"
+  },
+  {
+   "name": "choice-img-fg-hover",
+   "value": "var(--app-fg-selected)"
+  },
+  {
+   "name": "choice-title-bg-hover",
+   "value": "var(--app-bg-selected-subtle)"
+  },
+  {
+   "name": "field-label-font-family",
+   "value": "var(--app-font-family-heading)"
+  },
+  {
+   "name": "field-input-font-family",
+   "value": "var(--app-font-family-display)"
+  },
+  {
+   "name": "field-placeholder-font-family",
+   "value": "var(--app-font-family-body)"
+  },
+  {
+   "name": "field-selection-bg",
+   "value": "var(--app-bg-action-subtle)"
+  },
+  {
+   "name": "field-hint-font-family",
+   "value": "var(--app-font-family-body)"
+  },
+  {
+   "name": "field-label-fg-focus",
+   "value": "var(--app-fg-on-selected)"
+  },
+  {
+   "name": "field-label-bg-focus",
+   "value": "var(--app-bg-selected)"
+  },
+  {
+   "name": "footer-bg",
+   "value": "var(--app-bg-brand)"
+  },
+  {
+   "name": "footer-fg",
+   "value": "var(--app-fg-on-brand)"
+  },
+  {
+   "name": "footer-height",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "footer-radius",
+   "value": "var(--app-radius-surface)"
+  },
+  {
+   "name": "footer-shadow",
+   "value": "var(--app-shadow-raised)"
+  },
+  {
+   "name": "footer-navigation-bg",
+   "value": "var(--app-bg-brand)"
+  },
+  {
+   "name": "footer-navigation-fg",
+   "value": "var(--app-fg-on-brand)"
+  },
+  {
+   "name": "footer-strip-bg",
+   "value": "var(--app-fg-on-brand)"
+  },
+  {
+   "name": "footer-bg-open",
+   "value": "var(--app-bg-brand-deep)"
+  },
+  {
+   "name": "intro-gap",
+   "value": "var(--app-gap-stack)"
+  },
+  {
+   "name": "notebook-tabs-content-bg",
+   "value": "var(--app-bg-surface)"
+  },
+  {
+   "name": "notebook-tabs-bg",
+   "value": "var(--app-bg-sunken)"
+  },
+  {
+   "name": "notebook-tabs-radius",
+   "value": "var(--app-radius-surface)"
+  },
+  {
+   "name": "notebook-tabs-shadow",
+   "value": "var(--app-shadow-raised)"
+  },
+  {
+   "name": "notebook-tabs-bg-active",
+   "value": "var(--app-bg-selected)"
+  },
+  {
+   "name": "notebook-tabs-fg-active",
+   "value": "var(--app-fg-on-selected)"
+  },
+  {
+   "name": "radio-button-height",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "radio-button-width",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "section-card-shadow",
+   "value": "var(--app-shadow-raised)"
+  },
+  {
+   "name": "section-card-border-color",
+   "value": "var(--app-border)"
+  },
+  {
+   "name": "section-card-title-bg",
+   "value": "var(--app-bg-brand)"
+  },
+  {
+   "name": "section-card-title-fg",
+   "value": "var(--app-fg-on-brand)"
+  },
+  {
+   "name": "section-card-title-font-size",
+   "value": "var(--app-font-size-heading-sm)"
+  },
+  {
+   "name": "section-card-title-border-width",
+   "value": "var(--app-border-width)"
+  },
+  {
+   "name": "section-card-title-divider-color",
+   "value": "var(--app-bg-brand-deep)"
+  },
+  {
+   "name": "section-card-body-bg",
+   "value": "var(--app-bg-surface)"
+  },
+  {
+   "name": "tabs-tab-bg-selected",
+   "value": "var(--app-bg-selected)"
+  },
+  {
+   "name": "tabs-tab-fg-selected",
+   "value": "var(--app-fg-on-selected)"
+  },
+  {
+   "name": "tabs-tab-shadow-selected",
+   "value": "var(--app-shadow-raised)"
+  },
+  {
+   "name": "tabs-border-color",
+   "value": "var(--app-border)"
+  },
+  {
+   "name": "tabs-radius",
+   "value": "var(--app-radius-surface)"
+  },
+  {
+   "name": "tabs-bg",
+   "value": "var(--app-bg-page)"
+  },
+  {
+   "name": "tabs-layout-content-bg",
+   "value": "var(--app-bg-surface)"
+  },
+  {
+   "name": "card-content-radius",
+   "value": "var(--app-radius-control-sm)"
+  },
+  {
+   "name": "card-img-bg",
+   "value": "var(--app-bg-raised)"
+  },
+  {
+   "name": "card-content-bg",
+   "value": "var(--app-bg-surface)"
+  },
+  {
+   "name": "card-content-shadow",
+   "value": "var(--app-shadow-raised)"
+  },
+  {
+   "name": "card-content-border-color",
+   "value": "var(--app-border)"
+  },
+  {
+   "name": "card-header-bg",
+   "value": "var(--app-bg-sunken)"
+  },
+  {
+   "name": "card-title-pad",
+   "value": "var(--app-space-xs)"
+  },
+  {
+   "name": "card-title-font-family",
+   "value": "var(--app-font-family-heading)"
+  },
+  {
+   "name": "card-body-pad",
+   "value": "var(--app-space-xs)"
+  },
+  {
+   "name": "card-footer-bg",
+   "value": "var(--app-bg-surface)"
+  },
+  {
+   "name": "card-footer-border-color",
+   "value": "var(--app-border)"
+  },
+  {
+   "name": "card-footer-pad",
+   "value": "var(--app-space-xs)"
+  },
+  {
+   "name": "card-border-width",
+   "value": "var(--app-border-width)"
+  },
+  {
+   "name": "card-border-color",
+   "value": "var(--app-border-color-strong)"
+  },
+  {
+   "name": "heading-min-height",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "img-width",
+   "value": "var(--app-size-icon)"
+  },
+  {
+   "name": "img-height",
+   "value": "var(--app-size-icon)"
+  },
+  {
+   "name": "img-font-size",
+   "value": "var(--app-size-icon)"
+  },
+  {
+   "name": "modal-shadow",
+   "value": "var(--app-shadow-raised)"
+  },
+  {
+   "name": "modal-radius",
+   "value": "var(--app-radius-surface)"
+  },
+  {
+   "name": "modal-footer-min-height",
+   "value": "var(--app-size-control)"
+  },
+  {
+   "name": "modal-dialog-shadow",
+   "value": "var(--app-shadow-overlay)"
+  },
+  {
+   "name": "modal-border-color",
+   "value": "var(--app-border)"
+  },
+  {
+   "name": "progressbar-border-width",
+   "value": "var(--app-border-width)"
+  },
+  {
+   "name": "table-container-bg",
+   "value": "var(--app-bg-surface)"
+  },
+  {
+   "name": "table-container-border-width",
+   "value": "var(--app-border-width)"
+  },
+  {
+   "name": "table-container-radius",
+   "value": "var(--app-radius-control-sm)"
+  },
+  {
+   "name": "table-container-font-family",
+   "value": "var(--app-font-family-body)"
+  },
+  {
+   "name": "table-container-caption-font-family",
+   "value": "var(--app-font-family-heading)"
+  },
+  {
+   "name": "table-container-td--section-font-family",
+   "value": "var(--app-font-family-body)"
+  }
+ ],
+ "edits": [
+  [
+   "components\\carousel\\carousel.scss",
+   ".carousel {\r\n  width: 100%;\r\n  display: flex;\r\n  flex-direction: column;\r\n  gap: component.$carousel-gap;\r\n\r\n  &__banner {\r\n    width: 100%;\r\n\r\n    > * {\r\n      width: 100%;\r\n      height: 100%;\r\n    }\r\n\r\n    img {\r\n      width: 100%;\r\n      height: 100%;\r\n      object-fit: cover;\r\n      display: block;\r\n    }\r\n  }\r\n\r\n  &__thumbs {\r\n    display: flex;\r\n    gap: component.$carousel-thumbs-gap;\r\n    overflow-x: auto;\r\n    padding-block: 2px calc(var(--carousel-gap, 8px) / 2);\r\n    scroll-snap-type: x mandatory;\r\n    scrollbar-width: thin;\r\n  }\r\n\r\n  &__thumb {\r\n    // Transparent until chosen, so selecting a thumbnail changes its colour\r\n    // rather than its size — a border that appears on selection shifts the\r\n    // whole strip by two pixels.\r\n    border: component.$carousel-thumb-border-width solid transparent;\r\n    padding: 0;\r\n    cursor: pointer;\r\n    opacity: 1;\r\n    scroll-snap-align: start;\r\n    font: inherit;\r\n    transition:\r\n      opacity 160ms ease,\r\n      border-color 160ms ease,\r\n      transform 160ms ease,\r\n      box-shadow 160ms ease;\r\n    width: 80px;\r\n    flex-shrink: 0;\r\n\r\n    > * {\r\n      width: 100%;\r\n      height: 100%;\r\n    }\r\n\r\n    img {\r\n      width: 100%;\r\n      height: 100%;\r\n      object-fit: cover;\r\n      display: block;\r\n    }\r\n\r\n    &:hover {\r\n      opacity: 1;\r\n      transform: translateY(-1px);\r\n    }\r\n\r\n    &--active {\r\n      opacity: 1;\r\n      border-color: var(--app-border-selected);\r\n      box-shadow: var(--app-shadow-inset);\r\n    }\r\n  }\r\n}\r\n",
+   "carousel"
+  ],
+  [
+   "components\\checkbox\\checkbox.scss",
+   ".checkbox {\r\n  align-items: center;\r\n  color: var(--app-field-color);\r\n  display: inline-flex;\r\n  height: component.$checkbox-height;\r\n  justify-content: center;\r\n  line-height: 1;\r\n  mix-blend-mode: var(--app-blend-ink);\r\n  position: relative;\r\n  width: component.$checkbox-width;\r\n\r\n  input {\r\n    appearance: none;\r\n    background: transparent;\r\n    cursor: pointer;\r\n    inset: 0;\r\n    margin: 0;\r\n    position: absolute;\r\n  }\r\n\r\n  .checkbox__icon {\r\n    align-items: center;\r\n    display: flex;\r\n    font-size: 32px;\r\n    justify-content: center;\r\n    pointer-events: none;\r\n    transition: opacity 150ms ease;\r\n\r\n    [stroke-linecap='round'] {\r\n      color: var(--app-field-color);\r\n    }\r\n\r\n    &--checked {\r\n      display: none;\r\n    }\r\n  }\r\n\r\n  input:checked ~ .checkbox__icon--checked {\r\n    display: flex;\r\n  }\r\n\r\n  input:checked ~ .checkbox__icon--unchecked {\r\n    display: none;\r\n  }\r\n}\r\n",
+   "checkbox"
+  ],
+  [
+   "components\\choice\\choice.scss",
+   "@use '../../styles/utils.scss';\n\n.choice {\n  display: grid;\n  grid-template-areas: var(--app-choice-areas);\n  border: var(--app-field-border);\n  border-radius: component.$choice-radius;\n  width: 160px;\n  background: transparent;\n  color: inherit;\n  text-align: center;\n  text-decoration: none;\n  padding: 8px;\n  gap: component.$choice-gap;\n  cursor: pointer;\n\n  &__img {\n    grid-area: choice__img;\n    font-size: 3.5rem;\n    color: var(--app-fg-brand);\n    line-height: 1;\n  }\n\n  &__title {\n    grid-area: choice__title;\n    border: component.$choice-title-border-width solid var(--app-fg-default);\n    padding: 8px;\n    border-radius: component.$choice-title-radius;\n    text-transform: uppercase;\n    text-decoration: none;\n    background-color: component.$choice-title-bg;\n  }\n\n  &__desc {\n    grid-area: choice__desc;\n  }\n\n  @include utils.hover {\n    border-color: var(--app-border-selected);\n\n    .choice__img {\n      color: component.$choice-img-fg-hover;\n    }\n\n    .choice__title {\n      background-color: component.$choice-title-bg-hover;\n    }\n  }\n}\n",
+   "choice"
+  ],
+  [
+   "components\\field\\field.scss",
+   "@use '../../styles/ds/tokens' as component;\r\n\r\n.field {\r\n  display: flex;\r\n  flex-direction: column;\r\n\r\n  // The label is a TAB on top of the box, the way a section is tabbed in a\r\n  // paper folder: it carries the box's border colour as a fill and shares its\r\n  // top corners, so label and box read as one piece of stationery rather than\r\n  // as two elements.\r\n  //\r\n  // All six of these declarations died in the migration. They read\r\n  // `--field__label-bg`, `--field__label-color`, `--field__label-padding` and\r\n  // three more, every one of them defined only in the variables file that was\r\n  // deleted, and none with a fallback — so the label lost its fill, its colour,\r\n  // its padding and its weight in a single commit.\r\n  //\r\n  // `check-dangling-refs` did not catch it: that guard only inspects the\r\n  // `--app-*` namespace, and these were the old vocabulary. `check-orphan-reads`\r\n  // exists now for exactly this class.\r\n  &__label {\r\n    font-weight: normal;\r\n    border-bottom: 0;\r\n    color: component.$field-label-fg;\r\n    border-top-left-radius: var(--app-field-border-radius);\r\n    border-top-right-radius: var(--app-field-border-radius);\r\n    background-color: component.$field-label-bg;\r\n    padding: var(--app-field-label-pad);\r\n    align-self: flex-start;\r\n    font-size: var(--app-field-label-font-size);\r\n    font-family: component.$field-label-font-family;\r\n    letter-spacing: 0.0625rem;\r\n    mix-blend-mode: var(--app-blend-ink);\r\n    transition: background-color var(--app-duration-base) var(--app-ease);\r\n  }\r\n\r\n  &__box {\r\n    border: var(--app-field-border);\r\n    display: flex;\r\n    align-items: center;\r\n    padding: calc(var(--app-field-padding) + 2px) var(--app-field-padding) 0;\r\n    border-radius: var(--app-field-border-radius);\r\n    border-top-left-radius: 0;\r\n    transition: border-color 0.2s ease-in-out;\r\n    overflow: hidden;\r\n    position: relative;\r\n  }\r\n\r\n  &__bg {\r\n    position: absolute;\r\n    inset: 0;\r\n    z-index: 0;\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\r\n    pointer-events: none;\r\n    opacity: 0;\r\n    transition: opacity 0.2s ease;\r\n    width: 80%;\r\n    height: 100%;\r\n    margin: auto;\r\n    mix-blend-mode: var(--app-blend-ink);\r\n\r\n    svg {\r\n      height: 92%;\r\n      width: 100%;\r\n    }\r\n  }\r\n\r\n  &--bg-visible {\r\n    .field__bg {\r\n      opacity: 1;\r\n    }\r\n  }\r\n\r\n  &__input {\r\n    background-color: transparent;\r\n    font-family: component.$field-input-font-family;\r\n    font-weight: 200;\r\n    line-height: var(--app-field-line-height);\r\n    font-size: var(--app-field-font-size);\r\n    color: var(--app-field-color);\r\n    resize: none;\r\n    width: 100%;\r\n    border: 0;\r\n    padding: 0;\r\n    position: relative;\r\n    z-index: 1;\r\n\r\n    &::placeholder {\r\n      color: component.$field-placeholder-fg;\r\n      font-family: component.$field-placeholder-font-family;\r\n      letter-spacing: 1px;\r\n    }\r\n\r\n    &::selection {\r\n      color: var(--app-fg-heading);\r\n      background: component.$field-selection-bg;\r\n    }\r\n\r\n    &:focus {\r\n      outline: none;\r\n    }\r\n  }\r\n\r\n  &__list {\r\n    position: absolute;\r\n    left: 0;\r\n    top: 0;\r\n    width: var(--app-field-line-height);\r\n  }\r\n\r\n  &__list-item {\r\n    height: var(--app-field-line-height);\r\n    width: var(--app-field-line-height);\r\n    padding: 4px 3px 2px;\r\n  }\r\n\r\n  &__hint {\r\n    font-family: component.$field-hint-font-family;\r\n    margin-top: 2px;\r\n    font-size: 13px;\r\n  }\r\n\r\n  &__action {\r\n    display: flex;\r\n    padding-left: 1rem;\r\n  }\r\n\r\n  &__icon {\r\n    width: 26px;\r\n    height: 26px;\r\n  }\r\n\r\n  &--list {\r\n    .field__box {\r\n      position: relative;\r\n    }\r\n\r\n    .field__input {\r\n      padding-left: calc(var(--app-field-line-height) + 4px);\r\n    }\r\n  }\r\n\r\n  &--multiline {\r\n    .field__label {\r\n      align-self: stretch;\r\n      text-align: center;\r\n    }\r\n\r\n    .field__box {\r\n      border-top-left-radius: 0;\r\n      border-top-right-radius: 0;\r\n      border: 0;\r\n      padding: var(--app-field-box-padding-top) 0 0;\r\n      position: relative;\r\n\r\n      &::before {\r\n        content: '';\r\n        position: absolute;\r\n        inset: var(--app-field-box-padding-top) var(--app-field-line-offset-x) 0;\r\n        pointer-events: none;\r\n        z-index: 0;\r\n        background-image: repeating-linear-gradient(\r\n          to right,\r\n          var(--app-field-line-color) 0,\r\n          var(--app-field-line-color) var(--app-field-line-dash-length),\r\n          transparent var(--app-field-line-dash-length),\r\n          transparent\r\n            calc(var(--app-field-line-dash-length) + var(--app-field-line-dash-gap))\r\n        );\r\n        background-size: calc(\r\n            var(--app-field-line-dash-length) + var(--app-field-line-dash-gap)\r\n          )\r\n          100%;\r\n        background-repeat: repeat;\r\n        /* stylelint-disable color-no-hex --\r\n   The `#000` stops below are MASK values, not colours: a mask reads the\r\n   alpha channel, and #000 here means \"fully opaque\" for the ruled line.\r\n   No colour token can express that, and substituting one would change a\r\n   mask into a paint. */\r\n\r\n        -webkit-mask-image: repeating-linear-gradient(\r\n          to bottom,\r\n          transparent 0,\r\n          transparent\r\n            calc(var(--app-field-line-offset) - var(--app-field-line-thickness)),\r\n          #000 calc(var(--app-field-line-offset) - var(--app-field-line-thickness)),\r\n          #000 var(--app-field-line-offset),\r\n          transparent var(--app-field-line-offset),\r\n          transparent var(--app-field-line-step)\r\n        );\r\n        -webkit-mask-size: 100% var(--app-field-line-step);\r\n        -webkit-mask-repeat: repeat;\r\n        mask-image: repeating-linear-gradient(\r\n          to bottom,\r\n          transparent 0,\r\n          transparent\r\n            calc(var(--app-field-line-offset) - var(--app-field-line-thickness)),\r\n          #000 calc(var(--app-field-line-offset) - var(--app-field-line-thickness)),\r\n          #000 var(--app-field-line-offset),\r\n          transparent var(--app-field-line-offset),\r\n          transparent var(--app-field-line-step)\r\n        );\r\n        mask-size: 100% var(--app-field-line-step);\r\n        mask-repeat: repeat;\r\n      }\r\n    }\r\n\r\n    .field__input {\r\n      background: transparent;\r\n      position: relative;\r\n      z-index: 1;\r\n    }\r\n\r\n    // Three more declarations that wrote the old name while the reader had\r\n    // moved to `--app-*`. The large variant has not been changing its padding\r\n    // or its rule spacing since the migration — it only looked like it was.\r\n    &.field--large {\r\n      .field__box {\r\n        --app-field-box-padding-top: 24px;\r\n\r\n        padding-top: var(--app-field-box-padding-top);\r\n      }\r\n\r\n      .field__input {\r\n        --app-field-line-step: 44px;\r\n        --app-field-line-offset: calc(\r\n          32px - var(--app-field-line-offset-adjust)\r\n        );\r\n\r\n        line-height: 44px;\r\n        font-size: 25px;\r\n      }\r\n    }\r\n  }\r\n\r\n  // A field being edited is a field the user has CHOSEN, so the whole focused\r\n  // state comes from the `selected` family — box border, label fill, and the\r\n  // ruled lines of a textarea together.\r\n  &--focused {\r\n    .field__box {\r\n      border-color: var(--app-border-selected);\r\n    }\r\n\r\n    // The label inverts: the tab fills with cocoa and its text goes to the\r\n    // measured pair, so the section you are writing in is the one that stands\r\n    // out on the page.\r\n    .field__label {\r\n      color: component.$field-label-fg-focus;\r\n      background-color: component.$field-label-bg-focus;\r\n    }\r\n\r\n    // The rule lines follow the focus, which is the detail that makes a\r\n    // textarea read as the page you are writing on rather than a box near it.\r\n    //\r\n    // This line said `--field-line-color` while the gradient that draws the\r\n    // rules reads `--app-field-line-color`. The migration renamed every READ\r\n    // and left the DECLARATIONS alone, so the focus state has been writing to a\r\n    // name nothing consumes — the lines simply stopped changing colour.\r\n    &.field--multiline {\r\n      --app-field-line-color: var(--app-border-selected);\r\n    }\r\n  }\r\n\r\n  &--no-label {\r\n    .field__box {\r\n      border-radius: var(--app-field-border-radius);\r\n    }\r\n  }\r\n\r\n  &--no-breakline {\r\n    .field__box {\r\n      padding: var(--app-field-padding);\r\n    }\r\n  }\r\n}\r\n/* stylelint-enable color-no-hex */\r\n",
+   "field"
+  ],
+  [
+   "components\\footer\\footer.scss",
+   "﻿.footer {\r\n  background-color: component.$footer-bg;\r\n  color: component.$footer-fg;\r\n  bottom: 0;\r\n  height: component.$footer-height;\r\n  overflow: hidden;\r\n  position: sticky;\r\n  border-top-left-radius: component.$footer-radius;\r\n  border-top-right-radius: component.$footer-radius;\r\n  box-shadow: component.$footer-shadow;\r\n\r\n  &__control {\r\n    align-items: center;\r\n    display: inline-flex;\r\n    flex: 1;\r\n    height: 100%;\r\n    justify-content: center;\r\n    line-height: 1;\r\n  }\r\n\r\n  &__navigation {\r\n    background-color: component.$footer-navigation-bg;\r\n    color: component.$footer-navigation-fg;\r\n    display: flex;\r\n    height: 100%;\r\n    justify-content: center;\r\n    padding: 0 16px;\r\n  }\r\n\r\n  &--menu {\r\n    padding: 16px;\r\n    transition: background-color 300ms;\r\n    height: initial;\r\n\r\n    &::before {\r\n      content: '';\r\n      display: block;\r\n      max-width: 28px;\r\n      height: 4px;\r\n      border-radius: 2px;\r\n      background-color: component.$footer-strip-bg;\r\n      margin: 8px auto 22px;\r\n    }\r\n  }\r\n\r\n  &--open {\r\n    background-color: component.$footer-bg-open;\r\n  }\r\n}\r\n",
+   "footer"
+  ],
+  [
+   "components\\intro\\intro.scss",
+   ".intro {\n  padding-bottom: 32px;\n  padding-top: 32px;\n  display: grid;\n  gap: component.$intro-gap;\n}\n",
+   "intro"
+  ],
+  [
+   "components\\notebook-tabs\\notebook-tabs.container.scss",
+   "\n@mixin notebook-tabs-container {\n  display: flex;\n\n  .notebook-tabs {\n    position: sticky;\n    top: 0;\n    align-self: flex-start;\n    height: calc(100vh - var(--app-bar-size));\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n  }\n\n  &__content {\n    flex: 1;\n  }\n}\n\n.notebook-tabs-container-mobile {\n  @media (orientation: portrait) {\n    @include notebook-tabs-container;\n  }\n}\n\n.notebook-tabs-container {\n  @include notebook-tabs-container;\n\n  @media (orientation: landscape) {\n    flex-direction: row-reverse;\n\n    .notebook-tabs {\n      transform: translateX(1px);\n      width: 0;\n    }\n\n    &__content {\n      background-color: component.$notebook-tabs-content-bg;\n    color: var(--app-fg-default);\n\n      z-index: 1;\n      // box-shadow: var(--app-shadow-raised);\n    }\n  }\n}\n",
+   "notebook-tabs"
+  ],
+  [
+   "components\\notebook-tabs\\notebook-tabs.scss",
+   "@use '../../styles/helpers/media.scss' as *;\r\n@use '../../styles/utils.scss' as *;\r\n\r\n.notebook-tabs {\r\n  text-transform: uppercase;\r\n  font-size: 0.75rem;\r\n  text-orientation: upright;\r\n  z-index: 1;\r\n  letter-spacing: -1px;\r\n  line-height: 1;\r\n\r\n  ul {\r\n    list-style: none;\r\n    display: grid;\r\n    gap: 8px;\r\n  }\r\n\r\n  a {\r\n    writing-mode: vertical-lr;\r\n    background-color: component.$notebook-tabs-bg;\r\n    border-bottom-right-radius: component.$notebook-tabs-radius;\r\n    border-top-right-radius: component.$notebook-tabs-radius;\r\n    box-shadow: component.$notebook-tabs-shadow;\r\n    padding: 8px 5px 12px 3px;\r\n\r\n    &.ovo-active {\r\n      background-color: component.$notebook-tabs-bg-active;\r\n      color: component.$notebook-tabs-fg-active;\r\n      font-weight: bold;\r\n    }\r\n  }\r\n}\r\n",
+   "notebook-tabs"
+  ],
+  [
+   "components\\radio-button\\radio-button.scss",
+   ".radio-button {\r\n  align-items: center;\r\n  color: var(--app-field-color);\r\n  display: inline-flex;\r\n  height: component.$radio-button-height;\r\n  justify-content: center;\r\n  line-height: 1;\r\n  mix-blend-mode: var(--app-blend-ink);\r\n  position: relative;\r\n  width: component.$radio-button-width;\r\n\r\n  input {\r\n    appearance: none;\r\n    background: transparent;\r\n    cursor: pointer;\r\n    inset: 0;\r\n    margin: 0;\r\n    position: absolute;\r\n  }\r\n\r\n  .radio-button__icon {\r\n    align-items: center;\r\n    display: flex;\r\n    font-size: 24px;\r\n    justify-content: center;\r\n    pointer-events: none;\r\n    transition: opacity 150ms ease;\r\n\r\n    [stroke-linecap='round'] {\r\n      color: var(--app-field-color);\r\n    }\r\n\r\n    &--checked {\r\n      display: none;\r\n    }\r\n  }\r\n\r\n  input:checked ~ .radio-button__icon--checked {\r\n    display: flex;\r\n  }\r\n\r\n  input:checked ~ .radio-button__icon--unchecked {\r\n    display: none;\r\n  }\r\n}\r\n",
+   "radio-button"
+  ],
+  [
+   "components\\section-card\\section-card.scss",
+   "// =============================================================================\n// SECTION CARD\n// =============================================================================\n//\n// A titled panel: a brand band across the top, a paper body under it.\n//\n// -----------------------------------------------------------------------------\n// THE BUG THIS FILE CARRIED\n// -----------------------------------------------------------------------------\n//\n// Four of its six declarations were written like this:\n//\n//     background-color: var(--section-card-body-bg, --color-white);\n//                                                   ^^^^^^^^^^^^^ not a value\n//\n// A `var()` fallback has to be a VALUE. `--color-white` there is a bare custom\n// property NAME — it needed `var(--color-white)` — so the whole declaration was\n// invalid and the browser dropped it. The panel fell back to whatever the\n// element inherited, which is why the body looked white and the border was\n// missing entirely.\n//\n// It reads as a decision. It compiles. Nothing warns. And it survived a full\n// migration because a token that resolves to nothing and a token whose fallback\n// is malformed look identical from the outside — both simply have no effect.\n//\n// `scripts/check-fallback-values.mjs` now fails the build on the pattern.\n// =============================================================================\n\n.section-card {\n  border-radius: var(--app-card-border-radius);\n  overflow: hidden;\n  box-shadow: component.$section-card-shadow;\n  border: component.$section-card-border-color;\n\n  // The band. `bg-brand` and `fg-on-brand` are a measured pair, so the title is\n  // legible by construction rather than by inspection.\n  &__title {\n    background-color: component.$section-card-title-bg;\n    color: component.$section-card-title-fg;\n    padding: 0 var(--app-pad-surface);\n    margin: 0;\n    font-size: component.$section-card-title-font-size;\n    display: block;\n\n    > * {\n      padding: var(--app-pad-surface) 0;\n      border-bottom: component.$section-card-title-border-width dotted component.$section-card-title-divider-color;\n    }\n  }\n\n  &__body {\n    padding: var(--app-pad-surface);\n    background-color: component.$section-card-body-bg;\n  }\n}\n",
+   "section-card"
+  ],
+  [
+   "components\\tabs\\tabs.scss",
+   ".tabs {\r\n  .tabs__input {\r\n    appearance: none;\r\n    position: absolute;\r\n    cursor: pointer;\r\n    top: 0;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 100%;\r\n  }\r\n\r\n  .tabs__input:checked + .tabs__tab {\r\n    background-color: component.$tabs-tab-bg-selected;\r\n    color: component.$tabs-tab-fg-selected;\r\n    box-shadow: component.$tabs-tab-shadow-selected;\r\n  }\r\n\r\n  .tabs__input:focus-visible + .tabs__tab {\r\n    outline: var(--app-field-border);\r\n    outline-offset: -2px;\r\n  }\r\n\r\n  .tabs__input:disabled + .tabs__tab {\r\n    cursor: not-allowed;\r\n    opacity: 0.5;\r\n  }\r\n\r\n  .nav-pills {\r\n    border: component.$tabs-border-color;\r\n    border-radius: component.$tabs-radius;\r\n    padding: 4px;\r\n    background: component.$tabs-bg;\r\n  }\r\n\r\n  .nav-link {\r\n    position: relative;\r\n  }\r\n}\r\n",
+   "tabs"
+  ],
+  [
+   "components\\tabs-layout\\tabs-layout.scss",
+   "@use '../../styles/helpers/media.scss' as *;\n@use '../../styles/utils.scss' as *;\n\n.tabs-layout__mobile {\n  @extend .portrait-only;\n}\n\n.tabs-layout__desktop {\n  @extend .landscape-only;\n}\n\n.tabs-layout__content {\n  width: 100%;\n}\n\n.tabs-layout__section {\n  display: grid;\n}\n\n@media (orientation: portrait) {\n  .tabs-layout__content {\n    padding-left: var(--app-pad-surface);\n    padding-right: var(--app-pad-surface);\n  }\n}\n\n@media (orientation: landscape) {\n  .tabs-layout__content {\n    background-color: component.$tabs-layout-content-bg;\n    color: var(--app-fg-default);\n    // box-shadow: var(--app-shadow-raised);\n    height: 100%;\n    position: relative;\n\n    &::before {\n      // it hides tabs shadow\n      content: '';\n      position: absolute;\n      left: 0;\n      top: 0;\n      width: 100%;\n      height: 4px;\n      background-color: inherit;\n    }\n  }\n\n  .tabs-layout__section[data-tabs-layout-active='false'] {\n    display: none;\n  }\n}\n",
+   "tabs-layout"
+  ],
+  [
+   "styles\\components\\card.scss",
+   "\n.card {\n  container-type: inline-size;\n\n  &__content {\n    border-radius: component.$card-content-radius;\n    display: grid;\n    overflow: hidden;\n  }\n\n  &__img {\n    grid-area: card__img;\n    display: flex;\n    flex-direction: column;\n\n    img {\n      background-color: component.$card-img-bg;\n    }\n  }\n\n  &__header {\n    grid-area: card__header;\n  }\n\n  &__footer {\n    grid-area: card__footer;\n  }\n}\n\n.card:not(.slim-card) {\n  .card__content {\n    background-color: component.$card-content-bg;\n    color: var(--app-fg-default);\n\n    box-shadow: component.$card-content-shadow;\n    border: component.$card-content-border-color;\n    border-radius: var(--app-card-border-radius);\n\n    grid-template-areas:\n      'card__header card__header'\n      'card__img card__body'\n      'card__footer card__footer';\n    grid-template-columns: 7fr 10fr;\n    grid-template-columns: min(200px, calc(100% * 7 / 21)) 1fr;\n    grid-template-rows: 1fr auto auto;\n  }\n\n  .card__img {\n    padding: 14px 0 14px var(--app-pad-surface);\n    gap: calc(var(--app-pad-surface) / 2);\n\n    img {\n      // box-shadow: var(--app-shadow-raised);\n    }\n  }\n\n  .card__img-description {\n    font-size: 0.9375em;\n    font-weight: bold;\n    text-align: center;\n  }\n\n  // A card's header sits one step down from its body, which is how printed\n  // matter behaves: the same paper, slightly in shadow.\n  //\n  // Its text read `fg-selected` — correct-looking and wrong. A header is not a\n  // selected thing; it is a heading, and it only looked right because the brand\n  // hue and the selection hue are the same colour in this theme.\n  .card__header {\n    background-color: component.$card-header-bg;\n    color: var(--app-fg-heading);\n    font-weight: bold;\n  }\n\n  .card__title {\n    padding: component.$card-title-pad var(--app-pad-surface);\n    grid-column: 2;\n    font-family: component.$card-title-font-family;\n    font-size: 1rem;\n  }\n\n  .card__body {\n    grid-area: card__body;\n    padding: component.$card-body-pad var(--app-pad-surface);\n    align-self: center;\n    color: var(--app-fg-default);\n  }\n\n  .card__footer {\n    background-color: component.$card-footer-bg;\n    color: var(--app-fg-default);\n\n    border-top: component.$card-footer-border-color;\n    display: flex;\n    flex-wrap: wrap;\n    gap: 8px;\n    padding: component.$card-footer-pad var(--app-pad-surface);\n    justify-content: flex-end;\n  }\n\n  @container (min-width: 280px) {\n    .card__header {\n      grid-template-columns: subgrid;\n      grid-column: 1 / -1;\n      display: grid;\n    }\n\n    .card__img {\n      margin-top: -30px;\n    }\n  }\n}\n\n.slim-card {\n  padding: 8px;\n  border: component.$card-border-width solid component.$card-border-color;\n  grid-template-areas:\n    'card__img'\n    'card__header'\n    'card__body'\n    'card_footer';\n  grid-template-rows: auto auto 1fr auto;\n\n  .card__title {\n    font-weight: bold;\n    padding: 8px 0;\n    text-align: center;\n    text-decoration: underline;\n  }\n}\n",
+   "card"
+  ],
+  [
+   "styles\\components\\heading.scss",
+   ".heading {\r\n  display: grid;\r\n  grid-template-areas:\r\n    'heading__title . heading__indicator'\r\n    'heading__subtitle . heading__indicator';\r\n  flex-shrink: 0;\r\n  min-height: component.$heading-min-height;\r\n  padding: 8px;\r\n  grid-template-columns: auto 1fr auto;\r\n  align-items: center;\r\n\r\n  h1,\r\n  h2,\r\n  h3 {\r\n    grid-area: heading__title;\r\n  }\r\n\r\n  p {\r\n    grid-area: heading__subtitle;\r\n  }\r\n\r\n  &__indicator {\r\n    grid-area: heading__indicator;\r\n  }\r\n}\r\n",
+   "heading"
+  ],
+  [
+   "styles\\components\\img.scss",
+   ".img {\r\n  border-radius: 1px;\r\n}\r\n\r\n.img-primary {\r\n  @extend .img;\r\n\r\n  // clip-path: polygon(\r\n  //   0% 0%,\r\n  //   100% 0%,\r\n  //   100% 100%,\r\n  //   50% 100%,\r\n  //   50.9% 99.9%,\r\n  //   /* corte de 1 grau aproximado */ 0% 100%\r\n  // );\r\n  // transform: rotate(0.5deg);\r\n}\r\n\r\n.bx,\r\nion-icon,\r\n.svg-icon {\r\n  user-select: none;\r\n  width: component.$img-width;\r\n  height: component.$img-height;\r\n  display: inline-block;\r\n  fill: currentcolor;\r\n  flex-shrink: 0;\r\n  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;\r\n  font-size: component.$img-font-size;\r\n\r\n  &.large {\r\n    --icon-size: 2.25rem;\r\n  }\r\n}\r\n\r\n.logo {\r\n  width: calc(var(--app-bar-size) - var(--app-pad-surface));\r\n}\r\n",
+   "img"
+  ],
+  [
+   "styles\\components\\modal.scss",
+   "@use '../utils.scss';\r\n\r\n.modal {\r\n  box-shadow: component.$modal-shadow;\r\n  border-radius: component.$modal-radius;\r\n  display: flex;\r\n  flex-direction: column;\r\n  overflow: hidden;\r\n  max-height: 100%;\r\n  min-height: 0;\r\n\r\n  &__body {\r\n    flex: 1 1 auto;\r\n    min-height: 0;\r\n    overflow-x: hidden;\r\n    overflow-y: auto;\r\n    padding: 8px;\r\n    padding-bottom: calc(\r\n      8px + max(var(--dialog-keyboard-inset, 0px), env(safe-area-inset-bottom))\r\n    );\r\n    font-size: 1rem;\r\n    /* iOS momentum scroll */\r\n    -webkit-overflow-scrolling: touch;\r\n    scroll-padding-bottom: calc(24px + var(--dialog-keyboard-inset, 0px));\r\n    /* Opcional: melhora toque em iOS em alguns casos */\r\n    touch-action: pan-y;\r\n  }\r\n\r\n  &__footer {\r\n    align-items: center;\r\n    display: flex;\r\n    flex: 0 0 auto;\r\n    gap: 8px;\r\n    justify-content: flex-end;\r\n    min-height: component.$modal-footer-min-height;\r\n    padding: 8px;\r\n    flex-shrink: 0;\r\n  }\r\n\r\n  @include utils.isMobile {\r\n    width: calc(100vw - 8px);\r\n  }\r\n\r\n  @include utils.isDesktop {\r\n    box-shadow: component.$modal-dialog-shadow;\r\n    border: component.$modal-border-color;\r\n  }\r\n}\r\n",
+   "modal"
+  ],
+  [
+   "styles\\components\\progressbar.scss",
+   "@use '../ds/tokens' as component;\n\n.progressbar {\n  appearance: none;\n  width: 100%;\n  height: 8px;\n  overflow: hidden;\n\n  // Layer 3 first, layer 2 as the fallback. The component tokens are not\n  // emitted, so the chain is what makes these resolve — written out by hand\n  // because this is plain CSS with no access to `component.ref-chain()`.\n  border-radius: component.$progress-radius;\n  background-color: component.$progress-track-bg;\n  border: component.$progressbar-border-width solid var(--app-border-color);\n\n  &::-webkit-progress-bar {\n    background-color: inherit;\n    border-radius: inherit;\n  }\n\n  // The filled part reports how far along something is — it is an INDICATOR,\n  // not a control, so it takes neither `selected` (nothing here was chosen) nor\n  // a status colour (nothing has succeeded or failed yet). `progress-fill-bg`\n  // resolves to the action colour, which is the product's \"the system is\n  // working\" hue.\n  &::-webkit-progress-value {\n    background-color: component.$progress-fill-bg;\n    border-radius: inherit;\n    transition: width var(--app-duration-base) var(--app-ease);\n  }\n\n  &::-moz-progress-bar {\n    background-color: component.$progress-fill-bg;\n    border-radius: inherit;\n    transition: width var(--app-duration-base) var(--app-ease);\n  }\n}\n",
+   "progressbar"
+  ],
+  [
+   "styles\\components\\table.scss",
+   "@use '../ds/tokens' as component;\n\n.table-container {\n  background: component.$table-container-bg;\n  border: component.$table-container-border-width solid\n    component.$table-border-color;\n  border-radius: component.$table-container-radius;\n  box-shadow: none;\n  max-width: 100%;\n  overflow-x: auto;\n  width: 100%;\n\n  &--light {\n    --table-container-bg: var(--app-bg-surface);\n    --table-container-border: var(--app-border-width) solid\n      component.$table-border-color;\n    --table-container-shadow: none;\n  }\n}\n\n.table {\n  border-collapse: collapse;\n  border-spacing: 0;\n  color: component.$table-fg;\n  font-family: component.$table-container-font-family;\n  font-size: 15px;\n  line-height: 1.35;\n  min-width: 100%;\n  overflow: hidden;\n  table-layout: fixed;\n  text-align: left;\n  width: 100%;\n\n  &__caption {\n    background: transparent;\n    border-top-left-radius: 0;\n    border-top-right-radius: 0;\n    color: component.$table-header-fg;\n    font-family: component.$table-container-caption-font-family;\n    font-size: 19px;\n    mix-blend-mode: var(--table-caption-mix-blend-mode);\n    padding: 11px 14px;\n    text-align: center;\n  }\n\n  &__th {\n    border-bottom-width: 0.5px;\n    font-weight: bold;\n  }\n\n  &__td {\n    border-bottom-width: 0.5px;\n    font-weight: normal;\n  }\n\n  &__th,\n  &__td {\n    border-color: component.$table-border-color;\n    border-style: solid;\n    border-width: 0 0 0.5px;\n    height: 44px;\n    padding: 8px 6px;\n    vertical-align: middle;\n  }\n\n  &__td--mono {\n    color: var(--app-fg-muted);\n    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;\n  }\n\n  &__td--accent {\n    color: var(--app-fg-brand);\n  }\n\n  &__td--section {\n    background: component.$table-header-bg;\n    color: component.$table-header-fg;\n    font-family: component.$table-container-td--section-font-family;\n    font-weight: 600;\n    padding: 8px;\n  }\n\n  &__tr:last-child .table__td {\n    border-bottom-width: 0;\n  }\n\n  &--on-light,\n  .table-container--light & {\n    --table-cell-padding-inline: 3px;\n    --table-head-border-width: 1.5px;\n    --table-caption-font-size: 17px;\n    --table-caption-padding: 7px 14px;\n    --table-caption-border-radius: var(--app-radius-control-sm);\n    --table-caption-bg: var(--app-bg-brand);\n    --table-caption-color: var(--app-fg-on-brand);\n    --table-caption-mix-blend-mode: var(--app-blend-ink);\n  }\n\n  &--on-light .table__tr:last-child .table__td,\n  .table-container--light & .table__tr:last-child .table__td {\n    border-bottom-width: 0.5px;\n  }\n}\n",
+   "table-container"
+  ]
+ ]
+}

@@ -94,6 +94,10 @@
     --app-bg-selected-subtle: #fff1e8;
     --app-fg-selected: #a83f00;
     --app-border-selected: #ff6200;
+    --app-bg-brand: #ff6200;
+    --app-fg-on-brand: #ffffff;
+    --app-fg-brand: #a83f00;
+    --app-bg-brand-deep: #cc4d00;
     --app-fg-link: #000066;
     --app-fg-link-hover: #000d3c;
     --app-fg-link-visited: #000524;
@@ -130,6 +134,7 @@
     --app-bg-info-subtle: #e8ebfb;
     --app-fg-info: #001fbd;
     --app-border-info: #b3bcee;
+    --app-blend-ink: multiply;
   }
   :root,
   [data-theme=itau] {
@@ -155,41 +160,6 @@
   }
 }
 @layer ds.semantic {
-  [data-surface=inverted] {
-    --app-bg-page: var(--app-bg-inverted-base);
-    --app-bg-surface: var(--app-bg-inverted-base);
-    --app-fg-default: var(--app-fg-inverted-base);
-    --app-fg-heading: var(--app-fg-inverted-base);
-    --app-fg-muted: oklch(70.5% 0.015 286.067deg);
-    --app-border-color: oklch(37% 0.013 285.805deg);
-    --app-fg-link: oklch(98.5% 0 0deg);
-    --app-fg-link-hover: oklch(98.5% 0 0deg);
-    --app-fg-link-visited: oklch(98.5% 0 0deg);
-    --app-bg-surface-hover: rgba(255, 255, 255, 0.12);
-    --app-bg-surface-active: rgba(255, 255, 255, 0.2);
-  }
-  [data-surface=sunken] {
-    --app-bg-surface: var(--app-bg-sunken);
-    --app-border-color: var(--app-border-color-subtle);
-  }
-  [data-surface=inverted],
-  [data-surface=sunken] {
-    background-color: var(--app-bg-surface);
-    color: var(--app-fg-default);
-  }
-  [data-density=compact] {
-    --app-space-unit: 0.2rem;
-  }
-  :root {
-    --app-bg-inverted-base: oklch(21% 0.006 285.885deg);
-    --app-fg-inverted-base: oklch(98.5% 0 0deg);
-  }
-  [data-theme=dark] {
-    --app-bg-inverted-base: oklch(27.4% 0.006 286.033deg);
-    --app-fg-inverted-base: #fff;
-  }
-}
-@layer ds.semantic {
   [data-surface=brand] {
     --app-fg-default: #ffffff;
     --app-fg-heading: #ffffff;
@@ -198,6 +168,14 @@
     --app-bg-action-subtle: rgba(255, 255, 255, 0.1);
     --app-fg-link: #ffffff;
     --app-fg-link-hover: #ffffff;
+  }
+  [data-surface=sunken] {
+    --app-bg-surface: var(--app-bg-sunken);
+    --app-border-color: var(--app-border-color-subtle);
+  }
+  [data-surface=sunken] {
+    background-color: var(--app-bg-surface);
+    color: var(--app-fg-default);
   }
 }
 @layer ds.component {
@@ -242,11 +220,11 @@
     --sidebar-accent-foreground: var(--app-fg-default);
     --sidebar-border: var(--app-border-color-subtle);
     --sidebar-ring: var(--app-ring-color);
-    --chart-1: var(--app-chart-1, var(--app-bg-action));
-    --chart-2: var(--app-chart-2, var(--app-bg-selected));
-    --chart-3: var(--app-chart-3, var(--app-bg-info));
-    --chart-4: var(--app-chart-4, var(--app-bg-warning));
-    --chart-5: var(--app-chart-5, var(--app-bg-success));
+    --chart-1: var(--app-bg-action);
+    --chart-2: var(--app-bg-selected);
+    --chart-3: var(--app-bg-info);
+    --chart-4: var(--app-bg-warning);
+    --chart-5: var(--app-bg-success);
   }
 }
 @layer components {

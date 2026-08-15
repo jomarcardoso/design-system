@@ -1,0 +1,98 @@
+[
+ {
+  "file": "components/checkbox/checkbox.scss",
+  "line": 10,
+  "selector": ".checkbox",
+  "block": "checkbox",
+  "el": null,
+  "prop": "mix-blend-mode",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-blend-ink",
+  "name": null
+ },
+ {
+  "file": "components/chips/chips.scss",
+  "line": 10,
+  "selector": ".chip",
+  "block": "chip",
+  "el": null,
+  "prop": "mix-blend-mode",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-blend-ink",
+  "name": null
+ },
+ {
+  "file": "components/field/field.scss",
+  "line": 73,
+  "selector": "&__label",
+  "block": "field",
+  "el": "label",
+  "prop": "mix-blend-mode",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-blend-ink",
+  "name": null
+ },
+ {
+  "file": "components/field/field.scss",
+  "line": 74,
+  "selector": "&__label",
+  "block": "field",
+  "el": "label",
+  "prop": "transition",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-ease",
+  "name": null
+ },
+ {
+  "file": "components/field/field.scss",
+  "line": 102,
+  "selector": "&__bg",
+  "block": "field",
+  "el": "bg",
+  "prop": "mix-blend-mode",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-blend-ink",
+  "name": null
+ },
+ {
+  "file": "components/radio-button/radio-button.scss",
+  "line": 10,
+  "selector": ".radio-button",
+  "block": "radio-button",
+  "el": null,
+  "prop": "mix-blend-mode",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-blend-ink",
+  "name": null
+ },
+ {
+  "file": "styles/components/progressbar.scss",
+  "line": 29,
+  "selector": "&::-webkit-progress-value",
+  "block": "progressbar",
+  "el": null,
+  "prop": "transition",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-ease",
+  "name": null
+ },
+ {
+  "file": "styles/components/progressbar.scss",
+  "line": 35,
+  "selector": "&::-moz-progress-bar",
+  "block": "progressbar",
+  "el": null,
+  "prop": "transition",
+  "propSeg": null,
+  "state": null,
+  "token": "--app-ease",
+  "name": null
+ }
+]

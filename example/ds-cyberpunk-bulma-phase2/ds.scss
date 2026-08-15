@@ -20,10 +20,9 @@
 //       example/ds-cyberpunk-bulma-phase2/ds.scss out.css
 // =============================================================================
 
-@use '../../src/config' with ($themes: (), $adapters: (bulma));
+@use '../../src/config' with ($adapters: (bulma));
 @use '../../src/base';
 @use '../../src/semantic';
-@use '../../src/themes';
 @use '../../src/component';
 @use '../../src/adapters/bulma' as bulma-adapter;
 @use 'theme';
@@ -44,13 +43,13 @@
 // Layer 1 — compiles away.
 @include base.emit();
 
-// Layer 2 — structure, then this product's only theme, then contexts.
+// Layer 2 — structure, then this product's only theme. No contexts: nothing in
+// this page's markup writes `data-surface`, so there is no second surface to
+// declare one for.
 @include semantic.emit-structure();
 @include semantic.emit-theme('cyberpunk', theme.$cyberpunk, $default: true);
-@include themes.emit-contexts();
 
 // Layer 3 — names only.
-@include component.emit();
 
 // Layer 3.5 — the adapter, receiving this product's theme rather than the
 // tool's built-ins.

@@ -92,7 +92,7 @@ both behave differently under `file://`.
 | Layer | Lives in | Ships as | Runtime cost |
 |---|---|---|---|
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
-| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 126, the public contract |
+| 2 — semantic | `src/_semantic.scss` | custom properties | 126, the public contract. **No theme ships with the tool** — you supply the map |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
 | 3.5 — adapter | `src/adapters/*.scss` | custom properties | 28–64, whichever one is selected |
 
@@ -519,7 +519,7 @@ both behave differently under `file://`.
 | Layer | Lives in | Ships as | Runtime cost |
 |---|---|---|---|
 | 1 — base | `src/_base.scss` | Sass maps | **0 bytes.** Only values read via `color()` / `scale()` are inlined as literals |
-| 2 — semantic | `src/_semantic.scss` + `src/_themes.scss` | custom properties | 126, the public contract |
+| 2 — semantic | `src/_semantic.scss` | custom properties | 126, the public contract. **No theme ships with the tool** — you supply the map |
 | 3 — component | `src/_component.scss` | reserved names | 0 by default |
 | 3.5 — adapter | `src/adapters/*.scss` | custom properties | 28–64, whichever one is selected |
 
@@ -809,7 +809,8 @@ interpolation inside a loop, and the string only exists at compile time.
 **Layer 1 → 2 is the spec's alias model.** `base.color(indigo, 600)` is
 `{color.indigo.600}` with a different syntax.
 
-**Themes and surfaces are resolver modifiers.** `$themes` is a modifier whose
+**Themes and surfaces are resolver modifiers.** The set of themes a build emits
+is a modifier — in this repository the demo's, whose
 contexts are `light`/`dark`/`brand`; `data-surface` is a second one. Even the
 word matches — the spec calls them contexts, and so did this project before
 reading it.
@@ -942,16 +943,17 @@ patterns/
 src/                    the design system itself
   _base.scss            layer 1, compile-time only
   _semantic.scss        layer 2, the public contract
-  _themes.scss          theme choice maps and contexts
+  _derive.scss          generates the opposite-scheme theme from yours
   _component.scss       layer 3 naming contract
   _core.scss            emission machinery, pair invariant
-  _config.scss          prefix, themes, adapters, layer names
+  _config.scss          prefix, adapters, contrast floor, layer names
   adapters/                _bootstrap _daisyui _pico _bulma
 app.css                 cascade layer order + token-driven baseline
 reset-a11y.css          optional; restores the native focus outline
 tailwind.css            optional Tailwind bridge
 *-entry.{scss,css}      one optional build entry per library
 example/
+  demo/                 the demonstration pages' own themes and contexts
   coexistence.html      Bootstrap vs plain CSS, light/dark
   theme-brand.html      the brand theme across Bootstrap and plain CSS
   daisyui.html          daisyUI adapter

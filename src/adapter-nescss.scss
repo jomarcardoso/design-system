@@ -1,6 +1,0 @@
-// Standalone build of the NES.css adapter — see src/adapter-bootstrap.scss for
-// why each adapter ships on its own.
-@use 'config' with ($adapters: (nescss));
-@use 'adapters/nescss';
-
-@include nescss.emit();

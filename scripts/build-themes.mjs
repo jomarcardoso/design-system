@@ -4,9 +4,14 @@
 //
 //     node scripts/build-themes.mjs
 //
-// Writes `dist/theme-<name>.css` for every theme in `src/_themes.scss`, each
-// containing the structural tokens, that theme's colours, and every surface
+// Writes `dist/theme-<name>.css` for every theme in `example/demo/_themes.scss`,
+// each containing the structural tokens, that theme's colours, and every surface
 // context. A page loads exactly one.
+//
+// The themes come from the DEMO, not from the foundation, because the
+// foundation has none: this script demonstrates the packaging shape, and the
+// three maps it happens to read are the demonstration pages' own. A product
+// points `THEMES_SRC` at its own theme file.
 //
 // -----------------------------------------------------------------------------
 // WHY THIS SHAPE AND NOT THE OTHER TWO
@@ -62,10 +67,10 @@ import * as sass from 'sass';
 import { readFileSync, writeFileSync, unlinkSync, statSync } from 'node:fs';
 import { gzipSync } from 'node:zlib';
 
-const THEMES_SRC = 'src/_themes.scss';
+const THEMES_SRC = 'example/demo/_themes.scss';
 
 // The registry is the source of truth for which themes exist, so adding one to
-// `_themes.scss` produces a file here without editing this script.
+// the theme file produces a file here without editing this script.
 const registry = readFileSync(THEMES_SRC, 'utf8').match(/\$registry:\s*\(([^)]*)\)/);
 if (!registry) {
   console.error(`Could not find $registry in ${THEMES_SRC}.`);
@@ -83,16 +88,19 @@ const ENTRY = '_theme-build.scss';
 const rows = [];
 
 for (const name of names) {
-  // `$themes: (name)` makes this the only theme, and `themes.emit()` puts the
-  // first theme on `:root` as well as `[data-theme=…]` — so the file works
-  // whether or not the attribute is set.
+  // `$default: true` puts this theme on `:root` as well as on `[data-theme=…]`,
+  // so the file works whether or not the attribute is set — which is the whole
+  // point of a one-theme-per-file build.
   writeFileSync(
     ENTRY,
-    `@use 'src/config' with ($themes: (${name}));\n` +
-      `@use 'src/base';\n` +
-      `@use 'src/themes';\n\n` +
+    `@use 'src/base';\n` +
+      `@use 'src/semantic';\n` +
+      `@use 'example/demo/themes';\n` +
+      `@use 'example/demo/contexts';\n\n` +
       `@include base.emit();\n` +
-      `@include themes.emit();\n`
+      `@include semantic.emit-structure();\n` +
+      `@include semantic.emit-theme('${name}', themes.$${name}, $default: true);\n` +
+      `@include contexts.emit-contexts();\n`
   );
 
   const out = `dist/theme-${name}.css`;
@@ -121,8 +129,15 @@ for (const name of names) {
 
 unlinkSync(ENTRY);
 
-const combined = statSync('dist/ds.css').size;
-const combinedGzip = gzipSync(readFileSync('dist/ds.css', 'utf8')).length;
+// The "all themes in one file" shape, for comparison. It is now TWO files —
+// `dist/ds.css` is the foundation's own build and carries no theme at all, so
+// the demo's three live beside it — which is itself the point being measured:
+// the theme half is separable because nothing in the structural half depends
+// on it.
+const ALL_IN_ONE = ['dist/ds.css', 'dist/demo-themes.css'];
+const combinedCss = ALL_IN_ONE.map((f) => readFileSync(f, 'utf8')).join('');
+const combined = ALL_IN_ONE.reduce((n, f) => n + statSync(f).size, 0);
+const combinedGzip = gzipSync(combinedCss).length;
 
 for (const r of rows) {
   const surfaces = [...new Set(r.surfaces)];
@@ -135,7 +150,7 @@ for (const r of rows) {
 
 console.log(
   '\n'.padEnd(1) +
-    `dist/ds.css (all themes)`.padEnd(28) +
+    `ds.css + demo-themes.css`.padEnd(28) +
     `${String(combined).padStart(6)} B  ${String(combinedGzip).padStart(5)} B gzip`
 );
 console.log(

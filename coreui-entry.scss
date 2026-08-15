@@ -37,11 +37,9 @@
 // =============================================================================
 
 @use 'sass:color';
-@use 'sass:list';
 @use 'sass:map';
 @use 'src/base';
-@use 'src/config';
-@use 'src/themes';
+@use 'example/demo/themes';
 
 // CoreUI inherits Bootstrap's `shade-color()` / `tint-color()`, which call the
 // legacy `mix()` and hard-error on an oklch value. Every colour goes through
@@ -50,7 +48,7 @@
   @return color.to-space(color.to-gamut($c, $space: rgb, $method: local-minde), rgb);
 }
 
-$_choices: map.get(themes.$registry, list.nth(config.$themes, 1));
+$_choices: themes.$light;
 
 @function _c($key) {
   @return srgb(map.get($_choices, $key));

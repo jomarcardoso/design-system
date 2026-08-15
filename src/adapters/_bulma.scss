@@ -48,7 +48,6 @@
 @use 'sass:math';
 @use '../core';
 @use '../config';
-@use '../themes';
 
 // oklch -> the three hsl parts Bulma wants, resolved at compile time.
 //
@@ -322,20 +321,11 @@ $_map: (
   }
 }
 
-// `$themes` is a map of `name: choices`. See the note on the Bootstrap
-// adapter's `emit()`: the channels below are computed from a theme's actual
-// colours, so the adapter needs the choice maps, and reading them from
-// `themes.$registry` limited it to the themes shipped with the tool. A product
-// that defines its own theme passes it here. Omitted, the built-ins are used.
+// `$themes` is a map of `name: choices`, and it is REQUIRED. Bulma decomposes
+// every colour into HSL channels, so the adapter needs the choice maps and not
+// only the token names — see `core.require-themes()`.
 @mixin emit($themes: null) {
-  $set: $themes;
-
-  @if $set == null {
-    $set: ();
-    @each $name in config.$themes {
-      $set: map.merge($set, ($name: map.get(themes.$registry, $name)));
-    }
-  }
+  $set: core.require-themes('bulma', $themes);
 
   @include core.in-layer(config.$layer-adapter) {
     :root,

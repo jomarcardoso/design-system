@@ -160,8 +160,9 @@ $booking: (
   'info-border': palette.status('info-border'),
 
   // --- The inverted band ---------------------------------------------------
-  // Read by `themes.emit-contexts($choices)`. Before this example those four
-  // were hardcoded zinc and a navy header was not expressible without a fork.
+  // Read by this product's own `core.context()` call in `ds.scss`. Before this
+  // example the band was a pre-baked zinc block inside the tool, and a navy
+  // header was not expressible without forking a vendored file.
   inverted: map.get(palette.$blue, navy),
   'on-inverted': palette.grey(0),
   'inverted-muted': map.get(palette.$blue, 'navy-muted'),

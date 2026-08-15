@@ -244,7 +244,8 @@
 //     writing them is how systems end up with `bg-danger-subtle` but no
 //     `bg-warning-subtle`.
 //
-// Expected keys in $c are documented in _themes.scss.
+// The expected keys in $c are the ones `_req()` and `_opt()` below ask for;
+// `example/demo/_themes.scss` is a complete worked example of the map.
 
 // Reads one decision out of a theme map, and REFUSES a theme that does not
 // make it.
@@ -399,6 +400,49 @@
     'fg-selected': _req($c, 'selected-text', $name),
     'border-selected': _opt($c, 'selected-border', selected, $name),
 
+    // Brand surface — a band, a footer, a masthead. The brand hue used as
+    // DECORATION rather than as state.
+    //
+    // This role exists because a real product went looking for it and found
+    // nothing: a cocoa footer with white type had to be written as
+    // `background: var(--color-primary-main); color: white`, because the only
+    // cocoa-and-white pair the contract offered was `selected`. Painting a
+    // footer with the selection colour makes "chosen" mean nothing — every
+    // page would have a permanently selected strip along the bottom.
+    //
+    // Atlassian names it `background.brand.bold` and Material calls it a
+    // primary container; the job is well established and this contract was
+    // simply missing it.
+    //
+    // OPTIONAL, defaulting to the selection pair, because in a brand-school
+    // product they genuinely are the same colour — what differs is the JOB, and
+    // having two names is what lets a product split them later without a
+    // rename. A functional-school product that wants its band in a different
+    // tone sets `brand` and `on-brand` and gets it.
+    'bg-brand': _opt($c, brand, selected, $name),
+    'fg-on-brand': _opt($c, 'on-brand', 'on-selected', $name),
+
+    // The brand hue as INK — a heading, a section title, an accent rule. This
+    // is the companion to `bg-brand` and it exists for the same reason, found
+    // the same way: a product was writing `fg-selected` on an `<h3>`.
+    //
+    // Nothing about a heading is selected. It read that way only because the
+    // brand colour happened to be the selection colour, so `selected` was the
+    // only name available for "cocoa, as text". The day selection diverges from
+    // the brand — a redesign, a second theme — every heading in the product
+    // would follow it, silently and wrongly.
+    //
+    // Naming the two jobs separately costs one optional token and buys the
+    // ability to change one without the other. That is the entire argument for
+    // semantic tokens, applied to itself.
+    'fg-brand': _opt($c, 'brand-text', 'selected-text', $name),
+
+    // One deeper step, for a band that has a state of its own — a footer that
+    // expands, a masthead that sticks. Without it a product reaches into
+    // `selected-active` for the darker tone and quietly re-mixes the two roles
+    // it just finished separating.
+    'bg-brand-deep': _opt($c, 'brand-deep', 'selected-active', $name),
+
     // Navigation — the sketch's "cor de navegação". Modelled as a FOREGROUND
     // role, because navigation is overwhelmingly links and anchors. A "next"
     // button is an action with a different label, not a different colour role;
@@ -484,9 +528,9 @@
 // CONTRAST — measured on every theme, by construction
 // -----------------------------------------------------------------------------
 //
-// This used to live in `_themes.scss` and be a mixin a caller REMEMBERED to
-// invoke. That was the largest hole in the whole system, and it was invisible
-// because every caller in this repository happened to remember.
+// This used to live in a separate `themes` module and be a mixin a caller
+// REMEMBERED to invoke. That was the largest hole in the whole system, and it
+// was invisible because every caller in this repository happened to remember.
 //
 // The proof was a theme map with white on amber-400 — 1.72:1, unreadable — that
 // called `emit-theme()` and nothing else. It compiled clean. Any agent writing
@@ -666,7 +710,7 @@ $_contrast-pairs: (
   }
 }
 
-@mixin emit-theme($name, $choices, $default: false) {
+@mixin emit-theme($name, $choices, $default: false, $auto: false) {
   // Not optional, and not a separate call a caller can forget. See above.
   @include check-contrast($name, $choices);
   @include check-roles($name, $choices);
@@ -674,8 +718,59 @@ $_contrast-pairs: (
   @include core.in-layer(config.$layer-semantic) {
     $resolved: colors($choices, $name);
 
-    @include core.theme($name, $default) {
-      @include core.emit($resolved);
+    // `color-scheme` is MEASURED, not named.
+    //
+    // A page closer to black than to white is a dark interface, whatever the
+    // theme is called. That one line is what tells the browser to paint native
+    // scrollbars, form controls, `<select>` popups and the canvas behind the
+    // page to match — and getting it from the theme's NAME meant every product
+    // that called its night theme anything other than `dark` shipped light
+    // scrollbars on a dark page.
+    $page: _req($choices, page, $name);
+    $scheme: light;
+    @if base.contrast($page, #fff) > base.contrast($page, #000) {
+      $scheme: dark;
+    }
+
+    // BLEND MODE IS A THEME DECISION, and until now it was the one kind of
+    // value a product had no way to express as one.
+    //
+    // `mix-blend-mode: multiply` is how ink is made to look absorbed into
+    // paper: the mark multiplies with the texture behind it instead of sitting
+    // on top as a flat sticker. It is a good effect and it is also a hardcoded
+    // assumption about the backdrop, because multiply is arithmetic —
+    // `result = source x backdrop`. Against a cream page (~0.98) the source
+    // survives almost untouched. Against a near-black page (~0.02) EVERY source
+    // collapses to near-black: text, icons, SVG illustrations, chips, form
+    // labels, all of them, no matter what colour layer 2 handed them.
+    //
+    // That is the nastiest failure shape this system has produced so far,
+    // because nothing is wrong anywhere a token-based check can look. The
+    // computed `color` is the correct near-white. The contrast gate passes,
+    // measuring colours that are genuinely fine. The pixels are black anyway,
+    // and grepping for a dark value finds nothing, because nothing set one.
+    //
+    // `screen` is multiply's exact dual — `1 - (1-s)(1-b)` — so on a dark page
+    // it does for light ink what multiply does for dark ink on paper. Emitting
+    // it from the SAME measurement that decides `color-scheme` means a product
+    // writes `mix-blend-mode: var(--app-blend-ink)` once and it is right in
+    // every theme, including themes that do not exist yet.
+    $blend: if($scheme == dark, screen, multiply);
+
+    @include core.theme($name, $default, $scheme) {
+      @include core.emit(map.merge($resolved, ('blend-ink': $blend)));
+    }
+
+    // `$auto: true` additionally applies this theme when the OS asks for its
+    // scheme and the page has not chosen one. See `core.theme-auto`.
+    //
+    // Guarded rather than assumed: a product with two light themes has no
+    // business hooking either of them to `prefers-color-scheme`, and a product
+    // with three themes has to say WHICH dark one the OS gets.
+    @if $auto {
+      @include core.theme-auto($scheme) {
+        @include core.emit(map.merge($resolved, ('blend-ink': $blend)));
+      }
     }
 
     // RETURNING TO THE BASE SURFACE.
@@ -704,7 +799,11 @@ $_contrast-pairs: (
       $base-set: map.merge($base-set, ($key: map.get($resolved, $key)));
     }
 
-    @include core.theme($name, $default) {
+    // Same `$scheme`: this reopens the theme's own selector, so leaving it at
+    // the default re-declared `color-scheme: light` on a dark theme and the
+    // later declaration won. The native controls went light on a dark page,
+    // from a block whose only job was to restore surface tokens.
+    @include core.theme($name, $default, $scheme) {
       &[data-surface="base"],
       [data-surface="base"] {
         @include core.emit($base-set);

@@ -105,7 +105,6 @@
 @use 'sass:map';
 @use '../core';
 @use '../config';
-@use '../themes';
 @use '../component';
 
 @function rgb-triplet($c) {
@@ -212,7 +211,7 @@ $_derived: (
   // reserves a layer 3 name, the same shape as `accent`. Projects that want
   // code to stand out set `--app-code-fg` and get their colour back, with the
   // difference that theirs will be measured.
-  --bs-code-color: #{component.ref-chain('code-fg')};
+  --bs-code-color: #{component.$code-fg};
 
   // --- Lines -------------------------------------------------------------
   --bs-border-color: #{core.ref('border-color')};
@@ -264,6 +263,19 @@ $_derived: (
   // This is the "a library variable that exists is not necessarily read" trap,
   // and the lesson is narrow: grep the built CSS for who CONSUMES a variable,
   // not for who declares it.
+  // ONE focus colour, for every button and every variant.
+  //
+  // Bootstrap derives each variant's focus ring from that variant's own colour,
+  // so a focused outline button glowed in the action colour — the same signal
+  // the SOLID button carries at rest. Two buttons side by side, one focused,
+  // and both read as primary.
+  //
+  // Focus is not a property of the variant. It answers "where is the keyboard",
+  // which has to look the same everywhere and unlike anything else on screen.
+  // That is what `ring` is for, and why it is a role of its own.
+  --bs-btn-focus-shadow-rgb: #{rgb-triplet(map.get($choices, ring))};
+  --bs-focus-ring-color: #{core.ref('ring-color')};
+
   --bs-link-color-rgb: #{rgb-triplet(map.get($choices, link))};
   --bs-body-color-rgb: #{rgb-triplet(map.get($choices, text))};
   --bs-body-bg-rgb: #{rgb-triplet(map.get($choices, page))};
@@ -338,9 +350,9 @@ $_derived: (
     $bg-hover: core.ref('bg-#{$role}-hover');
 
     .btn-#{$bs} {
-      background-color: #{core.ref('button-bg', $bg)};
-      border-color: #{core.ref('button-border-color', $bg)};
-      color: #{core.ref('button-fg', core.ref('fg-on-#{$role}'))};
+      background-color: #{$bg};
+      border-color: #{$bg};
+      color: #{core.ref('fg-on-#{$role}')};
     }
 
     .btn-#{$bs}:hover {
@@ -395,12 +407,21 @@ $_derived: (
       border-color: #{core.ref(_slot($role, border))};
     }
 
-    // Hover fills with the variant colour, so the label flips to the paired
-    // foreground — the same pair the solid button uses.
+    // Outline hover keeps the OUTLINE.
+    //
+    // This used to fill with the variant colour and flip the label to the
+    // paired foreground — Bootstrap's own convention, which the adapter copied
+    // without arguing with it. It destroys the one thing outline exists to
+    // express: put a hovered secondary beside a primary and you have two
+    // primaries, so the screen momentarily has two main actions.
+    //
+    // A tint plus the border it already had says "you are on this" without
+    // promoting it. Emphasis is fill / border / nothing, and an interaction
+    // state must never move a control up that ladder.
     .btn-outline-#{$bs}:hover {
-      background-color: #{core.ref('bg-#{$role}')};
-      border-color: #{core.ref('bg-#{$role}')};
-      color: #{core.ref('fg-on-#{$role}')};
+      background-color: #{core.ref(_slot($role, subtle))};
+      border-color: #{core.ref(_slot($role, border))};
+      color: #{core.ref(_slot($role, text))};
     }
   }
 
@@ -424,42 +445,24 @@ $_derived: (
   // property and terminate on the semantic token, which is always emitted.
   .form-control,
   .form-select {
-    background-color: #{component.ref-chain('field-bg', core.ref('bg-surface'))};
-    border-color: #{component.ref-chain(
-        'field-border-color',
-        core.ref('border-color')
-      )};
-    border-radius: #{component.ref-chain(
-        'field-radius',
-        core.ref('radius-control')
-      )};
+    background-color: #{component.$field-bg};
+    border-color: #{component.$field-border-color};
+    border-radius: #{component.$field-radius};
   }
 
   .form-control:focus,
   .form-select:focus {
-    border-color: #{component.ref-chain(
-        'field-border-color-focus',
-        core.ref('border-action')
-      )};
+    border-color: #{component.$field-border-color-focus};
   }
 
   // Not variant-driven: bind on the variable. Every chain below terminates on
   // a DIFFERENT property than the one being declared, so none of them cycle.
   .card {
-    --bs-card-bg: #{component.ref-chain('surface-bg', var(--bs-body-bg))};
-    --bs-card-color: #{component.ref-chain('surface-fg', var(--bs-body-color))};
-    --bs-card-border-color: #{component.ref-chain(
-        'surface-border-color',
-        var(--bs-border-color)
-      )};
-    --bs-card-border-radius: #{component.ref-chain(
-        'surface-radius',
-        var(--bs-border-radius-lg)
-      )};
-    --bs-card-cap-bg: #{component.ref-chain(
-        'table-header-bg',
-        var(--bs-secondary-bg)
-      )};
+    --bs-card-bg: #{component.$surface-bg};
+    --bs-card-color: #{component.$surface-fg};
+    --bs-card-border-color: #{component.$surface-border-color};
+    --bs-card-border-radius: #{component.$surface-radius};
+    --bs-card-cap-bg: #{component.$table-header-bg};
 
     // Padding and elevation were reserved in the layer 3 contract and then read
     // by nobody, so a Bootstrap card and a hand-written card disagreed on both.
@@ -470,8 +473,8 @@ $_derived: (
     // padding at runtime rather than in `bootstrap-entry.scss` is deliberate —
     // it derives from `--app-space-unit`, so the card now follows
     // `[data-density="compact"]` like everything else.
-    --bs-card-spacer-y: #{core.ref('surface-pad', core.ref('pad-surface'))};
-    --bs-card-spacer-x: #{core.ref('surface-pad', core.ref('pad-surface'))};
+    --bs-card-spacer-y: #{component.$surface-pad-y};
+    --bs-card-spacer-x: #{component.$surface-pad-x};
 
     // Elevation binds on the PROPERTY, not on `--bs-card-box-shadow`, and the
     // reason is a trap worth remembering: Bootstrap declares that variable but
@@ -487,83 +490,48 @@ $_derived: (
   }
 
   .table {
-    --bs-table-color: #{component.ref-chain('table-fg', var(--bs-body-color))};
-    --bs-table-border-color: #{component.ref-chain(
-        'table-border-color',
-        var(--bs-border-color)
-      )};
-    --bs-table-striped-bg: #{component.ref-chain(
-        'table-row-bg-striped',
-        var(--bs-secondary-bg)
-      )};
-    --bs-table-hover-bg: #{component.ref-chain(
-        'table-row-bg-hover',
-        var(--bs-secondary-bg)
-      )};
+    --bs-table-color: #{component.$table-fg};
+    --bs-table-border-color: #{component.$table-border-color};
+    --bs-table-striped-bg: #{component.$table-row-bg-striped};
+    --bs-table-hover-bg: #{component.$table-row-bg-hover};
   }
 
   .modal {
-    --bs-modal-bg: #{component.ref-chain('overlay-bg', var(--bs-body-bg))};
-    --bs-modal-border-radius: #{component.ref-chain(
-        'overlay-radius',
-        var(--bs-border-radius-lg)
-      )};
+    --bs-modal-bg: #{component.$overlay-bg};
+    --bs-modal-border-radius: #{component.$overlay-radius};
   }
 
   // Dropdowns carry their own variable namespace; the previous version wrote
   // `--bs-modal-bg` here, which Bootstrap never reads on this element.
   .dropdown-menu {
-    --bs-dropdown-bg: #{component.ref-chain('overlay-bg', var(--bs-body-bg))};
-    --bs-dropdown-border-radius: #{component.ref-chain(
-        'overlay-radius',
-        var(--bs-border-radius)
-      )};
+    --bs-dropdown-bg: #{component.$overlay-bg};
+    --bs-dropdown-border-radius: #{component.$overlay-radius};
   }
 
   .nav-link {
-    --bs-nav-link-color: #{component.ref-chain('nav-fg', var(--bs-link-color))};
-    --bs-nav-link-hover-color: #{component.ref-chain(
-        'nav-fg-hover',
-        var(--bs-link-hover-color)
-      )};
+    --bs-nav-link-color: #{component.$nav-fg};
+    --bs-nav-link-hover-color: #{component.$nav-fg-hover};
   }
 
   .alert {
-    --bs-alert-border-radius: #{component.ref-chain(
-        'alert-radius',
-        var(--bs-border-radius)
-      )};
+    --bs-alert-border-radius: #{component.$alert-radius};
   }
 
   .badge {
-    --bs-badge-border-radius: #{component.ref-chain(
-        'badge-radius',
-        var(--bs-border-radius-pill)
-      )};
+    --bs-badge-border-radius: #{component.$badge-radius};
   }
 }
 
-// `$themes` is a map of `name: choices`, and it exists because the first
-// project to define its own theme could not use this adapter at all.
+// `$themes` is a map of `name: choices`, and it is REQUIRED — see
+// `core.require-themes()` for why an adapter that needs colour channels cannot
+// be given a sensible default.
 //
-// The triplets below have to be computed from a theme's actual colours (see
-// `_triplets`), so the adapter needs the choice maps — and it used to read them
-// straight out of `themes.$registry`, which only holds the themes that ship
-// with the tool. A product that turned those off and emitted its own hit
-// `list.nth($themes, 1)` on an empty list and could not build.
-//
-// Passing the map in makes a project theme exactly as supported as a built-in
-// one. Omit the argument and the built-ins are used, so nothing existing
-// changes.
+// The triplets below are computed from a theme's actual colours (see
+// `_triplets`), so the adapter needs the choice maps. It used to read them out
+// of a registry of themes that shipped with the tool; the tool ships none now,
+// and a project's theme is the only kind there is.
 @mixin emit($themes: null) {
-  $set: $themes;
-
-  @if $set == null {
-    $set: ();
-    @each $name in config.$themes {
-      $set: map.merge($set, ($name: map.get(themes.$registry, $name)));
-    }
-  }
+  $set: core.require-themes('bootstrap', $themes);
 
   @include core.in-layer(config.$layer-adapter) {
     // Everything that is a plain `var(--app-…)` goes here, once.
@@ -584,7 +552,7 @@ $_derived: (
 
     // The triplets, per theme, generated from `$themes` rather than listed by
     // hand. This is what keeps the promise that adding a theme touches no
-    // adapter: register it in `_themes.scss`, add it to `$themes`, done.
+    // adapter: write the map, pass it to `emit()`, done.
     $names: map.keys($set);
     $default-theme: null;
 

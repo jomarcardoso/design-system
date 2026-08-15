@@ -36,15 +36,13 @@
 // silences it explicitly rather than hiding it.
 // =============================================================================
 
-@use 'sass:list';
 @use 'sass:map';
-@use 'src/config';
-@use 'src/themes';
+@use 'example/demo/themes';
 @use 'src/adapters/nescss';
 
-// The theme whose colours get compiled in. The FIRST theme in `$themes`,
-// because a library that can only hold one should hold the default one.
-$_choices: map.get(themes.$registry, list.nth(config.$themes, 1));
+// The theme whose colours get compiled in. This is a DEMO build, so it takes
+// the demo's default theme; a product substitutes its own map here.
+$_choices: themes.$light;
 
 // --- Typography ---------------------------------------------------------
 // Left as the library's own. "Press Start 2P" is not a font choice this system

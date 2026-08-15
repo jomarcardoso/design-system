@@ -12,7 +12,11 @@
 //     the difference between a convention and a guarantee.
 // =============================================================================
 
+@use 'sass:color';
+@use 'sass:list';
 @use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
 @use 'sass:string';
 @use 'config';
 
@@ -69,10 +73,58 @@ $_forbidden: ('{', '}', '.');
 // Writes a flat map of token-name -> value as custom property declarations.
 // `null` values are skipped, so a token a theme has no opinion about is erased
 // completely rather than emitted empty.
+// COMPACT COLOUR SERIALISATION.
+//
+// A custom property value is opaque text to Sass and to the minifier — nothing
+// downstream will ever rewrite it. And Sass only prints a colour as hex when it
+// was WRITTEN as hex: any colour that came out of a computation interpolates as
+// `rgb(12, 11, 9)`, which survives `--style=compressed` untouched at 15 bytes
+// against 7.
+//
+// That never mattered while every theme was hand-written from hex literals in
+// the palette. It started mattering the moment `derive.dark()` could generate a
+// whole theme, where every one of ~85 values is computed. Doing the conversion
+// here rather than in the derivation keeps colours as real Sass colours for as
+// long as possible — which is what lets the contrast gate measure them.
+$_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
+
+@function _byte($n) {
+  $n: math.clamp(0, math.round($n), 255);
+
+  @return list.nth($_hex, math.div($n - $n % 16, 16) + 1) +
+    list.nth($_hex, $n % 16 + 1);
+}
+
+@function _compact($value) {
+  @if meta.type-of($value) != color {
+    @return $value;
+  }
+
+  $c: color.to-space($value, rgb);
+
+  // Translucent values keep `rgba()` — an 8-digit hex is longer and worse
+  // supported — but still get integer channels. A computed scrim serialises as
+  // `rgba(73.9671585459%, 71.3162355991%, 69.4631564999%, 0.55)`, which is 55
+  // bytes of false precision for a colour nobody can distinguish from
+  // `rgba(189, 182, 177, 0.55)`.
+  @if color.channel($value, 'alpha') < 1 {
+    @return rgba(
+      math.round(color.channel($c, 'red', $space: rgb)),
+      math.round(color.channel($c, 'green', $space: rgb)),
+      math.round(color.channel($c, 'blue', $space: rgb)),
+      color.channel($value, 'alpha')
+    );
+  }
+
+  @return '#' + _byte(color.channel($c, 'red', $space: rgb)) +
+    _byte(color.channel($c, 'green', $space: rgb)) +
+    _byte(color.channel($c, 'blue', $space: rgb));
+}
+
 @mixin emit($tokens) {
   @each $name, $value in $tokens {
     @if $value != null {
-      #{var-name($name)}: #{$value};
+      #{var-name($name)}: #{_compact($value)};
     }
   }
 }
@@ -93,14 +145,20 @@ $_forbidden: ('{', '}', '.');
 // The only hard requirement is that components read `var(--app-…)` rather than
 // resolving against `:root`, which they do because `ref()` is the only accessor.
 
-@mixin theme($name, $default: false) {
-  // Spelled out rather than `if($name == dark, ...)`: Sass is deprecating the
-  // plain `if()` function because CSS is claiming the name.
-  $scheme: light;
-  @if $name == dark {
-    $scheme: dark;
-  }
-
+// `$scheme` is `light` or `dark` and comes from `emit-theme()`, which MEASURES
+// the theme's page colour rather than reading its name.
+//
+// It used to be `@if $name == dark`. That works for a theme called `dark` and
+// silently fails for every other one: a product whose night theme is called
+// `caderninho-noite` — or `midnight`, or `sepia-escuro` — got
+// `color-scheme: light`, so the browser painted native scrollbars, form
+// controls, `<select>` popups and the canvas behind the page in light colours
+// on a dark interface. Nothing in CSS reports that; it just looks wrong at the
+// edges.
+//
+// Naming was doing the work of measuring, which is the same mistake as choosing
+// a token by the colour it produces instead of the job it names.
+@mixin theme($name, $default: false, $scheme: light) {
   @if $default {
     :root,
     [data-theme='#{$name}'] {
@@ -109,6 +167,37 @@ $_forbidden: ('{', '}', '.');
     }
   } @else {
     [data-theme='#{$name}'] {
+      color-scheme: $scheme;
+      @content;
+    }
+  }
+}
+
+// FOLLOWING THE OPERATING SYSTEM, without giving up the explicit switch.
+//
+// A theme selector answers "the user chose this". It cannot answer "the user
+// has not chosen, and their OS is in dark mode" — which is the state almost
+// every visitor arrives in, since nobody has clicked a toggle on their first
+// visit.
+//
+// The two have to coexist, and the order matters more than it looks:
+//
+//   :root:not([data-theme])   is 0,2,0 — it beats the plain `:root` that
+//                             carries the default theme, so the OS preference
+//                             applies to a page that has made no choice.
+//
+//   [data-theme='…']          is 0,1,0 — LOWER. That reads like a bug and is
+//                             not one: the moment the attribute exists, the
+//                             `:not()` stops matching at all, so the two
+//                             selectors are never in competition. Specificity
+//                             never gets a say.
+//
+// The consequence worth stating plainly: an explicit choice always wins,
+// including the choice to stay light on a machine set to dark. A toggle that
+// could be overruled by the OS is not a toggle.
+@mixin theme-auto($scheme) {
+  @media (prefers-color-scheme: #{$scheme}) {
+    :root:not([data-theme]) {
       color-scheme: $scheme;
       @content;
     }
@@ -187,6 +276,37 @@ $_pairs: (
 
 @function pairs() {
   @return $_pairs;
+}
+
+// -----------------------------------------------------------------------------
+// Adapters that need the theme VALUES, not just the token names
+// -----------------------------------------------------------------------------
+//
+// Most adapters only ever write `library-var: var(--app-token)`, so they never
+// see a colour. Four cannot: Bootstrap and CoreUI build their opacity
+// utilities, focus rings and `.text-bg-*` out of `rgba(var(--x-rgb), …)`, Bulma
+// decomposes every colour into HSL channels, and NES.css bakes a colour into an
+// SVG border-image. A channel cannot be extracted from a `var()`, so those four
+// need the theme MAPS.
+//
+// They used to default to a registry of themes that shipped with the tool. The
+// foundation now ships none, and the old fallback failed in the worst possible
+// way when it found nothing: it emitted the `var()` half of the mapping and
+// silently skipped the channels, so the product looked themed until something
+// translucent, focused, or outlined appeared. Refusing is the only honest
+// answer, because "no themes" is not a degraded build — it is a missing
+// argument.
+@function require-themes($adapter, $themes) {
+  @if $themes == null or map.keys($themes) == () {
+    @error '#{$adapter} adapter: emit() needs the theme maps, not just their '
+         + 'names. This library derives colour CHANNELS (rgb triplets, HSL '
+         + 'components, or a colour baked into an image asset) and a channel '
+         + 'cannot be read out of a var(). Pass `name: choices`, the same map '
+         + 'you gave semantic.emit-theme():'
+         + '  @include #{$adapter}-adapter.emit((<name>: $<theme>));';
+  }
+
+  @return $themes;
 }
 
 @mixin context($selector, $tokens) {

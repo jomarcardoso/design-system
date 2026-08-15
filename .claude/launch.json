@@ -6,6 +6,17 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["--yes", "serve", "-p", "4173", "--no-clipboard", "."],
       "port": 4173
+    },
+    {
+      "name": "recepta",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "--prefix",
+        "../recepta-book/www",
+        "run",
+        "dev"
+      ],
+      "port": 3000
     }
   ]
 }

@@ -139,11 +139,11 @@
       // roles, and a chart series is not a role — so these read layer 3 hooks
       // that default to the status family. A product with a real data palette
       // sets five variables; nothing is emitted until it does.
-      --chart-1: #{component.ref-chain('chart-1')};
-      --chart-2: #{component.ref-chain('chart-2')};
-      --chart-3: #{component.ref-chain('chart-3')};
-      --chart-4: #{component.ref-chain('chart-4')};
-      --chart-5: #{component.ref-chain('chart-5')};
+      --chart-1: #{component.$chart-1};
+      --chart-2: #{component.$chart-2};
+      --chart-3: #{component.$chart-3};
+      --chart-4: #{component.$chart-4};
+      --chart-5: #{component.$chart-5};
     }
   }
 }

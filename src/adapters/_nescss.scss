@@ -75,7 +75,6 @@
 @use 'sass:map';
 @use 'sass:math';
 @use '../core';
-@use '../themes';
 @use '../config';
 @use '../component';
 
@@ -189,18 +188,12 @@ $_map: (
 // Runtime
 // -----------------------------------------------------------------------------
 
-// `$themes` is a map of `name: choices`, for the reason given on the Bootstrap
-// adapter's `emit()` — plus one specific to this library: the border images
-// below are generated per theme and cannot be expressed as a `var()`.
+// `$themes` is a map of `name: choices`, and it is REQUIRED for the reason
+// `core.require-themes()` gives — plus one specific to this library: the border
+// images below are SVG data URIs generated per theme, and a colour inside an
+// asset cannot be expressed as a `var()` at all.
 @mixin emit($themes: null) {
-  $set: $themes;
-
-  @if $set == null {
-    $set: ();
-    @each $name in config.$themes {
-      $set: map.merge($set, ($name: map.get(themes.$registry, $name)));
-    }
-  }
+  $set: core.require-themes('nescss', $themes);
 
   @include core.in-layer(config.$layer-adapter) {
     // Surfaces. NES.css has no page/surface distinction, so `body` takes the

@@ -65,12 +65,12 @@
       // single decision stays the default without becoming the only option. A
       // brand with a stepped heading ramp sets `--app-heading-2-fg` and gets
       // it; nothing is emitted until someone does.
-      --pico-h1-color: #{component.ref-chain('heading-1-fg')};
-      --pico-h2-color: #{component.ref-chain('heading-2-fg')};
-      --pico-h3-color: #{component.ref-chain('heading-3-fg')};
-      --pico-h4-color: #{component.ref-chain('heading-4-fg')};
-      --pico-h5-color: #{component.ref-chain('heading-5-fg')};
-      --pico-h6-color: #{component.ref-chain('heading-6-fg')};
+      --pico-h1-color: #{component.$heading-1-fg};
+      --pico-h2-color: #{component.$heading-2-fg};
+      --pico-h3-color: #{component.$heading-3-fg};
+      --pico-h4-color: #{component.$heading-4-fg};
+      --pico-h5-color: #{component.$heading-5-fg};
+      --pico-h6-color: #{component.$heading-6-fg};
 
       // --- Primary ----------------------------------------------------
       // Pico splits every intent into a TEXT colour and a BACKGROUND colour.
@@ -109,49 +109,49 @@
       --pico-contrast-inverse: #{core.ref('bg-surface')};
 
       // --- Surfaces ---------------------------------------------------
-      --pico-card-background-color: #{core.ref('bg-surface')};
-      --pico-card-border-color: #{core.ref('border-color')};
-      --pico-card-sectioning-background-color: #{core.ref('bg-sunken')};
-      --pico-card-box-shadow: #{core.ref('shadow-raised')};
-      --pico-dropdown-background-color: #{core.ref('bg-raised')};
-      --pico-dropdown-border-color: #{core.ref('border-color')};
-      --pico-dropdown-hover-background-color: #{core.ref('bg-surface-hover')};
-      --pico-modal-overlay-background-color: #{core.ref('bg-overlay')};
+      --pico-card-background-color: #{component.$surface-bg};
+      --pico-card-border-color: #{component.$surface-border-color};
+      --pico-card-sectioning-background-color: #{component.$surface-section-bg};
+      --pico-card-box-shadow: #{component.$surface-shadow};
+      --pico-dropdown-background-color: #{component.$dropdown-bg};
+      --pico-dropdown-border-color: #{component.$dropdown-border-color};
+      --pico-dropdown-hover-background-color: #{component.$dropdown-bg-hover};
+      --pico-modal-overlay-background-color: #{component.$overlay-backdrop};
 
       // --- Form elements ----------------------------------------------
-      --pico-form-element-background-color: #{core.ref('bg-surface')};
-      --pico-form-element-border-color: #{core.ref('border-color')};
-      --pico-form-element-color: #{core.ref('fg-default')};
-      --pico-form-element-placeholder-color: #{core.ref('fg-subtlest')};
-      --pico-form-element-focus-color: #{core.ref('border-action')};
-      --pico-form-element-active-border-color: #{core.ref('border-action')};
-      --pico-form-element-active-background-color: #{core.ref('bg-surface')};
-      --pico-switch-background-color: #{core.ref('border-color-strong')};
-      --pico-switch-checked-background-color: #{core.ref('bg-action')};
-      --pico-range-thumb-color: #{core.ref('bg-action')};
-      --pico-progress-background-color: #{core.ref('bg-sunken')};
-      --pico-progress-color: #{core.ref('bg-action')};
+      --pico-form-element-background-color: #{component.$field-bg};
+      --pico-form-element-border-color: #{component.$field-border-color};
+      --pico-form-element-color: #{component.$field-fg};
+      --pico-form-element-placeholder-color: #{component.$field-placeholder-fg};
+      --pico-form-element-focus-color: #{component.$field-border-color-focus};
+      --pico-form-element-active-border-color: #{component.$field-border-color-focus};
+      --pico-form-element-active-background-color: #{component.$field-bg};
+      --pico-switch-background-color: #{component.$switch-track-bg};
+      --pico-switch-checked-background-color: #{component.$switch-track-bg-checked};
+      --pico-range-thumb-color: #{component.$range-thumb-bg};
+      --pico-progress-background-color: #{component.$progress-track-bg};
+      --pico-progress-color: #{component.$progress-fill-bg};
 
       // --- Content ----------------------------------------------------
-      --pico-table-border-color: #{core.ref('border-color-subtle')};
-      --pico-table-row-stripped-background-color: #{core.ref('bg-sunken')};
-      --pico-code-background-color: #{core.ref('bg-sunken')};
-      --pico-code-color: #{core.ref('fg-muted')};
+      --pico-table-border-color: #{component.$table-border-color};
+      --pico-table-row-stripped-background-color: #{component.$table-row-bg-striped};
+      --pico-code-background-color: #{component.$code-bg};
+      --pico-code-color: #{component.$code-fg};
       --pico-blockquote-border-color: #{core.ref('border-color-subtle')};
       --pico-mark-background-color: #{core.ref('bg-warning-subtle')};
       --pico-mark-color: #{core.ref('fg-warning')};
       --pico-ins-color: #{core.ref('fg-success')};
       --pico-del-color: #{core.ref('fg-danger')};
-      --pico-tooltip-background-color: #{core.ref('fg-default')};
-      --pico-tooltip-color: #{core.ref('bg-surface')};
+      --pico-tooltip-background-color: #{component.$tooltip-bg};
+      --pico-tooltip-color: #{component.$tooltip-fg};
 
       // --- Shape, spacing, typography ---------------------------------
       --pico-border-radius: #{core.ref('radius-control')};
       --pico-border-width: #{core.ref('border-width')};
       --pico-outline-width: #{core.ref('ring-width')};
       --pico-spacing: #{core.ref('pad-surface')};
-      --pico-form-element-spacing-vertical: #{core.ref('pad-control-y')};
-      --pico-form-element-spacing-horizontal: #{core.ref('pad-control-x')};
+      --pico-form-element-spacing-vertical: #{component.$field-pad-y};
+      --pico-form-element-spacing-horizontal: #{component.$field-pad-x};
       --pico-font-family-sans-serif: #{core.ref('font-family-body')};
       --pico-font-family-monospace: #{core.ref('font-family-mono')};
       --pico-font-size: #{core.ref('font-size')};

@@ -25,6 +25,11 @@
   Build with `npm run demo`.
 -->
 <link rel="stylesheet" href="../app.css">
+<!-- The DEMO themes. `app.css` pulls in `dist/ds.css`, which carries structure
+     and no colour at all: the foundation ships zero themes, because a theme is
+     a set of decisions belonging to whoever makes them. `light`, `dark` and
+     `brand` belong to this demonstration and live in `example/demo/`. -->
+<link rel="stylesheet" href="../dist/demo-themes.css">
 <link rel="stylesheet" href="../dist/adapter-bootstrap.css">
 <link rel="stylesheet" href="../dist/bootstrap.css">
 
@@ -233,7 +238,8 @@
     <strong>What this page is testing:</strong>
     <ul>
       <li><strong>A theme is data, not code.</strong> <code>brand</code> is one map of colour
-        decisions in <code>_themes.scss</code>. The token count did not change — 110 names
+        decisions in <code>example/demo/_themes.scss</code>, which belongs to this demo and
+        not to the tool. The token count did not change — 110 names
         before and after — because a theme supplies values, never new names.</li>
       <li><strong>Action and selected finally diverge.</strong> In <code>light</code> both are
         indigo, and the README lists collapsing them as an open question. Here action is

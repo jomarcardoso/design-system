@@ -40,7 +40,6 @@
 // decide. The alternative — a system that renders whatever it is given — would
 // have shipped the same button and said nothing.
 @use '../../src/config' with (
-  $themes: (),
   $adapters: (),
   $contrast-min: 3,
 
@@ -58,7 +57,6 @@
 
 @use '../../src/base';
 @use '../../src/semantic';
-@use '../../src/themes';
 @use '../../src/component';
 @use '../../src/adapters/shadcn' as shadcn-adapter;
 @use 'theme';
@@ -74,16 +72,15 @@
 // check itself; there is nothing to remember to call.
 @include semantic.emit-structure(theme.$typography);
 @include semantic.emit-theme('itau', theme.$itau, $default: true);
-@include themes.emit-contexts();
 
-// …and this product's own. The brand band is a context, not a set of variants:
-// see patterns.scss.
+// The contexts, all of which are this product's own — the tool ships none. The
+// brand band is a context rather than a set of variants, and so is the sunken
+// footer: see patterns.scss.
 @include patterns.contexts();
 
 // Layer 3 — the naming contract, plus this product's overrides. Unlike the
 // other examples this one DOES emit: iDS gives its chart series a fixed
 // categorical palette, which is a decision layer 2 correctly refuses to hold.
-@include component.emit();
 @include patterns.component-tokens();
 
 // Layer 3.5 — the adapter.

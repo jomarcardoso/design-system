@@ -46,7 +46,7 @@
  * These are the foreground halves of pairs layer 2 already guarantees. Flowbite
  * omits them because its own markup writes `text-white`, which puts the pair in
  * the markup where no adapter can reach it — and white on a mid-bright fill is
- * exactly the pairing the contrast check in `_themes.scss` rejects.
+ * exactly the pairing `semantic.check-contrast()` rejects.
  * -------------------------------------------------------------------------- */
 
 @theme inline {

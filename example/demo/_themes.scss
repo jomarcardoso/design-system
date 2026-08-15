@@ -1,33 +1,30 @@
 // =============================================================================
-// THEMES AND CONTEXTS
+// DEMO THEMES — light, dark, brand
 // =============================================================================
 //
-// THEME — a complete, self-sufficient set of colour decisions. Dark mode is a
-// theme: nothing from light is worth reusing, every surface and every
-// foreground changes. Selector: `[data-theme="…"]`, plus `:root` for the
-// default. A theme must define every key below or the build fails on a null.
+// THESE ARE NOT PART OF THE FOUNDATION. They used to live in `src/_themes.scss`
+// and shipped with the tool, which made the tool look like a design system: a
+// consumer who compiled `src/ds.scss` got three palettes it never asked for and
+// a `[data-theme="brand"]` block it could not remove without editing a vendored
+// file.
 //
-// CONTEXT (subtheme) — a PARTIAL override that inherits everything it does not
-// mention. An inverted brand band, a sidebar on a tinted surface, a danger
-// zone in a settings page: spacing, radius, typography, motion and z-index all
-// stay. Selector: any attribute or class, and contexts nest freely because
-// custom properties inherit down the DOM.
+// The foundation now ships ZERO themes. A theme is a set of colour DECISIONS
+// and those belong to whoever is making them — a product, or, as here, a demo.
+// The only theme the tool still generates on its own is the opposite-scheme
+// counterpart produced by `derive.dark()`, and that one is derived from a theme
+// somebody wrote.
 //
-// The rule that decides which one you are writing: if you find yourself
-// redefining the text colour AND the surface AND the borders AND the action
-// colour, it is a theme. If it is two or three pairs, it is a context.
-//
-// Contexts are validated by `core.context()`: overriding a background without
-// its foreground is a compile error, not a runtime contrast bug.
+// These three survive because the demonstration pages under `example/*.html`
+// need something to switch between, and because `scripts/audit-contrast.mjs`
+// measures those pages against all three. They keep their old names so that
+// markup and the audit keep working. Read them as sample content, not as a
+// starting point to inherit: the honest way to start is to write your own map
+// and pass it to `semantic.emit-theme()`, which is what every product under
+// `example/ds-*/` does.
 // =============================================================================
 
 @use 'sass:color';
-@use 'sass:list';
-@use 'sass:map';
-@use 'base';
-@use 'core';
-@use 'config';
-@use 'semantic';
+@use '../../src/base';
 
 // -----------------------------------------------------------------------------
 // Light — the default theme
@@ -434,220 +431,3 @@ $brand: (
 );
 
 $registry: (light: $light, dark: $dark, brand: $brand);
-
-// -----------------------------------------------------------------------------
-// Contexts — subthemes
-// -----------------------------------------------------------------------------
-//
-// These are deliberately short. A context that grows past a dozen tokens is a
-// theme wearing a disguise; promote it and stop paying the inheritance tax.
-
-// `$choices` is optional and exists because the INVERTED context was the one
-// part of layer 2 a product could not theme.
-//
-// The band's four colours were hardcoded to zinc. That is a reasonable default
-// and it is wrong for any brand whose dark band is not grey — Booking.com's
-// header is navy `#003b95`, and reproducing it meant either editing this
-// vendored file or abandoning the context and hand-writing the band, which is
-// exactly the fork the architecture exists to avoid.
-//
-// Four optional theme keys now cover it, each falling back to what was there:
-//
-//   inverted           the band's surface
-//   on-inverted        its foreground
-//   inverted-muted     secondary text on it
-//   inverted-border    lines on it
-//
-// A theme that says nothing gets the zinc band it always got.
-@mixin emit-contexts($choices: ()) {
-  $inverted: map.get($choices, 'inverted') or base.color(zinc, 900);
-  $on-inverted: map.get($choices, 'on-inverted') or base.color(zinc, 50);
-  $inverted-muted: map.get($choices, 'inverted-muted') or base.color(zinc, 400);
-  $inverted-border: map.get($choices, 'inverted-border') or base.color(zinc, 700);
-  // Defaults to the band's own foreground. A brand that wants a tinted link on
-  // its dark band sets this and gets measured on it like everything else.
-  $inverted-link: map.get($choices, 'inverted-link') or $on-inverted;
-  // The band needs its OWN interaction wash, for the third time this context
-  // has taught the same lesson: a surface that overrides some roles and not
-  // others ships a broken state.
-  //
-  // `bg-surface-hover` is a light-page token by definition — a step DOWN a
-  // light ramp. Inside a dark band it is nearly invisible, so every hoverable
-  // thing on a navy header had no hover at all. A translucent white is the
-  // right default because it composes over whatever the band happens to be.
-  $inverted-hover: map.get($choices, 'inverted-hover') or rgb(255 255 255 / 0.12);
-  $inverted-active: map.get($choices, 'inverted-active') or rgb(255 255 255 / 0.2);
-
-  @include core.in-layer(config.$layer-semantic) {
-    // Inverted band: hero sections, footers, promotional strips.
-    // Works under BOTH themes because it names its own pair explicitly.
-    @include core.context(
-      '[data-surface="inverted"]',
-      (
-        'bg-page': core.ref('bg-inverted-base'),
-        'bg-surface': core.ref('bg-inverted-base'),
-        'fg-default': core.ref('fg-inverted-base'),
-        'fg-heading': core.ref('fg-inverted-base'),
-        'fg-muted': $inverted-muted,
-        'border-color': $inverted-border,
-
-        // THE INTERACTIVE INKS, and their absence was a real bug for as long
-        // as this context has existed.
-        //
-        // The band flipped its surface and its body text and left `fg-link`,
-        // `fg-action` and `border-action` pointing at values chosen for a light
-        // page. Every footer link inside an inverted band therefore rendered in
-        // the light-theme link colour on a dark ground. The Booking study
-        // measured it at **1.2:1** — invisible, and it had been shipping.
-        //
-        // It survived because none of the earlier demo pages put a LINK inside
-        // an inverted band, which is a reminder that a context is only as
-        // tested as the markup someone happened to write. A footer is the most
-        // common inverted band there is.
-        //
-        // They take the band's own foreground rather than a tinted brand
-        // colour: on a dark ground the underline carries the affordance and the
-        // colour cannot, because any brand hue dark enough to read as a link on
-        // white is too dark to read on navy.
-        'fg-link': $inverted-link,
-        'fg-link-hover': $inverted-link,
-        'fg-link-visited': $inverted-link,
-        'bg-surface-hover': $inverted-hover,
-        'bg-surface-active': $inverted-active
-        //
-        // `fg-action` and `border-action` are DELIBERATELY NOT flipped here,
-        // and the first attempt did flip them — which broke the Booking header
-        // in the opposite direction, to 1:1.
-        //
-        // A link is always inline text directly on the band, so the band can
-        // decide its colour. An ACTION may not be: Booking's header buttons are
-        // white chips that bring their own surface onto the navy, and giving
-        // them white ink made them white-on-white. Itaú's are text buttons
-        // sitting directly on the band and do want the flip.
-        //
-        // The context cannot know which, so it declines to guess. A product
-        // whose actions sit directly on the band adds the two lines to its own
-        // context — `example/ds-itau-shadcn-phase3` does exactly that.
-      )
-    );
-
-    // Secondary surface: sidebars, wells, table headers. The most common
-    // subtheme, and the reason `bg-sunken` exists in the contract.
-    @include core.context(
-      '[data-surface="sunken"]',
-      (
-        'bg-surface': core.ref('bg-sunken'),
-        // `null`, not `core.ref('fg-default')`. The pair invariant demands that
-        // this key be considered, and it has been: a sunken surface is a tint
-        // of the same theme, so the inherited foreground is already correct.
-        // Writing `--app-fg-default: var(--app-fg-default)` would say the same
-        // thing as a self-reference, which is a cycle and therefore invalid.
-        // `null` is the documented way to answer "checked, unchanged" — it
-        // satisfies the invariant and emits nothing.
-        'fg-default': null,
-        'border-color': core.ref('border-color-subtle')
-      )
-    );
-
-    // A SURFACE CONTEXT HAS TO PAINT ITSELF.
-    //
-    // `core.context()` emits custom properties and nothing else, which is
-    // right for the general helper — a context may be applied to a wrapper
-    // that should not have a background. These two are different: they are
-    // named SURFACE, and a reader who writes `data-surface="inverted"` expects
-    // a dark band, not a set of variables that something else must remember
-    // to consume.
-    //
-    // Found by forgetting. The Booking study put `data-surface="inverted"` on
-    // its navy header and the header rendered transparent: the tokens were
-    // right and nothing painted them. Worse, every white control inside then
-    // read the overridden `bg-surface` and turned navy on a white page — one
-    // missing declaration producing a bug that looked like a theme error.
-    [data-surface="inverted"],
-    [data-surface="sunken"] {
-      background-color: #{core.ref("bg-surface")};
-      color: #{core.ref("fg-default")};
-    }
-
-    // Density, not colour: no pair to honour, just the one knob.
-    [data-density='compact'] {
-      --#{config.$prefix}-space-unit: 0.2rem;
-    }
-
-    // The two anchors the inverted context leans on.
-    :root {
-      --#{config.$prefix}-bg-inverted-base: #{$inverted};
-      --#{config.$prefix}-fg-inverted-base: #{$on-inverted};
-    }
-
-    // Only meaningful when the built-in dark theme is compiled. A product
-    // shipping its own single theme never matches this selector, so the
-    // hardcoded zinc here costs it nothing.
-    [data-theme='dark'] {
-      --#{config.$prefix}-bg-inverted-base: #{base.color(zinc, 800)};
-      --#{config.$prefix}-fg-inverted-base: #{base.color(white)};
-    }
-  }
-}
-
-// -----------------------------------------------------------------------------
-// Orchestration
-// -----------------------------------------------------------------------------
-
-// -----------------------------------------------------------------------------
-// Contrast validation
-// -----------------------------------------------------------------------------
-//
-// The pair invariant guarantees a foreground is DECLARED for every background.
-// It cannot say whether that foreground is READABLE, and that gap is where
-// accessibility regressions hide: a theme with a complete, well-formed set of
-// pairs can still ship white text on amber.
-//
-// So every theme is measured at build time. This costs nothing at runtime — it
-// is Sass arithmetic that produces no CSS — and it is the difference between
-// "we intend the system to be accessible" and "the build will not let it stop
-// being accessible".
-//
-// The ladder is deliberate rather than a single threshold:
-//   below 3.0   -> error. Unreadable at any size; this is a broken theme.
-//   3.0 to 4.5  -> warn. Legal for large text only, which is a real choice for
-//                  a badge or a heading, so it is surfaced rather than blocked.
-//   4.5 and up  -> silent. AA for body text.
-//
-// Pairs are listed as THEME keys rather than derived from `core.pairs()`,
-// because the surface pairs (`page`/`text`) do not follow the `X`/`on-X`
-// convention the intent pairs do, and spelling them out is clearer than
-// encoding the exception.
-
-// The contrast machinery now lives in `_semantic.scss`, beside the token
-// contract it measures, because `emit-theme()` has to run it and a module
-// cannot import the module that imports it. `themes.check-contrast()` is kept
-// as a forwarder: it is the standalone form, useful for measuring a theme map
-// without emitting it.
-@mixin check-contrast($name, $choices) {
-  @include semantic.check-contrast($name, $choices);
-}
-
-@mixin emit() {
-  @include semantic.emit-structure();
-
-  // The FIRST theme in `$themes` also lands on `:root`, so it applies before
-  // any `data-theme` attribute is set. Keying this on the literal name `light`
-  // instead would leave a project that compiles only `(dark)` with every token
-  // undefined until something wrote the attribute.
-  $default-theme: list.nth(config.$themes, 1);
-
-  @each $name in config.$themes {
-    $choices: map.get($registry, $name);
-    @if $choices == null {
-      @error 'themes: "#{$name}" is listed in $themes but not defined.';
-    }
-    @include semantic.emit-theme(
-      $name,
-      $choices,
-      $default: $name == $default-theme
-    );
-  }
-
-  @include emit-contexts();
-}

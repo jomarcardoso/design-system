@@ -108,6 +108,34 @@
         'fg-link-hover': palette.grey(0)
       )
     );
+
+    // The footer's grey band. This used to arrive from the tool's pre-baked
+    // `emit-contexts()`, which is exactly the thing that made a TOOL look like
+    // a design system: every consumer got a sunken surface whether or not it
+    // had one. Three lines here, owned by the product that has the footer.
+    //
+    // `null`, not `core.ref('fg-default')`: the pair invariant demands the
+    // foreground be CONSIDERED, and a sunken panel is a tint of the same theme
+    // so the inherited one is already right. Pointing the token at itself
+    // would be a cycle and the browser would drop the declaration.
+    @include core.context(
+      '[data-surface="sunken"]',
+      (
+        'bg-surface': core.ref('bg-sunken'),
+        'fg-default': null,
+        'border-color': core.ref('border-color-subtle')
+      )
+    );
+
+    // A surface context has to PAINT itself — `core.context()` emits custom
+    // properties and nothing else, which is right for the general helper and
+    // wrong for a thing called `data-surface="sunken"`. The footer also carries
+    // a `bg-sunken` utility class, so this changes no pixel today; it is here
+    // so the attribute alone is sufficient, which is what the name promises.
+    [data-surface="sunken"] {
+      background-color: #{core.ref("bg-surface")};
+      color: #{core.ref("fg-default")};
+    }
   }
 }
 

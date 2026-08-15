@@ -14,10 +14,11 @@
 // is expected and does not indicate a problem.
 // =============================================================================
 
-@use '../../src/config' with ($themes: (), $adapters: (bulma));
+@use 'sass:map';
+@use '../../src/config' with ($adapters: (bulma));
 @use '../../src/base';
+@use '../../src/core';
 @use '../../src/semantic';
-@use '../../src/themes';
 @use '../../src/component';
 @use '../../src/adapters/bulma' as bulma-adapter;
 @use 'theme';
@@ -34,16 +35,92 @@
 @include semantic.emit-structure(theme.$typography);
 @include semantic.emit-theme('booking', theme.$booking, $default: true);
 
-// The contexts, NOW RECEIVING THE THEME. This is the change this example forced:
-// the inverted band was hardcoded to zinc, and Booking's band is navy. Passing
-// `$booking` lets the theme colour it through four optional keys.
-@include themes.emit-contexts(theme.$booking);
+// -----------------------------------------------------------------------------
+// The contexts — written here, by the product that has them
+// -----------------------------------------------------------------------------
+//
+// These used to come from the tool, as a pre-baked `emit-contexts()` whose band
+// was hardcoded zinc. This example is the one that broke it: Booking's band is
+// navy `#003b95`, and the only ways out were editing a vendored file or
+// abandoning the context and hand-writing the header — the exact fork the
+// architecture exists to avoid. The tool grew four optional theme keys to
+// paper over it, which was a decision about what an inverted band looks like
+// still living in the tool, one indirection further away.
+//
+// So the band is declared here now, from this theme's own values, and
+// `core.context()` — the part that IS foundation machinery — still refuses to
+// compile a background whose foreground was not considered.
+$_band: map.get(theme.$booking, inverted);
+$_on-band: map.get(theme.$booking, 'on-inverted');
+
+@include core.in-layer(config.$layer-semantic) {
+  // The header, the hero strip and the footer.
+  @include core.context(
+    '[data-surface="inverted"]',
+    (
+      'bg-page': $_band,
+      'bg-surface': $_band,
+      'fg-default': $_on-band,
+      'fg-heading': $_on-band,
+      'fg-muted': map.get(theme.$booking, 'inverted-muted'),
+      'border-color': map.get(theme.$booking, 'inverted-border'),
+
+      // THE INTERACTIVE INKS. Their absence was a real bug for as long as this
+      // context existed: the band flipped its surface and its body text and
+      // left `fg-link` pointing at a value chosen for a white page, so every
+      // footer link on the navy band measured **1.2:1**. On a dark ground the
+      // underline carries the affordance and the colour cannot, so they take
+      // the band's own foreground.
+      'fg-link': $_on-band,
+      'fg-link-hover': $_on-band,
+      'fg-link-visited': $_on-band,
+
+      // The band needs its OWN interaction wash. `bg-surface-hover` is a step
+      // DOWN a light ramp by definition, which is invisible on navy, so every
+      // hoverable thing in the header had no hover at all. A translucent white
+      // composes over whatever the band happens to be.
+      'bg-surface-hover': rgb(255 255 255 / 0.12),
+      'bg-surface-active': rgb(255 255 255 / 0.2)
+
+      // `fg-action` and `border-action` are DELIBERATELY not flipped. Booking's
+      // header buttons are white chips that bring their own surface onto the
+      // navy; giving them white ink made them white-on-white, measured at 1:1.
+      // A product whose actions sit directly on the band adds the two lines —
+      // `ds-itau-shadcn-phase3/patterns.scss` does exactly that.
+    )
+  );
+
+  // The filters rail. `null`, not a self-reference: the pair invariant demands
+  // the foreground be CONSIDERED, and a sunken panel is a tint of the same
+  // theme, so the inherited one is already correct. Pointing the token at
+  // itself would be a cycle and the declaration would be dropped.
+  @include core.context(
+    '[data-surface="sunken"]',
+    (
+      'bg-surface': core.ref('bg-sunken'),
+      'fg-default': null,
+      'border-color': core.ref('border-color-subtle')
+    )
+  );
+
+  // A SURFACE CONTEXT HAS TO PAINT ITSELF. `core.context()` emits custom
+  // properties and nothing else, which is right for the general helper — a
+  // context may sit on a wrapper that should have no background. These two are
+  // named SURFACE, and the first draft of this page put `data-surface=
+  // "inverted"` on the header and got a transparent header: the tokens were
+  // right and nothing consumed them. Worse, every white control inside then
+  // read the overridden `bg-surface` and turned navy.
+  [data-surface="inverted"],
+  [data-surface="sunken"] {
+    background-color: #{core.ref("bg-surface")};
+    color: #{core.ref("fg-default")};
+  }
+}
 
 // Layer 3 — names only. This product needs no component-level override, which
 // is worth noting after the Itaú study needed two: the difference is that
 // Booking's focus ring, field rule and chart colours are all just the semantic
 // roles. Not every real system needs the hook layer.
-@include component.emit();
 
 // Layer 3.5 — the adapter, receiving this product's theme rather than the
 // tool's built-ins. Bulma decomposes every colour into HSL channels, so it

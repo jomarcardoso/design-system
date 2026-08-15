@@ -62,74 +62,79 @@
   :root,
   [data-theme=hot-tone] {
     color-scheme: light;
-    --app-bg-page: oklch(98% 0.016 73.684deg);
-    --app-bg-surface: #fff;
-    --app-bg-raised: #fff;
-    --app-fg-default: oklch(21.6% 0.006 56.043deg);
-    --app-fg-muted: oklch(44.4% 0.011 73.639deg);
-    --app-fg-heading: oklch(14.7% 0.004 49.25deg);
-    --app-bg-action: oklch(55.3% 0.195 38.402deg);
-    --app-fg-on-action: #fff;
-    --app-border-color: oklch(92.3% 0.003 48.717deg);
-    --app-bg-sunken: oklch(95.4% 0.038 75.164deg);
+    --app-bg-page: #fff7ed;
+    --app-bg-surface: #ffffff;
+    --app-bg-raised: #ffffff;
+    --app-fg-default: #1c1917;
+    --app-fg-muted: #57534d;
+    --app-fg-heading: #0c0a09;
+    --app-bg-action: #ca3500;
+    --app-fg-on-action: #ffffff;
+    --app-border-color: #e7e5e4;
+    --app-bg-sunken: #ffedd4;
     --app-bg-overlay: rgba(69, 26, 3, 0.55);
-    --app-fg-subtlest: oklch(55.3% 0.013 58.071deg);
-    --app-bg-surface-hover: oklch(95.4% 0.038 75.164deg);
-    --app-bg-surface-active: oklch(90.1% 0.076 70.697deg);
-    --app-bg-neutral: oklch(37.4% 0.01 67.558deg);
-    --app-fg-on-neutral: oklch(98.5% 0.001 106.423deg);
-    --app-bg-neutral-hover: oklch(26.8% 0.007 34.298deg);
-    --app-bg-neutral-active: oklch(21.6% 0.006 56.043deg);
-    --app-bg-disabled: oklch(97% 0.001 106.424deg);
-    --app-fg-disabled: oklch(70.9% 0.01 56.259deg);
-    --app-bg-action-hover: oklch(47% 0.157 37.304deg);
-    --app-bg-action-active: oklch(40.8% 0.123 38.172deg);
-    --app-bg-action-subtle: oklch(98% 0.016 73.684deg);
-    --app-fg-action: oklch(47% 0.157 37.304deg);
-    --app-border-action: oklch(55.3% 0.195 38.402deg);
-    --app-bg-selected: oklch(51.4% 0.222 16.935deg);
-    --app-fg-on-selected: #fff;
-    --app-bg-selected-hover: oklch(45.5% 0.188 13.697deg);
-    --app-bg-selected-active: oklch(41% 0.159 10.272deg);
-    --app-bg-selected-subtle: oklch(94.1% 0.03 12.58deg);
-    --app-fg-selected: oklch(45.5% 0.188 13.697deg);
-    --app-border-selected: oklch(51.4% 0.222 16.935deg);
-    --app-fg-link: oklch(47% 0.157 37.304deg);
-    --app-fg-link-hover: oklch(40.8% 0.123 38.172deg);
-    --app-fg-link-visited: oklch(45.5% 0.188 13.697deg);
-    --app-border-color-subtle: oklch(97% 0.001 106.424deg);
-    --app-border-color-strong: oklch(86.9% 0.005 56.366deg);
-    --app-ring-color: oklch(64.6% 0.222 41.116deg);
+    --app-fg-subtlest: #79716b;
+    --app-bg-surface-hover: #ffedd4;
+    --app-bg-surface-active: #ffd6a7;
+    --app-bg-neutral: #44403b;
+    --app-fg-on-neutral: #fafaf9;
+    --app-bg-neutral-hover: #292524;
+    --app-bg-neutral-active: #1c1917;
+    --app-bg-disabled: #f5f5f4;
+    --app-fg-disabled: #a6a09b;
+    --app-bg-action-hover: #9f2d00;
+    --app-bg-action-active: #7e2a0c;
+    --app-bg-action-subtle: #fff7ed;
+    --app-fg-action: #9f2d00;
+    --app-border-action: #ca3500;
+    --app-bg-selected: #c70036;
+    --app-fg-on-selected: #ffffff;
+    --app-bg-selected-hover: #a50036;
+    --app-bg-selected-active: #8b0836;
+    --app-bg-selected-subtle: #ffe4e6;
+    --app-fg-selected: #a50036;
+    --app-border-selected: #c70036;
+    --app-bg-brand: #c70036;
+    --app-fg-on-brand: #ffffff;
+    --app-fg-brand: #a50036;
+    --app-bg-brand-deep: #8b0836;
+    --app-fg-link: #9f2d00;
+    --app-fg-link-hover: #7e2a0c;
+    --app-fg-link-visited: #a50036;
+    --app-border-color-subtle: #f5f5f4;
+    --app-border-color-strong: #d6d3d1;
+    --app-ring-color: #f54900;
     --app-shadow-raised: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     --app-shadow-overlay: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-    --app-bg-success: oklch(52.7% 0.154 150.069deg);
-    --app-fg-on-success: #fff;
-    --app-bg-success-hover: oklch(44.8% 0.119 151.328deg);
-    --app-bg-success-active: oklch(39.3% 0.095 152.535deg);
-    --app-bg-success-subtle: oklch(98.2% 0.018 155.826deg);
-    --app-fg-success: oklch(44.8% 0.119 151.328deg);
-    --app-border-success: oklch(92.5% 0.084 155.995deg);
-    --app-bg-warning: oklch(76.9% 0.188 70.08deg);
-    --app-fg-on-warning: oklch(27.9% 0.077 45.635deg);
-    --app-bg-warning-hover: oklch(82.8% 0.189 84.429deg);
-    --app-bg-warning-active: oklch(87.9% 0.169 91.605deg);
-    --app-bg-warning-subtle: oklch(98.7% 0.022 95.277deg);
-    --app-fg-warning: oklch(47.3% 0.137 46.201deg);
-    --app-border-warning: oklch(92.4% 0.12 95.746deg);
-    --app-bg-danger: oklch(57.7% 0.245 27.325deg);
-    --app-fg-on-danger: #fff;
-    --app-bg-danger-hover: oklch(50.5% 0.213 27.518deg);
-    --app-bg-danger-active: oklch(44.4% 0.177 26.899deg);
-    --app-bg-danger-subtle: oklch(97.1% 0.013 17.38deg);
-    --app-fg-danger: oklch(44.4% 0.177 26.899deg);
-    --app-border-danger: oklch(88.5% 0.062 18.334deg);
-    --app-bg-info: oklch(50% 0.134 242.749deg);
-    --app-fg-on-info: #fff;
-    --app-bg-info-hover: oklch(44.3% 0.11 240.79deg);
-    --app-bg-info-active: oklch(39.1% 0.09 240.876deg);
-    --app-bg-info-subtle: oklch(97.7% 0.013 236.62deg);
-    --app-fg-info: oklch(44.3% 0.11 240.79deg);
-    --app-border-info: oklch(90.1% 0.058 230.902deg);
+    --app-bg-success: #008236;
+    --app-fg-on-success: #ffffff;
+    --app-bg-success-hover: #016630;
+    --app-bg-success-active: #0d542b;
+    --app-bg-success-subtle: #f0fdf4;
+    --app-fg-success: #016630;
+    --app-border-success: #b9f8cf;
+    --app-bg-warning: #fe9a00;
+    --app-fg-on-warning: #461901;
+    --app-bg-warning-hover: #ffb900;
+    --app-bg-warning-active: #ffd230;
+    --app-bg-warning-subtle: #fffbeb;
+    --app-fg-warning: #973c00;
+    --app-border-warning: #fee685;
+    --app-bg-danger: #e7000b;
+    --app-fg-on-danger: #ffffff;
+    --app-bg-danger-hover: #c10007;
+    --app-bg-danger-active: #9f0712;
+    --app-bg-danger-subtle: #fef2f2;
+    --app-fg-danger: #9f0712;
+    --app-border-danger: #ffc9c9;
+    --app-bg-info: #0069a8;
+    --app-fg-on-info: #ffffff;
+    --app-bg-info-hover: #00598a;
+    --app-bg-info-active: #024a70;
+    --app-bg-info-subtle: #f0f9ff;
+    --app-fg-info: #00598a;
+    --app-border-info: #b8e6fe;
+    --app-blend-ink: multiply;
   }
   :root,
   [data-theme=hot-tone] {
@@ -139,54 +144,19 @@
   :root [data-surface=base],
   [data-theme=hot-tone][data-surface=base],
   [data-theme=hot-tone] [data-surface=base] {
-    --app-bg-page: oklch(98% 0.016 73.684deg);
-    --app-bg-surface: #fff;
-    --app-bg-surface-hover: oklch(95.4% 0.038 75.164deg);
-    --app-bg-surface-active: oklch(90.1% 0.076 70.697deg);
-    --app-fg-default: oklch(21.6% 0.006 56.043deg);
-    --app-fg-heading: oklch(14.7% 0.004 49.25deg);
-    --app-fg-muted: oklch(44.4% 0.011 73.639deg);
-    --app-border-color: oklch(92.3% 0.003 48.717deg);
-    --app-fg-link: oklch(47% 0.157 37.304deg);
-    --app-fg-link-hover: oklch(40.8% 0.123 38.172deg);
-    --app-fg-link-visited: oklch(45.5% 0.188 13.697deg);
-    --app-fg-action: oklch(47% 0.157 37.304deg);
-    --app-border-action: oklch(55.3% 0.195 38.402deg);
-  }
-}
-@layer ds.semantic {
-  [data-surface=inverted] {
-    --app-bg-page: var(--app-bg-inverted-base);
-    --app-bg-surface: var(--app-bg-inverted-base);
-    --app-fg-default: var(--app-fg-inverted-base);
-    --app-fg-heading: var(--app-fg-inverted-base);
-    --app-fg-muted: oklch(70.5% 0.015 286.067deg);
-    --app-border-color: oklch(37% 0.013 285.805deg);
-    --app-fg-link: oklch(98.5% 0 0deg);
-    --app-fg-link-hover: oklch(98.5% 0 0deg);
-    --app-fg-link-visited: oklch(98.5% 0 0deg);
-    --app-bg-surface-hover: rgba(255, 255, 255, 0.12);
-    --app-bg-surface-active: rgba(255, 255, 255, 0.2);
-  }
-  [data-surface=sunken] {
-    --app-bg-surface: var(--app-bg-sunken);
-    --app-border-color: var(--app-border-color-subtle);
-  }
-  [data-surface=inverted],
-  [data-surface=sunken] {
-    background-color: var(--app-bg-surface);
-    color: var(--app-fg-default);
-  }
-  [data-density=compact] {
-    --app-space-unit: 0.2rem;
-  }
-  :root {
-    --app-bg-inverted-base: oklch(21% 0.006 285.885deg);
-    --app-fg-inverted-base: oklch(98.5% 0 0deg);
-  }
-  [data-theme=dark] {
-    --app-bg-inverted-base: oklch(27.4% 0.006 286.033deg);
-    --app-fg-inverted-base: #fff;
+    --app-bg-page: #fff7ed;
+    --app-bg-surface: #ffffff;
+    --app-bg-surface-hover: #ffedd4;
+    --app-bg-surface-active: #ffd6a7;
+    --app-fg-default: #1c1917;
+    --app-fg-heading: #0c0a09;
+    --app-fg-muted: #57534d;
+    --app-border-color: #e7e5e4;
+    --app-fg-link: #9f2d00;
+    --app-fg-link-hover: #7e2a0c;
+    --app-fg-link-visited: #a50036;
+    --app-fg-action: #9f2d00;
+    --app-border-action: #ca3500;
   }
 }
 @layer vendor-config {
@@ -204,7 +174,7 @@
     --bs-heading-color: var(--app-fg-heading);
     --bs-link-color: var(--app-fg-link);
     --bs-link-hover-color: var(--app-fg-link-hover);
-    --bs-code-color: var(--app-code-fg, var(--app-fg-default));
+    --bs-code-color: var(--app-fg-default);
     --bs-border-color: var(--app-border-color);
     --bs-border-color-translucent: var(--app-border-color-subtle);
     --bs-focus-ring-color: var(--app-ring-color);
@@ -243,6 +213,8 @@
     --bs-info-rgb: 0, 105, 168;
     --bs-warning-rgb: 253, 154, 0;
     --bs-danger-rgb: 231, 0, 11;
+    --bs-btn-focus-shadow-rgb: 245, 73, 0;
+    --bs-focus-ring-color: var(--app-ring-color);
     --bs-link-color-rgb: 159, 45, 0;
     --bs-body-color-rgb: 28, 25, 23;
     --bs-body-bg-rgb: 255, 247, 237;
@@ -251,54 +223,54 @@
     --bs-tertiary-bg-rgb: 255, 237, 212;
   }
   .btn-primary {
-    background-color: var(--app-button-bg, var(--app-bg-action));
-    border-color: var(--app-button-border-color, var(--app-bg-action));
-    color: var(--app-button-fg, var(--app-fg-on-action));
+    background-color: var(--app-bg-action);
+    border-color: var(--app-bg-action);
+    color: var(--app-fg-on-action);
   }
   .btn-primary:hover {
     background-color: var(--app-button-bg-hover, var(--app-bg-action-hover));
     border-color: var(--app-button-bg-hover, var(--app-bg-action-hover));
   }
   .btn-secondary {
-    background-color: var(--app-button-bg, var(--app-bg-neutral));
-    border-color: var(--app-button-border-color, var(--app-bg-neutral));
-    color: var(--app-button-fg, var(--app-fg-on-neutral));
+    background-color: var(--app-bg-neutral);
+    border-color: var(--app-bg-neutral);
+    color: var(--app-fg-on-neutral);
   }
   .btn-secondary:hover {
     background-color: var(--app-button-bg-hover, var(--app-bg-neutral-hover));
     border-color: var(--app-button-bg-hover, var(--app-bg-neutral-hover));
   }
   .btn-success {
-    background-color: var(--app-button-bg, var(--app-bg-success));
-    border-color: var(--app-button-border-color, var(--app-bg-success));
-    color: var(--app-button-fg, var(--app-fg-on-success));
+    background-color: var(--app-bg-success);
+    border-color: var(--app-bg-success);
+    color: var(--app-fg-on-success);
   }
   .btn-success:hover {
     background-color: var(--app-button-bg-hover, var(--app-bg-success-hover));
     border-color: var(--app-button-bg-hover, var(--app-bg-success-hover));
   }
   .btn-info {
-    background-color: var(--app-button-bg, var(--app-bg-info));
-    border-color: var(--app-button-border-color, var(--app-bg-info));
-    color: var(--app-button-fg, var(--app-fg-on-info));
+    background-color: var(--app-bg-info);
+    border-color: var(--app-bg-info);
+    color: var(--app-fg-on-info);
   }
   .btn-info:hover {
     background-color: var(--app-button-bg-hover, var(--app-bg-info-hover));
     border-color: var(--app-button-bg-hover, var(--app-bg-info-hover));
   }
   .btn-warning {
-    background-color: var(--app-button-bg, var(--app-bg-warning));
-    border-color: var(--app-button-border-color, var(--app-bg-warning));
-    color: var(--app-button-fg, var(--app-fg-on-warning));
+    background-color: var(--app-bg-warning);
+    border-color: var(--app-bg-warning);
+    color: var(--app-fg-on-warning);
   }
   .btn-warning:hover {
     background-color: var(--app-button-bg-hover, var(--app-bg-warning-hover));
     border-color: var(--app-button-bg-hover, var(--app-bg-warning-hover));
   }
   .btn-danger {
-    background-color: var(--app-button-bg, var(--app-bg-danger));
-    border-color: var(--app-button-border-color, var(--app-bg-danger));
-    color: var(--app-button-fg, var(--app-fg-on-danger));
+    background-color: var(--app-bg-danger);
+    border-color: var(--app-bg-danger);
+    color: var(--app-fg-on-danger);
   }
   .btn-danger:hover {
     background-color: var(--app-button-bg-hover, var(--app-bg-danger-hover));
@@ -327,97 +299,97 @@
     border-color: var(--app-border-action);
   }
   .btn-outline-primary:hover {
-    background-color: var(--app-bg-action);
-    border-color: var(--app-bg-action);
-    color: var(--app-fg-on-action);
+    background-color: var(--app-bg-action-subtle);
+    border-color: var(--app-border-action);
+    color: var(--app-fg-action);
   }
   .btn-outline-secondary {
     color: var(--app-fg-muted);
     border-color: var(--app-border-color-strong);
   }
   .btn-outline-secondary:hover {
-    background-color: var(--app-bg-neutral);
-    border-color: var(--app-bg-neutral);
-    color: var(--app-fg-on-neutral);
+    background-color: var(--app-bg-sunken);
+    border-color: var(--app-border-color-strong);
+    color: var(--app-fg-muted);
   }
   .btn-outline-success {
     color: var(--app-fg-success);
     border-color: var(--app-border-success);
   }
   .btn-outline-success:hover {
-    background-color: var(--app-bg-success);
-    border-color: var(--app-bg-success);
-    color: var(--app-fg-on-success);
+    background-color: var(--app-bg-success-subtle);
+    border-color: var(--app-border-success);
+    color: var(--app-fg-success);
   }
   .btn-outline-info {
     color: var(--app-fg-info);
     border-color: var(--app-border-info);
   }
   .btn-outline-info:hover {
-    background-color: var(--app-bg-info);
-    border-color: var(--app-bg-info);
-    color: var(--app-fg-on-info);
+    background-color: var(--app-bg-info-subtle);
+    border-color: var(--app-border-info);
+    color: var(--app-fg-info);
   }
   .btn-outline-warning {
     color: var(--app-fg-warning);
     border-color: var(--app-border-warning);
   }
   .btn-outline-warning:hover {
-    background-color: var(--app-bg-warning);
-    border-color: var(--app-bg-warning);
-    color: var(--app-fg-on-warning);
+    background-color: var(--app-bg-warning-subtle);
+    border-color: var(--app-border-warning);
+    color: var(--app-fg-warning);
   }
   .btn-outline-danger {
     color: var(--app-fg-danger);
     border-color: var(--app-border-danger);
   }
   .btn-outline-danger:hover {
-    background-color: var(--app-bg-danger);
-    border-color: var(--app-bg-danger);
-    color: var(--app-fg-on-danger);
+    background-color: var(--app-bg-danger-subtle);
+    border-color: var(--app-border-danger);
+    color: var(--app-fg-danger);
   }
   .form-control,
   .form-select {
-    background-color: var(--app-field-bg, var(--app-bg-surface, var(--app-bg-surface)));
-    border-color: var(--app-field-border-color, var(--app-border-color, var(--app-border-color)));
-    border-radius: var(--app-field-radius, var(--app-radius-control, var(--app-radius-control)));
+    background-color: var(--app-bg-surface);
+    border-color: var(--app-border-color);
+    border-radius: var(--app-radius-control);
   }
   .form-control:focus,
   .form-select:focus {
-    border-color: var(--app-field-border-color-focus, var(--app-border-action, var(--app-border-action)));
+    border-color: var(--app-border-action);
   }
   .card {
-    --bs-card-bg: var(--app-surface-bg, var(--app-bg-surface, var(--bs-body-bg)));
-    --bs-card-color: var(--app-surface-fg, var(--app-fg-default, var(--bs-body-color)));
-    --bs-card-border-color: var(--app-surface-border-color, var(--app-border-color, var(--bs-border-color)));
-    --bs-card-border-radius: var(--app-surface-radius, var(--app-radius-surface, var(--bs-border-radius-lg)));
-    --bs-card-cap-bg: var(--app-table-header-bg, var(--app-bg-sunken, var(--bs-secondary-bg)));
-    --bs-card-spacer-y: var(--app-surface-pad, var(--app-pad-surface));
-    --bs-card-spacer-x: var(--app-surface-pad, var(--app-pad-surface));
+    --bs-card-bg: var(--app-bg-surface);
+    --bs-card-color: var(--app-fg-default);
+    --bs-card-border-color: var(--app-border-color);
+    --bs-card-border-radius: var(--app-radius-surface);
+    --bs-card-cap-bg: var(--app-bg-sunken);
+    --bs-card-spacer-y: var(--app-pad-surface);
+    --bs-card-spacer-x: var(--app-pad-surface);
     box-shadow: var(--app-surface-shadow, var(--app-shadow-raised));
   }
   .table {
-    --bs-table-color: var(--app-table-fg, var(--app-fg-default, var(--bs-body-color)));
-    --bs-table-border-color: var(--app-table-border-color, var(--app-border-color-subtle, var(--bs-border-color)));
-    --bs-table-striped-bg: var(--app-table-row-bg-striped, var(--app-bg-sunken, var(--bs-secondary-bg)));
-    --bs-table-hover-bg: var(--app-table-row-bg-hover, var(--app-bg-surface-hover, var(--bs-secondary-bg)));
+    --bs-table-color: var(--app-fg-default);
+    --bs-table-border-color: var(--app-border-color-subtle);
+    --bs-table-striped-bg: var(--app-bg-sunken);
+    --bs-table-hover-bg: var(--app-bg-surface-hover);
   }
   .modal {
-    --bs-modal-bg: var(--app-overlay-bg, var(--app-bg-raised, var(--bs-body-bg)));
-    --bs-modal-border-radius: var(--app-overlay-radius, var(--app-radius-surface, var(--bs-border-radius-lg)));
+    --bs-modal-bg: var(--app-bg-raised);
+    --bs-modal-border-radius: var(--app-radius-surface);
   }
   .dropdown-menu {
-    --bs-dropdown-bg: var(--app-overlay-bg, var(--app-bg-raised, var(--bs-body-bg)));
-    --bs-dropdown-border-radius: var(--app-overlay-radius, var(--app-radius-surface, var(--bs-border-radius)));
+    --bs-dropdown-bg: var(--app-bg-raised);
+    --bs-dropdown-border-radius: var(--app-radius-surface);
   }
   .nav-link {
-    --bs-nav-link-color: var(--app-nav-fg, var(--app-fg-link, var(--bs-link-color)));
-    --bs-nav-link-hover-color: var(--app-nav-fg-hover, var(--app-fg-link-hover, var(--bs-link-hover-color)));
+    --bs-nav-link-color: var(--app-fg-default);
+    --bs-nav-link-hover-color: var(--app-fg-selected);
   }
   .alert {
-    --bs-alert-border-radius: var(--app-alert-radius, var(--app-radius-control, var(--bs-border-radius)));
+    --bs-alert-border-radius: var(--app-radius-control);
   }
   .badge {
-    --bs-badge-border-radius: var(--app-badge-radius, var(--app-radius-pill, var(--bs-border-radius-pill)));
+    --bs-badge-border-radius: var(--app-radius-pill);
   }
 }

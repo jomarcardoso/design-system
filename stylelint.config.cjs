@@ -9,6 +9,13 @@ module.exports = {
     /* No literal colours outside layer 1. Layer 1 is SCSS, so in practice this
      * bans literal colours from every CSS and SCSS file except _base.scss. */
     'color-no-hex': true,
+
+    /* And no NAMED colours. `color-no-hex` only catches `#fff`, so
+     * `color: white` sailed through every guard this system has — it was found
+     * by reading a footer, not by any check. A keyword is a literal like any
+     * other, and a white that cannot follow a theme is the same bug as a hex
+     * one. */
+    'color-named': 'never',
     'declaration-property-value-disallowed-list': {
       '/^(color|background|background-color|border-color|fill|stroke)$/': [
         /* `#` starts a hex colour AND a Sass interpolation. `(?!\{)` keeps the
@@ -51,8 +58,23 @@ module.exports = {
        *
        * Blocks:
        *   var(--app-base-*)  layer 1 primitives, if runtime emission is on
-       *   var(--color-*)     Tailwind's primitive namespace
+       *   var(--color-*)     Tailwind's primitive namespace — and, in practice,
+       *                      every home-grown palette ever written, because
+       *                      `--color-primary-main` and `--color-white` live
+       *                      here too
        *   var(--bs-*)        Bootstrap's namespace
+       *   var(--cui-*)       CoreUI's namespace
+       *   var(--pico-*)      Pico's
+       *   var(--bulma-*)     Bulma's
+       *
+       * The library namespaces are not decoration on this list. Application code
+       * reading a library variable is backwards in two ways at once: it inverts
+       * the direction the adapter exists to enforce, and it silently depends on
+       * a name the library is free to rename or drop. A real case, caught in a
+       * consuming product: a nav component read `--cui-nav-link-hover-bg`, a
+       * variable CoreUI neither declares nor consumes, so it resolved to
+       * whatever a stale theme file happened to set — the ACTION colour, on a
+       * component whose chosen state was the SELECTED colour.
        *
        * If a value is needed that layer 2 does not expose, the correct move is
        * to add a semantic token, not to reach around it. That is a two-line
@@ -66,7 +88,10 @@ module.exports = {
             '/.*/': [
               /var\(\s*--app-base-/,
               /var\(\s*--color-/,
-              /var\(\s*--bs-/
+              /var\(\s*--bs-/,
+              /var\(\s*--cui-/,
+              /var\(\s*--pico-/,
+              /var\(\s*--bulma-/
             ]
           },
           {

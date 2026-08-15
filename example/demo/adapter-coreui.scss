@@ -1,0 +1,24 @@
+// =============================================================================
+// DEMO BUILD — the coreui adapter, carrying the demo themes
+// =============================================================================
+//
+//     npm run build:adapters   ->   dist/adapter-coreui.css
+//
+// WHY THIS ENTRY LIVES IN THE DEMO AND NOT IN `src/`.
+//
+// Four adapters — bootstrap, bulma, coreui and nescss — cannot be compiled from
+// token NAMES alone. Their libraries decompose colour into channels (Bootstrap
+// and CoreUI want rgb triplets for their opacity utilities, Bulma wants HSL
+// components, NES.css bakes a colour into an SVG border image), and a channel
+// cannot be extracted from `var(--app-bg-action)`. So `emit()` needs the actual
+// theme maps, and it now REFUSES rather than falling back to a built-in set —
+// the built-in set no longer exists.
+//
+// A standalone entry for one of these is therefore always somebody's build, not
+// the tool's. This one is the demonstration pages'.
+// =============================================================================
+
+@use '../../src/adapters/coreui' as adapter;
+@use 'themes';
+
+@include adapter.emit(themes.$registry);

@@ -1,6 +1,0 @@
-// Standalone build of the CoreUI adapter — see src/adapter-bootstrap.scss for
-// why each adapter ships on its own.
-@use 'config' with ($adapters: (coreui));
-@use 'adapters/coreui';
-
-@include coreui.emit();

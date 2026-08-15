@@ -40,7 +40,7 @@
 // There is no `--color-on-brand` in Flowbite's vocabulary. Its own markup writes
 // `class="text-white bg-brand"`, which puts the foreground half of the pair in
 // the MARKUP, where no adapter can reach it — and white on a mid-bright fill is
-// exactly the pairing that fails WCAG (see the contrast check in _themes.scss).
+// exactly the pairing that fails WCAG (see `semantic.check-contrast()`).
 //
 // So this adapter publishes the missing companions: `--color-on-brand`,
 // `--color-on-success`, `--color-on-danger`, `--color-on-warning`. Markup then

@@ -11,10 +11,9 @@
 // =============================================================================
 
 @use 'sass:map';
-@use '../../src/config' with ($themes: (), $adapters: (daisyui));
+@use '../../src/config' with ($adapters: (daisyui));
 @use '../../src/base';
 @use '../../src/semantic';
-@use '../../src/themes';
 @use '../../src/component';
 @use '../../src/adapters/daisyui' as daisyui-adapter;
 @use 'theme';
@@ -24,18 +23,17 @@
 @include base.emit();
 
 // Layer 2 — structure with this product's typography merged in, then its only
-// theme, then the surface contexts.
+// theme. No contexts: nothing in this page's markup writes `data-surface`, so
+// there is no second surface to declare one for.
 //
 // The typography map is the reason `emit-structure()` takes an argument at all.
 // Before that, a product wanting a serif heading had to edit `_semantic.scss`
 // inside the vendored tool — a fork, for a decision that is purely its own.
 @include semantic.emit-structure(theme.$typography);
 @include semantic.emit-theme('caderninho', theme.$caderninho, $default: true);
-@include themes.emit-contexts();
 
 // Layer 3 — the naming contract. Emission stays off; this product needs no
 // component-level override.
-@include component.emit();
 
 // Layer 3.5 — the adapter, receiving this product's theme.
 @include daisyui-adapter.emit();
