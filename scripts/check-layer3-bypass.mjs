@@ -74,12 +74,14 @@ for (const dir of dirs) {
     // `--lib-thing: #{core.ref('token')};` with NO second argument — a bind
     // straight to layer 2.
     //
-    // `core.ref('surface-pad', core.ref('pad-surface'))` is NOT flagged: that is
-    // the chain written by hand, layer 3 first and layer 2 as the fallback, which
-    // is exactly what is being asked for. `component.ref-chain()` is the
-    // canonical spelling and two adapters wrote it out longhand instead; both
-    // reach the same CSS. A guard that cannot tell them apart would report
-    // correct code and get itself switched off.
+    // `core.ref('surface-pad', core.ref('pad-surface'))` is NOT flagged. It is
+    // the runtime fallback chain written by hand — layer 3 first, layer 2 as the
+    // fallback — which is the shape this system used before layer 3 became Sass
+    // `!default` variables. It still reaches the right value, so flagging it
+    // would report correct code and get the guard switched off.
+    //
+    // It is nonetheless the OLD form. `#{component.$surface-pad}` resolves the
+    // same choice at build time and emits one reference instead of two.
     for (const m of src.matchAll(
       /(--[\w-]+)\s*:\s*#\{\s*core\.ref\(\s*'([^']+)'\s*\)\s*\}/g
     )) {
@@ -121,9 +123,14 @@ for (const p of problems) {
 
 console.error(
   `check-layer3-bypass: ${problems.length} component binding(s) skip layer 3.\n\n` +
-    'Each one is a component token the system documents and the screen ignores.\n' +
-    "Use `component.ref-chain('<component>-<property>[-<state>]')`, which emits\n" +
-    'the layer 3 name with its layer 2 default as the fallback.\n'
+    'Each one is a component token the system documents and the screen ignores.\n\n' +
+    'Bind the layer 3 Sass variable instead:\n\n' +
+    '    --cui-btn-bg: #{component.$button-bg};\n\n' +
+    'It resolves at build time to that token\'s layer 2 default, so the emitted\n' +
+    'CSS is a single clean `var(--app-bg-action)` with no fallback chain.\n' +
+    'The `#{}` is not optional: Sass does not evaluate SassScript inside a\n' +
+    'custom property, so without it the literal text ships and the browser\n' +
+    'drops the declaration.\n'
 );
 
 // `--all` prints every binding rather than three per component. The summary is

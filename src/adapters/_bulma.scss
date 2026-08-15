@@ -196,6 +196,29 @@ $_map: (
   --bulma-scheme-invert-bis-l: #{_l(map.get($c, 'text-muted'))};
   --bulma-scheme-invert-ter-l: #{_l(map.get($c, 'text-subtlest'))};
 
+  // The subtle ground Bulma puts under `code`, a default `.tag`, a default
+  // `.notification` and a hovered dropdown item. It looks like a duplicate of
+  // `scheme-main-ter-l` and it is a separate variable, which is why it was
+  // missed — and the way it failed is the reason this comment is long.
+  //
+  // Bulma declares it on BARE `:root`, twice: 96% normally and 14% inside
+  // `@media (prefers-color-scheme: dark)`. Not `[data-theme=dark]` — bare
+  // `:root`, so on a machine whose OS is set to dark the 14% applies under
+  // EVERY theme, including a light one. The adapter's own block is
+  // `[data-theme=…]`, identical specificity and a different cascade layer, and
+  // it said nothing about this name, so the library's value stood.
+  //
+  // Result: `code` rendered a near-black ground while `--bulma-code` stayed the
+  // dark ink the light theme had chosen — 1.09:1, on the `brand` demo page, on
+  // any developer whose OS was in dark mode and nowhere else. The audit caught
+  // it only because the headless Chrome it runs in reports `prefers-color-scheme:
+  // dark`.
+  //
+  // The general lesson, again: grep the library for every variable it READS
+  // before deciding an adapter is complete. A name the library declares on
+  // `:root` under a media query is a name the theme has to take back.
+  --bulma-background-l: #{_l(map.get($c, sunken))};
+
   // --- Text ----------------------------------------------------------
   --bulma-text-h: #{_h($invert)};
   --bulma-text-s: #{_s($invert)};

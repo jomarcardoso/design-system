@@ -58,6 +58,7 @@
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:math';
+@use '../base';
 @use '../core';
 @use '../config';
 @use '../component';
@@ -587,7 +588,16 @@ $_derived: (
 
       // CoreUI keys dark mode off its own attribute, like Bootstrap. Aliasing
       // it keeps `data-theme` the single switch a product toggles.
-      @if $name == dark {
+      //
+      // MEASURED, not named. This used to read `@if $name == dark`, which is
+      // the same mistake `color-scheme` made and that `emit-theme()` already
+      // fixed: a product whose night theme is called `midnight`, `noite` or
+      // `sepia-escuro` got no CoreUI dark binding at all, and every opacity
+      // utility, focus ring and `.text-bg-*` kept the light theme's triplets on
+      // a dark page. The theme knows whether it is dark; its name does not.
+      $page: map.get($choices, page);
+
+      @if $page != null and base.contrast($page, #fff) > base.contrast($page, #000) {
         [data-coreui-theme='dark'] {
           @include _triplets($choices);
         }

@@ -22,8 +22,9 @@
 // background — were all this one mistake, and every one of them looked like a
 // design decision rather than a bug.
 //
-// `component.ref-chain()` produces the correct form. This script is what makes
-// forgetting it fail the build instead of the page.
+// Binding the layer 3 Sass variable — `#{component.$button-bg}` — produces the
+// correct form, because the variable already holds a live layer 2 reference.
+// This script is what makes forgetting it fail the build instead of the page.
 //
 //     node scripts/check-dangling-refs.mjs dist/ds.css
 // =============================================================================
@@ -95,8 +96,9 @@ console.error(
   `check-dangling-refs: ${dangling.size} name(s) referenced without a fallback ` +
     `and never declared, across ${total} declaration(s).\n\n` +
     'Each one silently voids the declaration that contains it. If the name is a\n' +
-    'layer 3 component token, use `component.ref-chain(<part>)` so it falls\n' +
-    'through to its layer 2 source instead of dangling.\n'
+    'layer 3 component token, bind its Sass variable — `component.$button-bg` —\n' +
+    'which resolves at build time to that token\'s layer 2 default, so the CSS\n' +
+    'carries one live reference instead of a name nothing declares.\n'
 );
 
 for (const [name, count] of [...dangling].sort((a, b) => b[1] - a[1])) {

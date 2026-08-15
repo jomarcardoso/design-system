@@ -106,7 +106,18 @@ try {
 // they are a second layer 3 running in parallel, which is its own problem and a
 // different fix (reconcile the vocabularies) from the one this guard is about.
 const productLayer3 = new Set();
-for (const f of (process.env.DS_PRODUCT_TOKENS || 'styles/ds/theme.scss').split(',')) {
+// The default is a product path, and it went stale the moment that product
+// split `theme.scss` into one file per theme. A missing file is swallowed by
+// the `catch` below, so the set silently emptied and every read of a
+// product-declared token — `--app-pad-surface`, `--app-size-bar` — reclassified
+// itself as a layer-2 bypass. Failing loudly on a rename is fine; reclassifying
+// in silence is not, which is why the paths are listed rather than guessed at.
+const DEFAULT_PRODUCT_TOKENS = [
+  'styles/ds/semantic/_structure.scss',
+  'styles/ds/semantic/_surfaces.scss'
+].join(',');
+
+for (const f of (process.env.DS_PRODUCT_TOKENS || DEFAULT_PRODUCT_TOKENS).split(',')) {
   try {
     const src = readFileSync(f.trim(), 'utf8');
     for (const m of src.matchAll(/^\s*--app-([a-z0-9-]+)\s*:/gm)) productLayer3.add(m[1]);

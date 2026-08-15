@@ -16,28 +16,51 @@
 // empty by default, and that is correct.
 //
 // -----------------------------------------------------------------------------
-// THE 3-LEVEL FALLBACK — why the contract can be empty and still work
+// WHY THE CONTRACT CAN BE EMPTY AND STILL WORK
 // -----------------------------------------------------------------------------
 //
-// Every adapter resolves a component value as a chain:
+// Every entry here is a Sass variable holding a POINTER at layer 2:
 //
-//     library-var: var(--app-<component>, var(--app-<semantic>, <library-default>));
-//                        └ level 1: component  └ level 2: semantic   └ level 3: lib default
+//     $button-bg: var(--app-bg-action) !default;
 //
-// Read the consequences carefully, because they resolve the tension you named
-// (this layer helps the adapter AND risks duplicating it):
+// An adapter binds that variable and nothing else:
 //
-//   - If NOBODY sets the component token, level 1 is undefined and the chain
-//     falls straight through to the semantic token. The component is themed
-//     correctly with ZERO component tokens emitted. This is the default state,
-//     and it is why the layer ships empty.
+//     --cui-btn-bg: #{component.$button-bg};
 //
-//   - If a consumer sets ONE component token (your input-label-bg example), it
-//     wins for that instance, and everything else still flows from semantic.
-//     No duplication: you added one name, not a parallel component system.
+// which compiles to `--cui-btn-bg: var(--app-bg-action)`. One reference, no
+// chain. Set `$button-bg` before the module is loaded and the same one line
+// compiles to whatever you chose. That is the whole mechanism: the layer is
+// free until someone uses it, because the indirection is resolved at build
+// time rather than paid for at runtime.
 //
-//   - The library's own default is the LAST resort, so removing our layers
-//     entirely leaves a working (unthemed) component rather than a broken one.
+// -----------------------------------------------------------------------------
+// THE 3-LEVEL FALLBACK IS GONE. DO NOT BRING IT BACK.
+// -----------------------------------------------------------------------------
+//
+// This layer used to be custom properties, and adapters resolved a value as a
+// chain: `var(--app-button-bg, var(--app-bg-action, var(--bs-btn-bg)))` —
+// component, then semantic, then the library's own default. It worked, and it
+// cost three references in every declaration for an override almost nobody
+// sets.
+//
+// Two failures killed it, and both are worth remembering because the pattern
+// looks so reasonable written down:
+//
+//   - Ending a chain in the property being DECLARED is a cycle by the CSS
+//     spec, so the whole declaration is invalid. `--bs-btn-bg: var(…,
+//     var(--bs-btn-bg))` silently dropped buttons, cards, tables and modals.
+//
+//   - The library default as a last resort sounds like resilience and is
+//     concealment. A missing token stopped being a bug and became a component
+//     quietly wearing Bootstrap indigo.
+//
+// What replaced the safety of the chain is not a longer chain. It is
+// `check-dangling-refs.mjs`, which fails the BUILD when a `var(--app-…)` has
+// no declaration behind it. A bare `var()` does not "fail fast" on its own —
+// an undefined custom property makes the declaration invalid at computed-value
+// time and the property silently falls back to inherited or initial, which is
+// the same concealment in a different costume. The guard is what makes it
+// loud; the CSS never could.
 //
 // So this layer's value is not the tokens it emits — it is the NAMES it
 // reserves, so that a consumer customising a component reaches for a token
@@ -626,3 +649,120 @@ $action-950: var(--app-bg-action-active) !default;
 //
 // A Sass variable holding a pointer removes the choice. There is nothing to
 // emit and nothing to duplicate.
+
+// ---------------------------------------------------------------------------
+// FROM A REAL PRODUCT
+// ---------------------------------------------------------------------------
+//
+// Everything above came from what LIBRARIES expose, which is why this layer
+// had `offcanvas`, `pagination` and `toast` long before it had `card`. These
+// came from the opposite direction: an inventory of what one real product's
+// components actually set.
+//
+// Only families a third party would recognise are here. A product's own
+// nouns stay with the product — the tool carrying them would be the stock
+// themes mistake in reverse.
+$carousel-gap: var(--app-gap-inline) !default;
+$carousel-thumbs-gap: var(--app-gap-inline) !default;
+$carousel-thumb-border-width: var(--app-border-width) !default;
+$checkbox-height: var(--app-size-control) !default;
+$checkbox-width: var(--app-size-control) !default;
+$field-label-font-family: var(--app-font-family-heading) !default;
+$field-input-font-family: var(--app-font-family-display) !default;
+$field-placeholder-font-family: var(--app-font-family-body) !default;
+$field-selection-bg: var(--app-bg-action-subtle) !default;
+$field-hint-font-family: var(--app-font-family-body) !default;
+$field-label-fg-focus: var(--app-fg-on-selected) !default;
+$field-label-bg-focus: var(--app-bg-selected) !default;
+$footer-bg: var(--app-bg-brand) !default;
+$footer-fg: var(--app-fg-on-brand) !default;
+$footer-height: var(--app-size-control) !default;
+$footer-radius: var(--app-radius-surface) !default;
+$footer-shadow: var(--app-shadow-raised) !default;
+$footer-navigation-bg: var(--app-bg-brand) !default;
+$footer-navigation-fg: var(--app-fg-on-brand) !default;
+$footer-strip-bg: var(--app-fg-on-brand) !default;
+$footer-bg-open: var(--app-bg-brand-deep) !default;
+$radio-button-height: var(--app-size-control) !default;
+$radio-button-width: var(--app-size-control) !default;
+$tabs-tab-bg-selected: var(--app-bg-selected) !default;
+$tabs-tab-fg-selected: var(--app-fg-on-selected) !default;
+$tabs-tab-shadow-selected: var(--app-shadow-raised) !default;
+$tabs-border-color: var(--app-border) !default;
+$tabs-radius: var(--app-radius-surface) !default;
+$tabs-bg: var(--app-bg-page) !default;
+$tabs-layout-content-bg: var(--app-bg-surface) !default;
+$card-content-radius: var(--app-radius-control-sm) !default;
+$card-img-bg: var(--app-bg-raised) !default;
+$card-content-bg: var(--app-bg-surface) !default;
+$card-content-shadow: var(--app-shadow-raised) !default;
+$card-content-border-color: var(--app-border) !default;
+$card-header-bg: var(--app-bg-sunken) !default;
+$card-title-pad: var(--app-space-xs) !default;
+$card-title-font-family: var(--app-font-family-heading) !default;
+$card-body-pad: var(--app-space-xs) !default;
+$card-footer-bg: var(--app-bg-surface) !default;
+$card-footer-border-color: var(--app-border) !default;
+$card-footer-pad: var(--app-space-xs) !default;
+$card-border-width: var(--app-border-width) !default;
+$card-border-color: var(--app-border-color-strong) !default;
+$heading-min-height: var(--app-size-control) !default;
+$img-width: var(--app-size-icon) !default;
+$img-height: var(--app-size-icon) !default;
+$img-font-size: var(--app-size-icon) !default;
+// A dialog is a sheet lifted clear of the page, so it is `raised` and not
+// `surface`. The pair was missing for as long as the family existed, which is
+// the hole this contract keeps falling into: layer 3 gets whatever names the
+// library that motivated it happened to expose, so `modal-dialog-shadow` was
+// here before `modal-bg`. The consequence was that the product painted its
+// dialog from the token layer with a rule keyed on `.modal`, because the
+// component had nothing to ask for.
+$modal-bg: var(--app-bg-raised) !default;
+$modal-fg: var(--app-fg-default) !default;
+// `shadow-overlay` and not `shadow-raised`: a modal floats above everything,
+// which is the whole reason the overlay step exists. There was briefly a second
+// entry, `modal-dialog-shadow`, so a product could lift the shadow on desktop
+// only — deleted, because the product that motivated it had never rendered the
+// mobile value: an unlayered rule in its token layer forced the desktop shadow
+// at every width. A knob whose two settings nobody has ever seen apart is not a
+// knob.
+$modal-shadow: var(--app-shadow-overlay) !default;
+$modal-radius: var(--app-radius-surface) !default;
+$modal-footer-min-height: var(--app-size-control) !default;
+$modal-border-color: var(--app-border) !default;
+$progressbar-border-width: var(--app-border-width) !default;
+$table-container-bg: var(--app-bg-surface) !default;
+$table-container-border-width: var(--app-border-width) !default;
+$table-container-radius: var(--app-radius-control-sm) !default;
+$table-container-font-family: var(--app-font-family-body) !default;
+$table-container-caption-font-family: var(--app-font-family-heading) !default;
+$table-container-td--section-font-family: var(--app-font-family-body) !default;
+$button-font-family: var(--app-font-family-body) !default;
+$button-ring-width: var(--app-ring-width) !default;
+$button-ring: var(--app-ring-color) !default;
+$table-caption-radius: var(--app-radius-control-sm) !default;
+$table-caption-bg: var(--app-bg-brand) !default;
+$table-caption-fg: var(--app-fg-on-brand) !default;
+$field-box-border-color-focus: var(--app-border-selected) !default;
+$field-divider-color-focus: var(--app-border-selected) !default;
+$carousel-indicator-border-color-active: var(--app-border-selected) !default;
+$button-border-width: var(--app-border-width) !default;
+$button-fg-disabled: var(--app-fg-disabled) !default;
+$button-size: var(--app-size-control) !default;
+$button-font-size: var(--app-font-size-sm) !default;
+$button-pad-y: var(--app-pad-control-y) !default;
+$field-pad: var(--app-pad-control-y) !default;
+$field-font-size: var(--app-font-size) !default;
+$field-line-height: var(--app-line-height-body) !default;
+$field-line-offset: 0px !default;
+$field-line-offset-x: 0px !default;
+$field-line-border-width: var(--app-border-width) !default;
+$field-line-dash-length: 0px !default;
+$field-line-dash-gap: 0px !default;
+$field-line-border-color: var(--app-border-color-subtle) !default;
+$field-box-pad-y: var(--app-pad-control-y) !default;
+$field-border: var(--app-border-width) solid var(--app-border-color) !default;
+$field-label-pad: var(--app-pad-control-y) var(--app-pad-control-x) !default;
+$field-label-font-size: var(--app-font-size-sm) !default;
+$card-radius: var(--app-radius-surface) !default;
+$carousel-indicator-shadow-active: var(--app-shadow-raised) !default;
