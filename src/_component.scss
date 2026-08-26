@@ -667,9 +667,19 @@ $carousel-thumbs-gap: var(--app-gap-inline) !default;
 $carousel-thumb-border-width: var(--app-border-width) !default;
 $checkbox-height: var(--app-size-control) !default;
 $checkbox-width: var(--app-size-control) !default;
+// Ticked, the box FILLS. Declared as a pair so the tick is legible on it by
+// construction rather than by review — the same invariant every `bg-X` /
+// `fg-on-X` in layer 2 carries. Without these two names a product paints the
+// checked state by hand and the contrast gate never sees it.
+$checkbox-bg-checked: var(--app-bg-selected) !default;
+$checkbox-fg-checked: var(--app-fg-on-selected) !default;
+$checkbox-radius: var(--app-radius-control) !default;
 $field-label-font-family: var(--app-font-family-heading) !default;
 $field-input-font-family: var(--app-font-family-display) !default;
-$field-placeholder-font-family: var(--app-font-family-body) !default;
+// The placeholder is an EXAMPLE of what to type, so it is written in the same
+// hand the answer will be. A different family makes the same font-size look
+// like a different one, and the example stops reading as an example.
+$field-placeholder-font-family: $field-input-font-family !default;
 $field-selection-bg: var(--app-bg-action-subtle) !default;
 $field-hint-font-family: var(--app-font-family-body) !default;
 $field-label-fg-focus: var(--app-fg-on-selected) !default;
@@ -685,6 +695,11 @@ $footer-strip-bg: var(--app-fg-on-brand) !default;
 $footer-bg-open: var(--app-bg-brand-deep) !default;
 $radio-button-height: var(--app-size-control) !default;
 $radio-button-width: var(--app-size-control) !default;
+// The same pair as the checkbox above, and a pill rather than a control
+// radius: a radio is round in every system that has ever shipped one.
+$radio-button-bg-checked: var(--app-bg-selected) !default;
+$radio-button-fg-checked: var(--app-fg-on-selected) !default;
+$radio-button-radius: var(--app-radius-pill) !default;
 $tabs-tab-bg-selected: var(--app-bg-selected) !default;
 $tabs-tab-fg-selected: var(--app-fg-on-selected) !default;
 $tabs-tab-shadow-selected: var(--app-shadow-raised) !default;
@@ -745,6 +760,13 @@ $table-caption-bg: var(--app-bg-brand) !default;
 $table-caption-fg: var(--app-fg-on-brand) !default;
 $field-box-border-color-focus: var(--app-border-selected) !default;
 $field-divider-color-focus: var(--app-border-selected) !default;
+// The label tab's own outline, separate from the box's. A tab and the box
+// under it can legitimately differ — a folder tab is often cut from heavier
+// stock — and in every product that FILLS the tab on focus, this is the border
+// that has to move with the fill while the box's does not.
+$field-border-width: var(--app-border-width) !default;
+$field-label-border-color: var(--app-border-color) !default;
+$field-label-border-color-focus: var(--app-border-selected) !default;
 $carousel-indicator-border-color-active: var(--app-border-selected) !default;
 $button-border-width: var(--app-border-width) !default;
 $button-fg-disabled: var(--app-fg-disabled) !default;

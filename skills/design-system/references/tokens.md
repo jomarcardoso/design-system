@@ -223,6 +223,7 @@ re-decide which size a button is; `radius-control` decides once.
 |---|---|
 | `--app-font-family-body` / `--app-font-family-heading` / `--app-font-family-display` / `--app-font-family-mono` | Families. `display` is the voice face — a wordmark, a pull quote, a handwritten note — and defaults to the heading face. |
 | `--app-font-size` | Body size. |
+| `--app-font-size-xs` | The kicker — the small uppercase line above a heading that says which section you are in. Also the smallest caption. |
 | `--app-font-size-sm` / `--app-font-size-lg` | Small print / lead text. |
 | `--app-font-size-heading-sm` / `--app-font-size-heading` / `--app-font-size-heading-lg` / `--app-font-size-heading-xl` | The heading scale. Named by prominence, not by tag: an `h3` inside a card is often the `-sm` step. |
 | `--app-line-height` / `--app-line-height-heading` | Line height. |
@@ -231,6 +232,54 @@ re-decide which size a button is; `radius-control` decides once.
 
 `font-family-body` and `font-family-heading` both point at the system sans stack today. Real
 faces are a brand decision and are deliberately left unset.
+
+### The scale is two decisions, and both are configurable
+
+**What the sizes are** is `base.$text`, a ten-step ramp. The default is the
+familiar hand-tuned one, whose steps grow by five different factors — fine to
+look at, and not a system: a product that wants to add a level between two of
+them has nowhere to put it. A product that wants a strict modular scale
+replaces the ramp:
+
+```scss
+@use 'ds/src/base' with (
+  $text: (xs: 0.8rem, sm: 0.89rem, base: 1rem, lg: 1.25rem, /* … */)
+);
+```
+
+**Which step each token takes** is `config.$type-scale-steps`, and it is
+separate because a product routinely needs one without the other. The default
+mapping skips `xl` between the two smallest headings — invisible on a
+hand-tuned ramp, and on a modular one the single place the ratio breaks:
+
+```scss
+@use 'ds/src/config' with (
+  $type-scale-steps: (
+    'heading-sm': base, 'heading': lg, 'heading-lg': xl, 'heading-xl': '2xl'
+  )
+);
+```
+
+The override is partial: keys you do not name keep their defaults. A step that
+is not a key of `base.$text` fails the build rather than emitting an empty
+size, because an empty size is a heading that silently inherits its parent's.
+
+That example also puts the smallest heading AT body size. It is a choice worth
+knowing about: a fourth-level heading is a label for what follows it, and a
+label larger than the text it labels inverts its own job — it separates itself
+by weight and face instead.
+
+### On a floor for the small end
+
+`xs` is deliberately the smallest emitted size, and the reason is legibility
+rather than WCAG. This document used to claim that anything below `sm` fails
+1.4.4 at the first zoom step; that is not what 1.4.4 says. The criterion is
+about text scaling to 200% without loss of content or function, and a size
+declared in `rem` scales with the root — a small `rem` value passes it and a
+large `px` value fails it. Where a ramp should stop at the bottom is a decision
+about that ramp, and it is normal for a modular scale to stop being modular
+there: a strict 1.25 downward from a 16px body reaches 10px in two steps, and
+10px is not a size a caption can be set in.
 
 ## Control sizing
 

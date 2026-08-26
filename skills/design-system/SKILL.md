@@ -238,6 +238,17 @@ machine — always wins. Pass it to exactly one theme per scheme.
 `color-scheme` is derived by MEASURING the theme's page colour, never from its
 name. A theme called `midnight` is as dark as one called `dark`.
 
+`accent-color: var(--app-bg-selected)` is emitted beside it, and it closes the
+other half of the same hole. `color-scheme` tells the browser how to paint
+scrollbars and the canvas; `accent-color` tells it how to paint the parts of a
+native control you cannot style — a checkbox tick, a range thumb, a progress
+bar, the highlighted row of an open `<select>`. Left at `auto`, those come from
+the OPERATING SYSTEM's accent, which on Windows is blue: a warm brown interface
+with a blue bar through the middle of its dropdown, in valid CSS, with nothing
+reporting it. `bg-selected` is what an accent MEANS — the colour of a thing
+chosen — so the native highlight and the product's own selected state answer to
+one value per theme.
+
 ### Name the two themes `light` and `dark`
 
 A two-theme product calls them `light` and `dark` — `data-bs-theme` in Bootstrap
