@@ -1,3 +1,5 @@
+<!-- example/ds-hot-tone-bootstrap-phase1/README.md -->
+
 # DS Hot Tone with Bootstrap — phase 1
 
 A product design system built **with** this tool. Nothing here is part of the

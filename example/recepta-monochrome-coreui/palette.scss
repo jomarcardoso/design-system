@@ -1,0 +1,40 @@
+// example/recepta-monochrome-coreui/palette.scss
+
+// =============================================================================
+// LAYER 1 — TWO PIGMENTS
+// =============================================================================
+//
+// The whole palette of Recepta is the two lines at the bottom of this file.
+// Everything else is a ladder computed off them in OKLCH.
+//
+// -----------------------------------------------------------------------------
+// A SEED IS A PIGMENT, NOT THE LIGHTEST STEP
+// -----------------------------------------------------------------------------
+//
+// The seed's own chroma is the PEAK the ramp curve multiplies, and `$pigment`
+// scales that peak. So the seed has to be the colour at full strength — the ink
+// in the bottle — not the pale surface it will produce.
+//
+// Handing `ramp.neutral()` a near-white paper colour looks right and is not:
+// `oklch(0.97 0.012 85)` has a chroma of 0.012, which at `$pigment: 0.6` leaves
+// a peak of 0.007, and the whole ramp comes out as an ordinary grey. The
+// warmth the interview asked for disappears and nothing reports an error,
+// because a grey ramp is a perfectly valid ramp.
+// =============================================================================
+
+@use '../../src/ramp';
+
+// PAPER — the neutral. Kraft/straw at full strength, held back to 0.6.
+//
+// `$pigment: 0.6` is `neutralPigment` from DESIGN_LANGUAGE.md, and the answer
+// behind it was "fresh recycled paper, not aged sepia". The hue sits at the
+// yellow-green end of warm rather than the red end, which is the whole
+// difference between paper stock and a stained page.
+$paper: ramp.neutral(#8f7c5e, $pigment: 0.6);
+
+// PEN — the accent. Ballpoint blue, the one live colour on the page.
+//
+// Cold against a warm neutral on purpose: the accent's job is to be the only
+// thing on screen that is not paper, and a blue warmed toward the paper would
+// read as part of it.
+$pen: ramp.chromatic(#1d51c4);

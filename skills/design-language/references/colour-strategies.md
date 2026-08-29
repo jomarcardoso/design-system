@@ -1,3 +1,5 @@
+<!-- skills/design-language/references/colour-strategies.md -->
+
 # Colour strategies
 
 Two questions in the interview decide more of the generated system than any

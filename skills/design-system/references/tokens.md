@@ -1,3 +1,5 @@
+<!-- skills/design-system/references/tokens.md -->
+
 # Layer 2 vocabulary
 
 Every token layer 2 emits, what it means, and when to reach for it. This is the
@@ -5,6 +7,100 @@ complete public contract — 126 names: 56 theme-independent structure tokens, 6
 colour tokens per theme, and 2 anchors the inverted context leans on. If
 something you need is not here, add it to `src/_semantic.scss` rather than
 reaching past the layer.
+
+> **These are the names that come OUT. A theme map is written in the names that
+> go IN, and they are different.** `--app-bg-page` is emitted; the key you write
+> is `page`. Writing a theme map from this file is the commonest way a first
+> build fails, so read the next section before doing it — and
+> [`worked-example.md`](worked-example.md) for the whole shape.
+
+---
+
+## What `emit-theme()` accepts
+
+A theme map's keys are **roles**, with no `bg-` or `fg-` prefix and no `--app-`.
+The mixin composes the emitted names from them.
+
+```scss
+@include semantic.emit-theme('caderno', $caderno, $default: true);
+```
+
+| you write | it emits |
+|---|---|
+| `page` | `--app-bg-page` |
+| `surface` · `raised` · `sunken` · `overlay` | `--app-bg-*` |
+| `surface-hover` · `surface-active` | `--app-bg-surface-hover`, `-active` |
+| `text` · `text-muted` · `text-subtlest` · `heading` | `--app-fg-default`, `-muted`, `--app-fg-subtlest`, `--app-fg-heading` |
+| `border` · `border-subtle` · `border-strong` | `--app-border-color*` |
+| `ring` | `--app-ring-color` |
+| `shadow-raised` · `shadow-overlay` | `--app-shadow-*` |
+| `disabled` · `disabled-text` | `--app-bg-disabled`, `--app-fg-disabled` |
+
+**Note `text` → `fg-default` and `border` → `border-color`.** Three of the keys
+are not simply the emitted name with the prefix removed, which is exactly why
+this table exists.
+
+### The interactive keys are the school's
+
+This is the part that cannot be inferred, and getting it wrong produces a build
+that declares one school and speaks another's vocabulary.
+
+| | `functional` | `brand` | `monochrome` |
+|---|---|---|---|
+| what acts | `action`, `on-action`, `action-hover`, `action-active`, `action-subtle`, `action-text` | `primary`, `on-primary`, … | **`accent`, `on-accent`, `accent-hover`, `accent-active`, `accent-subtle`, `accent-text`** |
+| what is chosen | `selected`, `on-selected`, `selected-hover`, `selected-active`, `selected-subtle`, `selected-text` | collapses onto `primary` | collapses onto `accent` |
+| links | `link`, `link-hover` | `link`, `link-hover` | collapses onto `accent` |
+| `link-visited` | its own key | its own key | **its own key — does NOT collapse** |
+| `neutral`, `on-neutral`, `neutral-hover`, `neutral-active` | same in all three | same | same |
+
+**A monochrome theme declares `accent` once.** It does not declare `action`,
+`selected` and `link` filled with the same value — that is the shape this
+vocabulary exists to remove, and `check-roles()` treats the collapse as the
+design rather than as a mistake precisely because the names are gone.
+`src/_roles.scss` is the map, and `core.ref()` resolves it at build time, so an
+adapter writes `core.ref('bg-action')` in every school and gets
+`var(--app-bg-accent)` here.
+
+**Status is common to all three** — `success`, `warning`, `danger`, `info`, each
+with `on-`, `-hover`, `-active`, `-subtle`, `-text`, `-border`. A school governs
+the interface, not the four colours that carry meaning a shape cannot.
+
+### A theme map must be COMPLETE
+
+`_req()` raises a Sass `@error` on the first missing key, with the message *"a
+theme is a COMPLETE set of colour decisions — unlike a context, it may not leave
+one out, because there is nothing above it to inherit from."*
+
+So a map that stops after `success` and `on-success` does not compile. All four
+status families, all six sub-keys each. If a value genuinely repeats another
+role, alias it explicitly rather than omitting it — an omission is
+indistinguishable from an oversight, which is why the build refuses to guess.
+
+### What PRODUCT CSS writes, per school
+
+The theme map is written in accepted keys. Hand-written CSS is different again:
+it reads the **emitted** names, and those follow the school.
+
+| in `functional` | in `monochrome` |
+|---|---|
+| `var(--app-bg-action)` | `var(--app-bg-accent)` |
+| `var(--app-fg-on-action)` | `var(--app-fg-on-accent)` |
+| `var(--app-bg-selected)` | `var(--app-bg-accent)` |
+| `var(--app-fg-link)` | `var(--app-fg-accent)` |
+
+**`--app-bg-action` does not exist in a monochrome build.** Not "is empty" —
+does not exist, because the name was never emitted. A rule reading it silently
+falls back to nothing, and the component renders transparent. That absence is
+deliberate: if the name existed, someone would eventually point it somewhere new
+and reintroduce two-hue thinking into a one-hue product.
+
+`scripts/check-dangling-refs.mjs` catches this in the repository. In a chat there
+is nothing to catch it, so check by hand against the table above.
+
+**Sass code is the exception**: `core.ref('bg-action')` resolves through
+`src/_roles.scss` at build time and emits the right name in every school. That is
+why eleven adapters share one code path. Only hand-written CSS has to know which
+school it is in.
 
 **DTCG types.** Each section below names the
 [W3C Design Tokens](https://www.w3.org/community/reports/design-tokens/CG-FINAL-format-20251028/)

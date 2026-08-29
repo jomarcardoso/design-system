@@ -1,3 +1,5 @@
+<!-- README.md -->
+
 # design-system
 
 A Claude Code plugin that conducts the creation of a design system end to end:

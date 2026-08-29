@@ -1,3 +1,5 @@
+<!-- CHANGELOG.md -->
+
 # Changelog
 
 This tool is **vendored**: a project copies `src/` into its own tree rather than
@@ -20,6 +22,144 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 ---
 
 ## [Unreleased]
+
+---
+
+## [0.6.0]
+
+**Four runs of the `design-system` skill against a deliberately weaker model,
+each one allowed to fail, plus the first hand-built monochrome-on-a-library
+example.** The runs found gaps in the instructions; building the example found
+two bugs in the code, one of which was reachable by all eleven adapters.
+
+**To upgrade:** copy the new `src/`, then read *Changed* below — the
+`emit-theme()` input vocabulary has always been what it is, but it was not
+written down anywhere until now, and a project that guessed it from the emitted
+names has a theme that does not compile.
+
+### Fixed
+
+- **An adapter could not read a `monochrome` or `brand` theme.** Adapters that
+  derive colour channels do `map.get($choices, link)` on the theme map, and a
+  monochrome map declares `accent` and never declares `link` — so the build died
+  with *"$color: null is not a color"* three frames inside the adapter, saying
+  nothing about schools.
+
+  Normalisation moved from `_semantic.scss` (private) into `_roles.scss` (public
+  as `normalise()`), and `core.require-themes()` now applies it. That is the one
+  line every adapter already calls, so all eleven are fixed at once and none of
+  them has to know the vocabulary rules.
+
+  The bug was reachable by every adapter since per-school vocabularies landed in
+  0.4.0 and had never fired, because no example combined an adapter with a
+  non-functional school. `example/recepta-monochrome-coreui` is now that
+  combination, and it is in `npm run verify`.
+
+- **`icon-stroke` had no token.** 0.5.0 added `iconStroke` to the design
+  language and never added its destination, so a decision was recorded with
+  nowhere to land. Now in layer 2 beside `size-icon`, as a literal length: it is
+  a drawn line rather than a layout measure, and it does not scale with density.
+
+- **A ramp seed is a pigment, not the page colour.** The seed's own chroma is
+  the peak the curve multiplies, so `ramp.neutral(oklch(0.97 0.012 85))` — the
+  paper you can see — leaves a peak of 0.007 at `$pigment: 0.6` and produces an
+  ordinary grey ramp. **Nothing errors**, because a grey ramp is a valid ramp.
+  Two runs made this exact mistake and so had the example's own
+  `DESIGN_LANGUAGE.md`, which named the page instead of the pigment. Documented
+  in `worked-example.md`, corrected in the example.
+
+### Added
+
+- **`references/worked-example.md` for `design-system`.** The skill had no
+  calibration file while `design-language` had one, which is most of why the
+  first run invented its own shape. Shows all three authored files —
+  `palette.scss`, `theme.scss`, the entry — from a product that compiles.
+
+  Each of its four sections closed a failure a run had already produced: the
+  theme-map key vocabulary, the entry that emits (a run wrote a theme map and
+  never emitted it, producing an empty stylesheet that looked finished), the
+  `$structure` map (radius and `size-control` decided and never emitted, which
+  no gate reports because a default is a valid value), and the adapter `emit()`
+  call that takes the theme maps rather than their names.
+
+- **The `emit-theme()` input contract, in `tokens.md`.** That file documented
+  the 126 names the build **emits**; nothing documented the different vocabulary
+  a theme map **accepts** — `page`, not `bg-page`. Guessing from the emitted
+  names was the commonest first-build failure and there was no way not to guess.
+  Adds the key table, the per-school interactive keys, the rule that a theme map
+  must be COMPLETE (`_req()` errors on the first missing key), and what
+  hand-written product CSS reads per school.
+
+- **A STOP protocol at the top of all three skills.** In a chat there is no
+  filesystem, so "not read yet" and "does not exist" are indistinguishable and a
+  model resolves the ambiguity by assuming it knows enough: one run, handed only
+  `SKILL.md`, regenerated `_semantic.scss`, `_ramp.scss` and `_config.scss` from
+  memory rather than asking for them.
+
+  The test is now concrete — *can you quote a line from it?* — and the first
+  reply is written out verbatim, so the person running the skill does not have
+  to read it to find out what it needs. `design-system` asks for four files plus
+  three conditional ones; `design-language` for six, naming the two with no
+  workaround; `design-patterns` for the project's ledger, which cannot be
+  reconstructed from a library's documentation without producing the opposite of
+  that skill's purpose.
+
+- **`references/review.md` for `design-system`** — 52 checks, deliberately
+  avoiding what `npm run verify` already catches, because repeating those would
+  pad the list and prove nothing. What is left is what a green build cannot see:
+  whether the values are the ones the document asked for, and whether each token
+  carries the meaning its name claims. Runs without a terminal report the five
+  build-only checks as `unverifiable` rather than guessing.
+
+  With the note that matters most: **distrust a clean report on your own
+  output.** A run reviewed a theme it had just written and reported *0 fail*
+  while that theme used the functional vocabulary under `monochrome`, called
+  `base.pal()` with a ramp map, configured no adapter for a CoreUI product and
+  carried citation markers on half its lines.
+
+- **`example/recepta-monochrome-coreui`** now builds: `palette.scss`,
+  `theme.scss`, `ds.scss`, compiled by `npm run build:example-recepta` and
+  checked by `verify:examples-refs`. First example combining a library with a
+  non-functional school, which is what surfaced the adapter bug.
+
+- **`AGENTS.md`**, and the rule it holds: **every file opens with a comment
+  naming its own path.** Files reach agents detached from their tree — pasted
+  into a chat, quoted in a review, attached to a message — and a `theme.scss`
+  with no path could be any of the seven under `example/`. Applied retroactively
+  to 58 source files and 24 markdown files. JSON is excepted, having no comment
+  syntax; inventing a `"_path"` key to fake it would create a data field
+  something eventually reads.
+
+### Changed
+
+- **Configuration is `@use "…/src/config" with (…)` in the project entry**, not
+  an edited `src/_config.scss`. Every example in `example/` already did this;
+  `install.md` said the opposite in four places. A run merged the two and
+  produced a file labelled `src/_config.scss` that `@use`s itself, which is the
+  only thing a reader could produce from contradictory instructions.
+
+- **The install interview is six questions, not three.** The old question 1
+  carried four decisions — foundation, `reset-a11y`, prefix, themes — with two
+  of them labelled "sub-decisions", which is the same fused-question failure the
+  `design-language` interview had. Every option is lettered, the eleven adapters
+  included, and a read-back step now sits between the last answer and the first
+  file copied.
+
+- **The authored set is a closed list of three files**, not a blocklist of files
+  to avoid. A blocklist cannot name `src/components/_button.css`, which a run
+  invented, and it does not stop a hand-written `:root { --app-* }` block, which
+  another run wrote to duplicate what `emit-structure()` emits.
+
+- **The first-turn file list is four files, down from ten.**
+  `colour-strategies.md` is covered by the school tables added to `tokens.md`,
+  and `src/_config.scss` is a file nobody authors whose four settings are named
+  in the handoff table. Asking for either cost a fetch and bought nothing.
+  `install.md` is now conditional — generating files in a chat installs nothing.
+
+- **The skill asks which component library the product uses.**
+  `DESIGN_LANGUAGE.md` does not record it, and should not: a design language
+  outlives the library beneath it. Four runs out of five silently emitted
+  `$adapters: ()` for a product that had one.
 
 ---
 

@@ -1,3 +1,5 @@
+<!-- skills/design-language/references/worked-example.md -->
+
 # A worked example
 
 What a finished `DESIGN_LANGUAGE.md` looks like, reconstructed from a product

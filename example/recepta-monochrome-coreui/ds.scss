@@ -1,0 +1,59 @@
+// example/recepta-monochrome-coreui/ds.scss
+
+// =============================================================================
+// RECEPTA — accent-driven, on CoreUI
+// =============================================================================
+//
+//     sass --load-path=. example/recepta-monochrome-coreui/ds.scss ds.css
+//
+// The same design as `ds-caderno-accent-driven`, with a library underneath.
+// That example shows the school with nothing beneath the tokens; this one shows
+// what the school looks like once CoreUI is involved — which is the harder
+// claim, because a library arrives with its own opinion about every colour.
+//
+// The library's own CSS is NOT built here. `coreui-entry.scss` compiles CoreUI
+// with the Sass-time variables set; this file emits the tokens and the adapter
+// that drive it at runtime. Two files, loaded in that order.
+// =============================================================================
+
+@use 'sass:map';
+@use '../../src/config' with (
+  $adapters: (coreui),
+  // The load-bearing line. It tells `check-roles()` that action, selected and
+  // link all resolving to the same pen is the design and not a collapse — and
+  // it is what makes `accent` the emitted name rather than `action`.
+  $colour-strategy: 'monochrome'
+);
+
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/component';
+@use '../../src/derive';
+@use '../../src/adapters/coreui';
+@use 'theme';
+
+// Layer 1 — two pigments and a ladder. Emits nothing.
+@include base.emit();
+
+// Layer 2 — structure first (theme-independent: spacing, radius, typography,
+// the icon stroke), then this product's day theme.
+@include semantic.emit-structure(map.merge(theme.$structure, theme.$typography));
+@include semantic.emit-theme('light', theme.$recepta, $default: true);
+
+// Night, GENERATED. `derive.dark()` transforms by ROLE rather than per colour,
+// so the pen comes up the ramp until it separates from a dark page and its
+// label goes dark with it — and every interaction state then brightens, because
+// a fill moves away from its own label. It goes through the same contrast gate
+// as the hand-written theme above.
+@include semantic.emit-theme('dark', derive.dark(theme.$recepta), $auto: true);
+
+// Layer 3 — the naming contract, unemitted. Nothing here diverges from its
+// defaults: a monochrome product gets a neutral secondary action without
+// writing a line.
+
+// The adapter. Binds CoreUI's `--cui-*` to layer 2 by reference, so a runtime
+// theme flip moves the library with the product rather than only at build time.
+@include coreui.emit((
+  'light': theme.$recepta,
+  'dark': derive.dark(theme.$recepta)
+));

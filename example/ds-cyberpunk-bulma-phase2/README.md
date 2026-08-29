@@ -1,3 +1,5 @@
+<!-- example/ds-cyberpunk-bulma-phase2/README.md -->
+
 # DS Cyberpunk with Bulma — phase 2
 
 A second product on the same foundation, deliberately disagreeing with the first

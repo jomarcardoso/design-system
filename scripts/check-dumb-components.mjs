@@ -1,3 +1,5 @@
+// scripts/check-dumb-components.mjs
+
 // =============================================================================
 // DUMB COMPONENT GUARD — a product's own components must read layer 3
 // =============================================================================

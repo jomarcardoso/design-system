@@ -4,7 +4,63 @@ description: A framework-independent CSS token foundation built on four layers, 
 license: MPL-2.0
 ---
 
+<!-- skills/design-system/SKILL.md -->
+
 # Design System
+
+## STOP — your first reply is a request, not a build
+
+**Do not generate anything on the first turn.** This file is one input of several.
+On its own it tells you the architecture and none of the values, and a build
+made from it alone is a plausible invention rather than this system.
+
+**How to tell whether you have a file: can you quote a line from it?** If not,
+you do not have it — "I know what a `_semantic.scss` looks like" is not having
+it. In a chat there is no filesystem to check, so anything not pasted into the
+conversation is missing, and missing is the normal state on turn one.
+
+Unless every file in the table below is already in the conversation, your first
+reply is this and nothing else — the person running you should not have to read
+this file to find out what it needs:
+
+> Before I build anything I need four files. Paths are from the repository root:
+>
+> 1. `DESIGN_LANGUAGE.md` — from the project
+> 2. `skills/design-system/references/tokens.md`
+> 3. `skills/design-system/references/worked-example.md`
+> 4. `skills/design-language/references/archetypes.md`
+>
+> Then, depending on the product — tell me if you are unsure and I will say
+> which apply once I have read the document:
+>
+> 5. `src/_ramp.scss` — if `colourStrategy: monochrome`
+> 6. `skills/design-system/references/adapters.md` — if a component library is
+>    involved. **Also tell me which one**, because the design language does not
+>    record it.
+> 7. `skills/design-system/references/install.md` — only if you are installing
+>    into a real project rather than generating the files here.
+>
+> Send what you have. I will tell you what is still blocking before I start.
+
+**Four files, not ten.** The list used to be longer and most of it was
+redundant: `colour-strategies.md` is covered by the school tables in
+`tokens.md`, and `src/_config.scss` is a file you never author, whose four
+settings are named in the handoff table below. Asking for either one costs the
+person a fetch and buys nothing.
+
+Then **wait**. When they arrive, say which are still missing and what each one
+would have decided, and only start once nothing structural is outstanding.
+
+**Ask which library the product uses.** `DESIGN_LANGUAGE.md` does not record
+it — the school, the archetype and the pigment are all there and the library is
+not, because a design language outlives the library under it. Four runs out of
+five have silently emitted `$adapters: ()` for a product that had one. If the
+answer is "none", that is a real answer; an unasked question is not.
+
+If the person says to proceed anyway, do — and open the output with the list of
+what was guessed and what it was guessed from. Never guess silently: a
+foundation that compiles and is wrong costs more than one that was never
+written, because everything built on it has to come back down.
 
 **Second of three skills.** `design-language` decides why the system looks and
 sounds the way it does and writes `DESIGN_LANGUAGE.md`; this skill turns those
@@ -21,6 +77,165 @@ depends on.
 The assets live in this plugin at `${CLAUDE_PLUGIN_ROOT}`. To put them into a
 project, read `references/install.md` — it drives a short interview before
 copying anything, because what a project needs varies.
+
+## What you author, and what you never author
+
+**The foundation is not yours to write. It is vendored — copied in, verbatim.**
+
+This is the first thing to get right, because getting it wrong does not look
+like an error. It looks like a complete, plausible design system, and it is a
+lossy reimplementation of one: `_semantic.scss` alone is nine hundred lines of
+contract, and a regenerated version is always a subset. The tokens it quietly
+drops are discovered months later by a component that reads one.
+
+**You author exactly three files. This is a closed list, not a starting point.**
+
+| file | holds |
+|---|---|
+| `palette.scss` | layer 1 for this product — the pigments and their ramps |
+| `theme.scss` | layer 2 assignment — which ladder position plays which role |
+| `ds.scss` (the entry) | `@use '…/src/config' with (…)`, then the `emit-*` calls. Where settings are set and where all CSS is produced. |
+
+Plus two you **copy and then merge** into what the project already has:
+`<library>-entry.scss` and `stylelint.config.cjs`.
+
+**Everything else in `src/` is copied unchanged** — `_base`, `_core`,
+`_semantic`, `_component`, `_roles`, `_ramp`, `_config`, `adapters/*`.
+`_config.scss` in particular: it holds `!default` values and is the module you
+configure, so it cannot configure itself. Setting a value there *and* in the
+entry's `@use … with` is two answers to one question.
+
+**A path not on the list above is not yours to create.** A real run invented
+`src/components/_button.css` and hand-wrote a `:root { --app-* }` block —
+neither is a file this system has, and the second duplicates exactly what
+`emit-structure()` emits. If you find yourself writing a custom property whose
+name starts with the token prefix, stop: a mixin already emits it, and a second
+copy drifts from the first at the next change.
+
+**Writing a file that ships with the plugin is the tell that you do not have
+it.** The correct move is to say so and ask, not to reconstruct it. A
+reconstruction cannot be diffed against the original by anyone who was not
+already suspicious, so it survives review in a way a missing file never does.
+
+The three you do author — `palette.scss`, `theme.scss` and the entry — are in
+[`references/worked-example.md`](references/worked-example.md), end to end.
+**Read it before writing any of them.** A build that stops after the theme map
+looks finished and compiles to nothing, because a Sass variable nobody passes to
+`emit-theme()` produces no CSS.
+
+## What you need in front of you
+
+This skill reads files that live outside its own folder, and two of them are in
+the *previous* skill's directory. **If any of these is missing, ask for it
+before starting.** Guessing a structural value is how a build ends up with
+defaults nobody chose while a document sits beside it saying otherwise.
+
+| file | needed for | without it |
+|---|---|---|
+| `DESIGN_LANGUAGE.md` (project root) | every decision | stop — run `design-language` first |
+| `design-language/references/archetypes.md` | every structural number: radius, spacing unit, shadows, the four faces, line-height, `size-control`, the icon row | radius, density and icons get invented |
+| `design-language/references/colour-strategies.md` | which layer 2 names the chosen school emits | the wrong vocabulary, and `check-roles()` warning about the wrong things |
+| `references/tokens.md` | the layer 2 contract — the 126 names emitted, AND the different vocabulary a theme map accepts | a theme map written in the emitted names, which is the commonest first-build failure |
+| `references/worked-example.md` | the shape of all three authored files, including the entry that emits | the theme map gets written and never emitted — a build that outputs nothing |
+| `references/install.md` | putting the files into a project | — |
+| `references/adapters.md` | wiring a library | an adapter improvised from the wrong shape |
+| `references/review.md` | the check after the build | no reviewer for what `verify` cannot see |
+| `src/_config.scss` | `$prefix`, `$colour-strategy`, `$contrast-min`, `$adapters` | settings edited blind |
+| `src/_ramp.scss` | `monochrome` only — generating layer 1 from a pigment | a seed colour invented instead of derived |
+
+**Say what is missing and what it would have decided**, rather than proceeding
+with a gap. *"I do not have `archetypes.md`, so I have no value for
+`radius-control` — send it, or tell me the number."* is one exchange. A build
+that guessed is a rebuild.
+
+**Asking is the work, not an interruption of it.** A run handed only this file
+generated the entire foundation from memory rather than requesting the rest —
+`_ramp.scss`, `_semantic.scss` and `_config.scss` all rewritten, none of them
+its to write. Producing something is not the goal; producing *this system* is,
+and the difference is invisible in the output.
+
+So: **when a needed file is absent, stop and list what you need.** Not a partial
+build with a note, not a best-effort reconstruction to be replaced later — a
+list. A wrong foundation that compiles is more expensive than no foundation,
+because everything built on it has to come back down.
+
+## Every file you write opens with its path
+
+The first line of every file this skill generates is a comment naming its path
+from the project root, then a blank line, then the file's real first line.
+
+```scss
+// styles/ds/theme.scss
+```
+
+A `theme.scss` reaches a reviewer detached from its tree — pasted into a chat,
+quoted in a diff, attached to a message — and a project with six of them under
+`example/` cannot tell which one arrived. The usual repair is guessing, which
+produces an edit applied to the wrong copy, silently, because both files exist
+and both look right.
+
+**JSON is the exception**, having no comment syntax. Do not invent a `"_path"`
+key to fake it — something will eventually read it as data.
+
+## Reading DESIGN_LANGUAGE.md
+
+The previous skill decided; this one gives those decisions values. **Every key
+below has a destination. Work through the table, not through impression** — a
+key read and not acted on is the commonest way a build ends up with defaults
+nobody chose while a document sits beside it saying otherwise.
+
+| key | goes to |
+|---|---|
+| `archetype` | the matrix in `design-language/references/archetypes.md`, which has a concrete value for `radius-control`, `radius-surface`, `$spacing-unit`, `shadow-raised`, `shadow-overlay`, the four faces, `line-height`, the heading step, `size-control`, `icon-style`, `icon-stroke` and `icon-size`. **Read that file.** It is in the other skill's folder and it is the source of every structural number here. |
+| `density` | `size-control` and `line-height` from that same row — dense pulls both down, generous pushes both up. They move together or the result is a tall control wrapping tight text. |
+| `platform` | mobile-first or multiplatform raises `size-control` to **at least 44px**, whatever the archetype wanted. Recorded as an `override` in the document, and it wins here too. |
+| `radius` | `radius-control` and `radius-surface`. Surfaces stay one step rounder than the controls inside them. |
+| `elevation` | `shadow-raised` and `shadow-overlay`. `borders` means both go near-zero and the weight moves to `border-color`. |
+| `elevationCarrier` | whichever token that names has to be the **strong** one. A flat system with a weak border produces surfaces nobody can tell apart, and it passes the contrast gate while doing it, because that gate measures text against its background and not one surface against another. |
+| `iconStyle` · `iconStroke` · `iconSize` | `icon-stroke` and `size-icon` in layer 2. `iconStyle` buys no token — it is a rule for whoever picks the set, and it belongs in the project's own notes rather than in CSS. |
+| `accessibility` | `$contrast-min` in `_config.scss`: `4.5` for AA, `7` for AAA. Set it **before** picking colours. AAA rejects palettes AA accepts, and finding out afterwards means re-deriving the ramp. |
+| `statusColours` | `traditional` keeps the usual hues; `brand-adapted` moves chroma and temperature and **never the hue family**. A green that is not green stops meaning "it worked". |
+| `colourStrategy` | `$colour-strategy` in `_config.scss`, which decides which layer 2 names exist and which role collapses `check-roles()` treats as mistakes. `references/adapters.md` and the other skill's `colour-strategies.md` have the three vocabularies. |
+| `neutralPigment` | the `$pigment` argument of `ramp.neutral()` — see below. |
+| `accentContrast` | whether `fg-on-accent` is measured against a light or a dark foreground. Getting it wrong fails the contrast gate at the END of the build, after the palette has been derived from the wrong assumption. |
+| `surfaceSeparation` | which of `border-color`, a tone step, or `shadow-raised` carries the difference between two surfaces. Agrees with `elevation` by construction. |
+| `secondaryAction` | `theme.scss` only. Six of the seven treatments are the same two or three tokens pointed elsewhere; none of them reaches the product layer. |
+
+**Four keys are not this skill's business**, and reading them as work to do is
+how a token build starts inventing copy: `voice`, `voiceExceptions` and
+`ctaMood` belong to whoever writes the strings, and `archetypeNote` is prose.
+
+**`deviations` and `overrides` are binding.** They record a decision that went
+against the archetype on purpose, with a reason and a date. Building the
+archetype's value instead is not a correction — it is undoing the decision the
+document exists to protect. If a deviation cannot be built, say so and stop;
+do not quietly build the default.
+
+**`guardrails` split by `enforcement`.** `stylelint` entries carry a
+`signature` and become a rule in `stylelint.config.cjs`. `ledger` entries go to
+`patterns.json` in the third skill. `document` entries are advice and produce no
+code — building a gate for one is worse than leaving it, because the next reader
+trusts the label.
+
+### Generating the ramp from a pigment
+
+`monochrome` products derive layer 1 rather than being handed it, and
+[`src/_ramp.scss`](../../src/_ramp.scss) is what does it:
+
+```scss
+$paper: ramp.neutral(#8a7355, $pigment: 0.6);   // neutralPigment from the document
+$pen:   ramp.chromatic(#005bac);                // the accent
+```
+
+Two pigments in, two full palettes out, with the same step keys a hand-written
+family uses — so `pal(paper, 100)` keeps working and a project can swap a
+hand-tuned palette for a generated one without touching layer 2.
+
+**This is for `monochrome` only.** The `functional` school's layer 1 is several
+independently chosen hues, and which hue plays which role is the product's
+decision rather than a ladder position; generating those would be inventing the
+palette instead of recording it. Read the header of `_ramp.scss` before using
+it — it says which school it serves and why the others must not.
 
 ## Adapters
 
@@ -374,6 +589,17 @@ that is what lets an adapter win over library defaults.
   admission test above.
 
 ## Verifying a change
+
+**Two things, and they make different claims.** `npm run verify` says the theme
+is well-formed. [`references/review.md`](references/review.md) says it is the
+*right* theme — fifty-two checks that the values are the ones
+`DESIGN_LANGUAGE.md` asked for and that each token carries the meaning its name
+claims. `verify` never reads that document, so nothing in it can catch a build
+that is internally perfect and answers to nobody.
+
+Run `verify` first, then the checklist. Where there is no terminal — a review in
+a chat — the checklist still runs on `DESIGN_LANGUAGE.md` and `theme.scss`
+alone, and its build-only checks come back `unverifiable` rather than guessed.
 
 **Run this. It is the whole check, and it needs no setup.**
 

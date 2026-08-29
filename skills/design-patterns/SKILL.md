@@ -4,7 +4,42 @@ description: The pattern ledger that decides which component variants a project 
 license: MPL-2.0
 ---
 
+<!-- skills/design-patterns/SKILL.md -->
+
 # Design Patterns
+
+## STOP — the ledger is the project's, and you probably do not have it
+
+**Do not emit markup, and do not invent a vocabulary.** This skill ships no
+component list on purpose: which button variants a product allows is that
+product's decision, and a tool that shipped an answer would be wrong for most of
+them. Without the project's ledger there is nothing here to enforce.
+
+**How to tell whether you have a file: can you quote a line from it?** If not,
+you do not have it. In a chat there is no filesystem to check.
+
+Unless these are already in the conversation, your first reply is this and
+nothing else:
+
+> Before I write any markup I need these. Paths are from the repository root:
+>
+> **From the project**
+> 1. `patterns/patterns.json` — the ledger. If the project has none, say so and
+>    I will start one from the template instead.
+> 2. `DESIGN_LANGUAGE.md` — its `guardrails` are where several `forbidden`
+>    entries come from
+>
+> **From this plugin**
+> 3. `patterns/patterns.schema.json`
+> 4. `patterns/patterns.template.json` — only if we are starting a ledger
+>
+> Also tell me which library the project uses, if the ledger does not say.
+>
+> Send what you have and I will tell you what is still blocking.
+
+Then **wait**. The ledger is the one that cannot be worked around: reconstructing
+it from a library's documentation produces the opposite of this skill's purpose —
+every variant the library offers, instead of the handful the product chose.
 
 **Third of three skills**, after `design-language` and `design-system`. The
 guardrails in `DESIGN_LANGUAGE.md` are where several `forbidden` entries come

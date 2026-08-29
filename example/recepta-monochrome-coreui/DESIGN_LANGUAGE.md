@@ -81,6 +81,8 @@ guardrails:
     enforcement: ledger
 ---
 
+<!-- example/recepta-monochrome-coreui/DESIGN_LANGUAGE.md -->
+
 # Design language — Recepta
 
 A personal recipe notebook for home cooking, nutrition and everyday health. The
@@ -136,9 +138,17 @@ The tokens live in `src/`. This section is the **rules for using them**.
   and the only chromatic decision in the product. Given at the interview as
   *"the blue of a biro"* and converted on the spot; the hex equivalent is
   `#1d51c4`, which shifts very slightly on conversion.
-- **Neutral seed:** fresh recycled paper, `oklch(0.97 0.012 85)`, pulled through
-  a 12-step ramp at `neutralPigment: 0.6`. Step 1 is the page, step 12 is
-  graphite. Nothing in the product is a true grey.
+- **Neutral seed:** kraft/straw pigment `#8f7c5e`, pulled through a 12-step ramp
+  at `neutralPigment: 0.6`. The page comes out `#f8f6f4` and step 12 is
+  graphite; nothing in the product is a true grey.
+
+  **The seed is the pigment, not the page.** A ramp seed's own chroma is the
+  peak the curve multiplies, so handing it the near-white paper colour —
+  `oklch(0.97 0.012 85)`, chroma 0.012 — leaves a peak of 0.007 and produces an
+  ordinary grey ramp. The warmth disappears and nothing errors, because a grey
+  ramp is a valid ramp. The hue sits at the yellow-green end of warm rather
+  than the red end, which is the difference between paper stock and a stained
+  page.
 - **The accent is strong, so its label inverts.** `accentContrast: high` — the
   blue is saturated enough that `fg-on-accent` is measured light, and the
   contrast gate checks it as such. A pale accent would have kept one ink colour

@@ -1,0 +1,159 @@
+// example/recepta-monochrome-coreui/theme.scss
+
+// =============================================================================
+// LAYER 2 — THE ASSIGNMENT
+// =============================================================================
+//
+// Every surface and every piece of ink is a LADDER POSITION on the paper ramp,
+// and one colour — the pen — carries everything interactive.
+//
+// A theme is a COMPLETE set of colour decisions. `_req()` raises a Sass error
+// on the first missing key rather than filling it in, because there is nothing
+// above a theme to inherit from and an omission is indistinguishable from an
+// oversight. All four status families, all six sub-keys each.
+// =============================================================================
+
+@use 'sass:map';
+@use '../../src/base';
+@use 'palette' as p;
+
+@function paper($step) {
+  @return map.get(p.$paper, $step);
+}
+
+@function pen($step) {
+  @return map.get(p.$pen, $step);
+}
+
+$recepta: (
+  // --- Paper: the ladder ---------------------------------------------------
+  //
+  // The page is NOT the lightest step. Step 0 is pure white and is reserved for
+  // something lifted clear of the page — a modal, a dropdown. Putting the page
+  // at 100 leaves two lighter steps above it, which is what lets a card read as
+  // resting ON the sheet rather than as a hole cut in it.
+  page: paper(100),
+  surface: paper(50),
+  raised: paper(0),
+  sunken: paper(200),
+  'surface-hover': paper(150),
+  'surface-active': paper(200),
+  overlay: rgba(38, 32, 22, 0.55),
+
+  // --- Ink -----------------------------------------------------------------
+  text: paper(900),
+  'text-muted': paper(700),
+  'text-subtlest': paper(600),
+  heading: paper(950),
+
+  // The secondary action. `secondaryAction: neutral` — a supporting action
+  // tinted with the accent would put two blues on a page whose premise is one.
+  neutral: paper(700),
+  'on-neutral': paper(0),
+  'neutral-hover': paper(800),
+  'neutral-active': paper(900),
+
+  disabled: paper(200),
+  'disabled-text': paper(500),
+
+  // --- Pen: the one live colour --------------------------------------------
+  //
+  // ONE declaration. `accent` expands to what acts, what is chosen and where
+  // text goes, because `$colour-strategy: 'monochrome'` says those are three
+  // jobs and one colour. In the functional school this block is twenty-one
+  // entries.
+  accent: pen(700),
+  'on-accent': paper(0),
+  'accent-hover': pen(800),
+  'accent-active': pen(900),
+  'accent-subtle': pen(50),
+  'accent-text': pen(700),
+
+  // Does not collapse onto the accent. The school says one HUE, not one state,
+  // and a visited link that looks unvisited is an accessibility regression
+  // dressed as minimalism.
+  'link-visited': pen(900),
+
+  // --- Structure -----------------------------------------------------------
+  //
+  // `elevation: borders` with `elevationCarrier: border-color`. The border is
+  // the thing that has to be strong: a flat system with a weak border produces
+  // surfaces nobody can tell apart, and it passes the contrast gate while doing
+  // it, because that gate measures text against its background rather than one
+  // surface against another.
+  border: paper(300),
+  'border-subtle': paper(200),
+  'border-strong': paper(500),
+  ring: pen(600),
+
+  'shadow-raised': base.scale(shadow, '2xs'),
+  'shadow-overlay': base.scale(shadow, sm),
+
+  // --- Status: the four exceptions -----------------------------------------
+  //
+  // `statusColours: brand-adapted` moves chroma and temperature, never the hue
+  // family. A green that is not green stops meaning "it worked", so these come
+  // from the tool's own primitives at restrained steps rather than being
+  // derived from either pigment.
+  success: base.color(green, 700),
+  'on-success': paper(0),
+  'success-hover': base.color(green, 800),
+  'success-active': base.color(green, 900),
+  'success-subtle': base.color(green, 50),
+  'success-text': base.color(green, 800),
+  'success-border': base.color(green, 200),
+
+  // The inverted pair. Dark ink on a light amber fill, so it has to BRIGHTEN as
+  // it is pressed — darkening walks the fill toward its own label and the text
+  // disappears exactly while the user is on it.
+  warning: base.color(amber, 200),
+  'on-warning': base.color(amber, 950),
+  'warning-hover': base.color(amber, 100),
+  'warning-active': base.color(amber, 50),
+  'warning-subtle': base.color(amber, 50),
+  'warning-text': base.color(amber, 800),
+  'warning-border': base.color(amber, 300),
+
+  danger: base.color(red, 700),
+  'on-danger': paper(0),
+  'danger-hover': base.color(red, 800),
+  'danger-active': base.color(red, 900),
+  'danger-subtle': base.color(red, 50),
+  'danger-text': base.color(red, 800),
+  'danger-border': base.color(red, 200),
+
+  // Info is the pen, and this is the one status that IS a school decision.
+  // Informational is not an alarm — it is the interface talking — so it takes
+  // the interface's colour rather than a fifth hue nobody asked for.
+  info: pen(700),
+  'on-info': paper(0),
+  'info-hover': pen(800),
+  'info-active': pen(900),
+  'info-subtle': pen(50),
+  'info-text': pen(700),
+  'info-border': pen(200)
+);
+
+// -----------------------------------------------------------------------------
+// Structure — the archetype's numbers
+// -----------------------------------------------------------------------------
+//
+// Straight from the Editorial & Premium row of `archetypes.md`, with the one
+// override DESIGN_LANGUAGE.md records: `size-control` raised from the
+// archetype's 40px to 44px because the product is multiplatform and 40px is a
+// miss target on a phone.
+$structure: (
+  'radius-control': 4px,
+  'radius-surface': 6px,
+  'size-control': calc(var(--app-space-unit) * 11),
+  'size-icon': 20px,
+  'icon-stroke': 1.25px,
+  'line-height': 1.7
+);
+
+// Typography is where a monochrome product keeps its identity. With one accent
+// and a grey ramp, the pairing is what separates a notebook from a dashboard.
+$typography: (
+  'font-family-body': (ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif),
+  'font-family-heading': (ui-serif, Georgia, Garamond, 'Times New Roman', serif)
+);

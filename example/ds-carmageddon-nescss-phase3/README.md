@@ -1,3 +1,5 @@
+<!-- example/ds-carmageddon-nescss-phase3/README.md -->
+
 # DS Carmageddon with NES.css — phase 3
 
 A third product on the same foundation: a race HUD in pixel art, built on

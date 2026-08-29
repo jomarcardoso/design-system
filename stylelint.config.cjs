@@ -1,3 +1,5 @@
+// stylelint.config.cjs
+
 /**
  * Layer boundaries are a convention until something enforces them. Six months
  * in, someone writes `bg-indigo-600` inside a component and the foundation

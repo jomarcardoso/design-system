@@ -113,6 +113,10 @@ guardrails:
     instead: toast
 ---
 
+<!-- skills/design-language/templates/DESIGN_LANGUAGE.md -->
+
+<!-- DESIGN_LANGUAGE.md -->
+
 # Design language — {{PRODUCT}}
 
 {{One paragraph: the sector, the promise, and who uses it. Written from the

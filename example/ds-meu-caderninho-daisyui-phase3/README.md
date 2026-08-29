@@ -1,3 +1,5 @@
+<!-- example/ds-meu-caderninho-daisyui-phase3/README.md -->
+
 # DS Meu Caderninho with daisyUI — phase 3
 
 A recipe notebook, built to match a supplied design rather than to show off the

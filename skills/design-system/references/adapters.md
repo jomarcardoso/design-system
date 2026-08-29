@@ -1,3 +1,5 @@
+<!-- skills/design-system/references/adapters.md -->
+
 # Adapters
 
 Reference for `design-system`. Load this when writing, debugging or choosing

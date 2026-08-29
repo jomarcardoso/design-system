@@ -1,3 +1,5 @@
+<!-- example/ds-caderno-accent-driven/README.md -->
+
 # DS Caderno — accent-driven, no library
 
 The **monochrome / accent-driven** school, built from two pigments and nothing

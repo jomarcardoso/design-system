@@ -1,9 +1,16 @@
+<!-- skills/design-system/references/install.md -->
+
 # Installing the design system into a project
 
 The files are **vendored**, not installed from a registry: copy them in, and the
-project owns them from that point on. Editing `src/_config.scss` in the target
-project *is* the supported way to configure the system — there is no package
-boundary to reach across.
+project owns them from that point on — there is no package boundary to reach
+across.
+
+**Configuration happens in the project's ENTRY file, not by editing
+`src/_config.scss`.** That file holds `!default` values and is the module being
+configured; the entry does `@use '…/src/config' with (…)`, which is what every
+example in `example/` does. Editing the vendored copy also works and is worse:
+the next upgrade overwrites it.
 
 Source: `${CLAUDE_PLUGIN_ROOT}`.
 
@@ -54,27 +61,86 @@ Report what you found in one or two sentences before asking. "You're on
 Bootstrap 5.3 and there's an existing `--app-*` set in `styles/theme.css`" gives
 the person the context to answer well.
 
-## Step 2 — Ask three independent questions
+## Step 2 — Ask six questions
 
-Ask all three together. They are genuinely independent — declining Tailwind must
-not skip the adapter question.
+**One number, one decision, and every option lettered.** They are genuinely
+independent — declining Tailwind must not skip the adapter question, and the
+prefix must not ride along inside "the foundation" as a sub-decision. A client
+answers "C" in a second and composes the same answer in prose in a minute.
 
-**1. The foundation** — always installed; the choice is what comes with it.
+Ask them together, each with the detection from step 1 marked as the
+recommendation. Carry the answers forward: **open every reply with what has
+been answered so far**, so a long install cannot lose its place and restart.
 
-- Layers 1–3 (`src/`), plus `app.css`, which declares the cascade layer order.
-- `reset-a11y.css` — optional. Restores the **native** focus outline after a
-  reset removes it. Worth taking: the native outline is forced-colors aware,
-  never clipped by `overflow`, and never shifts layout, none of which a token
-  ring can match.
-- Sub-decisions: the token **prefix**, and which **themes** to compile.
+```
+Answered: 1 yes · 2 app · 3 light + dark
+Remaining: 4, 5, 6
+```
 
-**2. The Tailwind bridge** — yes or no, independent of question 3.
+**1. Take `reset-a11y.css`?** The foundation itself — layers 1–3 (`src/`) plus
+`app.css`, which declares the cascade layer order — is always installed. This is
+the only part of it that is a choice.
+
+- (A) Yes *(recommended)*
+- (B) No
+
+It restores the **native** focus outline after a reset removes it. The native
+outline is forced-colors aware, never clipped by `overflow`, and never shifts
+layout — none of which a token ring can match.
+
+**2. Which token prefix?**
+
+- (A) `app` *(default)*
+- (B) `ds`
+- (C) Something else
+
+**Check for a collision before proposing (A).** If the project already has
+`--app-*` from its own design system, two systems share a namespace silently,
+whichever loads last wins, and neither team finds out. See below.
+
+**3. Which themes to compile?**
+
+- (A) `light` and `dark` *(recommended)*
+- (B) `light` only
+- (C) A named set — say which
+
+Dark mode is one more `emit-theme()` call, and the dark theme can be derived
+rather than written; see the dark mode section in `SKILL.md`. Adding it later is
+cheap, but adding it later means every colour decision was made without it.
+
+**4. The Tailwind bridge?** Independent of question 5.
+
+- (A) Yes — the project already uses Tailwind v4
+- (B) No
 
 Adds `tailwind.css`, which publishes layer 2 as utilities (`bg-surface`,
 `text-fg-muted`) through `@theme inline`. Zero extra custom properties. Only
 meaningful if the project already uses Tailwind v4.
 
-**3. An adapter** — independent of question 2. Pick **one**.
+**5. Which adapter?** Independent of question 4. Pick **one** — lead with
+whatever step 1 detected, marked as the recommendation.
+
+- (A) None
+- (B) Bootstrap
+- (C) CoreUI
+- (D) daisyUI *(needs Tailwind v4)*
+- (E) Pico CSS
+- (F) Bulma
+- (G) Flowbite *(needs Tailwind v4)*
+- (H) Preline UI *(needs Tailwind v4)*
+- (I) NES.css
+- (J) Water.css
+- (K) MVP.css
+
+**6. Where does `src/` go?**
+
+- (A) `styles/ds/src/` *(default)*
+- (B) Somewhere else — say where
+
+Keep the internal structure intact wherever it lands; the `@use` paths are
+relative.
+
+What each adapter answer brings:
 
 - **None** — plain CSS, or a framework with no adapter yet. Set
   `$adapters: ()`. Everything still works; components read layer 2 directly.
@@ -138,25 +204,47 @@ Default `app`. **Check for a collision first** — if the project already has
 plan to converge deliberately. Two systems silently sharing a namespace is the
 worst of the options, because whichever loads last wins and neither team knows.
 
-Set it in `src/_config.scss`:
+Set it in the entry:
 
 ```scss
-$prefix: 'ds' !default;
+@use 'styles/ds/src/config' with ($prefix: 'ds');
 ```
 
-## Step 3 — Copy only what was chosen
+## Step 3 — Read the answers back, then copy
+
+**Do not copy a file in the same turn the last question is answered.** One
+exchange sits between them: the six answers, plus what each one is about to do
+to the project.
+
+```
+Taking reset-a11y.css · prefix `app` · light + dark · no Tailwind bridge ·
+CoreUI adapter · src/ into styles/ds/src/
+
+That writes: styles/ds/src/, app.css, reset-a11y.css, coreui-entry.css,
+src/adapters/_coreui.scss, stylelint.config.cjs, and a ds.scss entry.
+Proceed?
+```
+
+Cheap here, expensive afterwards: an install is files landing in someone's
+repository, and a wrong prefix is a find-and-replace across everything that has
+been written since.
+
+**What is emitted is what was approved.** If filling the theme map makes you
+want a different answer, that is a question, not an edit.
+
+## Step 3b — Copy only what was chosen
 
 | Always | `src/`, `app.css` |
-| Q1 opt-in | `reset-a11y.css` |
-| Q2 yes | `tailwind.css` |
-| Q3 Bootstrap | `bootstrap-entry.scss`, `src/adapters/_bootstrap.scss` |
+| Q1 yes | `reset-a11y.css` |
+| Q4 yes | `tailwind.css` |
+| Q5 an adapter | `<name>-entry.*`, `src/adapters/_<name>.scss` |
 | Always | `stylelint.config.cjs` — merge into the project's existing config if it has one |
 
-If the adapter is **None**, delete `src/adapters/` and set `$adapters: ()` in
-`src/_config.scss`.
+If the adapter is **None**, delete `src/adapters/` and pass `$adapters: ()` in
+the entry's `@use … with`.
 
-Put `src/` wherever the project keeps sources — `styles/ds/src/` is a reasonable
-default. Keep the internal structure intact; the `@use` paths are relative.
+Put `src/` where question 6 said. Keep the internal structure intact; the
+`@use` paths are relative.
 
 ## Step 4 — Wire the cascade
 

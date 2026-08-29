@@ -1,3 +1,5 @@
+// scripts/generate-pattern-docs.mjs
+
 // =============================================================================
 // PATTERN DOCUMENTATION — generated from the ledger, never written by hand
 // =============================================================================

@@ -1,3 +1,5 @@
+<!-- skills/design-language/references/archetypes.md -->
+
 # The five archetypes, as token values
 
 An archetype is a **preset, not a cage**. It seeds the theme and the structural

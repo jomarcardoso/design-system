@@ -1,3 +1,5 @@
+<!-- example/ds-itau-shadcn-phase3/README.md -->
+
 # DS Itaú — shadcn/ui + Radix + Tailwind, phase 3
 
 A reconstruction of **iDS**, the design system Itaú runs in production, built on

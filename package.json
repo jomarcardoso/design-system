@@ -1,6 +1,6 @@
 {
   "name": "@org/ds",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "description": "Framework-independent design token foundation. Layer 1 compiles away, layer 2 is the public contract, adapters are leaves.",
   "type": "module",
@@ -21,7 +21,7 @@
     "build:daisyui": "tailwindcss -i daisyui-entry.css -o dist/daisyui.css",
     "build:demo-themes": "sass --no-source-map --style=compressed example/demo/demo.scss dist/demo-themes.css",
     "build:example-booking": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function,global-builtin,color-functions --load-path=. --load-path=node_modules example/ds-booking-bulma/ds.scss example/ds-booking-bulma/ds.css",
-    "build:example-caderninho": "sass --no-source-map --load-path=. example/ds-meu-caderninho-daisyui-phase3/ds.scss example/ds-meu-caderninho-daisyui-phase3/ds.css",
+    "build:example-caderninho": "sass --no-source-map --load-path=. example/ds-meu-caderninho-daisyui-phase3/ds.scss example/ds-meu-caderninho-daisyui-phase3/ds.css example/recepta-monochrome-coreui/ds.css",
     "build:example-carmageddon": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-carmageddon-nescss-phase3/ds.scss example/ds-carmageddon-nescss-phase3/ds.css",
     "build:example-cyberpunk": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-cyberpunk-bulma-phase2/ds.scss example/ds-cyberpunk-bulma-phase2/ds.css",
     "build:example-hot-tone": "sass --no-source-map --load-path=. example/ds-hot-tone-bootstrap-phase1/ds.scss example/ds-hot-tone-bootstrap-phase1/ds.css",
@@ -47,7 +47,7 @@
     "verify:utilities": "node scripts/check-utilities.mjs example/ds-itau-shadcn-phase3/index.html example/ds-itau-shadcn-phase3/tw.css example/ds-itau-shadcn-phase3/ds.css example/ds-itau-shadcn-phase3/app.css",
     "watch:tokens": "sass --watch src/ds.scss dist/ds.css",
     "build:example-caderno": "sass --no-source-map --silence-deprecation=if-function --load-path=. example/ds-caderno-accent-driven/ds.scss example/ds-caderno-accent-driven/ds.css",
-    "verify:examples-refs": "node scripts/check-dangling-refs.mjs example/ds-booking-bulma/ds.css example/ds-caderno-accent-driven/ds.css example/ds-carmageddon-nescss-phase3/ds.css example/ds-cyberpunk-bulma-phase2/ds.css example/ds-hot-tone-bootstrap-phase1/ds.css example/ds-itau-shadcn-phase3/ds.css example/ds-meu-caderninho-daisyui-phase3/ds.css"
+    "verify:examples-refs": "node scripts/check-dangling-refs.mjs example/ds-booking-bulma/ds.css example/ds-caderno-accent-driven/ds.css example/ds-carmageddon-nescss-phase3/ds.css example/ds-cyberpunk-bulma-phase2/ds.css example/ds-hot-tone-bootstrap-phase1/ds.css example/ds-itau-shadcn-phase3/ds.css example/ds-meu-caderninho-daisyui-phase3/ds.css example/recepta-monochrome-coreui/ds.css"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

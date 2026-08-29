@@ -1,3 +1,5 @@
+<!-- example/ds-booking-bulma/README.md -->
+
 # DS Booking — Bulma, phase 3
 
 A reconstruction of Booking.com's design language on this foundation, built on

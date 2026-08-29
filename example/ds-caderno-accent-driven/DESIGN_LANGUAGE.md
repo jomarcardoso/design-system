@@ -50,6 +50,8 @@ overrides:
     because: two lighter steps have to stay above it, or a card reads as a hole cut in the sheet rather than as paper resting on paper
 ---
 
+<!-- example/ds-caderno-accent-driven/DESIGN_LANGUAGE.md -->
+
 # Caderno — design language
 
 A recipe notebook. The user's own writing is the content and the interface is

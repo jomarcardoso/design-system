@@ -4,7 +4,48 @@ description: Runs the discovery interview that defines a product's design langua
 license: MPL-2.0
 ---
 
+<!-- skills/design-language/SKILL.md -->
+
 # Design language
+
+## STOP — your first reply is a request, not an interview
+
+**Do not start asking questions on the first turn.** This file explains how the
+interview works; it does not contain the questions, the options, the per-archetype
+recommendations or the document being filled in. An interview run from this file
+alone invents its own questions, and the answers land in a document with sections
+missing.
+
+**How to tell whether you have a file: can you quote a line from it?** If not,
+you do not have it. In a chat there is no filesystem to check, so anything not
+pasted into the conversation is missing, and missing is the normal state on turn
+one.
+
+Unless every file below is already in the conversation, your first reply is this
+and nothing else — the person running you should not have to read this file to
+find out what it needs:
+
+> Before I start the interview I need these, all from this plugin. Paths are
+> from the repository root:
+>
+> 1. `skills/design-language/references/questionnaire.md` — the eighteen questions
+> 2. `skills/design-language/references/archetypes.md` — the preset behind every recommendation
+> 3. `skills/design-language/references/colour-strategies.md` — block 4
+> 4. `skills/design-language/templates/DESIGN_LANGUAGE.md` — the document I will fill in
+> 5. `skills/design-language/references/worked-example.md` — calibration
+> 6. `skills/design-language/references/review.md` — the check at the end
+>
+> Also send `package.json` if you want the version recorded correctly, and any
+> existing `DESIGN_LANGUAGE.md` if this is a revision rather than a first run.
+>
+> Send what you have and I will tell you what is still blocking.
+
+Then **wait**. Files 1 and 4 are the two that cannot be worked around: without
+the questionnaire there is no interview, and without the template there is no
+document — only a guess at what one contains.
+
+If the person says to proceed anyway, do — and say up front which questions you
+are inventing and which sections you may be missing.
 
 Tokens are the bricks and the paint. The design language is the architecture,
 the tone and the rules of construction — it tells an agent and a developer not
@@ -13,6 +54,49 @@ only *what* to use but *how*, *when* and *why*.
 This skill runs a short interview and writes **`DESIGN_LANGUAGE.md` at the
 project root**: YAML front matter an agent reads before generating anything, and
 prose a person reads to find out why the system is the way it is.
+
+## What you need in front of you
+
+**If any of these is missing, ask for it before starting the interview.** Four
+of the six are read DURING it rather than after, so a missing one shows up as an
+invented value in the finished document rather than as an error.
+
+| file | needed for | without it |
+|---|---|---|
+| `references/questionnaire.md` | the eighteen questions, their options and the ✅/⚠️/❌ tables | questions get skipped or asked as free text |
+| `references/archetypes.md` | the preset behind every recommendation, and the row that decides typography, spacing and icons | faces and numbers invented to sound right |
+| `references/colour-strategies.md` | block 4 — the three schools, the seven secondary treatments, the accent-driven follow-ups | the wrong follow-up questions asked |
+| `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
+| `references/review.md` | the check at the end | nobody audits the file that was just written |
+| `references/worked-example.md` | calibrating length and specificity against a real product | a document that is too vague or too long |
+
+Say what is missing and what it would have decided. *"I do not have
+`archetypes.md`, so I have no preset for the typography — send it, or name the
+faces yourself."* costs one exchange; a document built on guesses costs a
+rebuild.
+
+## Every file you write opens with its path
+
+The first line of every generated file is a comment naming its path from the
+project root, then a blank line, then the file's real first line. In a
+`DESIGN_LANGUAGE.md` the front matter comes first, because tooling parses it
+before anything else, and the comment goes immediately after the closing `---`:
+
+```markdown
+---
+toolVersion: 0.5.0
+...
+---
+
+<!-- DESIGN_LANGUAGE.md -->
+```
+
+Files reach people detached from their tree — pasted into a chat, quoted in a
+review, attached to a message. One line says where this one belongs, and it
+survives copy-paste in a way a directory listing does not.
+
+**JSON is the exception**, having no comment syntax. Do not invent a `"_path"`
+key to fake it — something will eventually read it as data.
 
 ## The sequence
 
@@ -323,7 +407,7 @@ prose is the argument, and a key with no argument was not decided, only typed.
 ## Review the file you just wrote
 
 Run [`references/review.md`](references/review.md) against the finished document
-before handing it over. Thirty-one checks, each one having failed in a real run,
+before handing it over. Thirty-two checks, each one having failed in a real run,
 each one passing or failing against something quotable.
 
 Two rules carry it:
