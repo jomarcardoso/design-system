@@ -92,7 +92,7 @@ $caderno: (
   // --- Structure -----------------------------------------------------------
   //
   // Borders are the elevation carrier. `elevation: borders` in
-  // DESIGN-LANGUAGE.md — a ruled page separates blocks with lines, not with
+  // DESIGN_LANGUAGE.md — a ruled page separates blocks with lines, not with
   // shadows, and the two shadows below exist only for the two things that
   // genuinely float above the sheet.
   border: paper(300),
@@ -106,7 +106,7 @@ $caderno: (
   // --- Status: the four exceptions -----------------------------------------
   //
   // Straight from the tool's own primitives rather than derived from either
-  // pigment. `statusColours: traditional` in DESIGN-LANGUAGE.md: an error the
+  // pigment. `statusColours: traditional` in DESIGN_LANGUAGE.md: an error the
   // user must not miss is not the place to be inventive, and a red warmed
   // toward the paper stops reading as an error.
   success: base.color(green, 700),

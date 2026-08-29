@@ -7,7 +7,7 @@ license: MPL-2.0
 # Design Patterns
 
 **Third of three skills**, after `design-language` and `design-system`. The
-guardrails in `DESIGN-LANGUAGE.md` are where several `forbidden` entries come
+guardrails in `DESIGN_LANGUAGE.md` are where several `forbidden` entries come
 from: a restriction the interview recorded with a detectable signature belongs
 in the ledger, where the build catches it, rather than in a document nobody
 runs.

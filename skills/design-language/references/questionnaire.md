@@ -1,6 +1,7 @@
 # The discovery interview
 
-Fourteen questions in six blocks. Two rules govern the whole thing:
+Seventeen questions in six blocks — three of them apply to one colour
+school only. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
 threshold, or a rule the build can check. A question whose answer changes
@@ -43,6 +44,30 @@ friendlier" answers blocks 1 and 3 in one sentence.
 corners and soft shadows — keep those?"* is one exchange. Reading four options
 aloud is four.
 
+**One number, one decision.** A question that carries three decisions collects
+them positionally — "A, A" for three slots — and one disappears without anyone
+noticing which. Split it into 17a, 17b, 17c and let each answer have a label to
+land on.
+
+**Confirming means proposing ONE option.** Compressing a question is allowed;
+fusing its options is not. *"Hierarchy carried by whitespace and thin borders,
+with imperceptible shadows — confirm?"* names three mutually exclusive answers
+and takes a single "yes" for all of them. Whatever gets written down after that
+is a guess, and it looks exactly like a decision. If a confirmation mentions two
+options, it was not a confirmation — ask again with one.
+
+**Every option gets a letter.** A client answers "C" in a second and composes
+"preenchimento neutro sutil" in a minute, and the minute buys nothing — the two
+answers carry the same information. Where this file writes options as a prose
+list, that is shorthand for the reference, not the phrasing to use: letter them
+before asking. The only free-text questions are 1 (sector and promise) and the
+exact colour value in 9.
+
+**A question with a known default is a confirmation, not a menu.** Once the
+archetype and the school are set, most of what remains has a recommended answer
+— propose it and let a "keep it" close the question. Reading four options to
+someone with no reason to prefer one is asking them to do this skill's job.
+
 **Never invent an answer.** Write `undecided` with the default that was applied.
 An assumption recorded as a fact is worse than a gap, because nobody revisits it.
 
@@ -76,8 +101,14 @@ test answers against.
 
 **3. Which archetype matches the vision?**
 
-*Tech Minimalist · Enterprise Solid · Playful & Expressive · Editorial & Premium ·
-Utilitarian & Technical · hybrid.*
+- (A) Tech Minimalist
+- (B) Enterprise Solid
+- (C) Playful & Expressive
+- (D) Editorial & Premium
+- (E) Utilitarian & Technical
+- (F) Hybrid — name the two
+
+Lead with the one question 2 pointed at, marked as the suggestion.
 
 **If 2 and 3 disagree, ask about it.** It usually means the brand aspires to one
 thing and the product needs another — an analytics tool whose brand is playful,
@@ -108,7 +139,9 @@ worth recording as one.
 
 **5. Which devices come first?**
 
-*Desktop-first · Mobile-first · Equally multiplatform.*
+- (A) Desktop-first
+- (B) Mobile-first
+- (C) Equally multiplatform
 
 No archetype forbids any of these, and one of them **overrides the archetype**:
 mobile-first raises `size-control` to at least 44px regardless of what the
@@ -161,17 +194,12 @@ into `elevationCarrier`, which the template requires when elevation is `borders`
 
 > Decides the theme map and the threshold in `themes.check-contrast()`.
 
-**8. Is there a brand primary colour, or should one be generated?**
+**8. Which colour school does this product belong to?**
 
-Free text. If it exists, ask for the exact value. If it is a hex, say up front
-that it converts to oklch and may shift very slightly — that is gamut mapping,
-not an error.
+Two phrasings of one decision: 8a opens the topic, 8b settles it. Ask 8a first
+because it sorts fast, then confirm with 8b — 8a alone is never the answer.
 
-**No archetype answers this.** An archetype suggests a mood; the brand colour
-comes from the brand, and guessing at the one thing the client already knows is
-the fastest way to lose their confidence in everything else.
-
-**8b (opener). Which of these is the priority — brand presence everywhere,
+**8a (opener). Which of these is the priority — brand presence everywhere,
 managing a dense operational workflow, or a clean page where the user's own
 content is the only thing standing out?**
 
@@ -183,9 +211,9 @@ Use it to open the topic, **not to decide**. It sorts fast because it is about
 priority rather than pixels, and a client can answer it in one sentence. But it
 sorts by product TYPE, and product type does not determine the school: Apple
 Card is a bank and is monochrome; plenty of content apps are brand-led. Take the
-answer as a hypothesis and confirm it with 8c.
+answer as a hypothesis and confirm it with 8b.
 
-**8c (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
+**8b (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
 does it take your main brand colour, or a different one?**
 
 - (A) A different colour → `$colour-strategy: 'functional'`
@@ -197,7 +225,7 @@ vocabulary, and it is the most load-bearing line in the document — it is what 
 new component six months later reads to find out whether "chosen" gets a colour
 of its own.
 
-**When 8b and 8c disagree, 8c wins, and say so out loud.** The disagreement is
+**When 8a and 8b disagree, 8b wins, and say so out loud.** The disagreement is
 information: a client who said "brand everywhere" and then described a grey
 interface with one accent has a marketing site in mind and a product in front of
 them. Naming that early is cheaper than discovering it in review.
@@ -212,14 +240,52 @@ the follow-ups differ per answer.
 be monochrome as Tech Minimalist ones, and a Playful brand may well mark
 selection with its own hue. The two axes are independent.
 
-### 8d–8f — accent-driven only
+**9. Is there a brand primary colour, or should one be generated?**
 
-Ask these **only when 8c answered (C)**. In the other two schools the palette is
+**Asked after the school on purpose.** The school changes what this question is
+even about: in `functional` it opens a palette of several roles, in `brand` it is
+the one hue that does most of the work, and in `monochrome` it is the accent and
+the ONLY chromatic decision in the product. Ask it first and the client is
+choosing a colour without knowing what it will be used for.
+
+- (A) There is one — give the exact value
+- (B) There is none — generate it
+
+If (A) and it is a hex, say up front that it converts to oklch and may shift very
+slightly; that is gamut mapping, not an error.
+
+**No archetype answers this.** An archetype suggests a mood; the brand colour
+comes from the brand, and guessing at the one thing the client already knows is
+the fastest way to lose their confidence in everything else.
+
+**And the SCHOOL does not answer it either**, which is the trap in this block and
+has already been walked into: a client who opens with "we are accent-driven" has
+answered question 8, not this one. The school decides how many colours the system
+spends and on what — it never chooses the hue. Naming a school and then skipping
+the value produces *"a saturated blue ink tone"* in the finished document: a
+sentence, where the build needs a number.
+
+**A description is not an answer.** *"Ballpoint-pen blue on recycled paper"* is
+the client doing their job well and this skill not doing its own. Convert it, on
+the spot, to two values and read them back for confirmation — the accent and the
+neutral seed — because the client can judge `oklch(0.45 0.19 258)` rendered next
+to the words "ballpoint blue", and cannot judge it in the abstract six steps
+later.
+
+Leave the interview holding an `oklch()` or a hex. If there is none, say so,
+generate one against the level chosen in question 12, and record in the document
+that it was generated rather than given.
+
+---
+
+### 10 — the accent-driven profile
+
+Ask these **only when 8b answered (C)**. In the other two schools the palette is
 given; in this one it is generated from two pigments, and these three answers
 are what stop every monochrome product from looking like the same one. Skip them
 elsewhere — a functional product has no single "accent" to profile.
 
-**8d. Your highlight colour: strong enough that white text sits on it, or pale
+**10a. Your highlight colour: strong enough that white text sits on it, or pale
 enough that dark text stays?**
 
 - (A) Strong — Spotify, iOS → `accentContrast: high`
@@ -232,7 +298,7 @@ against a light or a dark foreground, and getting it wrong fails the contrast
 gate rather than shipping — but it fails at the end of the build, after the
 whole palette has been derived from the wrong assumption.
 
-**8e. Are your greys actually grey, or do they carry a tint?**
+**10b. Are your greys actually grey, or do they carry a tint?**
 
 - Pure grey → `neutralPigment: 0`
 - A hint — warm paper, cool slate → `0.5`–`0.8`
@@ -244,24 +310,50 @@ difference between a notebook and a settings screen. Ask for the FEELING —
 "warm paper", "cold steel" — and pick the number; a client has no intuition for
 chroma and every intuition for paper.
 
-**8f. How is one surface told from the next — a line, a change of tone, or a
+**10c. How is one surface told from the next — a line, a change of tone, or a
 shadow?**
 
 - (A) Lines → `surfaceSeparation: lines`
 - (B) Tone → `tones`
 - (C) Shadow → `shadows`
 
-The school leans on this because it has no colour to spend on structure. It also
-has to agree with `elevation` from block 2; if the client says "lines" here and
-"soft shadows" there, resolve it now rather than emitting both.
+The school leans on this because it has no colour to spend on structure.
 
-**8g. Beside your main button, what does the supporting action look like?**
+**This answer and `elevation` from question 7 are the same decision asked twice,
+so they pair one to one:**
+
+| question 7 | 10c |
+|---|---|
+| `borders` | `lines` |
+| `soft-shadows` | `shadows` |
+| `projected-shadows` | `shadows` |
+| — | `tones` → go back and set `elevation: borders`, because tone is not depth |
+
+Any other combination is a contradiction, not a nuance. If the client said
+"lines" there and "shadows" here, one of the two questions was heard wrong —
+re-ask the one that was compressed, and do not emit both.
+
+**11. Beside your main button, what does the supporting action look like?**
 
 
 - (A) Outlined
 - (B) A soft tint of the main colour
 - (C) A plain grey
 - (D) A second brand colour, filled
+
+**The school already has a favourite here — offer it as the default.** Question 8
+narrows this one, so present the recommendation and take a "keep it" as the
+answer rather than reading four options to a client who has no reason to prefer
+one:
+
+| school | default | why |
+|---|---|---|
+| `functional` | (A) outlined | the palette is already spending colour on roles |
+| `brand` | (B) a soft tint | the brand hue is present anyway; the tint reads as the same family |
+| `monochrome` | (C) plain grey | there is one accent and the secondary action is not it |
+
+(D) is the only answer that reaches for a layer 3 hook, and in `monochrome` it
+contradicts the school outright — take it, if taken, as a deviation.
 
 Seven treatments are in use and six of them are the same two or three tokens
 pointed at different values — so the answer changes `theme.scss` and never the
@@ -272,7 +364,7 @@ Ask it as an APPEARANCE question, as above, because that is how a client
 thinks about it. Translating the answer into roles is this skill's job, not
 theirs.
 
-**9. What level of accessibility rigour?**
+**12. What level of accessibility rigour?**
 
 - (A) **WCAG AA** — 4.5:1 body text. The recommended default for every archetype.
 - (B) **WCAG AAA** — 7:1. Government, health, anything with a legal requirement.
@@ -281,7 +373,13 @@ Not decoration: it sets the threshold the build enforces, and **AAA rejects
 palettes AA accepts**. Settle it before colours are picked. Ask it early even
 though it sits in block 4.
 
-**10. How should success, warning, error and info behave?**
+**13. How should success, warning, error and info behave?**
+
+- (A) Traditional — green, amber, red, blue
+- (B) Adapted to the brand palette
+
+The archetype has a ✅ in every row below, so **offer it as the default** instead
+of asking cold: *"Editorial suggests adapted status colours — keep that?"*
 
 | | traditional green/amber/red/blue | adapted to the brand palette |
 |---|---|---|
@@ -301,7 +399,7 @@ colour.
 
 > Decides the Voice section and the writing rules an agent follows.
 
-**11. How should the system speak in its own messages?**
+**14. How should the system speak in its own messages?**
 
 - (A) Direct and technical — *"Error 404: resource not found"*
 - (B) Clear and action-oriented — *"We couldn't find that page. Back to start"*
@@ -320,9 +418,10 @@ failure. The usable answer is normally "B, dropping to A for anything involving
 money or data loss", and that exception is what makes the rule enforceable —
 it goes into `voiceExceptions`.
 
-**12. Infinitive or imperative for action labels?**
+**15. Infinitive or imperative for action labels?**
 
-*"Save changes" vs "Save your changes".*
+- (A) Infinitive — *"Save changes"*
+- (B) Imperative — *"Save your changes"*
 
 No archetype prefers one. It sounds trivial and it is the most repeated string
 pattern in a product — settling it once removes a recurring review comment
@@ -335,13 +434,45 @@ forever.
 > Decides **checkable rules**. This block is what connects the interview to the
 > build, and it is the reason the document is worth generating at all.
 
-**13. Are there visual restrictions the system must NEVER apply?**
+**16. Are there visual restrictions the system must NEVER apply?**
 
-*Never gradients · never shadows · no filled icons · no full-bleed images · no
-uppercase labels …*
+**Do not ask this cold.** A client at this point in a first interview has no
+restrictions in mind, and asking them to produce some invites either an invented
+prohibition or an apologetic "I don't know" — both of which are the question
+failing, not the client. Nobody arrives with a list of things a product they have
+not built yet must never do. Restrictions come from having been burned, and this
+client has not been burned yet.
 
-Some come free with the archetype — Utilitarian already implies no decorative
-effects — so read the implied ones back and ask what to add.
+Ask it in two parts instead.
+
+**16a. Confirm what the archetype already forbids.** Present these as *already
+held*, not as options to pick — the answer is a yes, or a correction:
+
+| archetype | implied restrictions |
+|---|---|
+| Tech Minimalist | no gradients, no decorative shadows, no illustration as chrome |
+| Enterprise Solid | no gradients, no pill buttons, no display faces in the UI |
+| Playful & Expressive | no dense data tables, no uppercase-only labels |
+| Editorial & Premium | no gradients, no heavy shadows, no coloured headings, no uppercase labels |
+| Utilitarian & Technical | no decorative effects at all, no illustration, no rounded corners |
+
+> *"Editorial already rules out gradients, heavy shadows and coloured headings.
+> I have those. Anything to add?"*
+
+**16b. Anything beyond that?**
+
+- (A) Nothing for now
+- (B) Yes — say it
+
+**(A) is the expected answer and must be offered first**, not buried under five
+inventions. It is a real, common, correct outcome for a first interview: the
+guardrail list is the part of this document most designed to grow, and it grows
+from the first review where someone shipped a gradient. Say so when recording it,
+so an empty list reads as a stage rather than an oversight.
+
+The list fills faster on the conversion path — a team with an existing product
+has been burned already, and *"what keeps coming back in review?"* is the same
+question with a memory to answer from.
 
 For each restriction, ask the question that makes it enforceable:
 
@@ -352,13 +483,38 @@ advice. *"Never gradients"* is detectable: `linear-gradient` in the product's ow
 CSS. *"Keep it elegant"* is not, and saying so honestly is better than pretending
 it is a guardrail.
 
-**14. What are the universal interaction patterns?**
+**17. What are the universal interaction patterns?**
 
-Where confirmations live (modal or toast), whether destructive actions need a
-typed confirmation, whether forms save on blur or on submit.
+Three decisions, so **three labelled questions** — not one number carrying three
+answers. Numbering them together produces "A, A" for three slots: one answer
+silently dropped, and no way to tell which.
+
+**17a. Where do confirmations live?**
+
+- (A) A modal — blocks until answered
+- (B) A toast with undo
+
+*Propose (A) for anything that cannot be undone, (B) otherwise.*
+
+**17b. How much friction does a destructive action need?**
+
+- (A) One click
+- (B) A confirmation step
+- (C) Typing the name of the thing being deleted
+
+*Propose (B), or (C) when the data is unrecoverable.*
+
+**17c. When do forms save?**
+
+- (A) On blur, field by field
+- (B) On an explicit submit
+
+*Propose (B).*
 
 These become entries in `patterns.json`: the modal pattern either exists, or is
-`forbidden` with the toast named as `instead`.
+`forbidden` with the toast named as `instead`. **All three reach the document** —
+an answer collected in the ledger and missing from the generated file is worse
+than one never asked, because the client watched it being written down.
 
 ---
 
@@ -385,7 +541,7 @@ fails and names the alternative.
 `declaration-property-value-disallowed-list` catches
 `background: linear-gradient` anywhere in the project's own styles.
 
-**3. A line in `DESIGN-LANGUAGE.md`**, marked `enforcement: document`. An agent
+**3. A line in `DESIGN_LANGUAGE.md`**, marked `enforcement: document`. An agent
 reads it; no build checks it.
 
 ---

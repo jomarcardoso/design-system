@@ -1,6 +1,6 @@
 ---
 name: design-language
-description: Runs the discovery interview that defines a product's design language and writes DESIGN-LANGUAGE.md at the project root. Use this FIRST when starting a design system in a project, before any token or component work — trigger it on "start a design system", "set up the design system", "create a design language", "onboard this project", "define our visual identity", "we need a style guide", or when a project has tokens but nothing recording why they were chosen. Also use it to revisit a decision later: "why are our corners square", "change our voice", "add a guardrail". This is the first of three skills — it decides, `design-system` builds the tokens, `design-patterns` closes the component vocabulary.
+description: Runs the discovery interview that defines a product's design language and writes DESIGN_LANGUAGE.md at the project root. Use this FIRST when starting a design system in a project, before any token or component work — trigger it on "start a design system", "set up the design system", "create a design language", "onboard this project", "define our visual identity", "we need a style guide", or when a project has tokens but nothing recording why they were chosen. Also use it to revisit a decision later: "why are our corners square", "change our voice", "add a guardrail". This is the first of three skills — it decides, `design-system` builds the tokens, `design-patterns` closes the component vocabulary.
 license: MPL-2.0
 ---
 
@@ -10,7 +10,7 @@ Tokens are the bricks and the paint. The design language is the architecture,
 the tone and the rules of construction — it tells an agent and a developer not
 only *what* to use but *how*, *when* and *why*.
 
-This skill runs a short interview and writes **`DESIGN-LANGUAGE.md` at the
+This skill runs a short interview and writes **`DESIGN_LANGUAGE.md` at the
 project root**: YAML front matter an agent reads before generating anything, and
 prose a person reads to find out why the system is the way it is.
 
@@ -20,7 +20,7 @@ Three skills, in order. Each one needs the previous one's output.
 
 | | Skill | Produces | Question it answers |
 |---|---|---|---|
-| 1 | **design-language** (this) | `DESIGN-LANGUAGE.md` | why does it look and sound like this |
+| 1 | **design-language** (this) | `DESIGN_LANGUAGE.md` | why does it look and sound like this |
 | 2 | `design-system` | `src/`, the theme, `dist/theme-*.css` | what are the values |
 | 3 | `design-patterns` | `patterns.json` | which components may be built |
 
@@ -79,7 +79,7 @@ faces and spacing already chosen, and want them turned into tokens rather
 than reinvented. The interview still runs. It changes shape.
 
 **Read the code first, then confirm.** An existing system has already
-answered most of the fourteen questions; they are just answered in CSS
+answered most of the seventeen questions; they are just answered in CSS
 instead of in prose. Find them:
 
 ```bash
@@ -115,7 +115,8 @@ moving the brand.
 
 ## Running the interview
 
-Fourteen questions, six blocks. Read the questionnaire before starting.
+Seventeen questions, six blocks — three of them apply to one colour school
+only. Read the questionnaire before starting.
 
 **Every question decides something concrete.** A token value, a threshold, a
 guardrail. If an answer would change nothing, drop the question rather than
@@ -129,16 +130,111 @@ who says "IBM Carbon but friendlier" has answered blocks 1 and 3 at once.
 remaining question. "Playful suggests 16px corners and visible shadows — keep
 those?" is one exchange; reading three options aloud is three.
 
+**Confirming proposes ONE option.** Compressing a question is the point; fusing
+its options defeats it. A confirmation that names two mutually exclusive answers
+collects a "yes" that belongs to neither, and what gets written down afterwards
+is a guess wearing the shape of a decision. If the sentence you are about to
+send mentions two options, it is not a confirmation.
+
 **Never invent an answer.** Write `undecided` with the default that was applied.
 An assumption recorded as a fact is worse than a gap, because nobody revisits it.
 
-**Read the answers back before writing the file.** Archetype, density, geometry,
-colour rigour, voice, and every deviation with its reason. Contradictions surface
-in that summary, and the client hears their own product described while it is
-still cheap to change.
+**The archetype belongs to the client.** Answers that fight it go under
+`deviations` — they do not license changing it. Promoting an archetype to
+`hybrid` because one answer conflicts empties the deviation list without
+resolving anything, and it is worse than the conflict it hides: the record of a
+real tension is replaced by a premise nobody chose. If the answers genuinely
+point somewhere else, that is a QUESTION — *"your voice answer pulls towards
+Playful; do we change the archetype, or record it as a deviation?"* — and the
+client answers it. Three or more ❌ is the threshold for revisiting block 1, and
+even then it is asked, not decided.
 
 **Interview in the client's language; write the file in English**, like the rest
 of the system.
+
+## Carry the ledger in every turn
+
+The interview has state, and the state must live in the conversation rather than
+in recall. **Open every reply with the answers collected so far, then ask the
+next block.** It costs a few lines and it is what makes the interview survivable
+for a model that loses its place — and losing its place is not a long-context
+problem: the failure that motivated this rule happened on turn four of four.
+
+```
+Coletado: 1 caderno de receitas · 2 C · 3 Editorial & Premium
+          4 ocasional · 5 multiplataforma · 6 sutil · 7 bordas
+Faltam:   blocos 4, 5, 6
+```
+
+**The interview never restarts.** A model that cannot tell where it is will
+re-ask block 1 from the top, which is the single worst thing it can do — it
+reads to the client as the whole conversation having been thrown away. If you
+are unsure what has been answered, the last ledger is the answer; if there is no
+ledger, reconstruct one from the transcript and show it for confirmation. Asking
+"we have these seven, correct?" is recoverable. Starting over is not.
+
+**The ledger is also the read-back.** The final one, before the file is written,
+is just the same table with every row filled — so the gate below is not an extra
+ceremony, it is the last turn of something that has been running all along.
+
+## The read-back is a gate, not a courtesy
+
+**Do not write the file in the same turn that block 6 is answered.** Between the
+last answer and the first line of the document there is one more exchange, and
+skipping it is how a short, well-run interview still produces a contradictory
+file — every contradiction this skill has seen in the wild would have surfaced
+here.
+
+Read the answers back as a table, in the client's language, one row per front
+matter key:
+
+| key | value | where it came from |
+|---|---|---|
+| `archetype` | editorial-premium | Q3 — said outright |
+| `elevation` | borders | Q7 — "hierarchy from whitespace and thin lines" |
+| `surfaceSeparation` | lines | Q10c — agrees with Q7 |
+| `voice` | warm | Q14 — ⚠️ for editorial, recorded as a deviation |
+
+Four rules make it work:
+
+- **Every key gets a row.** A key with no row was never asked, and it must be
+  asked or written `undecided` — not filled from the archetype and presented as
+  the client's answer.
+- **Every row names the turn it came from.** A row whose origin is "inferred"
+  is the interview telling you where it guessed.
+- **Contradicting rows are resolved here**, out loud, before anything is
+  emitted. The pairs that contradict most often: `elevation` against
+  `surfaceSeparation`, `voice` against `archetype`, and a colour school named
+  in passing standing in for a brand colour nobody supplied.
+- **The approved table is a contract.** What gets emitted is what was approved,
+  key for key. If writing the file makes you want to change a value, that is not
+  an edit — it is a new question, and it goes back to the client before anything
+  is written. A file that differs from the table the client said yes to has
+  broken the only promise this gate makes.
+
+The client also hears their own product described while it is still one sentence
+to change, rather than a theme and a component vocabulary to rebuild.
+
+### Deviations are computed, not noticed
+
+Before showing the table, walk every answer against the archetype's row in
+[`references/archetypes.md`](references/archetypes.md) and the ✅/⚠️/❌ tables in
+the questionnaire. **Each answer that is not ✅ is a proposed deviation**, and it
+appears in the read-back as one, with its reason, for the client to accept:
+
+> `voice: warm` is ⚠️ for Editorial & Premium. Recording it as a deviation —
+> the notebook is meant to sound like a person, not a publication. Correct?
+
+This is mechanical on purpose. Left to judgement, the deviation list comes out
+empty every time, because the model that just collected an answer has no reason
+to doubt it — and an empty `deviations` on a product with three ⚠️ answers is
+the document lying about its own coherence.
+
+**And it is the only escape hatch.** The temptation, on finding a conflict this
+late, is to widen the archetype to `hybrid` so the conflict evaporates. That
+rewrites the client's own answer to Q3 to avoid writing one line, and it has
+happened twice. The archetype is a row in the contract like any other: changing
+it is a question, never a repair.
 
 ## Writing the file
 
@@ -156,11 +252,19 @@ specificity against something that actually shipped rather than against an
 invented brand.
 
 
-Copy [`templates/DESIGN-LANGUAGE.md`](templates/DESIGN-LANGUAGE.md) to the
+Copy [`templates/DESIGN_LANGUAGE.md`](templates/DESIGN_LANGUAGE.md) to the
 project root and fill it. Five sections, from the five pillars: principles,
 visual foundations, voice, interaction, composition.
 
-Two things to get right:
+**Open the template and work from it — do not write the document from memory.**
+Where there is no filesystem to copy through, read the template in full and
+reproduce every heading it has, including the ones you have little to say under.
+Reconstructing the structure from recall is how whole sections disappear:
+spacing and grid, the 45–75 character measure, `prefers-reduced-motion`, the
+closing "How this file is used". A missing heading is indistinguishable from a
+decision nobody made, so an empty one carries `undecided` and stays visible.
+
+Three things to get right:
 
 **The front matter and the prose must agree.** Tooling trusts the front matter,
 so a document whose YAML contradicts its own text is worse than one with no YAML
@@ -169,6 +273,28 @@ at all. When a decision changes, change both in the same edit.
 **Mark how each guardrail is enforced.** `ledger` and `stylelint` fail a build;
 `document` is advice an agent reads. Labelling advice as enforcement is the one
 way this file can actively mislead.
+
+**Check the invariants before emitting.** Six, and each one has produced a real
+broken document:
+
+| invariant | what a violation looks like |
+|---|---|
+| `surfaceSeparation` pairs with `elevation` — `borders`/`lines`, shadows/`shadows`; `tones` requires `elevation: borders` | a file that separates surfaces two ways at once |
+| `elevationCarrier` is set when `elevation: borders`, and omitted otherwise | a carrier named for a system that carries with shadow |
+| the accent trio — `accentContrast`, `neutralPigment`, `surfaceSeparation` — appears only under `colourStrategy: monochrome`, and always under it | a stale ramp profile the next reader cannot tell from a live one |
+| the brand colour is a value, not an adjective | "a saturated blue ink tone" reaching the build |
+| every front matter key is explained somewhere in the prose | `density: comfortable` declared and never costed |
+| every answer in the ledger reaches the document | "save on blur" collected, confirmed, and absent from the file |
+| `toolVersion` is read from `package.json`, not guessed | a document nobody can place against the changelog |
+
+**Record the version that generated the file.** `toolVersion` in the front
+matter, read from `package.json` at generation time. The tool is vendored, so
+nothing tells a project it has fallen behind — this line is where the next
+person starts reading `CHANGELOG.md` from, and without it catching up means
+diffing a document against a template of unknown vintage.
+
+The last one is the general case of the other four: the YAML is the index and the
+prose is the argument, and a key with no argument was not decided, only typed.
 
 ## Turning answers into a build
 
@@ -217,6 +343,6 @@ that it was generated rather than given.
 This file is meant to be edited. A design system that never revises its own
 language has either finished — which does not happen — or stopped being read.
 
-When a decision changes, change `DESIGN-LANGUAGE.md` first and the code second,
+When a decision changes, change `DESIGN_LANGUAGE.md` first and the code second,
 in the same commit. That ordering is what keeps the document the intent rather
 than a description written after the fact.

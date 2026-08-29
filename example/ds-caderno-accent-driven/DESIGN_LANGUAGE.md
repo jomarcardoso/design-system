@@ -1,4 +1,6 @@
 ---
+toolVersion: 0.4.0
+
 archetype: editorial-premium
 archetypeNote: ~
 

@@ -14,11 +14,11 @@ and they run in order:
 
 | | skill | produces | question it answers |
 |---|---|---|---|
-| 1 | `design-language` | `DESIGN-LANGUAGE.md` | why does it look and sound like this |
+| 1 | `design-language` | `DESIGN_LANGUAGE.md` | why does it look and sound like this |
 | 2 | `design-system` (this one) | `src/`, the theme, `dist/` | what are the values |
 | 3 | `design-patterns` | `patterns.json` | which components may be built |
 
-**If `DESIGN-LANGUAGE.md` does not exist at the project root, stop and run
+**If `DESIGN_LANGUAGE.md` does not exist at the project root, stop and run
 `design-language` first.** Skipping it produces a palette nobody can defend six
 months later — the values get chosen by whoever is typing, and the reasons
 are never written down.

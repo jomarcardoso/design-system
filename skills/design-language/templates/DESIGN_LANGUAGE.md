@@ -6,6 +6,16 @@
 # section that explains it — a front matter that disagrees with its own document
 # is worse than no front matter, because tooling trusts it.
 # =============================================================================
+# Which version of this tool ran the interview. Read it from `package.json` at
+# generation time — never guess it, and never leave it out.
+#
+# The tool is vendored, so nothing tells a project it has fallen behind. This
+# line is where the next person starts reading CHANGELOG.md from: without it,
+# catching up means diffing a document against a template of unknown vintage.
+# Bump it when a later version's decisions are actually applied, not when the
+# file is merely edited.
+toolVersion: 0.4.1
+
 archetype: tech-minimalist        # tech-minimalist | enterprise-solid | playful-expressive | editorial-premium | utilitarian-technical | hybrid
 archetypeNote: ~                  # required when archetype is hybrid
 
@@ -73,6 +83,15 @@ overrides:
 
 # Restrictions. `enforcement` is the honest part: `ledger` and `stylelint` fail
 # a build, `document` is advice an agent reads.
+#
+# `instead` names what to use in place of the FORBIDDEN thing, so it only makes
+# sense on a rule that forbids something. A rule that REQUIRES a pattern —
+# "destructive actions must use a modal" — has nothing to redirect to; writing
+# `instead: modal` there names the requirement as its own alternative.
+#
+# An empty list is normal on a first interview. Guardrails accumulate from
+# reviews, so write it as `guardrails: []` rather than inventing entries to fill
+# the section.
 guardrails:
   - rule: Never use gradient fills
     enforcement: stylelint
@@ -134,6 +153,11 @@ part a token file cannot express.
 
 - **Heading:** {{face}} · **Body:** {{face}} · **Display:** {{face or "unset —
   falls back to the heading face"}} · **Mono:** {{face}}
+
+  > No question in the interview asks for these. All four come from the
+  > archetype's row in `archetypes.md` — fill them from there and say so, rather
+  > than inventing a stack that sounds right. If the client named faces, those
+  > win and the difference from the preset is a deviation.
 - **Measure:** 45–75 characters. Wider and the eye loses the line return.
 - **Hierarchy comes from size and weight, not colour.** A heading tinted to
   stand out stops standing out the moment it sits next to a status colour.
@@ -143,8 +167,13 @@ part a token file cannot express.
 ### Spacing and grid
 
 - **Base unit:** `--app-space-unit`, {{4px}}. Every gap is a multiple.
-- **Density:** {{dense | comfortable | generous}} — {{what that means for
-  control height and leading}}.
+- **Density:** {{dense | comfortable | generous}} — {{`size-control` and
+  `line-height`, as numbers}}.
+
+  > Also unasked, and also in `archetypes.md`: `$spacing-unit`, `size-control`
+  > and `line-height` per archetype. This section is where `density` in the
+  > front matter stops being a word — a document that declares a density and
+  > never says what it costs in pixels has not decided anything.
 - Space belongs to the **container**, not to the item. A component that carries
   its own outer margin cannot be reused in a tighter context.
 
@@ -237,6 +266,7 @@ express.
 
 ---
 
-*Generated from the discovery interview on {{DATE}}. Undecided answers are
+*Generated from the discovery interview on {{DATE}}, against version
+{{toolVersion}} of the design system. Undecided answers are
 marked `undecided` with the default that was applied, so a gap stays visible
 rather than hardening into a fact nobody chose.*

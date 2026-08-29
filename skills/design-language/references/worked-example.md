@@ -1,6 +1,6 @@
 # A worked example
 
-What a finished `DESIGN-LANGUAGE.md` looks like, reconstructed from a product
+What a finished `DESIGN_LANGUAGE.md` looks like, reconstructed from a product
 that already exists in this repository:
 [`example/ds-meu-caderninho-daisyui-phase3`](../../../example/ds-meu-caderninho-daisyui-phase3).
 
@@ -17,6 +17,8 @@ products turn out to be.
 
 ```markdown
 ---
+toolVersion: 0.4.0
+
 archetype: hybrid
 archetypeNote: >
   Editorial & Premium typography and restraint, on Playful & Expressive warmth.

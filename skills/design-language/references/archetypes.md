@@ -98,7 +98,7 @@ is guessing at the one thing the client already knows.
 
 ## When none of the five fits
 
-Say so in `DESIGN-LANGUAGE.md` and write the values out by hand. The matrix
+Say so in `DESIGN_LANGUAGE.md` and write the values out by hand. The matrix
 covers the common cases in the current market; it is not a taxonomy of every
 product that can exist. A hybrid — "Editorial type on a Utilitarian density",
 which is what most analytics products actually are — is a legitimate answer, and

@@ -162,7 +162,7 @@ $colour-strategy: 'functional' !default;
 //
 // Lowering this is a real decision, not a workaround: it says the product
 // accepts pairs that only work at large sizes. If a project does it, the
-// `deviations` block in DESIGN-LANGUAGE.md is where the reason belongs — a
+// `deviations` block in DESIGN_LANGUAGE.md is where the reason belongs — a
 // threshold nobody wrote down reads as an accident to the next person.
 $contrast-min: 4.5 !default;
 

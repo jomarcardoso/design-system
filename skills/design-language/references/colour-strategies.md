@@ -139,7 +139,7 @@ selected: <the accent>,      // 'monochrome' — same as everything
 'action-subtle': <its tint>,
 ```
 
-Record both answers in `DESIGN-LANGUAGE.md`. The strategy is the single most
+Record both answers in `DESIGN_LANGUAGE.md`. The strategy is the single most
 load-bearing decision in the file: it is what a new component six months later
 reads to know whether "chosen" gets its own colour.
 
@@ -174,7 +174,7 @@ generating the design. `brand` sits between: neutrals generated, brand hue given
 ### The three follow-ups
 
 Asked only when the answer is monochrome, because the other schools are handed
-their palette. See questions 8d–8f in the questionnaire.
+their palette. See question 10 in the questionnaire.
 
 | answer                                       | writes              | why it matters |
 | -------------------------------------------- | ------------------- | -------------- |

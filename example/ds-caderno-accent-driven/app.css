@@ -48,7 +48,7 @@
   }
 
   /* A card rests ON the sheet: one step lighter than the page, and separated by
-   * a line rather than a shadow. `elevation: borders` in DESIGN-LANGUAGE.md. */
+   * a line rather than a shadow. `elevation: borders` in DESIGN_LANGUAGE.md. */
   .card {
     background: var(--app-bg-surface);
     border: var(--app-border);

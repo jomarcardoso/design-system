@@ -23,6 +23,138 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.4.1]
+
+**Corrections only — no new capability.** Everything here makes the
+`design-language` skill executable by a weaker agent; a run on a strong model
+produces the same document it did in 0.4.0.
+
+**The interview was run three times against a deliberately weaker model, and
+each run was allowed to fail.** Nothing in `src/` changed — this is entirely
+the skill, its questionnaire and its template. The transcripts
+are in `tasks/gemini-tests/`, and every fix below names the failure that
+produced it rather than the principle it upholds.
+
+Why bother: a skill that only works when the model is strong is a skill that
+works when it is not needed. Each failure below was a gap in the instructions
+that a capable model happened to paper over.
+
+**To upgrade:** nothing to apply. If your project already has a
+`DESIGN-LANGUAGE.md`, rename it to `DESIGN_LANGUAGE.md` — see *Renamed* below.
+
+### Fixed
+
+- **Question 8 could be skipped by naming a colour school.** The brand-colour
+  question sat directly above a block headed `8d–8f — accent-driven only`, so a
+  client opening with "we're accent-driven" read as having answered it. The
+  interview then produced *"a saturated blue ink tone"* where the build needs a
+  number.
+
+  Block 4 is renumbered so no question is a lettered child of an unrelated
+  parent: **8** is the colour school (8a opener, 8b decider), **9** is the brand
+  colour, **10** is the accent-driven profile (10a–10c, conditional), **11** is
+  the secondary action. Questions 12–17 shift accordingly. Question 9 now states
+  that neither the archetype *nor the school* answers it, and that a description
+  — "ballpoint blue on recycled paper" — gets converted to values on the spot and
+  read back for confirmation.
+
+- **The school is now asked before the colour, not after.** The school changes
+  what the colour question is about: in `functional` it opens a palette of
+  roles, in `monochrome` it is the only chromatic decision in the product.
+  Asking first made clients choose a colour without knowing what it would do.
+
+- **"Confirm rather than enumerate" was compressing options, not questions.** A
+  run fused three mutually exclusive elevation answers into one yes/no —
+  *"hierarchy from whitespace and thin borders, with imperceptible shadows —
+  confirm?"* — took a single "yes", and emitted `elevation: soft-shadows` for a
+  client who had said borders. Confirming now means proposing exactly one
+  option; a sentence naming two is not a confirmation.
+
+- **A question could carry three decisions.** Question 17 held confirmations,
+  destructive friction and form submission under one number, collected "A, A"
+  for three slots, and dropped one answer with no way to tell which. Split into
+  **17a/17b/17c**, with the general rule stated: one number, one decision.
+
+- **The interview could restart itself.** On turn four of four, a run re-asked
+  block 1 from the top — not a context-length failure but a stateless one: the
+  interview's state lived only in the model's attention over the transcript.
+  Every reply now opens with a ledger of what has been collected and what
+  remains, so the state is in the most recent text. The interview never
+  restarts; a model unsure of its position reconstructs the ledger and confirms
+  it, which is recoverable in a way that starting over is not.
+
+- **`deviations` came out empty by construction.** Two separate runs promoted a
+  client's stated archetype to `hybrid` at the last step so that a conflicting
+  answer stopped being a conflict — laundering the deviation instead of
+  recording it. Two changes: deviations are now **computed** by walking every
+  answer against the archetype's ✅/⚠️/❌ row before the read-back, and the
+  archetype is explicitly the client's answer, changeable only by asking.
+
+- **The read-back was advice, and a run wrote a file that contradicted its own
+  approved table.** It is now a gate with a contract: the emitted front matter
+  equals what the client approved, key for key, and wanting to change a value
+  while writing is a new question rather than an edit.
+
+- **Question 16 asked clients to invent prohibitions.** Nobody arrives at a
+  first interview with a list of things an unbuilt product must never do;
+  restrictions come from having been burned. Split into **16a**, which presents
+  the archetype's own restrictions as already held for confirmation, and
+  **16b**, where *"nothing for now"* is the first option and is documented as
+  the expected, correct answer. `guardrails: []` is now the normal first state.
+
+- **The template asked for values the interview never collected.** Typography
+  faces and the spacing unit had no question behind them, so runs either
+  invented a font stack or dropped the section entirely. Both placeholders now
+  point at the archetype preset in `archetypes.md` and require the source to be
+  named. `density` must be stated in pixels, not adjectives.
+
+- **Whole template sections went missing.** Reconstructing the document from
+  memory instead of the file lost spacing and grid, the 45–75 character measure,
+  `prefers-reduced-motion` and the closing section. The skill now requires
+  reading the template in full and reproducing every heading, empty ones
+  included, carrying `undecided`.
+
+### Added
+
+- **Six invariants checked before the file is emitted**, each one having already
+  produced a broken document: `surfaceSeparation` pairs one-to-one with
+  `elevation`; `elevationCarrier` is set only for `borders`; the accent trio
+  appears only under `monochrome`; the brand colour is a value and not an
+  adjective; every front matter key is explained in the prose; every ledger
+  answer reaches the document.
+
+- **Defaults instead of menus** wherever the archetype or school already has an
+  answer — secondary action per school, status colours per archetype, the three
+  interaction patterns. Every option is lettered; a client answers "C" in a
+  second and composes the same answer in prose in a minute.
+
+- **`example/recepta-monochrome-coreui/`** — the interview's output for a
+  monochrome Editorial product on CoreUI, kept as the corrected version of the
+  third test run with a README naming each correction. Steps 2 and 3 are not
+  built yet.
+
+- **`toolVersion` in the generated front matter.** The document now records
+  which version of the tool ran the interview, read from `package.json` rather
+  than guessed. The tool is vendored, so nothing tells a project it has fallen
+  behind; this line is where the next reader starts working through this file.
+  Without it, catching up means diffing a document against a template of
+  unknown vintage.
+
+  **To upgrade:** add `toolVersion:` as the first key of your
+  `DESIGN_LANGUAGE.md` front matter, set to the version you last applied — not
+  to the current one, unless you have applied everything up to it.
+
+### Renamed
+
+- **`DESIGN-LANGUAGE.md` → `DESIGN_LANGUAGE.md`**, across the three skills, the
+  template, `src/_config.scss` and the examples.
+
+  **To upgrade:** `git mv DESIGN-LANGUAGE.md DESIGN_LANGUAGE.md` at your project
+  root. Nothing reads the file programmatically, so a stale name degrades to an
+  agent not finding it rather than to a build failure.
+
+---
+
 ## [0.4.0]
 
 **Layer 2 stops being one contract shared by three schools and becomes three
@@ -123,7 +255,7 @@ Accent-driven becomes a school the tool actually supports, rather than a value
   flat chroma gives the pale steps a cast that reads as a miscalibrated monitor.
 
 - `example/ds-caderno-accent-driven/` — the school built from two pigments, no
-  component library, with its `DESIGN-LANGUAGE.md`. Light theme written, dark
+  component library, with its `DESIGN_LANGUAGE.md`. Light theme written, dark
   generated by `derive.dark()`, both through the contrast gate.
 
 - **`accent-driven` and `minimalist` accepted as aliases for `monochrome`.** The

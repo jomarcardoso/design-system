@@ -69,7 +69,7 @@ claude plugin marketplace add /path/to/design-system
 ```
 
 Then ask Claude to start a design system in a project. It runs the discovery
-interview first, writes `DESIGN-LANGUAGE.md`, and only then installs the token
+interview first, writes `DESIGN_LANGUAGE.md`, and only then installs the token
 layers and asks which library to adapt.
 
 To work on the design system itself:
@@ -377,7 +377,7 @@ parts. Each skill needs the previous one's output.
 
 | | Skill | Produces | Question it answers |
 |---|---|---|---|
-| 1 | **design-language** | `DESIGN-LANGUAGE.md` at the project root | why does it look and sound like this |
+| 1 | **design-language** | `DESIGN_LANGUAGE.md` at the project root | why does it look and sound like this |
 | 2 | **design-system** | `src/`, the theme, `dist/theme-*.css` | what are the values |
 | 3 | **design-patterns** | `patterns.json` | which components may be built |
 
@@ -934,7 +934,7 @@ a different job.
 .claude-plugin/         plugin + marketplace manifests
 skills/design-language/ SKILL.md — the discovery interview, run FIRST
   references/           the 14 questions and the 5 archetypes as token values
-  templates/            the DESIGN-LANGUAGE.md a project ends up with
+  templates/            the DESIGN_LANGUAGE.md a project ends up with
 skills/design-system/   SKILL.md and references — the CSS token side
 skills/design-patterns/ SKILL.md — the markup side: what may be built
 patterns/

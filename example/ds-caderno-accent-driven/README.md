@@ -46,5 +46,5 @@ and it passed the same gate on the first build, worst pair 7.57:1.
 
 Not a fallback, not "we had no second colour". A supporting action tinted with
 the accent puts two blues on a page whose entire premise is that there is one.
-`secondaryAction: neutral` in `DESIGN-LANGUAGE.md`; layer 3 needs no override
+`secondaryAction: neutral` in `DESIGN_LANGUAGE.md`; layer 3 needs no override
 because the school already implies it.
