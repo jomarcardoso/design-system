@@ -29,6 +29,9 @@
       "additionalProperties": {
         "$ref": "#/$defs/component"
       }
+    },
+    "composition": {
+      "$ref": "#/$defs/composition"
     }
   },
   "$defs": {
@@ -210,6 +213,24 @@
         "diverges": {
           "type": "string",
           "description": "For an OVERRIDE: what this changes about the library's component, and why. The documentation generator prints exactly this and links the rest to the library's docs, which is what keeps the page a delta rather than a second catalogue."
+        },
+        "dos": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "When to reach for this pattern, in cases a reader can check a screen against. Advice, not enforced — the verifier cannot tell whether a button was the right button. Kept here rather than in a README beside the component because THIS file is the one read before markup is emitted."
+        },
+        "donts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "When not to use it, and what to use instead. The place for a rule the build cannot detect: \"tabs only on desktop; below the tablet breakpoint this becomes an accordion\". A don't with a detectable signature belongs in a `forbidden` pattern or in stylelint instead, where it fails a build rather than waiting to be read."
+        },
+        "responsive": {
+          "type": "string",
+          "description": "How the pattern changes across viewports, when it changes at all. Written as the rule, not the breakpoint value: \"collapses to a select below the tablet breakpoint\"."
         }
       },
       "allOf": [
@@ -310,6 +331,49 @@
         },
         "matches": {
           "$ref": "#/$defs/libraryClasses"
+        }
+      }
+    },
+    "composition": {
+      "type": "object",
+      "description": "How to build a screen the ledger has no component for. DESIGN_LANGUAGE.md §6 holds the same subject as RELATIONS that survive a change of theme; this holds the concrete bindings for THIS theme. Split that way on purpose: one design language can have several token themes, so a value that is true of one theme cannot live in the document that outlives it.",
+      "additionalProperties": false,
+      "properties": {
+        "intent": {
+          "type": "string",
+          "description": "What this block governs, and its boundary with the component entries above."
+        },
+        "typeRoles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Content role to concrete type step — `pageTitle`, `sectionTitle`, `body`, `caption`. The step, not the pixel size: `text-2xl`, so a theme change moves it."
+        },
+        "rhythm": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Concrete gaps for the relations the language states: `related`, `unrelated`, `section`. Values in spacing tokens."
+        },
+        "surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The surface levels this product allows, in order, as layer 2 token names. Two is the normal answer; a product with five has none."
+        },
+        "accentBudget": {
+          "type": "string",
+          "description": "Where the accent may appear on a screen the ledger does not describe. The rule most often broken by an ad-hoc page."
+        },
+        "donts": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Composition mistakes specific to this product."
         }
       }
     }

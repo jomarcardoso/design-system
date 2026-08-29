@@ -29,6 +29,9 @@ rather than a feeling.
 | **`line-height`**                 | `1.5`                                 | `1.5`                             | `1.6`–`1.7`                          | `1.7`                                  | `1.4`                            |
 | **Heading step**                  | `2xl`→`4xl` — a clear jump            | `xl`→`3xl` — restrained           | `2xl`→`5xl` — headings shout         | `2xl`→`5xl`, with tighter tracking     | `lg`→`2xl` — headings are labels |
 | **`size-control`**                | 36px (`unit * 9`)                     | 36px                              | 44px (`unit * 11`)                   | 40px                                   | 28px (`unit * 7`)                |
+| **`icon-style`**                  | outline, or filled for selected       | outline, filled for selected      | **filled**                           | outline                                | outline                          |
+| **`icon-stroke`**                 | `1.5px`                               | `1.75px`                          | `2px` — or none, if filled           | `1.25px` — matches a light serif       | `1.75px`                         |
+| **`icon-size`**                   | `20px`                                | `20px`                            | `24px`                               | `20px`                                 | `16px` — icons sit in dense rows |
 | **Contrast target**               | AA, high                              | AA                                | AA                                   | AA, subtle by design — watch the check | AA, very high                    |
 | **Reference products**            | Vercel, Linear, Raycast               | IBM Carbon, Salesforce, SAP Fiori | Duolingo, Headspace, Mailchimp       | Stripe Press, Notion, Medium           | GitHub, AWS Console, Grafana     |
 

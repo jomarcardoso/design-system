@@ -79,7 +79,7 @@ faces and spacing already chosen, and want them turned into tokens rather
 than reinvented. The interview still runs. It changes shape.
 
 **Read the code first, then confirm.** An existing system has already
-answered most of the seventeen questions; they are just answered in CSS
+answered most of the eighteen questions; they are just answered in CSS
 instead of in prose. Find them:
 
 ```bash
@@ -115,7 +115,7 @@ moving the brand.
 
 ## Running the interview
 
-Seventeen questions, six blocks — three of them apply to one colour school
+Eighteen questions, six blocks — three of them apply to one colour school
 only. Read the questionnaire before starting.
 
 **Every question decides something concrete.** A token value, a threshold, a
@@ -215,6 +215,30 @@ Four rules make it work:
 The client also hears their own product described while it is still one sentence
 to change, rather than a theme and a component vocabulary to rebuild.
 
+### Composition rules arrive filled in
+
+Section 6 of the template — composing a screen the system has no component for —
+is **derived from the archetype, not asked**. There is no block for it. Build the
+proposal from the archetype's row in `archetypes.md` and put it in the read-back
+alongside the answered keys, phrased as something to disagree with:
+
+> Editorial suggests: one page title at the top step, section titles two steps
+> above body, captions one below · related blocks one unit apart and unrelated
+> ones three · two surface levels, page and raised · the accent only on the
+> primary action and on what is currently chosen. Change any of these?
+
+Two reasons it is shown rather than asked. A client has no opinion about vertical
+rhythm in the abstract and a strong one the moment they see a proposal — so
+showing it costs one exchange and asking it costs four with worse answers. And a
+rule nobody saw is a rule nobody can object to, which is how a document acquires
+sections its owner does not recognise.
+
+**Write relations, never values.** This is the line between the two files: a
+relation survives a change of theme, a value does not. "Two steps above body"
+holds for every theme this language will have; "24px" is true of one and becomes
+a lie at the next. Concrete values belong in `patterns.json`, which is allowed to
+know which theme this is.
+
 ### Deviations are computed, not noticed
 
 Before showing the table, walk every answer against the archetype's row in
@@ -295,6 +319,31 @@ diffing a document against a template of unknown vintage.
 
 The last one is the general case of the other four: the YAML is the index and the
 prose is the argument, and a key with no argument was not decided, only typed.
+
+## Review the file you just wrote
+
+Run [`references/review.md`](references/review.md) against the finished document
+before handing it over. Thirty-one checks, each one having failed in a real run,
+each one passing or failing against something quotable.
+
+Two rules carry it:
+
+**Report, do not repair.** Produce the report and stop. The failure that
+motivated the checklist was a run that noticed a conflict while writing and
+resolved it by widening the archetype to `hybrid` — deleting the conflict rather
+than recording it. A reviewer that edits is a second author, and the client
+never finds out anything was wrong. Fix on instruction, in a separate pass.
+
+**Walk the deviations mechanically.** Check B5 — every non-✅ answer appears
+under `deviations` — passes every time when left to judgement, because the
+reviewer has no more reason to doubt an answer than the author did. Count it
+against the archetype's row instead.
+
+The checklist also runs **standalone**: a client can paste it into a fresh chat
+with the document and get an audit from a model that never saw the interview.
+Checks needing the transcript are marked and come back `unverifiable` rather than
+guessed — which is itself a test, because a design language that cannot be
+audited without its interview is under-written.
 
 ## Turning answers into a build
 

@@ -60,6 +60,44 @@ Never compose a variant the ledger does not list. `btn-outline-danger` is not
 "danger with outline"; it is a combination nobody decided on. If the request
 genuinely needs it, that is a ledger change, discussed first.
 
+**Read `dos`, `donts` and `responsive` before emitting, not after.** `state`
+says what classes to write; these three say whether this pattern was the right
+one at all — *"tabs only on desktop; below the tablet breakpoint this becomes an
+accordion"* is the kind of rule no verifier can catch and every product has.
+
+They live here rather than in a README beside the component for one reason:
+**this is the file that gets read at the moment markup is written.** A markdown
+file in the component's folder is a display case — real, useful for a person
+browsing, and never open when it would have mattered. Generate that file from
+this one if you want it; do not maintain it in parallel.
+
+A `dont` with a detectable signature does not belong in `donts`. It belongs in a
+`forbidden` pattern, or in stylelint — somewhere that fails a build instead of
+waiting to be read. `donts` is for the rest.
+
+## Composing a screen with no component
+
+Most screens are not built from this list. Someone needs a page the ledger has
+never heard of, reaches for raw markup, uses the correct tokens, and still ships
+something that does not look like the product — because tokens are the paint and
+this is the grammar.
+
+The optional top-level **`composition`** block holds it: `typeRoles` mapping
+content roles to type steps, `rhythm` for the gaps, `surfaces` for the levels
+this product allows, `accentBudget` for where the accent may appear.
+
+**The same subject is split across two files, and the split is the point.**
+
+| | holds | example |
+|---|---|---|
+| `DESIGN_LANGUAGE.md` §6 | relations, which survive a change of theme | "a section title is two steps above body" |
+| `composition` here | bindings, which are true of THIS theme | `sectionTitle: text-2xl` |
+
+One design language can have several token themes. A value that is true of one
+theme cannot live in the document that outlives it — that is what makes the
+language reusable and this ledger specific. When the two disagree, the language
+is the intent and this file is the thing to fix.
+
 ## Refusing
 
 A refusal is only useful with an alternative, which is why the schema requires

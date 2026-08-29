@@ -23,6 +23,121 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.5.0]
+
+**The "guidelines" layer, resolved by deciding it already exists.** A survey of
+how Spectrum and others split Foundations from Component Specs came back with a
+proposal for a fourth document, `GUIDELINES.md`, holding token-application
+rules, do's and don'ts and accessibility. That document is not added: those
+three things already live in `DESIGN_LANGUAGE.md` §2/§4/§5, in
+`references/tokens.md`, and in `patterns.json`. A third file restating them
+would drift from both within a release.
+
+What the survey did surface were three genuine gaps, closed here. The review
+checklist below came from a separate ask and is not one of them.
+
+**Why minor and not a patch.** 0.4.1 said, in as many words, that a strong model
+would produce the same document it produced in 0.4.0 — it changed who could run
+the skill, not what came out. That is no longer true: a run now emits three
+iconography keys and a section 6 that did not exist, so the shape of the
+generated artefact changed. **Why not major:** everything is additive. An
+existing ledger still validates, an existing `DESIGN_LANGUAGE.md` still parses,
+and no token was renamed. Nothing in `src/` was touched at all.
+
+**To upgrade** — three edits, all to files in your project, none urgent enough
+to block anything:
+
+1. **Add the iconography keys** to your `DESIGN_LANGUAGE.md` front matter and a
+   short **Iconography** subsection to §2. Take the values from your archetype's
+   row in `archetypes.md`. If you have shipped icons already, read the real ones
+   out of the code and record those instead — and if they disagree with the
+   preset, that is a deviation, not a correction.
+
+2. **Add a Shape subsection** to §2 if `radius` is declared and unexplained —
+   see *Fixed* below. It is the same edit for every project, and it is the one
+   most likely to be missing.
+
+3. **Optional: add `composition`** to `patterns.json`, and `dos`/`donts` to the
+   patterns that have a rule the verifier cannot catch. Skipping this changes
+   nothing; the fields are optional and their absence means the same as before,
+   which is that nobody wrote the rule down.
+
+Then set `toolVersion: 0.5.0`.
+
+### Added
+
+- **Iconography, question 8.** The foundation most often left undecided, and the
+  reason a product ends up mixing two icon sets and reading as two products.
+  Adds `iconStyle`, `iconStroke` and `iconSize` to the front matter, an
+  `icon-style`/`icon-stroke`/`icon-size` row per archetype in `archetypes.md`,
+  and a template section. Three rules come with it: stroke weight answers to the
+  body type rather than to the icon set's default, corner geometry follows
+  `radius-control`, and icons inherit `currentColor` — an icon set with its own
+  palette fights every theme the product will have, and shows it first in dark
+  mode.
+
+  Questions 8–17 shift to 9–18; the interview is now eighteen questions.
+
+- **`dos`, `donts` and `responsive` per pattern** in the ledger schema. The
+  place for *"tabs only on desktop; below the tablet breakpoint this becomes an
+  accordion"* — a rule no verifier can catch and every product has. They live in
+  `patterns.json` rather than in a README beside the component because that is
+  the file read at the moment markup is written; a markdown file in the
+  component's folder is a display case, never open when it would have mattered.
+  Generate it from the ledger, do not maintain it in parallel. A `dont` with a
+  detectable signature still belongs in a `forbidden` entry or in stylelint,
+  where it fails a build.
+
+- **Composing a screen the system has no component for**, split across the two
+  files on purpose:
+
+  | | holds | example |
+  |---|---|---|
+  | `DESIGN_LANGUAGE.md` §6 | relations, which survive a change of theme | "a section title is two steps above body" |
+  | `composition` in `patterns.json` | bindings true of THIS theme | `sectionTitle: text-2xl` |
+
+  One design language can have several token themes, so a value true of one
+  theme cannot live in the document that outlives it. This is the ad-hoc screen
+  case: tokens give the paint, and until now nothing gave the grammar — a page
+  built outside the component list came out with correct tokens and wrong
+  proportions, which passes every guard the repository has.
+
+  §6 is **derived from the archetype and shown in the read-back, not asked**.
+  A client has no opinion about vertical rhythm in the abstract and a strong one
+  the moment they see a proposal, so showing it costs one exchange where asking
+  would cost four and get worse answers.
+
+- **`example/recepta-monochrome-coreui/`** carries all three: iconography in the
+  front matter and in section 2, and a filled section 6.
+
+- **`references/review.md`** — thirty-one checks run against the finished
+  document, each one having already failed in a real run. Grouped by what they
+  can see: the front matter contract, the interview (marked `[T]`, needing the
+  transcript), template completeness, and the judgement calls a machine cannot
+  make. It runs two ways — the agent reads it at the end of its own session, or
+  a client pastes it into a fresh chat with the document alone and gets an audit
+  from a model that never saw the interview. Checks needing the transcript come
+  back `unverifiable` rather than guessed, which is itself a test: a design
+  language that cannot be audited without its interview is under-written.
+
+  Two rules make it more than theatre. **Report, do not repair** — the failure
+  that motivated the file was a run that noticed a conflict while writing and
+  resolved it by widening the archetype, deleting the conflict instead of
+  recording it; a reviewer that edits is a second author and the client never
+  learns anything was wrong. And **walk the deviations mechanically**, because
+  that check passes every time when left to judgement: the reviewer has no more
+  reason to doubt an answer than the author did.
+
+### Fixed
+
+- **`radius` had nowhere to be explained.** Section 2 of the template had
+  colour, typography, spacing and elevation but no **Shape** subsection, so the
+  most recognisable archetype signal in the system was declared in the front
+  matter and argued nowhere. Found by running the new checklist against the
+  example on its first pass, which is the outcome it exists for.
+
+---
+
 ## [0.4.1]
 
 **Corrections only — no new capability.** Everything here makes the

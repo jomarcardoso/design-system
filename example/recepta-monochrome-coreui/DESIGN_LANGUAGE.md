@@ -1,5 +1,5 @@
 ---
-toolVersion: 0.4.1
+toolVersion: 0.5.0
 
 archetype: editorial-premium
 archetypeNote: ~
@@ -10,6 +10,12 @@ platform: multiplatform
 radius: subtle
 elevation: borders
 elevationCarrier: border-color
+
+# Thin outline, matching a light serif. Icons inherit `currentColor` — the one
+# accent is spent on actions, never on decoration.
+iconStyle: outline
+iconStroke: 1.25px
+iconSize: 20px
 
 accessibility: AA
 statusColours: brand-adapted
@@ -133,6 +139,10 @@ The tokens live in `src/`. This section is the **rules for using them**.
 - **Neutral seed:** fresh recycled paper, `oklch(0.97 0.012 85)`, pulled through
   a 12-step ramp at `neutralPigment: 0.6`. Step 1 is the page, step 12 is
   graphite. Nothing in the product is a true grey.
+- **The accent is strong, so its label inverts.** `accentContrast: high` — the
+  blue is saturated enough that `fg-on-accent` is measured light, and the
+  contrast gate checks it as such. A pale accent would have kept one ink colour
+  throughout and leaned harder on weight and space; this one does not.
 - **Proportion:** roughly 60% paper, 30% ink and rule, 10% blue. The accent
   covering a third of a screen leaves no emphasis to give.
 - **Status colours are adapted** — the hue families stay green, amber, red and
@@ -171,6 +181,28 @@ The tokens live in `src/`. This section is the **rules for using them**.
   rather than read.
 - Space belongs to the **container**, not the item. A card carrying its own
   outer margin cannot be reused in a tighter context.
+
+### Shape
+
+- **`radius-control`:** 4px · **`radius-surface`:** 6px · **Pills:** badges
+  only — the Editorial row of `archetypes.md`.
+- Subtle, not square and not rounded. Square would read as an instrument and
+  rounded as a toy; 4px reads as a trimmed page, which is the object this
+  product is imitating.
+- **Surfaces are one step rounder than the controls inside them.** A button with
+  the same radius as its card reads as stuck to it.
+
+### Iconography
+
+- **Style:** outline · **Stroke:** 1.25px · **Size:** 20px — the Editorial row
+  of `archetypes.md`, and the thinnest stroke in the matrix because it sits
+  beside a light serif.
+- **Icons inherit `currentColor`.** An icon never carries its own colour. The
+  product has one accent and it is spent on actions, not on decoration.
+- **Corners match `radius-control`**, 4px. An icon drawn square inside a rounded
+  interface reads as clip art.
+- **One set.** Mixing two is the most visible inconsistency this product could
+  ship and no token file would notice.
 
 ### Elevation
 
@@ -270,6 +302,36 @@ The rest are here, and are advice.
 
 ---
 
+## 6. Composing a screen the system has no component for
+
+A recipe notebook grows screens faster than it grows components — a shopping
+list, a week plan, a printed sheet. These rules are what make one of those look
+like Recepta without a component existing for it.
+
+Everything here is a **relation**, not a value. The concrete steps live in
+`patterns.json`, which is allowed to know which theme this is; these hold across
+every theme this language will ever have.
+
+- **Type roles.** Body is the baseline. A page has exactly one title, at the top
+  step. Section titles sit two steps above body, captions one below. A recipe
+  step is body — it is the thing being read, so nothing outranks it.
+- **Vertical rhythm.** Related things one unit apart, unrelated things three.
+  The gap says what belongs together before anyone reads a word, which is the
+  whole reason a list of ingredients is legible at arm's length.
+- **Surfaces.** Two levels: the page, and a block raised off it. No third. With
+  `elevation: borders` the level is carried by a hairline, so a third would have
+  to be a second hairline, which is not a level.
+- **Alignment.** One vertical edge per column. A screen with three left edges
+  reads as three screens, and this product is meant to read as one sheet.
+- **Where the accent may appear.** The one primary action, and what is currently
+  chosen. Nowhere else — not on headings, not on rules, not on a decorative tag.
+
+> An agent asked for a screen reads this section and the tokens, and nothing
+> else. A rule here that cannot be followed without knowing a pixel value is in
+> the wrong file.
+
+---
+
 ## How this file is used
 
 **By an agent.** The front matter is read before generating any markup or CSS;
@@ -288,7 +350,7 @@ express.
 
 ---
 
-*Generated from the discovery interview on 2026-08-29, against version 0.4.1 of
+*Generated from the discovery interview on 2026-08-29, against version 0.5.0 of
 the design system. The library underneath is
 CoreUI; nothing in this file depends on that, and the adapter is what makes it
 true. No answer was left `undecided`.*

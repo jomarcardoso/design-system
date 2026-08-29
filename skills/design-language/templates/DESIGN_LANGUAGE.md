@@ -14,7 +14,7 @@
 # catching up means diffing a document against a template of unknown vintage.
 # Bump it when a later version's decisions are actually applied, not when the
 # file is merely edited.
-toolVersion: 0.4.1
+toolVersion: 0.5.0
 
 archetype: tech-minimalist        # tech-minimalist | enterprise-solid | playful-expressive | editorial-premium | utilitarian-technical | hybrid
 archetypeNote: ~                  # required when archetype is hybrid
@@ -25,6 +25,18 @@ platform: desktop-first           # desktop-first | mobile-first | multiplatform
 radius: subtle                    # square | subtle | rounded | pill
 elevation: borders                # borders | soft-shadows | projected-shadows
 elevationCarrier: border-color    # what carries hierarchy — required when elevation is `borders`
+
+# Icons carry more archetype per pixel than anything except radius, and are the
+# foundation most often left undecided — which is how a product ends up mixing
+# two icon sets and reading as two products.
+#
+# `mixed` means filled marks the selected state and outlined everything else; it
+# needs a set that ships both weights of the same glyph.
+iconStyle: outline                # outline | filled | mixed
+iconStroke: 1.5px                 # set against the BODY weight, not the icon set's default
+iconSize: 20px
+# Icons inherit `currentColor`. An icon set with its own palette fights every
+# theme the product will have, and shows it first in dark mode.
 
 accessibility: AA                 # AA | AAA — sets the threshold in themes.check-contrast()
 statusColours: traditional        # traditional | brand-adapted
@@ -177,6 +189,31 @@ part a token file cannot express.
 - Space belongs to the **container**, not to the item. A component that carries
   its own outer margin cannot be reused in a tighter context.
 
+### Shape
+
+- **`radius-control`:** {{4px}} · **`radius-surface`:** {{6px}} · **Pills:**
+  {{badges only | everywhere | never}} — from the archetype row in
+  `archetypes.md`.
+- Radius is the most recognisable archetype signal and the cheapest to change.
+  {{One sentence on what this radius is saying — square reads as instrument,
+  rounded reads as approachable, and the product has to mean one of them.}}
+- **Surfaces are one step rounder than the controls inside them.** A control
+  with the same radius as its container reads as stuck to it.
+
+### Iconography
+
+- **Style:** {{outline | filled | mixed}} · **Stroke:** {{1.5px}} ·
+  **Size:** {{20px}} — from the archetype row in `archetypes.md`.
+- **Icons inherit `currentColor`.** An icon never carries its own colour: it
+  takes the colour of the text it sits beside, which is what keeps it correct in
+  every theme and in dark mode.
+- **The stroke answers to the type, not to the icon set.** A 2px stroke beside a
+  light serif is a different product in the same screen.
+- **Corner geometry matches `radius-control`.** Icons drawn square inside a
+  rounded interface read as clip art.
+- **One set.** Mixing two is the single most visible inconsistency a product can
+  ship, and it is invisible in a token file.
+
 ### Elevation
 
 - **Strategy:** {{borders | soft shadows | projected shadows}}.
@@ -245,6 +282,36 @@ The rest are here, and are advice.
 |---|---|---|
 | {{rule}} | `patterns.json` | `verify:patterns` names the alternative |
 | {{rule}} | `stylelint.config.cjs` | `npm run lint` |
+
+---
+
+## 6. Composing a screen the system has no component for
+
+Most screens are not built from the component list. Someone needs a page the
+ledger has never heard of, reaches for raw markup, uses the right tokens, and
+still ships something that does not look like the product — because tokens give
+the paint and this section gives the grammar.
+
+**Everything here is a RELATION, never a value.** A relation survives a change of
+theme; a value does not. "A section title is two steps above body" holds in every
+theme this language will ever have. "A section title is 24px" is true of one
+theme and becomes a lie at the next one — that belongs in `patterns.json`, which
+is allowed to know what this theme is.
+
+- **Type roles.** Body is the baseline. {{Section title N steps above · caption
+  one below · a page has exactly one title at the top step}}.
+- **Vertical rhythm.** {{Related things one unit apart, unrelated things three.
+  The gap says what belongs together, and it says it before anyone reads a word.}}
+- **Surfaces.** {{Which level the page is, which level a raised block is, and how
+  many levels this product allows before it has none — normally two.}}
+- **Alignment.** {{One vertical edge per column of content. A screen with three
+  left edges reads as three screens.}}
+- **Where the accent may appear.** {{The one primary action, and what is
+  currently chosen. Nowhere else.}}
+
+> An agent asked for a screen reads this section and the tokens, and nothing
+> else. If a rule here cannot be followed without knowing a pixel value, it is in
+> the wrong file.
 
 ---
 

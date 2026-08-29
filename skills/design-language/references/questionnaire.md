@@ -1,6 +1,6 @@
 # The discovery interview
 
-Seventeen questions in six blocks — three of them apply to one colour
+Eighteen questions in six blocks — three of them apply to one colour
 school only. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
@@ -46,7 +46,7 @@ aloud is four.
 
 **One number, one decision.** A question that carries three decisions collects
 them positionally — "A, A" for three slots — and one disappears without anyone
-noticing which. Split it into 17a, 17b, 17c and let each answer have a label to
+noticing which. Split it into 18a, 18b, 18c and let each answer have a label to
 land on.
 
 **Confirming means proposing ONE option.** Compressing a question is allowed;
@@ -153,7 +153,8 @@ the system working, not a compromise.
 
 ## Block 3 — Visual foundations and geometry
 
-> Decides `radius-control`, `radius-surface`, `shadow-raised`, `shadow-overlay`.
+> Decides `radius-control`, `radius-surface`, `shadow-raised`, `shadow-overlay`,
+> `icon-stroke` and `icon-size`.
 
 **6. What shape should structures have — buttons, cards, inputs?**
 
@@ -188,18 +189,54 @@ check measures text against its background, not one surface against another.
 Whatever carries hierarchy has to be the thing that is strong. The answer goes
 into `elevationCarrier`, which the template requires when elevation is `borders`.
 
+**8. What do the icons look like?**
+
+- (A) Outlined, thin stroke
+- (B) Outlined, medium stroke
+- (C) Filled
+- (D) Mixed — filled marks the selected state, outlined everything else
+
+| | A · thin outline | B · medium outline | C · filled | D · mixed |
+|---|---|---|---|---|
+| Tech Minimalist | ✅ | ✅ | ⚠️ | ✅ |
+| Enterprise Solid | ⚠️ | ✅ | ⚠️ | ✅ |
+| Playful | ❌ | ⚠️ | ✅ | ✅ |
+| Editorial | ✅ | ⚠️ | ❌ | ⚠️ |
+| Utilitarian | ⚠️ | ✅ | ⚠️ | ⚠️ |
+
+Icons carry more archetype signal per pixel than anything except radius, and
+they are the foundation most often left undecided — which means a product ends
+up mixing two icon sets and reading as two products.
+
+Three consequences, and they are why this is a question rather than a preset:
+
+- **Stroke weight has to agree with the type.** A 2px icon stroke beside a light
+  serif is a different product in the same screen. Set `icon-stroke` against the
+  body weight, not against the icon set's default.
+- **Corner geometry follows question 6.** Icons drawn with square corners inside
+  a 16px-rounded interface read as clip art. Whatever radius the interface took,
+  the icon set has to be able to match it.
+- **(D) is a behaviour, not a style**, and it is the one answer that needs the
+  set to ship both weights of the same glyph. Confirm the set can before taking
+  it.
+
+**Colour is not an icon decision.** An icon inherits `currentColor` and takes
+its meaning from the text beside it. An icon set with its own palette fights
+every theme the product will ever have — including dark mode, which is where it
+shows first.
+
 ---
 
 ## Block 4 — Colour and accessibility
 
 > Decides the theme map and the threshold in `themes.check-contrast()`.
 
-**8. Which colour school does this product belong to?**
+**9. Which colour school does this product belong to?**
 
-Two phrasings of one decision: 8a opens the topic, 8b settles it. Ask 8a first
-because it sorts fast, then confirm with 8b — 8a alone is never the answer.
+Two phrasings of one decision: 9a opens the topic, 9b settles it. Ask 9a first
+because it sorts fast, then confirm with 9b — 9a alone is never the answer.
 
-**8a (opener). Which of these is the priority — brand presence everywhere,
+**9a (opener). Which of these is the priority — brand presence everywhere,
 managing a dense operational workflow, or a clean page where the user's own
 content is the only thing standing out?**
 
@@ -211,9 +248,9 @@ Use it to open the topic, **not to decide**. It sorts fast because it is about
 priority rather than pixels, and a client can answer it in one sentence. But it
 sorts by product TYPE, and product type does not determine the school: Apple
 Card is a bank and is monochrome; plenty of content apps are brand-led. Take the
-answer as a hypothesis and confirm it with 8b.
+answer as a hypothesis and confirm it with 9b.
 
-**8b (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
+**9b (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
 does it take your main brand colour, or a different one?**
 
 - (A) A different colour → `$colour-strategy: 'functional'`
@@ -225,7 +262,7 @@ vocabulary, and it is the most load-bearing line in the document — it is what 
 new component six months later reads to find out whether "chosen" gets a colour
 of its own.
 
-**When 8a and 8b disagree, 8b wins, and say so out loud.** The disagreement is
+**When 9a and 9b disagree, 9b wins, and say so out loud.** The disagreement is
 information: a client who said "brand everywhere" and then described a grey
 interface with one accent has a marketing site in mind and a product in front of
 them. Naming that early is cheaper than discovering it in review.
@@ -240,7 +277,7 @@ the follow-ups differ per answer.
 be monochrome as Tech Minimalist ones, and a Playful brand may well mark
 selection with its own hue. The two axes are independent.
 
-**9. Is there a brand primary colour, or should one be generated?**
+**10. Is there a brand primary colour, or should one be generated?**
 
 **Asked after the school on purpose.** The school changes what this question is
 even about: in `functional` it opens a palette of several roles, in `brand` it is
@@ -273,19 +310,19 @@ to the words "ballpoint blue", and cannot judge it in the abstract six steps
 later.
 
 Leave the interview holding an `oklch()` or a hex. If there is none, say so,
-generate one against the level chosen in question 12, and record in the document
+generate one against the level chosen in question 13, and record in the document
 that it was generated rather than given.
 
 ---
 
-### 10 — the accent-driven profile
+### 11 — the accent-driven profile
 
-Ask these **only when 8b answered (C)**. In the other two schools the palette is
+Ask these **only when 9b answered (C)**. In the other two schools the palette is
 given; in this one it is generated from two pigments, and these three answers
 are what stop every monochrome product from looking like the same one. Skip them
 elsewhere — a functional product has no single "accent" to profile.
 
-**10a. Your highlight colour: strong enough that white text sits on it, or pale
+**11a. Your highlight colour: strong enough that white text sits on it, or pale
 enough that dark text stays?**
 
 - (A) Strong — Spotify, iOS → `accentContrast: high`
@@ -298,7 +335,7 @@ against a light or a dark foreground, and getting it wrong fails the contrast
 gate rather than shipping — but it fails at the end of the build, after the
 whole palette has been derived from the wrong assumption.
 
-**10b. Are your greys actually grey, or do they carry a tint?**
+**11b. Are your greys actually grey, or do they carry a tint?**
 
 - Pure grey → `neutralPigment: 0`
 - A hint — warm paper, cool slate → `0.5`–`0.8`
@@ -310,7 +347,7 @@ difference between a notebook and a settings screen. Ask for the FEELING —
 "warm paper", "cold steel" — and pick the number; a client has no intuition for
 chroma and every intuition for paper.
 
-**10c. How is one surface told from the next — a line, a change of tone, or a
+**11c. How is one surface told from the next — a line, a change of tone, or a
 shadow?**
 
 - (A) Lines → `surfaceSeparation: lines`
@@ -333,7 +370,7 @@ Any other combination is a contradiction, not a nuance. If the client said
 "lines" there and "shadows" here, one of the two questions was heard wrong —
 re-ask the one that was compressed, and do not emit both.
 
-**11. Beside your main button, what does the supporting action look like?**
+**12. Beside your main button, what does the supporting action look like?**
 
 
 - (A) Outlined
@@ -364,7 +401,7 @@ Ask it as an APPEARANCE question, as above, because that is how a client
 thinks about it. Translating the answer into roles is this skill's job, not
 theirs.
 
-**12. What level of accessibility rigour?**
+**13. What level of accessibility rigour?**
 
 - (A) **WCAG AA** — 4.5:1 body text. The recommended default for every archetype.
 - (B) **WCAG AAA** — 7:1. Government, health, anything with a legal requirement.
@@ -373,7 +410,7 @@ Not decoration: it sets the threshold the build enforces, and **AAA rejects
 palettes AA accepts**. Settle it before colours are picked. Ask it early even
 though it sits in block 4.
 
-**13. How should success, warning, error and info behave?**
+**14. How should success, warning, error and info behave?**
 
 - (A) Traditional — green, amber, red, blue
 - (B) Adapted to the brand palette
@@ -399,7 +436,7 @@ colour.
 
 > Decides the Voice section and the writing rules an agent follows.
 
-**14. How should the system speak in its own messages?**
+**15. How should the system speak in its own messages?**
 
 - (A) Direct and technical — *"Error 404: resource not found"*
 - (B) Clear and action-oriented — *"We couldn't find that page. Back to start"*
@@ -418,7 +455,7 @@ failure. The usable answer is normally "B, dropping to A for anything involving
 money or data loss", and that exception is what makes the rule enforceable —
 it goes into `voiceExceptions`.
 
-**15. Infinitive or imperative for action labels?**
+**16. Infinitive or imperative for action labels?**
 
 - (A) Infinitive — *"Save changes"*
 - (B) Imperative — *"Save your changes"*
@@ -434,7 +471,7 @@ forever.
 > Decides **checkable rules**. This block is what connects the interview to the
 > build, and it is the reason the document is worth generating at all.
 
-**16. Are there visual restrictions the system must NEVER apply?**
+**17. Are there visual restrictions the system must NEVER apply?**
 
 **Do not ask this cold.** A client at this point in a first interview has no
 restrictions in mind, and asking them to produce some invites either an invented
@@ -445,7 +482,7 @@ client has not been burned yet.
 
 Ask it in two parts instead.
 
-**16a. Confirm what the archetype already forbids.** Present these as *already
+**17a. Confirm what the archetype already forbids.** Present these as *already
 held*, not as options to pick — the answer is a yes, or a correction:
 
 | archetype | implied restrictions |
@@ -459,7 +496,7 @@ held*, not as options to pick — the answer is a yes, or a correction:
 > *"Editorial already rules out gradients, heavy shadows and coloured headings.
 > I have those. Anything to add?"*
 
-**16b. Anything beyond that?**
+**17b. Anything beyond that?**
 
 - (A) Nothing for now
 - (B) Yes — say it
@@ -483,20 +520,20 @@ advice. *"Never gradients"* is detectable: `linear-gradient` in the product's ow
 CSS. *"Keep it elegant"* is not, and saying so honestly is better than pretending
 it is a guardrail.
 
-**17. What are the universal interaction patterns?**
+**18. What are the universal interaction patterns?**
 
 Three decisions, so **three labelled questions** — not one number carrying three
 answers. Numbering them together produces "A, A" for three slots: one answer
 silently dropped, and no way to tell which.
 
-**17a. Where do confirmations live?**
+**18a. Where do confirmations live?**
 
 - (A) A modal — blocks until answered
 - (B) A toast with undo
 
 *Propose (A) for anything that cannot be undone, (B) otherwise.*
 
-**17b. How much friction does a destructive action need?**
+**18b. How much friction does a destructive action need?**
 
 - (A) One click
 - (B) A confirmation step
@@ -504,7 +541,7 @@ silently dropped, and no way to tell which.
 
 *Propose (B), or (C) when the data is unrecoverable.*
 
-**17c. When do forms save?**
+**18c. When do forms save?**
 
 - (A) On blur, field by field
 - (B) On an explicit submit
