@@ -52,7 +52,8 @@ const PAGES = [
   // gate and a rendered gate that disagree are worse than either alone.
   { path: 'ds-itau-shadcn-phase3/', themes: ['itau'], min: 3 },
   { path: 'ds-meu-caderninho-daisyui-phase3/docs.html', themes: ['caderninho'] },
-  { path: 'ds-booking-bulma/', themes: ['booking'] }
+  { path: 'ds-booking-bulma/', themes: ['booking'] },
+  { path: 'ds-caderno-accent-driven/', themes: ['light', 'dark'] }
 ];
 
 export const SNIPPET = `(() => {

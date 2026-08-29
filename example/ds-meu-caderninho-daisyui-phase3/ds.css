@@ -190,6 +190,7 @@
     --app-font-family-heading: ui-serif, Georgia, Cambria, Times New Roman, serif;
     --app-font-family-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
     --app-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-font-size-xs: 0.75rem;
     --app-font-size-sm: 0.875rem;
     --app-font-size: 1rem;
     --app-font-size-lg: 1.125rem;
@@ -229,6 +230,7 @@
   :root,
   [data-theme=caderninho] {
     color-scheme: light;
+    accent-color: var(--app-bg-selected);
     --app-bg-page: #f8f4ec;
     --app-bg-surface: #fbf9f6;
     --app-bg-raised: #ffffff;
@@ -306,6 +308,7 @@
   :root,
   [data-theme=caderninho] {
     color-scheme: light;
+    accent-color: var(--app-bg-selected);
   }
   :root[data-surface=base],
   :root [data-surface=base],

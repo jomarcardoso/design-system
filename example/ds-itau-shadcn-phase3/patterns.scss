@@ -173,7 +173,7 @@
       // The caret is the brand's attention colour, not the text colour. Reads
       // layer 2 directly rather than taking a reserved name: nobody overrides
       // one field's caret, so it fails the layer 3 admission test.
-      caret-color: var(--app-bg-action);
+      caret-color: var(--app-bg-primary);
     }
 
     .ids-field__input::placeholder {
@@ -184,7 +184,7 @@
     // that wants the navy back changes one variable instead of this rule.
     .ids-field__input:focus-visible {
       border-bottom-width: 2px;
-      border-bottom-color: var(--app-field-border-color-focus, var(--app-border-action));
+      border-bottom-color: var(--app-field-border-color-focus, var(--app-border-primary));
       background: var(--app-bg-surface-hover);
     }
 
@@ -232,19 +232,19 @@
     // colour separately would be two places to keep in step.
     .ids-btn-secondary {
       background: transparent;
-      color: var(--app-fg-action);
+      color: var(--app-fg-primary);
       border: var(--app-border-width) solid currentColor;
     }
 
     .ids-btn-secondary:hover,
     .ids-btn-secondary:focus-visible {
-      background: var(--app-bg-action-subtle);
+      background: var(--app-bg-primary-container);
       color: var(--app-fg-link-hover);
     }
 
     .ids-btn-text {
       background: transparent;
-      color: var(--app-fg-action);
+      color: var(--app-fg-primary);
       border: 0;
     }
 

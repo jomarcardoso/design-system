@@ -648,6 +648,9 @@
   .border-\[var\(--app-border-success\)\] {
     border-color: var(--app-border-success);
   }
+  .border-accent {
+    border-color: var(--accent);
+  }
   .border-border {
     border-color: var(--border);
   }
@@ -658,7 +661,7 @@
     border-color: var(--app-bg-info-subtle);
   }
   .border-line-ink {
-    border-color: var(--app-border-action);
+    border-color: var(--app-border-primary);
   }
   .border-primary {
     border-color: var(--primary);
@@ -695,6 +698,9 @@
   }
   .bg-\[var\(--app-…\)\] {
     background-color: var(--app-…);
+  }
+  .bg-accent {
+    background-color: var(--accent);
   }
   .bg-background {
     background-color: var(--background);
@@ -1038,7 +1044,7 @@
     color: var(--app-bg-info);
   }
   .text-ink {
-    color: var(--app-fg-action);
+    color: var(--app-fg-primary);
   }
   .text-muted {
     color: var(--muted);
@@ -1195,7 +1201,7 @@
       background-color: var(--primary);
     }
     .hover\:bg-primary-hover:hover {
-      background-color: var(--app-bg-action-hover);
+      background-color: var(--app-bg-primary-hover);
     }
     .hover\:bg-sunken:hover {
       background-color: var(--app-bg-sunken);
@@ -1226,7 +1232,7 @@
     outline-style: none;
   }
   .active\:bg-primary-active:active {
-    background-color: var(--app-bg-action-active);
+    background-color: var(--app-bg-primary-active);
   }
   @media (width >= 40rem) {
     .sm\:grid-cols-2 {

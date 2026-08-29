@@ -1,0 +1,201 @@
+/* =============================================================================
+ * CADERNO — the application entry
+ * =============================================================================
+ *
+ * No library, so no vendor layer and no import-order trap. Everything below
+ * reads layer 2 and nothing else — no hex, no pixel that is not a token.
+ *
+ * That constraint is the demonstration. In the accent-driven school the
+ * interface is supposed to read through weight, shape and space, and the way to
+ * find out whether it does is to build it with one accent, a grey ramp, and no
+ * component library holding it up.
+ * ========================================================================== */
+
+@layer ds.base, ds.semantic, ds.component, components;
+
+@import '../../reset-a11y.css' layer(ds.base);
+@import './ds.css';
+
+@layer components {
+  :where(body) {
+    margin: 0;
+    background: var(--app-bg-page);
+    color: var(--app-fg-default);
+    font-family: var(--app-font-family-body);
+    font-size: var(--app-font-size);
+    line-height: var(--app-line-height);
+  }
+
+  :where(h1, h2, h3) {
+    font-family: var(--app-font-family-heading);
+    color: var(--app-fg-heading);
+    margin: 0;
+  }
+
+  .wrap {
+    max-width: 68ch;
+    margin: 0 auto;
+    padding: var(--app-space-2xl) var(--app-pad-surface);
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-space-2xl);
+  }
+
+  .wordmark {
+    font-family: var(--app-font-family-display);
+    font-size: var(--app-font-size-heading-lg);
+    color: var(--app-fg-heading);
+  }
+
+  /* A card rests ON the sheet: one step lighter than the page, and separated by
+   * a line rather than a shadow. `elevation: borders` in DESIGN-LANGUAGE.md. */
+  .card {
+    background: var(--app-bg-surface);
+    border: var(--app-border);
+    border-radius: var(--app-radius-surface);
+    padding: var(--app-pad-surface);
+    display: flex;
+    flex-direction: column;
+    gap: var(--app-gap-stack);
+  }
+
+  .rule {
+    border: 0;
+    border-top: var(--app-border-width) solid var(--app-border-color-subtle);
+    margin: 0;
+  }
+
+  /* --- Buttons ------------------------------------------------------------
+   *
+   * Three levels of emphasis, ONE colour. The primary is the pen; the
+   * secondary is the paper ramp; the ghost is nothing until you touch it.
+   * A tinted-accent secondary would put two blues on a page whose premise is
+   * that there is one. */
+  .btn {
+    font: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--app-gap-inline);
+    min-height: var(--app-size-control);
+    padding: var(--app-pad-control-y) var(--app-pad-control-x);
+    border: var(--app-border-width) solid transparent;
+    border-radius: var(--app-radius-control);
+    cursor: pointer;
+    transition: background-color var(--app-duration-base) var(--app-ease);
+  }
+
+  .btn:focus-visible {
+    outline: var(--app-ring-width) solid var(--app-ring-color);
+    outline-offset: var(--app-ring-offset);
+  }
+
+  .btn--primary {
+    background: var(--app-bg-accent);
+    color: var(--app-fg-on-accent);
+  }
+  .btn--primary:hover { background: var(--app-bg-accent-hover); }
+  .btn--primary:active { background: var(--app-bg-accent-active); }
+
+  .btn--secondary {
+    background: var(--app-bg-neutral);
+    color: var(--app-fg-on-neutral);
+  }
+  .btn--secondary:hover { background: var(--app-bg-neutral-hover); }
+
+  .btn--ghost {
+    background: transparent;
+    color: var(--app-fg-accent);
+  }
+  .btn--ghost:hover { background: var(--app-bg-surface-hover); }
+
+  .btn[disabled] {
+    background: var(--app-bg-disabled);
+    color: var(--app-fg-disabled);
+    cursor: not-allowed;
+  }
+
+  /* --- Chips: neutral at rest, pen when chosen --------------------------- */
+  .chips { display: flex; flex-wrap: wrap; gap: var(--app-gap-inline); }
+
+  .chip {
+    padding: var(--app-space-2xs) var(--app-space-sm);
+    border: var(--app-border-width) solid var(--app-border-color);
+    border-radius: var(--app-radius-pill);
+    background: var(--app-bg-sunken);
+    color: var(--app-fg-muted);
+    font-size: var(--app-font-size-sm);
+  }
+
+  .chip[aria-pressed='true'] {
+    background: var(--app-bg-accent-subtle);
+    border-color: var(--app-border-accent);
+    color: var(--app-fg-accent);
+  }
+
+  /* --- Field ------------------------------------------------------------- */
+  .field { display: flex; flex-direction: column; gap: var(--app-space-2xs); }
+
+  .field > label {
+    font-size: var(--app-font-size-sm);
+    color: var(--app-fg-muted);
+  }
+
+  .field > input {
+    font: inherit;
+    padding: var(--app-pad-control-y) var(--app-pad-control-x);
+    background: var(--app-bg-raised);
+    color: var(--app-fg-default);
+    border: var(--app-border-width) solid var(--app-border-color-strong);
+    border-radius: var(--app-radius-control);
+  }
+
+  .field > input:focus-visible {
+    outline: var(--app-ring-width) solid var(--app-ring-color);
+    outline-offset: var(--app-ring-offset);
+    border-color: var(--app-border-accent);
+  }
+
+  /* --- Ingredients: the ruled page --------------------------------------- */
+  .lines { list-style: none; margin: 0; padding: 0; }
+
+  .lines > li {
+    padding: var(--app-space-sm) 0;
+    border-bottom: var(--app-border-width) solid var(--app-border-color-subtle);
+    display: flex;
+    justify-content: space-between;
+    gap: var(--app-gap-stack);
+  }
+  .lines > li:last-child { border-bottom: 0; }
+  .lines b { color: var(--app-fg-muted); font-weight: var(--app-font-weight-body); }
+
+  /* --- Notes: the four exceptions ---------------------------------------- */
+  .note {
+    padding: var(--app-pad-control-y) var(--app-pad-control-x);
+    border-radius: var(--app-radius-control);
+    border-inline-start: var(--app-space-2xs) solid;
+    font-size: var(--app-font-size-sm);
+  }
+  .note--success {
+    background: var(--app-bg-success-subtle);
+    color: var(--app-fg-success);
+    border-color: var(--app-border-success);
+  }
+  .note--warning {
+    background: var(--app-bg-warning-subtle);
+    color: var(--app-fg-warning);
+    border-color: var(--app-border-warning);
+  }
+  .note--danger {
+    background: var(--app-bg-danger-subtle);
+    color: var(--app-fg-danger);
+    border-color: var(--app-border-danger);
+  }
+  .note--info {
+    background: var(--app-bg-info-subtle);
+    color: var(--app-fg-info);
+    border-color: var(--app-border-info);
+  }
+
+  .muted { color: var(--app-fg-muted); }
+  .row { display: flex; gap: var(--app-gap-inline); flex-wrap: wrap; align-items: center; }
+}

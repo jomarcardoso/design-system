@@ -1,0 +1,34 @@
+// =============================================================================
+// LAYER 1 — TWO PIGMENTS
+// =============================================================================
+//
+// The whole palette of this product is the two lines at the bottom of this
+// file. Everything else is a ladder computed off them in OKLCH.
+//
+// That is the accent-driven school's claim made literal: layer 1 is a neutral
+// ramp plus one accent, layer 2 maps onto it by ladder position, and so
+// changing a pigment moves the entire system without editing a single semantic
+// token. Nothing here is possible in the functional school, where layer 1 is
+// several independently chosen hues and which hue plays which role is the
+// design rather than a ladder position.
+// =============================================================================
+
+@use '../../src/ramp';
+
+// PAPER — the neutral. A warm ochre pigment held well back.
+//
+// `$pigment: 0.7` is the "how much colour is in your greys" answer from the
+// interview. At 1 the mid-tones read as tea stain rather than as stock; at 0
+// this is an ordinary grey ramp and the product loses the thing that makes it
+// look like paper at all. The visible difference between 0 and 0.7 is a few
+// thousandths of chroma, and it is the difference between a notebook and a
+// settings screen.
+$paper: ramp.neutral(#8a7355, $pigment: 0.7);
+
+// PEN — the accent. Ballpoint blue, the one live colour on the page.
+//
+// Cold against a warm neutral on purpose. The two do not share a hue family and
+// should not: the accent's job is to be the only thing on screen that is not
+// paper, and a blue that had been warmed toward the paper would read as part of
+// it.
+$pen: ramp.chromatic(#005bac);

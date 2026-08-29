@@ -12,25 +12,25 @@ rather than a feeling.
 
 ## The matrix
 
-| | Tech Minimalist | Enterprise Solid | Playful & Expressive | Editorial & Premium | Utilitarian & Technical |
-|---|---|---|---|---|---|
-| **Personality** | direct, inventive, productivity-first | conservative, institutional, safe | warm, encouraging, human | elegant, restrained, considered | precise, dense, data-first |
-| **`radius-control`** | `scale(radius, md)` 6px | `scale(radius, sm)` 4px | `scale(radius, 2xl)` 16px | `scale(radius, sm)` 4px | `scale(radius, xs)` 2px |
-| **`radius-surface`** | `lg` 8px | `md` 6px | `3xl` 24px | `md` 6px | `xs` 2px |
-| **`radius-pill`** | pills for badges only | pills for badges only | pills everywhere | pills for badges only | never |
-| **`$spacing-unit`** | `4px` | `4px` | `4px`, but scales chosen one step up | `4px`, scales one step up | `4px`, scales one step down |
-| **`shadow-raised`** | `xs` — a hairline lift | `sm` — soft, traditional | `lg` — projected and visible | `2xs` — barely there | `none` — borders only |
-| **`shadow-overlay`** | `md` | `lg` | `xl` | `sm` | `sm` |
-| **Elevation strategy** | thin borders carry hierarchy | shadows carry hierarchy | shadows are decorative too | whitespace carries hierarchy | borders only |
-| **`font-family-heading`** | geometric / neo-grotesque sans | humanist sans | rounded or display | **serif** | condensed sans |
-| **`font-family-body`** | same sans | same humanist sans | rounded sans | sans | sans |
-| **`font-family-display`** | unset | unset | display face | serif or a display serif | `font-family-mono` |
-| **`font-family-mono` prominence** | code blocks | code blocks | rare | rare | **data tables and figures** |
-| **`line-height`** | `1.5` | `1.5` | `1.6`–`1.7` | `1.7` | `1.4` |
-| **Heading step** | `2xl`→`4xl` — a clear jump | `xl`→`3xl` — restrained | `2xl`→`5xl` — headings shout | `2xl`→`5xl`, with tighter tracking | `lg`→`2xl` — headings are labels |
-| **`size-control`** | 36px (`unit * 9`) | 36px | 44px (`unit * 11`) | 40px | 28px (`unit * 7`) |
-| **Contrast target** | AA, high | AA | AA | AA, subtle by design — watch the check | AA, very high |
-| **Reference products** | Vercel, Linear, Raycast | IBM Carbon, Salesforce, SAP Fiori | Duolingo, Headspace, Mailchimp | Stripe Press, Notion, Medium | GitHub, AWS Console, Grafana |
+|                                   | Tech Minimalist                       | Enterprise Solid                  | Playful & Expressive                 | Editorial & Premium                    | Utilitarian & Technical          |
+| --------------------------------- | ------------------------------------- | --------------------------------- | ------------------------------------ | -------------------------------------- | -------------------------------- |
+| **Personality**                   | direct, inventive, productivity-first | conservative, institutional, safe | warm, encouraging, human             | elegant, restrained, considered        | precise, dense, data-first       |
+| **`radius-control`**              | `scale(radius, md)` 6px               | `scale(radius, sm)` 4px           | `scale(radius, 2xl)` 16px            | `scale(radius, sm)` 4px                | `scale(radius, xs)` 2px          |
+| **`radius-surface`**              | `lg` 8px                              | `md` 6px                          | `3xl` 24px                           | `md` 6px                               | `xs` 2px                         |
+| **`radius-pill`**                 | pills for badges only                 | pills for badges only             | pills everywhere                     | pills for badges only                  | never                            |
+| **`$spacing-unit`**               | `4px`                                 | `4px`                             | `4px`, but scales chosen one step up | `4px`, scales one step up              | `4px`, scales one step down      |
+| **`shadow-raised`**               | `xs` — a hairline lift                | `sm` — soft, traditional          | `lg` — projected and visible         | `2xs` — barely there                   | `none` — borders only            |
+| **`shadow-overlay`**              | `md`                                  | `lg`                              | `xl`                                 | `sm`                                   | `sm`                             |
+| **Elevation strategy**            | thin borders carry hierarchy          | shadows carry hierarchy           | shadows are decorative too           | whitespace carries hierarchy           | borders only                     |
+| **`font-family-heading`**         | geometric / neo-grotesque sans        | humanist sans                     | rounded or display                   | **serif**                              | condensed sans                   |
+| **`font-family-body`**            | same sans                             | same humanist sans                | rounded sans                         | sans                                   | sans                             |
+| **`font-family-display`**         | unset                                 | unset                             | display face                         | serif or a display serif               | `font-family-mono`               |
+| **`font-family-mono` prominence** | code blocks                           | code blocks                       | rare                                 | rare                                   | **data tables and figures**      |
+| **`line-height`**                 | `1.5`                                 | `1.5`                             | `1.6`–`1.7`                          | `1.7`                                  | `1.4`                            |
+| **Heading step**                  | `2xl`→`4xl` — a clear jump            | `xl`→`3xl` — restrained           | `2xl`→`5xl` — headings shout         | `2xl`→`5xl`, with tighter tracking     | `lg`→`2xl` — headings are labels |
+| **`size-control`**                | 36px (`unit * 9`)                     | 36px                              | 44px (`unit * 11`)                   | 40px                                   | 28px (`unit * 7`)                |
+| **Contrast target**               | AA, high                              | AA                                | AA                                   | AA, subtle by design — watch the check | AA, very high                    |
+| **Reference products**            | Vercel, Linear, Raycast               | IBM Carbon, Salesforce, SAP Fiori | Duolingo, Headspace, Mailchimp       | Stripe Press, Notion, Medium           | GitHub, AWS Console, Grafana     |
 
 ## What each choice actually does
 
@@ -51,7 +51,7 @@ tall buttons full of cramped text. The presets above move all three.
 **Editorial is the one to watch on contrast.** "Subtle contrast" and "refined
 grey on grey" are the archetype's own vocabulary, and they are also how a theme
 fails the build-time WCAG check. The check is not negotiable — a muted palette
-has to be muted in *chroma*, not in lightness distance. If the build errors here
+has to be muted in _chroma_, not in lightness distance. If the build errors here
 the archetype is not wrong, the specific step is.
 
 **Utilitarian earns monospace as a body-adjacent face**, which is the only
@@ -66,8 +66,13 @@ The archetype writes three things, and nothing else:
 ```scss
 // 1. Structural scales — passed to emit-structure()
 $typography: (
-  'font-family-heading': (ui-serif, Georgia, serif),   // Editorial
-  'line-height': 1.7
+  'font-family-heading': (
+    ui-serif,
+    Georgia,
+    serif,
+  ),
+  // Editorial
+  'line-height': 1.7,
 );
 
 // 2. Radius and control size — edited in the project's copy of _base.scss,
@@ -75,13 +80,15 @@ $typography: (
 $structure: (
   'radius-control': 4px,
   'radius-surface': 6px,
-  'size-control': calc(var(--app-space-unit) * 10)
+  'size-control': calc(var(--app-space-unit) * 10),
 );
 
 // 3. Shadow choice — in the theme map, because elevation reads differently
 //    on a dark surface than on a light one
-'shadow-raised': base.scale(shadow, '2xs'),
-'shadow-overlay': base.scale(shadow, sm),
+'shadow-raised':base.scale(shadow,'2xs'),'shadow-overlay': base.scale(
+  shadow,
+  sm
+);
 ```
 
 Colour is **not** in that list. An archetype suggests a mood — sober blues for

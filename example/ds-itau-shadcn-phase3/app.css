@@ -21,7 +21,7 @@
  * position, so only `theme`, `base` and `utilities` were appended, AFTER it.
  *
  * The product layer therefore sat before Tailwind's preflight, and preflight's
- * `button { color: inherit }` beat `.ids-btn-text { color: var(--app-fg-action) }`.
+ * `button { color: inherit }` beat `.ids-btn-text { color: var(--app-fg-primary) }`.
  * The navy text button rendered black. Valid CSS, no warning, and invisible
  * unless you measure the computed colour — which is how it was found.
  *

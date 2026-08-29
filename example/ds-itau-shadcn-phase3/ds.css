@@ -23,6 +23,7 @@
     --app-font-family-heading: Itau Display, Inter, Helvetica Neue, Arial, sans-serif;
     --app-font-family-display: Itau Display, Inter, Helvetica Neue, Arial, sans-serif;
     --app-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-font-size-xs: 0.75rem;
     --app-font-size-sm: 0.875rem;
     --app-font-size: 1rem;
     --app-font-size-lg: 1.125rem;
@@ -62,14 +63,15 @@
   :root,
   [data-theme=itau] {
     color-scheme: light;
+    accent-color: var(--app-bg-selected);
     --app-bg-page: #f1f2f4;
     --app-bg-surface: #ffffff;
     --app-bg-raised: #ffffff;
     --app-fg-default: #000000;
     --app-fg-muted: #4c4c4c;
     --app-fg-heading: #000000;
-    --app-bg-action: #ff6200;
-    --app-fg-on-action: #ffffff;
+    --app-bg-primary: #ff6200;
+    --app-fg-on-primary: #ffffff;
     --app-border-color: #cfd1d3;
     --app-bg-sunken: #e3e5e8;
     --app-bg-overlay: rgba(0, 0, 0, 0.5);
@@ -82,11 +84,11 @@
     --app-bg-neutral-active: #000000;
     --app-bg-disabled: #cfd1d3;
     --app-fg-disabled: #999999;
-    --app-bg-action-hover: #e55800;
-    --app-bg-action-active: #cc4d00;
-    --app-bg-action-subtle: #e6e6f0;
-    --app-fg-action: #000066;
-    --app-border-action: #000066;
+    --app-bg-primary-hover: #e55800;
+    --app-bg-primary-active: #cc4d00;
+    --app-bg-primary-container: #e6e6f0;
+    --app-fg-primary: #000066;
+    --app-border-primary: #000066;
     --app-bg-selected: #ff6200;
     --app-fg-on-selected: #ffffff;
     --app-bg-selected-hover: #e55800;
@@ -139,6 +141,7 @@
   :root,
   [data-theme=itau] {
     color-scheme: light;
+    accent-color: var(--app-bg-selected);
   }
   :root[data-surface=base],
   :root [data-surface=base],
@@ -155,17 +158,15 @@
     --app-fg-link: #000066;
     --app-fg-link-hover: #000d3c;
     --app-fg-link-visited: #000524;
-    --app-fg-action: #000066;
-    --app-border-action: #000066;
   }
 }
 @layer ds.semantic {
   [data-surface=brand] {
     --app-fg-default: #ffffff;
     --app-fg-heading: #ffffff;
-    --app-fg-action: #ffffff;
-    --app-border-action: #ffffff;
-    --app-bg-action-subtle: rgba(255, 255, 255, 0.1);
+    --app-fg-primary: #ffffff;
+    --app-border-primary: #ffffff;
+    --app-bg-primary-container: rgba(255, 255, 255, 0.1);
     --app-fg-link: #ffffff;
     --app-fg-link-hover: #ffffff;
   }
@@ -180,7 +181,7 @@
 }
 @layer ds.component {
   :root {
-    --app-field-border-color-focus: var(--app-bg-action);
+    --app-field-border-color-focus: var(--app-bg-primary);
     --app-chart-1: #ff6200;
     --app-chart-2: #002766;
     --app-chart-3: #0131ff;
@@ -198,8 +199,8 @@
     --card-foreground: var(--app-fg-default);
     --popover: var(--app-bg-raised);
     --popover-foreground: var(--app-fg-default);
-    --primary: var(--app-bg-action);
-    --primary-foreground: var(--app-fg-on-action);
+    --primary: var(--app-bg-primary);
+    --primary-foreground: var(--app-fg-on-primary);
     --secondary: var(--app-bg-sunken);
     --secondary-foreground: var(--app-fg-default);
     --accent: var(--app-bg-surface-hover);
@@ -214,13 +215,13 @@
     --radius: var(--app-radius-control);
     --sidebar: var(--app-bg-sunken);
     --sidebar-foreground: var(--app-fg-default);
-    --sidebar-primary: var(--app-bg-action);
-    --sidebar-primary-foreground: var(--app-fg-on-action);
+    --sidebar-primary: var(--app-bg-primary);
+    --sidebar-primary-foreground: var(--app-fg-on-primary);
     --sidebar-accent: var(--app-bg-surface-hover);
     --sidebar-accent-foreground: var(--app-fg-default);
     --sidebar-border: var(--app-border-color-subtle);
     --sidebar-ring: var(--app-ring-color);
-    --chart-1: var(--app-bg-action);
+    --chart-1: var(--app-bg-primary);
     --chart-2: var(--app-bg-selected);
     --chart-3: var(--app-bg-info);
     --chart-4: var(--app-bg-warning);
@@ -247,14 +248,14 @@
     border-bottom: var(--app-border-width) solid var(--app-border-color-strong);
     border-radius: var(--app-radius-control-sm) var(--app-radius-control-sm) 0 0;
     outline: none;
-    caret-color: var(--app-bg-action);
+    caret-color: var(--app-bg-primary);
   }
   .ids-field__input::placeholder {
     color: var(--app-fg-subtlest);
   }
   .ids-field__input:focus-visible {
     border-bottom-width: 2px;
-    border-bottom-color: var(--app-field-border-color-focus, var(--app-border-action));
+    border-bottom-color: var(--app-field-border-color-focus, var(--app-border-primary));
     background: var(--app-bg-surface-hover);
   }
   .ids-field__input:disabled {
@@ -276,17 +277,17 @@
   }
   .ids-btn-secondary {
     background: transparent;
-    color: var(--app-fg-action);
+    color: var(--app-fg-primary);
     border: var(--app-border-width) solid currentColor;
   }
   .ids-btn-secondary:hover,
   .ids-btn-secondary:focus-visible {
-    background: var(--app-bg-action-subtle);
+    background: var(--app-bg-primary-container);
     color: var(--app-fg-link-hover);
   }
   .ids-btn-text {
     background: transparent;
-    color: var(--app-fg-action);
+    color: var(--app-fg-primary);
     border: 0;
   }
   .ids-btn-text:hover,

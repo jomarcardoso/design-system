@@ -171,20 +171,40 @@ not an error.
 comes from the brand, and guessing at the one thing the client already knows is
 the fastest way to lose their confidence in everything else.
 
-**8b. When something is CHOSEN — a selected tab, a ticked checkbox — does it
-take your main brand colour, or a different one?**
+**8b (opener). Which of these is the priority — brand presence everywhere,
+managing a dense operational workflow, or a clean page where the user's own
+content is the only thing standing out?**
+
+- Brand presence → probably `brand`
+- Dense operational workflow, many states and alerts → probably `functional`
+- Clean page, content is the protagonist → probably `monochrome`
+
+Use it to open the topic, **not to decide**. It sorts fast because it is about
+priority rather than pixels, and a client can answer it in one sentence. But it
+sorts by product TYPE, and product type does not determine the school: Apple
+Card is a bank and is monochrome; plenty of content apps are brand-led. Take the
+answer as a hypothesis and confirm it with 8c.
+
+**8c (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
+does it take your main brand colour, or a different one?**
 
 - (A) A different colour → `$colour-strategy: 'functional'`
 - (B) The main brand colour → `$colour-strategy: 'brand'`
 - (C) There is only one colour; everything else is grey → `'monochrome'`
 
-Phrased that way a client answers it without knowing any vocabulary, and it
-is the single most load-bearing decision in the document — it is what a new
-component six months later reads to find out whether "chosen" gets a colour
+This is the decision. Phrased this way a client answers it without knowing any
+vocabulary, and it is the most load-bearing line in the document — it is what a
+new component six months later reads to find out whether "chosen" gets a colour
 of its own.
 
+**When 8b and 8c disagree, 8c wins, and say so out loud.** The disagreement is
+information: a client who said "brand everywhere" and then described a grey
+interface with one accent has a marketing site in mind and a product in front of
+them. Naming that early is cheaper than discovering it in review.
+
 It sets which collapses `check-roles()` treats as mistakes, and NOT which
-tokens exist: all three schools use one contract. Read
+tokens exist for SURFACES and STATUS — those are common — but it does decide the
+names of the interactive roles. Read
 [`references/colour-strategies.md`](colour-strategies.md) before asking, because
 the follow-ups differ per answer.
 
@@ -192,7 +212,51 @@ the follow-ups differ per answer.
 be monochrome as Tech Minimalist ones, and a Playful brand may well mark
 selection with its own hue. The two axes are independent.
 
-**8c. Beside your main button, what does the supporting action look like?**
+### 8d–8f — accent-driven only
+
+Ask these **only when 8c answered (C)**. In the other two schools the palette is
+given; in this one it is generated from two pigments, and these three answers
+are what stop every monochrome product from looking like the same one. Skip them
+elsewhere — a functional product has no single "accent" to profile.
+
+**8d. Your highlight colour: strong enough that white text sits on it, or pale
+enough that dark text stays?**
+
+- (A) Strong — Spotify, iOS → `accentContrast: high`
+- (B) Pale — a soft tinted fill → `accentContrast: low`
+
+Both are the school. (A) fills the primary button and inverts its label; (B)
+keeps a single ink colour throughout and leans harder on weight and space. The
+generator needs to know because it decides whether `on-accent` is measured
+against a light or a dark foreground, and getting it wrong fails the contrast
+gate rather than shipping — but it fails at the end of the build, after the
+whole palette has been derived from the wrong assumption.
+
+**8e. Are your greys actually grey, or do they carry a tint?**
+
+- Pure grey → `neutralPigment: 0`
+- A hint — warm paper, cool slate → `0.5`–`0.8`
+- Clearly tinted → `1`
+
+This is the smallest number in the document and it does more visible work than
+any other. It is a few thousandths of chroma in the mid-tones, and it is the
+difference between a notebook and a settings screen. Ask for the FEELING —
+"warm paper", "cold steel" — and pick the number; a client has no intuition for
+chroma and every intuition for paper.
+
+**8f. How is one surface told from the next — a line, a change of tone, or a
+shadow?**
+
+- (A) Lines → `surfaceSeparation: lines`
+- (B) Tone → `tones`
+- (C) Shadow → `shadows`
+
+The school leans on this because it has no colour to spend on structure. It also
+has to agree with `elevation` from block 2; if the client says "lines" here and
+"soft shadows" there, resolve it now rather than emitting both.
+
+**8g. Beside your main button, what does the supporting action look like?**
+
 
 - (A) Outlined
 - (B) A soft tint of the main colour

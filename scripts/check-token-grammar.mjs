@@ -84,8 +84,8 @@ const EXEMPT = new Set([
   'heading-1-fg', 'heading-2-fg', 'heading-3-fg', 'heading-4-fg',
   'heading-5-fg', 'heading-6-fg',
   // `accent` is a role a few libraries expose directly; it has no component.
-  'accent-bg', 'accent-fg', 'accent-bg-hover', 'accent-bg-subtle',
-  'accent-fg-on-subtle',
+  'tertiary-bg', 'tertiary-fg', 'tertiary-bg-hover', 'tertiary-bg-subtle',
+  'tertiary-fg-on-subtle',
 ]);
 
 // Layer 3 is Sass variables now, not a map. `$button-bg: var(--app-bg-action)

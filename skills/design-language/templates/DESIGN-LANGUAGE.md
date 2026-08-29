@@ -21,11 +21,26 @@ statusColours: traditional        # traditional | brand-adapted
 
 # Which school this product belongs to. Sets config.$colour-strategy, and so
 # which role collapses check-roles() treats as mistakes. It does NOT change
-# which tokens exist — all three use one contract.
+# which interactive token NAMES exist: action/selected/link, primary/container,
+# or accent. Surfaces, ink and status are common to all three.
 #   functional  a colour per job (Atlassian, Polaris)
 #   brand       the brand hue also marks what is chosen (Material, Itau)
 #   monochrome  one accent, everything else grey (Apple, Vercel, Radix)
 colourStrategy: functional
+
+# --- Accent-driven only -----------------------------------------------------
+# Delete these three when colourStrategy is functional or brand: they describe a
+# generated ramp, and those schools are given their palette rather than deriving
+# it. Leaving them behind is worse than omitting them, because the next reader
+# cannot tell a stale answer from a live one.
+#
+# high | low. Is the solid accent saturated enough to need light ink on it?
+accentContrast: high
+# 0 = true grey, 1 = the seed pigment at full strength. The smallest number in
+# this file and the one that does the most visible work.
+neutralPigment: 0.7
+# lines | tones | shadows. Must agree with `elevation` above.
+surfaceSeparation: lines
 
 # outline | tinted | neutral | second-brand. Six of the seven treatments in
 # use are the same tokens pointed elsewhere, so this changes theme.scss and

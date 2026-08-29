@@ -2413,6 +2413,7 @@
     --app-font-family-heading: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     --app-font-family-display: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     --app-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+    --app-font-size-xs: 0.75rem;
     --app-font-size-sm: 0.875rem;
     --app-font-size: 1rem;
     --app-font-size-lg: 1.125rem;
@@ -2452,6 +2453,7 @@
   :root,
   [data-theme=carmageddon] {
     color-scheme: dark;
+    accent-color: var(--app-bg-selected);
     --app-bg-page: #0c0a09;
     --app-bg-surface: #1c1917;
     --app-bg-raised: #292524;
@@ -2529,6 +2531,7 @@
   :root,
   [data-theme=carmageddon] {
     color-scheme: dark;
+    accent-color: var(--app-bg-selected);
   }
   :root[data-surface=base],
   :root [data-surface=base],

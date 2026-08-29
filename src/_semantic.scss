@@ -67,6 +67,7 @@
 @use 'base';
 @use 'core';
 @use 'config';
+@use 'roles';
 
 // -----------------------------------------------------------------------------
 // STRUCTURE — theme-independent tokens
@@ -343,7 +344,107 @@ $_type-scale-steps: (
   @return _req($c, $fallback-key, $name);
 }
 
+// -----------------------------------------------------------------------------
+// SCHOOL-NATIVE THEME KEYS
+// -----------------------------------------------------------------------------
+//
+// A theme map is written in ITS SCHOOL's vocabulary, not in the canonical one.
+// A monochrome product declares `accent` once; a brand product declares
+// `primary`. Neither should have to fill three keys with the same value so that
+// a contract written for a third school stays satisfied — that redundancy was
+// the point of splitting the vocabularies.
+//
+// This expands the school's keys back onto the canonical ones the body of
+// `colors()` reads, so there is one `colors()` rather than three.
+//
+// EXPLICIT ALWAYS WINS. `_alias` only fills a canonical key that is absent, so a
+// monochrome product that genuinely wants its links a step lighter than its
+// buttons writes `link` and keeps it.
+@function _alias($c, $from, $to) {
+  @if map.has-key($c, $to) or not map.has-key($c, $from) {
+    @return $c;
+  }
+  @return map.merge($c, ($to: map.get($c, $from)));
+}
+
+@function _normalise($c) {
+  $s: config.strategy();
+
+  @if $s == 'monochrome' {
+    $c: _alias($c, accent, action);
+    $c: _alias($c, 'on-accent', 'on-action');
+    $c: _alias($c, 'accent-hover', 'action-hover');
+    $c: _alias($c, 'accent-active', 'action-active');
+    $c: _alias($c, 'accent-subtle', 'action-subtle');
+    $c: _alias($c, 'accent-text', 'action-text');
+    $c: _alias($c, 'accent-border', 'action-border');
+
+    // The collapse. Three canonical families, one declared accent.
+    @each $suffix in ('', '-hover', '-active', '-subtle', '-text', '-border') {
+      $c: _alias($c, 'action#{$suffix}', 'selected#{$suffix}');
+    }
+    $c: _alias($c, 'on-action', 'on-selected');
+    $c: _alias($c, 'action-text', link);
+    $c: _alias($c, 'action-hover', 'link-hover');
+    // `link-visited` is deliberately NOT aliased. The school says one hue, not
+    // one state, and letting a visited link look unvisited is an accessibility
+    // regression dressed as minimalism.
+    $c: _alias($c, 'action-text', 'link-visited');
+  } @else if $s == 'brand' {
+    $c: _alias($c, primary, action);
+    $c: _alias($c, 'on-primary', 'on-action');
+    $c: _alias($c, 'primary-hover', 'action-hover');
+    $c: _alias($c, 'primary-active', 'action-active');
+    $c: _alias($c, 'primary-container', 'action-subtle');
+    $c: _alias($c, 'primary-text', 'action-text');
+    $c: _alias($c, 'primary-border', 'action-border');
+
+    // The brand hue marking what is chosen IS this school, so selection
+    // defaults to the container rather than to the solid fill — which is what
+    // Material actually renders for a selected list item.
+    $c: _alias($c, 'primary-container', selected);
+    $c: _alias($c, 'on-primary-container', 'on-selected');
+    $c: _alias($c, 'primary-hover', 'selected-hover');
+    $c: _alias($c, 'primary-active', 'selected-active');
+    $c: _alias($c, 'primary-container', 'selected-subtle');
+    $c: _alias($c, 'primary-text', 'selected-text');
+    $c: _alias($c, 'primary-border', 'selected-border');
+  }
+
+  @return $c;
+}
+
+// Canonical keys in, EMITTED keys out.
+//
+// Where a school collapses several canonical names onto one — monochrome's
+// accent standing in for action, selected and link — the values have to agree,
+// and this is where that becomes a compile-time assertion rather than a
+// convention. A "monochrome" theme that gives its action and its selection two
+// different colours is not monochrome, and the build says so instead of
+// emitting whichever the map iterated last.
+@function _to-school($tokens, $name) {
+  $out: ();
+
+  @each $key, $value in $tokens {
+    $emitted: roles.resolve($key);
+    $existing: map.get($out, $emitted);
+
+    @if $existing != null and $existing != $value {
+      @error 'theme "#{$name}": "#{$key}" and another role both emit '
+           + '"#{$emitted}" in the #{config.strategy()} school, but they carry '
+           + 'different values (#{$existing} vs #{$value}). In this school '
+           + 'those are one colour. Either give them the same value, or the '
+           + 'product belongs in a different school.';
+    }
+
+    $out: map.merge($out, ($emitted: $value));
+  }
+
+  @return $out;
+}
+
 @function colors($c, $name: 'unnamed') {
+  $c: _normalise($c);
   $tokens: (
     // Surfaces. The original sketch had a single "background colour"; a real
     // UI needs a hierarchy or a card on a card is impossible to express.
@@ -547,7 +648,7 @@ $_type-scale-steps: (
     );
   }
 
-  @return $tokens;
+  @return _to-school($tokens, $name);
 }
 
 // -----------------------------------------------------------------------------
@@ -729,19 +830,20 @@ $_contrast-pairs: (
 
   $checks: $all;
 
-  @if config.$colour-strategy == 'monochrome' {
+  @if config.strategy() == 'monochrome' {
     // One accent by design. Nothing to warn about.
     $checks: ();
-  } @else if config.$colour-strategy == 'brand' {
+  } @else if config.strategy() == 'brand' {
     // The brand hue doing several jobs is the school, not a slip. Navigation
     // collapsing into it is still worth saying: a system where the button, the
     // chosen tab AND the link are one colour has stopped distinguishing
     // anything, and that is a different claim from "our brand colour marks
     // what is chosen".
     $checks: ((action, link, 'a button and an inline link'),);
-  } @else if config.$colour-strategy != 'functional' {
+  } @else if config.strategy() != 'functional' {
     @error 'config.$colour-strategy must be "functional", "brand" or '
-         + '"monochrome"; got "#{config.$colour-strategy}".';
+         + '"monochrome" (aliases: "accent-driven", "minimalist"); got '
+         + '"#{config.$colour-strategy}".';
   }
 
   @each $c in $checks {

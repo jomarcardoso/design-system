@@ -1,0 +1,44 @@
+// =============================================================================
+// CADERNO — accent-driven, no library
+// =============================================================================
+//
+//     sass --load-path=. example/ds-caderno-accent-driven/ds.scss ds.css
+//
+// No adapter. The accent-driven school's claim is that an interface reads
+// through weight, shape and space rather than through colour, and the honest
+// way to show that is to let the tokens style plain markup with nothing
+// underneath them. `recepta-book` runs this same design with the CoreUI
+// adapter, which is what the school looks like once a library is involved.
+// =============================================================================
+
+@use '../../src/config' with (
+  $adapters: (),
+  // The load-bearing line. It tells `check-roles()` that `action`, `selected`
+  // and `link` all being the same pen is the design and not a collapse — see
+  // theme.scss.
+  $colour-strategy: 'monochrome'
+);
+
+@use '../../src/base';
+@use '../../src/semantic';
+@use '../../src/component';
+@use '../../src/derive';
+@use 'theme';
+
+// Layer 1 — two pigments and a ladder. Emits nothing.
+@include base.emit();
+
+// Layer 2 — structure with this product's typefaces, then the day theme.
+@include semantic.emit-structure(theme.$typography);
+@include semantic.emit-theme('light', theme.$caderno, $default: true);
+
+// Night, generated. `derive.dark()` transforms by ROLE rather than per colour,
+// so the pen comes UP the ramp until it separates from a dark page and its
+// label goes dark with it — and every interaction state then brightens, because
+// a fill moves away from its own label. The result goes through the same
+// contrast gate as the hand-written theme above.
+@include semantic.emit-theme('dark', derive.dark(theme.$caderno), $auto: true);
+
+// Layer 3 — the naming contract, unemitted. Nothing here diverges from its
+// defaults, which is the point of a school-aware layer 3: a monochrome product
+// gets a neutral secondary action without writing a line.

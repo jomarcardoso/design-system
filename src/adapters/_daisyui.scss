@@ -92,8 +92,8 @@
       // this foundation would deliver less than using daisyUI alone. Reading
       // `accent-bg` keeps the same default at the same cost — nothing is
       // emitted — while leaving one variable to set.
-      --color-accent: #{component.$accent-bg};
-      --color-accent-content: #{component.$accent-fg};
+      --color-accent: #{component.$tertiary-bg};
+      --color-accent-content: #{component.$tertiary-fg};
 
       // `neutral` is daisyUI's dark solid (`btn-neutral`), not a grey text
       // colour. It used to be bound to `fg-default` with `bg-surface` as its
@@ -205,7 +205,7 @@
     }
 
     .btn-accent {
-      --btn-rest-fg: #{component.$accent-fg-on-subtle};
+      --btn-rest-fg: #{component.$tertiary-fg-on-subtle};
     }
 
     .btn-info {

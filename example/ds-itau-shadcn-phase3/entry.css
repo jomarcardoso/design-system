@@ -59,8 +59,8 @@
    * that was missing was a utility to reach them, so the markup reached for
    * `/90` instead. Publishing them here is a two-line fix that removes every
    * opacity hack from the page. */
-  --color-primary-hover: var(--app-bg-action-hover);
-  --color-primary-active: var(--app-bg-action-active);
+  --color-primary-hover: var(--app-bg-primary-hover);
+  --color-primary-active: var(--app-bg-primary-active);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -128,9 +128,9 @@
   /* The navy. `ink` rather than `secondary`, deliberately: this brand uses one
    * navy for links, outline buttons and text buttons alike, and naming it
    * after any one of those jobs would mislead at the other two. */
-  --color-ink: var(--app-fg-action);
+  --color-ink: var(--app-fg-primary);
   --color-ink-hover: var(--app-fg-link-hover);
-  --color-line-ink: var(--app-border-action);
+  --color-line-ink: var(--app-border-primary);
 
   --color-selected: var(--app-bg-selected);
   --color-on-selected: var(--app-fg-on-selected);

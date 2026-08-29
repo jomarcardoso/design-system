@@ -35,9 +35,24 @@ That separates `monochrome` from both.
 
 ### What the setting actually changes
 
-**No tokens.** All three schools use the same contract; what differs is which
-values the theme points them at. What the setting changes is which collapses
-`check-roles()` treats as a mistake:
+**The token NAMES.** Each school emits its own vocabulary for the interactive
+roles — `action` / `selected` / `link` in functional, `primary` /
+`primary-container` in brand, `accent` in monochrome. Surfaces, ink, borders,
+shadows and the whole status family are common to all three and keep one
+spelling.
+
+That split is recent and deliberate. Layer 2 used to be the UNION of what all
+three schools need, so a monochrome product carried `bg-action`, `bg-selected`
+and `fg-link` as three names it had to fill with the same value — three
+decisions where the school says there is one. It also meant a school could quietly
+start looking like another: a name that exists will eventually be pointed
+somewhere new.
+
+Adapters and layer 3 are unaffected. `core.ref('bg-action')` resolves through
+`src/_roles.scss` at build time, so eleven adapters keep one code path and emit
+`var(--app-bg-accent)` in a monochrome build.
+
+It also changes which collapses `check-roles()` treats as a mistake:
 
 - `functional` — warns when any two of `action` / `selected` / `link` share a value.
 - `brand` — warns only when `action` and `link` collapse. The brand hue marking
@@ -127,3 +142,53 @@ selected: <the accent>,      // 'monochrome' — same as everything
 Record both answers in `DESIGN-LANGUAGE.md`. The strategy is the single most
 load-bearing decision in the file: it is what a new component six months later
 reads to know whether "chosen" gets its own colour.
+
+---
+
+## Accent-driven: the school that generates its own layer 1
+
+`monochrome` — also sold as **Accent-Driven** or **Minimalist**, and all three
+spellings are accepted in `config.$colour-strategy` — is the one school whose
+layer 1 can be computed rather than chosen:
+
+```scss
+@use 'ds/src/ramp';
+
+$paper: ramp.neutral(#8a7355, $pigment: 0.7);   // the neutral ladder
+$pen:   ramp.chromatic(#005bac);                // the one live colour
+```
+
+Layer 2 then maps onto those two ramps **by ladder position** — canvas takes a
+light step, body text a dark one, borders the middle — and because the mapping
+is positional rather than a set of independent decisions, changing a pigment
+moves the whole system without editing a semantic token. That is what makes the
+white-label promise real, and it is the thing a client means when they say
+"I want to try it in green".
+
+**It does not transfer to the other two schools, and offering it there would be
+a disservice.** `functional`'s layer 1 is several independently chosen hues —
+one for what acts, one for what is chosen, one for where text goes — and which
+hue plays which role is the design itself, not a rung. Generating it would be
+generating the design. `brand` sits between: neutrals generated, brand hue given.
+
+### The three follow-ups
+
+Asked only when the answer is monochrome, because the other schools are handed
+their palette. See questions 8d–8f in the questionnaire.
+
+| answer                                       | writes              | why it matters |
+| -------------------------------------------- | ------------------- | -------------- |
+| accent strong enough for white ink, or pale? | `accentContrast`    | decides whether `on-accent` is measured light or dark — get it wrong and the contrast gate fails at the END of the build, after the palette has been derived from the wrong assumption |
+| how much pigment is in the greys?            | `neutralPigment`    | a few thousandths of chroma; the difference between a notebook and a settings screen |
+| line, tone or shadow between surfaces?       | `surfaceSeparation` | the school has no colour to spend on structure, so this carries it |
+
+### What the school does NOT change
+
+The **status family**. A destructive confirmation is red in Vercel too. "One
+accent" governs the interface — what acts, what is chosen, where text goes — not
+the four colours that carry meaning a shape cannot. Trimming the contract to
+"about 17 colour tokens" by dropping status is a recurring suggestion and it
+removes a functional requirement, not a school-specific luxury.
+
+`info` is the honest exception: informational is the interface talking, so it
+can take the interface's colour rather than a fifth hue nobody asked for.

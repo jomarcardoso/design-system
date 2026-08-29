@@ -19,6 +19,7 @@
 @use 'sass:meta';
 @use 'sass:string';
 @use 'config';
+@use 'roles';
 
 // -----------------------------------------------------------------------------
 // Naming
@@ -54,7 +55,12 @@ $_forbidden: ('{', '}', '.');
     }
   }
 
-  @return --#{config.$prefix}-#{$name};
+  // Resolved through the active school here rather than at each call site.
+  // `ref('bg-action')` is what every adapter and every layer 3 entry writes; what
+  // reaches the CSS is `--app-bg-accent` in a monochrome build and
+  // `--app-bg-primary` in a brand one. One accessor, three vocabularies, no
+  // branching anywhere downstream.
+  @return --#{config.$prefix}-#{roles.resolve($name)};
 }
 
 // The public read accessor. Layer 2, layer 3 and adapters use this; nothing
@@ -176,13 +182,13 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
     :root,
     [data-theme='#{$name}'] {
       color-scheme: $scheme;
-      accent-color: var(--#{config.$prefix}-bg-selected);
+      accent-color: #{ref('bg-selected')};
       @content;
     }
   } @else {
     [data-theme='#{$name}'] {
       color-scheme: $scheme;
-      accent-color: var(--#{config.$prefix}-bg-selected);
+      accent-color: #{ref('bg-selected')};
       @content;
     }
   }
@@ -219,7 +225,7 @@ $_hex: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9' 'a' 'b' 'c' 'd' 'e' 'f';
   @media (prefers-color-scheme: #{$scheme}) {
     :root:not([data-theme]) {
       color-scheme: $scheme;
-      accent-color: var(--#{config.$prefix}-bg-selected);
+      accent-color: #{ref('bg-selected')};
       @content;
     }
   }

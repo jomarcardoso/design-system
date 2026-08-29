@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Caderno — accent-driven</title>
+<!--
+  Run `npm run demo:examples`, then open WITH a trailing slash:
+  http://localhost:4173/example/ds-caderno-accent-driven/
+
+  No component library. Every rule in app.css reads layer 2 and nothing else.
+-->
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<main class="wrap">
+
+  <header class="row" style="justify-content:space-between">
+    <span class="wordmark">Caderno</span>
+    <div class="row">
+      <button class="btn btn--ghost" data-set-theme="light">Dia</button>
+      <button class="btn btn--ghost" data-set-theme="dark">Noite</button>
+    </div>
+  </header>
+
+  <section class="card">
+    <h1>Pão de queijo</h1>
+    <p class="muted">
+      Uma receita da avó, anotada a caneta na página de trás do caderno.
+    </p>
+
+    <div class="chips">
+      <button class="chip" aria-pressed="true">Sem glúten</button>
+      <button class="chip" aria-pressed="false">Rápido</button>
+      <button class="chip" aria-pressed="false">Forno</button>
+    </div>
+
+    <hr class="rule">
+
+    <ul class="lines">
+      <li><span>Polvilho azedo</span> <b>500 g</b></li>
+      <li><span>Leite</span> <b>250 ml</b></li>
+      <li><span>Queijo meia cura</span> <b>300 g</b></li>
+      <li><span>Ovos</span> <b>2</b></li>
+    </ul>
+
+    <div class="row">
+      <button class="btn btn--primary">Iniciar modo cozinha</button>
+      <button class="btn btn--secondary">Imprimir</button>
+      <button class="btn btn--ghost">Compartilhar</button>
+      <button class="btn" disabled>Indisponível</button>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Anotar</h2>
+    <div class="field">
+      <label for="q">Sua observação</label>
+      <input id="q" type="text" placeholder="deixei descansar 20 min">
+    </div>
+    <p class="muted">
+      Um <a href="#">link no corpo do texto</a> usa a mesma caneta do botão —
+      é a escola, não um descuido.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>As quatro exceções</h2>
+    <p class="muted">
+      Uma cor por acento governa a interface, não os quatro avisos que carregam
+      significado que a forma não carrega.
+    </p>
+    <div class="note note--success">Receita salva no seu caderno.</div>
+    <div class="note note--warning">O forno ainda está aquecendo.</div>
+    <div class="note note--danger">Não foi possível salvar. Tente de novo.</div>
+    <div class="note note--info">Rende 25 unidades.</div>
+  </section>
+
+</main>
+
+<script>
+  for (const b of document.querySelectorAll('[data-set-theme]')) {
+    b.addEventListener('click', () => {
+      document.documentElement.dataset.theme = b.dataset.setTheme;
+    });
+  }
+</script>
+</body>
+</html>
