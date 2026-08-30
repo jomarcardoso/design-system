@@ -31,6 +31,13 @@ frame: single-column
 # they are needed; the cook reading a step is not also choosing a filter.
 disclosure: progressive
 
+# A major third, GENERATED rather than inherited. The foundation ships
+# Tailwind's hand-tuned scale — a good scale, and the one a large share of
+# interfaces already use. Keeping it would mean inheriting a typographic
+# signature on the surface where an Editorial product is meant to be
+# recognisable.
+typeScale: 1.25
+
 # DERIVED then confirmed. Icons lead their labels, and stand alone only in a
 # repeated toolbar. A notebook has no icon vocabulary of its own, so an unlabelled
 # glyph here is a puzzle rather than a shortcut.
@@ -234,6 +241,11 @@ The tokens live in `src/`. This section is the **rules for using them**.
   arm's length.
 - **Measure:** 45–75 characters. A method that runs wider loses the line return
   exactly when the reader looks away at the pan.
+- **Scale: a major third (1.25), generated.** Body 16px, section titles 31px,
+  the page title 39px. The foundation ships a hand-tuned scale and this product
+  does not use it — not because it is bad, but because it is the scale a large
+  share of recent interfaces already share, and typography is where an Editorial
+  product is supposed to be recognisable.
 - **Leading:** 1.7, the archetype's value, kept despite the density deviation.
 - **Hierarchy comes from size and weight, never colour.** A tinted heading stops
   standing out the moment a status colour appears beside it — and here it would
@@ -413,7 +425,11 @@ every theme this language will ever have.
 - **Type roles.** Body is the baseline. A page has exactly one title, at the top
   step. Section titles sit two steps above body, captions one below. A recipe
   step is body — it is the thing being read, so nothing outranks it.
-- **Vertical rhythm.** Related things one unit apart, unrelated things three.
+- **Vertical rhythm.** Related things one unit apart, unrelated things three,
+  sections twelve. The invariant behind the numbers: the gap between unrelated
+  things is at least twice the gap between related ones. Below that, grouping
+  stops reading and the page becomes a list of equals — the failure usually
+  diagnosed as "it needs more whitespace" when what it needs is a ratio.
   The gap says what belongs together before anyone reads a word, which is the
   whole reason a list of ingredients is legible at arm's length.
 - **Surfaces.** Two levels: the page, and a block raised off it. No third. With

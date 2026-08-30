@@ -147,13 +147,13 @@ chosen is `DESIGN_LANGUAGE.md`.
 | `--app-font-family-heading` | Iowan Old Style, Georgia, Palatino Linotype, ui-serif, serif | Iowan Old Style, Georgia, Palatino Linotype, ui-serif, serif |
 | `--app-font-family-mono` | ui-monospace, Cascadia Mono, Consolas, Menlo, monospace | ui-monospace, Cascadia Mono, Consolas, Menlo, monospace |
 | `--app-font-size` | 1rem | 1rem |
-| `--app-font-size-heading` | 1.5rem | 1.5rem |
-| `--app-font-size-heading-lg` | 1.875rem | 1.875rem |
-| `--app-font-size-heading-sm` | 1.125rem | 1.125rem |
-| `--app-font-size-heading-xl` | 2.25rem | 2.25rem |
-| `--app-font-size-lg` | 1.125rem | 1.125rem |
-| `--app-font-size-sm` | 0.875rem | 0.875rem |
-| `--app-font-size-xs` | 0.75rem | 0.75rem |
+| `--app-font-size-heading` | 1.953125rem | 1.953125rem |
+| `--app-font-size-heading-lg` | 2.4375rem | 2.4375rem |
+| `--app-font-size-heading-sm` | 1.25rem | 1.25rem |
+| `--app-font-size-heading-xl` | 3.046875rem | 3.046875rem |
+| `--app-font-size-lg` | 1.25rem | 1.25rem |
+| `--app-font-size-sm` | 0.796875rem | 0.796875rem |
+| `--app-font-size-xs` | 0.640625rem | 0.640625rem |
 | `--app-font-weight-body` | 400 | 400 |
 | `--app-font-weight-heading` | 600 | 600 |
 | `--app-letter-spacing-heading` | -0.025em | -0.025em |

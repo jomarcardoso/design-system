@@ -142,6 +142,7 @@ defaults nobody chose while a document sits beside it saying otherwise.
 | `references/review.md` | the check after the build | no reviewer for what `verify` cannot see |
 | `src/_config.scss` | `$prefix`, `$colour-strategy`, `$contrast-min`, `$adapters` | settings edited blind |
 | `src/_ramp.scss` | `monochrome` only — generating layer 1 from a pigment | a seed colour invented instead of derived |
+| `src/_type.scss` | only when `typeScale` is set — generating the type scale from a ratio | the foundation's hand-tuned scale, which is Tailwind's and is a signature nobody chose |
 
 **Say what is missing and what it would have decided**, rather than proceeding
 with a gap. *"I do not have `archetypes.md`, so I have no value for
@@ -197,6 +198,7 @@ nobody chose while a document sits beside it saying otherwise.
 | `statusColours` | `traditional` keeps the usual hues; `brand-adapted` moves chroma and temperature and **never the hue family**. A green that is not green stops meaning "it worked". |
 | `colourStrategy` | `$colour-strategy` in `_config.scss`, which decides which layer 2 names exist and which role collapses `check-roles()` treats as mistakes. `references/adapters.md` and the other skill's `colour-strategies.md` have the three vocabularies. |
 | `neutralPigment` | the `$pigment` argument of `ramp.neutral()` — see below. |
+| `typeScale` | the `$ratio` argument of `type.scale()`, whose result replaces `base.$text`. Absent means keep the shipped scale, which is a valid answer and not an oversight. |
 | `accentContrast` | whether `fg-on-accent` is measured against a light or a dark foreground. Getting it wrong fails the contrast gate at the END of the build, after the palette has been derived from the wrong assumption. |
 | `surfaceSeparation` | which of `border-color`, a tone step, or `shadow-raised` carries the difference between two surfaces. Agrees with `elevation` by construction. |
 | `secondaryAction` | `theme.scss` only. Six of the seven treatments are the same two or three tokens pointed elsewhere; none of them reaches the product layer. |

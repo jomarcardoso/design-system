@@ -17,6 +17,14 @@
 // =============================================================================
 
 @use 'sass:map';
+// The type scale, GENERATED from a ratio rather than inherited.
+//
+// `typeScale: 1.25` — a major third. The foundation ships Tailwind's hand-tuned
+// scale, which is a good scale and is also the one a large share of interfaces
+// built in the last few years already use. Keeping it would mean inheriting a
+// typographic signature this product never chose, on the surface where Editorial
+// products are supposed to be recognisable.
+@use '../../src/type';
 @use '../../src/config' with (
   $adapters: (coreui),
   // The load-bearing line. It tells `check-roles()` that action, selected and
@@ -25,7 +33,7 @@
   $colour-strategy: 'monochrome'
 );
 
-@use '../../src/base';
+@use '../../src/base' with ($text: type.scale(1rem, 1.25));
 @use '../../src/core';
 @use '../../src/semantic';
 // Layer 3, CONFIGURED — which is how a product customises a library without

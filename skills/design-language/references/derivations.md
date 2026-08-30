@@ -251,6 +251,55 @@ Question 19 gave the regions. These follow.
 a shadow or a radius — chrome that looks like content is the fastest way to make
 a product feel assembled from parts.
 
+## I. The type scale ratio
+
+**The single number that most changes how a page feels at a glance**, more than
+any colour, and until now nobody chose it — every product inherited the scale
+the foundation ships, which is Tailwind's hand-tuned one. It is a good scale and
+it is also *the* scale, in a large share of the interfaces built in the last few
+years. A product that keeps it has inherited a typographic signature it never
+chose.
+
+| ratio | name | what it does | derived for |
+|---|---|---|---|
+| 1.125 | minor second | barely a hierarchy; size cannot do the work alone | Utilitarian; `dense` |
+| 1.200 | minor third | restrained, safe for applications | Tech Minimalist, Enterprise |
+| 1.250 | major third | clear steps, the common editorial choice | Editorial; `comfortable` |
+| 1.333 | perfect fourth | dramatic; few levels, large jumps | Playful; marketing surfaces |
+| 1.500 | perfect fifth | very dramatic | rarely a whole product |
+
+**A tight ratio moves the work elsewhere.** At 1.125 a heading is barely larger
+than body text, so hierarchy has to come from weight, colour or space — which is
+correct for a dense tool and wrong for a reading product. At 1.333 the third
+step up is already very large, so a page with four heading levels runs out of
+room. Say which is happening rather than only naming the number.
+
+`src/_type.scss` generates it: `type.scale(1rem, 1.25)` returns the same step
+keys the hand-written scale uses, so it is a drop-in. Like the colour ramp, it
+is **not on by default** — generating something is a claim that the generated
+version is better, and for a product that never thought about type the shipped
+scale is the better answer.
+
+## J. Vertical rhythm
+
+Derived from `density`, and expressed as **relations** so it survives a change
+of scale.
+
+| | related | unrelated | between sections |
+|---|---|---|---|
+| `dense` | `space-2xs` | `space-sm` | `space-xl` |
+| `comfortable` | `space-xs` | `space-lg` | `space-2xl` |
+| `generous` | `space-sm` | `space-xl` | `space-2xl` and a rule |
+
+**The invariant, which matters more than the values: the gap between unrelated
+things is at least twice the gap between related ones.** Below that, grouping
+stops reading and the page becomes a list of equals — which is the failure that
+gets diagnosed as "it needs more whitespace" when what it needs is a ratio.
+
+**Space belongs to the container.** A component carrying its own outer margin
+cannot be reused in a tighter context, and every rhythm here is applied by the
+thing doing the grouping.
+
 ## Deriving `accentContrast`
 
 Kept as a front matter key and no longer asked. It is measured, not chosen:

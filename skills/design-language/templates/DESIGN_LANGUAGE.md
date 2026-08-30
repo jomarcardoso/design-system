@@ -58,6 +58,12 @@ frame: single-column              # single-column | content-aside | app-frame
 # interface is on screen at rest. See derivations.md §F.
 disclosure: progressive           # progressive | exposed
 
+# The ratio between type steps. DERIVED from the archetype and the density, and
+# the single number that most changes how a page feels at a glance. Omit it to
+# keep the foundation's hand-tuned scale — which is Tailwind's, and is therefore
+# a signature the product did not choose.
+typeScale: 1.25                   # 1.125 | 1.2 | 1.25 | 1.333 | 1.5
+
 # DERIVED then confirmed. What an icon is USED for, which is a different
 # decision from iconStyle above. See derivations.md §G.
 iconPolicy: icon-leads            # label-always | icon-leads | icon-alone | icon-contained
