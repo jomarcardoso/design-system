@@ -33,8 +33,9 @@ find out what it needs:
 > 3. `skills/design-language/references/colour-strategies.md` — block 4
 > 4. `skills/design-language/templates/DESIGN_LANGUAGE.md` — the document I will fill in
 > 5. `skills/design-language/references/derivations.md` — the answers to component defaults
-> 6. `skills/design-language/references/worked-example.md` — calibration
-> 7. `skills/design-language/references/review.md` — the check at the end
+> 6. `skills/design-language/references/conflicts.md` — answers that fight, and how to soften
+> 7. `skills/design-language/references/worked-example.md` — calibration
+> 8. `skills/design-language/references/review.md` — the check at the end
 >
 > Also send `package.json` if you want the version recorded correctly, and any
 > existing `DESIGN_LANGUAGE.md` if this is a revision rather than a first run.
@@ -69,6 +70,7 @@ invented value in the finished document rather than as an error.
 | `references/colour-strategies.md` | block 4 — the three schools, the seven secondary treatments, the accent-driven follow-ups | the wrong follow-up questions asked |
 | `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
 | `references/derivations.md` | turning the answers into component-level defaults | the hundred unowned decisions fall back to the library, and the build reads as generic however good the document is |
+| `references/conflicts.md` | answers that cannot all be true, and the moves that resolve each | a value quietly adjusted to make a conflict disappear, which the next reader takes for the original intent |
 | `references/review.md` | the check at the end | nobody audits the file that was just written |
 | `references/worked-example.md` | calibrating length and specificity against a real product | a document that is too vague or too long |
 
@@ -353,6 +355,32 @@ considered. And if the client rejects three derivations in a row, the posture
 answer is probably wrong — which is much cheaper to learn here than after a
 build.
 
+### Conflicts are raised WITH their softening plan
+
+Some answers cannot all be true at once, and
+[`references/conflicts.md`](references/conflicts.md) has the recurring ones with
+the moves that resolve each.
+
+Four rules, and the third is the one that matters most:
+
+- **Name both answers and what each one buys.** Not "this is a problem" — which
+  two decisions are in the room, and what each was for. The client made both for
+  a reason and usually remembers only one.
+- **Bring the plan in the same breath.** A conflict raised without options is a
+  complaint; two or three concrete moves make it a decision.
+- **Never soften silently.** Adjusting a value so a conflict disappears, and not
+  saying so, is the worst available outcome: the client believes they got what
+  they asked for, the document records something else, and the next person reads
+  the adjustment as the original intent.
+- **Distinguish "different" from "conflicting".** Most answers that fight a
+  suggestion are simply another valid product. Warning about mere difference
+  teaches the client to ignore warnings, and then the real one arrives in the
+  same tone.
+
+**And leave it open.** After the plan is on the table the client may still
+choose the thing that conflicts. That is allowed; it becomes a deviation with
+its reason, and where it costs something concrete the cost is written down too.
+
 ### Deviations are computed, not noticed
 
 Before showing the table, walk every answer against the archetype's row in
@@ -437,7 +465,7 @@ prose is the argument, and a key with no argument was not decided, only typed.
 ## Review the file you just wrote
 
 Run [`references/review.md`](references/review.md) against the finished document
-before handing it over. Thirty-eight checks, each one having failed in a real run,
+before handing it over. Forty checks, each one having failed in a real run,
 each one passing or failing against something quotable.
 
 Two rules carry it:

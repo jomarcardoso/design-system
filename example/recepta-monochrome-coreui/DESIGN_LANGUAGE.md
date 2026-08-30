@@ -80,6 +80,26 @@ deviations:
       get to carry the writing.
     accepted: 2026-08-29
 
+# Conflicts raised and resolved. Not deviations — nothing here went against the
+# archetype — but decisions whose values look arbitrary without their story.
+resolutions:
+  - conflict: >
+      "paper, but not that old yellowed sepia" and "it has to read as paper"
+      could not both hold literally. Two builds honoured the restriction as
+      written and produced cream, then ice.
+    chosen: >
+      sepia held at the LIGHT end of the ladder. What the answer was avoiding
+      was age, and age is darkness and unevenness rather than yellow.
+    instead-of: a warm grey, which read as an office rather than a notebook
+  - conflict: >
+      the ink ladder wanted three distinguishable steps and the third,
+      paper(600), measured 3.67:1 against the page — below the AA this product
+      committed to.
+    chosen: moved the muted and subtlest inks one rung down, to 800 and 700
+    instead-of: >
+      dropping to a two-ink page, which flattens every screen, or lowering the
+      threshold, which is not a typography decision
+
 overrides:
   - decision: size-control raised from 40px to 44px
     because: multiplatform; 40px is a miss target on a phone held over a pan

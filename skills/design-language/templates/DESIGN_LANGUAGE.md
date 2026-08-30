@@ -114,6 +114,17 @@ deviations:
     reason: The consumer app shares a brand with a children's product.
     accepted: 2026-08-07
 
+# Conflicts that were raised and RESOLVED. Not deviations — nothing here went
+# against the archetype — but decisions that look arbitrary without their story.
+#
+# A conflict resolved in one exchange leaves no other trace: the front matter
+# ends up holding the value that worked, and the next reader sees a number with
+# no reason and "corrects" it back to the one that failed the build.
+resolutions:
+  - conflict: the accent could not reach AA against either ink
+    chosen: moved its lightness two steps, kept the hue
+    instead-of: a neutral primary fill, which the client rejected
+
 # Ergonomics that outranked the archetype. Not a compromise — the system
 # working as intended.
 overrides:

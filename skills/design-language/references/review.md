@@ -2,7 +2,7 @@
 
 # Reviewing a generated DESIGN_LANGUAGE.md
 
-A checklist run against a finished document. Thirty-eight checks, each one either
+A checklist run against a finished document. Forty checks, each one either
 passing or failing against something quotable — not against an impression.
 
 **Every check on this list has failed in a real run.** Nothing here is
@@ -63,6 +63,7 @@ The checks a machine could run, and the ones that catch the worst failures.
 | B6 | Each deviation names what it went against, why, and the date | a deviation the next reader cannot evaluate |
 | B7 | Ergonomic wins are `overrides`, not `deviations` | mobile-first's 44px recorded as a compromise |
 | B8 | On an existing product, the break-or-evolve answer was asked and honoured | the new palette applied to the old contrast, which satisfies nobody and explains itself to no one |
+| B9 | No value was softened without being told | the client believes they got what they asked for and the document records something else |
 
 **B5 is the one to run mechanically**, not by judgement. Walk each answer
 against the archetype's row in `archetypes.md` and count. Left to impression,
@@ -88,6 +89,7 @@ the answer than the author did.
 | C12 | `frame` is present, and §6 says what each region becomes on a phone | a layout that exists only at desktop width |
 | C13 | `iconPolicy` is present, and says where an icon may appear without its label | icon-only buttons on destructive actions, decided by nobody |
 | C14 | The frame regions fit the ladder budget from 13c | a third rung spent on chrome by a product that allowed two |
+| C15 | Every conflict that was raised appears under `resolutions` | a value that looks arbitrary, which the next reader corrects back to the one that failed |
 
 ## D. Whether it is any good
 
@@ -116,16 +118,16 @@ quote what comes back.
 ## The report
 
 One line per failed check, plus a count. Passing checks are not listed
-individually — a report that recites thirty-six passes buries the two
+individually — a report that recites thirty-eight passes buries the two
 failures.
 
-**The three counts must add up to 38.** A real run opened with
+**The three counts must add up to 40.** A real run opened with
 "22 pass, 8 fail, 0 unverifiable" against a list of 22 — the pass count was the
 list length rather than the remainder, so a reader saw a total audit and got a
 partial one. If the arithmetic does not close, the review has not finished.
 
 ```
-DESIGN_LANGUAGE.md review — 35 pass, 2 fail, 1 unverifiable
+DESIGN_LANGUAGE.md review — 37 pass, 2 fail, 1 unverifiable
 
 FAIL A4  `elevation: soft-shadows` with `surfaceSeparation: tones`.
          Line 12 against line 26. Question 7 was asked as a compound
