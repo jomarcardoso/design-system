@@ -38,6 +38,17 @@ iconSize: 20px
 # Icons inherit `currentColor`. An icon set with its own palette fights every
 # theme the product will have, and shows it first in dark mode.
 
+# How loud this product is when something needs attention. The single most
+# load-bearing key after the school: roughly eight component-level defaults are
+# derived from it — badge fill and ink, the resting secondary action, whether a
+# selected chip is tinted or filled, divider weight, the interactive edge,
+# control font weight, how far the accent budget stretches, and accentContrast.
+#
+# See skills/design-language/references/derivations.md for the tables. A
+# question that decides one token is a question badly asked; this one replaced
+# `accentContrast`, which was exactly that.
+posture: quiet                    # quiet | balanced | loud
+
 accessibility: AA                 # AA | AAA — sets the threshold in themes.check-contrast()
 statusColours: traditional        # traditional | brand-adapted
 
@@ -56,7 +67,10 @@ colourStrategy: functional
 # it. Leaving them behind is worse than omitting them, because the next reader
 # cannot tell a stale answer from a live one.
 #
-# high | low. Is the solid accent saturated enough to need light ink on it?
+# high | low. DERIVED, not asked: the accent is measured against the lightest
+# and darkest ramp steps, and whichever wins becomes `fg-on-accent`. Recorded
+# here because tooling reads it, but changing it by hand does not change the
+# measurement — change the accent instead.
 accentContrast: high
 # 0 = true grey, 1 = the seed pigment at full strength. The smallest number in
 # this file and the one that does the most visible work.

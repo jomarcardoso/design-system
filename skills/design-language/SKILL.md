@@ -32,8 +32,9 @@ find out what it needs:
 > 2. `skills/design-language/references/archetypes.md` — the preset behind every recommendation
 > 3. `skills/design-language/references/colour-strategies.md` — block 4
 > 4. `skills/design-language/templates/DESIGN_LANGUAGE.md` — the document I will fill in
-> 5. `skills/design-language/references/worked-example.md` — calibration
-> 6. `skills/design-language/references/review.md` — the check at the end
+> 5. `skills/design-language/references/derivations.md` — the answers to component defaults
+> 6. `skills/design-language/references/worked-example.md` — calibration
+> 7. `skills/design-language/references/review.md` — the check at the end
 >
 > Also send `package.json` if you want the version recorded correctly, and any
 > existing `DESIGN_LANGUAGE.md` if this is a revision rather than a first run.
@@ -67,6 +68,7 @@ invented value in the finished document rather than as an error.
 | `references/archetypes.md` | the preset behind every recommendation, and the row that decides typography, spacing and icons | faces and numbers invented to sound right |
 | `references/colour-strategies.md` | block 4 — the three schools, the seven secondary treatments, the accent-driven follow-ups | the wrong follow-up questions asked |
 | `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
+| `references/derivations.md` | turning the answers into component-level defaults | the hundred unowned decisions fall back to the library, and the build reads as generic however good the document is |
 | `references/review.md` | the check at the end | nobody audits the file that was just written |
 | `references/worked-example.md` | calibrating length and specificity against a real product | a document that is too vague or too long |
 
@@ -199,8 +201,10 @@ moving the brand.
 
 ## Running the interview
 
-Twenty questions, six blocks — five of them apply to one colour school
-only. Read the questionnaire before starting.
+Twenty questions, six blocks — four of them apply to one colour school only,
+and one is skipped when the product is new. Roughly a hundred further decisions
+are DERIVED from those answers rather than asked; see
+[`references/derivations.md`](references/derivations.md). Read the questionnaire before starting.
 
 **Every question decides something concrete.** A token value, a threshold, a
 guardrail. If an answer would change nothing, drop the question rather than
@@ -323,6 +327,32 @@ holds for every theme this language will have; "24px" is true of one and becomes
 a lie at the next. Concrete values belong in `patterns.json`, which is allowed to
 know which theme this is.
 
+### Derived defaults arrive with the read-back
+
+Section 6 is not the only thing computed rather than asked.
+[`references/derivations.md`](references/derivations.md) turns the twenty
+answers into roughly a hundred component-level defaults — what a badge is made
+of, how an input rests, which lines are heavy, how far the accent may travel —
+and those go in the read-back as a block, with their provenance:
+
+> Badges: quiet fill, muted ink — from `archetype: editorial-premium` and
+> `posture: quiet`. Inputs: recessed, hairline edge — the same two. The accent
+> reaches the primary action, the current selection and the focus ring, and
+> nothing else.
+
+**This is the layer that decides whether the output is generic**, and it is worth
+being blunt about why. A read-back gate checks COHERENCE: that what was decided
+was respected. It has no opinion about what was never decided — and an interface
+has hundreds of decisions the interview does not reach. Left unowned, they fall
+to whatever the component library ships, because a library default is the only
+concrete thing available. Three gates did not stop that; a derivation table does.
+
+**Derive, present, let the client disagree.** Never ask these one at a time: an
+interview that reaches eighty questions is one where the answers stop being
+considered. And if the client rejects three derivations in a row, the posture
+answer is probably wrong — which is much cheaper to learn here than after a
+build.
+
 ### Deviations are computed, not noticed
 
 Before showing the table, walk every answer against the archetype's row in
@@ -407,7 +437,7 @@ prose is the argument, and a key with no argument was not decided, only typed.
 ## Review the file you just wrote
 
 Run [`references/review.md`](references/review.md) against the finished document
-before handing it over. Thirty-two checks, each one having failed in a real run,
+before handing it over. Thirty-five checks, each one having failed in a real run,
 each one passing or failing against something quotable.
 
 Two rules carry it:
