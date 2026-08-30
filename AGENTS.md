@@ -104,6 +104,39 @@ that a Sass variable was not set. Find that variable rather than raising the
 specificity — the override wins today and loses the next time the library moves
 a selector.
 
+## The chain
+
+A finished product is five artefacts, each referring to the one before it:
+
+```
+DESIGN_LANGUAGE.md   the answers, and why
+      ↓
+DERIVED.md           what the answers produced, and which answer produced each
+      ↓
+theme.scss → ds.css  the values, and FOUNDATIONS.md reporting them
+      ↓
+patterns.json        which components exist, in which form, going where
+      ↓
+the markup           which the ledger verifies
+```
+
+They agree on the day they are written and drift afterwards, one edit at a
+time: an answer changes and the derivation is not regenerated, a token is
+renamed and `DERIVED.md` keeps citing the old name, a pattern is promoted and
+the class it names is never written.
+
+```bash
+npm run verify:chain
+```
+
+Four links, all mechanical: every answer produced something, every derivation
+names a real token, every composition binding resolves, every promoted pattern
+has its class. It found three breaks the first time it ran.
+
+**What it cannot check is the interesting half** — whether a derivation is the
+RIGHT derivation for an answer. That is judgement, and it belongs to the review
+checklists.
+
 ## Verifying
 
 ```bash

@@ -492,6 +492,19 @@ Two sections are not obvious and are the most useful:
 reading section 1 should be able to say "yes, that is the product" or "no" —
 which is a cheaper place to find out than a built page.
 
+## The chain has to stay continuous
+
+`DESIGN_LANGUAGE.md` and `DERIVED.md` are two links in a five-link chain, and
+`npm run verify:chain` checks the mechanical half of it: that every answer
+produced something, every derivation names a token the build emits, every
+composition binding resolves, and every promoted pattern has its class.
+
+**An answer that derived nothing is the interesting failure**, and the one the
+check found on its first run: three keys were collected in the interview and
+appeared nowhere downstream. An answer with no consequence is either inert — in
+which case asking for it wasted the client's attention — or the derivation
+forgot it, and both are worth knowing.
+
 ## Review the file you just wrote
 
 Run [`references/review.md`](references/review.md) against the finished document

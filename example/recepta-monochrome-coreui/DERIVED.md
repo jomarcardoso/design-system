@@ -63,6 +63,25 @@ inherited from your mother — which rules out more than the archetype does.
 | related / unrelated / section | `space-xs` / `space-lg` / `space-2xl` | `density: comfortable` |
 | measure | 68ch | Editorial + Q5 reading-adjacent |
 
+### Icons
+
+| decision | value | from |
+|---|---|---|
+| the set | Lucide | `iconStyle: outline` needs a set drawn with a real stroke attribute |
+| stroke | 1.25px, via `--app-icon-stroke` | `iconStroke`, itself from the Editorial row — the thinnest in the matrix, because it sits beside a light serif |
+| size | 20px, via `--app-size-icon` | `iconSize` |
+| colour | `currentColor`, always | the icon takes the ink of the text it belongs to |
+| where a glyph may stand alone | a repeated toolbar only | `iconPolicy: icon-leads` |
+
+### Status
+
+| decision | value | from |
+|---|---|---|
+| hue families | green, amber, red, and the pen for info | `statusColours: brand-adapted` — adapted moves chroma and temperature, never the family |
+| chroma | pulled down, so an alert never shouts over a photograph of food | `brand-adapted` + `posture: quiet` |
+| the warning pair | dark ink on a light amber fill, brightening as it is pressed | the inverted-pair rule: a fill that darkens walks toward its own label |
+| where a status colour may NOT go | anything decorative, and any action that has not happened yet | `brand-adapted` + the accent budget |
+
 ### The accent budget
 
 | may appear | may not |
