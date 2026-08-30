@@ -25,8 +25,17 @@
     "donts": [
       "Never a third surface level. With elevation: borders a level is carried by a hairline, and a third would have to be a second hairline, which is not a level.",
       "Never tint a heading for emphasis — hierarchy is size and weight.",
-      "Never separate surfaces with a shadow. That decision was made in question 7 and spending it twice separates the same page two ways."
-    ]
+      "Never separate surfaces with a shadow. That decision was made in question 7 and spending it twice separates the same page two ways.",
+      "Never a persistent rail or sidebar. The frame is a single column and a rail would be the application announcing itself."
+    ],
+    "frame": {
+      "regions": "header, sheet, footer. No aside.",
+      "measure": "68ch",
+      "separation": "A rule under the header. Never a tone — the two-rung budget belongs to content.",
+      "phone": "Nothing to collapse. The single column is already the phone layout, which is what makes this frame cheap on a multiplatform product."
+    },
+    "disclosure": "progressive — secondary actions sit behind the item they act on rather than in every row; filters open rather than persist.",
+    "iconPolicy": "Icons lead their labels. Alone only in a repeated toolbar, and never on a destructive action."
   },
   "components": {
     "button": {

@@ -158,6 +158,84 @@ most often broken by an ad-hoc screen.
 
 ---
 
+## F. Disclosure — how much is on screen at once
+
+Not asked. Derived from question 5 and the archetype, because a client who is
+asked *"do you prefer progressive disclosure or high information density?"* is
+being asked to pick a side in someone else's argument.
+
+| | `progressive` | `exposed` |
+|---|---|---|
+| derived from | Q5 = reading or occasional; Editorial, Tech Minimalist | Q5 = prolonged; Utilitarian, Enterprise |
+| what it means | controls appear when they are needed | controls stay visible |
+| in the wild | Notion, Apple Notes, reading apps | Jira, AWS console, admin tools |
+| the trade | less noise, more clicks and more remembering | fewer clicks, a heavier screen |
+
+**Both are real positions and neither is the sophisticated one.** Progressive
+disclosure sold as "clean" costs a user who does the same task forty times a day
+forty extra clicks; density sold as "powerful" costs a first-time reader the
+ability to find anything. The archetype already chose which cost the product can
+afford — this only names it.
+
+What it decides:
+
+| decision | `progressive` | `exposed` |
+|---|---|---|
+| secondary actions in a row | behind an overflow menu | visible |
+| filters | in a panel that opens | along the top, always |
+| navigation | collapsed below the tablet breakpoint, and often above it | persistent |
+| table row actions | on hover or on select | in every row |
+| section content | collapsible, one open at a time | all open |
+
+**`exposed` needs quieter neutrals, not louder ones.** A screen with everything
+visible manages noise by lowering the contrast of everything at rest and
+spending the accent on one point — which is why `posture: loud` with
+`exposed` is the hardest combination in the system, and worth flagging when it
+comes up.
+
+## G. Icon policy — how an icon is used, not what it looks like
+
+Question 9 decided the icon's STYLE. This decides its JOB, and it is derived
+then confirmed, because it changes what the client sees on every screen.
+
+| | derived when | what it means |
+|---|---|---|
+| **label always** | `exposed`; Enterprise, Utilitarian; `posture: balanced` | an icon never appears without its text |
+| **icon leads, label follows** | most products | icon plus label in navigation and actions; icon alone only in a repeated toolbar |
+| **icon alone, text colour** | `progressive` + `quiet`; Editorial, Tech Minimalist | icons act as buttons with no fill and no border, inheriting `currentColor` |
+| **icon alone, with a container** | `posture: loud`; Playful | every icon button carries a fill or a border |
+
+Three rules hold whichever is derived:
+
+- **An icon alone must be a known glyph in a repeated place.** A magnifier in a
+  search field is understood; a bespoke glyph on a first-time action is a puzzle.
+- **Never an icon alone for something destructive or irreversible.** The label is
+  the confirmation the user reads before the modal appears.
+- **The icon takes the ink of the text it belongs to**, at the same or a quieter
+  step — never the accent, unless the thing it marks is selected. An icon in the
+  accent beside body text spends the budget on decoration.
+
+**Two families may coexist.** The commonest pairing in the wild is outline at
+rest and filled when selected, which is question 9's option (D). When the answer
+was (A), (B) or (C), a second family needs a reason — mixing stroke weights is
+the most visible inconsistency a product can ship and the one no token catches.
+
+## H. The frame
+
+Question 19 gave the regions. These follow.
+
+| decision | derived from | rule |
+|---|---|---|
+| content measure | archetype + Q5 | reading or Editorial: 45–75 characters. Dense tool: the region's width, with a max only where lines would exceed ~110 characters |
+| header behaviour | `disclosure` + Q5 | `progressive` + reading: static, scrolls away · `exposed`: sticky · long reading pages: sticky and condensed after the first screen |
+| aside on a phone | `disclosure` | `progressive`: becomes a sheet or a menu · `exposed`: moves above the content and stays |
+| tone of each region | Q13c | one-surface budget: all regions share the page tone, separated by rules · two: the frame takes the second rung and the content keeps the page |
+| where the accent sits in the frame | `colourStrategy` | the current item in the navigation, and nothing else in the chrome |
+
+**A frame region is not a card.** It is separated by a rule or a rung, never by
+a shadow or a radius — chrome that looks like content is the fastest way to make
+a product feel assembled from parts.
+
 ## Deriving `accentContrast`
 
 Kept as a front matter key and no longer asked. It is measured, not chosen:

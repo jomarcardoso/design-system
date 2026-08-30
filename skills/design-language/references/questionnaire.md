@@ -2,7 +2,7 @@
 
 # The discovery interview
 
-Twenty questions in six blocks — four of them apply to one colour school
+Twenty-one questions in six blocks — four of them apply to one colour school
 only, and one is skipped when the product is new. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
@@ -48,7 +48,7 @@ aloud is four.
 
 **One number, one decision.** A question that carries three decisions collects
 them positionally — "A, A" for three slots — and one disappears without anyone
-noticing which. Split it into 20a, 20b, 20c and let each answer have a label to
+noticing which. Split it into 21a, 21b, 21c and let each answer have a label to
 land on.
 
 **Confirming means proposing ONE option.** Compressing a question is allowed;
@@ -599,7 +599,33 @@ forever.
 > Decides **checkable rules**. This block is what connects the interview to the
 > build, and it is the reason the document is worth generating at all.
 
-**19. Are there visual restrictions the system must NEVER apply?**
+**19. What regions does a page have?**
+
+- (A) **A single column.** A header, the content, a footer. Nothing beside it.
+- (B) **Content with an aside.** A sidebar, filters, or a table of contents
+  sitting alongside.
+- (C) **An application frame.** Persistent navigation on one edge, a working
+  area, and often a panel on the other.
+
+The one structural question in the interview, and it is here because it is the
+only one that is a fact about the PRODUCT rather than a preference about how it
+looks. Everything else in this block can be derived; this cannot — a recipe
+notebook and a recipe manager have the same archetype, the same school and
+different frames.
+
+**It spends the ladder.** Each persistent region that wants its own tone takes a
+rung, and question 13c already fixed the budget. (C) with a two-surface budget
+means the navigation and the working area share a tone and are separated by a
+line; if the client wants them to differ, the budget has to move. Say that
+rather than quietly spending a third rung.
+
+**Everything else about the frame is derived** — the container measure, whether
+the header is sticky or collapses, whether the aside is a rail or a panel, how
+the frame degrades on a phone. Those follow from the archetype, question 5 and
+the disclosure posture, and the tables are in
+[`derivations.md`](derivations.md).
+
+**20. Are there visual restrictions the system must NEVER apply?**
 
 **Do not ask this cold.** A client at this point in a first interview has no
 restrictions in mind, and asking them to produce some invites either an invented
@@ -610,7 +636,7 @@ client has not been burned yet.
 
 Ask it in two parts instead.
 
-**19a. Confirm what the archetype already forbids.** Present these as *already
+**20a. Confirm what the archetype already forbids.** Present these as *already
 held*, not as options to pick — the answer is a yes, or a correction:
 
 | archetype | implied restrictions |
@@ -624,7 +650,7 @@ held*, not as options to pick — the answer is a yes, or a correction:
 > *"Editorial already rules out gradients, heavy shadows and coloured headings.
 > I have those. Anything to add?"*
 
-**19b. Anything beyond that?**
+**20b. Anything beyond that?**
 
 - (A) Nothing for now
 - (B) Yes — say it
@@ -648,20 +674,20 @@ advice. *"Never gradients"* is detectable: `linear-gradient` in the product's ow
 CSS. *"Keep it elegant"* is not, and saying so honestly is better than pretending
 it is a guardrail.
 
-**20. What are the universal interaction patterns?**
+**21. What are the universal interaction patterns?**
 
 Three decisions, so **three labelled questions** — not one number carrying three
 answers. Numbering them together produces "A, A" for three slots: one answer
 silently dropped, and no way to tell which.
 
-**20a. Where do confirmations live?**
+**21a. Where do confirmations live?**
 
 - (A) A modal — blocks until answered
 - (B) A toast with undo
 
 *Propose (A) for anything that cannot be undone, (B) otherwise.*
 
-**20b. How much friction does a destructive action need?**
+**21b. How much friction does a destructive action need?**
 
 - (A) One click
 - (B) A confirmation step
@@ -669,7 +695,7 @@ silently dropped, and no way to tell which.
 
 *Propose (B), or (C) when the data is unrecoverable.*
 
-**20c. When do forms save?**
+**21c. When do forms save?**
 
 - (A) On blur, field by field
 - (B) On an explicit submit

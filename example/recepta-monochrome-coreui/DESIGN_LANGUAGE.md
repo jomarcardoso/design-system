@@ -17,6 +17,25 @@ iconStyle: outline
 iconStroke: 1.25px
 iconSize: 20px
 
+# Quiet: one thing stands out because everything around it recedes. The recipe
+# is the loudest thing on the page and the interface is the paper it sits on.
+# Eight component defaults derive from this — see derivations.md.
+posture: quiet
+
+# A single column. The notebook has no sidebar: a page of a recipe book is a
+# page, and a persistent rail would be the app announcing itself on a surface
+# whose premise is that it does not.
+frame: single-column
+
+# DERIVED from Q5 (occasional) and the Editorial archetype. Controls appear when
+# they are needed; the cook reading a step is not also choosing a filter.
+disclosure: progressive
+
+# DERIVED then confirmed. Icons lead their labels, and stand alone only in a
+# repeated toolbar. A notebook has no icon vocabulary of its own, so an unlabelled
+# glyph here is a puzzle rather than a shortcut.
+iconPolicy: icon-leads
+
 accessibility: AA
 statusColours: brand-adapted
 
@@ -25,7 +44,9 @@ statusColours: brand-adapted
 colourStrategy: monochrome
 
 # --- Accent-driven only ------------------------------------------------------
-# high | low. The ballpoint blue is saturated enough to need light ink on it.
+# high | low. DERIVED, not chosen: the accent measured against the lightest and
+# darkest ramp steps, and the light one wins. Changing this by hand does not
+# change the measurement — change the accent.
 accentContrast: high
 # 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
 # end of the ladder — see the note in section 2 on why the original "not sepia"
@@ -230,6 +251,11 @@ The tokens live in `src/`. This section is the **rules for using them**.
   product has one accent and it is spent on actions, not on decoration.
 - **Corners match `radius-control`**, 4px. An icon drawn square inside a rounded
   interface reads as clip art.
+- **Policy: icons lead their labels.** An icon stands alone only in a repeated
+  toolbar where the glyph is already known. A notebook has no icon vocabulary of
+  its own, so an unlabelled glyph here is a puzzle rather than a shortcut — and
+  never on deleting a recipe, where the label is the confirmation the reader gets
+  before the modal appears.
 - **One set.** Mixing two is the most visible inconsistency this product could
   ship and no token file would notice.
 
@@ -352,6 +378,18 @@ Everything here is a **relation**, not a value. The concrete steps live in
 `patterns.json`, which is allowed to know which theme this is; these hold across
 every theme this language will ever have.
 
+- **The frame: a single column.** A header with a rule under it, the sheet, a
+  footer. No aside — a page of a recipe book is a page, and a persistent rail
+  would be the application announcing itself on a surface whose whole premise is
+  that it does not. The header is separated by a rule rather than by a tone,
+  which keeps the two-rung budget for content.
+- **Measure: 45–75 characters**, held at 68ch. A method that runs wider loses the
+  line return exactly when the reader looks away at the pan.
+- **Disclosure: progressive.** Controls appear when they are needed — the cook
+  reading a step is not also choosing a filter. The cost is real and accepted: a
+  daily user pays a click for the calm. It would be the wrong trade for a recipe
+  MANAGER, which is the same archetype and the same school with a different
+  answer to question 5.
 - **Type roles.** Body is the baseline. A page has exactly one title, at the top
   step. Section titles sit two steps above body, captions one below. A recipe
   step is body — it is the thing being read, so nothing outranks it.

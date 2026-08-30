@@ -49,6 +49,19 @@ iconSize: 20px
 # `accentContrast`, which was exactly that.
 posture: quiet                    # quiet | balanced | loud
 
+# The page frame. The one structural answer in the file — a fact about the
+# product rather than a preference about how it looks, and the only one of these
+# that cannot be derived.
+frame: single-column              # single-column | content-aside | app-frame
+
+# DERIVED from question 5 and the archetype, not asked. How much of the
+# interface is on screen at rest. See derivations.md §F.
+disclosure: progressive           # progressive | exposed
+
+# DERIVED then confirmed. What an icon is USED for, which is a different
+# decision from iconStyle above. See derivations.md §G.
+iconPolicy: icon-leads            # label-always | icon-leads | icon-alone | icon-contained
+
 accessibility: AA                 # AA | AAA — sets the threshold in themes.check-contrast()
 statusColours: traditional        # traditional | brand-adapted
 
@@ -229,6 +242,13 @@ part a token file cannot express.
   light serif is a different product in the same screen.
 - **Corner geometry matches `radius-control`.** Icons drawn square inside a
   rounded interface read as clip art.
+- **Policy:** {{label-always | icon-leads | icon-alone | icon-contained}} — what
+  an icon is USED for, which is a different decision from the style above.
+  {{Where an icon may appear without its label, and where it may not.}}
+- **Never an icon alone for something destructive.** The label is the
+  confirmation the reader gets before the modal appears.
+- **An icon takes the ink of the text it belongs to**, at the same step or a
+  quieter one — never the accent, unless what it marks is selected.
 - **One set.** Mixing two is the single most visible inconsistency a product can
   ship, and it is invisible in a token file.
 
@@ -316,6 +336,17 @@ theme this language will ever have. "A section title is 24px" is true of one
 theme and becomes a lie at the next one — that belongs in `patterns.json`, which
 is allowed to know what this theme is.
 
+- **The frame.** {{single column | content with an aside | application frame}}.
+  {{Which regions exist, what separates them from the content, and what each one
+  becomes on a phone. A frame region is separated by a rule or a rung — never by
+  a shadow or a radius, because chrome that looks like content is the fastest way
+  to make a product feel assembled from parts.}}
+- **Measure.** {{45–75 characters | the region width}} — from the archetype and
+  question 5.
+- **Disclosure.** {{progressive | exposed}}. {{What is visible at rest and what
+  waits to be asked for. Derived, and the trade is real in both directions: the
+  quiet version costs a daily user clicks, the exposed version costs a first-time
+  reader the ability to find anything.}}
 - **Type roles.** Body is the baseline. {{Section title N steps above · caption
   one below · a page has exactly one title at the top step}}.
 - **Vertical rhythm.** {{Related things one unit apart, unrelated things three.

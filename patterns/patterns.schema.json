@@ -374,6 +374,21 @@
             "type": "string"
           },
           "description": "Composition mistakes specific to this product."
+        },
+        "frame": {
+          "type": "object",
+          "description": "The page frame, bound to this product. Which regions exist, what separates them, and what each becomes on a phone. A frame region is separated by a rule or a rung, never by a shadow or a radius: chrome that looks like content makes a product feel assembled from parts.",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "disclosure": {
+          "type": "string",
+          "description": "How much of the interface is on screen at rest, and what waits to be asked for. Derived from the design language rather than chosen here; recorded because it decides where secondary actions and filters live."
+        },
+        "iconPolicy": {
+          "type": "string",
+          "description": "What an icon is USED for, which is a different decision from its style. Where a glyph may appear without its label, and where it may not."
         }
       }
     }
