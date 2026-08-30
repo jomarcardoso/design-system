@@ -25,6 +25,178 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.7.0]
+
+**The accent-driven school stops being the functional school with the colours
+removed.** Building the first real product on it — monochrome, on a library,
+rendered in a browser — showed that the school had a vocabulary it could not
+speak: the neutral ladder had twelve rungs and layer 2 gave semantic names to
+about six of them, so everything quiet on a page had to borrow a surface or a
+solid. Five bugs came out of the same exercise, four of them in code.
+
+**To upgrade:** copy the new `src/`. Nothing breaks — the new tokens are
+optional with fallbacks. Then read *Changed* on the library entry, because the
+work that belongs there is currently being done by CSS overrides in most
+projects, including this one.
+
+### Added
+
+- **`bg-neutral-subtle`, `-hover` and `-active` in layer 2.** The rung the
+  contract was missing. `bg-action-subtle` and `bg-selected-subtle` existed from
+  the start; the neutral had no quiet step, so anything wanting a soft neutral
+  chip reached for a page surface (not a fill, no edge) or for `bg-neutral`
+  (a SOLID, with inverted ink). A badge built on the solid renders as a small
+  dark button — which is exactly what the first accent-driven page shipped, a
+  cooking time competing with the one primary action beside it.
+
+  In this school the quiet fill does more work than the solid: badges, chips,
+  tags, resting secondary buttons and ghost hover are all made of it. A system
+  with one accent needs a neutral that can hold a shape WITHOUT inverting.
+
+  Optional, falling back to `sunken`, so no existing theme breaks. The fallback
+  is a starting point rather than an answer — `sunken` is a PAGE recess and this
+  is an ELEMENT fill.
+
+- **The rung table, in `colour-strategies.md`.** Each of the twelve steps with
+  its job, from Radix UI's documented scale: canvas, panel, element at rest,
+  its hover and pressed, divider, interactive edge and its hover, the one solid
+  neutral and its hover, secondary ink, primary ink. A product that only ever
+  touches the two ends and the middle has spent three rungs of twelve and left
+  the school's whole vocabulary on the floor.
+
+- **Question 11d — how much of the ladder the LAYOUT may spend.** One surface,
+  two, or three and more. With the consequence that makes it decidable: the
+  rungs a layout does not spend are not saved, they are RESERVED. A layout that
+  has already used rungs 1, 2 and 3 on page, header and sidebar has nothing left
+  that reads as an element rather than as a region.
+
+- **Question 11e — which way the ladder runs.** Lighter as it rises (Radix,
+  Apple HIG, editorial reading products) or darker as it groups (Material 3's
+  `surface-container` family, Atlassian's `background.neutral.subtle`). Both are
+  shipped systems and neither is a default.
+
+  It exists because the accent-driven example got its ladder by copying another
+  example's theme, the client liked the result, and nothing recorded the
+  decision — which is the worst way to be right. `elevation` pushes at this
+  question and does not settle it: tone being the only thing that can lift
+  something says nothing about which direction.
+
+- **`$list-item-bg-active` and `$pagination-item-bg-disabled` in layer 3.** A
+  list that lightens on hover and does nothing under the finger reads as broken
+  on touch, where hover does not exist and press is the only feedback.
+
+### Fixed
+
+- **`bg-surface-active` and `bg-disabled` reached nothing.** Found by auditing
+  which layer 2 tokens actually arrive in the built CoreUI CSS. Four consumers
+  were sitting on library defaults: the list row pressed state, list and
+  pagination disabled surfaces, and the dropdown link hover — which CoreUI
+  points at `--cui-tertiary-bg`, bound here to `bg-sunken`. A page RECESS
+  borrowed for an interaction STATE is the exact substitution `bg-surface-hover`
+  was added to stop, and in a theme where sunken and page share a value it
+  renders a hover that does nothing.
+
+- **`--cui-badge-color` and `--cui-badge-border-radius` were never bound.** The
+  library hardcodes `#fff` for badge ink inside the rule, which made a light
+  chip look impossible without leaving the library. It is a Sass `!default` and
+  a beatable literal both — a value in a declaration still loses to the same
+  variable at a later layer.
+
+  `.text-bg-*` is the real ceiling and stays refused in the ledger: it writes
+  `color: #fff !important` in the rule itself, which no variable in either half
+  of the architecture can move.
+
+- **The ink ladder had a step nothing could legally be written in.** `fg-subtlest`
+  at rung 600 measured 3.67:1 against the page, below the AA the product
+  committed to. Unnoticed for as long as no page used the token.
+
+### Changed
+
+- **`coreui-entry.scss` sets what only it can reach.** It set 24 of CoreUI's
+  1161 Sass variables and every one was colour or radius, so `$spacer`,
+  `$line-height-base`, `$headings-font-family`, the component font weights and
+  the `$enable-*` flags all stayed at library defaults.
+
+  `$spacers` is the sharp one: it compiles every `.p-*`, `.m-*` and `.gap-*`
+  utility to a LITERAL, so a page using `.gap-2` was spacing itself with
+  CoreUI's rhythm and no token could reach it. `$spacer` is now four base units,
+  which lines the two scales up exactly.
+
+  The diagnostic that found it is worth keeping: **a product writing CSS that
+  overrides a library is evidence that a Sass variable was not set.** This
+  repository had one — a `@layer base` rule giving headings their serif face —
+  and setting `$headings-font-family` deleted it. A `var()` is allowed as a Sass
+  variable's value wherever the library assigns it straight through, which is
+  the best of both halves: set at build time, still theme-reactive.
+
+- **The entry and the adapter are documented as two halves**, in
+  `references/adapters.md` and as a rule in `AGENTS.md`. They are not
+  interchangeable and confusing them is how a project ends up overriding a
+  library with its own stylesheet. The test is one question — does this value
+  change between themes? Yes, the adapter; no, the entry; neither can reach it,
+  and only then is it a limit to record in `patterns.json` as a refusal.
+
+- **The accent-driven example is retuned, and both changes were errors of hue
+  rather than of parameter.** The neutral seed sat at 67 degrees and produced
+  cream; the accent measured within a degree of Bootstrap's own blue and read as
+  a framework default. `neutralPigment: 0.6` was never the problem.
+
+  The client's original *"paper, but not that old yellowed sepia"* was withdrawn
+  after seeing two builds honour it literally: what was being avoided was AGE,
+  and age is darkness and unevenness rather than yellow. Recorded as a revision
+  in the document rather than changed quietly, because it was a reasonable thing
+  to say and the next person will say it again.
+
+### Added — `design-patterns`
+
+- **`references/worked-example.md`** — a real ledger, commented. The skill had
+  none while the other two did, which is the gap that made the `design-system`
+  skill invent its own shape on first contact. It carries the rule that decides
+  whether a ledger works at all: **the namespace claims VARIANTS, never
+  anatomy.** Measured on seven lines of ordinary markup, a namespace of
+  `^card-(?!group)` produces eight violations on `card-body`, `card-title`,
+  `nav-item`, `nav-link` and the modal parts; `^card$` produces none.
+
+- **`references/review.md`** — thirty-two checks the verifier cannot make,
+  because it reads markup and not the ledger as a document.
+
+- **A STOP protocol**, matching the other two skills.
+
+### Changed — `design-patterns`
+
+- **What is in the code is evidence, not authority.** The instruction to fill a
+  new ledger from existing markup is now split in two, and the existing-code
+  path requires consent for every entry. A design system is normally adopted
+  BECAUSE something needs to change, so the incoherence in today's markup is
+  frequently the thing it was brought in to remove — five ways to say
+  "secondary", a button coloured by an absolute palette name. Importing that
+  wholesale writes it into the contract and hands it a justification.
+
+  With the rule that follows from it: **never infer consent from frequency.**
+  The composition used on forty screens may be the one being replaced; that is
+  what a facelift is.
+
+- **A greenfield path**, for the common case where the design system comes
+  first and there is no markup to read. Presented as a good position rather
+  than a missing input: the vocabulary gets decided rather than inherited.
+
+- **When a utility class may appear in a pattern.** Two tests, and a pattern
+  has to pass both: the base class carries the component on its own — a button
+  needing five classes to read as a button has a recipe rather than a base — and
+  the utility is self-sufficient, forcing no change to a child or sibling. A
+  third test only a build can run: the adapter has to bind it. `bg-body-tertiary`
+  passed both written tests and was still broken, because the adapter bound the
+  colour and the library reads the triplet.
+
+### Added — the example
+
+- **`example/recepta-monochrome-coreui` is complete**: design language, palette,
+  theme, entry, ledger and a page, all in `npm run verify`. First example with
+  all three skills' output, first combining a library with a non-functional
+  school, and the reason four of this release's bugs are fixed.
+
+---
+
 ## [0.6.0]
 
 **Four runs of the `design-system` skill against a deliberately weaker model,

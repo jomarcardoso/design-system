@@ -2,8 +2,8 @@
 
 # The discovery interview
 
-Eighteen questions in six blocks — three of them apply to one colour
-school only. Two rules govern the whole thing:
+Twenty questions in six blocks — five of them apply to one colour school
+only. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
 threshold, or a rule the build can check. A question whose answer changes
@@ -371,6 +371,66 @@ so they pair one to one:**
 Any other combination is a contradiction, not a nuance. If the client said
 "lines" there and "shadows" here, one of the two questions was heard wrong —
 re-ask the one that was compressed, and do not emit both.
+
+**11d. How much of the neutral ladder may the LAYOUT spend?**
+
+- (A) One surface. Header, page and modal are all the canvas, separated by
+  lines. The quietest, and the most editorial.
+- (B) Two surfaces. The header and the modal sit one rung above the page.
+- (C) Three or more. Distinct tones for header, sidebar, panel and page.
+
+Asked because it is the difference a reader sees on every screen, and because it
+is the question a client raises unprompted the moment they compare their current
+product to this school: *"today my app uses a lot of tones — do I keep them?"*
+
+**The rungs the layout does not spend are not saved, they are RESERVED.** This
+school runs on a quiet neutral fill — badges, chips, tags, resting secondary
+buttons, ghost hover — and those live at rung 3. A layout that has already spent
+rungs 1, 2 and 3 on page, header and sidebar has nothing left that reads as an
+ELEMENT rather than as a REGION, and every label then has to be either a
+page-coloured rectangle with no edge or a dark solid that looks like a button.
+
+So (C) is a deviation in this school rather than a preference, and it is worth
+saying so out loud: it does not stop the product being accent-driven, it spends
+the budget the school reserves for its most characteristic element. The rung
+table in [`colour-strategies.md`](colour-strategies.md) says what each one is
+for.
+
+**11e. Which way does the ladder run?**
+
+Ask only when 11d answered (B) or (C). With one surface there is no direction.
+
+- (A) **Paper on a table.** The page sits a rung or two up the ladder and
+  anything raised above it is LIGHTER — a card, a modal, a dropdown. The
+  lightest step is reserved for what floats.
+- (B) **Recessed containers.** The page is the lightest step, and anything
+  grouped or contained is DARKER — a form panel, a data area, a sidebar.
+
+Both are in shipped systems and neither is a default:
+
+| | (A) lighter as it rises | (B) darker as it groups |
+|---|---|---|
+| documented in | Radix UI's 12-step scale; Apple HIG; editorial reading products | Material 3's `surface-container` / `-low` / `-high`; Atlassian's `color.background.neutral.subtle` |
+| suits | reading, content the user owns, anything imitating a physical page | dense operational screens, forms, tables, dashboards |
+| the metaphor | sheets stacked on a desk | wells cut into a surface |
+
+**Two other answers already push at this and neither settles it**, which is why
+it is its own question. `elevation: borders` means tone is the only thing left
+that can lift something — but it does not say which way. And a product imitating
+paper is not automatically (A): a recipe card sunk into the page is a perfectly
+coherent design, it is just a different one.
+
+**It has to be asked rather than inferred.** The first build of the
+accent-driven example took (A) by copying another example's theme, and the
+client liked the result — which is the worst way to be right, because nothing
+recorded the decision and the next theme would have inherited it by accident
+too.
+
+Record it in section 2 under Elevation, in words rather than in step numbers:
+*"anything raised is lighter than the page"* survives a change of palette;
+*"cards are step 50"* does not.
+
+---
 
 **12. Beside your main button, what does the supporting action look like?**
 

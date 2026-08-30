@@ -92,6 +92,52 @@ $font-family-sans-serif: base.scale(font, sans);
 $font-family-monospace: base.scale(font, mono);
 $font-size-base: base.scale(text, base);
 
+// -----------------------------------------------------------------------------
+// THE PART THAT IS ONLY REACHABLE HERE
+// -----------------------------------------------------------------------------
+//
+// Everything above is colour, and colour has a runtime path: the adapter can
+// rebind it per theme. What follows has NO runtime path, because CoreUI either
+// computes with it at Sass time or bakes it into generated utility rules. If it
+// is not set here it can only be corrected afterwards with CSS that overrides
+// the library — which is the thing this architecture exists to avoid.
+//
+// The audit that produced this block: the entry set 24 of CoreUI's 1161 Sass
+// variables, all of them colour or radius, and a product page then had to write
+// its own `@layer base` rule to give headings the serif face. That override was
+// the evidence — a stylesheet fixing something a variable already controlled.
+
+// SPACING. `$spacers` generates every `.p-*`, `.m-*` and `.gap-*` utility as a
+// LITERAL, so a page using `.gap-2` is spacing itself with CoreUI's scale and
+// not with this system's. Anchoring `$spacer` to four times the base unit lines
+// the two up exactly: .p-1 = space-2xs, .p-2 = space-xs, .p-3 = space-md,
+// .p-4 = space-lg, .p-5 = space-2xl.
+$spacer: base.$spacing-unit * 4;
+
+// Leading feeds `$input-height` and every control that derives from it, so
+// leaving it at CoreUI's 1.5 while the theme emits 1.7 makes library controls
+// and product text disagree about the same measurement.
+$line-height-base: 1.5;
+
+// Headings. `_reboot.scss` assigns `font-family: $headings-font-family` with no
+// fallback logic, so a `var()` reaches the CSS intact and stays theme-reactive.
+// This is the line that removes the `@layer base` override from every product
+// that would otherwise need one.
+$headings-font-family: var(--app-font-family-heading);
+$headings-font-weight: var(--app-font-weight-heading);
+
+// Component WEIGHT and SHAPE — compiled, and the residue that keeps a themed
+// build still reading as Bootstrap. A badge at weight 700 is a chip shouting;
+// at the body weight it is a label.
+$badge-font-weight: var(--app-font-weight);
+$btn-font-weight: var(--app-font-weight);
+
+// Asserted rather than assumed. Both are already false in CoreUI 5, and a
+// product whose DESIGN_LANGUAGE.md carries a "never gradients" guardrail should
+// not depend on a library default staying put across a major version.
+$enable-gradients: false;
+$enable-shadows: false;
+
 // The library, wrapped so the adapter — declared later in `vendor-config` —
 // wins over it. CoreUI ships unlayered, like Bootstrap.
 @layer vendor {

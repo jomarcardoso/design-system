@@ -207,6 +207,7 @@
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);
     --app-size-icon: calc(var(--app-space-unit) * 4);
+    --app-icon-stroke: 1.5px;
     --app-ring-width: 2px;
     --app-ring-offset: 2px;
     --app-ring: var(--app-ring-width) solid var(--app-ring-color);

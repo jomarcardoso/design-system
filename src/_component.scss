@@ -458,6 +458,14 @@ $nav-radius: #{core.ref('radius-control')} !default;
 $nav-fg-disabled: #{core.ref('fg-disabled')} !default;
 $nav-fg-on-active: #{core.ref('fg-on-selected')} !default;
 $nav-tab-bg-active: #{core.ref('bg-surface')} !default;
+// The tab LABEL, and it is a different decision from `nav-fg-active`.
+//
+// An enclosed tab does not take the selected FILL — it takes a surface, so the
+// label sitting on it cannot be `fg-on-selected`, which is the ink measured
+// against that fill. Pointing the two at each other put white on white and
+// measured 1.03:1 in a real build; the contrast gate never saw it, because it
+// measures layer 2 pairs and this is a layer 3 crossing.
+$nav-tab-fg-active: #{core.ref('fg-selected')} !default;
 $nav-tab-border-color-active: #{core.ref('border-selected')} !default;
 $nav-tab-border-color-hover: #{core.ref('border-color-subtle')} !default;
 $nav-underline-width: #{core.ref('border-width')} !default;
@@ -549,6 +557,10 @@ $list-radius: #{core.ref('radius-surface')} !default;
 $list-item-bg: #{core.ref('bg-surface')} !default;
 $list-item-fg: #{core.ref('fg-default')} !default;
 $list-item-bg-hover: #{core.ref('bg-surface-hover')} !default;
+// The PRESSED state of a row, which was missing while its hover was here. A
+// list that lightens on hover and then does nothing under the finger reads as
+// broken on touch, where hover does not exist and press is the only feedback.
+$list-item-bg-active: #{core.ref('bg-surface-active')} !default;
 $list-item-bg-selected: #{core.ref('bg-selected')} !default;
 $list-item-fg-selected: #{core.ref('fg-on-selected')} !default;
 $list-item-bg-disabled: #{core.ref('bg-disabled')} !default;
@@ -567,6 +579,7 @@ $pagination-item-bg-hover: #{core.ref('bg-surface-hover')} !default;
 $pagination-item-bg-selected: #{core.ref('bg-selected')} !default;
 $pagination-item-fg-selected: #{core.ref('fg-on-selected')} !default;
 $pagination-item-fg-disabled: #{core.ref('fg-disabled')} !default;
+$pagination-item-bg-disabled: #{core.ref('bg-disabled')} !default;
 
 // --- Toast / notification ------------------------------------------------
 $toast-bg: #{core.ref('bg-raised')} !default;

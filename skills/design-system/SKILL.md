@@ -592,7 +592,7 @@ that is what lets an adapter win over library defaults.
 
 **Two things, and they make different claims.** `npm run verify` says the theme
 is well-formed. [`references/review.md`](references/review.md) says it is the
-*right* theme — fifty-two checks that the values are the ones
+*right* theme — fifty-four checks that the values are the ones
 `DESIGN_LANGUAGE.md` asked for and that each token carries the meaning its name
 claims. `verify` never reads that document, so nothing in it can catch a build
 that is internally perfect and answers to nobody.

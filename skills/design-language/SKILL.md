@@ -28,7 +28,7 @@ find out what it needs:
 > Before I start the interview I need these, all from this plugin. Paths are
 > from the repository root:
 >
-> 1. `skills/design-language/references/questionnaire.md` — the eighteen questions
+> 1. `skills/design-language/references/questionnaire.md` — the twenty questions
 > 2. `skills/design-language/references/archetypes.md` — the preset behind every recommendation
 > 3. `skills/design-language/references/colour-strategies.md` — block 4
 > 4. `skills/design-language/templates/DESIGN_LANGUAGE.md` — the document I will fill in
@@ -63,7 +63,7 @@ invented value in the finished document rather than as an error.
 
 | file | needed for | without it |
 |---|---|---|
-| `references/questionnaire.md` | the eighteen questions, their options and the ✅/⚠️/❌ tables | questions get skipped or asked as free text |
+| `references/questionnaire.md` | the twenty questions, their options and the ✅/⚠️/❌ tables | questions get skipped or asked as free text |
 | `references/archetypes.md` | the preset behind every recommendation, and the row that decides typography, spacing and icons | faces and numbers invented to sound right |
 | `references/colour-strategies.md` | block 4 — the three schools, the seven secondary treatments, the accent-driven follow-ups | the wrong follow-up questions asked |
 | `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
@@ -163,7 +163,7 @@ faces and spacing already chosen, and want them turned into tokens rather
 than reinvented. The interview still runs. It changes shape.
 
 **Read the code first, then confirm.** An existing system has already
-answered most of the eighteen questions; they are just answered in CSS
+answered most of the twenty questions; they are just answered in CSS
 instead of in prose. Find them:
 
 ```bash
@@ -199,7 +199,7 @@ moving the brand.
 
 ## Running the interview
 
-Eighteen questions, six blocks — three of them apply to one colour school
+Twenty questions, six blocks — five of them apply to one colour school
 only. Read the questionnaire before starting.
 
 **Every question decides something concrete.** A token value, a threshold, a

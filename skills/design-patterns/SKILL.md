@@ -30,10 +30,14 @@ nothing else:
 >    entries come from
 >
 > **From this plugin**
-> 3. `patterns/patterns.schema.json`
-> 4. `patterns/patterns.template.json` — only if we are starting a ledger
+> 3. `skills/design-patterns/references/worked-example.md` — a real ledger; the
+>    template is empty on purpose and shows the shape of nothing
+> 4. `patterns/patterns.schema.json`
+> 5. `patterns/patterns.template.json` — only if we are starting a ledger
+> 6. `skills/design-patterns/references/review.md` — send it at the end
 >
-> Also tell me which library the project uses, if the ledger does not say.
+> Also tell me **which library the project uses**, if the ledger does not say —
+> the design language does not record it.
 >
 > Send what you have and I will tell you what is still blocking.
 
@@ -55,9 +59,17 @@ allow.
 This plugin ships no vocabulary — only `patterns/patterns.template.json`, which
 is empty, plus the schema and the verifier. Which button variants a product
 allows is the product's decision, and a tool that shipped an answer would be
-wrong for most of them. Two worked examples live in `example/`:
+wrong for most of them.
+
+[`references/worked-example.md`](references/worked-example.md) is a real one,
+commented, and reading it is the difference between a ledger with the right
+shape and one invented from the schema. Two more live in `example/` —
 `ds-hot-tone-bootstrap-phase1` and `ds-cyberpunk-bulma-phase2`. They disagree
 with each other on purpose.
+
+When the ledger is finished, check it against
+[`references/review.md`](references/review.md): thirty-two checks the verifier
+cannot make, because it reads markup and not the ledger as a document.
 
 ## What this exists to do
 
@@ -203,10 +215,68 @@ together — that is the whole reason `state` is a field and not a comment.
 
 ## Starting a ledger from nothing
 
-Copy `patterns.template.json` into the project, add the library it builds with,
-then fill the vocabulary from what the code ALREADY does — read the markup,
-group the compositions actually in use, and name them. A vocabulary invented
-before looking describes a product nobody built.
+Copy `patterns.template.json` into the project and add the library it builds
+with. Then read [`references/worked-example.md`](references/worked-example.md),
+because the template is empty on purpose and shows the shape of nothing.
+
+Two situations, and they start from opposite ends.
+
+### There is no markup yet
+
+The common case when the design system comes first — a rebuild, a new app, a
+product being repaginated. There is a `DESIGN_LANGUAGE.md` and a theme and no
+screens. **This is a good position to be in**, not a missing input: the
+vocabulary gets decided rather than inherited.
+
+Three sources, in order:
+
+1. **`DESIGN_LANGUAGE.md` decides more than it looks.** `secondaryAction` says
+   what the supporting button is. `guardrails` with `enforcement: ledger` are
+   already `forbidden` entries, with their `reason` written. §6 becomes the
+   `composition` block. The voice table implies whether a destructive
+   confirmation is a modal.
+2. **The library offers a menu; take the smallest useful slice.** Bootstrap has
+   nine button variants and most products use four. Name the four, and let the
+   allowlist refuse the rest silently.
+3. **The screens that are certainly coming.** A recipe app has a card and a
+   form. It does not yet have a carousel, and adding one now is a decision
+   nobody made that will be wrong when someone needs it.
+
+**Start short and let it grow under pressure.** A ledger that begins with forty
+components has pre-decided forty arguments without hearing any of them.
+
+### There is existing markup
+
+Reading it is worth doing — it shows what the product actually needed, which is
+more honest than anyone's memory of it. But **what is in the code is evidence,
+not authority, and nothing goes in without the client agreeing to it.**
+
+The reason is the whole situation you are in: a design system is normally being
+adopted *because* something needs to change. The incoherence in today's markup
+is frequently the thing it was brought in to remove — five ways to say
+"secondary", a button coloured by an absolute palette name, a card that is a
+different card on every page. Importing that wholesale writes it into the
+contract and hands it a justification. The ledger stops being what the product
+chose and becomes a record of what nobody got round to fixing.
+
+So present it as a list of candidates rather than filling the file:
+
+> I found six button compositions in the markup. Four look like real patterns —
+> primary, secondary, a destructive one, and a text-only one. The other two are
+> `btn-light` and a `btn-primary` with an inline background override. Which of
+> these belong in the vocabulary, and which are you adopting the system to get
+> rid of?
+
+Accepted, rejected and deferred are three different answers and all three are
+useful. A rejected candidate is worth a `forbidden` entry with the reason —
+that is precisely a thing people will reach for, and precisely where a good
+refusal message pays for itself.
+
+**Never infer consent from frequency.** The composition used on forty screens
+may be the one being replaced; that is what a facelift is. Only the client knows
+which, and it is one question.
+
+### Both paths
 
 Mark everything `raw` at first. Promotion is later and needs a trigger; setting
 a pattern to `styled` before the class exists makes the ledger lie on day one.

@@ -1,0 +1,96 @@
+/* example/recepta-monochrome-coreui/app.css */
+
+/* =============================================================================
+ * RECEPTA — the application entry
+ * =============================================================================
+ *
+ * The layer order is declared first and in full, including layers this file
+ * never fills, so that adding Tailwind or a legacy stylesheet later slots into
+ * the right position with no edit here.
+ *
+ * `vendor` holds CoreUI, `vendor-config` holds the adapter that rebinds it. The
+ * order is what makes a runtime theme flip move the library: the adapter is
+ * declared after the library, so its `--cui-*` values win.
+ * ========================================================================== */
+
+@layer legacy, theme, base, ds.base, ds.semantic, ds.component, vendor,
+  vendor-config, components, ds.overrides, utilities;
+
+@import '../../dist/coreui.css';
+@import './ds.css';
+
+@layer base {
+  html {
+    background: var(--app-bg-page);
+    color: var(--app-fg-default);
+    font-family: var(--app-font-family-body);
+    font-size: var(--app-font-size);
+    line-height: var(--app-line-height);
+  }
+
+  /* No heading rule here any more. `coreui-entry.scss` sets
+   * `$headings-font-family` and `$headings-font-weight`, so the library emits
+   * them itself and this product needs no override. That deletion is the whole
+   * argument: the CSS that was here existed because a Sass variable was not
+   * set, not because the library could not do it. */
+
+  :where(a) {
+    color: var(--app-fg-accent);
+  }
+
+  :where(a:hover) {
+    color: var(--app-fg-accent);
+  }
+}
+
+@layer components {
+  /* The page is a sheet of paper with a measure, not a full-width app.
+   * `DESIGN_LANGUAGE.md`: 45–75 characters, because a method that runs wider
+   * loses the line return exactly when the reader looks away at the pan. */
+  .sheet {
+    max-width: 68ch;
+    margin-inline: auto;
+    padding-inline: var(--app-space-lg);
+  }
+
+  /* Vertical rhythm, from `composition.rhythm` in patterns.json: related
+   * things one unit apart, unrelated things three. */
+  .stack > * + * {
+    margin-block-start: var(--app-space-xs);
+  }
+
+  .stack-loose > * + * {
+    margin-block-start: var(--app-space-lg);
+  }
+
+  .section + .section {
+    margin-block-start: var(--app-space-2xl);
+  }
+
+  /* The three inks. `fg-default` is the body and needs no class; these two are
+   * the steps below it, and a page that never uses them has one ink and reads
+   * flat — every line shouting equally. */
+  .muted {
+    color: var(--app-fg-muted);
+  }
+
+  .subtlest {
+    color: var(--app-fg-subtlest);
+    font-size: var(--app-font-size-sm);
+  }
+
+  /* The handwriting face, for the one place a notebook should look handwritten.
+   * `font-family-display` — used once, on purpose. */
+  .hand {
+    font-family: var(--app-font-family-display);
+    font-size: var(--app-font-size-heading-sm);
+    color: var(--app-fg-muted);
+  }
+
+  /* A ruled line, which is what this product uses instead of a shadow. */
+  .rule {
+    border: 0;
+    border-block-start: var(--app-border);
+    margin-block: var(--app-space-lg);
+  }
+}

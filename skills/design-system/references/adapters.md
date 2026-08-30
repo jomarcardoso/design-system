@@ -10,6 +10,64 @@ LEAF: nothing depends on it, and deleting one changes nothing else. That is
 why the libraries below repeat each other rather than share an implementation
 — the day one of them diverges, a shared file becomes a knot.
 
+## The entry and the adapter are two halves, and picking the wrong one costs CSS
+
+A library with a Sass source is themed in **two places**, and they are not
+interchangeable. Confusing them is how a project ends up overriding the library
+with its own stylesheet — which is the failure this whole architecture exists to
+avoid, because an override wins by specificity and then loses the next time the
+library changes a selector.
+
+| | `<library>-entry.scss` | `src/adapters/_<library>.scss` |
+|---|---|---|
+| when | Sass compile time, **before** the library builds | runtime, in the `vendor-config` layer |
+| sets | the library's `!default` Sass variables | the library's CSS custom properties |
+| reaches | anything the library computes with, or bakes into a generated rule | anything the library left as a `var()` |
+| survives a theme flip | **no** — it is frozen at build | **yes**, which is the point |
+
+**The test is one question: does this value change between themes?**
+
+- **Yes** → the adapter. A colour, an ink, a state fill. It has to be able to
+  move when `data-theme` moves.
+- **No** → the entry. Radius, leading, the spacing scale, font weights, padding
+  ratios, `$enable-*` flags. Freezing them is correct; they are properties of
+  the product, not of the theme.
+- **Neither reaches it** → then, and only then, is it a limit worth recording in
+  `patterns.json` as a refusal. CoreUI's `.text-bg-*` declares
+  `color: #fff !important` inside the rule; no variable in either half beats
+  that, so the ledger refuses the class instead of fighting it.
+
+### What a thin entry costs
+
+Measured on this repository. `coreui-entry.scss` set 24 of CoreUI's 1161 Sass
+variables and every one of them was colour or radius. Everything else stayed at
+the library's defaults, and each default then had to be corrected downstream or
+left wrong:
+
+| left unset | what it meant |
+|---|---|
+| `$spacer` / `$spacers` | every `.p-*`, `.m-*` and `.gap-*` utility is compiled from CoreUI's 1rem scale. A page using `.gap-2` was spacing itself with the library's rhythm, not the design system's, and no token could reach it. |
+| `$headings-font-family` | the product wrote its own `@layer base` rule to give headings the serif face — **a stylesheet fixing something a variable already controlled** |
+| `$line-height-base` | leading feeds `$input-height`, so library controls and product text disagreed about the same measurement |
+| `$badge-font-weight`, `$btn-font-weight` | weight 700 on a label. Most of what still reads as "a Bootstrap page" after the colours are correct is weight and padding, and both are here |
+| `$enable-gradients` | a `never gradients` guardrail depending on a library default staying put across a major version |
+
+The heading rule is the one to remember, because it is the diagnostic. **If a
+product is writing CSS that overrides the library, the first question is which
+Sass variable was not set** — not how to raise the specificity.
+
+### A `var()` in a Sass variable is often allowed
+
+`$headings-font-family: var(--app-font-family-heading)` works, because
+`_reboot.scss` assigns it straight through. That is the best of both halves: set
+at build time, and still theme-reactive at runtime.
+
+It does **not** work where the library computes with the value — anything
+reaching `shade-color()`, `tint-color()`, `color.mix()` or arithmetic needs a
+real Sass value, which is why the theme colours in the entry go through `srgb()`
+first. Check how the library uses a variable before handing it a `var()`; the
+failure is a hard Sass error, so it is at least loud.
+
 ## Compressing is fine. Compressing without a hook is not.
 
 Layer 2 is deliberately smaller than most libraries: two brand roles, one

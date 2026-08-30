@@ -1,0 +1,309 @@
+{
+  "$schema": "../../patterns/patterns.schema.json",
+  "version": 1,
+  "libraries": [
+    "coreui"
+  ],
+  "composition": {
+    "intent": "How to build a screen this ledger has no component for. DESIGN_LANGUAGE.md section 6 holds the same subject as relations that survive a change of theme; these are the bindings for this theme.",
+    "typeRoles": {
+      "pageTitle": "font-family-heading font-size-heading-lg",
+      "sectionTitle": "font-family-heading font-size-heading",
+      "body": "font-family-body font-size",
+      "caption": "font-family-body font-size-sm"
+    },
+    "rhythm": {
+      "related": "space-xs",
+      "unrelated": "space-lg",
+      "section": "space-2xl"
+    },
+    "surfaces": [
+      "bg-page",
+      "bg-surface"
+    ],
+    "accentBudget": "One primary action per screen, plus whatever is currently selected. Nowhere else — not on headings, not on rules, not on a decorative tag.",
+    "donts": [
+      "Never a third surface level. With elevation: borders a level is carried by a hairline, and a third would have to be a second hairline, which is not a level.",
+      "Never tint a heading for emphasis — hierarchy is size and weight.",
+      "Never separate surfaces with a shadow. That decision was made in question 7 and spending it twice separates the same page two ways."
+    ]
+  },
+  "components": {
+    "button": {
+      "intent": "A control that performs an action. If it navigates to a URL, it is an anchor and nothing here applies.",
+      "namespace": {
+        "coreui": "^btn$|^btn-(?!group|toolbar|close)"
+      },
+      "namespaceNote": "Every `btn-*` class in CoreUI is a variant, so the wide lookahead is right here — it is the exception among the components in this file. `btn-group`, `btn-toolbar` and `btn-close` are a container, a container and an icon, so the lookahead marks where this component's authority ends.",
+      "patterns": {
+        "primary": {
+          "intent": "The action a screen exists for: save the recipe, start cooking mode.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "btn",
+              "btn-primary"
+            ]
+          },
+          "dos": [
+            "One per screen. The accent is a pen, not a highlighter."
+          ],
+          "donts": [
+            "Never two side by side — a screen with two main actions has two jobs."
+          ]
+        },
+        "secondary": {
+          "intent": "A supporting action beside the primary one: cancel, back, dismiss.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "btn",
+              "btn-secondary"
+            ]
+          },
+          "notes": "`secondaryAction: neutral` in DESIGN_LANGUAGE.md. A tinted supporting action would put two blues on a page whose premise is that there is one."
+        },
+        "danger": {
+          "intent": "An action that is hard to undo: delete a saved recipe.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "btn",
+              "btn-danger"
+            ]
+          },
+          "dos": [
+            "Always behind a confirmation modal — the guardrail in DESIGN_LANGUAGE.md."
+          ]
+        },
+        "quiet": {
+          "intent": "A tertiary action inside a dense surface, where even an outline would be noise: edit a step, remove an ingredient row.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "btn",
+              "btn-link"
+            ]
+          }
+        },
+        "status-coloured": {
+          "intent": "A button carrying a status colour to suggest an outcome.",
+          "state": "forbidden",
+          "reason": "A status colour reports an outcome that has happened; a button proposes an action that has not. A green Save reads as already saved. This product also adapts its status colours down so they do not compete with a photograph of food, which makes them weaker as buttons than the accent already is.",
+          "instead": "primary",
+          "matches": {
+            "coreui": [
+              "btn-success",
+              "btn-warning",
+              "btn-info",
+              "btn-outline-success",
+              "btn-outline-warning",
+              "btn-outline-info"
+            ]
+          }
+        },
+        "absolute-palette": {
+          "intent": "A button coloured by a fixed palette name rather than a theme role.",
+          "state": "forbidden",
+          "reason": "`light` and `dark` are palette entries, not theme roles. They do not invert, so a light button stays light on the dark theme. This is a measured fact about the library rather than a matter of taste.",
+          "instead": "secondary",
+          "matches": {
+            "coreui": [
+              "btn-light",
+              "btn-dark",
+              "btn-outline-light",
+              "btn-outline-dark"
+            ]
+          }
+        }
+      },
+      "modifiers": {
+        "size": {
+          "intent": "Physical size. Orthogonal to emphasis — a secondary button can be small without becoming a different pattern.",
+          "options": {
+            "medium": {
+              "intent": "The default, 44px from the multiplatform override. Adds no class, so most call sites name no size at all.",
+              "libraries": {
+                "coreui": []
+              }
+            },
+            "small": {
+              "intent": "Dense rows: an ingredient line, an inline action in a step.",
+              "libraries": {
+                "coreui": [
+                  "btn-sm"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "card": {
+      "intent": "A bounded block of recipe content resting on the page: a recipe in a list, the ingredients, a note.",
+      "namespace": {
+        "coreui": "^card$|^bg-body-tertiary$"
+      },
+      "namespaceNote": "The root class, plus the ONE background utility this product allows on a card. `card-body`, `card-title`, `card-text`, `card-header` and `card-img-top` are ANATOMY — the markup CoreUI requires — not variants, so no pattern produces them and claiming them would make the verifier report ordinary markup as unknown. The utility is claimed because on a card it IS the variant: leave it out and `sunken` is indistinguishable from `default`.",
+      "patterns": {
+        "default": {
+          "intent": "The standard block, resting on the page and separated from it by a hairline.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "card"
+            ]
+          },
+          "dos": [
+            "Let a photograph run to the edge of its own card, and no further."
+          ],
+          "donts": [
+            "Never separate two cards with a shadow — this product carries hierarchy in border-color."
+          ]
+        },
+        "sunken": {
+          "intent": "A recessed block inside a recipe: the utensils list, the cook's note, a tip.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "card",
+              "bg-body-tertiary"
+            ]
+          },
+          "notes": "CoreUI has no tonal card variant, so this is the base class plus a background utility. It passes both tests: `card` is a complete card before the utility arrives, and the utility touches nothing else. A third test only a build can run: the ADAPTER has to bind it. `.bg-body-tertiary` is written as `rgba(var(--cui-tertiary-bg-rgb), ...)`, and the adapter bound `--cui-tertiary-bg` without the triplet — so this card kept CoreUI own grey through a theme flip until that was fixed. Named here rather than left open so the product does not acquire four recessed panels that do not match."
+        }
+      }
+    },
+    "field": {
+      "intent": "A form control for editing a recipe, an ingredient, or the search box.",
+      "namespace": {
+        "coreui": "^form-control$|^form-select$|^form-check-input$"
+      },
+      "namespaceNote": "The control classes only. `form-label`, `form-text` and `form-check` are anatomy and are left unclaimed.",
+      "patterns": {
+        "text": {
+          "intent": "Single-line or multi-line text: a recipe title, a step.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "form-control"
+            ]
+          }
+        },
+        "select": {
+          "intent": "A choice from a closed list: a category, a unit of measure.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "form-select"
+            ]
+          }
+        },
+        "check": {
+          "intent": "Ticking off an ingredient while cooking.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "form-check-input"
+            ]
+          }
+        }
+      }
+    },
+    "nav": {
+      "intent": "Moving between sections of one recipe, or between areas of the notebook.",
+      "namespace": {
+        "coreui": "^nav$|^nav-(tabs|pills|underline)$|^navbar$"
+      },
+      "namespaceNote": "The root plus the three variant classes, ENUMERATED rather than excluded. `nav-item` and `nav-link` are anatomy; a lookahead like `^nav-(?!bar)` would claim them and report every tab link as an unknown variant.",
+      "patterns": {
+        "bar": {
+          "intent": "The notebook's own header.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "navbar"
+            ]
+          }
+        },
+        "tabs": {
+          "intent": "Sections within one recipe: ingredients, method, notes.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "nav",
+              "nav-tabs"
+            ]
+          },
+          "dos": [
+            "Section-level navigation inside a single recipe."
+          ],
+          "donts": [
+            "Not for moving between recipes — that is a route, not a tab."
+          ],
+          "responsive": "Below the tablet breakpoint these stack as headings in the flow; tabs sit at the top of a phone screen and compete with the header."
+        }
+      }
+    },
+    "modal": {
+      "intent": "A dialog that blocks until answered. In this product it exists for one job.",
+      "namespace": {
+        "coreui": "^modal$"
+      },
+      "namespaceNote": "The root class only. `modal-dialog`, `modal-content`, `modal-header`, `modal-body` and `modal-footer` are the anatomy CoreUI requires; `modal-backdrop` is generated by the library at runtime.",
+      "patterns": {
+        "confirmation": {
+          "intent": "Confirming something that cannot be undone: deleting a saved recipe.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "modal"
+            ]
+          },
+          "dos": [
+            "Action-oriented register in the body text, per voiceExceptions — nobody wants charm from the thing that just deleted a recipe."
+          ],
+          "donts": [
+            "Not for anything reversible. A toast with undo is the pattern for that, and this product has not needed one yet."
+          ]
+        }
+      }
+    },
+    "badge": {
+      "intent": "A read-only label on a recipe: a time, a category, a difficulty.",
+      "namespace": {
+        "coreui": "^badge$|^text-bg-[a-z]+$|^bg-body-secondary$"
+      },
+      "namespaceNote": "`badge` plus the two utilities that can act as its fill. `bg-body-secondary` is claimed because on a badge it IS the variant; `text-bg-*` is claimed so the refusal below can catch it.",
+      "patterns": {
+        "neutral": {
+          "intent": "The only badge this product has. A label is not a status, and it is not an action either.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "badge",
+              "bg-body-secondary"
+            ]
+          },
+          "notes": "The library's own badge, rendering as a paper chip with no product CSS. Three token decisions get it there: the adapter binds `--cui-badge-color` and `--cui-badge-border-radius`, which CoreUI exposes and nobody had bound; the adapter points `--cui-secondary-bg-rgb` at `bg-neutral-subtle`; and the entry configures layer 3 with `$badge-fg: fg-muted`. CoreUI hardcodes `--cui-badge-color: #fff` inside the rule, which is why it looked untokenisable — a literal in a declaration is still beatable by the same variable at a later layer."
+        },
+        "status-coloured": {
+          "intent": "A badge carrying a status colour, or the library's own badge classes.",
+          "state": "forbidden",
+          "reason": "A status colour reports an outcome. A cooking time is not an outcome, and a green 30-minute badge teaches readers that green means nothing here. The whole `text-bg-*` family is refused for a second reason that no token can fix: every one of them declares `color: #fff !important` in the rule itself, so the ink cannot follow a theme. That is a real limit of the library, and a ledger is the right place to record it rather than fight it.",
+          "instead": "neutral",
+          "matches": {
+            "coreui": [
+              "text-bg-success",
+              "text-bg-danger",
+              "text-bg-warning",
+              "text-bg-info",
+              "text-bg-primary",
+              "text-bg-secondary"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

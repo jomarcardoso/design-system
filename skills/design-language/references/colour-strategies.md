@@ -173,7 +173,46 @@ one for what acts, one for what is chosen, one for where text goes — and which
 hue plays which role is the design itself, not a rung. Generating it would be
 generating the design. `brand` sits between: neutrals generated, brand hue given.
 
-### The three follow-ups
+### The ladder has jobs, and using it is the school
+
+This is the part most easily missed, and missing it produces the failure that
+sounds like a compliment: a build that is technically monochrome and reads as
+"one of the other schools with the colours removed".
+
+The neutral ramp is not a range to pick from by eye. **Each rung has a job**, and
+a product that only ever touches the two ends and the middle has spent three
+steps out of twelve and left the school's whole vocabulary on the floor:
+
+| rung | job | in the interface |
+|---|---|---|
+| 1 | canvas | the page |
+| 2 | panel | sidebar, header, modal surface |
+| 3 | **element at rest** | badge, chip, tag, resting secondary button, ghost hover |
+| 4 · 5 | element hover · pressed | the same things being interacted with |
+| 6 | divider | the line between two ingredients |
+| 7 · 8 | interactive edge · its hover | the border of an input, of a selectable card |
+| 9 · 10 | the one solid neutral · its hover | a filled button that carries no opinion |
+| 11 | secondary ink | metadata, times, captions |
+| 12 | primary ink | titles and body |
+
+**Rung 3 is the one that decides whether the school looks like itself.** In an
+accent-driven product the quiet neutral fill is everywhere — it is what a label
+is made of — and there is exactly one accent, so anything that cannot be the
+accent has to be able to hold a shape without inverting. Layer 2 carries it as
+`bg-neutral-subtle`, which is a different token from `bg-neutral`: the solid
+inverts its ink and is a *button*, this one keeps body ink and is a *label*.
+
+The failure is concrete and was shipped once. With no quiet fill available, a
+badge reached for the solid neutral, and a cooking time rendered as a small dark
+button sitting beside the one primary action — two things competing for the eye
+on a page whose premise is that one thing wins.
+
+**Ask what the layout is allowed to spend.** Some accent-driven products keep
+every layout surface on rung 1 and separate with lines only; others give the
+header and the modal rung 2. Both are the school. The difference is visible on
+every screen, and it is question 11d.
+
+### The four follow-ups
 
 Asked only when the answer is monochrome, because the other schools are handed
 their palette. See question 10 in the questionnaire.

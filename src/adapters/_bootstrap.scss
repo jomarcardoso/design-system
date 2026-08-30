@@ -279,6 +279,12 @@ $_derived: (
   --bs-focus-ring-color: #{core.ref('ring-color')};
 
   --bs-link-color-rgb: #{rgb-triplet(map.get($choices, link))};
+  // The hover half of the same pair, and it was missing for as long as the
+  // resting half was present. `a:hover` reads the triplet exactly as `a` does,
+  // so a themed link went back to Bootstrap's own blue on hover. Found by
+  // `check-adapter-forms.mjs` rather than by eye — which is the difference
+  // between a rule written in a comment and a rule that runs.
+  --bs-link-hover-color-rgb: #{rgb-triplet(map.get($choices, 'link-hover'))};
   --bs-body-color-rgb: #{rgb-triplet(map.get($choices, text))};
   --bs-body-bg-rgb: #{rgb-triplet(map.get($choices, page))};
   --bs-emphasis-color-rgb: #{rgb-triplet(map.get($choices, heading))};

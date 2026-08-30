@@ -27,14 +27,28 @@
 // PAPER — the neutral. Kraft/straw at full strength, held back to 0.6.
 //
 // `$pigment: 0.6` is `neutralPigment` from DESIGN_LANGUAGE.md, and the answer
-// behind it was "fresh recycled paper, not aged sepia". The hue sits at the
-// yellow-green end of warm rather than the red end, which is the whole
-// difference between paper stock and a stained page.
-$paper: ramp.neutral(#8f7c5e, $pigment: 0.6);
+// behind it was "fresh recycled paper, not aged sepia".
+//
+// THE HUE IS DOING MORE WORK THAN THE PIGMENT. A first attempt used a seed at
+// 67 degrees — orange-yellow — and the ramp came out cream: the page stayed
+// near-neutral because it is the lightest step, but the borders and the sunken
+// panels landed at #dcd7cf, which is beige. Recycled stock is not cream. It has
+// a grey-GREEN cast, from the fibre, and that sits nearer 100 degrees. Same
+// pigment number, different hue, and it stops looking like a wedding invitation.
+$paper: ramp.neutral(#8a6b3d, $pigment: 0.6);
 
 // PEN — the accent. Ballpoint blue, the one live colour on the page.
 //
+// NOT AZURE. The first attempt was #1d51c4, which measures L 0.48 / C 0.19 /
+// H 262 — within a degree and a hundredth of Bootstrap's own #0d6efd. It read
+// as "a framework's blue", because it was one.
+//
+// Ballpoint ink is darker, less saturated and shifted toward violet: the dye
+// sits ON the fibre rather than soaking in, which is why a scan of a biro line
+// comes back closer to indigo than to sky. The ramp normalises lightness, so
+// only the hue and the chroma of this seed survive — and those two are the
+// whole difference between a pen and a link.
+//
 // Cold against a warm neutral on purpose: the accent's job is to be the only
-// thing on screen that is not paper, and a blue warmed toward the paper would
-// read as part of it.
-$pen: ramp.chromatic(#1d51c4);
+// thing on screen that is not paper.
+$pen: ramp.chromatic(#2a3b8f);

@@ -41,17 +41,43 @@ $recepta: (
   overlay: rgba(38, 32, 22, 0.55),
 
   // --- Ink -----------------------------------------------------------------
+  // THREE INKS, AND ALL THREE HAVE TO CARRY TEXT AT AA.
+  //
+  // The obvious ladder is 900 / 700 / 600, and the third step fails: paper(600)
+  // on a paper(100) page measures 3.67:1, below the 4.5 this product committed
+  // to. It went unnoticed for as long as no page used the token — the ramp had
+  // a step nothing could legally be written in.
+  //
+  // Moving both down one keeps three distinguishable inks and puts the faintest
+  // at 5.2:1. The ladder has nothing between 600 and 700, so this is the choice.
   text: paper(900),
-  'text-muted': paper(700),
-  'text-subtlest': paper(600),
+  'text-muted': paper(800),
+  'text-subtlest': paper(700),
   heading: paper(950),
 
   // The secondary action. `secondaryAction: neutral` — a supporting action
   // tinted with the accent would put two blues on a page whose premise is one.
+  // THE LADDER, USED AS A LADDER.
+  //
+  // The accent-driven school assigns a JOB to each rung rather than reaching
+  // for whichever step looks right. Steps 2-3 are quiet fills, 3-5 are their
+  // interaction states, 6-8 are lines, 9-10 are the one solid neutral, 11-12
+  // are ink. A theme that only ever touches the two ends and the middle is a
+  // functional theme with the colour removed, which is what this one was.
+  //
+  // The solid: a fill for an action that carries no opinion. Its ink inverts.
   neutral: paper(700),
   'on-neutral': paper(0),
   'neutral-hover': paper(800),
   'neutral-active': paper(900),
+
+  // The QUIET fill, and in this school it does more work than the solid. Every
+  // badge, chip, tag, resting secondary button and ghost hover is made of it,
+  // and it carries ordinary ink rather than inverting — which is the whole
+  // difference between a label and a small dark button.
+  'neutral-subtle': paper(200),
+  'neutral-subtle-hover': paper(300),
+  'neutral-subtle-active': paper(400),
 
   disabled: paper(200),
   'disabled-text': paper(500),
@@ -81,9 +107,12 @@ $recepta: (
   // surfaces nobody can tell apart, and it passes the contrast gate while doing
   // it, because that gate measures text against its background rather than one
   // surface against another.
-  border: paper(300),
-  'border-subtle': paper(200),
-  'border-strong': paper(500),
+  // Lines, at three weights: a divider between ingredients, the resting edge
+  // of an input, and the edge that has to be found by eye when a surface has
+  // nothing else to separate it.
+  border: paper(400),
+  'border-subtle': paper(300),
+  'border-strong': paper(600),
   ring: pen(600),
 
   'shadow-raised': base.scale(shadow, '2xs'),
@@ -153,7 +182,46 @@ $structure: (
 
 // Typography is where a monochrome product keeps its identity. With one accent
 // and a grey ramp, the pairing is what separates a notebook from a dashboard.
+// The product ships Young Serif, Plus Jakarta Sans, Caveat and DM Mono. This
+// example may not — it has to render on a machine with nothing installed — so
+// each one is replaced by the nearest face that is already on the system. The
+// SHAPE of the pairing survives; the exact faces are the product's.
+//
+//   Young Serif        -> Georgia. Sturdy old-style with a high x-height, which
+//                         is the quality Young Serif is chosen for. Iowan Old
+//                         Style first on macOS, where it is closer still.
+//   Plus Jakarta Sans  -> the platform UI sans. Geometric-humanist either way,
+//                         and it is the face the reader already reads all day.
+//   Caveat             -> the system script face. Used for the display role
+//                         only: a handwritten title on a printed page is the
+//                         whole metaphor, and it would be unreadable as body.
+//   DM Mono            -> the platform mono. Rare here — quantities are not code.
 $typography: (
-  'font-family-body': (ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif),
-  'font-family-heading': (ui-serif, Georgia, Garamond, 'Times New Roman', serif)
+  'font-family-body': (
+    system-ui,
+    'Segoe UI Variable Text',
+    'Segoe UI',
+    -apple-system,
+    sans-serif
+  ),
+  'font-family-heading': (
+    'Iowan Old Style',
+    Georgia,
+    'Palatino Linotype',
+    ui-serif,
+    serif
+  ),
+  'font-family-display': (
+    'Segoe Script',
+    'Bradley Hand',
+    'Brush Script MT',
+    cursive
+  ),
+  'font-family-mono': (
+    ui-monospace,
+    'Cascadia Mono',
+    Consolas,
+    Menlo,
+    monospace
+  )
 );

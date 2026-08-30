@@ -1,5 +1,5 @@
 ---
-toolVersion: 0.5.0
+toolVersion: 0.7.0
 
 archetype: editorial-premium
 archetypeNote: ~
@@ -27,8 +27,9 @@ colourStrategy: monochrome
 # --- Accent-driven only ------------------------------------------------------
 # high | low. The ballpoint blue is saturated enough to need light ink on it.
 accentContrast: high
-# 0 = true grey, 1 = the seed pigment at full strength. Fresh recycled paper,
-# not aged sepia — the difference is roughly a tenth of this number.
+# 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
+# end of the ladder — see the note in section 2 on why the original "not sepia"
+# answer was withdrawn.
 neutralPigment: 0.6
 # lines | tones | shadows. Agrees with `elevation: borders` above.
 surfaceSeparation: lines
@@ -112,9 +113,10 @@ are recorded so the next person reads them as decisions rather than as drift.
   competes with the photograph of the dish or with the step being cooked. When
   two layouts are on the table, the one that gives the recipe more of the screen
   wins, even when the other is better organised.
-- **Fresh paper, not old paper.** The neutrals are warm because paper is warm,
-  and they stop well short of sepia. A surface that reads as *aged* turns an
-  inheritance into a museum piece — the notebook is meant to be still in use.
+- **Fresh paper, not old paper.** The neutrals are sepia because paper is sepia,
+  and they stay at the LIGHT end of it. What makes a page look aged is darkness
+  and unevenness, not yellow — an inheritance still in use is a clean warm page,
+  and a museum piece is a dim one.
 - **The accent is a pen, not a highlighter.** One ballpoint blue, marking only
   what is actionable or currently chosen. If a screen has two blue things
   competing for the eye, one of them is wrong; there is no second accent to
@@ -134,25 +136,42 @@ The tokens live in `src/`. This section is the **rules for using them**.
 
 ### Colour
 
-- **Accent:** ballpoint blue, `oklch(0.45 0.20 258)` — carried by `bg-accent`,
-  and the only chromatic decision in the product. Given at the interview as
-  *"the blue of a biro"* and converted on the spot; the hex equivalent is
-  `#1d51c4`, which shifts very slightly on conversion.
-- **Neutral seed:** kraft/straw pigment `#8f7c5e`, pulled through a 12-step ramp
-  at `neutralPigment: 0.6`. The page comes out `#f8f6f4` and step 12 is
-  graphite; nothing in the product is a true grey.
+- **Accent:** ballpoint blue, seed `#2a3b8f`, resolving to `#4a5eab` at the step
+  `bg-accent` takes. The only chromatic decision in the product.
+- **Neutral seed:** sepia pigment `#8a6b3d`, pulled through a 12-step ramp at
+  `neutralPigment: 0.6`. The page comes out `#f9f6f2`, the rules `#cfc2b0` and
+  the quiet fill `#ebe5dd`; nothing in the product is a true grey.
+
+  **The interview's answer here was revised, and the revision is the point.**
+  Question 11b was answered *"paper, but not that old yellowed sepia"*, and two
+  builds honoured it literally — first a straw seed at 67 degrees, which came
+  out cream, then a grey-green one, which came out ice. Neither read as paper.
+  Seeing it on a screen, the client withdrew the restriction: the thing being
+  avoided was AGE, and the way to avoid age is lightness and cleanliness, not
+  the removal of yellow. Sepia at a light step is a fresh page; sepia at a dark
+  one is a stained one.
+
+  Recorded rather than quietly changed, because the original answer was a
+  reasonable thing to say and the next person will be tempted to say it again.
 
   **The seed is the pigment, not the page.** A ramp seed's own chroma is the
   peak the curve multiplies, so handing it the near-white paper colour —
   `oklch(0.97 0.012 85)`, chroma 0.012 — leaves a peak of 0.007 and produces an
   ordinary grey ramp. The warmth disappears and nothing errors, because a grey
-  ramp is a valid ramp. The hue sits at the yellow-green end of warm rather
-  than the red end, which is the difference between paper stock and a stained
-  page.
+  ramp is a valid ramp.
 - **The accent is strong, so its label inverts.** `accentContrast: high` — the
   blue is saturated enough that `fg-on-accent` is measured light, and the
   contrast gate checks it as such. A pale accent would have kept one ink colour
   throughout and leaned harder on weight and space; this one does not.
+- **Ballpoint, not azure.** The first seed measured within a degree of
+  Bootstrap's own blue and read as a framework's default. Ink from a biro sits
+  ON the fibre rather than soaking in, so it scans darker and nearer violet than
+  any UI blue: `#2a3b8f`, which the ramp resolves to `#4a5eab`.
+- **The layout spends TWO rungs of the ladder** — question 11d. The page and the
+  header are one surface; a card is one rung lighter. Rung 3 is reserved for the
+  quiet neutral fill that every badge, chip and resting secondary action is made
+  of, and a layout that spends it leaves labels with nothing to be made of but a
+  dark solid.
 - **Proportion:** roughly 60% paper, 30% ink and rule, 10% blue. The accent
   covering a third of a screen leaves no emphasis to give.
 - **Status colours are adapted** — the hue families stay green, amber, red and
@@ -217,6 +236,17 @@ The tokens live in `src/`. This section is the **rules for using them**.
 ### Elevation
 
 - **Strategy:** borders. Hairlines and whitespace, no depth.
+- **The ladder runs UP: anything raised is lighter than the page** — question
+  11e, answer (A). The page sits two rungs up, a card is lighter than it, and the
+  lightest step is reserved for what genuinely floats. Sheets stacked on a desk
+  rather than wells cut into one, which is the metaphor the product already
+  makes everywhere else.
+
+  Written as a relation on purpose: *anything raised is lighter than the page*
+  survives a change of palette, and *cards are step 50* does not. It is also the
+  one decision here that was originally inherited rather than made — the first
+  build copied another example's ladder, the result happened to be liked, and
+  nothing recorded why. Question 11e exists because of that.
 - **Hierarchy is carried by:** `border-color`. This is load-bearing — a flat
   system with a weak border produces surfaces nobody can tell apart, **and it
   passes the contrast check while doing it**, because that check measures text
@@ -360,7 +390,7 @@ express.
 
 ---
 
-*Generated from the discovery interview on 2026-08-29, against version 0.5.0 of
+*Generated from the discovery interview on 2026-08-29, against version 0.7.0 of
 the design system. The library underneath is
 CoreUI; nothing in this file depends on that, and the adapter is what makes it
 true. No answer was left `undecided`.*

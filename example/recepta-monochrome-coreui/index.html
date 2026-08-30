@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recepta — caderno de receitas</title>
+
+<!--
+  example/recepta-monochrome-coreui/index.html
+
+  Run `npm run demo:examples`, then open with a TRAILING SLASH:
+  http://localhost:4173/example/recepta-monochrome-coreui/
+
+  Every class on this page comes from patterns.json. Checked by:
+
+      node scripts/verify-patterns.mjs example/recepta-monochrome-coreui \
+        --ledger example/recepta-monochrome-coreui/patterns.json
+
+  The point of the page is the claim the accent-driven school makes: that an
+  interface can read through weight, shape and space with one colour on it. If
+  that is true, this page is legible with a single blue on it and nothing else.
+-->
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+
+<header>
+  <nav class="navbar border-bottom">
+    <div class="sheet d-flex align-items-center justify-content-between w-100">
+      <span class="navbar-brand mb-0">Recepta</span>
+      <button class="btn btn-secondary btn-sm" type="button">Entrar</button>
+    </div>
+  </nav>
+</header>
+
+<main class="sheet" style="padding-block: var(--app-space-2xl)">
+
+  <!-- ─── The recipe ───────────────────────────────────────────────────── -->
+  <article class="section">
+    <p class="mb-1"><span class="badge bg-body-secondary">Bolos</span>
+      <span class="badge bg-body-secondary">1 h 20</span>
+      <span class="badge bg-body-secondary">8 porções</span></p>
+
+    <h1>Bolo de fubá da vó Terezinha</h1>
+
+    <p class="mb-1">Aquele que ela fazia no domingo de manhã e o cheiro subia
+      antes de qualquer um acordar. Fica com a casquinha por cima se você
+      resistir a abrir o forno.</p>
+
+    <p class="muted mb-1">Passada por Terezinha Alves, em 1998. Copiada do
+      caderno de capa dura que ficava em cima da geladeira.</p>
+
+    <p class="subtlest mb-0">Editada pela última vez há 3 dias · 214 preparos</p>
+
+    <hr class="rule">
+
+    <nav class="nav nav-tabs" aria-label="Seções da receita">
+      <a class="nav-link active" href="#ingredientes" aria-current="page">Ingredientes</a>
+      <a class="nav-link" href="#preparo">Modo de preparo</a>
+      <a class="nav-link" href="#notas">Notas</a>
+    </nav>
+
+    <!-- ─── Ingredients ────────────────────────────────────────────────── -->
+    <section id="ingredientes" class="section">
+      <h2>Ingredientes</h2>
+
+      <div class="card">
+        <div class="card-body stack">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="i1" checked>
+            <label class="form-check-label" for="i1">3 xícaras de fubá</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="i2">
+            <label class="form-check-label" for="i2">2 xícaras de açúcar</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="i3">
+            <label class="form-check-label" for="i3">4 ovos, em temperatura ambiente</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="i4">
+            <label class="form-check-label" for="i4">1 xícara de leite</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="i5">
+            <label class="form-check-label" for="i5">1 colher de sopa de fermento em pó</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="card bg-body-tertiary">
+        <div class="card-body">
+          <h3 class="card-title">Da cozinha dela</h3>
+          <p class="hand mb-1">Peneire o fubá antes.</p>
+          <p class="card-text muted mb-0">Ela dizia que era frescura, e fazia
+            sempre.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Method ─────────────────────────────────────────────────────── -->
+    <section id="preparo" class="section">
+      <h2>Modo de preparo</h2>
+
+      <ol class="stack-loose ps-4 mb-0">
+        <li>Bata os ovos com o açúcar até clarear. Não tenha pressa aqui —
+          é o que deixa o bolo leve.</li>
+        <li>Acrescente o leite e o fubá aos poucos, alternando, sem parar
+          de bater.</li>
+        <li>Por último o fermento, misturado com uma colher e nada mais.
+          <button class="btn btn-link btn-sm" type="button">Editar passo</button></li>
+        <li>Forno médio, 40 minutos. Espete um palito no centro: sai limpo,
+          está pronto.</li>
+      </ol>
+    </section>
+
+    <!-- ─── Notes ──────────────────────────────────────────────────────── -->
+    <section id="notas" class="section">
+      <h2>Notas</h2>
+
+      <div class="card">
+        <div class="card-body">
+          <label class="form-label" for="nota">Sua anotação</label>
+          <p class="subtlest mb-2">Só você vê o que escrever aqui.</p>
+          <textarea class="form-control" id="nota" rows="3">Fiz com metade do açúcar e ficou melhor. Da próxima, forma de buraco.</textarea>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rule">
+
+    <div class="d-flex flex-wrap gap-2 align-items-center">
+      <button class="btn btn-primary" type="button">Guarde a receita</button>
+      <button class="btn btn-secondary" type="button">Cancelar</button>
+      <button class="btn btn-danger btn-sm ms-auto" type="button">Apagar</button>
+    </div>
+  </article>
+
+  <!-- ─── The notebook ─────────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>No seu caderno</h2>
+
+    <div class="row g-3 mt-0">
+      <div class="col-12 col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title">Pão de queijo mineiro</h3>
+            <p class="card-text muted">Polvilho azedo, e a paciência de esperar
+              a massa esfriar antes de enrolar.</p>
+            <p class="subtlest mb-2">Guardada em março</p>
+            <span class="badge bg-body-secondary">45 min</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title">Canja de galinha</h3>
+            <p class="card-text muted">Para quando alguém em casa não está bem,
+              que é a única razão pela qual essa receita existe.</p>
+            <p class="subtlest mb-2">Guardada em julho</p>
+            <span class="badge bg-body-secondary">1 h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Search ───────────────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>Procurar</h2>
+    <div class="row g-2">
+      <div class="col-12 col-sm-7">
+        <input class="form-control" type="search" placeholder="Nome ou ingrediente" aria-label="Procurar receita">
+      </div>
+      <div class="col-12 col-sm-5">
+        <select class="form-select" aria-label="Categoria">
+          <option selected>Todas as categorias</option>
+          <option>Bolos</option>
+          <option>Salgados</option>
+          <option>Sopas</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── The one modal ────────────────────────────────────────────────── -->
+  <section class="section">
+    <h2>Confirmação destrutiva</h2>
+    <p class="mb-0">O único modal do produto, mostrado aberto para inspeção.</p>
+
+    <div class="modal d-block position-static mt-3" tabindex="-1" role="dialog" aria-modal="false" aria-label="Apagar receita">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 class="modal-title">Apagar esta receita?</h3>
+          </div>
+          <div class="modal-body">
+            <p class="mb-0">Isto não pode ser desfeito.</p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button">Manter</button>
+            <button class="btn btn-danger" type="button">Apagar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="sheet" style="padding-block: var(--app-space-2xl)">
+  <hr class="rule">
+  <p class="mb-0"><small>Recepta — o caderno que era da sua mãe.</small></p>
+</footer>
+
+</body>
+</html>

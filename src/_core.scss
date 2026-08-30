@@ -262,6 +262,12 @@ $_pairs: (
   'bg-neutral': 'fg-on-neutral',
   'bg-neutral-hover': 'fg-on-neutral',
   'bg-neutral-active': 'fg-on-neutral',
+  // The subtle neutral does NOT invert — that is what separates it from the
+  // solid. It is a quiet fill under ordinary body ink, so it is measured
+  // against `fg-default` like the page surfaces are.
+  'bg-neutral-subtle': 'fg-default',
+  'bg-neutral-subtle-hover': 'fg-default',
+  'bg-neutral-subtle-active': 'fg-default',
   // `bg-disabled` is deliberately ABSENT. Its foreground is `fg-disabled` and
   // the two do move together, but listing it here would push adapters to
   // treat a disabled control as an ordinary readable pair — and WCAG 2.2

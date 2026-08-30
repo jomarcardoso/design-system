@@ -164,6 +164,22 @@ $_derived: (
   --cui-link-color-rgb: #{rgb-triplet(map.get($choices, link))};
   --cui-link-hover-color-rgb: #{rgb-triplet(map.get($choices, 'link-hover'))};
 
+  // The surface utilities — `.bg-body-secondary` and `.bg-body-tertiary`.
+  //
+  // `--cui-secondary-bg` and `--cui-tertiary-bg` are bound above and looked
+  // correct in devtools, and the utilities ignored both: they are written as
+  // `rgba(var(--cui-tertiary-bg-rgb), var(--cui-bg-opacity))`, so the triplet
+  // is the only form anything consumes. A recessed card kept CoreUI's own light
+  // grey through a theme flip and rendered near-black text on it.
+  //
+  // Same failure the link colour had, one variable along. Grep the built CSS
+  // for who CONSUMES a variable, never for who declares it.
+  // `neutral-subtle` is OPTIONAL in layer 2 — it falls back to `sunken` for
+  // themes written before it existed — so the same fallback has to be repeated
+  // here, where the raw authored map is what is being read.
+  --cui-secondary-bg-rgb: #{rgb-triplet(if(map.has-key($choices, 'neutral-subtle'), map.get($choices, 'neutral-subtle'), map.get($choices, sunken)))};
+  --cui-tertiary-bg-rgb: #{rgb-triplet(map.get($choices, sunken))};
+
   // The non-button focus ring, which CoreUI does drive from `:root`.
   //
   // The BUTTON ring is not here, and the reason is the trap this adapter warns
@@ -432,6 +448,60 @@ $_derived: (
   // A product that wants a hover fill on its own nav component reads
   // `--app-bg-selected-subtle` directly, from its own layer. That is the correct
   // direction — application code reads layer 2, never library variables.
+  // INTERACTION ON A NEUTRAL SURFACE, and the disabled surface with it.
+  //
+  // Found by auditing which layer 2 tokens actually reach this library:
+  // `bg-surface-active` and `bg-disabled` reached nothing at all, while CoreUI
+  // had four consumers for them sitting on its own defaults.
+  //
+  // `bg-surface-hover` and `-active` are the states of a row, a menu item, a
+  // list entry — a surface being pointed at, not a component being chosen. The
+  // distinction matters here because CoreUI defaults the list row hover to
+  // `--cui-tertiary-bg`, which this adapter binds to `bg-sunken`: a page RECESS
+  // borrowed for an interaction STATE. That looked harmless and is the exact
+  // substitution layer 2 added `bg-surface-hover` to stop, because a theme
+  // where sunken and page share a value renders a hover that does nothing.
+  .list-group {
+    --cui-list-group-action-hover-bg: #{component.$list-item-bg-hover};
+    --cui-list-group-action-active-bg: #{component.$list-item-bg-active};
+    --cui-list-group-disabled-bg: #{component.$list-item-bg-disabled};
+    --cui-list-group-disabled-color: #{component.$list-item-fg-disabled};
+  }
+
+  .dropdown-menu {
+    --cui-dropdown-link-hover-bg: #{component.$dropdown-bg-hover};
+  }
+
+  // The ACTIVE page of a pagination is a selection rather than a hover: it is
+  // the one item currently chosen, so it takes the selected role and that
+  // role's measured ink instead of a surface state.
+  .pagination {
+    --cui-pagination-hover-bg: #{component.$pagination-item-bg-hover};
+    --cui-pagination-focus-bg: #{component.$pagination-item-bg-hover};
+    --cui-pagination-active-bg: #{component.$pagination-item-bg-selected};
+    --cui-pagination-active-color: #{component.$pagination-item-fg-selected};
+    --cui-pagination-active-border-color: #{component.$pagination-item-bg-selected};
+    --cui-pagination-disabled-bg: #{component.$pagination-item-bg-disabled};
+    --cui-pagination-disabled-color: #{component.$pagination-item-fg-disabled};
+  }
+
+  // BADGE. CoreUI gives `.badge` no background of its own — the fill comes from
+  // a `text-bg-*` or `bg-*` utility — but everything else about it is a
+  // variable, and the ink was hardcoded to `#fff` inside the rule.
+  //
+  // That literal is why a light chip was impossible without leaving the library:
+  // any background a theme chose came out with white text on it. Binding the
+  // two variables the library does expose is enough, and it is the difference
+  // between "CoreUI cannot do this" and "nobody had bound it".
+  //
+  // `.text-bg-*` remains out of reach and always will be: it declares
+  // `color: #fff !important` in the rule itself, so no variable can move it.
+  // A ledger is the right place to refuse that class rather than fight it.
+  .badge {
+    --cui-badge-color: #{component.$badge-fg};
+    --cui-badge-border-radius: #{component.$badge-radius};
+  }
+
   .nav {
     --cui-nav-link-color: #{component.$nav-fg};
     --cui-nav-link-hover-color: #{component.$nav-fg-hover};
@@ -449,7 +519,7 @@ $_derived: (
   // page surface and only its border carries the selection.
   .nav-tabs {
     --cui-nav-tabs-border-color: #{component.$nav-border-color};
-    --cui-nav-tabs-link-active-color: #{component.$nav-fg-active};
+    --cui-nav-tabs-link-active-color: #{component.$nav-tab-fg-active};
     --cui-nav-tabs-link-active-bg: #{component.$nav-tab-bg-active};
     --cui-nav-tabs-link-active-border-color: #{component.$nav-tab-border-color-active};
     --cui-nav-tabs-link-hover-border-color: #{component.$nav-tab-border-color-hover};
@@ -457,7 +527,7 @@ $_derived: (
 
   // Underline: the mark IS the selection, so it is the only thing coloured.
   .nav-underline {
-    --cui-nav-underline-link-active-color: #{component.$nav-fg-active};
+    --cui-nav-underline-link-active-color: #{component.$nav-tab-fg-active};
     --cui-nav-underline-border-width: #{component.$nav-underline-width};
   }
 
@@ -471,7 +541,7 @@ $_derived: (
   // "chosen" while the rest of the interface uses the brand. That is exactly the
   // gap that makes an application start writing `--cui-*` by hand.
   .nav-underline-border {
-    --cui-nav-underline-border-link-active-color: #{component.$nav-fg-active};
+    --cui-nav-underline-border-link-active-color: #{component.$nav-tab-fg-active};
     --cui-nav-underline-border-link-color: #{component.$nav-fg};
     --cui-nav-underline-border-link-disabled-color: #{component.$nav-fg-disabled};
     --cui-nav-underline-border-border-color: #{component.$nav-border-color};
@@ -486,7 +556,7 @@ $_derived: (
     // An enclosed tab that is chosen comes FORWARD: its fill is the raised
     // surface, not the selection colour, and only its text and border carry the
     // selection. Filling it would make it read as a pressed button.
-    --cui-nav-enclosed-link-active-color: #{component.$nav-fg-active};
+    --cui-nav-enclosed-link-active-color: #{component.$nav-tab-fg-active};
     --cui-nav-enclosed-link-active-bg: #{component.$nav-tab-bg-active};
     --cui-nav-enclosed-link-active-border-color: #{component.$nav-tab-border-color-active};
   }

@@ -472,6 +472,33 @@ $_type-scale-steps: (
     'bg-neutral-hover': _req($c, 'neutral-hover', $name),
     'bg-neutral-active': _req($c, 'neutral-active', $name),
 
+    // THE QUIET FILL, and the rung this contract was missing.
+    //
+    // `bg-action-subtle` and `bg-selected-subtle` existed from the start; the
+    // neutral had no subtle step, so anything wanting a soft neutral chip had
+    // to reach for a page surface (which is not a fill and has no edge) or for
+    // `bg-neutral` (which is a SOLID, with inverted ink). A badge built on the
+    // solid comes out as a small dark button — which is exactly what happened
+    // on the first accent-driven page built with a library under it.
+    //
+    // In the accent-driven school this is the workhorse: it is what badges,
+    // chips, tags, resting secondary buttons and ghost-button hover are made
+    // of. A school with one accent needs a neutral that can hold a shape
+    // WITHOUT inverting, or every quiet element on the page shouts.
+    //
+    // It carries ordinary body ink, like the other `-subtle` fills, which is
+    // why it is paired with `fg-default` rather than getting an `on-` token.
+    //
+    // OPTIONAL, falling back to `sunken`. Adding a required key would break
+    // every theme that already exists, and the recessed page surface is the
+    // nearest thing most of them already have. The fallback is a starting
+    // point rather than an answer: `sunken` is a PAGE-level recess and this is
+    // an ELEMENT fill, so a product that puts chips on a page will want to
+    // separate them.
+    'bg-neutral-subtle': _opt($c, 'neutral-subtle', sunken, $name),
+    'bg-neutral-subtle-hover': _opt($c, 'neutral-subtle-hover', 'surface-hover', $name),
+    'bg-neutral-subtle-active': _opt($c, 'neutral-subtle-active', 'surface-active', $name),
+
     // DISABLED. The contract used to offer `opacity-disabled` and nothing
     // else, so adapters invented a pair: Flowbite reached for `fg-subtlest`
     // and `bg-sunken`, two tokens borrowed for a third meaning.

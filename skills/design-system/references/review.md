@@ -2,7 +2,7 @@
 
 # Reviewing a generated theme
 
-Fifty-two checks against a build that already exists. Run it after
+Fifty-four checks against a build that already exists. Run it after
 `npm run verify` passes — or instead of it, when there is no terminal.
 
 **This list deliberately avoids what the build already catches.** `verify`
@@ -112,6 +112,8 @@ used with the wrong meaning*.
 | C6 | No literal colour in product CSS, and none in the theme map that a palette entry should carry | a hex that works and belongs to nothing |
 | C7 | Layer 3 entries read layer 2, never layer 1 | a component reaching past the contract into `--app-base-*` |
 | C8 | Every generated file opens with its path as a comment — JSON excepted | a `theme.scss` that could be any of six |
+| C7b | No product CSS overrides a library rule | an override is evidence that a Sass `!default` was not set in the library entry; it wins today and loses when the library moves a selector |
+| C7c | Values that never change between themes are in the ENTRY, not the adapter | a spacing scale or font weight left at the library default because only colour was configured |
 | C8b | An entry file exists and calls `emit-structure()` and `emit-theme()`, once per theme | a theme map defined and never emitted — the build compiles to nothing and looks finished |
 | C8c | Configuration is `@use … with` in the entry, not an edited `src/_config.scss` | a vendored file the next upgrade overwrites, or a `_config.scss` that @uses itself |
 | C8d | The theme map is COMPLETE — four status families, six sub-keys each | `_req()` raises a Sass @error on the first missing key; the theme does not compile |
@@ -139,11 +141,11 @@ previous theme, which looks exactly like a broken adapter.
 
 ## The report
 
-One line per failure, plus a count. **The three counts must add up to 52.** If
+One line per failure, plus a count. **The three counts must add up to 54.** If
 the arithmetic does not close, the review has not finished.
 
 ```
-theme review — 48 pass, 1 fail, 3 unverifiable
+theme review — 50 pass, 1 fail, 3 unverifiable
 
 FAIL A10  `neutralPigment: 0.6` in DESIGN_LANGUAGE.md line 32, but
           theme.scss line 8 calls ramp.neutral($seed) with no $pigment,

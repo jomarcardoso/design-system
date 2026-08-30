@@ -59,6 +59,35 @@ comment goes immediately after the closing `---`.
 
 ---
 
+## Never override a library with CSS
+
+When a third-party component looks wrong, the reflex is a stylesheet that beats
+it. That reflex is wrong here, and it has cost this repository real time twice.
+
+Work through the halves in order, and stop at the first one that can reach it:
+
+1. **`<library>-entry.scss`** — the library's Sass `!default` variables, set
+   before it compiles. Everything the library computes with or bakes into a
+   generated utility rule lives only here: the spacing scale, leading, font
+   weights, padding ratios, `$enable-*` flags. A `var()` is often allowed as the
+   value, which keeps it theme-reactive.
+2. **`src/adapters/_<library>.scss`** — the library's CSS custom properties,
+   rebound at runtime. Everything that changes between themes lives here, and
+   nothing that changes between themes may live in the entry.
+3. **`patterns.json`** — if neither half reaches it, the class is a real limit of
+   the library. Refuse it with a reason. CoreUI's `.text-bg-*` writes
+   `color: #fff !important` inside the rule; that is a ceiling, not a puzzle.
+
+**A `!important` or a hardcoded literal in the built CSS is not proof that a
+value is unreachable.** `--cui-badge-color: #fff` looked like one and was a Sass
+`!default` all along. Read the library's own `_variables.scss` before concluding
+anything is fixed.
+
+**The diagnostic:** a product writing CSS that overrides a library is evidence
+that a Sass variable was not set. Find that variable rather than raising the
+specificity — the override wins today and loses the next time the library moves
+a selector.
+
 ## Verifying
 
 ```bash

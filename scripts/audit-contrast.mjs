@@ -55,7 +55,8 @@ const PAGES = [
   { path: 'ds-itau-shadcn-phase3/', themes: ['itau'], min: 3 },
   { path: 'ds-meu-caderninho-daisyui-phase3/docs.html', themes: ['caderninho'] },
   { path: 'ds-booking-bulma/', themes: ['booking'] },
-  { path: 'ds-caderno-accent-driven/', themes: ['light', 'dark'] }
+  { path: 'ds-caderno-accent-driven/', themes: ['light', 'dark'] },
+  { path: 'recepta-monochrome-coreui/', themes: ['light', 'dark'] }
 ];
 
 export const SNIPPET = `(() => {

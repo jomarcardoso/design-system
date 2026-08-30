@@ -57,7 +57,22 @@ those instructions describe something that compiles. Three did not:
    was reachable by any of the eleven adapters and had never fired, because no
    example combined an adapter with `monochrome`.
 
-3. **An adapter's `emit()` needs the theme maps**, not their names — libraries
+3. **A layer 3 pair was crossed.** `--cui-nav-tabs-link-active-color` took
+   `$nav-fg-active` (`fg-on-selected`, the ink measured against the selected
+   FILL) while the background beside it was `$nav-tab-bg-active` (`bg-surface`).
+   An enclosed tab takes a surface, not the fill. White on white, measured at
+   **1.03:1** in the browser — and the build gate never saw it, because it
+   measures layer 2 pairs and this was a layer 3 crossing. `$nav-tab-fg-active`
+   now exists and is paired with its own background.
+
+4. **The CoreUI surface utilities were bound in the wrong form.** The adapter
+   set `--cui-tertiary-bg`; `.bg-body-tertiary` is written as
+   `rgba(var(--cui-tertiary-bg-rgb), ...)` and consumed neither. The recessed
+   card kept CoreUI own light grey through a theme flip and rendered near-black
+   text on it. Same failure the link colour had, one variable along — the
+   adapter warns about exactly this at the top of the file.
+
+5. **An adapter's `emit()` needs the theme maps**, not their names — libraries
    that derive colour channels cannot read a channel out of a `var()`. The
    worked example now shows the call.
 

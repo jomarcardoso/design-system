@@ -26,8 +26,20 @@
 );
 
 @use '../../src/base';
+@use '../../src/core';
 @use '../../src/semantic';
-@use '../../src/component';
+// Layer 3, CONFIGURED — which is how a product customises a library without
+// writing a component. CoreUI ships a badge whose ink is a literal `#fff` and
+// whose fill comes from a utility; the adapter binds the two variables the
+// library does expose, and these two lines decide what they carry.
+//
+// The result is the library's own `.badge`, rendering as a paper chip. No new
+// class, no CSS of this product's own — just the token contract pointed
+// somewhere the library never imagined.
+@use '../../src/component' with (
+  $badge-fg: #{core.ref('fg-muted')},
+  $badge-radius: #{core.ref('radius-control')}
+);
 @use '../../src/derive';
 @use '../../src/adapters/coreui';
 @use 'theme';
