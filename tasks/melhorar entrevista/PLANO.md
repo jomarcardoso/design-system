@@ -115,7 +115,14 @@ impossível, paleta que não combina, e escolhas que ferem decisão anterior.
 Mostrar a opção que não se deve seguir, dizer qual decisão ela fere, e ainda
 assim deixá-la aberta.
 
-## Fase 5 — reexecutar a entrevista no recepta
+## Fase 5 — SUPERSEDIDA
+
+> Ver [`PLANO-2-alargamento.md`](PLANO-2-alargamento.md). A reexecução passou
+> para o fim: testar antes de alargar mede a ferramenta antiga. O plano 2
+> também corrige um erro deste — a ideia de forçar promoção na primeira versão,
+> que confundia dois eixos distintos.
+
+## Fase 5 (original) — reexecutar a entrevista no recepta
 
 Refazer as perguntas novas, regenerar as camadas posteriores, e perguntar de
 novo o que mudou de resposta. É o teste real, e o `recepta-monochrome-coreui`
