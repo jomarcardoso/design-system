@@ -117,6 +117,24 @@ they produce a screen with no focal point — the failure mode that reads as
 everything else as if the posture were `balanced`. Record it, because it looks
 like an inconsistency to anyone reading the front matter later.
 
+### Monochrome, and categorical data
+
+A chart comparing five categories needs five distinguishable hues. The school
+has one. This is a real conflict rather than a preference, and it arrives late —
+usually when the first dashboard is designed, long after the palette was agreed.
+
+| softening move | what it keeps |
+|---|---|
+| a neutral ramp when the data is ORDERED — intensity, volume, time | the school intact; works for heatmaps and single series |
+| one accent for the series that matters and neutrals for the rest | the school, and the chart says which series is the point |
+| an admitted chart palette, held in layer 1 and never as interface tokens | real comparison, with a boundary a reader can see |
+| the comparison happens in a table | the school, at the cost of the chart |
+
+**The move that does not work** is generating five tints of the accent. They are
+the same hue at different lightness, which is exactly what the eye reads as an
+ordered scale — so a categorical chart drawn that way implies a ranking that is
+not in the data.
+
 ### Generous density, and dense data
 
 A table of twenty columns does not fit a generous scale. This one usually means
