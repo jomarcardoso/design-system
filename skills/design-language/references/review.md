@@ -2,7 +2,7 @@
 
 # Reviewing a generated DESIGN_LANGUAGE.md
 
-A checklist run against a finished document. Forty checks, each one either
+A checklist run against a finished document. Forty-three checks, each one either
 passing or failing against something quotable — not against an impression.
 
 **Every check on this list has failed in a real run.** Nothing here is
@@ -90,6 +90,9 @@ the answer than the author did.
 | C13 | `iconPolicy` is present, and says where an icon may appear without its label | icon-only buttons on destructive actions, decided by nobody |
 | C14 | The frame regions fit the ladder budget from 13c | a third rung spent on chrome by a product that allowed two |
 | C15 | Every conflict that was raised appears under `resolutions` | a value that looks arbitrary, which the next reader corrects back to the one that failed |
+| C16 | `DERIVED.md` exists beside the document | the derived decisions live only in the agent's head and nobody can review them |
+| C17 | Every row in `DERIVED.md` names the answer it came from | a guess that got in, indistinguishable from a derivation |
+| C18 | `DERIVED.md` has a “what was NOT decided” section with real entries in it | gaps invisible, and a default nobody chose |
 
 ## D. Whether it is any good
 
@@ -118,16 +121,16 @@ quote what comes back.
 ## The report
 
 One line per failed check, plus a count. Passing checks are not listed
-individually — a report that recites thirty-eight passes buries the two
+individually — a report that recites forty-one passes buries the two
 failures.
 
-**The three counts must add up to 40.** A real run opened with
+**The three counts must add up to 43.** A real run opened with
 "22 pass, 8 fail, 0 unverifiable" against a list of 22 — the pass count was the
 list length rather than the remainder, so a reader saw a total audit and got a
 partial one. If the arithmetic does not close, the review has not finished.
 
 ```
-DESIGN_LANGUAGE.md review — 37 pass, 2 fail, 1 unverifiable
+DESIGN_LANGUAGE.md review — 40 pass, 2 fail, 1 unverifiable
 
 FAIL A4  `elevation: soft-shadows` with `surfaceSeparation: tones`.
          Line 12 against line 26. Question 7 was asked as a compound

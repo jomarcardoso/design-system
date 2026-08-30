@@ -12,7 +12,11 @@ school, CoreUI as the component library underneath.
 |---|---|---|---|
 | 1 | `design-language` | `DESIGN_LANGUAGE.md` | done |
 | 2 | `design-system` | `palette.scss`, `theme.scss`, `ds.scss` → `ds.css` | done |
-| 3 | `design-patterns` | `patterns.json` | not started |
+| 3 | `design-patterns` | `patterns.json` + a page | done |
+
+Plus two generated documents: [`DERIVED.md`](DERIVED.md), what the answers
+produced and which answer produced each, and [`FOUNDATIONS.md`](FOUNDATIONS.md),
+the values the build compiled to.
 
 ## Where this one came from
 

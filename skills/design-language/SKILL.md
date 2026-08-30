@@ -71,6 +71,7 @@ invented value in the finished document rather than as an error.
 | `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
 | `references/derivations.md` | turning the answers into component-level defaults | the hundred unowned decisions fall back to the library, and the build reads as generic however good the document is |
 | `references/conflicts.md` | answers that cannot all be true, and the moves that resolve each | a value quietly adjusted to make a conflict disappear, which the next reader takes for the original intent |
+| `templates/DERIVED.md` | the second document the interview produces | the derived decisions exist only in the agent's head, and nobody can review them |
 | `references/review.md` | the check at the end | nobody audits the file that was just written |
 | `references/worked-example.md` | calibrating length and specificity against a real product | a document that is too vague or too long |
 
@@ -462,10 +463,39 @@ diffing a document against a template of unknown vintage.
 The last one is the general case of the other four: the YAML is the index and the
 prose is the argument, and a key with no argument was not decided, only typed.
 
+## Write DERIVED.md alongside it
+
+The interview produces two documents, not one.
+
+`DESIGN_LANGUAGE.md` holds the decisions and why they were made.
+[`templates/DERIVED.md`](templates/DERIVED.md) holds **what those decisions
+produced and which answer produced each** — the derived defaults, the component
+forms chosen and what else was available, the rules now in force, and the gaps.
+
+It is a separate file rather than a section for one reason: it is **derived**,
+so it is regenerated whenever an answer changes, and a regenerated section
+inside an authored document would delete prose somebody wrote. Say so at the
+top of it, because the instinct is to edit it.
+
+Two sections are not obvious and are the most useful:
+
+- **What was NOT decided.** A gap nobody can see becomes a default nobody chose,
+  which is the failure this whole layer exists to prevent. Print styles, motion,
+  the icon set, which patterns leave the library first — name them.
+- **If you want to change something, change this.** A reverse index: *louder
+  badges? change `posture`, not the badge.* It exists because the instinct on
+  seeing something one dislikes is to change that thing, and in a derived system
+  that is exactly how a product drifts — one component gets an exception, then
+  another, and six months later the derivation describes nothing.
+
+**It is written for a person who was not in the interview.** A stakeholder
+reading section 1 should be able to say "yes, that is the product" or "no" —
+which is a cheaper place to find out than a built page.
+
 ## Review the file you just wrote
 
 Run [`references/review.md`](references/review.md) against the finished document
-before handing it over. Forty checks, each one having failed in a real run,
+before handing it over. Forty-three checks, each one having failed in a real run,
 each one passing or failing against something quotable.
 
 Two rules carry it:

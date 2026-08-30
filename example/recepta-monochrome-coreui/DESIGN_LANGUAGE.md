@@ -446,6 +446,20 @@ every theme this language will ever have.
 
 ---
 
+## What these answers produced
+
+[`DERIVED.md`](DERIVED.md) beside this file holds the consequences: the derived
+defaults with the answer each came from, the component form chosen for each
+family and what else was available, the rules now in force, and — deliberately
+visible — what is still undecided. It is regenerated when an answer here
+changes, which is why it is a separate file rather than a section.
+
+It also carries the reverse index. If something in the built product is wrong,
+that table says which ANSWER to change rather than which component to patch —
+which is the difference between a system and a pile of exceptions.
+
+---
+
 ## How this file is used
 
 **By an agent.** The front matter is read before generating any markup or CSS;
