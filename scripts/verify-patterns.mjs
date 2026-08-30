@@ -340,6 +340,33 @@ for (const [name, c] of Object.entries(ledger.components)) {
   );
 }
 
+// PLANNED PROMOTIONS.
+//
+// Reported beside maturity rather than buried in the JSON, because the whole
+// point of a trajectory is that somebody sees it. A ledger records the adequate
+// present and a mapped future: `state` is today and `trajectory` is the plan,
+// and a `raw` with no trajectory reads as a permanent choice rather than a
+// starting point.
+//
+// This is also the answer to "the vocabulary is 100% raw, so it is a library
+// theme". It is — today — and the difference between a starting point and a
+// resting point is whether the next move is written down.
+const planned = [];
+for (const [name, c] of Object.entries(ledger.components)) {
+  for (const [p, v] of Object.entries(c.patterns)) {
+    if (v.trajectory) planned.push([`${name}/${p}`, v.state, v.trajectory]);
+  }
+}
+
+if (planned.length) {
+  console.log(`\n${bold('Planned')}`);
+  for (const [key, from, t] of planned) {
+    console.log(`  ${key.padEnd(22)} ${dim(from)} → ${t.to}`);
+    console.log(`  ${' '.repeat(22)} ${dim('when')} ${t.when}`);
+    if (t.blocked) console.log(`  ${' '.repeat(22)} ${dim('blocked')} ${t.blocked}`);
+  }
+}
+
 if (usage.size) {
   console.log(`\n${bold('Call sites')}`);
   for (const [key, n] of [...usage].sort((a, b) => b[1] - a[1])) {

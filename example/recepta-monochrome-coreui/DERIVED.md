@@ -119,8 +119,15 @@ inherited from your mother — which rules out more than the archetype does.
   in the interview asked.
 - **Motion beyond the defaults.** The durations and easings are the
   foundation's; nothing here chose them.
-- **Component promotion.** Every pattern is `raw` today, which means the shapes
-  are CoreUI's. Which ones leave the library first is the next real decision.
+- ~~Component promotion.~~ **Mapped, not done.** Every pattern is `raw` today,
+  so the shapes are CoreUI's and only the colour is this product's. Four
+  trajectories are now recorded and `verify:patterns` prints them: the card
+  leaves first, when a recipe carries a photograph and the framed form is
+  needed; tabs follow, when the section count grows or the first phone review
+  happens; the badge waits for the first filter chip, and is blocked on a chip
+  pattern that does not exist yet. The button stays — recorded as considered
+  rather than missed, because CoreUI's geometry already matches once the entry
+  sets radius, weight and height.
 
 ## 6. If you want to change something, change this
 
@@ -133,7 +140,7 @@ inherited from your mother — which rules out more than the archetype does.
 | icons standing alone | `iconPolicy` | one button |
 | cards that read as recessed | the ladder direction (13d) | the card |
 | a second colour anywhere | `colourStrategy` — and it stops being this school | one component |
-| the interface to stop looking like CoreUI | promote patterns out of `raw` | the tokens, which are already this product's |
+| the interface to stop looking like CoreUI | promote patterns out of `raw` — the trajectories say which and when | the tokens, which are already this product's |
 
 ---
 

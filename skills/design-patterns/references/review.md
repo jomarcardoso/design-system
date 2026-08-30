@@ -2,7 +2,7 @@
 
 # Reviewing a ledger
 
-Thirty-four checks against a `patterns.json` that already exists. Run it after
+Thirty-six checks against a `patterns.json` that already exists. Run it after
 `npm run verify:patterns` passes — or instead of it, when there is no terminal.
 
 **This list avoids what the verifier already catches.** `verify:patterns` reads
@@ -49,6 +49,8 @@ ledger.
 | A5 | No component nobody has built | an entry for a carousel this product does not have, wrong by the time someone needs it |
 | A5b | Each component records the FORM it takes, not only the variants allowed | the shape left to the library, which is most of what makes a themed build still look like the library |
 | A5c | A form the library cannot express is recorded as a pending implementation | an omission, which reads as the form never having been wanted |
+| A5d | Patterns that will not stay `raw` carry a `trajectory` | a starting point and a resting point look identical in the JSON, and the promotion nobody wrote down never happens |
+| A5e | Every `trajectory.when` is a trigger rather than a date | a date is a wish; a trigger is a decision already made, waiting for its moment |
 | A6 | The vocabulary is shorter than the library's menu | Bootstrap's nine button variants copied in whole, which is the library's decision wearing the product's name |
 
 ## B. The entries
@@ -96,11 +98,11 @@ ledger.
 
 ## The report
 
-One line per failure, plus a count. **The three counts must add up to 34.** If
+One line per failure, plus a count. **The three counts must add up to 36.** If
 the arithmetic does not close, the review has not finished.
 
 ```
-patterns.json review — 31 pass, 1 fail, 2 unverifiable
+patterns.json review — 33 pass, 1 fail, 2 unverifiable
 
 FAIL B4  `card/featured` offers `instead: "highlight"`, and no pattern
          named `highlight` exists in this file. The refusal has nowhere

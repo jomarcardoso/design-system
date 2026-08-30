@@ -59,7 +59,12 @@
           ],
           "donts": [
             "Never two side by side — a screen with two main actions has two jobs."
-          ]
+          ],
+          "trajectory": {
+            "to": "styled",
+            "when": "never, unless the shape stops fitting",
+            "why": "Nothing is lost by staying raw. CoreUI's button geometry already matches the archetype once the entry sets radius, weight and control height, so promotion would buy shape this product already has. Recorded so the next reader knows it was considered rather than missed."
+          }
         },
         "secondary": {
           "intent": "A supporting action beside the primary one: cancel, back, dismiss.",
@@ -168,7 +173,13 @@
           ],
           "donts": [
             "Never separate two cards with a shadow — this product carries hierarchy in border-color."
-          ]
+          ],
+          "trajectory": {
+            "to": "own",
+            "when": "the first recipe card that carries a photograph",
+            "why": "CoreUI's card is a generic container and the chosen form is a framed photo at a fixed ratio, which it has no expression for. Every card on the page is currently the library's shape with this product's colours.",
+            "form": "framed, fixed ratio"
+          }
         },
         "sunken": {
           "intent": "A recessed block inside a recipe: the utensils list, the cook's note, a tip.",
@@ -250,7 +261,13 @@
           "donts": [
             "Not for moving between recipes — that is a route, not a tab."
           ],
-          "responsive": "Below the tablet breakpoint these stack as headings in the flow; tabs sit at the top of a phone screen and compete with the header."
+          "responsive": "Below the tablet breakpoint these stack as headings in the flow; tabs sit at the top of a phone screen and compete with the header.",
+          "trajectory": {
+            "to": "own",
+            "when": "the recipe view gets a fourth section, or the first phone review",
+            "why": "The enclosed tab is CoreUI's shape and it is heavier than a quiet Editorial product wants. It also has no answer below the tablet breakpoint, which the responsive note admits and the markup does not yet honour.",
+            "form": "weight only"
+          }
         }
       }
     },
@@ -294,7 +311,14 @@
               "bg-body-secondary"
             ]
           },
-          "notes": "The library's own badge, rendering as a paper chip with no product CSS. Three token decisions get it there: the adapter binds `--cui-badge-color` and `--cui-badge-border-radius`, which CoreUI exposes and nobody had bound; the adapter points `--cui-secondary-bg-rgb` at `bg-neutral-subtle`; and the entry configures layer 3 with `$badge-fg: fg-muted`. CoreUI hardcodes `--cui-badge-color: #fff` inside the rule, which is why it looked untokenisable — a literal in a declaration is still beatable by the same variable at a later layer."
+          "notes": "The library's own badge, rendering as a paper chip with no product CSS. Three token decisions get it there: the adapter binds `--cui-badge-color` and `--cui-badge-border-radius`, which CoreUI exposes and nobody had bound; the adapter points `--cui-secondary-bg-rgb` at `bg-neutral-subtle`; and the entry configures layer 3 with `$badge-fg: fg-muted`. CoreUI hardcodes `--cui-badge-color: #fff` inside the rule, which is why it looked untokenisable — a literal in a declaration is still beatable by the same variable at a later layer.",
+          "trajectory": {
+            "to": "own",
+            "when": "the first filter chip — the moment a label has to become interactive",
+            "why": "The library badge is a label and cannot carry a selected state or a remove affordance. It is adequate for the read-only tags on the page today and will not stretch.",
+            "form": "removable chip",
+            "blocked": "no chip pattern exists yet; adding one is a ledger change, discussed first"
+          }
         },
         "status-coloured": {
           "intent": "A badge carrying a status colour, or the library's own badge classes.",

@@ -231,6 +231,42 @@
         "responsive": {
           "type": "string",
           "description": "How the pattern changes across viewports, when it changes at all. Written as the rule, not the breakpoint value: \"collapses to a select below the tablet breakpoint\"."
+        },
+        "trajectory": {
+          "type": "object",
+          "description": "Where this pattern is GOING, and what moves it. A ledger records the adequate present and a mapped future: `state` is today, this is the plan. Without it a `raw` reads as a permanent choice rather than a starting point, and the promotion nobody scheduled either never happens or happens with no plan behind it.",
+          "additionalProperties": false,
+          "required": [
+            "to",
+            "when"
+          ],
+          "properties": {
+            "to": {
+              "enum": [
+                "styled",
+                "own",
+                "wrapped",
+                "forbidden"
+              ],
+              "description": "The state this pattern should reach. `styled` and `own` are where a product stops wearing the library shape. `forbidden` is a real trajectory too: a variant kept alive only until the thing replacing it exists."
+            },
+            "when": {
+              "type": "string",
+              "description": "The TRIGGER, in terms someone will recognise when it arrives — \"the first screen that needs a filter chip\", \"when the marketing site ships\". Not a date. A date is a wish; a trigger is a decision already made, waiting for its moment."
+            },
+            "why": {
+              "type": "string",
+              "description": "What the current state costs. This is what stops the plan being aspirational: if nothing is lost by staying where it is, the pattern does not need a trajectory."
+            },
+            "form": {
+              "type": "string",
+              "description": "The form from component-forms.md this pattern should take once promoted, when the trajectory exists because the library cannot express the chosen one."
+            },
+            "blocked": {
+              "type": "string",
+              "description": "What has to exist first, when the trigger is not the only thing missing. A pending implementation the ledger admits to rather than omits."
+            }
+          }
         }
       },
       "allOf": [

@@ -70,8 +70,54 @@ shape and one invented from the schema. Two more live in `example/` —
 with each other on purpose.
 
 When the ledger is finished, check it against
-[`references/review.md`](references/review.md): thirty-four checks the verifier
+[`references/review.md`](references/review.md): thirty-six checks the verifier
 cannot make, because it reads markup and not the ledger as a document.
+
+## The adequate present, and a mapped future
+
+A ledger records two things about every pattern: `state` is where it is today,
+and `trajectory` is where it is going and what moves it.
+
+That second field exists because of a real misreading. A vocabulary at 100%
+`raw` is, in that moment, a library theme — `raw` means emit the library's
+classes, so the shape is the library's and only the colour is the product's.
+The conclusion people draw is that promotion should be forced up front. It
+should not: a first version that rewrites eight components has spent its budget
+on shapes nobody has argued about yet.
+
+**The difference between a starting point and a resting point is whether the
+next move is written down.** A `raw` with a trajectory is the first; a `raw`
+without one is the second, and it looks identical in the JSON.
+
+```json
+"trajectory": {
+  "to": "own",
+  "when": "the first filter chip — the moment a label has to become interactive",
+  "why": "the library badge is a label and cannot carry a selected state",
+  "form": "removable chip",
+  "blocked": "no chip pattern exists yet; adding one is a ledger change"
+}
+```
+
+Four things make it useful rather than aspirational:
+
+- **`when` is a TRIGGER, not a date.** "The first screen that needs a filter
+  chip" is something a person recognises when it arrives. A date is a wish.
+- **`why` names what the current state COSTS.** If nothing is lost by staying
+  where it is, the pattern does not need a trajectory — and recording that it
+  was considered is worth more than an empty plan.
+- **`blocked` admits a pending implementation** rather than omitting it. Silence
+  looks like nobody thought of it.
+- **`forbidden` is a legitimate destination.** A variant kept alive only until
+  the thing replacing it exists is a plan, not a contradiction.
+
+`npm run verify:patterns` prints these under **Planned**, beside the maturity
+report, because a trajectory nobody sees is a comment.
+
+**Two axes, and confusing them is how this field got proposed wrongly the first
+time.** The VOCABULARY improves by getting shorter — fewer ways to say
+"secondary". The FORM improves by climbing — raw to styled to own. They are
+measured separately and a ledger can be excellent at one and poor at the other.
 
 ## What this exists to do
 
