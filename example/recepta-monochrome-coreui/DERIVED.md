@@ -111,8 +111,10 @@ inherited from your mother — which rules out more than the archetype does.
 
 ## 5. What was NOT decided
 
-- **The icon set itself.** `iconStyle: outline` at 1.25px narrows it to a
-  thin-stroke family; which one is still open.
+- ~~The icon set.~~ **Decided: Lucide.** `iconStyle: outline` at 1.25px needs a
+  set drawn with a real `stroke-width` attribute, which rules out CoreUI's own
+  icons and every filled-path family. Three glyphs are on the page, which is
+  itself in character for `quiet`.
 - **Print styles.** A recipe notebook is a plausible thing to print and nothing
   in the interview asked.
 - **Motion beyond the defaults.** The durations and easings are the

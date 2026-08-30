@@ -58,6 +58,7 @@
     "bulma": "^1.0.4",
     "daisyui": "^5.7.9",
     "flowbite": "^4.0.2",
+    "lucide-static": "^1.37.0",
     "mvp.css": "^1.17.3",
     "postcss-scss": "^4.0.9",
     "preline": "^4.2.0",

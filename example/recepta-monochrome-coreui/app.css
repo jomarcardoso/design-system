@@ -87,6 +87,67 @@
     color: var(--app-fg-muted);
   }
 
+  /* ICONS — Lucide, chosen by the DESIGN_LANGUAGE and not by the library.
+   *
+   * CoreUI ships its own set and it is mostly solid and thick, which would fit
+   * the component library and fight a document that asked for outline at
+   * 1.25px. Lucide draws with a real stroke attribute, so the token can move it.
+   *
+   * This is the only place `--app-icon-stroke` can prove itself: it is a token
+   * for a DRAWN line, and an icon set of filled paths would have no use for it.
+   * If a set is chosen where these three declarations do nothing, that set does
+   * not fit the answers. */
+  .icon {
+    /* `fill` HAS to be a declaration and not the attribute Lucide ships.
+     *
+     * The SVG arrives with `fill="none"`, which is a presentation attribute and
+     * therefore loses to any CSS rule — and CoreUI has one: its `.icon` class
+     * sets `fill: currentcolor`, on the same class name. So every glyph rendered
+     * solid on a product whose document says outline, with the attribute sitting
+     * right there in the markup saying otherwise.
+     *
+     * Two lessons kept because both will recur. A presentation attribute is the
+     * weakest thing in the cascade, so an intent that matters belongs in CSS.
+     * And `.icon` is a class name a component library may already own — the same
+     * collision `check-collisions` exists for, one layer down. */
+    fill: none;
+    inline-size: var(--app-size-icon);
+    block-size: var(--app-size-icon);
+    stroke-width: var(--app-icon-stroke);
+    /* No colour here on purpose. Lucide draws with `stroke="currentColor"`, so
+     * the glyph takes the ink of the text it sits beside — which is the rule
+     * the design language states and the reason an icon set with its own
+     * palette was never an option. */
+    vertical-align: -0.2em;
+  }
+
+  /* `iconPolicy: icon-leads`. The gap is what makes them one unit rather than
+   * two things next to each other. */
+  .with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--app-space-xs);
+  }
+
+  /* A glyph inside a field sits in the field ink, not the body ink: it is
+   * chrome for the control rather than content. */
+  .field-icon {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-start: var(--app-space-sm);
+    translate: 0 -50%;
+    color: var(--app-fg-subtlest);
+    pointer-events: none;
+  }
+
+  .field-with-icon {
+    position: relative;
+  }
+
+  .field-with-icon .form-control {
+    padding-inline-start: calc(var(--app-space-sm) * 2 + var(--app-size-icon));
+  }
+
   /* A ruled line, which is what this product uses instead of a shadow. */
   .rule {
     border: 0;

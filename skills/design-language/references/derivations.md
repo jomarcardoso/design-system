@@ -220,6 +220,26 @@ then confirmed, because it changes what the client sees on every screen.
 | **icon alone, text colour** | `progressive` + `quiet`; Editorial, Tech Minimalist | icons act as buttons with no fill and no border, inheriting `currentColor` |
 | **icon alone, with a container** | `posture: loud`; Playful | every icon button carries a fill or a border |
 
+### Choosing the SET
+
+**The icon set follows this document, not the component library.** Same rule as
+the typefaces: the library decides what a component is, the design language
+decides what it looks like. A library that ships its own icons is making a
+suggestion, and a suggestion is not an answer.
+
+| the document says | what fits | what does not |
+|---|---|---|
+| `outline`, thin stroke | a set drawn with a real `stroke-width` attribute — Lucide, Phosphor | sets of filled paths, where stroke is not a knob that exists |
+| `outline`, medium | most outline sets | — |
+| `filled` | Material Symbols filled, Bootstrap Icons | thin-stroke sets, which have no filled twin |
+| `mixed` | a set shipping BOTH weights of the same glyph — Material Symbols, Phosphor | a set with only one weight; the pair has to be the same drawing |
+
+**The test:** does `--app-icon-stroke` change anything? It is a token for a
+drawn line, so a set of filled paths has no use for it. If the three
+declarations that read it do nothing, the set does not fit the answers — and
+that is a cheaper thing to discover before choosing than after a hundred glyphs
+are in the markup.
+
 Three rules hold whichever is derived:
 
 - **An icon alone must be a known glyph in a repeated place.** A magnifier in a

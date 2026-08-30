@@ -59,6 +59,22 @@ comment goes immediately after the closing `---`.
 
 ---
 
+## The document chooses the assets, not the library
+
+Typefaces and icon sets follow `DESIGN_LANGUAGE.md`. A component library that
+ships its own is making a suggestion; the document is the answer.
+
+CoreUI ships icons that are mostly solid and thick. They fit CoreUI and fight a
+document asking for outline at 1.25px, so a product with that document uses a
+stroke-drawn set instead and loses nothing — the library styles components, not
+glyphs.
+
+**And put the intent in CSS, not in a presentation attribute.** An SVG arriving
+with `fill="none"` loses to any CSS rule, and libraries have them: CoreUI sets
+`fill: currentcolor` on a class called `.icon`, so every glyph rendered solid on
+a page whose markup said otherwise. A presentation attribute is the weakest
+thing in the cascade.
+
 ## Never override a library with CSS
 
 When a third-party component looks wrong, the reflex is a stylesheet that beats
