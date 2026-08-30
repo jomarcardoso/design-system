@@ -80,6 +80,21 @@ comes up rather than treating it as a contradiction.
 
 ---
 
+## The school decides more than the token names
+
+The tables below read `posture` heavily and the school only where the two
+disagree. That is deliberate but it is not the whole story: each school has a
+SIGNATURE — the handful of moves that make a build recognisably that school — and
+those are in
+[`colour-strategies.md`](colour-strategies.md). Derive from the tables here, then
+check the signature: a build with the right `$colour-strategy` and none of its
+signature picked the school on paper.
+
+The shortest version. `functional`: status is everyday vocabulary rather than an
+exception, and every hue is muted at rest. `brand`: the container pair, and
+elevation by tonal step rather than by shadow. `monochrome`: the twelve-rung
+ladder used as a ladder.
+
 ## A. Quiet elements — the ones that made the page generic
 
 The badge, the tag, the chip, the resting secondary action. In every school
@@ -104,15 +119,15 @@ for the action.
 
 ## B. Surfaces and inputs
 
-Reads `posture`, `elevation`, `11d` (how many surfaces) and `11e` (direction).
+Reads `posture`, `elevation`, `13c` (how many surfaces) and `13d` (direction).
 
 | decision | derived from | rule |
 |---|---|---|
-| input background | `11e` | ladder runs UP → input takes the same surface as its container, edge carries it. Ladder runs DOWN → input is one rung recessed |
+| input background | `13d` | ladder runs UP → input takes the same surface as its container, edge carries it. Ladder runs DOWN → input is one rung recessed |
 | input at rest | `posture` | `quiet`: hairline, no fill change · `balanced`: hairline + recess · `loud`: full border, visible fill |
 | input on focus | always | the ring, never a colour change alone |
 | card separation | `surfaceSeparation` | `lines` → hairline, same fill as page · `tones` → one rung, no line · `shadows` → `shadow-raised` |
-| modal surface | `11d` | one surface → the page colour, separated by the scrim alone · two or more → the raised rung |
+| modal surface | `13c` | one surface → the page colour, separated by the scrim alone · two or more → the raised rung |
 
 **Pure white is a value, not a mistake — but it needs a job.** When
 `neutralPigment > 0`, white is the top of the ramp and belongs to whatever

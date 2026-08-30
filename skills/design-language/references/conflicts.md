@@ -106,6 +106,20 @@ Say it as a consequence rather than a problem: badges quiet, secondary neutral,
 dividers subtle, and the accent reserved harder than in any other combination.
 If the client also wants prominent badges, that is the real conflict.
 
+### Loud, and functional
+
+Harder than loud plus monochrome, and for the opposite reason. `functional`
+puts several hues on one screen and only works because every one of them is
+desaturated at rest — Atlassian and Polaris look restrained *because* they use
+more colours, not despite it. `loud` raises them all, and several saturated hues
+competing produces no focal point at all.
+
+**Softening:** keep the status family at full strength, since an error that does
+not alarm has failed at its one job, and derive everything else — badges,
+selection, secondary actions, tinted rows — as if the posture were `quiet`. The
+result still reads as loud, because the four colours that matter are loud and
+nothing else competes with them.
+
 ### Loud, and exposed
 
 The hardest pair in the system. A screen showing everything at once manages

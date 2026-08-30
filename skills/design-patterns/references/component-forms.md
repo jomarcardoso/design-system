@@ -22,6 +22,18 @@ whole card.
 
 ## How to use it
 
+**Two kinds of condition appear in the tables, and it is worth knowing which
+you are reading.** Of the conditions here, about two thirds name an ANSWER —
+`quiet`, `monochrome`, Editorial, the ladder direction, `mobile-first` — and
+those are decided before anyone opens a screen. The rest name the CONTENT:
+*"a count, read-only"*, *"filters the user applied"*, *"few large options"*.
+
+The interview cannot know whether a given badge is a count or a filter, so this
+file determines the form **given what the element is**. The answer half comes
+from the document; the content half comes from whoever is building the screen.
+When the two disagree — a filter chip on a product whose posture says badges are
+quiet — the content wins on the affordance and the answer wins on the treatment.
+
 **Nothing here is banned.** The conditions describe FIT, not permission. A form
 marked "avoid when" is reachable by a client who wants it — it becomes a
 deviation with a reason, exactly like an archetype deviation. The rule from the

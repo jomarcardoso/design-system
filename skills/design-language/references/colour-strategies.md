@@ -147,6 +147,75 @@ reads to know whether "chosen" gets its own colour.
 
 ---
 
+## What makes each school recognisable
+
+The accent-driven section below is long because that school generates its own
+layer 1 and needs the machinery explained. The other two do not — which for a
+while left them looking like the accent-driven school with more colours, and
+that is wrong in both directions. Each has a signature, and a build that has the
+right `$colour-strategy` and none of the signature is a build that picked the
+school on paper.
+
+### `functional` — you can read the state without reading the words
+
+**The claim:** every job has its own hue, and the payoff is that a dense
+operational screen is legible at a glance. A row is failing, a task is blocked,
+a field is invalid, an item is selected — four different meanings, four colours,
+no reading required.
+
+**What makes it look like itself:**
+
+- **Status is a first-class citizen, not an exception.** The other two schools
+  treat `success` / `warning` / `danger` / `info` as four colours that carry
+  meaning a shape cannot. Here they are part of the everyday vocabulary: coloured
+  lozenges in tables, tinted row backgrounds, inline validation on every field,
+  and subtle status surfaces (`bg-danger-subtle` and friends) doing real layout
+  work rather than appearing once per session.
+- **Selection is visibly not hover, and neither is action.** Three states a user
+  can be in at once, three treatments that never collide. Getting this wrong is
+  the school's signature failure: a selected row that looks hovered makes a
+  table lie about what the next click will do.
+- **Muted at rest.** This is the counter-intuitive one. Many hues on one screen
+  only works if every one of them is desaturated — Atlassian and Polaris look
+  restrained precisely because they use more colours, not despite it. A
+  `functional` build with saturated status colours is the loudest thing this
+  system can produce.
+- **The neutrals are a supporting cast.** They separate regions and carry text;
+  they are not the material the interface is made of. A `functional` product
+  that leans on its neutral ladder the way a monochrome one does has quietly
+  changed school.
+
+**The trap:** `posture: loud` plus `functional` is the hardest combination in
+the system, harder than loud plus monochrome. Several saturated hues competing
+on one screen produce no focal point at all — see `conflicts.md`.
+
+### `brand` — the hue is the interface, and tone does the hierarchy
+
+**The claim:** one brand colour marks what acts AND what is chosen, and the
+interface is recognisable from a thumbnail.
+
+**What makes it look like itself:**
+
+- **The container pair.** `primary` / `primary-container` / `on-primary-container`
+  is the shape Material 3 is built on and the thing the other two schools have no
+  equivalent for: a soft brand-tinted surface used to GROUP, not to act. A
+  `brand` build with no containers is a `functional` build with fewer hues.
+- **Elevation is tonal, not shadowed.** M3's `surface-container-low` through
+  `-highest` replace shadow with a brand-tinted ladder. This is the school where
+  question 13e most often answers "darker as it groups", and where the neutrals
+  are not neutral — they carry the brand hue at very low chroma.
+- **The brand appears where other schools keep neutral.** App bars, selected
+  states, the floating action, filled navigation. Restraint here is a deviation
+  rather than the default.
+- **Emphasis comes from tonal step, not from adding colour.** The trap the school
+  invites is brand everywhere, which emphasises nothing; M3's answer is more
+  steps of the same hue rather than a second hue.
+
+**The tell that a build only claimed this school:** the brand colour is used on
+buttons and nowhere else, elevation is a shadow, and there is no container. That
+is `functional` with one hue, and it will read as a Bootstrap theme, because that
+is what Bootstrap is.
+
 ## Accent-driven: the school that generates its own layer 1
 
 `monochrome` — also sold as **Accent-Driven** or **Minimalist**, and all three
@@ -210,7 +279,7 @@ on a page whose premise is that one thing wins.
 **Ask what the layout is allowed to spend.** Some accent-driven products keep
 every layout surface on rung 1 and separate with lines only; others give the
 header and the modal rung 2. Both are the school. The difference is visible on
-every screen, and it is question 11d.
+every screen, and it is question 13c.
 
 ### The four follow-ups
 
