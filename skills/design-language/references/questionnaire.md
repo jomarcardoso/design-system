@@ -2,7 +2,7 @@
 
 # The discovery interview
 
-Twenty-one questions in six blocks — four of them apply to one colour school
+Twenty-two questions in six blocks — four of them apply to one colour school
 only, and one is skipped when the product is new. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
@@ -48,7 +48,7 @@ aloud is four.
 
 **One number, one decision.** A question that carries three decisions collects
 them positionally — "A, A" for three slots — and one disappears without anyone
-noticing which. Split it into 21a, 21b, 21c and let each answer have a label to
+noticing which. Split it into 22a, 22b, 22c and let each answer have a label to
 land on.
 
 **Confirming means proposing ONE option.** Compressing a question is allowed;
@@ -607,11 +607,11 @@ forever.
 - (C) **An application frame.** Persistent navigation on one edge, a working
   area, and often a panel on the other.
 
-The one structural question in the interview, and it is here because it is the
-only one that is a fact about the PRODUCT rather than a preference about how it
-looks. Everything else in this block can be derived; this cannot — a recipe
-notebook and a recipe manager have the same archetype, the same school and
-different frames.
+One of the two structural questions in the interview — this and question 20 —
+and they are here because they are facts about the PRODUCT rather than
+preferences about how it looks. Everything else in this block can be derived;
+these cannot. A recipe notebook and a recipe manager have the same archetype,
+the same school and different frames.
 
 **It spends the ladder.** Each persistent region that wants its own tone takes a
 rung, and question 13c already fixed the budget. (C) with a two-surface budget
@@ -625,7 +625,48 @@ the frame degrades on a phone. Those follow from the archetype, question 5 and
 the disclosure posture, and the tables are in
 [`derivations.md`](derivations.md).
 
-**20. Are there visual restrictions the system must NEVER apply?**
+**20. What role does imagery play?**
+
+- (A) **None.** The product has no photography, and none is planned. Illustration
+  and icons are the only non-text elements.
+- (B) **Supporting.** Images appear — an avatar, a thumbnail, a logo — but a
+  screen still reads with every one of them missing.
+- (C) **The content.** The image is what the user came for. A recipe photograph,
+  a product shot, a portfolio piece. A screen without it is broken, not plainer.
+
+The second fact about the product, and the one most often skipped — which is why
+a generated system usually has an opinion about a button's border and none at all
+about the photograph next to it. Nothing else in the interview implies it: the
+same archetype, the same school and the same frame describe both a recipe
+notebook where the photograph is the page and a recipe manager where it is a
+32px thumbnail beside a title.
+
+**(C) makes the image a first-class surface**, which is a real cost. It takes a
+rung of the ladder for the frame around it, it needs its own radius decision
+separate from the card's, and it needs an answer for what shows before the image
+loads and when there is none — a hole the ledger otherwise fills at the first
+bug report.
+
+**20a. Ask only when the answer is (B) or (C) — what proportion?**
+
+- (A) **Wide** — 16:9 or 3:2. Landscape, editorial, cinematic.
+- (B) **Square** — 1:1. Grids, avatars, anything that has to tile.
+- (C) **Tall** — 4:5 or 3:4. Phone-first, food, fashion.
+- (D) **Whatever the image is.** No crop.
+
+*Propose (A) for Editorial and Enterprise, (B) where the answer to 19 was (C),
+(D) only when the client says the images are not theirs to crop.*
+
+**(D) is not a free option.** An uncropped image makes every row a different
+height, and a product that also asked for a dense grid is asking for two things
+that do not hold together. That is a conflict, and
+[`conflicts.md`](conflicts.md) has the softening move.
+
+**Everything else about images is derived** — the border treatment, the radius,
+whether they take a shadow, and what the system does with a decorative image.
+The tables are in [`derivations.md`](derivations.md), section K.
+
+**21. Are there visual restrictions the system must NEVER apply?**
 
 **Do not ask this cold.** A client at this point in a first interview has no
 restrictions in mind, and asking them to produce some invites either an invented
@@ -636,7 +677,7 @@ client has not been burned yet.
 
 Ask it in two parts instead.
 
-**20a. Confirm what the archetype already forbids.** Present these as *already
+**21a. Confirm what the archetype already forbids.** Present these as *already
 held*, not as options to pick — the answer is a yes, or a correction:
 
 | archetype | implied restrictions |
@@ -650,7 +691,7 @@ held*, not as options to pick — the answer is a yes, or a correction:
 > *"Editorial already rules out gradients, heavy shadows and coloured headings.
 > I have those. Anything to add?"*
 
-**20b. Anything beyond that?**
+**21b. Anything beyond that?**
 
 - (A) Nothing for now
 - (B) Yes — say it
@@ -674,20 +715,20 @@ advice. *"Never gradients"* is detectable: `linear-gradient` in the product's ow
 CSS. *"Keep it elegant"* is not, and saying so honestly is better than pretending
 it is a guardrail.
 
-**21. What are the universal interaction patterns?**
+**22. What are the universal interaction patterns?**
 
 Three decisions, so **three labelled questions** — not one number carrying three
 answers. Numbering them together produces "A, A" for three slots: one answer
 silently dropped, and no way to tell which.
 
-**21a. Where do confirmations live?**
+**22a. Where do confirmations live?**
 
 - (A) A modal — blocks until answered
 - (B) A toast with undo
 
 *Propose (A) for anything that cannot be undone, (B) otherwise.*
 
-**21b. How much friction does a destructive action need?**
+**22b. How much friction does a destructive action need?**
 
 - (A) One click
 - (B) A confirmation step
@@ -695,7 +736,7 @@ silently dropped, and no way to tell which.
 
 *Propose (B), or (C) when the data is unrecoverable.*
 
-**21c. When do forms save?**
+**22c. When do forms save?**
 
 - (A) On blur, field by field
 - (B) On an explicit submit

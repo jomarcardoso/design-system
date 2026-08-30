@@ -82,6 +82,65 @@ inherited from your mother — which rules out more than the archetype does.
 | the warning pair | dark ink on a light amber fill, brightening as it is pressed | the inverted-pair rule: a fill that darkens walks toward its own label |
 | where a status colour may NOT go | anything decorative, and any action that has not happened yet | `brand-adapted` + the accent budget |
 
+### Images
+
+| decision | value | from |
+|---|---|---|
+| `ratio-media` | 0.8 — 4:5, tall | `imageRatio`, itself from the phone being where a recipe is read |
+| `ratio-thumb` | 1 | not a decision; an avatar is square in every product that has shipped |
+| `radius-image` | `radius-surface`, 12px | `imagery: content` — the photograph is a surface, not an ornament inside one |
+| edge | an inset hairline in `border-color` | `imagery: content` + the ladder running UP: a pale sky on cream paper has no boundary |
+| shadow | none | `elevationCarrier: border-color` |
+| decorative images | **not allowed** | `editorial-premium` permits them; question 1 does not — a notebook has photographs of food and nothing else |
+| before it loads | `aspect-ratio` reserves the box; a missing image shows `bg-neutral-subtle` and a centred icon at `fg-subtlest` | `imagery: content`, where there is no version of the product with the image always present |
+
+The inset hairline is the interesting one. The ladder runs from the lightest
+paper upward, so every surface is at least as light as the page — and a
+photograph of a pale dish on a pale plate then bleeds into the card behind it.
+A border would have been the reflex; at a fixed 4:5 the box has no room to give
+up, so it is `box-shadow: inset 0 0 0 1px` instead.
+
+### Grid and columns
+
+| decision | value | from |
+|---|---|---|
+| columns | none — one measure, centred | `frame: single-column` |
+| `gap-grid` | `space-lg` | `frame` + `density: comfortable` |
+| `size-measure` | 68ch | `editorial-premium` + Q5, reading-adjacent |
+| where the grid stops | the recipe list is a two-up grid above the tablet breakpoint and a single stack below it | `platform: multiplatform` — the phone layout is the design, and the second column is what happens when there is room |
+| density per breakpoint | unchanged | `platform: multiplatform`; a phone is narrower, not denser, and the target size stays |
+
+**Breakpoints are CoreUI's**, compiled from `$grid-breakpoints` in
+`coreui-entry.scss`. There is no token for them and there cannot be: they are
+baked into generated utility rules before any custom property exists.
+
+### Motion
+
+| decision | value | from |
+|---|---|---|
+| what moves | colour and opacity only | `posture: quiet` |
+| state feedback | `duration-fast`, 120ms, in and out | `posture: quiet` |
+| disclosure | `duration-base`, 200ms | `posture` + `disclosure: progressive` |
+| entrance | none. Nothing animates on page load | `posture: quiet` |
+| the photograph arriving | no fade, no blur-up | `posture: quiet` — a notebook does not perform the arrival of a picture |
+| waiting | a skeleton at `bg-neutral-subtle`; nothing under ~300ms | `posture: quiet` and the known card shape |
+| reduced motion | the duration tokens go to `0s`; every state still changes | always |
+
+This replaces the line that used to sit in section 5 saying motion was
+undecided. It was true and it was a hole: the durations were the foundation's,
+which is to say nobody's.
+
+### Focus and hover
+
+| decision | value | from |
+|---|---|---|
+| focus form | `ring` at 2px, offset 2px | `posture: quiet` — a focus ring is not a place to have a personality |
+| `ring-color` | the accent, the ink blue | `colourStrategy: monochrome`; it is the only chromatic thing in the system |
+| `:focus-visible`, never `:focus` | so a mouse click on a card draws nothing | always |
+| what hover changes | the background, one rung. Nothing else | `posture: quiet` |
+| what hover never does | move, grow, or reveal an action | the row a cook is aiming at must not slide away |
+| the touch equivalent | every action visible on hover is visible at rest; `:active` carries the feedback | `platform: multiplatform` |
+
 ### The accent budget
 
 | may appear | may not |
@@ -136,8 +195,12 @@ inherited from your mother — which rules out more than the archetype does.
   itself in character for `quiet`.
 - **Print styles.** A recipe notebook is a plausible thing to print and nothing
   in the interview asked.
-- **Motion beyond the defaults.** The durations and easings are the
-  foundation's; nothing here chose them.
+- ~~Motion beyond the defaults.~~ **Decided.** Derived from `posture: quiet`
+  rather than asked — see the motion table above. The durations are still the
+  foundation's values; what changed is that they are now a choice with a reason
+  attached, and the list of what is allowed to move is short and written down.
+- **Print styles for the image.** A 4:5 photograph on A4 is a decision and the
+  print question above already had no answer.
 - ~~Component promotion.~~ **Mapped, not done.** Every pattern is `raw` today,
   so the shapes are CoreUI's and only the colour is this product's. Four
   trajectories are now recorded and `verify:patterns` prints them: the card

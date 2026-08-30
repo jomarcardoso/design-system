@@ -164,6 +164,43 @@ ponta. Um agente novo não consegue auditar a continuidade, que era o pedido
 original: *"que um agente veja a cadeia toda, entenda que é contínua e
 identifique desvios"*.
 
+## Fase I — os quatro assuntos que faltavam
+
+Levantados pelo usuário depois da fase G, e auditados no código antes de
+responder: interações, espaçamento e grid, divisão de conteúdo, imagens.
+
+O resultado da auditoria, honesto:
+
+| assunto | estado antes |
+|---|---|
+| bordas, sombras, superfícies, direção da superfície, raio | **coberto** — pergunta, token e derivação |
+| gaps, ritmo vertical, medida do container | **coberto** |
+| foco, hover, padding de controle | **token existe, decisão não** |
+| movimento | **token existe, zero derivação** — o próprio DERIVED.md do exemplo listava como não decidido |
+| densidade responsiva, grid, colunas, calhas, breakpoints | **nada** |
+| imagens | **nada** — nem token, nem regra, nem derivação |
+
+O buraco mais grave era imagem. Num app de receitas a foto é o conteúdo, e o
+sistema não tinha opinião nenhuma sobre ela.
+
+**Em quatro blocos, nesta ordem:**
+
+1. **Imagens.** Pergunta 20 (papel da imagem) e 20a (proporção) — o segundo
+   fato sobre o produto, ao lado do frame. Tokens novos:
+   `radius-image`, `ratio-media`, `ratio-thumb`. Derivação §K: borda, raio,
+   sombra, imagem decorativa por arquétipo, e o que aparece antes de carregar.
+2. **Grid.** Derivação §L a partir de `frame`, `density` e `platform`.
+   Tokens `gap-grid` e `size-measure`. Os breakpoints continuam da
+   biblioteca, no `<library>-entry.scss`, porque são compilados.
+3. **Movimento.** Derivação §M a partir de `posture` e `disclosure`. **Sem
+   pergunta nova** — um cliente perguntado sobre a velocidade de um dropdown
+   responde, e a resposta não é sobre o produto dele.
+4. **Foco e hover como política.** Derivação §N, mais a densidade responsiva.
+
+O achado da §N vale registrar: a forma do foco quase não varia com a postura, e
+isso É a conclusão — **anel de foco não é lugar de ter personalidade**. A única
+coisa que vale derivar é a cor.
+
 ## Fase H — a entrevista
 
 **Por último.** Reexecutar com tudo acima disponível, regenerar as camadas, e

@@ -49,10 +49,29 @@ iconSize: 20px
 # `accentContrast`, which was exactly that.
 posture: quiet                    # quiet | balanced | loud
 
-# The page frame. The one structural answer in the file — a fact about the
-# product rather than a preference about how it looks, and the only one of these
+# The page frame. One of the two structural answers in the file — facts about
+# the product rather than preferences about how it looks, and the only two here
 # that cannot be derived.
 frame: single-column              # single-column | content-aside | app-frame
+
+# What role imagery plays. The other structural answer, and the one most often
+# left out — which is how a system ends up with an opinion about a button and
+# none at all about the photograph beside it.
+#
+#   none        no photography, and none planned
+#   supporting  images appear; a screen still reads without them
+#   content     the image is what the user came for
+#
+# `content` makes the image a first-class surface: it spends a rung of the
+# ladder, takes its own radius, and needs an answer for the empty and loading
+# states. See derivations.md section K.
+imagery: supporting               # none | supporting | content
+# Unitless, feeding --app-ratio-media. `auto` means these images belong to
+# someone else and are not this product to crop, which a grid does not survive
+# — see conflicts.md.
+imageRatio: 1.5                   # 1.7777 (16:9) | 1.5 (3:2) | 1 | 0.8 (4:5) | 0.75 (3:4) | auto
+# Omit both when imagery is `none`, the same way the accent keys are omitted
+# outside the monochrome school.
 
 # DERIVED from question 5 and the archetype, not asked. How much of the
 # interface is on screen at rest. See derivations.md §F.
@@ -236,6 +255,19 @@ part a token file cannot express.
   > never says what it costs in pixels has not decided anything.
 - Space belongs to the **container**, not to the item. A component that carries
   its own outer margin cannot be reused in a tighter context.
+- **Columns:** {{none, one measure centred | 12}} · **Gutter:** `--app-gap-grid`,
+  {{token}} · **Measure:** `--app-size-measure`, {{68ch}}.
+
+  > The measure is the constraint, not the column count. A twelve-column grid
+  > whose content runs to 110 characters is a grid doing nothing.
+- **Where the grid stops:** {{one sentence naming the breakpoint and what the
+  layout becomes below it}}. The breakpoints themselves are the component
+  library's and are set in `<library>-entry.scss` — there is no token for them,
+  because they are compiled into generated rules before any custom property
+  exists.
+- **Density does not change per breakpoint** {{unless stated here, with the
+  reason}}. A phone is not a denser device; it is a narrower one, and shrinking
+  the unit on a touch screen fights the target size above.
 
 ### Shape
 
@@ -247,6 +279,30 @@ part a token file cannot express.
   rounded reads as approachable, and the product has to mean one of them.}}
 - **Surfaces are one step rounder than the controls inside them.** A control
   with the same radius as its container reads as stuck to it.
+
+### Imagery
+
+{{Delete this section only if `imagery: none`, and say so in one line rather
+than removing the heading — a system with no images decided that, and the next
+reader needs to know it was decided.}}
+
+- **Role:** {{supporting | content}} — {{one sentence on what a screen loses
+  without the image}}.
+- **Proportion:** `--app-ratio-media`, {{3:2}} · **Thumbnails and avatars:**
+  `--app-ratio-thumb`, always square.
+- **Radius:** `--app-radius-image`, {{token}}. {{Whether it matches the surface
+  it sits in, and why.}}
+- **Edge:** {{an inset hairline | none}}. An image with a pale edge on a pale
+  surface has no boundary, and the layout stops reading. Where a boundary is
+  needed it is `box-shadow: inset 0 0 0 1px`, not a border — a photograph at a
+  fixed ratio has no room to give up.
+- **Decorative images:** {{allowed | not allowed}}. A decorative image is one a
+  screen reader is told to skip; if it carries meaning it is not decorative, and
+  calling it decorative to avoid writing alt text is how an audit fails for a
+  reason nobody logged.
+- **Before it loads:** the box is reserved with `aspect-ratio`, always, so
+  nothing moves when the image arrives. A missing image shows
+  {{`bg-neutral-subtle` and a centred icon}} — a state, not a spinner.
 
 ### Iconography
 
@@ -306,12 +362,28 @@ part a token file cannot express.
   redundant `hover` — it is the only state a keyboard user has.
 - **Focus ring:** the native outline, or `--app-ring-*`. Never `outline: none`
   without a replacement that is at least as visible.
-- **Durations:** `--app-duration-fast` for micro-feedback, `--app-duration-base`
-  for transitions, `--app-duration-slow` for anything entering the screen.
-- **Easing:** `--app-ease-out` for entering, `--app-ease-in` for leaving.
-  Something arriving should decelerate; something leaving should not linger.
-- **`prefers-reduced-motion` is honoured**, and honouring it means removing the
-  movement, not shortening it.
+- **What hover changes:** {{the background, one step}} — derived from
+  `posture`. Hover never moves anything and never changes size: a control that
+  grows under the cursor pushes its own neighbours, and on a list it slides the
+  row away from the pointer aiming at it.
+- **Every hover has a non-hover equivalent.** Touch has none, so an action
+  revealed on hover is either always visible on touch or lives somewhere a
+  finger can reach. `:active` is not optional — it is the only feedback a
+  finger gets.
+- **What moves:** {{colour and opacity only}} — derived from `posture`.
+  **Layout does not animate**; height, width and position are what make an
+  interface feel loose. **Nothing animates on page load.**
+- **Durations:** `--app-duration-fast` for state feedback,
+  `--app-duration-base` for disclosure, `--app-duration-slow` for anything
+  entering the screen. Hover transitions in and out at the same duration; an
+  asymmetric hover reads as lag.
+- **Easing:** `--app-ease`, which decelerates. One curve, because a product
+  with two easings has not decided on one.
+- **Waiting:** {{a skeleton at `bg-neutral-subtle` | a spinner | neither}}.
+  Nothing at all under ~300ms — a flash of a spinner is worse than a pause.
+- **`prefers-reduced-motion` is honoured**, and honouring it means setting the
+  duration tokens to `0s` inside the query. The state still changes; it changes
+  at once. Removing the change instead is a different bug.
 
 ---
 

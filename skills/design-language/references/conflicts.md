@@ -184,6 +184,35 @@ Tabs sit where the header already is. Not a contradiction, but it needs an
 answer for the small viewport before it reaches the ledger — stacked sections,
 an accordion, or a select.
 
+### Uncropped images, and a grid
+
+Question 20a offers "whatever the image is" and it is the honest answer for a
+product whose images belong to someone else. It does not survive a grid: every
+tile becomes a different height, the rows stop aligning, and the page reads as
+broken rather than as varied.
+
+**The softening move is to crop the tile and not the image.** The grid gets
+`ratio-media`, applied with `object-fit: cover` on the thumbnail; the detail view
+shows the image at its own proportion, uncropped. The product keeps its promise
+about not altering anyone's work, in the one place where the promise matters.
+
+Where the client refuses even the cropped tile, the grid becomes a list — one
+column, image at its natural height. Say that this is what "no crop" costs
+before recording it, because it is a layout decision arriving through a question
+that did not sound like one.
+
+### Images as content, and a two-surface ladder
+
+Question 20 answered `content` needs a rung: the frame around a photograph is a
+surface, and it has to differ from the one behind it or the image floats. If
+13c bought two surfaces, the third rung is now spoken for and the sunken tone
+that was going to separate the aside is gone.
+
+**The softening move is the inset hairline** from section K of `derivations.md`,
+which gives the image a boundary without spending a tone. It is the right answer
+often enough that it is the default, and the conflict is only real when the
+client also wants the image frame to read as a distinct card.
+
 ---
 
 ## What goes in the read-back

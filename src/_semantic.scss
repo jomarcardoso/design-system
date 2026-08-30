@@ -31,7 +31,7 @@
 //
 //   --app-{property}-{role}[-{prominence}][-{state}]
 //
-//   property    bg fg border ring shadow radius space size duration ease z
+//   property    bg fg border ring shadow radius ratio space size duration ease z
 //               opacity | font-family font-size font-weight line-height
 //               letter-spacing
 //   role        page surface raised sunken overlay | default muted subtlest
@@ -64,6 +64,7 @@
 // idea, and keeping it is precisely why the daisyUI adapter is thirty lines.
 // =============================================================================
 
+@use 'sass:math';
 @use 'sass:list';
 @use 'sass:map';
 @use 'base';
@@ -133,6 +134,24 @@ $_type-scale-steps: (
     'radius-surface': base.scale(radius, xl),
     'radius-pill': base.scale(radius, full),
 
+    // An image is not a surface. A card can be softly rounded and the
+    // photograph inside it square-cornered, and the reverse — a rounded photo
+    // on a square card — is a different product. Defaulting to
+    // `radius-surface` costs a product with no opinion nothing and gives one
+    // with an opinion somewhere to put it.
+    'radius-image': core.ref('radius-surface'),
+
+    // --- Proportion -----------------------------------------------------
+    // Unitless, for `aspect-ratio`. Two, because a product almost always has
+    // one shape for the image that carries content and a second for the one
+    // that identifies a person or a thing — and they are rarely the same.
+    //
+    // `auto` is a legal value for `ratio-media` and means the images are not
+    // this product's to crop. It is an answer, not an absence, and it has
+    // consequences a dense grid does not survive.
+    'ratio-media': math.div(16, 9),
+    'ratio-thumb': 1,
+
     // --- Spacing --------------------------------------------------------
     // The original sketch had one general padding and one general gap. One
     // value does not survive contact with a real UI: a card's padding and a
@@ -157,6 +176,12 @@ $_type-scale-steps: (
     'pad-surface': core.ref('space-lg'),
     'gap-inline': core.ref('space-xs'),
     'gap-stack': core.ref('space-md'),
+
+    // The gutter between columns of a layout grid. Separate from `gap-stack`
+    // because horizontal and vertical rhythm answer to different things: the
+    // stack follows the type's leading, the gutter follows how many columns
+    // have to fit before they stop being readable.
+    'gap-grid': core.ref('space-lg'),
 
     // --- Typography -----------------------------------------------------
     //
@@ -245,6 +270,11 @@ $_type-scale-steps: (
     'size-control-sm': calc(#{core.ref('space-unit')} * 7),
     'size-control-lg': calc(#{core.ref('space-unit')} * 11),
     'size-icon': calc(#{core.ref('space-unit')} * 4),
+
+    // The reading measure — how wide a column of prose is allowed to get. In
+    // `ch` on purpose: the constraint is a count of characters, so it has to
+    // follow the typeface rather than a pixel count chosen against one.
+    'size-measure': 68ch,
 
     // The width of a drawn icon stroke. Set against the BODY type weight, not
     // against whatever the icon set ships: a 2px stroke beside a light serif is

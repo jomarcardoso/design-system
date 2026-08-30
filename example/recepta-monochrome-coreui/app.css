@@ -87,6 +87,55 @@
     color: var(--app-fg-muted);
   }
 
+  /* THE PHOTOGRAPH — `imagery: content`, and the whole of derivations.md K.
+   *
+   * Four things, and every one of them is a token rather than a number chosen
+   * by eye:
+   *
+   * 1. THE BOX IS RESERVED. `aspect-ratio` is set on the frame, always, so the
+   *    card is its final height before the image exists. This is the entire fix
+   *    for layout shift and it is one declaration — and it is why the ratio is a
+   *    token at all, rather than a crop decided in whatever tool made the file.
+   *
+   * 2. THE EDGE IS INSET. The ladder here runs UP from the lightest paper, so
+   *    every surface is at least as light as the page — and a pale dish on a
+   *    pale plate then bleeds into the card behind it. The reflex is a border;
+   *    a photograph at a fixed 4:5 has no room to give one up, so it is an inset
+   *    shadow, which paints inside the box the ratio already fixed.
+   *
+   * 3. THE RADIUS IS ITS OWN. `--app-radius-image` happens to equal
+   *    `--app-radius-surface` in this product and is a separate token because
+   *    the next product will want a square photograph in a rounded card.
+   *
+   * 4. NOTHING ANIMATES ON ARRIVAL. `posture: quiet` — a notebook does not
+   *    perform the appearance of a picture. No fade, no blur-up. */
+  .photo {
+    aspect-ratio: var(--app-ratio-media);
+    border-radius: var(--app-radius-image);
+    overflow: hidden;
+    background-color: var(--app-bg-neutral-subtle);
+    box-shadow: inset 0 0 0 1px var(--app-border-color);
+  }
+
+  .photo > img {
+    inline-size: 100%;
+    block-size: 100%;
+    /* The crop lives here, not in the file. An image whose own proportion
+     * differs from the product is cropped by the frame, which is what makes
+     * "whatever the image is" and "a grid" reconcilable at all. */
+    object-fit: cover;
+    display: block;
+  }
+
+  /* The missing image is a STATE, not a wait — so an icon at rest, never a
+   * spinner. There is no version of this product where the photograph is
+   * always there, which is what makes this required rather than polish. */
+  .photo-empty {
+    display: grid;
+    place-items: center;
+    color: var(--app-fg-subtlest);
+  }
+
   /* ICONS — Lucide, chosen by the DESIGN_LANGUAGE and not by the library.
    *
    * CoreUI ships its own set and it is mostly solid and thick, which would fit

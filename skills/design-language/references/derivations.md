@@ -1,9 +1,9 @@
 <!-- skills/design-language/references/derivations.md -->
 
-# Derivations — from twenty answers to a hundred decisions
+# Derivations — from twenty-two answers to a hundred decisions
 
-The interview asks about twenty things. A finished interface needs hundreds of
-decisions, and the ones in between have to come from somewhere.
+The interview asks about twenty-two things. A finished interface needs hundreds
+of decisions, and the ones in between have to come from somewhere.
 
 Today they come from judgement at generation time, and **when judgement has
 nothing to stand on it reaches for the library's default** — not from laziness,
@@ -319,6 +319,187 @@ gets diagnosed as "it needs more whitespace" when what it needs is a ratio.
 **Space belongs to the container.** A component carrying its own outer margin
 cannot be reused in a tighter context, and every rhythm here is applied by the
 thing doing the grouping.
+
+## K. Images
+
+Question 20 says what role imagery plays; 20a says its proportion. Everything
+below follows, and none of it is asked.
+
+**The image is a surface**, and every rule this file already states about
+surfaces applies to it. That is the whole trick: a system that treats a
+photograph as a special case ends up with a photograph that looks pasted on.
+
+| `imagery` | `ratio-media` | `radius-image` | edge | shadow |
+|---|---|---|---|---|
+| `none` | — | — | — | — |
+| `supporting` | from 20a | `radius-control` | a hairline in `border-color` | never |
+| `content` | from 20a | `radius-surface` | see below | follows `elevationCarrier` |
+
+**`ratio-thumb` is always `1`** and is not a decision. An avatar, a favicon, a
+sixteen-pixel logo beside a name — every one of them is square, in every product
+that has ever shipped, and asking about it spends a question to confirm a
+constant.
+
+### The edge, when the image is the content
+
+The problem is a photograph with a pale sky sitting on a pale surface: the image
+has no boundary and the layout stops reading. It is a real bug and it appears in
+review, not in design, because the placeholder was grey.
+
+| `surfaceDirection` | treatment |
+|---|---|
+| lighter surfaces on a darker page | an inset hairline, `border-color` at the surface's own tone |
+| darker surfaces on a lighter page | none — the surface is already darker than any sky |
+
+**A border on an image goes inside, not around.** `box-shadow: inset 0 0 0 1px`
+rather than `border`, because a border changes the box and a photograph at a
+fixed ratio has no room to give up.
+
+### Decorative images
+
+| `archetype` | policy |
+|---|---|
+| Editorial & Premium | allowed, and the only archetype where it is a first-class element |
+| Playful & Expressive | allowed as illustration, never as photography behind text |
+| Tech Minimalist, Enterprise Solid, Utilitarian & Technical | **not allowed** — this is a guardrail, and it belongs in the restriction list |
+
+A decorative image is one a screen reader is told to skip. **If it carries
+meaning it is not decorative**, and calling it decorative to avoid writing alt
+text is how a product fails an audit for a reason nobody logged.
+
+### What shows before it loads
+
+Not optional when the answer is `content`, because there is no version of that
+product where the image is always there.
+
+- **The reserved box.** `aspect-ratio: var(--app-ratio-media)` on the container,
+  always, so nothing moves when the image arrives. This is the whole fix for
+  layout shift and it costs one line.
+- **The empty state.** `bg-neutral-subtle` and a centred icon at `fg-subtlest`.
+  Not a spinner: a missing image is a state, not a wait.
+- **No blur-up, no fade-in, unless `posture` is `loud`.** A quiet product does
+  not animate the arrival of a photograph.
+
+## L. Grid and columns
+
+Derived from `frame`, `density` and `platform`. The values below are the
+system's opinion; the **breakpoints themselves are compiled by the component
+library**, so they are set in `<library>-entry.scss` and not in the theme.
+
+| `frame` | columns | `gap-grid` |
+|---|---|---|
+| single column | none — one measure, centred | `space-lg` |
+| content with an aside | 12, and the aside is a fixed rail | `space-lg` |
+| application frame | 12 | `space-md` |
+
+Then `density` moves the gutter one step: `dense` down, `generous` up.
+
+**`size-measure` is the constraint, not the column count.** A twelve-column grid
+whose content column runs to 110 characters is a grid doing nothing. The measure
+is `68ch` by default, and section H moves it.
+
+### Where the grid stops
+
+| `platform` | behaviour |
+|---|---|
+| desktop-first | the grid collapses to one column below the tablet breakpoint |
+| mobile-first | there is no grid below tablet — one column is the design, not the fallback |
+| both, equally | **the phone layout is designed first and the grid is what happens when there is room** |
+
+The third row is the one usually got wrong, and the tell is a product whose
+phone view is the desktop view with the columns stacked.
+
+### Density does not change per breakpoint by default
+
+It can — `--app-space-unit` is a custom property, so a media query can compact a
+whole subtree in one line — and it usually should not. **A phone is not a denser
+device; it is a narrower one**, and shrinking the unit on a touch screen fights
+the target size that section B just set.
+
+The exception is `frame: application frame` on a tablet, where the working area
+genuinely has less room and the client asked for the frame to survive. Say so
+when applying it, so the media query is a decision and not a habit.
+
+## M. Motion
+
+Derived from `posture` and `disclosure`. **No question asks about motion**, and
+one should not: a client asked how fast a dropdown opens will answer, and the
+answer will not be about their product.
+
+| `posture` | what moves | duration | easing |
+|---|---|---|---|
+| `quiet` | colour and opacity only | `duration-fast` | `ease` |
+| `balanced` | colour, opacity, and disclosure | `duration-base` for disclosure, `duration-fast` for state | `ease` |
+| `loud` | the above, plus entrance | `duration-base`, `duration-slow` for a modal | `ease`, and a spring only for a deliberate gesture |
+
+**The rules that hold at every posture:**
+
+- **Nothing animates on page load.** An entrance animation on content the user
+  asked for is the product performing at them.
+- **Hover transitions in, and out at the same duration.** An asymmetric hover
+  reads as lag.
+- **Layout does not animate.** Height, width and position are expensive and they
+  are what makes an interface feel loose. Transform and opacity are not.
+- **`prefers-reduced-motion` removes the duration, not the change.** The state
+  still changes; it changes at once. Setting the duration tokens to `0s` inside
+  the query is the whole implementation, which is the argument for the tokens
+  existing at all.
+
+**Spinner or skeleton** is a motion decision and belongs here:
+
+| wait | form |
+|---|---|
+| under ~300ms | nothing. A flash of a spinner is worse than a pause |
+| a known region, known shape | a skeleton at `bg-neutral-subtle` |
+| unknown duration or unknown shape | a spinner |
+| the whole page | neither — the empty state, with what the user can do meanwhile |
+
+## N. Focus and hover, as policy
+
+Both have tokens and neither had a decision, which is how a system ends up with
+a different focus treatment per component.
+
+### Focus
+
+| `posture` | form |
+|---|---|
+| `quiet` | `ring` at `ring-width`, offset by `ring-offset`, in `ring-color` |
+| `balanced` | the same |
+| `loud` | the ring, plus the element's own background moving one step |
+
+The form barely varies, and that is the finding: **a focus ring is not a place to
+have a personality.** It is one treatment applied everywhere, and the only thing
+worth deriving is its colour.
+
+| `school` | `ring-color` |
+|---|---|
+| functional | `bg-action` |
+| brand | `bg-primary` |
+| monochrome | the accent |
+
+**`:focus-visible`, never `:focus`**, so a mouse click does not draw a ring. And
+the rule already in the template: never `outline: none` without a replacement in
+the same rule.
+
+### Hover
+
+| `posture` | what hover changes |
+|---|---|
+| `quiet` | the background, one step. Nothing else |
+| `balanced` | background, and the border where one exists |
+| `loud` | background, border, and the shadow where `elevationCarrier` is shadow |
+
+**Hover never moves anything and never changes size.** A control that grows
+under the cursor moves its own neighbours, and on a list it makes the row the
+user was aiming at slide away.
+
+**Every hover has a non-hover equivalent.** Touch has no hover, and a phone is
+not a device where a product gets to hide an affordance behind one — an action
+revealed on hover is either always visible on touch, or it lives somewhere a
+touch can reach. This is a checkable rule and belongs in the guardrails.
+
+**`:active` is not optional on touch.** It is the only feedback a finger gets,
+and the `*-active` tokens exist for it.
 
 ## Deriving `accentContrast`
 

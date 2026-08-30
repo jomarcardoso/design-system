@@ -27,6 +27,15 @@ posture: quiet
 # whose premise is that it does not.
 frame: single-column
 
+# The photograph IS the recipe. A card with no image is not a plainer card, it
+# is a broken one — which makes the image a first-class surface here, with its
+# own radius and a rung of the ladder for its frame.
+imagery: content
+# 4:5. Tall, because food is photographed from above onto a plate and because
+# the phone is where a recipe is actually read. The Editorial default is 3:2 and
+# was overruled by the second reason, not the first.
+imageRatio: 0.8
+
 # DERIVED from Q5 (occasional) and the Editorial archetype. Controls appear when
 # they are needed; the cook reading a step is not also choosing a filter.
 disclosure: progressive

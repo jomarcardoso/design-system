@@ -6,6 +6,9 @@
     --app-radius-control: 4px;
     --app-radius-surface: 6px;
     --app-radius-pill: 9999px;
+    --app-radius-image: 6px;
+    --app-ratio-media: 0.8;
+    --app-ratio-thumb: 1;
     --app-space-unit: 4px;
     --app-space-2xs: calc(var(--app-space-unit) * 1);
     --app-space-xs: calc(var(--app-space-unit) * 2);
@@ -19,6 +22,7 @@
     --app-pad-surface: var(--app-space-lg);
     --app-gap-inline: var(--app-space-xs);
     --app-gap-stack: var(--app-space-md);
+    --app-gap-grid: var(--app-space-lg);
     --app-font-family-body: system-ui, Segoe UI Variable Text, Segoe UI, -apple-system, sans-serif;
     --app-font-family-heading: Iowan Old Style, Georgia, Palatino Linotype, ui-serif, serif;
     --app-font-family-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
@@ -40,6 +44,7 @@
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);
     --app-size-icon: 20px;
+    --app-size-measure: 68ch;
     --app-icon-stroke: 1.25px;
     --app-ring-width: 2px;
     --app-ring-offset: 2px;

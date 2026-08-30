@@ -64,6 +64,53 @@ guess that got in.
 | control weight | {{…}} | {{posture}} |
 | related / unrelated / section | {{…}} | {{density}} |
 
+### Images
+
+Delete this block when `imagery: none`, and say in section 5 that the product
+declared it has no photography — an absent block reads as forgotten.
+
+| decision | value | from |
+|---|---|---|
+| `ratio-media` | {{…}} | {{imageRatio}} |
+| `radius-image` | {{token}} | {{imagery}} |
+| edge treatment | {{inset hairline \| none}} | {{imagery, surfaceDirection}} |
+| shadow | {{…}} | {{elevationCarrier}} |
+| decorative images | {{allowed \| not allowed}} | {{archetype}} |
+| before it loads | {{reserved box + empty state}} | {{imagery}} |
+
+### Grid and columns
+
+| decision | value | from |
+|---|---|---|
+| columns | {{none \| 12}} | {{frame}} |
+| `gap-grid` | {{token}} | {{frame, density}} |
+| `size-measure` | {{68ch}} | {{archetype, frame}} |
+| where the grid stops | {{…}} | {{platform}} |
+| density per breakpoint | {{unchanged}} | {{platform, frame}} |
+
+**Breakpoints are the library's**, compiled in `<library>-entry.scss`. Name the
+values here so the next reader does not go looking for a token that cannot
+exist.
+
+### Motion
+
+| decision | value | from |
+|---|---|---|
+| what moves | {{colour and opacity only}} | {{posture}} |
+| state feedback | {{`duration-fast`}} | {{posture}} |
+| disclosure | {{…}} | {{posture, disclosure}} |
+| waiting | {{skeleton \| spinner \| neither}} | {{posture}} |
+| reduced motion | durations to `0s`; the state still changes | always |
+
+### Focus and hover
+
+| decision | value | from |
+|---|---|---|
+| focus form | {{ring, offset}} | {{posture}} |
+| `ring-color` | {{token}} | {{colourStrategy}} |
+| what hover changes | {{background, one step}} | {{posture}} |
+| the touch equivalent | {{…}} | {{platform}} |
+
 ### The accent budget
 
 | may appear | may not |

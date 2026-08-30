@@ -171,9 +171,16 @@ $recepta: (
 // override DESIGN_LANGUAGE.md records: `size-control` raised from the
 // archetype's 40px to 44px because the product is multiplatform and 40px is a
 // miss target on a phone.
+//
+// The image tokens come from question 20 rather than the archetype row: 4:5
+// because a recipe is read on a phone, and `radius-image` matching
+// `radius-surface` because `imagery: content` makes the photograph a surface
+// in its own right rather than an ornament inside the card.
 $structure: (
   'radius-control': 4px,
   'radius-surface': 6px,
+  'radius-image': 6px,
+  'ratio-media': 0.8,
   'size-control': calc(var(--app-space-unit) * 11),
   'size-icon': 20px,
   'icon-stroke': 1.25px,

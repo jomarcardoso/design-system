@@ -151,6 +151,14 @@ A green run proves the build is well-formed. It does not prove the values are
 the ones a `DESIGN_LANGUAGE.md` asked for — that is
 `skills/design-system/references/review.md`, and it is a different claim.
 
+**The dangling-reference check reads a product's `app.css` too, not only its
+`ds.css`.** It used to read the generated file alone, which is the one place the
+mistake cannot happen — every name in `ds.css` was emitted by the build. Product
+CSS is where a token gets typed from memory, and `var(--app-fg-subtle)` for
+`--app-fg-subtlest` voids the whole declaration silently: the element inherits,
+the page still looks plausible, and nothing fails. Add both files for every new
+example.
+
 ## Versioning
 
 `CHANGELOG.md` explains the scheme and why every entry that needs action from a
