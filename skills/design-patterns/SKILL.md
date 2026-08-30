@@ -32,9 +32,11 @@ nothing else:
 > **From this plugin**
 > 3. `skills/design-patterns/references/worked-example.md` — a real ledger; the
 >    template is empty on purpose and shows the shape of nothing
-> 4. `patterns/patterns.schema.json`
-> 5. `patterns/patterns.template.json` — only if we are starting a ledger
-> 6. `skills/design-patterns/references/review.md` — send it at the end
+> 4. `skills/design-patterns/references/component-forms.md` — the shapes each
+>    component can take, and the answers each one fits
+> 5. `patterns/patterns.schema.json`
+> 6. `patterns/patterns.template.json` — only if we are starting a ledger
+> 7. `skills/design-patterns/references/review.md` — send it at the end
 >
 > Also tell me **which library the project uses**, if the ledger does not say —
 > the design language does not record it.
@@ -68,7 +70,7 @@ shape and one invented from the schema. Two more live in `example/` —
 with each other on purpose.
 
 When the ledger is finished, check it against
-[`references/review.md`](references/review.md): thirty-two checks the verifier
+[`references/review.md`](references/review.md): thirty-four checks the verifier
 cannot make, because it reads markup and not the ledger as a document.
 
 ## What this exists to do
@@ -220,6 +222,29 @@ with. Then read [`references/worked-example.md`](references/worked-example.md),
 because the template is empty on purpose and shows the shape of nothing.
 
 Two situations, and they start from opposite ends.
+
+### Choosing the FORM, not just the variant
+
+`patterns.json` records which library variants are allowed. It does not, on its
+own, record what SHAPE a component should have — whether a tab is underlined or
+boxed, whether a photo bleeds or sits in a frame, whether a checkbox is a box or
+a whole card. That is the gap a library fills with its own default, and it is
+most of what makes a themed build still look like the library.
+
+[`references/component-forms.md`](references/component-forms.md) holds those
+shapes with the answers each one fits. Derive the fitting form, propose it, and
+name what else was available — a client who wanted something else says so in one
+exchange.
+
+**Nothing there is banned.** The conditions describe fit, not permission: a form
+marked "avoid when" is reachable by a client who wants it, as a deviation with a
+reason. **And several forms of one family can coexist** — a plain checkbox in a
+form and a selectable card in a chooser are two entries with two contexts, not a
+contradiction.
+
+**When the library cannot express the chosen form, record the pending
+implementation** in the ledger with its reason. A pending entry is acceptable;
+an omission is not, because silence looks like the form was never wanted.
 
 ### There is no markup yet
 
