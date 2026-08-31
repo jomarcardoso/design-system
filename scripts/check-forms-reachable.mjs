@@ -6,9 +6,9 @@
 //
 //     node scripts/check-forms-reachable.mjs
 //
-// `component-forms.md` states a rule it has no way to keep: *every form must be
-// reachable if the answers lead there*. This keeps it, and asks the more useful
-// question in the other direction.
+// The two catalogues state a rule they have no way to keep — *every form must be
+// reachable if the answers lead there* — and no way at all to ask the more
+// expensive question in the other direction.
 //
 // -----------------------------------------------------------------------------
 // THE TWO CHECKS, AND WHY THE SECOND ONE MATTERS MORE
@@ -20,11 +20,11 @@
 //      makes the file look richer than it is.
 //
 //   2. EMPTY FAMILY — a combination of answers for which some family has NO
-//      fitting form. This is the one that costs something. A generator that
-//      reaches a family with nothing to propose does not stop; it takes what
-//      the component library ships, because a library default is the only
-//      concrete thing available. That is the exact failure this whole release
-//      was written against, and until now nothing could see it.
+//      fitting form. This is the one that costs something. A generator reaching
+//      a family with nothing to propose does not stop; it takes what the
+//      component library ships, because a library default is the only concrete
+//      thing available. That is the exact failure the 0.8.0 release was written
+//      against, and nothing could see it until this.
 //
 // -----------------------------------------------------------------------------
 // WHAT IT DOES NOT CHECK
@@ -39,138 +39,59 @@
 // empty, and that is correct: whoever builds the screen supplies that half.
 // =============================================================================
 
-import { AXES, readForms, satisfies, triggers } from './lib/forms.mjs';
+import { AXES, readForms } from './lib/forms.mjs';
+import { buildAxes, coverFamily, describeHoles } from './lib/coverage.mjs';
+import { CATALOGUES, AXIS_SHAPED, COHERENT } from './lib/catalogues.mjs';
 
-// Families written as an axis matrix rather than a form catalogue. Listed so
-// they are reported as skipped rather than silently dropped — a family that
-// vanishes from a coverage report is the worst outcome available here.
-const AXIS_SHAPED = new Set(['Table']);
+export const loadFamilies = () =>
+  CATALOGUES.flatMap(([kind, file]) => readForms(file).map((f) => ({ ...f, kind })));
 
-// Answer pairs the questionnaire fixes one to one. Enumerating the raw product
-// would invent combinations no interview can produce and then report holes in
-// them, which is a checker manufacturing its own bugs.
-const COHERENT = [
-  (a) =>
-    (a.elevation === 'borders') === (a.surfaceSeparation === 'lines' || a.surfaceSeparation === 'tones'),
-  (a) => (a.elevation === 'soft-shadows' || a.elevation === 'projected-shadows') === (a.surfaceSeparation === 'shadows'),
-  // Tone as the separator needs a rung to spend it on.
-  (a) => !(a.surfaceSeparation === 'tones' && a.surfaceModel === 'flat')
-];
-
-const families = readForms();
-
-// Only enumerate the axes the catalogue actually mentions; the rest cannot
-// change any outcome and would multiply the search space for nothing.
-const referenced = new Map();
-for (const f of families) {
-  for (const form of f.forms) {
-    for (const cond of [form.fits, form.avoid]) {
-      for (const alts of cond.all) {
-        for (const a of alts) {
-          const [k, v] = a.split('=');
-          if (!referenced.has(k)) referenced.set(k, new Set());
-          referenced.get(k).add(v);
-        }
-      }
-    }
-  }
-}
-
-// An axis needs an "anything else" member only when the catalogue does NOT name
-// every value it can take — otherwise the synthetic member is a combination no
-// interview can produce, and every family looks empty in it. That is a checker
-// manufacturing its own bugs, which is worse than not checking: the real holes
-// below were buried under fourteen thousand phantom ones on the first run.
-const axes = [...referenced.entries()].map(([k, vs]) => {
-  const known = AXES[k] ?? [];
-  const namesAll = known.length > 0 && known.every((v) => vs.has(v));
-  return [k, namesAll ? [...vs] : [...vs, `other:${k}`]];
-});
-
-function* combinations(i = 0, acc = {}) {
-  if (i === axes.length) {
-    if (COHERENT.every((c) => c(acc))) yield acc;
-    return;
-  }
-  const [k, vs] = axes[i];
-  for (const v of vs) yield* combinations(i + 1, { ...acc, [k]: v });
-}
+const families = loadFamilies().filter((f) => !AXIS_SHAPED.has(f.name));
+const axes = buildAxes(families, AXES);
 
 const problems = [];
+let formCount = 0;
+let biggest = 0;
 
-// --- check 1: a form no combination can reach -------------------------------
-const reached = new Set();
+for (const family of families) {
+  const { local, total, fitting, holes } = coverFamily(family, axes, COHERENT);
+  biggest = Math.max(biggest, total);
 
-// --- check 2: a family with nothing to offer --------------------------------
-const holes = new Map(); // family -> list of answer maps
-
-let total = 0;
-for (const answers of combinations()) {
-  total++;
-  for (const f of families) {
-    if (AXIS_SHAPED.has(f.name)) continue;
-    let any = false;
-    for (const form of f.forms) {
-      if (!satisfies(form.fits, answers)) continue;
-      if (triggers(form.avoid, answers)) continue;
-      any = true;
-      reached.add(`${f.name} :: ${form.name}`);
-    }
-    if (!any) {
-      if (!holes.has(f.name)) holes.set(f.name, []);
-      holes.get(f.name).push(answers);
-    }
-  }
-}
-
-for (const f of families) {
-  if (AXIS_SHAPED.has(f.name)) continue;
-  for (const form of f.forms) {
-    if (!reached.has(`${f.name} :: ${form.name}`)) {
+  for (const form of family.forms) {
+    formCount++;
+    if (!fitting.get(form.name)) {
       problems.push([
-        `${f.name} — "${form.name}" is unreachable`,
+        `${family.name} — "${form.name}" is unreachable`,
         'no combination of answers satisfies its conditions without triggering its own "avoid"'
       ]);
     }
   }
-}
 
-/** The smallest description shared by every hole: what actually causes it. */
-function describe(maps) {
-  const shared = [];
-  for (const [k] of axes) {
-    const vs = new Set(maps.map((m) => m[k]));
-    if (vs.size === 1) {
-      const v = [...vs][0];
-      if (!String(v).startsWith('other:')) shared.push(`${k}=${v}`);
-    }
+  if (holes.count) {
+    problems.push([
+      `${family.name} has no fitting form`,
+      `${holes.count} of ${total} combinations of the ${local.length} answers it reads — ` +
+        describeHoles(local, holes.seen)
+    ]);
   }
-  return shared.length ? shared.join(' and ') : 'any combination';
-}
-
-for (const [family, maps] of holes) {
-  problems.push([
-    `${family} has no fitting form`,
-    `${maps.length} of ${total} coherent answer combinations — ${describe(maps)}`
-  ]);
 }
 
 // --- report -----------------------------------------------------------------
 const bold = (s) => `[1m${s}[0m`;
 const dim = (s) => `[2m${s}[0m`;
 
-const formCount = families.reduce((n, f) => n + (AXIS_SHAPED.has(f.name) ? 0 : f.forms.length), 0);
-
 if (!problems.length) {
+  const byKind = (k) => families.filter((f) => f.kind === k).length;
   console.log(
-    `check-forms-reachable: ok — ${formCount} forms in ${families.length - AXIS_SHAPED.size} ` +
-      `families, every one reachable, none empty across ${total} coherent combinations.` +
-      (AXIS_SHAPED.size ? ` ${[...AXIS_SHAPED].join(', ')} skipped: axis matrix, not a form table.` : '')
+    `check-forms-reachable: ok — ${formCount} forms in ${byKind('component')} component ` +
+      `and ${byKind('layout')} layout families, every one reachable, none empty. ` +
+      `Each family searched over the answers it reads, up to ${biggest} combinations. ` +
+      `${[...AXIS_SHAPED].join(', ')} skipped: axis matrix, not a form table.`
   );
   process.exit(0);
 }
 
-console.error(`\n${bold('Form coverage')} ${dim(`— ${total} coherent answer combinations`)}\n`);
+console.error(`\n${bold('Form coverage')}\n`);
 for (const [what, why] of problems) {
   console.error(`  ${bold(what)}`);
   console.error(`    ${dim(why)}\n`);

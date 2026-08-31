@@ -110,6 +110,27 @@ const TOKENS = new Map(Object.entries({
   'colourStrategy: functional': 'colourStrategy=functional',
   'accessibility: AAA': 'accessibility=AAA',
   colorCriticalWorkspace: 'colorCriticalWorkspace=true',
+
+  // The frame, the protagonist and the dwell, which layout-forms.md leans on
+  // far more than the component catalogue does — a page shape follows from what
+  // the page is FOR in a way a badge never does.
+  'single-column': 'frame=single-column',
+  'content-aside': 'frame=content-aside',
+  'app-frame': 'frame=app-frame',
+  'user-content': 'protagonist=user-content',
+  'product-content': 'protagonist=product-content',
+  tools: 'protagonist=tools',
+  seconds: 'dwell=seconds',
+  minutes: 'dwell=minutes',
+  hours: 'dwell=hours',
+
+  // Archetypes spelled as the front matter spells them, for tables naming the
+  // value rather than the word a designer says out loud.
+  'editorial-premium': 'archetype=editorial-premium',
+  'tech-minimalist': 'archetype=tech-minimalist',
+  'enterprise-solid': 'archetype=enterprise-solid',
+  'playful-expressive': 'archetype=playful-expressive',
+  'utilitarian-technical': 'archetype=utilitarian-technical',
   'frame: single-column': 'frame=single-column',
   'frame: content-aside': 'frame=content-aside',
   'frame: app-frame': 'frame=app-frame'
@@ -240,7 +261,15 @@ export function readForms(file = 'skills/design-patterns/references/component-fo
       if (current) families.push(current);
       continue;
     }
-    if (!current || !line.startsWith('|')) continue;
+    if (!current) continue;
+
+    // `**Only when ...`value`...**` immediately under the heading.
+    const only = line.match(/^\*\*Only when (.+)\*\*/);
+    if (only) {
+      current.only = [...only[1].matchAll(/`([^`]+)`/g)].map((m) => m[1].trim());
+      continue;
+    }
+    if (!line.startsWith('|')) continue;
 
     const cells = line.slice(1, line.lastIndexOf('|')).split('|').map((c) => c.trim());
     if (cells.length < 2) continue;
@@ -255,6 +284,13 @@ export function readForms(file = 'skills/design-patterns/references/component-fo
       continue;
     }
     if (!header) continue;
+
+    // A family may be CONDITIONAL, the way question 14 is conditional on the
+    // school: an aside is not a shape a single-column page can take, and a
+    // workspace is not a shape a reading product has. Without this the checker
+    // reports those families as empty for every product that legitimately does
+    // not have them, which is noise that teaches a reader to ignore the report.
+    if (current.only === undefined) current.only = null;
 
     const at = (n) => {
       const i = header.indexOf(n);

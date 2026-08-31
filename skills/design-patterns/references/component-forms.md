@@ -98,7 +98,7 @@ library's default surviving, not a decision.
 | hairline, same fill | separated by a rule only | `surfaceSeparation: lines` | when cards must be scannable at a glance in a dense grid |
 | one rung lighter | tone carries it, no rule | `surfaceModel: elevated`; `surfaceSeparation: tones` | `surfaceModel: recessed` — a card below the page is a well, not a card |
 | one rung darker (well) | recessed container | `surfaceModel: recessed`; grouping form fields or data | reading surfaces — a recessed article reads as secondary |
-| soft shadow | the library default | `elevation: soft-shadows` | `elevation: borders`; it is the decision spent twice |
+| soft shadow | the library default | `elevation: soft-shadows` or `elevation: projected-shadows` | `elevation: borders` — it is the decision spent twice |
 | asymmetric corners | rounded on one diagonal | Playful; a deliberate signature | any product whose language mentions paper, print or documents |
 
 ## Card with an image

@@ -3,23 +3,31 @@
 # The form map
 
 **Generated — do not edit.** `npm run docs:forms` rebuilds it from
-`skills/design-patterns/references/component-forms.md`.
+`component-forms.md` and `layout-forms.md`.
 
-Every form the catalogue offers, the answers that lead to it, and how much
+Every form the two catalogues offer, the answers that lead to it, and how much
 of the answer space it serves. It exists to answer one question: **can the
 interview actually reach all of these?** `npm run verify:forms` is the
 enforcement — this is the thing you read.
 
-Across **8640** coherent combinations of the 10 answers the
-catalogue discriminates on. Combinations the questionnaire rules out — a
-bordered system separating its surfaces with shadows — are excluded, because
-measuring reach against products that cannot exist flatters every number.
+**Each family is measured over the answers IT reads**, not over the product of
+every answer in the system. A family whose forms name `posture` and
+`monochrome` cannot be made empty by the frame or the dwell, so multiplying
+those out would ask the same question thousands of times for the same result.
 
-**Reach is specificity, not quality.** A form at 4% is doing the job a
-catalogue exists for. A FAMILY whose forms all sit high is the warning: it
-means the answers are not deciding anything there.
+**Reach is specificity, not quality.** A form at 20% is doing the job a
+catalogue exists for. A FAMILY whose forms all sit near 100% is the warning:
+it means the answers decide nothing there.
+
+---
+
+# Component forms
+
+The shapes a component takes.
 
 ## Button
+
+Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -33,9 +41,11 @@ means the answers are not deciding anything there.
 
 ## Input
 
+Over 45 combinations of 3 answers: posture, archetype, surfaceModel.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| boxed, filled | 25% | `recessed`, `balanced` or `loud` | `elevated` | — |
+| boxed, filled | 22% | `recessed`, `balanced` or `loud` | `elevated` | — |
 | boxed, flat | 33% | `quiet` | — | ladder runs UP; dense forms |
 | underline only | 13% | `quiet`, `editorial-premium` or `tech-minimalist` | — | many fields at once; the affordance is weak |
 | floating label | 27% | `balanced` | `editorial-premium` | Material-adjacent products |
@@ -43,34 +53,42 @@ means the answers are not deciding anything there.
 
 ## Card
 
+Over 55 combinations of 4 answers: archetype, surfaceModel, surfaceSeparation, elevation.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| hairline, same fill | 38% | `lines` | — | when cards must be scannable at a glance in a dense grid |
-| one rung lighter | 13% | `elevated`, `tones` | `recessed` | — |
-| one rung darker (well) | 38% | `recessed` | — | grouping form fields or data; reading surfaces |
-| soft shadow | 38% | `soft-shadows` | `borders` | it is the decision spent twice |
+| hairline, same fill | 27% | `lines` | — | when cards must be scannable at a glance in a dense grid |
+| one rung lighter | 9% | `elevated`, `tones` | `recessed` | — |
+| one rung darker (well) | 36% | `recessed` | — | grouping form fields or data; reading surfaces |
+| soft shadow | 55% | `soft-shadows` or `projected-shadows` | `borders` | — |
 | asymmetric corners | 20% | `playful-expressive` | — | a deliberate signature; any product whose language mentions paper; print or documents |
 
 ## Card with an image
+
+Over 45 combinations of 3 answers: posture, archetype, surfaceSeparation.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | framed, fixed ratio | 20% | `editorial-premium` | — | anything imitating print; full-bleed layouts where the frame reads as a border |
 | top-bleed | 33% | `balanced` | — | commerce; listings; — |
 | full-bleed with text over | 7% | `playful-expressive`, `loud` | — | media; entertainment; any product whose metaphor is paper or print |
-| split | 13% | `quiet`, `lines` | — | narrow columns |
+| split | 11% | `quiet`, `lines` | — | narrow columns |
 | image above, no frame | 100% | — | — | any archetype; any posture; when the photograph's own edges are pale; the card is lighter than the page |
 
 ## Selectable card
+
+Over 27 combinations of 3 answers: posture, colourStrategy, elevation.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | accent border on select | 67% | `quiet` or `balanced` | — | any school; — |
 | tone shift on select | 67% | `brand` or `functional` | `monochrome` | — |
 | corner check indicator | 100% | — | — | when the choice must survive a screenshot; small cards; the indicator crowds |
-| pressed | 38% | `soft-shadows` | `borders` | — |
+| pressed | 33% | `soft-shadows` | `borders` | — |
 
 ## Badge, tag and chip
+
+Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -81,25 +99,31 @@ means the answers are not deciding anything there.
 
 ## Tabs
 
+Over 45 combinations of 3 answers: posture, archetype, elevation.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | underline | 67% | `quiet` or `balanced` | — | any school; — |
-| enclosed | 21% | `borders`, `balanced` | `quiet` | — |
+| enclosed | 11% | `borders`, `balanced` | `quiet` | — |
 | segmented pill | 67% | `balanced` or `loud` | — | mobile-first; more than four options |
 | weight only | 13% | `quiet`, `editorial-premium` or `tech-minimalist` | — | when the set changes often |
 
 ## List and table rows
 
+Over 81 combinations of 4 answers: posture, colourStrategy, surfaceSeparation, density.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | whitespace only, no rules | 11% | `generous`, `quiet` | — | reading; dense data |
-| hairline per row | 13% | `comfortable`, `lines` | — | — |
+| hairline per row | 11% | `comfortable`, `lines` | — | — |
 | zebra striping | 22% | `dense` | `quiet` | wide tables |
 | row as a card | 33% | `comfortable` | — | touch targets that need to be obvious; long lists; the gaps waste the screen |
 | accent bar on the selected row | 89% | — | `monochrome`, `quiet` | any school |
 | hover only, no resting treatment | 100% | — | — | any density; any school; touch; where there is no hover |
 
 ## Divider
+
+Over 45 combinations of 3 answers: posture, archetype, density.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -111,15 +135,19 @@ means the answers are not deciding anything there.
 
 ## Message and alert
 
+Over 18 combinations of 3 answers: posture, surfaceSeparation, statusColours.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | left border in the status colour, neutral fill | 33% | `quiet` or `balanced`, `brand-adapted` | — | — |
 | subtle status fill | 33% | `balanced` | `quiet` | — |
 | solid status fill | 33% | `loud` | `quiet` | — |
-| border only, page fill | 13% | `quiet`, `lines` | — | when the message must interrupt |
+| border only, page fill | 11% | `quiet`, `lines` | — | when the message must interrupt |
 | inverted toast | 100% | — | — | any; for transient confirmation; as the confirmation for something destructive |
 
 ## Checkbox, radio, switch
+
+Over 3 combinations of 1 answers: posture.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -131,16 +159,20 @@ means the answers are not deciding anything there.
 
 ## Page header
 
+Over 90 combinations of 4 answers: posture, archetype, surfaceSeparation, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | title alone | 33% | `quiet` | — | short pages; pages that need orientation |
 | eyebrow + title | 20% | `editorial-premium` | — | content with taxonomy; when the eyebrow would repeat the navigation |
 | title + subtitle | 33% | `balanced` | — | anything explanatory; when the subtitle is the first paragraph in disguise |
-| title + rule | 8% | `editorial-premium`, `lines` | `shadows` | — |
+| title + rule | 7% | `editorial-premium`, `lines` | `shadows` | — |
 | title + actions | 50% | `exposed` | `progressive` | tools |
 | stacked with metadata | 100% | — | — | reading products; records; articles; dense tools where the metadata is a column |
 
 ## Opening / hero
+
+Over 15 combinations of 2 answers: posture, archetype.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -152,6 +184,8 @@ means the answers are not deciding anything there.
 
 ## Empty state
 
+Over 15 combinations of 2 answers: posture, archetype.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | one muted line | 33% | `quiet` | — | a list that is often empty; unremarkable; a first-run screen |
@@ -160,6 +194,8 @@ means the answers are not deciding anything there.
 | a skeleton of the thing that would be there | 33% | `quiet` | — | when emptiness is temporary; when emptiness is the normal state |
 
 ## Loading
+
+Over 6 combinations of 2 answers: posture, disclosure.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -170,6 +206,8 @@ means the answers are not deciding anything there.
 | the control becomes busy in place | 100% | — | — | when the whole region changes |
 
 ## Error and success
+
+Over 2 combinations of 1 answers: disclosure.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -182,6 +220,8 @@ means the answers are not deciding anything there.
 
 ## Form: label position
 
+Over 30 combinations of 3 answers: posture, archetype, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | above the field | 100% | — | — | almost always; best for scanning; for narrow screens; — |
@@ -191,10 +231,12 @@ means the answers are not deciding anything there.
 
 ## Form: grouping, help and actions
 
+Over 6 combinations of 2 answers: surfaceSeparation, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| a rule and a section title | 38% | `lines` | — | long forms |
-| a card per group | 25% | `tones` | — | forms that are also records |
+| a rule and a section title | 33% | `lines` | — | long forms |
+| a card per group | 33% | `tones` | — | forms that are also records |
 | a fieldset with a legend | 100% | — | — | accessibility-led; dense settings |
 | an accordion, one open | 50% | `progressive` | — | long optional sections |
 | always visible under the field | 50% | `exposed` | — | anything the user gets wrong |
@@ -207,6 +249,8 @@ means the answers are not deciding anything there.
 
 ## Pagination and continuation
 
+Over 6 combinations of 2 answers: posture, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | numbered pages | 50% | `exposed` | — | data the user returns to by position; feeds |
@@ -215,6 +259,8 @@ means the answers are not deciding anything there.
 | infinite scroll | 33% | `loud` | — | feeds; anything with a footer; or work that must be resumable |
 
 ## Breadcrumb
+
+Over 10 combinations of 2 answers: archetype, disclosure.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -226,6 +272,8 @@ means the answers are not deciding anything there.
 
 ## Stepper and timeline
 
+Over 6 combinations of 2 answers: posture, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | numbered steps in a row | 100% | — | — | short flows; three to five steps; more than five |
@@ -234,6 +282,8 @@ means the answers are not deciding anything there.
 | dots only | 33% | `quiet` | — | carousels; short flows; when the steps have names worth showing |
 
 ## Avatar and identity
+
+Over 9 combinations of 2 answers: posture, colourStrategy.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -245,6 +295,8 @@ means the answers are not deciding anything there.
 
 ## Chart
 
+Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | one accent, everything else neutral | 33% | `monochrome` | — | a single series; comparisons between categories |
@@ -255,6 +307,8 @@ means the answers are not deciding anything there.
 
 ## Carousel
 
+Over 6 combinations of 2 answers: posture, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | arrows and dots | 33% | `balanced` | — | a few featured items; more than about seven items |
@@ -263,6 +317,8 @@ means the answers are not deciding anything there.
 | replaced by a grid | 100% | — | — | almost always worth considering; when order carries meaning |
 
 ## Footer
+
+Over 3 combinations of 1 answers: posture.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -273,6 +329,8 @@ means the answers are not deciding anything there.
 
 ## Grid, list or table for the same data
 
+Over 2 combinations of 1 answers: disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | grid of cards | 100% | — | — | the image matters; browsing; comparing values across items |
@@ -281,6 +339,8 @@ means the answers are not deciding anything there.
 | switchable | 50% | `exposed` | — | when both uses are real; when it is being added to avoid a decision |
 
 ## Overlay: sheet, modal or panel
+
+Over 2 combinations of 1 answers: disclosure.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -292,6 +352,8 @@ means the answers are not deciding anything there.
 
 ## Tooltip and popover
 
+Over 6 combinations of 2 answers: posture, disclosure.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | tooltip, inverted surface | 100% | — | — | short clarification; pointer devices; touch-only |
@@ -301,28 +363,184 @@ means the answers are not deciding anything there.
 
 ## Navigation and header
 
+Over 270 combinations of 5 answers: posture, archetype, surfaceModel, elevation, ladderSpend.
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| plain bar, hairline below | 8% | `quiet`, `flat` | — | — |
-| bar on its own rung | 38% | `elevated` or `recessed`, `2` | `flat` | — |
-| floating island | 3% | `playful-expressive`, `loud` | `borders` | marketing surfaces |
+| plain bar, hairline below | 11% | `quiet`, `flat` | — | — |
+| bar on its own rung | 33% | `elevated` or `recessed`, `2` | `flat` | — |
+| floating island | 4% | `playful-expressive`, `loud` | `borders` | marketing surfaces |
 | collapsing header, title moves into the bar | 100% | — | — | reading products with long pages; short pages; the motion is noise |
 | icon-only rail that expands | 100% | — | — | desktop-first; dense tools; multiplatform |
 
-## Table
+---
 
-Written as an axis matrix rather than a form catalogue — several decisions,
-each with its own options and its own source. Listed here so its absence
-from the coverage numbers is visible rather than silent.
+# Layout forms
+
+The shapes a page takes. A page has fewer legitimate variants than a component, so a layout family carrying one universal fallback and three specific forms is the expected shape here — not a sign of a weak table.
+
+## Index — how a set of things is presented
+
+Over 1080 combinations of 6 answers: archetype, density, disclosure, frame, protagonist, imagery.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| feed | 8% | `single-column`, `user-content` | — | items with no natural order the user chooses; sets the user searches rather than browses |
+| grid of cards | 8% | `content`, `product-content` | — | browsing; items whose distinguishing information is text-heavy |
+| list with a leading thumbnail | 11% | `supporting`, `dense` | — | phones; items whose image IS the decision |
+| table | 3% | `tools`, `dense`, `exposed` | `content` | phones as the primary target |
+| sectioned index | 20% | `editorial-premium` | — | a set with a real taxonomy; sets that grow without bound |
+| plain list | 100% | — | — | anything; sets whose image or whose comparable columns are the reason to look |
+
+## Detail — how one thing is opened
+
+Over 72 combinations of 4 answers: density, disclosure, frame, protagonist.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| its own page | 100% | — | — | anything; comparing items side by side |
+| master–detail | 8% | `app-frame` or `content-aside`, `tools`, `exposed` | — | phones; long-form reading |
+| side panel over the index | 17% | `content-aside`, `progressive` | — | triage; review work; content long enough to need its own scroll; header |
+| inline expansion | 17% | `dense`, `progressive` | — | short detail; detail with its own actions; sub-navigation |
+| overlay | 50% | `progressive` | — | a quick look that returns; anything the user links to or shares |
+
+## Navigation placement
+
+Over 1215 combinations of 6 answers: posture, archetype, density, frame, dwell, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| top bar | 100% | — | — | anything; deep hierarchies |
+| side rail, labelled | 67% | `app-frame` or `content-aside` | `single-column` | products with three destinations |
+| side rail, icons only | 2% | `app-frame`, `dense`, `hours` | `mobile-first` | sets the user visits rarely |
+| bottom bar | 33% | `mobile-first` | `desktop-first` | three to five destinations; more than five |
+| none — the content is the navigation | 2% | `single-column`, `quiet`, `editorial-premium` | — | products with tasks rather than reading |
+
+## Header behaviour
+
+Over 216 combinations of 5 answers: disclosure, frame, protagonist, dwell, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| static, scrolls away | 100% | — | — | anything; pages whose primary action lives in it |
+| sticky, full height | 8% | `exposed`, `tools` | `mobile-first` | — |
+| sticky, condensed after the first screen | 33% | `hours` | — | long pages; short pages; where it never condenses; reads as a bug |
+| none | 33% | `app-frame` | — | where the rail carries identity; products a user arrives at from outside |
+
+## The aside
+
+Only when `content-aside` or `app-frame`.
+
+Over 36 combinations of 4 answers: disclosure, frame, dwell, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| persistent panel | 100% | `content-aside` or `app-frame` | — | phones; where it has nowhere to go |
+| collapsible rail | 17% | `app-frame`, `hours` | — | products where its content is needed continuously |
+| a sheet on demand | 17% | `progressive`, `mobile-first` | — | filters the user adjusts repeatedly |
+| the aside becomes a section | 33% | `multiplatform` | — | asides carrying navigation; which must stay reachable |
+
+## Form pages
+
+Over 72 combinations of 4 answers: density, disclosure, protagonist, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| one column | 67% | `mobile-first` or `multiplatform` | — | anything a user completes once; long settings pages with many independent fields |
+| two columns | 11% | `desktop-first`, `dense` | — | data entry by someone trained; anything a first-time user fills in |
+| sectioned, one page | 50% | `exposed` | — | forms of ten to forty fields; flows with branching |
+| wizard | 50% | `progressive` | — | branching; a user who does this once; anything the user returns to; edits |
+| inline edit in place | 13% | `user-content`, `progressive` | — | anything needing validation across several fields at once |
+
+## Reading pages
+
+Over 3240 combinations of 7 answers: archetype, density, disclosure, frame, protagonist, dwell, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| one measure, centred | 100% | — | — | anything; reference material scanned rather than read |
+| measure with a margin column | 2% | `editorial-premium`, `content-aside`, `desktop-first` | `mobile-first` | where the margin has nowhere to be |
+| measure with a table of contents | 17% | `hours`, `exposed` | — | documentation; anything under about two screens |
+| full width, no measure | 8% | `tools`, `dense` | — | anything anyone reads in sentences |
+
+## Dashboard and overview pages
+
+Over 36 combinations of 3 answers: posture, protagonist, dwell.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| one big, several small | 8% | `tools`, `balanced` | — | a screen with one real question; screens where every metric matters equally |
+| an even grid of tiles | 100% | — | — | anything; when the user actually has a primary question |
+| sections of related metrics | 33% | `hours` | — | many metrics; fewer than about six |
+| a single number | 11% | `quiet`, `seconds` | — | a status screen; anything requiring a decision |
+
+## Search and filter placement
+
+Over 54 combinations of 4 answers: posture, disclosure, frame, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| a field in the header | 100% | — | — | anything; products where filters matter more than the query |
+| a left rail of filters | 6% | `content-aside`, `exposed`, `desktop-first` | — | phones; three or fewer filters |
+| chips above the results | 17% | `progressive`, `mobile-first` | — | few filters; more than about eight |
+| a modal or sheet | 17% | `mobile-first`, `progressive` | — | many filters; filters the user adjusts repeatedly while reading results |
+| none — the set is small enough | 33% | `quiet` | — | sets a person can see all of; anything that grows |
+
+## Settings and account pages
+
+Over 648 combinations of 6 answers: posture, disclosure, frame, protagonist, dwell, platform.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| one long page with headings | 100% | — | — | anything; products with genuinely separate domains |
+| tabs across the top | 22% | `balanced` | `mobile-first` | three to six groups |
+| a side rail of sections | 17% | `app-frame`, `exposed` | `single-column` | many groups |
+| search-first | 8% | `hours`, `tools` | — | very many settings; small products; where it reads as evasion |
+
+## Workspace and canvas pages
+
+Only when `tools`.
+
+Over 108 combinations of 6 answers: disclosure, frame, protagonist, dwell, platform, colorCriticalWorkspace.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| chrome around a lit viewport | 50% | `true`, `tools` | — | anything where the chrome IS the product |
+| docked panels, resizable | 4% | `app-frame`, `hours`, `exposed` | `mobile-first` | — |
+| floating panels | 100% | `tools` | — | expert users who arrange once; first-time users; anything on a phone |
+| tool bar plus full-bleed canvas | 100% | — | — | anything; tools with many simultaneous options |
+
+## First run and empty products
+
+Over 72 combinations of 4 answers: posture, disclosure, protagonist, imagery.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| the empty state carries it | 100% | — | — | anything; products needing configuration before they work |
+| a checklist of first steps | 13% | `exposed`, `tools` | — | setup with real prerequisites; products a user can simply start using |
+| a tour over the real interface | 67% | `loud` or `balanced` | — | genuinely novel interactions; interfaces a user can work out by looking |
+| sample content, marked as sample | 8% | `product-content`, `content` | — | anything where sample data could be mistaken for real |
+
+## Error and offline pages
+
+Over 18 combinations of 3 answers: posture, disclosure, frame.
+
+| form | reach | led to by | ruled out by | content it needs |
+|---|---|---|---|---|
+| in place, the rest of the page intact | 50% | `progressive` | — | a failure affecting one region; failures that make the whole page wrong |
+| full page with a way back | 33% | `single-column` | — | routing; permission failures; recoverable failures; where it loses the user's context |
+| a banner above the content | 50% | `exposed` | — | degraded but usable states; hard failures; where it understates |
+| retry in place, no message | 33% | `quiet` | — | transient network failures; anything the user needs to know about |
 
 ---
 
-## Forms the answers never narrow
+## Forms no answer narrows
 
-These reach 95% or more of the space, which means no answer meaningfully
-rules them out. That is right for a genuinely universal shape and wrong
-for anything else — a form here that ought to be specific is a condition
-column nobody filled in.
+These reach every combination their family is measured over, which means no
+answer rules them out. That is right for a genuinely universal shape, and
+right for the fallback every layout family needs — a page always has SOME
+shape. It is wrong for anything that ought to be specific, where it means a
+condition column nobody filled in.
 
 - Button — icon-only
 - Input — prefix / suffix slot
@@ -375,3 +593,15 @@ column nobody filled in.
 - Tooltip and popover — tooltip, inverted surface
 - Navigation and header — collapsing header, title moves into the bar
 - Navigation and header — icon-only rail that expands
+- Index — how a set of things is presented — plain list
+- Detail — how one thing is opened — its own page
+- Navigation placement — top bar
+- Header behaviour — static, scrolls away
+- The aside — persistent panel
+- Reading pages — one measure, centred
+- Dashboard and overview pages — an even grid of tiles
+- Search and filter placement — a field in the header
+- Settings and account pages — one long page with headings
+- Workspace and canvas pages — floating panels
+- Workspace and canvas pages — tool bar plus full-bleed canvas
+- First run and empty products — the empty state carries it
