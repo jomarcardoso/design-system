@@ -7,9 +7,38 @@ archetypeNote: ~
 density: comfortable
 platform: multiplatform
 
+# An hour, not a minute. The frequency answer is "occasional" — nobody opens a
+# recipe notebook daily — and the SITTING is long: the book stays open on the
+# counter for as long as the cooking takes. The two used to be one question and
+# this product is the case that breaks it.
+dwell: hours
+
+# The recipes are the cook's own, copied from a grandmother's book. The
+# interface is the paper they sit on.
+protagonist: user-content
+
+# Photographs are shown, never judged. Nobody calibrates a picture of a cake.
+colorCriticalWorkspace: false
+
 radius: subtle
 elevation: borders
 elevationCarrier: border-color
+
+# Derived from `elevationCarrier`. Used to be asked twice.
+surfaceSeparation: lines
+
+# Paper on a table: the page sits two rungs up the sepia ladder and anything
+# raised above it is LIGHTER. Derived from `protagonist: user-content` and
+# confirmed — a recipe card sunk into the page would have been a coherent
+# design, just a different one, and the first build took this direction by
+# copying another example rather than by deciding.
+#
+# Under the dark theme it means the same thing, which is the one model that
+# survives the flip unchanged. See derivations.md T.
+surfaceModel: elevated
+# Page on one rung, everything raised on the next. The third is RESERVED for the
+# quiet neutral fill every badge, tag and resting secondary action is made of.
+ladderSpend: 2
 
 # Thin outline, matching a light serif. Icons inherit `currentColor` — the one
 # accent is spent on actions, never on decoration.
@@ -224,7 +253,7 @@ The tokens live in `src/`. This section is the **rules for using them**.
   Bootstrap's own blue and read as a framework's default. Ink from a biro sits
   ON the fibre rather than soaking in, so it scans darker and nearer violet than
   any UI blue: `#2a3b8f`, which the ramp resolves to `#4a5eab`.
-- **The layout spends TWO rungs of the ladder** — question 11d. The page and the
+- **The layout spends TWO rungs of the ladder** — question 10a. The page and the
   header are one surface; a card is one rung lighter. Rung 3 is reserved for the
   quiet neutral fill that every badge, chip and resting secondary action is made
   of, and a layout that spends it leaves labels with nothing to be made of but a
@@ -304,7 +333,8 @@ The tokens live in `src/`. This section is the **rules for using them**.
 
 - **Strategy:** borders. Hairlines and whitespace, no depth.
 - **The ladder runs UP: anything raised is lighter than the page** — question
-  11e, answer (A). The page sits two rungs up, a card is lighter than it, and the
+  10, answer (B) — `surfaceModel: elevated`. The page sits two rungs up, a card
+  is lighter than it, and the
   lightest step is reserved for what genuinely floats. Sheets stacked on a desk
   rather than wells cut into one, which is the metaphor the product already
   makes everywhere else.
@@ -313,7 +343,7 @@ The tokens live in `src/`. This section is the **rules for using them**.
   survives a change of palette, and *cards are step 50* does not. It is also the
   one decision here that was originally inherited rather than made — the first
   build copied another example's ladder, the result happened to be liked, and
-  nothing recorded why. Question 11e exists because of that.
+  nothing recorded why. Question 10 exists because of that.
 - **Hierarchy is carried by:** `border-color`. This is load-bearing — a flat
   system with a weak border produces surfaces nobody can tell apart, **and it
   passes the contrast check while doing it**, because that check measures text

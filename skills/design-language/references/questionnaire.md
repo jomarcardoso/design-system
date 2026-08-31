@@ -2,7 +2,7 @@
 
 # The discovery interview
 
-Twenty-two questions in six blocks — four of them apply to one colour school
+Twenty-three questions in six blocks — two of them apply to one colour school
 only, and one is skipped when the product is new. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
@@ -48,7 +48,7 @@ aloud is four.
 
 **One number, one decision.** A question that carries three decisions collects
 them positionally — "A, A" for three slots — and one disappears without anyone
-noticing which. Split it into 22a, 22b, 22c and let each answer have a label to
+noticing which. Split it into 23a, 23b, 23c and let each answer have a label to
 land on.
 
 **Confirming means proposing ONE option.** Compressing a question is allowed;
@@ -147,26 +147,108 @@ has to be said out loud, because silence reads as (B).
 
 ---
 
-## Block 2 — Use context and ergonomics
+## Block 2 — What the product is for
 
-> Decides `size-control`, `line-height`, and which end of the spacing scale
-> components reach for.
+> Decides `density`, `size-control`, `line-height`, `posture` and
+> `surfaceModel`. **This is the block that stops the interview collecting
+> taste.**
 
-**5. How often is it used, and for what kind of task?**
+Everything here is a fact about the product that its owner knows and a designer
+would have to guess. Nothing here asks what anything should look like — and the
+four visual decisions this block feeds are all the stronger for being derived
+from it rather than asked.
 
-- (A) Prolonged — a work tool, a dashboard, dense data
-- (B) Occasional — checkout, self-service, short flows
-- (C) Reading and continuous content
+**Why this block exists in this form.** Ask a client whether they want an
+elegant interface and they say yes; nobody says no. A preference question with
+no counterpoint collects a yes that means nothing, and worse, it invites someone
+who is not a designer to make a designer's decision with ten seconds of
+vocabulary. The counterpoint that works is never *ugly versus elegant* — it is
+**what the product is for**, which has real trade-offs a client can weigh
+because they are trade-offs about their own users.
 
-| | A · dense | B · comfortable | C · reading |
+**5. How often does someone open this, and for what?**
+
+- (A) **Every working day.** It is the tool their job runs on.
+- (B) **Some days.** A specific task, come back when it comes up again.
+- (C) **Rarely, often once.** A sign-up, a purchase, a form.
+
+| | A · daily | B · some days | C · rarely |
 |---|---|---|---|
-| Tech Minimalist | ✅ | ✅ | ⚠️ |
-| Enterprise Solid | ✅ | ⚠️ | ❌ |
-| Playful | ❌ | ✅ | ⚠️ |
-| Editorial | ⚠️ | ⚠️ | ✅ |
-| Utilitarian | ✅ | ❌ | ❌ |
+| Tech Minimalist | ✅ | ✅ | ✅ |
+| Enterprise Solid | ✅ | ✅ | ⚠️ |
+| Playful | ⚠️ | ✅ | ✅ |
+| Editorial | ⚠️ | ✅ | ✅ |
+| Utilitarian | ✅ | ⚠️ | ❌ |
 
-**6. Which devices come first?**
+**6. How long is one sitting?**
+
+- (A) **Seconds to a couple of minutes.**
+- (B) **Ten to thirty minutes.**
+- (C) **An hour or more, continuously.**
+
+**Frequency and dwell are different questions and used to be one.** They fused
+into *"prolonged / occasional / reading"*, which forced a single letter to carry
+both — and a recipe notebook is the case that breaks it: opened now and then
+(B on question 5) and left open for an hour while someone cooks (C here). The
+fused version collected `occasional` and threw away the answer that decides more.
+
+**Dwell is the strongest single input to `posture`**, and it is the counterpoint
+question in disguise:
+
+> *Ten seconds gets you one chance to make an impression, and heavier elements
+> pay off — nobody is around long enough to tire of them. An hour gets you the
+> opposite problem: every extra border, every extra tone, every element with its
+> own small claim on attention becomes something the eye has to process again
+> and again, and the product that looked richest in the first minute is the one
+> that is exhausting in the fortieth.*
+
+That sentence is worth saying out loud, because it is the trade the client is
+actually making and no amount of asking about elegance surfaces it.
+
+| dwell | proposes |
+|---|---|
+| A · seconds | `posture: balanced` or `loud`; density can be generous with weight |
+| B · minutes | `posture: balanced` |
+| C · an hour or more | `posture: quiet`; every decorative element has to justify itself |
+
+**7. Who is the screen for?**
+
+- (A) **The content the user puts there.** Their notes, their photographs, their
+  documents. The interface is the paper.
+- (B) **The content the product offers.** A catalogue, a library, other people's
+  work presented well.
+- (C) **The brand.** Someone should know whose product this is from across the
+  room.
+- (D) **The tools.** The user is manipulating something, and the controls are
+  the product.
+
+The question the colour-school block cannot ask, because the school is an answer
+about *token architecture* and this is an answer about *who the screen belongs
+to*. They correlate and they are not the same: a bank can be monochrome, and a
+reading app can be brand-led.
+
+| protagonist | proposes |
+|---|---|
+| A · the user's content | `surfaceModel: elevated`; the accent budget at its smallest |
+| B · the product's content | `elevated` or `flat`; imagery is likely `content` |
+| C · the brand | `flat` with brand-coloured blocks, or `recessed`; the accent budget widest |
+| D · the tools | `recessed` or `flat`; see the colour-critical rule below |
+
+**(D) has a follow-up that is DERIVED from question 1, not asked.** When the
+product described there is one where the user judges colour — a photo or video
+editor, a 3D tool, anything with a canvas being calibrated — set
+`colorCriticalWorkspace: true` and say so:
+
+> *"You described an image editor. That makes the interface a frame around a lit
+> viewport rather than a surface in its own right: the chrome goes low-contrast
+> and neutral so the user's iris stays adapted to the image and not to the
+> toolbar. It is physiology, not taste. Confirm?"*
+
+It is a flag any archetype may carry rather than a sixth archetype, because the
+case is real, rare, and does not change anything else about the product's
+personality. What it does change is written in `derivations.md`.
+
+**8. Which devices come first?**
 
 - (A) Desktop-first
 - (B) Mobile-first
@@ -180,26 +262,25 @@ the system working, not a compromise.
 
 ---
 
-## Block 3 — Visual foundations and geometry
+## Block 3 — Depth and emphasis
 
-> Decides `radius-control`, `radius-surface`, `shadow-raised`, `shadow-overlay`,
-> `icon-stroke` and `icon-size`.
+> Decides `elevation`, `elevationCarrier`, `surfaceModel` and `posture`.
 
-**7. What shape should structures have — buttons, cards, inputs?**
+**Two questions moved out of this block and became derivations**, because they
+were the two most likely to collect taste from someone with no reason to have an
+opinion:
 
-| | square 0–2px | subtle 4–8px | rounded 12–16px | pill |
-|---|---|---|---|---|
-| Tech Minimalist | ⚠️ | ✅ | ⚠️ | ❌ |
-| Enterprise Solid | ⚠️ | ✅ | ❌ | ❌ |
-| Playful | ❌ | ⚠️ | ✅ | ✅ |
-| Editorial | ⚠️ | ✅ | ❌ | ❌ |
-| Utilitarian | ✅ | ⚠️ | ❌ | ❌ |
+| what used to be asked | now |
+|---|---|
+| **the shape of things** — square, subtle, rounded, pill | DERIVED from the archetype. Its own text already said *"set the preset, look at a real screen, adjust once"*, which is a derivation describing itself as a question. See `derivations.md` §O. |
+| **what the icons look like** — outline, filled, mixed | DERIVED from the archetype and the shape. The ✅ table had exactly one ✅ per archetype in four of five rows, which means the archetype was already answering it. See `derivations.md` §P. |
 
-Radius is the most recognisable archetype signal and the cheapest to change —
-two tokens. Do not let it absorb an hour of debate: set the preset, look at a
-real screen, adjust once.
+Both still reach the client — in the read-back, with their provenance, as
+something to disagree with. **A derived default is not a decision taken away
+from anyone.** It is a decision made by the thing that has the standing to make
+it, and shown.
 
-**8. How should depth and layering feel?**
+**9. How should depth and layering feel?**
 
 | | flat, borders only | subtle shadows | projected shadows |
 |---|---|---|---|
@@ -218,44 +299,73 @@ check measures text against its background, not one surface against another.
 Whatever carries hierarchy has to be the thing that is strong. The answer goes
 into `elevationCarrier`, which the template requires when elevation is `borders`.
 
-**9. What do the icons look like?**
+- (A) **The border colour.** A visible hairline separates everything.
+- (B) **The tone of the surface.** Each layer is a rung of the neutral ladder.
+- (C) **Space alone.** No line, no tone; distance does the work.
 
-- (A) Outlined, thin stroke
-- (B) Outlined, medium stroke
-- (C) Filled
-- (D) Mixed — filled marks the selected state, outlined everything else
+**10. Which way does light fall?** — DERIVED from block 2, then confirmed.
 
-| | A · thin outline | B · medium outline | C · filled | D · mixed |
-|---|---|---|---|---|
-| Tech Minimalist | ✅ | ✅ | ⚠️ | ✅ |
-| Enterprise Solid | ⚠️ | ✅ | ⚠️ | ✅ |
-| Playful | ❌ | ⚠️ | ✅ | ✅ |
-| Editorial | ✅ | ⚠️ | ❌ | ⚠️ |
-| Utilitarian | ⚠️ | ✅ | ⚠️ | ⚠️ |
+The physics of the screen, and **independent of the colour school**. A product
+can be monochrome and elevated (a reading app), monochrome and flat (Vercel),
+functional and recessed (a dense B2B console). Treating them as one axis is what
+makes generated systems converge: the school gets chosen, the surface model
+comes along for the ride, and two products with different jobs end up with the
+same page.
 
-Icons carry more archetype signal per pixel than anything except radius, and
-they are the foundation most often left undecided — which means a product ends
-up mixing two icon sets and reading as two products.
+- (A) **`flat`.** Page and cards share one tone. Everything is separated by
+  hairlines and by space. One tone on screen, no competition between greys.
+- (B) **`elevated`.** The page is a rung down and anything raised above it is
+  LIGHTER — a card, a modal, a dropdown. Paper on a table under a lamp.
+- (C) **`recessed`.** The page is the lightest step and anything grouped is
+  DARKER — a form panel, a data area, a well. Niches cut into a surface.
 
-Three consequences, and they are why this is a question rather than a preset:
+**This used to be two questions inside the accent-driven profile**, asked only
+when the school was monochrome — so a functional or brand product was never
+asked which way its ladder ran, and half the products this tool generates had
+the decision made for them by whichever example got copied. Promoting it here is
+the single largest correction in this file.
 
-- **Stroke weight has to agree with the type.** A 2px icon stroke beside a light
-  serif is a different product in the same screen. Set `icon-stroke` against the
-  body weight, not against the icon set's default.
-- **Corner geometry follows question 6.** Icons drawn with square corners inside
-  a 16px-rounded interface read as clip art. Whatever radius the interface took,
-  the icon set has to be able to match it.
-- **(D) is a behaviour, not a style**, and it is the one answer that needs the
-  set to ship both weights of the same glyph. Confirm the set can before taking
-  it.
+Derive the proposal from block 2 and present ONE option:
 
-**Colour is not an icon decision.** An icon inherits `currentColor` and takes
-its meaning from the text beside it. An icon set with its own palette fights
-every theme the product will ever have — including dark mode, which is where it
-shows first.
+| | proposes |
+|---|---|
+| protagonist A, the user's content | `elevated` |
+| protagonist B, the product's content | `elevated`, or `flat` at long dwell |
+| protagonist C, the brand | `flat` |
+| protagonist D, the tools | `recessed` |
+| `colorCriticalWorkspace: true` | `flat` or `recessed`, never `elevated` — a lit chrome is the thing being avoided |
+| dwell C, an hour or more | does NOT change the model — it lowers the contrast BETWEEN rungs and pulls `posture` to quiet |
 
-**10. When something needs attention, does this product raise its voice or
-lower everyone else's?**
+| | A · flat | B · elevated | C · recessed |
+|---|---|---|---|
+| Tech Minimalist | ✅ | ⚠️ | ⚠️ |
+| Enterprise Solid | ⚠️ | ⚠️ | ✅ |
+| Playful | ⚠️ | ✅ | ❌ |
+| Editorial | ✅ | ✅ | ⚠️ |
+| Utilitarian | ✅ | ❌ | ✅ |
+
+**10a. How many rungs may the LAYOUT spend?** — ask only when 10 is not `flat`.
+
+- (A) Two. The page, and one raised rung shared by header, card and modal.
+- (B) Three or more. Distinct tones for header, sidebar, panel and page.
+
+**The rungs the layout does not spend are not saved, they are RESERVED.** Every
+system needs a quiet neutral fill — badges, chips, tags, resting secondary
+buttons, ghost hover — and it lives one rung past the layout's last. A layout
+that has spent every rung has nothing left that reads as an ELEMENT rather than
+a REGION, and every label then has to be either a page-coloured rectangle with
+no edge or a dark solid that looks like a button.
+
+So **(B) is a deviation rather than a preference**, and it is worth saying so
+out loud: it spends the budget the system reserves for its most characteristic
+element.
+
+**A frame region is not a card.** Whatever the answer, chrome is separated by a
+rule or a rung, never by a shadow or a radius — chrome that looks like content
+is the fastest way to make a product feel assembled from parts.
+
+**11. When something needs attention, does this product raise its voice or
+lower everyone else's?** — proposed from question 6, then confirmed.
 
 - (A) **Quiet.** One thing stands out because everything around it recedes.
 - (B) **Balanced.** Emphasis is stated plainly, and the rest is legible rather
@@ -270,31 +380,23 @@ lower everyone else's?**
 | Editorial | ✅ | ⚠️ | ❌ |
 | Utilitarian | ⚠️ | ✅ | ⚠️ |
 
-**This is the highest-leverage question in the interview**, and it is new
-because the one it replaces was the opposite. `accentContrast` asked whether the
-highlight was saturated enough to need light ink — a question about one token,
-phrased in the token contract's own vocabulary, which a client cannot answer and
-which left every other quiet element in the product at the library's default.
+**The highest-leverage question in the interview**, and the one most improved by
+having block 2 in front of it. It decides eight things: the fill and ink of every
+badge and tag, the resting treatment of a secondary action, whether a chip is
+tinted or filled when selected, divider weight, the interactive edge, control
+font weight, how far the accent budget stretches, and `accentContrast` itself.
+The tables are in [`derivations.md`](derivations.md), and the values are
+**derived and shown** rather than asked one at a time.
 
-This one decides eight things: the fill and ink of every badge and tag, the
-resting treatment of a secondary action, whether a chip is tinted or filled when
-selected, divider weight, the interactive edge, control font weight, how far the
-accent budget stretches, and `accentContrast` itself. The table is in
-[`derivations.md`](derivations.md), and the values are **derived and shown**
-rather than asked one at a time.
+**Propose from dwell rather than asking cold.** *"An hour-long sitting proposes
+quiet — the cost is that a hurried user has to look for the action, and the
+benefit is that nobody is tired at minute forty. Keep it?"* is one exchange and
+it carries the trade. Reading three options aloud is three exchanges and carries
+none.
 
-**Say the trade in plain words**, because a client hears "loud" as a compliment
-and "quiet" as timid, and neither is true:
-
-> *Quiet gets you a page where the content is the loudest thing, and the cost is
-> that a hurried user has to look for the action. Loud gets you an action nobody
-> can miss, and the cost is that everything else has to stay out of its way — a
-> loud interface with three loud elements has none.*
-
-**In `monochrome`, (C) is coherent but expensive.** Spotify is exactly that. It
-puts the whole burden on one colour, so everything else must go quieter to
-compensate, not louder. Worth saying when it comes up rather than treating it as
-a contradiction.
+**In `monochrome`, (C) is coherent but expensive.** It puts the whole burden on
+one colour, so everything else must go quieter to compensate, not louder. Worth
+saying when it comes up rather than treating it as a contradiction.
 
 ---
 
@@ -302,12 +404,13 @@ a contradiction.
 
 > Decides the theme map and the threshold in `themes.check-contrast()`.
 
-**11. Which colour school does this product belong to?**
+**12. Which colour school does this product belong to?**
 
-Two phrasings of one decision: 9a opens the topic, 9b settles it. Ask 9a first
-because it sorts fast, then confirm with 9b — 9a alone is never the answer.
+Two phrasings of one decision: 12a opens the topic, 12b settles it. Ask 12a
+first because it sorts fast, then confirm with 12b — 12a alone is never the
+answer.
 
-**11a (opener). Which of these is the priority — brand presence everywhere,
+**12a (opener). Which of these is the priority — brand presence everywhere,
 managing a dense operational workflow, or a clean page where the user's own
 content is the only thing standing out?**
 
@@ -319,9 +422,9 @@ Use it to open the topic, **not to decide**. It sorts fast because it is about
 priority rather than pixels, and a client can answer it in one sentence. But it
 sorts by product TYPE, and product type does not determine the school: Apple
 Card is a bank and is monochrome; plenty of content apps are brand-led. Take the
-answer as a hypothesis and confirm it with 11b.
+answer as a hypothesis and confirm it with 12b.
 
-**11b (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
+**12b (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
 does it take your main brand colour, or a different one?**
 
 - (A) A different colour → `$colour-strategy: 'functional'`
@@ -333,7 +436,7 @@ vocabulary, and it is the most load-bearing line in the document — it is what 
 new component six months later reads to find out whether "chosen" gets a colour
 of its own.
 
-**When 11a and 11b disagree, 11b wins, and say so out loud.** The disagreement is
+**When 12a and 12b disagree, 12b wins, and say so out loud.** The disagreement is
 information: a client who said "brand everywhere" and then described a grey
 interface with one accent has a marketing site in mind and a product in front of
 them. Naming that early is cheaper than discovering it in review.
@@ -348,7 +451,7 @@ the follow-ups differ per answer.
 be monochrome as Tech Minimalist ones, and a Playful brand may well mark
 selection with its own hue. The two axes are independent.
 
-**12. Is there a brand primary colour, or should one be generated?**
+**13. Is there a brand primary colour, or should one be generated?**
 
 **Asked after the school on purpose.** The school changes what this question is
 even about: in `functional` it opens a palette of several roles, in `brand` it is
@@ -368,7 +471,7 @@ the fastest way to lose their confidence in everything else.
 
 **And the SCHOOL does not answer it either**, which is the trap in this block and
 has already been walked into: a client who opens with "we are accent-driven" has
-answered question 8, not this one. The school decides how many colours the system
+answered question 12, not this one. The school decides how many colours the system
 spends and on what — it never chooses the hue. Naming a school and then skipping
 the value produces *"a saturated blue ink tone"* in the finished document: a
 sentence, where the build needs a number.
@@ -381,17 +484,22 @@ to the words "ballpoint blue", and cannot judge it in the abstract six steps
 later.
 
 Leave the interview holding an `oklch()` or a hex. If there is none, say so,
-generate one against the level chosen in question 15, and record in the document
+generate one against the level chosen in question 16, and record in the document
 that it was generated rather than given.
 
 ---
 
-### 13 — the accent-driven profile
+### The accent-driven profile — question 14
 
-Ask these **only when 11b answered (C)**. In the other two schools the palette is
-given; in this one it is generated from two pigments, and these three answers
-are what stop every monochrome product from looking like the same one. Skip them
+Ask **only when 12b answered (C)**. In the other two schools the palette is
+given; in this one it is generated from two pigments, and the pigment number is
+what stops every monochrome product from looking like the same one. Skip it
 elsewhere — a functional product has no single "accent" to profile.
+
+It used to be four questions. Two of them — the ladder budget and its direction
+— turned out to belong to every school and moved to block 3; one was question 9
+asked twice and was deleted. What is left is the one number no other answer
+implies.
 
 **`accentContrast` is NOT asked here any more.** It used to be: *"is your
 highlight strong enough that white text sits on it, or pale enough that dark
@@ -399,106 +507,66 @@ text stays?"* — a question about `fg-on-accent`, answerable only by someone wh
 already knows the token contract, and deciding exactly one value while every
 other quiet element in the product stayed at the library default.
 
-It is now MEASURED from the accent that question 12 collected, and the posture
-answer from question 10 decides the eight things it used to be standing in for.
+It is now MEASURED from the accent that question 13 collected, and the posture
+answer from question 11 decides the eight things it used to be standing in for.
 See [`derivations.md`](derivations.md).
 
-**13a. Are your greys actually grey, or do they carry a tint?**
+**14. Which paper is this?**
 
-- Pure grey → `neutralPigment: 0`
-- A hint — warm paper, cool slate → `0.5`–`0.8`
-- Clearly tinted → `1`
+- (A) **No paper.** True grey, the colour of a settings screen. `neutralPigment: 0`
+- (B) **A hint of it.** Warm paper, or cold slate. You would call it grey until
+  you put it next to a real one. `0.5`–`0.8`
+- (C) **Unmistakably tinted.** Nobody would call this grey. `0.9`–`1`
 
-This is the smallest number in the document and it does more visible work than
-any other. It is a few thousandths of chroma in the mid-tones, and it is the
-difference between a notebook and a settings screen. Ask for the FEELING —
-"warm paper", "cold steel" — and pick the number; a client has no intuition for
-chroma and every intuition for paper.
+| | A · none | B · a hint | C · tinted |
+|---|---|---|---|
+| Tech Minimalist | ✅ | ✅ | ⚠️ |
+| Enterprise Solid | ✅ | ✅ | ❌ |
+| Playful | ⚠️ | ✅ | ✅ |
+| Editorial | ⚠️ | ✅ | ✅ |
+| Utilitarian | ✅ | ⚠️ | ❌ |
 
-**13b. How is one surface told from the next — a line, a change of tone, or a
-shadow?**
+**Ask for the FEELING and pick the number yourself.** This is the smallest value
+in the document and it does more visible work than any other — a few thousandths
+of chroma in the mid-tones, and the difference between a notebook and a settings
+screen. A client has no intuition for chroma and every intuition for paper.
 
-- (A) Lines → `surfaceSeparation: lines`
-- (B) Tone → `tones`
-- (C) Shadow → `shadows`
+**Do not read the numbers aloud as the options.** A client asked to choose
+between 0.5 and 0.8 cannot, correctly: nothing in their experience distinguishes
+them, and *"I do not know which"* is the question failing rather than the client.
+Name the material, take the answer, and write the number down. Within (B),
+choose 0.6 unless the client reaches for a word like "linen" or "kraft", which is
+0.8.
 
-The school leans on this because it has no colour to spend on structure.
+**Where `surfaceSeparation` comes from** — DERIVED, not asked.
 
-**This answer and `elevation` from question 7 are the same decision asked twice,
-so they pair one to one:**
+`surfaceSeparation` comes from the follow-up to question 9, which already asked
+what carries hierarchy. It used to be a question here, and it was question 9
+asked a second time in different words: the two paired one to one, so the second
+one could only ever confirm or contradict, and a contradiction meant one of them
+had been heard wrong rather than that the client had two opinions.
 
-| question 7 | 10c |
+| question 9 | `surfaceSeparation` |
 |---|---|
-| `borders` | `lines` |
-| `soft-shadows` | `shadows` |
-| `projected-shadows` | `shadows` |
-| — | `tones` → go back and set `elevation: borders`, because tone is not depth |
+| flat, carried by the border colour | `lines` |
+| flat, carried by the tone of the surface | `tones` |
+| flat, carried by space alone | `lines`, with the border at its faintest |
+| subtle shadows, or projected shadows | `shadows` |
 
-Any other combination is a contradiction, not a nuance. If the client said
-"lines" there and "shadows" here, one of the two questions was heard wrong —
-re-ask the one that was compressed, and do not emit both.
+Show the derived value in the read-back with question 9 named as its source.
+**A question whose answer changes nothing is dropped rather than kept for
+symmetry** — that is the first rule of this file, and this question was breaking
+it.
 
-**13c. How much of the neutral ladder may the LAYOUT spend?**
-
-- (A) One surface. Header, page and modal are all the canvas, separated by
-  lines. The quietest, and the most editorial.
-- (B) Two surfaces. The header and the modal sit one rung above the page.
-- (C) Three or more. Distinct tones for header, sidebar, panel and page.
-
-Asked because it is the difference a reader sees on every screen, and because it
-is the question a client raises unprompted the moment they compare their current
-product to this school: *"today my app uses a lot of tones — do I keep them?"*
-
-**The rungs the layout does not spend are not saved, they are RESERVED.** This
-school runs on a quiet neutral fill — badges, chips, tags, resting secondary
-buttons, ghost hover — and those live at rung 3. A layout that has already spent
-rungs 1, 2 and 3 on page, header and sidebar has nothing left that reads as an
-ELEMENT rather than as a REGION, and every label then has to be either a
-page-coloured rectangle with no edge or a dark solid that looks like a button.
-
-So (C) is a deviation in this school rather than a preference, and it is worth
-saying so out loud: it does not stop the product being accent-driven, it spends
-the budget the school reserves for its most characteristic element. The rung
-table in [`colour-strategies.md`](colour-strategies.md) says what each one is
-for.
-
-**13d. Which way does the ladder run?**
-
-Ask only when 13c answered (B) or (C). With one surface there is no direction.
-
-- (A) **Paper on a table.** The page sits a rung or two up the ladder and
-  anything raised above it is LIGHTER — a card, a modal, a dropdown. The
-  lightest step is reserved for what floats.
-- (B) **Recessed containers.** The page is the lightest step, and anything
-  grouped or contained is DARKER — a form panel, a data area, a sidebar.
-
-Both are in shipped systems and neither is a default:
-
-| | (A) lighter as it rises | (B) darker as it groups |
-|---|---|---|
-| documented in | Radix UI's 12-step scale; Apple HIG; editorial reading products | Material 3's `surface-container` / `-low` / `-high`; Atlassian's `color.background.neutral.subtle` |
-| suits | reading, content the user owns, anything imitating a physical page | dense operational screens, forms, tables, dashboards |
-| the metaphor | sheets stacked on a desk | wells cut into a surface |
-
-**Two other answers already push at this and neither settles it**, which is why
-it is its own question. `elevation: borders` means tone is the only thing left
-that can lift something — but it does not say which way. And a product imitating
-paper is not automatically (A): a recipe card sunk into the page is a perfectly
-coherent design, it is just a different one.
-
-**It has to be asked rather than inferred.** The first build of the
-accent-driven example took (A) by copying another example's theme, and the
-client liked the result — which is the worst way to be right, because nothing
-recorded the decision and the next theme would have inherited it by accident
-too.
-
-Record it in section 2 under Elevation, in words rather than in step numbers:
-*"anything raised is lighter than the page"* survives a change of palette;
-*"cards are step 50"* does not.
+> The two questions that used to sit here — how much of the ladder the layout
+> spends, and which way it runs — **moved to block 3 as question 10 and 10a.**
+> They were never accent-driven questions: every school has surfaces, and asking
+> them only of monochrome products left the other two with the decision made by
+> whichever example got copied.
 
 ---
 
-**14. Beside your main button, what does the supporting action look like?**
+**15. Beside your main button, what does the supporting action look like?**
 
 
 - (A) Outlined
@@ -529,7 +597,7 @@ Ask it as an APPEARANCE question, as above, because that is how a client
 thinks about it. Translating the answer into roles is this skill's job, not
 theirs.
 
-**15. What level of accessibility rigour?**
+**16. What level of accessibility rigour?**
 
 - (A) **WCAG AA** — 4.5:1 body text. The recommended default for every archetype.
 - (B) **WCAG AAA** — 7:1. Government, health, anything with a legal requirement.
@@ -538,7 +606,7 @@ Not decoration: it sets the threshold the build enforces, and **AAA rejects
 palettes AA accepts**. Settle it before colours are picked. Ask it early even
 though it sits in block 4.
 
-**16. How should success, warning, error and info behave?**
+**17. How should success, warning, error and info behave?**
 
 - (A) Traditional — green, amber, red, blue
 - (B) Adapted to the brand palette
@@ -564,7 +632,7 @@ colour.
 
 > Decides the Voice section and the writing rules an agent follows.
 
-**17. How should the system speak in its own messages?**
+**18. How should the system speak in its own messages?**
 
 - (A) Direct and technical — *"Error 404: resource not found"*
 - (B) Clear and action-oriented — *"We couldn't find that page. Back to start"*
@@ -583,7 +651,7 @@ failure. The usable answer is normally "B, dropping to A for anything involving
 money or data loss", and that exception is what makes the rule enforceable —
 it goes into `voiceExceptions`.
 
-**18. Infinitive or imperative for action labels?**
+**19. Infinitive or imperative for action labels?**
 
 - (A) Infinitive — *"Save changes"*
 - (B) Imperative — *"Save your changes"*
@@ -599,7 +667,15 @@ forever.
 > Decides **checkable rules**. This block is what connects the interview to the
 > build, and it is the reason the document is worth generating at all.
 
-**19. What regions does a page have?**
+**No archetype tables in this block, and that is deliberate.** Every other
+block marks a recommended answer because the archetype has an opinion; here the
+first two questions are FACTS about the product and the last two are the
+clients own history. An archetype that recommended a frame would be
+recommending what the product is, which it does not get to do. Say that when
+the marks are noticed missing — an absent table reads as an oversight, and this
+one is a position.
+
+**20. What regions does a page have?**
 
 - (A) **A single column.** A header, the content, a footer. Nothing beside it.
 - (B) **Content with an aside.** A sidebar, filters, or a table of contents
@@ -607,14 +683,14 @@ forever.
 - (C) **An application frame.** Persistent navigation on one edge, a working
   area, and often a panel on the other.
 
-One of the two structural questions in the interview — this and question 20 —
+One of the two structural questions in the interview — this and question 21 —
 and they are here because they are facts about the PRODUCT rather than
 preferences about how it looks. Everything else in this block can be derived;
 these cannot. A recipe notebook and a recipe manager have the same archetype,
 the same school and different frames.
 
 **It spends the ladder.** Each persistent region that wants its own tone takes a
-rung, and question 13c already fixed the budget. (C) with a two-surface budget
+rung, and question 10a already fixed the budget. (C) with a two-surface budget
 means the navigation and the working area share a tone and are separated by a
 line; if the client wants them to differ, the budget has to move. Say that
 rather than quietly spending a third rung.
@@ -625,7 +701,7 @@ the frame degrades on a phone. Those follow from the archetype, question 5 and
 the disclosure posture, and the tables are in
 [`derivations.md`](derivations.md).
 
-**20. What role does imagery play?**
+**21. What role does imagery play?**
 
 - (A) **None.** The product has no photography, and none is planned. Illustration
   and icons are the only non-text elements.
@@ -647,14 +723,14 @@ separate from the card's, and it needs an answer for what shows before the image
 loads and when there is none — a hole the ledger otherwise fills at the first
 bug report.
 
-**20a. Ask only when the answer is (B) or (C) — what proportion?**
+**21a. Ask only when the answer is (B) or (C) — what proportion?**
 
 - (A) **Wide** — 16:9 or 3:2. Landscape, editorial, cinematic.
 - (B) **Square** — 1:1. Grids, avatars, anything that has to tile.
 - (C) **Tall** — 4:5 or 3:4. Phone-first, food, fashion.
 - (D) **Whatever the image is.** No crop.
 
-*Propose (A) for Editorial and Enterprise, (B) where the answer to 19 was (C),
+*Propose (A) for Editorial and Enterprise, (B) where the answer to 20 was (C),
 (D) only when the client says the images are not theirs to crop.*
 
 **(D) is not a free option.** An uncropped image makes every row a different
@@ -666,7 +742,7 @@ that do not hold together. That is a conflict, and
 whether they take a shadow, and what the system does with a decorative image.
 The tables are in [`derivations.md`](derivations.md), section K.
 
-**21. Are there visual restrictions the system must NEVER apply?**
+**22. Are there visual restrictions the system must NEVER apply?**
 
 **Do not ask this cold.** A client at this point in a first interview has no
 restrictions in mind, and asking them to produce some invites either an invented
@@ -677,7 +753,7 @@ client has not been burned yet.
 
 Ask it in two parts instead.
 
-**21a. Confirm what the archetype already forbids.** Present these as *already
+**22a. Confirm what the archetype already forbids.** Present these as *already
 held*, not as options to pick — the answer is a yes, or a correction:
 
 | archetype | implied restrictions |
@@ -691,7 +767,7 @@ held*, not as options to pick — the answer is a yes, or a correction:
 > *"Editorial already rules out gradients, heavy shadows and coloured headings.
 > I have those. Anything to add?"*
 
-**21b. Anything beyond that?**
+**22b. Anything beyond that?**
 
 - (A) Nothing for now
 - (B) Yes — say it
@@ -715,20 +791,20 @@ advice. *"Never gradients"* is detectable: `linear-gradient` in the product's ow
 CSS. *"Keep it elegant"* is not, and saying so honestly is better than pretending
 it is a guardrail.
 
-**22. What are the universal interaction patterns?**
+**23. What are the universal interaction patterns?**
 
 Three decisions, so **three labelled questions** — not one number carrying three
 answers. Numbering them together produces "A, A" for three slots: one answer
 silently dropped, and no way to tell which.
 
-**22a. Where do confirmations live?**
+**23a. Where do confirmations live?**
 
 - (A) A modal — blocks until answered
 - (B) A toast with undo
 
 *Propose (A) for anything that cannot be undone, (B) otherwise.*
 
-**22b. How much friction does a destructive action need?**
+**23b. How much friction does a destructive action need?**
 
 - (A) One click
 - (B) A confirmation step
@@ -736,7 +812,7 @@ silently dropped, and no way to tell which.
 
 *Propose (B), or (C) when the data is unrecoverable.*
 
-**22c. When do forms save?**
+**23c. When do forms save?**
 
 - (A) On blur, field by field
 - (B) On an explicit submit

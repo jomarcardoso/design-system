@@ -202,7 +202,7 @@ interface is recognisable from a thumbnail.
   `brand` build with no containers is a `functional` build with fewer hues.
 - **Elevation is tonal, not shadowed.** M3's `surface-container-low` through
   `-highest` replace shadow with a brand-tinted ladder. This is the school where
-  question 13e most often answers "darker as it groups", and where the neutrals
+  question 10 most often answers `recessed`, and where the neutrals
   are not neutral — they carry the brand hue at very low chroma.
 - **The brand appears where other schools keep neutral.** App bars, selected
   states, the floating action, filled navigation. Restraint here is a deviation
@@ -279,12 +279,12 @@ on a page whose premise is that one thing wins.
 **Ask what the layout is allowed to spend.** Some accent-driven products keep
 every layout surface on rung 1 and separate with lines only; others give the
 header and the modal rung 2. Both are the school. The difference is visible on
-every screen, and it is question 13c.
+every screen, and it is question 10a.
 
 ### The four follow-ups
 
 Asked only when the answer is monochrome, because the other schools are handed
-their palette. See question 10 in the questionnaire.
+their palette. See question 11 in the questionnaire.
 
 | answer                                       | writes              | why it matters |
 | -------------------------------------------- | ------------------- | -------------- |

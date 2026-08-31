@@ -22,16 +22,91 @@ archetypeNote: ~                  # required when archetype is hybrid
 density: comfortable              # dense | comfortable | generous
 platform: desktop-first           # desktop-first | mobile-first | multiplatform
 
+# How long ONE SITTING lasts. Split out of the frequency question, which used to
+# carry both and forced one letter to answer two things — a recipe notebook is
+# opened now and then AND left open for an hour, and the fused version threw the
+# second half away.
+#
+# It is the strongest single input to `posture`, and it is the counterpoint the
+# interview needs: ten seconds rewards heavier elements because nobody is around
+# long enough to tire of them; an hour punishes every one of them.
+dwell: minutes                    # seconds | minutes | hours
+
+# Who the screen is FOR. Not the colour school — that is an answer about token
+# architecture, and this is an answer about who the surface belongs to. They
+# correlate and are not the same: a bank can be monochrome, a reading app can be
+# brand-led.
+#
+#   user-content     their notes, their photographs. The interface is the paper
+#   product-content  a catalogue, a library, other people's work
+#   brand            someone should know whose product this is from across the room
+#   tools            the user is manipulating something and the controls are the product
+protagonist: user-content         # user-content | product-content | brand | tools
+
+# DERIVED from question 1, then confirmed. True only when the user JUDGES COLOUR
+# on screen — photo and video editors, 3D tools, grading, print proofing. A
+# product that merely displays images is not this; a recipe notebook shows
+# photographs and nobody calibrates one.
+#
+# The reason is physiological rather than aesthetic, and that matters: as a
+# preference it would be arguable. A bright interface beside the work changes the
+# viewer's adaptation state and the image is judged wrong.
+#
+# It forces surfaceModel away from `elevated`, caps neutralPigment at 0.2, and
+# shrinks the accent budget to its smallest. See derivations.md section S.
+colorCriticalWorkspace: false
+
+# DERIVED from the archetype, no longer asked. It was a question until its own
+# text gave it away: "do not let it absorb an hour of debate — set the preset,
+# look at a real screen, adjust once." That is a derivation describing itself as
+# a question, and it is one of the two that most reliably collected taste from
+# someone with no reason to have an opinion. `posture: loud` moves it one step
+# up; `surfaceModel: recessed` moves it one step down. See derivations.md O.
 radius: subtle                    # square | subtle | rounded | pill
+
 elevation: borders                # borders | soft-shadows | projected-shadows
 elevationCarrier: border-color    # what carries hierarchy — required when elevation is `borders`
 
-# Icons carry more archetype per pixel than anything except radius, and are the
-# foundation most often left undecided — which is how a product ends up mixing
-# two icon sets and reading as two products.
+# The PHYSICS of light on the screen, and independent of the colour school. A
+# product can be monochrome and elevated, monochrome and flat, functional and
+# recessed. Treating this as part of the school is what makes generated systems
+# converge: the school gets chosen and the surface model comes along for the ride.
 #
-# `mixed` means filled marks the selected state and outlined everything else; it
-# needs a set that ships both weights of the same glyph.
+#   flat      page and cards share one tone; hairlines and space separate
+#   elevated  raised is LIGHTER than the page — sheets on a desk
+#   recessed  grouped is DARKER than the page — niches cut into a surface
+#
+# It used to be two questions inside the accent-driven profile, asked only of
+# monochrome products — so functional and brand products had the decision made by
+# whichever example got copied.
+#
+# NOT dark mode. The word "inverted" is avoided for exactly that reason, and how
+# each model behaves under the dark theme is derivations.md section T — where the
+# finding is that `elevated` survives the flip unchanged and `recessed` inverts.
+# DERIVED from `elevationCarrier`, not asked. It used to be a question in the
+# accent-driven block and it was the elevation question asked a second time in
+# different words — the two paired one to one, so the second could only confirm
+# or contradict. It applies to every school; only the question was monochrome.
+surfaceSeparation: lines          # lines | tones | shadows
+
+surfaceModel: elevated            # flat | elevated | recessed
+# How many rungs the LAYOUT may spend. Omit when surfaceModel is `flat`. Three or
+# more is a deviation rather than a preference: the rungs the layout does not
+# spend are RESERVED for the quiet neutral fill every badge, chip and resting
+# secondary action is made of.
+ladderSpend: 2                    # 2 | 3
+
+# DERIVED from the archetype and from `radius`, no longer asked. The old
+# question's own table had exactly one ✅ in four of five rows, which means the
+# archetype was answering it and the client was being asked to agree.
+#
+# The stroke is set against the BODY type weight, not against the icon set's
+# default: a 2px stroke beside a light serif is a different product in the same
+# screen, and a set ships one weight for every product that will ever use it.
+#
+# `mixed` — filled marks the selected state, outlined everything else — is the
+# one value never derived, because it needs a set shipping both weights of the
+# same glyph. Propose it only when the chosen set is known to have them.
 iconStyle: outline                # outline | filled | mixed
 iconStroke: 1.5px                 # set against the BODY weight, not the icon set's default
 iconSize: 20px
@@ -100,7 +175,7 @@ statusColours: traditional        # traditional | brand-adapted
 colourStrategy: functional
 
 # --- Accent-driven only -----------------------------------------------------
-# Delete these three when colourStrategy is functional or brand: they describe a
+# Delete these two when colourStrategy is functional or brand: they describe a
 # generated ramp, and those schools are given their palette rather than deriving
 # it. Leaving them behind is worse than omitting them, because the next reader
 # cannot tell a stale answer from a live one.
@@ -113,8 +188,6 @@ accentContrast: high
 # 0 = true grey, 1 = the seed pigment at full strength. The smallest number in
 # this file and the one that does the most visible work.
 neutralPigment: 0.7
-# lines | tones | shadows. Must agree with `elevation` above.
-surfaceSeparation: lines
 
 # outline | tinted | neutral | second-brand. Six of the seven treatments in
 # use are the same tokens pointed elsewhere, so this changes theme.scss and
@@ -337,7 +410,7 @@ reader needs to know it was decided.}}
 
 ## 3. Voice
 
-{{One paragraph on how the product sounds, from question 11.}}
+{{One paragraph on how the product sounds, from question 18.}}
 
 | Situation | Register | Example |
 |---|---|---|

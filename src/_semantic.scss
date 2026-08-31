@@ -623,6 +623,33 @@ $_type-scale-steps: (
     'border-color-subtle': _req($c, border-subtle, $name),
     'border-color-strong': _req($c, border-strong, $name),
 
+    // --- The two border ROLES -------------------------------------------
+    //
+    // The three names above are TONES. Tone is prominence; it does not say
+    // what a border is FOR, and a border does two unrelated jobs:
+    //
+    //   divider      separates content on the same plane. A rule under a
+    //                header, the edge of an aside, a line between rows. It
+    //                never implies that anything can be clicked.
+    //   interactive  affordance and state. A control at rest, a selectable
+    //                card, a field waiting for input. It never separates two
+    //                pieces of static content.
+    //
+    // With one name for both, every component author picks a tone by eye, and
+    // the page fills with lines that mean different things and look the same —
+    // at which point the eye cannot tell which rectangle it may click.
+    //
+    // Primer splits border.default from border.emphasis; Material splits
+    // outline from outline-variant. Both arrived at it from the same failure.
+    //
+    // These default to the plain border tone, so a theme that has never thought
+    // about it changes nothing. derivations.md section R says which tone each
+    // takes from the answer to question 9, and carries the REDUNDANCY rule:
+    // under surfaceModel elevated, a card lighter than the page needs no
+    // divider, because the two fills already draw the line.
+    'border-divider': _opt($c, 'border-divider', border, $name),
+    'border-interactive': _opt($c, 'border-interactive', border, $name),
+
     'ring-color': _req($c, ring, $name),
 
     // Elevation is a colour-layer concern: shadows are near-invisible in dark

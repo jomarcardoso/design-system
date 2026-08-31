@@ -70,7 +70,11 @@ const problems = [];
 const INERT = new Set([
   'toolVersion', 'archetype', 'archetypeNote', 'platform', 'accessibility',
   'voice', 'voiceExceptions', 'ctaMood', 'deviations', 'overrides',
-  'guardrails', 'resolutions', 'elevationCarrier'
+  'guardrails', 'resolutions', 'elevationCarrier',
+  // Block 2 collects these to DERIVE from; they name no token of their own.
+  // They are listed rather than inferred, so that adding a key and forgetting
+  // to derive from it is still reported.
+  'dwell', 'protagonist', 'colorCriticalWorkspace'
 ]);
 
 const fm = language.split('---')[1] ?? '';

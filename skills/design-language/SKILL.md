@@ -28,7 +28,7 @@ find out what it needs:
 > Before I start the interview I need these, all from this plugin. Paths are
 > from the repository root:
 >
-> 1. `skills/design-language/references/questionnaire.md` — the twenty-two questions
+> 1. `skills/design-language/references/questionnaire.md` — the twenty-three questions
 > 2. `skills/design-language/references/archetypes.md` — the preset behind every recommendation
 > 3. `skills/design-language/references/colour-strategies.md` — block 4
 > 4. `skills/design-language/templates/DESIGN_LANGUAGE.md` — the document I will fill in
@@ -65,7 +65,7 @@ invented value in the finished document rather than as an error.
 
 | file | needed for | without it |
 |---|---|---|
-| `references/questionnaire.md` | the twenty-two questions, their options and the ✅/⚠️/❌ tables | questions get skipped or asked as free text |
+| `references/questionnaire.md` | the twenty-three questions, their options and the ✅/⚠️/❌ tables | questions get skipped or asked as free text |
 | `references/archetypes.md` | the preset behind every recommendation, and the row that decides typography, spacing and icons | faces and numbers invented to sound right |
 | `references/colour-strategies.md` | block 4 — the three schools, the seven secondary treatments, the accent-driven follow-ups | the wrong follow-up questions asked |
 | `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
@@ -168,7 +168,7 @@ faces and spacing already chosen, and want them turned into tokens rather
 than reinvented. The interview still runs. It changes shape.
 
 **Read the code first, then confirm.** An existing system has already
-answered most of the twenty-two questions; they are just answered in CSS
+answered most of the twenty-three questions; they are just answered in CSS
 instead of in prose. Find them:
 
 ```bash
@@ -204,7 +204,7 @@ moving the brand.
 
 ## Running the interview
 
-Twenty-one questions, six blocks — four of them apply to one colour school only,
+Twenty-three questions, six blocks — two of them apply to one colour school only,
 and one is skipped when the product is new. Roughly a hundred further decisions
 are DERIVED from those answers rather than asked; see
 [`references/derivations.md`](references/derivations.md). Read the questionnaire before starting.
@@ -282,8 +282,8 @@ matter key:
 | key | value | where it came from |
 |---|---|---|
 | `archetype` | editorial-premium | Q3 — said outright |
-| `elevation` | borders | Q7 — "hierarchy from whitespace and thin lines" |
-| `surfaceSeparation` | lines | Q10c — agrees with Q7 |
+| `elevation` | borders | Q9 — "hierarchy from whitespace and thin lines" |
+| `surfaceSeparation` | lines | derived from Q9 — the border carries hierarchy |
 | `voice` | warm | Q14 — ⚠️ for editorial, recorded as a deviation |
 
 Four rules make it work:
@@ -333,7 +333,7 @@ know which theme this is.
 ### Derived defaults arrive with the read-back
 
 Section 6 is not the only thing computed rather than asked.
-[`references/derivations.md`](references/derivations.md) turns the twenty-two
+[`references/derivations.md`](references/derivations.md) turns the twenty-three
 answers into roughly a hundred component-level defaults — what a badge is made
 of, how an input rests, which lines are heavy, how far the accent may travel,
 what happens to a photograph before it loads, how much moves and how fast — and

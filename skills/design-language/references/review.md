@@ -88,7 +88,7 @@ the answer than the author did.
 | C11 | `accentContrast` agrees with a MEASUREMENT of the declared accent | a value typed by hand that the ramp then contradicts |
 | C12 | `frame` is present, and §6 says what each region becomes on a phone | a layout that exists only at desktop width |
 | C13 | `iconPolicy` is present, and says where an icon may appear without its label | icon-only buttons on destructive actions, decided by nobody |
-| C14 | The frame regions fit the ladder budget from 13c | a third rung spent on chrome by a product that allowed two |
+| C14 | The frame regions fit `ladderSpend` from question 10a | a third rung spent on chrome by a product that allowed two |
 | C15 | Every conflict that was raised appears under `resolutions` | a value that looks arbitrary, which the next reader corrects back to the one that failed |
 | C16 | `DERIVED.md` exists beside the document | the derived decisions live only in the agent's head and nobody can review them |
 | C17 | Every row in `DERIVED.md` names the answer it came from | a guess that got in, indistinguishable from a derivation |

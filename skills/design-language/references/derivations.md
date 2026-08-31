@@ -1,8 +1,8 @@
 <!-- skills/design-language/references/derivations.md -->
 
-# Derivations — from twenty-two answers to a hundred decisions
+# Derivations — from twenty-three answers to a hundred decisions
 
-The interview asks about twenty-two things. A finished interface needs hundreds
+The interview asks about twenty-three things. A finished interface needs hundreds
 of decisions, and the ones in between have to come from somewhere.
 
 Today they come from judgement at generation time, and **when judgement has
@@ -119,15 +119,15 @@ for the action.
 
 ## B. Surfaces and inputs
 
-Reads `posture`, `elevation`, `13c` (how many surfaces) and `13d` (direction).
+Reads `posture`, `elevation`, `10a` (how many rungs) and `10` (`surfaceModel`).
 
 | decision | derived from | rule |
 |---|---|---|
-| input background | `13d` | ladder runs UP → input takes the same surface as its container, edge carries it. Ladder runs DOWN → input is one rung recessed |
+| input background | `surfaceModel` | ladder runs UP → input takes the same surface as its container, edge carries it. Ladder runs DOWN → input is one rung recessed |
 | input at rest | `posture` | `quiet`: hairline, no fill change · `balanced`: hairline + recess · `loud`: full border, visible fill |
 | input on focus | always | the ring, never a colour change alone |
 | card separation | `surfaceSeparation` | `lines` → hairline, same fill as page · `tones` → one rung, no line · `shadows` → `shadow-raised` |
-| modal surface | `13c` | one surface → the page colour, separated by the scrim alone · two or more → the raised rung |
+| modal surface | `10a` | one surface → the page colour, separated by the scrim alone · two or more → the raised rung |
 
 **Pure white is a value, not a mistake — but it needs a job.** When
 `neutralPigment > 0`, white is the top of the ramp and belongs to whatever
@@ -251,7 +251,7 @@ Three rules hold whichever is derived:
   accent beside body text spends the budget on decoration.
 
 **Two families may coexist.** The commonest pairing in the wild is outline at
-rest and filled when selected, which is question 9's option (D). When the answer
+rest and filled when selected, which is `iconStyle: mixed`. When the answer
 was (A), (B) or (C), a second family needs a reason — mixing stroke weights is
 the most visible inconsistency a product can ship and the one no token catches.
 
@@ -264,7 +264,7 @@ Question 19 gave the regions. These follow.
 | content measure | archetype + Q5 | reading or Editorial: 45–75 characters. Dense tool: the region's width, with a max only where lines would exceed ~110 characters |
 | header behaviour | `disclosure` + Q5 | `progressive` + reading: static, scrolls away · `exposed`: sticky · long reading pages: sticky and condensed after the first screen |
 | aside on a phone | `disclosure` | `progressive`: becomes a sheet or a menu · `exposed`: moves above the content and stays |
-| tone of each region | Q13c | one-surface budget: all regions share the page tone, separated by rules · two: the frame takes the second rung and the content keeps the page |
+| tone of each region | Q10a | one-surface budget: all regions share the page tone, separated by rules · two: the frame takes the second rung and the content keeps the page |
 | where the accent sits in the frame | `colourStrategy` | the current item in the navigation, and nothing else in the chrome |
 
 **A frame region is not a card.** It is separated by a rule or a rung, never by
@@ -500,6 +500,258 @@ touch can reach. This is a checkable rule and belongs in the guardrails.
 
 **`:active` is not optional on touch.** It is the only feedback a finger gets,
 and the `*-active` tokens exist for it.
+
+## O. Shape — the radius, which used to be a question
+
+Derived from the archetype. It was question 7 until its own text gave it away:
+*"do not let it absorb an hour of debate: set the preset, look at a real screen,
+adjust once."* That is a derivation describing itself as a question.
+
+| archetype | `radius-control` | `radius-surface` | pills |
+|---|---|---|---|
+| Tech Minimalist | 6px | 10px | never |
+| Enterprise Solid | 4px | 8px | never |
+| Playful & Expressive | 12px | 20px | badges and chips |
+| Editorial & Premium | 4px | 8px | never |
+| Utilitarian & Technical | 2px | 2px | never |
+
+Then two adjustments, in order:
+
+- **`posture: loud` moves both one step up**, because a loud product is asking
+  to be noticed and a square corner reads as instrument rather than invitation.
+- **`surfaceModel: recessed` moves both one step down.** A well is cut, and a
+  cut has a corner.
+
+**Surfaces are one step rounder than the controls inside them.** A control with
+the same radius as its container reads as stuck to it, and this holds at every
+row above.
+
+**Radius is the most recognisable archetype signal and the cheapest to change**
+— two tokens. That is the argument for deriving it rather than asking: the cost
+of getting it wrong is one line, and the cost of asking is that a client with no
+reason to prefer one spends a question deciding something the archetype already
+answered.
+
+## P. Icon style — also formerly a question
+
+Derived from the archetype and from §O. It was question 9, and its own ✅ table
+had exactly one ✅ in four of the five rows — which means the archetype was
+answering it and the client was being asked to agree.
+
+| archetype | `iconStyle` | `iconStroke` | `iconSize` |
+|---|---|---|---|
+| Tech Minimalist | outline | 1.5px | 20px |
+| Enterprise Solid | outline | 1.75px | 20px |
+| Playful & Expressive | filled | — | 24px |
+| Editorial & Premium | outline | 1.25px | 20px |
+| Utilitarian & Technical | outline | 1.75px | 16px |
+
+**The stroke is set against the BODY type weight, not against the icon set's
+default.** A 2px stroke beside a light serif is a different product in the same
+screen, and an icon set ships one weight for every product that will ever use it.
+
+**Corner geometry follows §O.** Icons drawn with square corners inside a
+20px-rounded interface read as clip art, so whatever radius the archetype took,
+the set has to be able to match it.
+
+**`mixed` is a behaviour, not a style** — filled marks the selected state,
+outlined everything else — and it is the one value that is never derived, because
+it needs a set that ships both weights of the same glyph. Propose it only when
+the chosen set is known to have them.
+
+**Colour is not an icon decision at any archetype.** An icon inherits
+`currentColor` and takes its meaning from the text beside it. A set with its own
+palette fights every theme the product will have, and shows it first in dark
+mode.
+
+## Q. The surface model
+
+Question 10, and the first thing to say about it is what it is NOT: it is not
+the colour school, and it is not dark mode.
+
+**It is independent of the school.** The school is the token architecture — which
+interactive roles exist and what they are called. The surface model is the
+physics of light on the screen. A product can be monochrome and `elevated` (a
+reading app), monochrome and `flat` (a minimal technical tool), functional and
+`recessed` (a dense operational console). Treating them as one axis is what makes
+generated systems converge: the school gets chosen, the surface model comes along
+for the ride, and two products with different jobs end up with the same page.
+
+**It is not `derive.dark()`.** The word "inverted" was deliberately avoided for
+this reason — see §T.
+
+| | `flat` | `elevated` | `recessed` |
+|---|---|---|---|
+| page | the base step | one or two rungs up | the lightest step |
+| raised — card, modal, dropdown | the same tone as the page | LIGHTER than the page | — |
+| grouped — panel, well, data area | the same tone as the page | — | DARKER than the page |
+| what separates | a hairline, and space | the tone difference | the tone difference |
+| the metaphor | ink on one sheet | sheets stacked on a desk | niches cut into a surface |
+| documented in | Vercel; minimal technical tools | Radix's 12-step scale; Apple HIG | Material 3 `surface-container`; Atlassian `background.neutral` |
+
+### What it decides
+
+| decision | rule |
+|---|---|
+| direction of `bg-page` against `bg-surface` | `flat`: equal · `elevated`: surface lighter · `recessed`: surface darker |
+| whether `bg-sunken` exists | `recessed` only. Under `elevated` a sunken tone contradicts the model and produces a page with light above and dark below the same plane |
+| `border-divider` | load-bearing under `flat`; **redundant wherever a tone difference already draws the line** — see §R |
+| input at rest | `flat` and `elevated`: same fill as its container, the edge carries it · `recessed`: one rung recessed |
+| image frame edge | `elevated`: an inset hairline, because a pale photograph on a light card has no boundary · `recessed` and `flat`: none needed |
+| the frame's chrome | never a shadow and never a radius, at any model. Chrome that looks like content is the fastest way to make a product feel assembled from parts |
+
+### The elevation ceiling
+
+**One permanent level, one temporary. That is the whole rule**, and it is a
+guardrail rather than a question because the answer is the same for almost every
+product:
+
+- **Permanent:** the content surface — cards, panels. One level, whatever the
+  model.
+- **Temporary:** what covers the screen — modals, dropdowns, popovers. The only
+  things allowed a real shadow.
+- **Never elevated:** the header and the sidebar. They belong to the page plane
+  and are separated by a rule or by one rung.
+
+A sidebar, cards and a dialog all lifted at once produces what the shadow
+literature calls an accumulation of floating islands: nothing is elevated,
+because everything is. A product that wants more than one permanent level is
+making a deviation and it goes in the document as one.
+
+## R. The two border roles
+
+A border does two unrelated jobs and until now had one token. Three tones
+existed — `border-color`, `-subtle`, `-strong` — but tone is **prominence**, not
+**role**: nothing said what a border was FOR, so every component author picked a
+tone by eye and the page filled with lines that meant different things and looked
+the same.
+
+| token | job | never |
+|---|---|---|
+| `border-divider` | separate content on the same plane — a rule under a header, the edge of an aside, a line between rows | implies that anything is clickable |
+| `border-interactive` | affordance and state — a control at rest, a selectable card, a field waiting for input | separates two pieces of static content |
+
+The split is Primer's `border.default` against `border.emphasis`, and Material's
+outline against outline-variant. Both arrived at it the same way: a system with
+one border token gets a page where the divider and the input edge are the same
+weight, and the eye cannot tell which rectangle it may click.
+
+### Derived, not asked
+
+| | `border-divider` | `border-interactive` |
+|---|---|---|
+| question 9 = the border carries hierarchy | `border-color` — it is load-bearing | `border-color-strong` |
+| question 9 = the tone carries hierarchy | `border-color-subtle` | `border-color` |
+| question 9 = space carries hierarchy | `border-color-subtle`, used almost nowhere | `border-color` |
+| `posture: loud` | unchanged | one step stronger |
+
+### The redundancy rule
+
+**Where a tone difference already draws the line, the divider does not appear.**
+Under `surfaceModel: elevated`, a card that is lighter than the page needs no
+border — the two fills give the eye the boundary, and adding a line on top is the
+graphic noise that makes a quiet product look busy for no reason anyone can name.
+
+This is behaviour of the build, not an instruction for whoever writes the theme:
+
+| `surfaceModel` | a static container | an interactive container |
+|---|---|---|
+| `flat` | `border-divider` | `border-interactive` |
+| `elevated` | none — the tone is the line | `border-interactive`, or nothing at rest and an edge on hover |
+| `recessed` | none | `border-interactive` |
+
+**The interactive edge survives everywhere**, because affordance is not
+separation. A card that is lighter than the page still has to say it can be
+clicked, and the two most common ways are an edge at rest or a clean rest with an
+edge on hover — the second is `quiet`, the first is `balanced` and `loud`.
+
+## S. Colour-critical workspaces
+
+`colorCriticalWorkspace: true`, derived from question 1 and confirmed. It is a
+flag any archetype may carry, not a sixth archetype: the case is real, rare, and
+does not change anything else about the product's personality.
+
+It applies when the user is **judging colour** on screen — a photo or video
+editor, a 3D tool, a colour grading application, a print proofing view. It does
+not apply to a product that merely displays images. A recipe notebook shows
+photographs; nobody calibrates one.
+
+**The reason is physiological rather than aesthetic**, and saying so matters,
+because as a preference it would be arguable and as physiology it is not. A
+bright interface next to the work makes the viewer's iris contract to the
+interface, and the image is then judged against the wrong adaptation state. It is
+why every professional editing tool has a neutral, low-contrast chrome.
+
+| what it forces | |
+|---|---|
+| `surfaceModel` | `flat` or `recessed`, never `elevated` — a lit chrome is exactly the thing being avoided |
+| `neutralPigment` | at most 0.2. A tinted grey next to an image is a colour cast the user will try to correct for |
+| the accent budget | the smallest it goes: the primary action, the current selection, the focus ring. Nothing decorative |
+| status colours | unchanged in family, and never used as a large fill near the canvas |
+| the canvas | **the only lit surface on screen.** Everything else is the frame |
+
+**It conflicts with `archetype: playful-expressive`**, and that conflict is real
+rather than stylistic: decorative shadows and saturated chrome are the two things
+the flag exists to prevent. See `conflicts.md`.
+
+## T. What each surface model does in the dark theme
+
+**Not a mirror.** This is the rule that was missing, and it matters because
+`derive.dark()` already refuses naive lightness inversion for a measured reason —
+inverting a light theme step by step produces pairs that pass in one direction
+and fail badly in the other.
+
+The models do not survive the flip in the same way:
+
+| | in light | in dark |
+|---|---|---|
+| `flat` | one tone, hairlines | **unchanged in kind.** One tone, hairlines. The border has to get RELATIVELY stronger, because a 1px line at low lightness separates less than the same line at high lightness |
+| `elevated` | raised is lighter | **still lighter.** This is the one that survives directly — a lit sheet is lighter than its surroundings whichever theme it is in, and it is why every dark interface with cards makes the card lighter, never darker |
+| `recessed` | grouped is darker | **inverts to lighter.** A well cut into a dark surface cannot go darker without reaching the floor of the ramp: there is nowhere left to go, and the well stops reading. Under dark, a recessed model groups by going one step UP |
+
+**The asymmetry is the finding.** `elevated` means the same thing in both themes;
+`recessed` means "one step away from the page toward the middle of the ramp",
+which is down in light and up in dark. A theme generated by transforming
+lightness alone gets this wrong and produces a dark theme with invisible panels.
+
+Record it in `DESIGN_LANGUAGE.md` in words, not in step numbers: *"grouped
+content steps away from the page toward the middle of the ramp"* holds in both
+themes, and *"panels are step 100"* is true of one.
+
+## Validating a new question: does it discriminate?
+
+Before a question is considered finished, run it against three products that
+ought to end up different. **If two of them converge, the question is not
+discriminating and the fault is the question's**, not the products'.
+
+These three are the standing set, chosen because they stress different axes:
+
+| | a recipe notebook | a dense B2B console | an image editor |
+|---|---|---|---|
+| dwell | hours | hours | hours |
+| protagonist | the user's content | the tools | the tools |
+| `colorCriticalWorkspace` | false | false | **true** |
+| archetype | Editorial & Premium | Enterprise Solid | Utilitarian & Technical |
+| school | monochrome | functional | monochrome |
+| **`surfaceModel`** | **`elevated`** | **`recessed`** | **`flat`** |
+| `neutralPigment` | 0.6 | 0.2 | **≤ 0.2, forced** |
+| `posture` | quiet | balanced | quiet |
+| accent budget | smallest | the CTA plus states | **smallest, forced** |
+| `radius` | 4 / 8 | 4 / 8 | 2 / 2 |
+| divider | present, absent around cards | present everywhere | present everywhere |
+
+**The finding from running it.** The first draft of question 10 had a rule
+saying long dwell pulls the model one step toward `flat`. Applied here, the
+console and the editor both landed on `flat` and the question stopped
+discriminating between them — which is exactly the failure this table exists to
+catch. The rule was wrong: **long dwell lowers the contrast BETWEEN rungs and
+pulls `posture` to quiet; it does not change the model.** A dense console still
+needs its wells however long someone sits in front of it.
+
+The two products that share `protagonist: tools` are separated by
+`colorCriticalWorkspace` alone, and that is enough: it forces the model away
+from `elevated`, caps the pigment, and caps the accent. Three tokens, all
+different, from one flag.
 
 ## Deriving `accentContrast`
 

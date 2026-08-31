@@ -81,7 +81,7 @@ rule most often broken by an ad-hoc page.
 
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
-| boxed, filled | border plus a recessed fill | ladder runs DOWN (13d = B); `balanced` or `loud` | ladder runs UP — the recess fights the surface above it |
+| boxed, filled | border plus a recessed fill | `surfaceModel: recessed`; `balanced` or `loud` | `elevated` — the recess fights the surface above it |
 | boxed, flat | border only, same fill as its container | ladder runs UP; `quiet` | dense forms — the fields stop being findable |
 | underline only | a rule under the field | `quiet` + Editorial or Tech Minimalist | many fields at once; the affordance is weak |
 | floating label | label starts inside, rises on focus | `balanced`; Material-adjacent products | Editorial — the motion reads as a different product |
@@ -443,8 +443,8 @@ the one that fails hardest on touch.
 
 | form | fits when | avoid when |
 |---|---|---|
-| plain bar, hairline below | `quiet`; one-surface layouts (13c = A) | — |
-| bar on its own rung | two-surface layouts (13c = B) | one-surface layouts |
+| plain bar, hairline below | `quiet`; `surfaceModel: flat` | — |
+| bar on its own rung | `elevated` or `recessed`, `ladderSpend: 2` | `flat` |
 | floating island | Playful; `loud`; marketing surfaces | `elevation: borders` — the island needs a shadow |
 | collapsing header, title moves into the bar | reading products with long pages | short pages; the motion is noise |
 | icon-only rail that expands | desktop-first; dense tools | multiplatform — hover does not exist on touch |

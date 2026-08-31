@@ -45,15 +45,35 @@ guess that got in.
 | secondary action | {{…}} | {{secondaryAction, posture}} |
 | tertiary / ghost | {{…}} | {{…}} |
 
+### Shape and icons — derived, never asked
+
+These two used to be questions and were the two most likely to collect taste.
+They still reach the client here, with their provenance, as something to
+disagree with.
+
+| decision | value | from |
+|---|---|---|
+| `radius-control` / `radius-surface` | {{…}} | {{archetype}}, {{± posture, ± surfaceModel}} |
+| pills | {{never}} | {{archetype}} |
+| `iconStyle` | {{outline}} | {{archetype}} |
+| `iconStroke` | {{…}} | {{archetype}}, set against the body weight |
+| `iconSize` | {{…}} | {{archetype}} |
+
 ### Surfaces, inputs and lines
 
 | decision | value | from |
 |---|---|---|
-| input at rest | {{…}} | {{ladder direction, posture}} |
+| `surfaceModel` | {{flat \| elevated \| recessed}} | {{protagonist, dwell}} |
+| `surfaceSeparation` | {{lines}} | {{elevationCarrier}} |
+| rungs the layout spends | {{2}} | {{surfaceModel, the frame}} |
+| input at rest | {{…}} | {{surfaceModel, posture}} |
 | card separation | {{…}} | {{surfaceSeparation}} |
-| divider weight | {{…}} | {{posture}} |
-| interactive edge | {{…}} | {{posture}} |
-| modal surface | {{…}} | {{ladder budget}} |
+| `border-divider` | {{token}} | {{elevationCarrier}} |
+| `border-interactive` | {{token}} | {{elevationCarrier, posture}} |
+| where the divider disappears | {{…}} | {{surfaceModel}} — a tone difference already draws the line |
+| modal surface | {{…}} | {{ladderSpend}} |
+| what may be elevated at once | one permanent, one temporary | always |
+| the same model in dark | {{…}} | {{surfaceModel}} — see derivations.md T |
 
 ### Type and rhythm
 
@@ -162,7 +182,7 @@ describes nothing.
 | bigger headings | `typeScale` | one heading |
 | more visible controls at rest | `disclosure` | each control |
 | icons without their labels | `iconPolicy` | one button |
-| a card that reads as recessed | the ladder direction (13d) | the card |
+| a card that reads as recessed | `surfaceModel` (question 10) | the card |
 
 {{Add the rows this product will actually be asked about.}}
 

@@ -42,15 +42,35 @@ inherited from your mother — which rules out more than the archetype does.
 | secondary action | quiet neutral fill | `secondaryAction: neutral`, `monochrome` |
 | tertiary / ghost | transparent, quiet fill on hover | `posture: quiet` |
 
+### Shape and icons — derived, never asked
+
+Both used to be questions, and both were answered by the archetype anyway. They
+appear here so they can still be argued with.
+
+| decision | value | from |
+|---|---|---|
+| `radius-control` / `radius-surface` | 4px / 6px | `editorial-premium`; no adjustment, since `posture` is quiet and the model is not recessed |
+| pills | never | `editorial-premium` |
+| `iconStyle` | outline | `editorial-premium` |
+| `iconStroke` | 1.25px | `editorial-premium` — the thinnest in the matrix, set against a light serif |
+| `iconSize` | 20px | `editorial-premium` |
+
 ### Surfaces, inputs and lines
 
 | decision | value | from |
 |---|---|---|
-| input at rest | hairline, same fill as its container | ladder runs UP (13d = A) + `quiet` |
+| `surfaceModel` | `elevated` | `protagonist: user-content` — the cook's recipes are the lit thing |
+| `ladderSpend` | 2 | `surfaceModel` + the frame; rung 3 stays reserved |
+| `border-divider` | `border-color` | `elevationCarrier: border-color` — the line is load-bearing here |
+| `border-interactive` | `border-color-strong` | same, and `posture: quiet` leaves it unmoved |
+| where the divider disappears | around any card lighter than the page | `surfaceModel: elevated` — the two fills already draw the line |
+| what may be elevated at once | one permanent (the card), one temporary (the modal). Never the header | always |
+| the same model in dark | unchanged — raised stays lighter | `elevated` is the one model that survives the flip |
+| input at rest | hairline, same fill as its container | `surfaceModel: elevated` + `quiet` |
 | card separation | hairline, same fill as the page | `surfaceSeparation: lines` |
 | divider weight | `border-color-subtle` | `posture: quiet` |
 | interactive edge | `border-color` at rest, `border-strong` on hover | `posture: quiet` |
-| modal surface | the raised rung | two-surface budget (13c = B) |
+| modal surface | the raised rung | `ladderSpend: 2` |
 | where `paper(0)` lands | `bg-raised` only — modals and dropdowns | ladder runs UP |
 
 ### Type and rhythm
@@ -184,7 +204,7 @@ which is to say nobody's.
 | the library's solid badge and `text-bg-*` are refused | `ledger` | `posture: quiet`; and `text-bg-*` cannot follow a theme |
 | never tint a heading for emphasis | `document` | Editorial guardrail |
 | depth never comes from a heavy shadow | `document` | `elevation: borders` |
-| never a third surface level | `document` | 13c = B |
+| never a third surface level | `document` | `ladderSpend: 2` |
 | every pair at 4.5:1 or better | build gate | `accessibility: AA` |
 
 ## 5. What was NOT decided
@@ -220,7 +240,7 @@ which is to say nobody's.
 | bigger or smaller headings | `typeScale` | one heading |
 | the actions visible without hovering | `disclosure` | each control |
 | icons standing alone | `iconPolicy` | one button |
-| cards that read as recessed | the ladder direction (13d) | the card |
+| cards that read as recessed | `surfaceModel: elevated` | the card |
 | a second colour anywhere | `colourStrategy` — and it stops being this school | one component |
 | the interface to stop looking like CoreUI | promote patterns out of `raw` — the trajectories say which and when | the tokens, which are already this product's |
 
