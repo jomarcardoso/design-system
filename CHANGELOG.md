@@ -25,6 +25,268 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.8.0]
+
+**The interview stops producing library themes.** Two runs against a weaker
+model produced documents that read well and built pages that read as Bootstrap,
+and the diagnosis took the whole release to reach: a read-back gate checks
+COHERENCE — that what was decided was respected — and has no opinion about what
+was never decided. An interface has hundreds of decisions the interview does not
+reach, and left unowned they fall to whatever the component library ships,
+because a library default is the only concrete thing in the room. Three gates
+did not stop that. A derivation table does.
+
+Then the client running the third test stopped it with the finding that
+outranks all of them:
+
+> *"as perguntas estavam indo muito por um caminho de preferência do que de
+> atender a necessidade. E a preferência de um usuário não designer como eu pode
+> levar a um produto que não atende."*
+
+So the release ends where it should have started: **the interview collects facts
+about the product, and the looks are derived from them.** Twenty-three questions,
+two fewer about appearance and two more about the job. Roughly a hundred
+component-level decisions now computed rather than invented, each carrying the
+answer that produced it.
+
+**To upgrade:** copy the new `src/`. Every new token is optional with a
+fallback, so nothing breaks. Then regenerate `DESIGN_LANGUAGE.md` — the
+questionnaire renumbered, two questions became derivations and one was deleted,
+so a document written against 0.7.0 cites question numbers that no longer mean
+what they say. `npm run verify:chain <product>` reports the gaps.
+
+### Added
+
+- **`references/derivations.md`** — the layer between twenty-three answers and a
+  hundred decisions. Twenty sections: quiet elements, surfaces and inputs, type,
+  lines and edges, the accent budget, disclosure, icon policy, the frame, the
+  type scale ratio, vertical rhythm, images, grid and columns, motion, focus and
+  hover, shape, icon style, the surface model, the two border roles,
+  colour-critical workspaces, and what each surface model does in the dark
+  theme.
+
+  Three rules govern it. **Compute, present, let the client disagree** — asking
+  these one at a time is how an interview reaches eighty questions and the
+  answers stop being considered. **Every derived default carries its
+  provenance**, because without it a client cannot tell a recommendation from a
+  leftover and neither can the next agent. And **a question that decides one
+  token is a question badly asked.**
+
+- **`templates/DERIVED.md`** — the second document the interview produces, and
+  the readable consultation record. What the answers produced, which answer
+  produced each, what was NOT decided, and a reverse index: *if you want to
+  change X, change this.*
+
+- **Questions 6 and 7 — how long one sitting lasts, and who the screen is for.**
+  The two facts the interview never collected and could not derive anything
+  serious without.
+
+  Dwell was fused into the frequency question, and a recipe notebook is the case
+  that breaks the fusion: opened now and then, left open for an hour while
+  someone cooks. The fused version kept the half that decides less. Dwell is the
+  strongest single input to `posture`, and it is the counterpoint the interview
+  was missing — ten seconds rewards heavier elements because nobody is around
+  long enough to tire of them; an hour punishes every one of them.
+
+  The protagonist — the user's content, the product's content, the brand, or the
+  tools — is what the colour school cannot ask, because the school is an answer
+  about token architecture and this is an answer about who the surface belongs
+  to. A bank can be monochrome; a reading app can be brand-led.
+
+- **Question 10, `surfaceModel`: `flat` / `elevated` / `recessed`.** The physics
+  of light on the screen, independent of the colour school. It existed as two
+  questions inside the accent-driven profile, asked **only when the school was
+  monochrome** — so every functional and brand product had the decision made by
+  whichever example got copied.
+
+  Deliberately not called "inverted", which is the name it arrives under in the
+  literature and which collides with dark mode in a way that would mislead every
+  later reader of a `DESIGN_LANGUAGE.md`.
+
+- **The elevation ceiling.** One permanent level of elevation and one temporary;
+  the header and the sidebar belong to the page plane. A guardrail rather than a
+  question, because the answer is the same for nearly every product. A sidebar,
+  cards and a dialog lifted at once means nothing is elevated.
+
+- **`colorCriticalWorkspace`** — derived from question 1, confirmed, and a flag
+  any archetype may carry rather than a sixth archetype. True only where the user
+  JUDGES colour on screen: photo and video editors, 3D tools, grading, proofing.
+  A product that merely displays images is not this.
+
+  **The reason is physiological rather than aesthetic**, and saying so matters:
+  as a preference it would be arguable. A bright interface beside the work
+  changes the viewer's adaptation state, and the image is judged wrong. It forces
+  the surface model away from `elevated`, caps `neutralPigment` at 0.2, and
+  shrinks the accent budget to its smallest.
+
+- **`border-divider` and `border-interactive` in layer 2.** Three border TONES
+  existed and tone is prominence — nothing said what a border was FOR. A divider
+  separates content on the same plane and never implies anything is clickable; an
+  interactive edge signals affordance and state and never separates two static
+  things. With one name for both, every author picks a tone by eye and the page
+  fills with lines that mean different things and look the same, at which point
+  the eye cannot tell which rectangle it may click.
+
+  Primer splits `border.default` from `border.emphasis`; Material splits outline
+  from outline-variant. Both arrived at it from the same failure. Optional,
+  falling back to `border-color`.
+
+  The redundancy rule ships with them: under `surfaceModel: elevated`, a card
+  lighter than the page needs no divider — the two fills already draw the line,
+  and adding one is the graphic noise that makes a quiet product look busy for a
+  reason nobody can name.
+
+- **`radius-image`, `ratio-media`, `ratio-thumb`, `gap-grid`, `size-measure`.**
+  Images had no tokens, no rules and no derivations — which for a product whose
+  photograph IS the content is the largest hole the audit found. The system had
+  an opinion about a button's border and none about the picture beside it.
+
+  `aspect-ratio` on the frame rather than on the image is the whole fix for
+  layout shift and costs one declaration, which is the argument for the ratio
+  being a token at all rather than a crop decided in whatever tool made the file.
+
+- **`src/_type.scss` and `typeScale`.** `type.scale($base, $ratio)` generates the
+  scale from a ratio. The single number that most changes how a page feels at a
+  glance, and until now every product inherited the foundation's — which is
+  Tailwind's, and is therefore a typographic signature the product never chose.
+  Not on by default: generating something is a claim the generated version is
+  better, and for a product that never thought about type the shipped scale is
+  the better answer.
+
+- **`references/conflicts.md`** — sixteen recurring conflicts with the move that
+  softens each. The governing rule is **never soften silently**: adjusting a
+  value so a conflict disappears, and not saying so, is the worst available
+  outcome, because the client believes they got what they asked for and the next
+  person reads the adjustment as the original intent.
+
+- **`trajectory` in `patterns.json`.** Where a pattern is GOING and what moves
+  it: the state is today, this is the plan. A ledger at a hundred per cent `raw`
+  is a library theme by definition — but the answer is a recorded trajectory
+  rather than forced promotion, because a system is *"o presente adequado mais um
+  futuro traçado"*. `to`, `when` (a trigger, not a date — a date is a wish),
+  `why` (what the current state costs, which is what stops the plan being
+  aspirational), and optionally `form` and `blocked`.
+
+- **`scripts/check-chain.mjs`** — `npm run verify:chain`. Four mechanical links:
+  every answer produced something, every derivation names a real token, every
+  composition binding resolves, every promoted pattern has its class. It found
+  three breaks the first time it ran and has caught every one since. What it
+  cannot check is whether a derivation is the RIGHT derivation — that is
+  judgement, and it belongs to the review checklists.
+
+- **`scripts/docs-foundations.mjs`** — `FOUNDATIONS.md` generated from the
+  compiled CSS rather than written by hand.
+
+- **`scripts/check-adapter-forms.mjs`** — flags a composed form bound while the
+  channel form is consumed. Found `--bs-link-hover-color-rgb` unbound.
+
+- **Twelve more component form families**, taking `component-forms.md` from
+  eighteen to thirty, and the rule the widening produced: **the namespace claims
+  VARIANTS, never anatomy.** Measured, not asserted — eight violations on seven
+  lines under the loose pattern, zero under the strict one.
+
+- **The signatures of the other two schools**, in `colour-strategies.md`. What
+  makes a functional system recognisable as functional, and a brand system as
+  brand — the monochrome school had a written identity and the other two were
+  described only by what tokens they emit.
+
+- **`AGENTS.md`** — the path-comment rule, *the document chooses the assets, not
+  the library*, *never override a library with CSS*, and the chain.
+
+### Changed
+
+- **Shape and icon style are derived, not asked.** They were the two questions
+  most likely to collect taste from someone with no reason to have an opinion,
+  and the archetype was answering both anyway. The shape question gave itself
+  away in its own text — *"do not let it absorb an hour of debate: set the
+  preset, look at a real screen, adjust once"* is a derivation describing itself
+  as a question. The icon question had exactly one ✅ in four of its five rows.
+
+  Both still reach the client, in the read-back, with provenance. A derived
+  default is not a decision taken away from anyone; it is a decision made by the
+  thing with the standing to make it, and shown.
+
+- **`posture: quiet | balanced | loud` replaces `accentContrast` as a question.**
+  The old one asked whether a highlight was saturated enough to need light ink —
+  a question about one token, phrased in the token contract's own vocabulary,
+  which a client cannot answer and which left every other quiet element at the
+  library default. `accentContrast` is now MEASURED. `posture` decides eight
+  things, and it is proposed from the dwell answer rather than asked cold.
+
+- **`surfaceSeparation` is derived from the elevation question.** It was that
+  question asked a second time in different words — the two paired one to one, so
+  the second could only confirm or contradict, and a contradiction meant one had
+  been misheard rather than that the client held two opinions.
+
+- **Question 5 asks frequency only.** Dwell moved out; see *Added*.
+
+- **`DESIGN-LANGUAGE.md` is `DESIGN_LANGUAGE.md`**, and every generated document
+  records the `toolVersion` that produced it. The tool is vendored, so nothing
+  tells a project it has fallen behind; that line is where the next reader starts
+  reading this file from.
+
+- **The read-back gate now carries the derived defaults and the conflicts**, with
+  their provenance and their softening plans, rather than only the answered keys.
+
+- **Deviations are computed, not noticed.** Every answer is walked against the
+  archetype's row before the table is shown. Left to judgement the deviation list
+  comes out empty every time, because the model that just collected an answer has
+  no reason to doubt it — and an empty list on a product with three ⚠️ answers is
+  the document lying about its own coherence.
+
+- **`check-dangling-refs` reads each example's `app.css`, not only its generated
+  `ds.css`.** The generated file is the one place the mistake cannot happen.
+  Product CSS is where a token gets typed from memory.
+
+- **`require-themes()` normalises every theme map**, via `roles.normalise()`
+  moved into `_roles.scss`. This fixed all eleven adapters at once: none of them
+  could read a monochrome theme, because a school that emits `accent` where
+  another emits `action` left the adapter holding `null`.
+
+### Removed
+
+- **The ladder-budget and ladder-direction questions leave the accent-driven
+  block**, promoted to question 10 and 10a for every school.
+- **The `surfaceSeparation` question**, now derived.
+- **The shape and icon-style questions**, now derived.
+
+### Fixed
+
+- **The seed of `ramp.neutral()` is the pigment, not the page colour.** Handing
+  it a near-white paper tone looks right and is not: the seed's chroma is the
+  PEAK the curve multiplies, so a near-white seed produces a grey ramp — and no
+  error, because a grey ramp is a perfectly valid ramp.
+
+- **The accent-driven example was shipping Bootstrap's blue.** Measured at H 262
+  against Bootstrap's own 262, within a hundredth of its chroma. A monochrome
+  product whose single chromatic decision is the framework's default has made no
+  decision at all.
+
+- **`--cui-tertiary-bg-rgb` was unbound**, so a sunken card kept CoreUI's grey
+  through a theme flip. **The active nav tab measured 1.03:1**, white on white.
+  Both found by building the example and looking at it, which is the only method
+  that finds them.
+
+- **Icons rendered solid on a document that asked for outline.** The SVG arrives
+  with `fill="none"`, which is a presentation attribute and therefore loses to
+  any CSS rule — and CoreUI has one, `fill: currentcolor` on a class called
+  `.icon`. Two lessons, both of which will recur: a presentation attribute is the
+  weakest thing in the cascade, and `.icon` is a class name a component library
+  may already own.
+
+- **`docs-foundations.mjs` had two parser bugs** that each silently dropped a
+  whole theme: `:root, [data-theme=light]` read as `:root` alone, and a `[^}]*`
+  body let `@layer` swallow the block.
+
+- **`worked-example.md` said two files and had no `@include`**, so a build
+  following it compiled to nothing. **`install.md` said to edit `src/_config.scss`
+  while all six examples use `@use ... with`.** Both reconciled toward the code.
+
+- **`package.json` had a mangled `build:example-caderninho`** and no
+  `build:example-recepta` — latent, because `verify` does not run example builds.
+
+---
+
 ## [0.7.0]
 
 **The accent-driven school stops being the functional school with the colours

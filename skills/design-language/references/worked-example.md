@@ -19,7 +19,7 @@ products turn out to be.
 
 ```markdown
 ---
-toolVersion: 0.4.0
+toolVersion: 0.8.0
 
 archetype: hybrid
 archetypeNote: >
