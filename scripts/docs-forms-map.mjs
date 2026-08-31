@@ -83,7 +83,12 @@ for (const family of families) {
       local.map((a) => a.key).join(', ') + '.',
     ''
   );
-  P('| form | reach | led to by | ruled out by | content it needs |');
+  if (family.excludes?.length) {
+    P("**Never both**, so choosing one rules the other out for this product:", "");
+    for (const [x, y] of family.excludes) P("- " + x + " / " + y);
+    P("");
+  }
+  P("| form | reach | led to by | ruled out by | content it needs |");
   P('|---|---|---|---|---|');
 
   for (const form of family.forms) {

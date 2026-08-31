@@ -69,7 +69,7 @@ put them in a client-facing document as if they were terms of art.
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | solid fill | the library default | `posture: balanced` or `loud`; any school | — |
-| soft fill | accent at a subtle step, accent ink | `posture: quiet` with `brand` or `functional` | `monochrome` — the tint reads as a selection |
+| soft fill | accent at a subtle step, accent ink | secondary rank, where a fill is wanted rather than an outline; `posture: quiet` with `brand` or `functional` | `monochrome` — the tint reads as a selection |
 | outline | border and ink, no fill | secondary at any posture; primary only in `quiet` + Editorial | as the only primary on a dense screen |
 | text / ghost | no fill, no border | tertiary anywhere; secondary in `quiet` | when the action must be found without reading |
 | underline-offset link-button | serif text, offset underline on hover | Editorial + `quiet` | anywhere a touch target is needed — the hit area is the text |
@@ -83,13 +83,19 @@ rule most often broken by an ad-hoc page.
 
 **One per product.**
 
+**Never both:** boxed, filled and floating label — a floating label needs the
+top of the box to move into, and a filled box has already spent it.
+
+**Never both:** underline only and boxed, filled — one resting treatment per
+product. A form mixing them reads as two forms.
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
-| boxed, filled | border plus a recessed fill | `surfaceModel: recessed`; `balanced` or `loud` | `elevated` — the recess fights the surface above it |
+| boxed, filled | border plus a recessed fill | the resting treatment every field in the product takes; `surfaceModel: recessed`; `balanced` or `loud` | `elevated` — the recess fights the surface above it |
 | boxed, flat | border only, same fill as its container | ladder runs UP; `quiet` | dense forms — the fields stop being findable |
 | underline only | a rule under the field | `quiet` + Editorial or Tech Minimalist | many fields at once; the affordance is weak |
 | floating label | label starts inside, rises on focus | `balanced`; Material-adjacent products | Editorial — the motion reads as a different product |
-| prefix / suffix slot | a unit or icon in its own recess | any, where the field has a unit | when the slot would be the only recess on the page |
+| prefix / suffix slot | a unit or icon in its own recess | an addition rather than a resting treatment: fields carrying a unit, a currency or a clear affordance | when the slot would be the only recess on the page |
 
 **The input is where "pure white" gets in.** Whatever form is chosen, the field's
 fill is a step of the product's ramp. A white field on a paper page is the
@@ -99,12 +105,15 @@ library's default surviving, not a decision.
 
 **Several — content, target and grouping are three roles and three treatments.**
 
+**Never both:** asymmetric corners and soft shadow — two signatures competing
+on the same edge, and neither survives the other.
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | hairline, same fill | separated by a rule only | `surfaceSeparation: lines` | when cards must be scannable at a glance in a dense grid |
-| one rung lighter | tone carries it, no rule | `surfaceModel: elevated`; `surfaceSeparation: tones` | `surfaceModel: recessed` — a card below the page is a well, not a card |
+| one rung lighter | tone carries it, no rule | the CONTENT role; `surfaceModel: elevated`; `surfaceSeparation: tones` | `surfaceModel: recessed` — a card below the page is a well, not a card |
 | one rung darker (well) | recessed container | `surfaceModel: recessed`; grouping form fields or data | reading surfaces — a recessed article reads as secondary |
-| soft shadow | the library default | `elevation: soft-shadows` or `elevation: projected-shadows` | `elevation: borders` — it is the decision spent twice |
+| soft shadow | the library default | the CONTENT role, and only where something genuinely floats; `elevation: soft-shadows` or `elevation: projected-shadows` | `elevation: borders` — it is the decision spent twice |
 | asymmetric corners | rounded on one diagonal | Playful; a deliberate signature | any product whose language mentions paper, print or documents |
 
 ## Card with an image
@@ -130,6 +139,20 @@ kind of inference this file exists to make explicit rather than leave to taste.
 ## Selectable card
 
 **Several — a chooser and a filter are different roles.**
+
+**Never both:** accent border on select and tone shift on select
+
+**Never both:** accent border on select and pressed
+
+**Never both:** tone shift on select and pressed
+
+**Never both:** tone shift on select and corner check indicator
+
+**Never both:** corner check indicator and pressed
+
+How a selection announces itself is ONE decision for the whole product — see
+`derivations.md` §V. A user who learns that a chosen card gains an accent edge
+must not meet a second chooser where it darkens instead.
 
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
@@ -163,6 +186,16 @@ family, and what a solid fill causes.
 ## Tabs
 
 **One per product.**
+
+**Never both:** underline and enclosed
+
+**Never both:** enclosed and segmented pill
+
+**Never both:** underline and segmented pill
+
+One tab shape per product. The exception the catalogue does allow is the
+small-viewport fallback, which is a different COMPONENT — an accordion or a
+select — rather than a second tab.
 
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
@@ -206,9 +239,9 @@ usually stacked sections, an accordion, or a select.
 
 | form | fits when | avoid when |
 |---|---|---|
-| left border in the status colour, neutral fill | `quiet`, `balanced`; `statusColours: brand-adapted` | — |
-| subtle status fill | `balanced` | `quiet` on a page where the fill would be the largest colour area |
-| solid status fill | `loud` | `quiet` — a warning should not be the loudest thing on a calm page |
+| left border in the status colour, neutral fill | the INLINE reach: a message about the thing beside it; `quiet`, `balanced`; `statusColours: brand-adapted` | — |
+| subtle status fill | the PAGE-LEVEL reach: a banner about the whole screen; `balanced` | `quiet` on a page where the fill would be the largest colour area |
+| solid status fill | the PAGE-LEVEL reach, when the state blocks work; `loud` | `quiet` — a warning should not be the loudest thing on a calm page |
 | border only, page fill | `quiet`; `lines` | when the message must interrupt |
 | inverted toast | any, for transient confirmation | as the confirmation for something destructive |
 
@@ -222,7 +255,7 @@ usually stacked sections, an accordion, or a select.
 | outline check, no fill | `quiet` | dense lists — the checked state is hard to scan |
 | whole row or card selectable | onboarding, plans, few large options | forms with many fields |
 | segmented control instead of radios | two to four options, mobile-first | more than four |
-| switch with an icon in the thumb | `loud`, `balanced` | `quiet` — the icon is decoration |
+| switch with an icon in the thumb | a setting that takes effect immediately, never a form field submitted later; `loud`, `balanced` | `quiet` — the icon is decoration |
 
 Coexistence is normal here: a plain checkbox in a form and a selectable card in
 a chooser are two entries, not a contradiction.
@@ -235,12 +268,16 @@ a chooser are two entries, not a contradiction.
 that takes the library's `h1` and nothing else has already announced which
 library it is.
 
+**Never both:** title + rule and stacked with metadata — the rule and the
+metadata block both separate the head from the body, and doing it twice reads
+as an unfinished template.
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | title alone | one heading, nothing around it | `quiet`; short pages | pages that need orientation |
 | eyebrow + title | a small category line above the title | Editorial; content with taxonomy | when the eyebrow would repeat the navigation |
 | title + subtitle | a supporting sentence under it | `balanced`; anything explanatory | when the subtitle is the first paragraph in disguise |
-| title + rule | a hairline the width of the measure, under the title | Editorial; `lines` | `shadows` — the rule is a second separation |
+| title + rule | a hairline the width of the measure, under the title | pages whose body begins immediately, with no metadata between; Editorial; `lines` | `shadows` — the rule is a second separation |
 | title + actions | the page's actions on the same line, right-aligned | `exposed`; tools | `progressive` — the actions belong near what they act on |
 | stacked with metadata | title, then a muted line of facts | reading products, records, articles | dense tools where the metadata is a column |
 
@@ -424,13 +461,16 @@ joining the markers turns a list into a sequence, and it costs one border.
 
 **One per product.**
 
+**Never both:** a categorical palette and one accent, everything else neutral
+— a chart set cannot be half categorical.
+
 | form | fits when | avoid when |
 |---|---|---|
 | one accent, everything else neutral | `monochrome`; a single series | comparisons between categories |
 | a neutral ramp as the scale | `monochrome`; heatmaps, intensity | categorical data — steps imply order |
-| a categorical palette | `functional`, `brand` | `monochrome` — this is the school's real tension |
+| a categorical palette | series that are unordered kinds rather than degrees; `functional`, `brand` | `monochrome` — this is the school's real tension |
 | sparkline, no axes | inline, in tables or cards | anything the user must read values from |
-| rounded bar tops | Playful; `loud` | Utilitarian — it costs precision at small sizes |
+| rounded bar tops | a detail rather than a chart type: bar charts, and only where the value is read as approximate; Playful; `loud` | Utilitarian — it costs precision at small sizes |
 
 **`monochrome` and categorical data is a genuine conflict**, not a preference.
 Categories need distinguishable hues and the school has one. The softening moves
@@ -503,10 +543,13 @@ the one that fails hardest on touch.
 
 **One per product.**
 
+**Never both:** bar on its own rung and floating island — two ways for one bar
+to say it is not the page, and a product needs one.
+
 | form | fits when | avoid when |
 |---|---|---|
 | plain bar, hairline below | `quiet`; `surfaceModel: flat` | — |
-| bar on its own rung | `elevated` or `recessed`, `ladderSpend: 2` | `flat` |
+| bar on its own rung | products whose navigation stays visible while the content scrolls under it; `elevated` or `recessed`, `ladderSpend: 2` | `flat` |
 | floating island | Playful; `loud`; marketing surfaces | `elevation: borders` — the island needs a shadow |
 | collapsing header, title moves into the bar | reading products with long pages | short pages; the motion is noise |
 | icon-only rail that expands | desktop-first; dense tools | multiplatform — hover does not exist on touch |

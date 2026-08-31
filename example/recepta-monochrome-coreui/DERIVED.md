@@ -161,6 +161,20 @@ which is to say nobody's.
 | what hover never does | move, grow, or reveal an action | the row a cook is aiming at must not slide away |
 | the touch equivalent | every action visible on hover is visible at rest; `:active` carries the feedback | `platform: multiplatform` |
 
+### How a selection announces itself
+
+One decision for every family that has a chosen state — chip, tab, toggle,
+selectable card, list row, checkbox. It used to be decided four times in four
+tables nobody had checked against each other.
+
+| decision | value | from |
+|---|---|---|
+| the progression | washed → saturated | `posture: quiet` |
+| `accentFill` | `washed` | `protagonist: user-content` + `dwell: hours` |
+| the second channel | the ink darkens with the fill | `accessibility: AA` — a tone step alone does not survive a printed recipe |
+| multi-select | washed only, never a solid fill | cardinality: the tag filters are multi-select, and eight filled chips is a wall of colour |
+| the floor it clears | the accent is the only chromatic fill on a sepia page | measured, not assumed — see DESIGN_LANGUAGE.md |
+
 ### The accent budget
 
 | may appear | may not |

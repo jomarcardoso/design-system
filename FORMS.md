@@ -32,7 +32,7 @@ Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | solid fill | 67% | `balanced` or `loud` | — | any school; — |
-| soft fill | 44% | `quiet` or `functional` | `monochrome` | — |
+| soft fill | 44% | `quiet` or `functional` | `monochrome` | secondary rank; where a fill is wanted rather than an outline |
 | outline | 7% | `quiet`, `editorial-premium` | — | secondary at any posture; as the only primary on a dense screen |
 | text / ghost | 33% | `quiet` | — | tertiary anywhere; when the action must be found without reading |
 | underline-offset link-button | 7% | `editorial-premium`, `quiet` | — | anywhere a touch target is needed |
@@ -43,24 +43,33 @@ Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 
 Over 45 combinations of 3 answers: posture, archetype, surfaceModel.
 
+**Never both**, so choosing one rules the other out for this product:
+
+- boxed, filled / floating label
+- underline only / boxed, filled
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| boxed, filled | 22% | `recessed`, `balanced` or `loud` | `elevated` | — |
+| boxed, filled | 22% | `recessed`, `balanced` or `loud` | `elevated` | the resting treatment every field in the product takes |
 | boxed, flat | 33% | `quiet` | — | ladder runs UP; dense forms |
 | underline only | 13% | `quiet`, `editorial-premium` or `tech-minimalist` | — | many fields at once; the affordance is weak |
 | floating label | 27% | `balanced` | `editorial-premium` | Material-adjacent products |
-| prefix / suffix slot | 100% | — | — | any; where the field has a unit; when the slot would be the only recess on the page |
+| prefix / suffix slot | 100% | — | — | an addition rather than a resting treatment: fields carrying a unit; a currency or a clear affordance; when the slot would be the only recess on the page |
 
 ## Card
 
 Over 55 combinations of 4 answers: archetype, surfaceModel, surfaceSeparation, elevation.
 
+**Never both**, so choosing one rules the other out for this product:
+
+- asymmetric corners / soft shadow
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | hairline, same fill | 27% | `lines` | — | when cards must be scannable at a glance in a dense grid |
-| one rung lighter | 9% | `elevated`, `tones` | `recessed` | — |
+| one rung lighter | 9% | `elevated`, `tones` | `recessed` | the CONTENT role |
 | one rung darker (well) | 36% | `recessed` | — | grouping form fields or data; reading surfaces |
-| soft shadow | 55% | `soft-shadows` or `projected-shadows` | `borders` | — |
+| soft shadow | 55% | `soft-shadows` or `projected-shadows` | `borders` | the CONTENT role; only where something genuinely floats |
 | asymmetric corners | 20% | `playful-expressive` | — | a deliberate signature; any product whose language mentions paper; print or documents |
 
 ## Card with an image
@@ -78,6 +87,14 @@ Over 45 combinations of 3 answers: posture, archetype, surfaceSeparation.
 ## Selectable card
 
 Over 27 combinations of 3 answers: posture, colourStrategy, elevation.
+
+**Never both**, so choosing one rules the other out for this product:
+
+- accent border on select / tone shift on select
+- accent border on select / pressed
+- tone shift on select / pressed
+- tone shift on select / corner check indicator
+- corner check indicator / pressed
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -100,6 +117,12 @@ Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 ## Tabs
 
 Over 45 combinations of 3 answers: posture, archetype, elevation.
+
+**Never both**, so choosing one rules the other out for this product:
+
+- underline / enclosed
+- enclosed / segmented pill
+- underline / segmented pill
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
@@ -139,9 +162,9 @@ Over 18 combinations of 3 answers: posture, surfaceSeparation, statusColours.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| left border in the status colour, neutral fill | 33% | `quiet` or `balanced`, `brand-adapted` | — | — |
-| subtle status fill | 33% | `balanced` | `quiet` | — |
-| solid status fill | 33% | `loud` | `quiet` | — |
+| left border in the status colour, neutral fill | 33% | `quiet` or `balanced`, `brand-adapted` | — | the INLINE reach: a message about the thing beside it; — |
+| subtle status fill | 33% | `balanced` | `quiet` | the PAGE-LEVEL reach: a banner about the whole screen |
+| solid status fill | 33% | `loud` | `quiet` | the PAGE-LEVEL reach; when the state blocks work |
 | border only, page fill | 11% | `quiet`, `lines` | — | when the message must interrupt |
 | inverted toast | 100% | — | — | any; for transient confirmation; as the confirmation for something destructive |
 
@@ -155,18 +178,22 @@ Over 3 combinations of 1 answers: posture.
 | outline check, no fill | 33% | `quiet` | — | dense lists |
 | whole row or card selectable | 100% | — | — | onboarding; plans; few large options; forms with many fields |
 | segmented control instead of radios | 100% | — | — | two to four options; mobile-first; more than four |
-| switch with an icon in the thumb | 67% | `loud` or `balanced` | `quiet` | — |
+| switch with an icon in the thumb | 67% | `loud` or `balanced` | `quiet` | a setting that takes effect immediately; never a form field submitted later |
 
 ## Page header
 
 Over 90 combinations of 4 answers: posture, archetype, surfaceSeparation, disclosure.
+
+**Never both**, so choosing one rules the other out for this product:
+
+- title + rule / stacked with metadata
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | title alone | 33% | `quiet` | — | short pages; pages that need orientation |
 | eyebrow + title | 20% | `editorial-premium` | — | content with taxonomy; when the eyebrow would repeat the navigation |
 | title + subtitle | 33% | `balanced` | — | anything explanatory; when the subtitle is the first paragraph in disguise |
-| title + rule | 7% | `editorial-premium`, `lines` | `shadows` | — |
+| title + rule | 7% | `editorial-premium`, `lines` | `shadows` | pages whose body begins immediately; with no metadata between |
 | title + actions | 50% | `exposed` | `progressive` | tools |
 | stacked with metadata | 100% | — | — | reading products; records; articles; dense tools where the metadata is a column |
 
@@ -297,13 +324,17 @@ Over 9 combinations of 2 answers: posture, colourStrategy.
 
 Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 
+**Never both**, so choosing one rules the other out for this product:
+
+- a categorical palette / one accent, everything else neutral
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | one accent, everything else neutral | 33% | `monochrome` | — | a single series; comparisons between categories |
 | a neutral ramp as the scale | 33% | `monochrome` | — | heatmaps; intensity; categorical data |
-| a categorical palette | 67% | `functional` or `brand` | `monochrome` | — |
+| a categorical palette | 67% | `functional` or `brand` | `monochrome` | series that are unordered kinds rather than degrees |
 | sparkline, no axes | 100% | — | — | inline; in tables or cards; anything the user must read values from |
-| rounded bar tops | 7% | `playful-expressive`, `loud` | `utilitarian-technical` | — |
+| rounded bar tops | 7% | `playful-expressive`, `loud` | `utilitarian-technical` | a detail rather than a chart type: bar charts; only where the value is read as approximate |
 
 ## Carousel
 
@@ -365,10 +396,14 @@ Over 6 combinations of 2 answers: posture, disclosure.
 
 Over 270 combinations of 5 answers: posture, archetype, surfaceModel, elevation, ladderSpend.
 
+**Never both**, so choosing one rules the other out for this product:
+
+- bar on its own rung / floating island
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | plain bar, hairline below | 11% | `quiet`, `flat` | — | — |
-| bar on its own rung | 33% | `elevated` or `recessed`, `2` | `flat` | — |
+| bar on its own rung | 33% | `elevated` or `recessed`, `2` | `flat` | products whose navigation stays visible while the content scrolls under it |
 | floating island | 4% | `playful-expressive`, `loud` | `borders` | marketing surfaces |
 | collapsing header, title moves into the bar | 100% | — | — | reading products with long pages; short pages; the motion is noise |
 | icon-only rail that expands | 100% | — | — | desktop-first; dense tools; multiplatform |
@@ -420,10 +455,16 @@ Over 1215 combinations of 6 answers: posture, archetype, density, frame, dwell, 
 
 Over 216 combinations of 5 answers: disclosure, frame, protagonist, dwell, platform.
 
+**Never both**, so choosing one rules the other out for this product:
+
+- sticky, full height / sticky, condensed after the first screen
+- sticky, full height / none
+- static, scrolls away / sticky, full height
+
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | static, scrolls away | 100% | — | — | anything; pages whose primary action lives in it |
-| sticky, full height | 8% | `exposed`, `tools` | `mobile-first` | — |
+| sticky, full height | 8% | `exposed`, `tools` | `mobile-first` | headers carrying an action or a filter the user needs while scrolling |
 | sticky, condensed after the first screen | 33% | `hours` | — | long pages; short pages; where it never condenses; reads as a bug |
 | none | 33% | `app-frame` | — | where the rail carries identity; products a user arrives at from outside |
 
@@ -501,12 +542,18 @@ Over 648 combinations of 6 answers: posture, disclosure, frame, protagonist, dwe
 
 Only when `tools`.
 
-Over 108 combinations of 6 answers: disclosure, frame, protagonist, dwell, platform, colorCriticalWorkspace.
+Over 6 combinations of 3 answers: protagonist, platform, colorCriticalWorkspace.
+
+**Never both**, so choosing one rules the other out for this product:
+
+- docked panels, resizable / floating panels
+- docked panels, resizable / tool bar plus full-bleed canvas
+- chrome around a lit viewport / docked panels, resizable
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
 | chrome around a lit viewport | 50% | `true`, `tools` | — | anything where the chrome IS the product |
-| docked panels, resizable | 4% | `app-frame`, `hours`, `exposed` | `mobile-first` | — |
+| docked panels, resizable | 33% | `mobile-first` | — | — |
 | floating panels | 100% | `tools` | — | expert users who arrange once; first-time users; anything on a phone |
 | tool bar plus full-bleed canvas | 100% | — | — | anything; tools with many simultaneous options |
 

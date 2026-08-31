@@ -95,10 +95,18 @@ the page plane — separated by a rule or by one rung, never by a shadow. See
 
 **One per product.**
 
+**Never both:** sticky, full height and sticky, condensed after the first screen
+
+**Never both:** sticky, full height and none
+
+**Never both:** static, scrolls away and sticky, full height
+
+One header behaviour per product, whatever the page.
+
 | form | fits when | avoid when |
 |---|---|---|
 | static, scrolls away | anything — the default, and the cheapest | pages whose primary action lives in it |
-| sticky, full height | `exposed`; `tools` | `mobile-first` — it eats a phone's screen |
+| sticky, full height | headers carrying an action or a filter the user needs while scrolling; `exposed`; `tools` | `mobile-first` — it eats a phone's screen |
 | sticky, condensed after the first screen | `hours`; long pages | short pages, where it never condenses and reads as a bug |
 | none | `app-frame`, where the rail carries identity | products a user arrives at from outside |
 
@@ -196,10 +204,16 @@ is how it stops being an accident.
 The shape a product takes when the user is manipulating something rather than
 reading it.
 
+**Never both:** docked panels, resizable and floating panels
+
+**Never both:** docked panels, resizable and tool bar plus full-bleed canvas
+
+**Never both:** chrome around a lit viewport and docked panels, resizable
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | chrome around a lit viewport | panels frame a single work area | `colorCriticalWorkspace`; `tools` | anything where the chrome IS the product |
-| docked panels, resizable | fixed regions the user sizes | `app-frame`; `hours`; `exposed` | `mobile-first` |
+| docked panels, resizable | tools whose panels hold state the user reads while working in the canvas; `app-frame`; `hours`; `exposed` | `mobile-first` |
 | floating panels | panels the user moves | `tools`; expert users who arrange once | first-time users; anything on a phone |
 | tool bar plus full-bleed canvas | one bar, everything else is canvas | anything — the fallback, and the only one a phone can hold | tools with many simultaneous options |
 

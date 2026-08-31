@@ -185,6 +185,20 @@ colourStrategy: functional
 # here because tooling reads it, but changing it by hand does not change the
 # measurement — change the accent instead.
 accentContrast: high
+
+# Which accent token a CHOSEN state reaches for — the decision the client
+# describes as "sometimes saturated, sometimes washed". NOT accentContrast, which
+# is the measurement above; the two look alike and are unrelated, and the
+# distinction has to be restated wherever either appears.
+#
+#   saturated  bg-accent, ink inverts to fg-on-accent
+#   washed     bg-accent-subtle, ink stays dark
+#
+# DERIVED from protagonist and dwell. Overruled by CARDINALITY, which the screen
+# supplies rather than the interview: multi-select never takes a solid fill at
+# any posture, because eight filled chips is a wall of colour with no hierarchy
+# left for the action that acts on them. See derivations.md section V.
+accentFill: washed                # saturated | washed
 # 0 = true grey, 1 = the seed pigment at full strength. The smallest number in
 # this file and the one that does the most visible work.
 neutralPigment: 0.7

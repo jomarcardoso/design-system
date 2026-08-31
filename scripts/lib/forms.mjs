@@ -267,6 +267,16 @@ export function readForms(file = 'skills/design-patterns/references/component-fo
     // treatment. "Vary across roles, never within a role" — three kinds of card
     // is a system, two kinds of primary button is a bug, and the difference is
     // that a primary button is a single ROLE. See derivations.md section U.
+    // `**Never both:** A and B — why.` Two forms one product cannot hold at
+    // once: two metaphors that would read as two products. Where no line
+    // excludes a pair, they are variants, and check-forms-exclusive then
+    // requires each to say WHEN it applies.
+    const never = line.match(/^\*\*Never both:\*\*\s*(.+?)\s+and\s+(.+?)(?:\s+—.*)?$/);
+    if (never) {
+      (current.excludes ??= []).push([never[1].trim(), never[2].trim()]);
+      continue;
+    }
+
     const mult = line.match(/^\*\*(One per product|Several)\b/);
     if (mult) {
       current.multiplicity = mult[1] === "Several" ? "per-role" : "one";

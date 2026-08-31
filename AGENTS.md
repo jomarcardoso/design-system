@@ -164,6 +164,19 @@ takes what the component library ships, because a library default is the only
 concrete thing available. That is the failure the whole 0.8.0 release was
 written against, and nothing could see it until this.
 
+Two checks run under that name. The second asks the question a person building
+a screen actually has: **three card forms fit my product — which do I use
+here?** Every pair of forms that can be live at once must be in a state the
+catalogue has named. Either a `**Never both:**` line rules the pair out, or each
+form carries a CONTENT condition saying when it applies. A pair with neither is
+the catalogue offering two shapes for one situation, and whoever is building
+picks by taste.
+
+**An answer condition is not separation.** Two forms both fitting `quiet` are
+not separated by `quiet`: the answers are fixed for the whole product, so if
+both fit, both fit everywhere and every time. Only the content half can break a
+tie, because only it varies from screen to screen.
+
 ```bash
 npm run docs:forms
 ```

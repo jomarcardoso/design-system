@@ -832,6 +832,128 @@ it is a role the system already has, it takes that treatment. If it is genuinely
 a fifth role, that is a change to this table and it is worth making — once, here,
 rather than locally and invisibly.
 
+## V. How a selection announces itself
+
+**One decision, applied to every family that has a chosen state** — a chip, a
+tab, a toggle button, a selectable card, a list row, a checkbox. Until now it
+was decided four times in four tables that nobody had checked against each
+other, which is how a product ends up teaching a user that "chosen" means an
+accent edge and then meeting them with a darker fill two screens later.
+
+**It is not asked.** The client's phrasing of the question — *sometimes
+saturated, sometimes washed, sometimes just a border* — is the right
+observation and the wrong thing to put to a non-designer, because the answer
+comes back as taste. Everything below derives.
+
+### The two progressions
+
+| | at rest | when chosen |
+|---|---|---|
+| **outline → filled** | a border in `border-interactive`, no fill | a solid fill in the accent, ink inverts to `fg-on-accent` |
+| **washed → saturated** | a quiet fill in `bg-neutral-subtle`, ink stays dark | the accent at its subtle step, then its solid step under pressure; ink stays dark until the fill is dark enough to need otherwise |
+
+A third exists and is not a progression so much as its absence:
+
+| | at rest | when chosen |
+|---|---|---|
+| **weight only** | nothing | the ink darkens and the weight goes up |
+
+### What decides it
+
+Four inputs, none of them a preference, and the second is the one that does the
+most work.
+
+**1. `posture`, which comes from `dwell`.**
+
+| `posture` | proposes |
+|---|---|
+| `quiet` | washed → saturated, or weight only |
+| `balanced` | washed → saturated |
+| `loud` | outline → filled |
+
+**2. CARDINALITY — how many are on screen, and how many can be on at once.**
+
+This is the discriminator the interview cannot supply and the screen always
+can. It is the content half, and it overrules the posture proposal:
+
+| on screen | how many active | progression |
+|---|---|---|
+| few, up to about six | one | **outline → filled** is affordable; a single solid mark reads instantly |
+| many, more than about eight | one | washed → saturated; eight outlines is a page of boxes |
+| any number | **several at once** | **washed → saturated, always** |
+
+**Multi-select and a solid fill do not go together, at any posture.** Eight
+chips filled with the accent is not eight selections, it is a wall of colour
+with no hierarchy left over for the action that acts on them — and the accent
+budget in §E was spent on the first three. This is a hard rule rather than a
+lean, and it is the single most useful thing in this section.
+
+**3. Whether the state must survive without colour.**
+
+From question 16 and from `accessibility`. A selection carried by hue alone is
+invisible to a colour-blind reader, in a printout, and in a screenshot pasted
+into a ticket. Where it must survive:
+
+- **outline → filled** already survives — the fill is a lightness change, not
+  only a hue change.
+- **washed → saturated** needs a second channel: a check mark, a weight change,
+  or a border appearing. The tone step alone is not enough.
+- **weight only** survives by construction and is the strongest of the three
+  here, which is worth saying because it looks like the weakest.
+
+**4. `surfaceModel`.**
+
+| | |
+|---|---|
+| `elevated` | a solid fill fights a surface that is already the lit thing. Prefer washed → saturated |
+| `flat`, `recessed` | either works |
+
+### `accentFill`
+
+The token the chosen state reaches for, and the front-matter key that records
+this:
+
+| `accentFill` | the chosen fill | the ink on it |
+|---|---|---|
+| `saturated` | `bg-accent` | `fg-on-accent` — inverts |
+| `washed` | `bg-accent-subtle` | `fg-default` — stays dark |
+
+Derived from `protagonist` and `dwell`, which is the same pair that decides how
+much of the page the product is willing to spend on being noticed:
+
+| | proposes |
+|---|---|
+| `brand` or `product-content`, at `seconds` | `saturated` — the action is the magnet, and nobody is here long enough to tire of it |
+| `user-content`, at `hours` | `washed` — the content stays the magnet |
+| anything else | `washed`, and say what it costs |
+
+**`accentFill` is not `accentContrast`.** The two look alike and are unrelated:
+`accentContrast` is MEASURED, comparing the accent against both ends of the ramp
+to decide which ink survives on it. This one chooses which accent token the
+chosen state uses at all. The names are close enough that the distinction has to
+be stated wherever either appears.
+
+**The floor `washed` has to clear.** In a `quiet` product, `bg-accent-subtle`
+sits very near the `bg-neutral-subtle` that every badge, tag and resting
+secondary action is made of — so a washed primary action can end up looking like
+a label. Measure it: if the chosen state is not clearly the strongest thing on
+its own screen, `washed` has failed and the answer is `saturated`, recorded as a
+deviation with this reason. **A quiet product is one where the content is
+loudest, not one where the action is lost.**
+
+### The rule that ties it to the ledger
+
+**One progression per product**, across every family that has a chosen state.
+The catalogues enforce it as `**Never both:**` lines inside each family; this
+section is why those lines exist. A tab that underlines in the accent and a chip
+that fills with it are the same decision expressed twice, and they must agree.
+
+Where they genuinely cannot — a filter chip that is multi-select beside a tab
+set that is single-select — the **cardinality rule wins per family**, and the
+document records both with the reason. That is not two design languages; it is
+one rule producing two outcomes from two different facts, which is what a
+derivation is for.
+
 ## Validating a new question: does it discriminate?
 
 Before a question is considered finished, run it against three products that

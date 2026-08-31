@@ -93,6 +93,17 @@ colourStrategy: monochrome
 # darkest ramp steps, and the light one wins. Changing this by hand does not
 # change the measurement — change the accent.
 accentContrast: high
+
+# Washed. The photograph of the food is the magnet, not the button — and at an
+# hour a sitting, a saturated fill on every save button is the thing a cook
+# stops seeing. Derived from protagonist: user-content and dwell: hours.
+#
+# It clears the floor it has to clear: bg-accent-subtle here is the only
+# chromatic fill on a page whose every other quiet element is sepia, so the
+# primary action is still unmistakably the strongest thing on its screen. In a
+# product with tinted badges it would not have been, and the answer would have
+# been saturated with that reason recorded.
+accentFill: washed
 # 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
 # end of the ladder — see the note in section 2 on why the original "not sepia"
 # answer was withdrawn.
