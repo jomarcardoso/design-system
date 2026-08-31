@@ -137,7 +137,44 @@ has its class. It found three breaks the first time it ran.
 RIGHT derivation for an answer. That is judgement, and it belongs to the review
 checklists.
 
+## The form catalogue is data
+
+`component-forms.md` is prose for people and a dataset for scripts, and the
+marker that separates the two is the BACKTICK:
+
+| written | read as |
+|---|---|
+| `quiet`, `monochrome`, `lines` | an ANSWER the interview holds |
+| Editorial, Playful, Utilitarian | an archetype, also an answer |
+| dense data, quiet fill, reading | a fact about the CONTENT |
+
+`dense data` is not `density: dense` — it is "a lot of data", and reading it as
+an answer would make a table form unreachable for every comfortable product.
+Content conditions are always satisfiable, because they are the half the
+interview cannot decide either way.
+
+```bash
+npm run verify:forms
+```
+
+Two checks. **A form no combination of answers can reach** is dead vocabulary —
+it makes the file look richer than it is. **A family with no fitting form** is
+the expensive one: a generator that reaches a family with nothing to propose
+takes what the component library ships, because a library default is the only
+concrete thing available. That is the failure the whole 0.8.0 release was
+written against, and nothing could see it until this.
+
+```bash
+npm run docs:forms
+```
+
+Regenerates `FORMS.md`. Read its last section — the forms no answer narrows.
+**Reach is specificity, not quality**: a form serving 4% of the space is doing
+the job a catalogue exists for. A form at 95% that ought to be specific is a
+condition column nobody filled in.
+
 ## Verifying
+
 
 ```bash
 npm run verify

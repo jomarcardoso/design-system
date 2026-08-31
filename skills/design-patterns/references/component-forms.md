@@ -95,9 +95,9 @@ library's default surviving, not a decision.
 
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
-| hairline, same fill | separated by a rule only | `surfaceSeparation: lines`; `quiet` | when cards must be scannable at a glance in a dense grid |
-| one rung lighter | tone carries it, no rule | ladder runs UP; `tones` | `elevation: borders` with the ladder running down |
-| one rung darker (well) | recessed container | ladder runs DOWN; grouping form fields or data | reading surfaces — a recessed article reads as secondary |
+| hairline, same fill | separated by a rule only | `surfaceSeparation: lines` | when cards must be scannable at a glance in a dense grid |
+| one rung lighter | tone carries it, no rule | `surfaceModel: elevated`; `surfaceSeparation: tones` | `surfaceModel: recessed` — a card below the page is a well, not a card |
+| one rung darker (well) | recessed container | `surfaceModel: recessed`; grouping form fields or data | reading surfaces — a recessed article reads as secondary |
 | soft shadow | the library default | `elevation: soft-shadows` | `elevation: borders`; it is the decision spent twice |
 | asymmetric corners | rounded on one diagonal | Playful; a deliberate signature | any product whose language mentions paper, print or documents |
 
@@ -111,6 +111,7 @@ The family the notes singled out, because the wrong choice is loud and common.
 | top-bleed | photo fills the card's top edge to edge | `balanced`; commerce and listings | — |
 | full-bleed with text over | text sits on the photo, over a scrim or gradient | Playful; `loud`; media and entertainment | **any product whose metaphor is paper or print** |
 | split | image one side, text the other, one rule between | `quiet`; `lines` | narrow columns |
+| image above, no frame | photo sits on the card with the card's own edge around it | any archetype; any posture | when the photograph's own edges are pale and the card is lighter than the page — it needs the inset hairline from `derivations.md` §K |
 
 **The full-bleed-with-text form is the worked example of a form ruling itself
 out.** A product described as a notebook has no such object: nothing in a
@@ -168,7 +169,8 @@ usually stacked sections, an accordion, or a select.
 | hairline per row | `comfortable`; `lines` | — |
 | zebra striping | `dense`; wide tables | `quiet` — the alternation is a second surface level |
 | row as a card | `comfortable`; touch targets that need to be obvious | long lists; the gaps waste the screen |
-| accent bar on the selected row | any school | `monochrome` at `quiet`, unless selection is rare |
+| accent bar on the selected row | any school | `monochrome` and `quiet` — unless selection is rare |
+| hover only, no resting treatment | any density; any school | touch, where there is no hover — pair it with a resting treatment |
 
 ## Divider
 
