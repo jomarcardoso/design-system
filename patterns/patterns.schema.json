@@ -92,6 +92,13 @@
               "description": "URL of the library's own documentation for this component."
             }
           }
+        },
+        "multiplicity": {
+          "enum": [
+            "one",
+            "per-role"
+          ],
+          "description": "Whether this component legitimately carries more than one treatment. `one` means every instance looks the same everywhere — an input, a tab set, a checkbox. `per-role` means the roles genuinely differ and each gets its own treatment — a card that is content, a card that is a target, a card that is grouping. Three kinds of card is a system; two kinds of primary button is a bug, and the difference is not quantity but that a primary button is a single role a user has to be able to learn once. The form catalogues declare the same thing per family and `npm run verify:forms` refuses a family that stays silent about it."
         }
       }
     },
@@ -267,6 +274,10 @@
               "description": "What has to exist first, when the trigger is not the only thing missing. A pending implementation the ledger admits to rather than omits."
             }
           }
+        },
+        "role": {
+          "type": "string",
+          "description": "Which role this pattern serves within its component. The axis a component actually varies on, and it is NOT the same axis for every family. Containers vary on `content` / `target` / `grouping` / `chrome` — the thing the user came for, the actionable thing, the thing that organises other things, the region of the frame. Buttons vary on RANK: `primary` / `secondary` / `tertiary`. Badge, tag and chip vary on JOB: a count, a label, a choice. Forcing all of them into the container set was the first attempt and it produced four button patterns all labelled `target`, which records nothing. Vary across roles; never within one — two patterns sharing a role and differing in treatment is the failure this field exists to make visible, and it arrives by accretion rather than by decision. See derivations.md section U."
         }
       },
       "allOf": [

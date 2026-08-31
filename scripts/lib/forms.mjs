@@ -263,6 +263,16 @@ export function readForms(file = 'skills/design-patterns/references/component-fo
     }
     if (!current) continue;
 
+    // Multiplicity: whether the family legitimately carries more than one
+    // treatment. "Vary across roles, never within a role" — three kinds of card
+    // is a system, two kinds of primary button is a bug, and the difference is
+    // that a primary button is a single ROLE. See derivations.md section U.
+    const mult = line.match(/^\*\*(One per product|Several)\b/);
+    if (mult) {
+      current.multiplicity = mult[1] === "Several" ? "per-role" : "one";
+      continue;
+    }
+
     // `**Only when ...`value`...**` immediately under the heading.
     const only = line.match(/^\*\*Only when (.+)\*\*/);
     if (only) {
@@ -291,6 +301,7 @@ export function readForms(file = 'skills/design-patterns/references/component-fo
     // reports those families as empty for every product that legitimately does
     // not have them, which is noise that teaches a reader to ignore the report.
     if (current.only === undefined) current.only = null;
+    if (current.multiplicity === undefined) current.multiplicity = null;
 
     const at = (n) => {
       const i = header.indexOf(n);

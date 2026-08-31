@@ -64,7 +64,8 @@
             "to": "styled",
             "when": "never, unless the shape stops fitting",
             "why": "Nothing is lost by staying raw. CoreUI's button geometry already matches the archetype once the entry sets radius, weight and control height, so promotion would buy shape this product already has. Recorded so the next reader knows it was considered rather than missed."
-          }
+          },
+          "role": "primary"
         },
         "secondary": {
           "intent": "A supporting action beside the primary one: cancel, back, dismiss.",
@@ -75,7 +76,8 @@
               "btn-secondary"
             ]
           },
-          "notes": "`secondaryAction: neutral` in DESIGN_LANGUAGE.md. A tinted supporting action would put two blues on a page whose premise is that there is one."
+          "notes": "`secondaryAction: neutral` in DESIGN_LANGUAGE.md. A tinted supporting action would put two blues on a page whose premise is that there is one.",
+          "role": "secondary"
         },
         "danger": {
           "intent": "An action that is hard to undo: delete a saved recipe.",
@@ -88,7 +90,8 @@
           },
           "dos": [
             "Always behind a confirmation modal — the guardrail in DESIGN_LANGUAGE.md."
-          ]
+          ],
+          "role": "primary"
         },
         "quiet": {
           "intent": "A tertiary action inside a dense surface, where even an outline would be noise: edit a step, remove an ingredient row.",
@@ -98,7 +101,8 @@
               "btn",
               "btn-link"
             ]
-          }
+          },
+          "role": "tertiary"
         },
         "status-coloured": {
           "intent": "A button carrying a status colour to suggest an outcome.",
@@ -151,7 +155,8 @@
             }
           }
         }
-      }
+      },
+      "multiplicity": "per-role"
     },
     "card": {
       "intent": "A bounded block of recipe content resting on the page: a recipe in a list, the ingredients, a note.",
@@ -179,7 +184,8 @@
             "when": "the first recipe card that carries a photograph",
             "why": "CoreUI's card is a generic container and the chosen form is a framed photo at a fixed ratio, which it has no expression for. Every card on the page is currently the library's shape with this product's colours.",
             "form": "framed, fixed ratio"
-          }
+          },
+          "role": "content"
         },
         "sunken": {
           "intent": "A recessed block inside a recipe: the utensils list, the cook's note, a tip.",
@@ -190,9 +196,11 @@
               "bg-body-tertiary"
             ]
           },
-          "notes": "CoreUI has no tonal card variant, so this is the base class plus a background utility. It passes both tests: `card` is a complete card before the utility arrives, and the utility touches nothing else. A third test only a build can run: the ADAPTER has to bind it. `.bg-body-tertiary` is written as `rgba(var(--cui-tertiary-bg-rgb), ...)`, and the adapter bound `--cui-tertiary-bg` without the triplet — so this card kept CoreUI own grey through a theme flip until that was fixed. Named here rather than left open so the product does not acquire four recessed panels that do not match."
+          "notes": "CoreUI has no tonal card variant, so this is the base class plus a background utility. It passes both tests: `card` is a complete card before the utility arrives, and the utility touches nothing else. A third test only a build can run: the ADAPTER has to bind it. `.bg-body-tertiary` is written as `rgba(var(--cui-tertiary-bg-rgb), ...)`, and the adapter bound `--cui-tertiary-bg` without the triplet — so this card kept CoreUI own grey through a theme flip until that was fixed. Named here rather than left open so the product does not acquire four recessed panels that do not match.",
+          "role": "grouping"
         }
-      }
+      },
+      "multiplicity": "per-role"
     },
     "field": {
       "intent": "A form control for editing a recipe, an ingredient, or the search box.",
@@ -208,7 +216,8 @@
             "coreui": [
               "form-control"
             ]
-          }
+          },
+          "role": "target"
         },
         "select": {
           "intent": "A choice from a closed list: a category, a unit of measure.",
@@ -217,7 +226,8 @@
             "coreui": [
               "form-select"
             ]
-          }
+          },
+          "role": "target"
         },
         "check": {
           "intent": "Ticking off an ingredient while cooking.",
@@ -226,9 +236,11 @@
             "coreui": [
               "form-check-input"
             ]
-          }
+          },
+          "role": "target"
         }
-      }
+      },
+      "multiplicity": "one"
     },
     "nav": {
       "intent": "Moving between sections of one recipe, or between areas of the notebook.",
@@ -244,7 +256,8 @@
             "coreui": [
               "navbar"
             ]
-          }
+          },
+          "role": "chrome"
         },
         "tabs": {
           "intent": "Sections within one recipe: ingredients, method, notes.",
@@ -267,9 +280,11 @@
             "when": "the recipe view gets a fourth section, or the first phone review",
             "why": "The enclosed tab is CoreUI's shape and it is heavier than a quiet Editorial product wants. It also has no answer below the tablet breakpoint, which the responsive note admits and the markup does not yet honour.",
             "form": "weight only"
-          }
+          },
+          "role": "chrome"
         }
-      }
+      },
+      "multiplicity": "one"
     },
     "modal": {
       "intent": "A dialog that blocks until answered. In this product it exists for one job.",
@@ -291,9 +306,11 @@
           ],
           "donts": [
             "Not for anything reversible. A toast with undo is the pattern for that, and this product has not needed one yet."
-          ]
+          ],
+          "role": "content"
         }
-      }
+      },
+      "multiplicity": "one"
     },
     "badge": {
       "intent": "A read-only label on a recipe: a time, a category, a difficulty.",
@@ -318,7 +335,8 @@
             "why": "The library badge is a label and cannot carry a selected state or a remove affordance. It is adequate for the read-only tags on the page today and will not stretch.",
             "form": "removable chip",
             "blocked": "no chip pattern exists yet; adding one is a ledger change, discussed first"
-          }
+          },
+          "role": "label"
         },
         "status-coloured": {
           "intent": "A badge carrying a status colour, or the library's own badge classes.",
@@ -336,7 +354,8 @@
             ]
           }
         }
-      }
+      },
+      "multiplicity": "per-role"
     }
   }
 }

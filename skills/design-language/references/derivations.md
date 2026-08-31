@@ -718,6 +718,120 @@ Record it in `DESIGN_LANGUAGE.md` in words, not in step numbers: *"grouped
 content steps away from the page toward the middle of the ramp"* holds in both
 themes, and *"panels are step 100"* is true of one.
 
+## U. One container, several roles
+
+The observation this section exists for, in the client's words: *a card that is
+the main content can have a different fill; if it is clickable it can have a
+border; if neither, maybe just padding.* That is correct, and it is not a
+special case of cards. **The axis is ROLE** — though "role" does not mean the
+same four things for every family, which is the correction this section needed
+after its first draft.
+
+A library shipping one `.card` that can be bordered, filled or bare is not
+being vague. It is being versatile, and that versatility is what a design system
+should be spending — not narrowing away. The system's job is not to pick one
+card; it is to say **which shape in which role**, and to make the roles few
+enough that a reader can hold them.
+
+### The four roles a CONTAINER plays
+
+The set below is for containers — cards, panels, wells, regions. It is not the
+universal set, and treating it as one was the first draft's mistake: it produced
+four button patterns all labelled `target`, which is true and records nothing.
+
+**Other families vary on their own axis**, and the axis is whatever a user has
+to be able to learn once:
+
+| family | its role axis |
+|---|---|
+| containers | content · target · grouping · chrome |
+| button | rank — primary · secondary · tertiary |
+| badge, tag and chip | job — a count · a label · a choice |
+| message and alert | reach — inline · page-level · transient |
+| overlay | blocking · non-blocking |
+
+The rule below holds for all of them. Only the vocabulary changes.
+
+| role | what it is | how you tell |
+|---|---|---|
+| **content** | the thing the user came for | remove it and the page has no purpose |
+| **target** | actionable — clicking it does something | it has a destination or an effect |
+| **grouping** | organises other things; not actionable, not the star | remove it and nothing is lost but order |
+| **chrome** | a region of the frame — header, aside, toolbar | it is the same on every page |
+
+**A role is not a size and not an importance.** A small card can be content and
+a large one can be grouping. The test is the middle column, and it is
+answerable without looking at the screen.
+
+### What each role takes, per surface model
+
+The three tokens in play are the surface tone, `border-divider` and
+`border-interactive` — which is what §R added them for.
+
+| role | `flat` | `elevated` | `recessed` |
+|---|---|---|---|
+| content | page tone; `border-divider`; the most padding | one rung lighter; **no border** — the tone is the line | page tone, which is the lightest; `border-divider` |
+| target | `border-interactive` at rest | one rung lighter; `border-interactive` on hover only | one rung darker; `border-interactive` at rest |
+| grouping | `border-divider` only | **`border-divider`, not a tone** — see below | one rung darker; no border |
+| chrome | a rule | one rung and a rule | one rung and a rule |
+
+**Grouping under `elevated` is the interesting cell.** The instinct is to give
+it another rung, and `ladderSpend: 2` has none left: the page spent one and the
+content surface spent the other. So grouping falls back to a divider, and that
+is the right answer rather than a compromise — a group inside content that is
+ALSO lighter than content reads as more important than the thing it groups.
+
+**A target at `quiet` earns its edge on hover, not at rest.** At `balanced` and
+`loud` it carries the edge at rest. This is the one place posture changes the
+table, and it is the same trade as everywhere: a resting edge is easier to find
+and adds a line to every card on the page.
+
+### The rule that governs all of it
+
+> **Vary across roles. Never within a role.**
+
+Three kinds of card is a system. Two kinds of primary button is a bug, and the
+difference is not quantity — it is that *primary button* is a single role, so a
+user who learns it on one screen must find it on the next. A card that is
+content and a card that is a target are two things wearing one library class,
+and a reader has no trouble telling them apart because the CONTENT tells them.
+
+**Two patterns may share a role without breaking it**, when what differs between
+them is governed by another decision entirely. A danger button and a primary
+button are both the primary RANK and differ in the status colour, which
+`statusColours` decides — that is one treatment applied to two semantics, not
+two treatments. Likewise a text field, a select and a checkbox all serve
+`target` and all take the same resting treatment, which is the rule being kept
+rather than broken. What the rule forbids is the same role wearing two SHAPES.
+
+This is why the ledger records a `role` per pattern and a `multiplicity` per
+family. A family marked `one` that acquires a second treatment is the failure
+this rule names, and it happens by accretion — nobody decides to have two
+primary buttons; a second one arrives on a page somebody built in a hurry.
+
+| `multiplicity` | families |
+|---|---|
+| `per-role` | card, list rows, button, badge/tag/chip, message and alert, overlay |
+| `one` | input, tabs, checkbox and radio, divider, pagination, breadcrumb, page header, avatar, tooltip, stepper, and every layout family |
+
+**Badge, tag and chip is the honest hard case.** Three roles that libraries ship
+as one class: a badge is a count, a tag is a label, a chip is a choice. They
+look similar and behave differently, and a read-only tag that looks pressable is
+the commonest failure in the whole catalogue. `per-role` here is not permission
+to have three styles — it is the requirement to make three roles legible.
+
+### What this does NOT license
+
+**It is not per-page.** A role is a property of the element's job, not of which
+screen it landed on. "The card on the dashboard looks different" is not a role;
+it is a product with two design languages and one document.
+
+**It is not per-team.** The same argument arrives as *"our section needs its own
+card"*, and the answer is the same question: which of the four roles is it? If
+it is a role the system already has, it takes that treatment. If it is genuinely
+a fifth role, that is a change to this table and it is worth making — once, here,
+rather than locally and invisibly.
+
 ## Validating a new question: does it discriminate?
 
 Before a question is considered finished, run it against three products that

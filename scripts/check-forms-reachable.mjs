@@ -54,6 +54,18 @@ let formCount = 0;
 let biggest = 0;
 
 for (const family of families) {
+  // Every family declares whether it legitimately carries more than one
+  // treatment. Silence is not "one" — it is a family nobody thought about, and
+  // the accretion this rule exists to catch happens exactly there. Nobody
+  // decides to have two primary buttons; a second one arrives on a page
+  // somebody built in a hurry. See derivations.md section U.
+  if (!family.multiplicity) {
+    problems.push([
+      family.name + " does not say how many treatments it may have",
+      "add \"**One per product.**\" or \"**Several — <why>**\" under the heading"
+    ]);
+  }
+
   const { local, total, fitting, holes } = coverFamily(family, axes, COHERENT);
   biggest = Math.max(biggest, total);
 

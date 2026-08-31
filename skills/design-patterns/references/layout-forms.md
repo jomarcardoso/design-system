@@ -40,6 +40,8 @@ here re-asks that. These are the shapes available WITHIN each, and the answer to
 
 ## Index — how a set of things is presented
 
+**One per product.**
+
 The first page of most products, and the one most often taken from a template.
 
 | form | what it is | fits when | avoid when |
@@ -58,6 +60,8 @@ layout error in this file.
 
 ## Detail — how one thing is opened
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | its own page | the index is replaced | anything — the default, and the only form that always has a URL | comparing items side by side |
@@ -73,6 +77,8 @@ back-button bug in every product that makes it.
 
 ## Navigation placement
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | top bar | one horizontal row of destinations | anything — the fallback, and the only form no frame rules out | deep hierarchies |
@@ -87,6 +93,8 @@ the page plane — separated by a rule or by one rung, never by a shadow. See
 
 ## Header behaviour
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | static, scrolls away | anything — the default, and the cheapest | pages whose primary action lives in it |
@@ -95,6 +103,8 @@ the page plane — separated by a rule or by one rung, never by a shadow. See
 | none | `app-frame`, where the rail carries identity | products a user arrives at from outside |
 
 ## The aside
+
+**One per product.**
 
 **Only when `content-aside` or `app-frame`.**
 
@@ -114,6 +124,8 @@ it cannot afford. A hairline is the answer at `ladderSpend: 2`.
 
 ## Form pages
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | one column | every field stacked, one measure | `mobile-first`; `multiplatform`; anything a user completes once | long settings pages with many independent fields |
@@ -128,6 +140,8 @@ nobody can predict: the eye does not know whether to go right or down.
 
 ## Reading pages
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | one measure, centred | the sheet | anything — the default for prose, at any archetype | reference material scanned rather than read |
@@ -141,6 +155,8 @@ is how it stops being an accident.
 
 ## Dashboard and overview pages
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | one big, several small | a primary figure with supporting tiles | `tools`; `balanced`; a screen with one real question | screens where every metric matters equally |
@@ -149,6 +165,8 @@ is how it stops being an accident.
 | a single number | one figure and its trend | `quiet`; `seconds`; a status screen | anything requiring a decision |
 
 ## Search and filter placement
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|
@@ -160,6 +178,8 @@ is how it stops being an accident.
 
 ## Settings and account pages
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | one long page with headings | anything — the default, and right far longer than teams expect | products with genuinely separate domains |
@@ -168,6 +188,8 @@ is how it stops being an accident.
 | search-first | `hours`; `tools`; very many settings | small products, where it reads as evasion |
 
 ## Workspace and canvas pages
+
+**One per product.**
 
 **Only when `tools`.**
 
@@ -187,6 +209,8 @@ reason.
 
 ## First run and empty products
 
+**One per product.**
+
 The page nobody designs and every product has.
 
 | form | fits when | avoid when |
@@ -201,6 +225,8 @@ being legible, and every one of them is skipped by most of the people who see
 it.
 
 ## Error and offline pages
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|

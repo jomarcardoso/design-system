@@ -64,6 +64,8 @@ put them in a client-facing document as if they were terms of art.
 
 ## Button
 
+**Several — primary, secondary and tertiary ARE the roles — and each of them is one treatment, everywhere.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | solid fill | the library default | `posture: balanced` or `loud`; any school | — |
@@ -79,6 +81,8 @@ rule most often broken by an ad-hoc page.
 
 ## Input
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | boxed, filled | border plus a recessed fill | `surfaceModel: recessed`; `balanced` or `loud` | `elevated` — the recess fights the surface above it |
@@ -93,6 +97,8 @@ library's default surviving, not a decision.
 
 ## Card
 
+**Several — content, target and grouping are three roles and three treatments.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | hairline, same fill | separated by a rule only | `surfaceSeparation: lines` | when cards must be scannable at a glance in a dense grid |
@@ -102,6 +108,8 @@ library's default surviving, not a decision.
 | asymmetric corners | rounded on one diagonal | Playful; a deliberate signature | any product whose language mentions paper, print or documents |
 
 ## Card with an image
+
+**Several — the framed and the bleeding card are different roles, not different tastes.**
 
 The family the notes singled out, because the wrong choice is loud and common.
 
@@ -121,6 +129,8 @@ kind of inference this file exists to make explicit rather than leave to taste.
 
 ## Selectable card
 
+**Several — a chooser and a filter are different roles.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | accent border on select | border becomes the accent | any school; `quiet` and `balanced` | — |
@@ -129,6 +139,8 @@ kind of inference this file exists to make explicit rather than leave to taste.
 | pressed | shadow removed on select, card sits flat | `elevation: soft-shadows` only | `borders` — there is no shadow to remove |
 
 ## Badge, tag and chip
+
+**Several — a count, a label and a choice. Three roles libraries ship as one class, and a read-only tag that looks pressable is the commonest failure in this file.**
 
 Three different jobs that libraries ship as one class.
 
@@ -150,6 +162,8 @@ family, and what a solid fill causes.
 
 ## Tabs
 
+**One per product.**
+
 | form | what it is | fits when | avoid when |
 |---|---|---|---|
 | underline | active tab gets a rule in the accent | any school; `quiet` and `balanced` | — |
@@ -163,6 +177,8 @@ usually stacked sections, an accordion, or a select.
 
 ## List and table rows
 
+**Several — a row that is read and a row that is a target.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | whitespace only, no rules | `generous` density; `quiet`; reading | dense data — the eye loses the row |
@@ -174,6 +190,8 @@ usually stacked sections, an accordion, or a select.
 
 ## Divider
 
+**One per product.**
+
 | form | fits when |
 |---|---|
 | full-width hairline | anything |
@@ -184,6 +202,8 @@ usually stacked sections, an accordion, or a select.
 
 ## Message and alert
 
+**Several — inline validation, a page-level banner and a transient toast are three roles.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | left border in the status colour, neutral fill | `quiet`, `balanced`; `statusColours: brand-adapted` | — |
@@ -193,6 +213,8 @@ usually stacked sections, an accordion, or a select.
 | inverted toast | any, for transient confirmation | as the confirmation for something destructive |
 
 ## Checkbox, radio, switch
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|
@@ -206,6 +228,8 @@ Coexistence is normal here: a plain checkbox in a form and a selectable card in
 a chooser are two entries, not a contradiction.
 
 ## Page header
+
+**One per product.**
 
 **The first thing anyone sees and the most copied from the library.** A product
 that takes the library's `h1` and nothing else has already announced which
@@ -226,6 +250,8 @@ element and it is the difference between a page and a document.
 
 ## Opening / hero
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | none — the content starts | `quiet`; tools; anything the user opens repeatedly | first-visit surfaces that must explain themselves |
@@ -235,6 +261,8 @@ element and it is the difference between a page and a document.
 | one large action | `loud`; a product with a single job | products with several equally-weighted entry points |
 
 ## Table
+
+**One per product.**
 
 Split out from the row treatments above, because a table is several decisions
 and the library ships one answer for all of them.
@@ -257,6 +285,8 @@ job silently.
 
 ## Empty state
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | one muted line | `quiet`; a list that is often empty and unremarkable | a first-run screen — the user needs to know what goes here |
@@ -268,6 +298,8 @@ job silently.
 nothing else on the screen. It is worth writing rather than defaulting.
 
 ## Loading
+
+**One per product.**
 
 The clearest case of a form derived from posture rather than taste.
 
@@ -284,6 +316,8 @@ user two different things about the same wait.
 
 ## Error and success
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | inline under the field | field validation, always | page-level failures |
@@ -299,6 +333,8 @@ about itself.
 
 ## Form: label position
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | above the field | almost always; best for scanning and for narrow screens | — |
@@ -310,6 +346,8 @@ about itself.
 that choosing it is a decision rather than an accident.
 
 ## Form: grouping, help and actions
+
+**One per product.**
 
 | grouping | fits when |
 |---|---|
@@ -333,6 +371,8 @@ that choosing it is a decision rather than an accident.
 
 ## Pagination and continuation
 
+**One per product.**
+
 Each of these is a `disclosure` decision wearing a component.
 
 | form | fits when | avoid when |
@@ -344,6 +384,8 @@ Each of these is a `disclosure` decision wearing a component.
 
 ## Breadcrumb
 
+**One per product.**
+
 | form | fits when |
 |---|---|
 | none | flat products; a notebook |
@@ -353,6 +395,8 @@ Each of these is a `disclosure` decision wearing a component.
 | replaced by a single back link on phones | multiplatform, always |
 
 ## Stepper and timeline
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|
@@ -366,6 +410,8 @@ joining the markers turns a list into a sequence, and it costs one border.
 
 ## Avatar and identity
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | photo, circle | social and collaborative products | products where people are records, not personalities |
@@ -375,6 +421,8 @@ joining the markers turns a list into a sequence, and it costs one border.
 | with a presence dot | real-time collaboration | anything asynchronous |
 
 ## Chart
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|
@@ -392,6 +440,8 @@ happen in a table.
 
 ## Carousel
 
+**One per product.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | arrows and dots | `balanced`; a few featured items | more than about seven items |
@@ -401,6 +451,8 @@ happen in a table.
 
 ## Footer
 
+**One per product.**
+
 | form | fits when |
 |---|---|
 | none | tools and applications behind a login |
@@ -409,6 +461,8 @@ happen in a table.
 | a rule and legal text | anything with legal obligations |
 
 ## Grid, list or table for the same data
+
+**Several — the whole family is a choice the user makes, so all three coexist by design.**
 
 One collection, three forms, and the choice is usually made by habit.
 
@@ -421,6 +475,8 @@ One collection, three forms, and the choice is usually made by habit.
 
 ## Overlay: sheet, modal or panel
 
+**Several — a blocking decision and a detail view are different roles.**
+
 | form | fits when | avoid when |
 |---|---|---|
 | modal | a decision that blocks; something irreversible | anything the user needs the page to answer |
@@ -430,6 +486,8 @@ One collection, three forms, and the choice is usually made by habit.
 | inline expansion | `progressive`; edit-in-place | anything that would push content far down |
 
 ## Tooltip and popover
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|
@@ -442,6 +500,8 @@ One collection, three forms, and the choice is usually made by habit.
 the one that fails hardest on touch.
 
 ## Navigation and header
+
+**One per product.**
 
 | form | fits when | avoid when |
 |---|---|---|
