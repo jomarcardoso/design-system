@@ -109,10 +109,14 @@ Over 45 combinations of 3 answers: posture, colourStrategy, archetype.
 
 | form | reach | led to by | ruled out by | content it needs |
 |---|---|---|---|---|
-| pill with a status dot | 67% | — | `monochrome` | categories that need a colour without a coloured fill |
+| badge — quiet fill, muted ink | 67% | `quiet` or `balanced` | `loud` | a count or a state the system set; which fills it solid |
+| badge — solid fill, inverted ink | 33% | `loud` | `quiet` | a count that must be seen from across the page |
+| tag — same fill, never interactive-looking | 100% | — | — | a label the content carries rather than one anybody removes; anything the user can act on |
+| chip — quiet at rest, accent when chosen | 100% | — | — | a choice the user can make then unmake; labels the system applied |
+| pill with a status dot | 67% | — | `monochrome` | categories needing a colour without a coloured fill |
 | outlined, monospace, uppercase | 20% | `utilitarian-technical` | — | metadata; logs; products whose guardrails forbid uppercase |
-| removable chip | 100% | — | — | filters the user applied; tags the system applied |
-| attached edge badge | 67% | — | `quiet` | a tab pinned to a card's edge |
+| removable chip | 100% | — | — | filters the user applied then wants back; tags the system applied |
+| attached edge badge | 67% | — | `quiet` | a count that belongs to the card rather than to its content |
 
 ## Tabs
 
@@ -592,6 +596,8 @@ condition column nobody filled in.
 - Input — prefix / suffix slot
 - Card with an image — image above, no frame
 - Selectable card — corner check indicator
+- Badge, tag and chip — tag — same fill, never interactive-looking
+- Badge, tag and chip — chip — quiet at rest, accent when chosen
 - Badge, tag and chip — removable chip
 - List and table rows — hover only, no resting treatment
 - Divider — full-width hairline

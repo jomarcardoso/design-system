@@ -165,20 +165,21 @@ must not meet a second chooser where it darkens instead.
 
 **Several — a count, a label and a choice. Three roles libraries ship as one class, and a read-only tag that looks pressable is the commonest failure in this file.**
 
-Three different jobs that libraries ship as one class.
+Three different jobs that libraries ship as one class, and the three jobs ARE
+the forms — they used to sit in a reference table above the real one, which
+meant the family's most important decision was invisible to everything that
+reads this file as data.
 
-| | what it is | form |
-|---|---|---|
-| **badge** | a count or a state, read-only | quiet fill, muted ink (see `derivations.md` §A) |
-| **tag** | a label describing the thing, read-only | same fill; never interactive-looking |
-| **chip** | a filter or a choice, interactive | quiet fill at rest, accent-subtle when selected |
-
-| form | fits when | avoid when |
-|---|---|---|
-| pill with a status dot | categories that need a colour without a coloured fill | `monochrome` — the dot is a second colour |
-| outlined, monospace, uppercase | Utilitarian; metadata and logs | products whose guardrails forbid uppercase |
-| removable chip | filters the user applied | tags the system applied — nothing to remove |
-| attached edge badge | a tab pinned to a card's edge | `quiet` — it is a loud shape |
+| form | what it is | fits when | avoid when |
+|---|---|---|---|
+| badge — quiet fill, muted ink | a count or a state, read-only | a count or a state the system set; `quiet` or `balanced` | `loud`, which fills it solid — see `derivations.md` §A |
+| badge — solid fill, inverted ink | the same, shouting | a count that must be seen from across the page; `loud` | `quiet` — a label that looks like a button |
+| tag — same fill, never interactive-looking | a label describing the thing, read-only | a label the content carries rather than one anybody removes | anything the user can act on |
+| chip — quiet at rest, accent when chosen | a filter or a choice, interactive | a choice the user can make then unmake | labels the system applied |
+| pill with a status dot | a category marked by a dot rather than a fill | categories needing a colour without a coloured fill | `monochrome` — the dot is a second colour |
+| outlined, monospace, uppercase | a technical marker | metadata and logs; Utilitarian | products whose guardrails forbid uppercase |
+| removable chip | a chip carrying its own dismiss | filters the user applied then wants back | tags the system applied — nothing to remove |
+| attached edge badge | a tab pinned to a card's edge | a count that belongs to the card rather than to its content | `quiet` — it is a loud shape |
 
 **A read-only label must not look pressable.** The commonest failure in this
 family, and what a solid fill causes.

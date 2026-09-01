@@ -199,6 +199,18 @@ Regenerates `FORMS.md`. Read its last section — the forms no answer narrows.
 the job a catalogue exists for. A form at 95% that ought to be specific is a
 condition column nobody filled in.
 
+```bash
+node scripts/docs-forms-derived.mjs example/<product>
+```
+
+The other direction: given one product's answers, which form does each family
+take. It writes `FORM-SET.md` beside the design language, and the number to
+read is at the bottom — **how many families took a form the answers narrowed,
+and how many fell back to a form no answer rules out.** A family in the second
+group is one where the product could have answered anything and got the same
+recommendation, which means the shape comes from the library. The fix is a
+condition column in the catalogue, not a better generator.
+
 ## Verifying
 
 

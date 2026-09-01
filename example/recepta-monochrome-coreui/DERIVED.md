@@ -183,6 +183,15 @@ tables nobody had checked against each other.
 
 ## 3. Component forms
 
+**The full set is [`FORM-SET.md`](FORM-SET.md), generated.** Forty families with
+the form this product's answers lead to, what else was available, and the two
+families it does not have. This section used to list eleven by hand, which meant
+a client saw no recommendation for the other twenty-nine — and a family with no
+recommendation takes the library's shape while nobody is looking.
+
+Kept below are the ones worth arguing about in prose.
+
+
 | family | form chosen | from | also available |
 |---|---|---|---|
 | button | solid fill for primary, quiet neutral for secondary, text for tertiary | `quiet` + `monochrome` | outline; underline-offset link-button, which Editorial also fits |
