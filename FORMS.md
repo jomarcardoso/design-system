@@ -254,7 +254,6 @@ Over 30 combinations of 3 answers: posture, archetype, disclosure.
 | above the field | 100% | — | — | almost always; best for scanning; for narrow screens; — |
 | beside the field | 50% | `exposed` | — | dense settings pages; desktop-first; mobile-first |
 | floating | 27% | `balanced` | `editorial-premium` | Material-adjacent products; any field with a permanent value; where the label has nowhere to go |
-| inside as placeholder only | 100% | — | — | never as the only label; — |
 
 ## Form: grouping, help and actions
 
@@ -612,7 +611,6 @@ condition column nobody filled in.
 - Error and success — full-page state
 - Error and success — silence
 - Form: label position — above the field
-- Form: label position — inside as placeholder only
 - Form: grouping, help and actions — a fieldset with a legend
 - Form: grouping, help and actions — only on error
 - Form: grouping, help and actions — in the flow, after the last field

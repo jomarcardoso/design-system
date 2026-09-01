@@ -52,7 +52,7 @@
     "build:example-caderno": "sass --no-source-map --silence-deprecation=if-function --load-path=. example/ds-caderno-accent-driven/ds.scss example/ds-caderno-accent-driven/ds.css",
     "verify:examples-refs": "node scripts/check-dangling-refs.mjs example/ds-booking-bulma/ds.css example/ds-caderno-accent-driven/ds.css example/ds-caderno-accent-driven/app.css example/ds-carmageddon-nescss-phase3/ds.css example/ds-cyberpunk-bulma-phase2/ds.css example/ds-hot-tone-bootstrap-phase1/ds.css example/ds-hot-tone-bootstrap-phase1/app.css example/ds-itau-shadcn-phase3/ds.css example/ds-itau-shadcn-phase3/app.css example/ds-meu-caderninho-daisyui-phase3/ds.css example/ds-meu-caderninho-daisyui-phase3/app.css example/recepta-monochrome-coreui/ds.css example/recepta-monochrome-coreui/app.css",
     "docs:forms": "node scripts/docs-forms-map.mjs > FORMS.md",
-    "verify:forms": "node scripts/check-forms-reachable.mjs && node scripts/check-forms-exclusive.mjs"
+    "verify:forms": "node scripts/check-forms-reachable.mjs && node scripts/check-forms-exclusive.mjs && node scripts/check-never-offered.mjs"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

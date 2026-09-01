@@ -34,9 +34,12 @@ nothing else:
 >    template is empty on purpose and shows the shape of nothing
 > 4. `skills/design-patterns/references/component-forms.md` — the shapes each
 >    component can take, and the answers each one fits
-> 5. `patterns/patterns.schema.json`
-> 6. `patterns/patterns.template.json` — only if we are starting a ledger
-> 7. `skills/design-patterns/references/review.md` — send it at the end
+> 5. `skills/design-patterns/references/layout-forms.md` — the same for pages
+> 6. `skills/design-patterns/references/never-offered.md` — what this tool does
+>    not propose, and what to reach for instead
+> 7. `patterns/patterns.schema.json`
+> 8. `patterns/patterns.template.json` — only if we are starting a ledger
+> 9. `skills/design-patterns/references/review.md` — send it at the end
 >
 > Also tell me **which library the project uses**, if the ledger does not say —
 > the design language does not record it.

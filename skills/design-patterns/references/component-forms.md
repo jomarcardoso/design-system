@@ -377,10 +377,12 @@ about itself.
 | above the field | almost always; best for scanning and for narrow screens | — |
 | beside the field | `exposed`; dense settings pages; desktop-first | mobile-first |
 | floating | `balanced`; Material-adjacent products | Editorial; and any field with a permanent value, where the label has nowhere to go |
-| inside as placeholder only | never as the only label | — |
 
-**Placeholder-as-label fails the moment someone types.** It is in the list so
-that choosing it is a decision rather than an accident.
+**Placeholder-as-label is not on this menu.** It used to be, with the objection
+in prose underneath — which is the shape of a rule nobody enforces: present,
+readable, and outvoted by the table above it. A generator reads the table and
+not the paragraph. It moved to [`never-offered.md`](never-offered.md), where a
+refusal is a row rather than a footnote.
 
 ## Form: grouping, help and actions
 

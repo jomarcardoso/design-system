@@ -177,6 +177,19 @@ not separated by `quiet`: the answers are fixed for the whole product, so if
 both fit, both fit everywhere and every time. Only the content half can break a
 tie, because only it varies from screen to screen.
 
+A third check reads `never-offered.md`, the catalogue of shapes this tool does
+not propose — bevels, neumorphism, glassmorphism, gradient fills, carousels as
+the only route to content. It exists for RECOGNITION rather than prohibition:
+an agent that does not know a shape exists reinvents it. Nothing there is
+banned; a client who asks gets it as a recorded deviation.
+
+It refuses two things. **A form catalogue offering a shape that file refuses** —
+placeholder-as-label was listed as a form with the objection in prose
+underneath, which is the shape of a rule nobody enforces: present, readable, and
+outvoted by the table above it. A generator reads the table, not the paragraph.
+And **an entry that refuses without saying what instead**, because the person
+reading it wanted the thing it refuses.
+
 ```bash
 npm run docs:forms
 ```
