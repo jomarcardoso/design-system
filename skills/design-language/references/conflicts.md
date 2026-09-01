@@ -78,7 +78,7 @@ move it is the client's to make, and it belongs in the document.
 The conflict the notes singled out, and the interesting thing is that it is
 usually a mislabelled school rather than a real contradiction.
 
-**First, re-ask the decider from question 12b:** *"when something is CHOSEN — a
+**First, re-ask the decider from question 11b:** *"when something is CHOSEN — a
 selected tab, a ticked checkbox — does it take one of these colours, or always
 the same one?"* A client who answers "one of these, depending" described
 `functional` and called it monochrome, because monochrome is the word in the
@@ -205,7 +205,7 @@ that did not sound like one.
 
 Question 20 answered `content` needs a rung: the frame around a photograph is a
 surface, and it has to differ from the one behind it or the image floats. If
-question 10a bought two rungs, the third rung is now spoken for and the sunken tone
+`ladderSpend` bought two rungs, the third rung is now spoken for and the sunken tone
 that was going to separate the aside is gone.
 
 **The softening move is the inset hairline** from section K of `derivations.md`,

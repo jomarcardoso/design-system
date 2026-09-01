@@ -1,8 +1,8 @@
 <!-- skills/design-language/references/derivations.md -->
 
-# Derivations — from twenty-three answers to a hundred decisions
+# Derivations — from twenty-one answers to a hundred decisions
 
-The interview asks about twenty-three things. A finished interface needs hundreds
+The interview asks about twenty-one things. A finished interface needs hundreds
 of decisions, and the ones in between have to come from somewhere.
 
 Today they come from judgement at generation time, and **when judgement has
@@ -119,7 +119,7 @@ for the action.
 
 ## B. Surfaces and inputs
 
-Reads `posture`, `elevation`, `10a` (how many rungs) and `10` (`surfaceModel`).
+Reads `posture`, `elevation`, `ladderSpend` and `surfaceModel` — all four derived, none asked.
 
 | decision | derived from | rule |
 |---|---|---|
@@ -127,7 +127,7 @@ Reads `posture`, `elevation`, `10a` (how many rungs) and `10` (`surfaceModel`).
 | input at rest | `posture` | `quiet`: hairline, no fill change · `balanced`: hairline + recess · `loud`: full border, visible fill |
 | input on focus | always | the ring, never a colour change alone |
 | card separation | `surfaceSeparation` | `lines` → hairline, same fill as page · `tones` → one rung, no line · `shadows` → `shadow-raised` |
-| modal surface | `10a` | one surface → the page colour, separated by the scrim alone · two or more → the raised rung |
+| modal surface | `ladderSpend` | one surface → the page colour, separated by the scrim alone · two or more → the raised rung |
 
 **Pure white is a value, not a mistake — but it needs a job.** When
 `neutralPigment > 0`, white is the top of the ramp and belongs to whatever
@@ -264,7 +264,7 @@ Question 19 gave the regions. These follow.
 | content measure | archetype + Q5 | reading or Editorial: 45–75 characters. Dense tool: the region's width, with a max only where lines would exceed ~110 characters |
 | header behaviour | `disclosure` + Q5 | `progressive` + reading: static, scrolls away · `exposed`: sticky · long reading pages: sticky and condensed after the first screen |
 | aside on a phone | `disclosure` | `progressive`: becomes a sheet or a menu · `exposed`: moves above the content and stays |
-| tone of each region | Q10a | one-surface budget: all regions share the page tone, separated by rules · two: the frame takes the second rung and the content keeps the page |
+| tone of each region | `ladderSpend` | one-surface budget: all regions share the page tone, separated by rules · two: the frame takes the second rung and the content keeps the page |
 | where the accent sits in the frame | `colourStrategy` | the current item in the navigation, and nothing else in the chrome |
 
 **A frame region is not a card.** It is separated by a rule or a rung, never by
@@ -534,7 +534,7 @@ answered.
 
 ## P. Icon style — also formerly a question
 
-Derived from the archetype and from §O. It was question 9, and its own ✅ table
+Derived from the archetype and from §O. It was a question, and its own ✅ table
 had exactly one ✅ in four of the five rows — which means the archetype was
 answering it and the client was being asked to agree.
 
@@ -640,9 +640,9 @@ weight, and the eye cannot tell which rectangle it may click.
 
 | | `border-divider` | `border-interactive` |
 |---|---|---|
-| question 9 = the border carries hierarchy | `border-color` — it is load-bearing | `border-color-strong` |
-| question 9 = the tone carries hierarchy | `border-color-subtle` | `border-color` |
-| question 9 = space carries hierarchy | `border-color-subtle`, used almost nowhere | `border-color` |
+| `elevationCarrier` = the border colour | `border-color` — it is load-bearing | `border-color-strong` |
+| `elevationCarrier` = the surface tone | `border-color-subtle` | `border-color` |
+| `elevationCarrier` = space alone | `border-color-subtle`, used almost nowhere | `border-color` |
 | `posture: loud` | unchanged | one step stronger |
 
 ### The redundancy rule
@@ -950,7 +950,7 @@ lean, and it is the single most useful thing in this section.
 
 **3. Whether the state must survive without colour.**
 
-From question 16 and from `accessibility`. A selection carried by hue alone is
+From question 15 and from `accessibility`. A selection carried by hue alone is
 invisible to a colour-blind reader, in a printout, and in a screenshot pasted
 into a ticket. Where it must survive:
 
@@ -981,6 +981,95 @@ document records both with the reason. That is not two design languages; it is
 one rule producing two outcomes from two different facts, which is what a
 derivation is for.
 
+## W. Depth, what carries it, and how many rungs
+
+Three things that were three questions until a client noticed what they were
+asking:
+
+> *A pergunta 9 começou a perguntar o que quero em vez de continuar entendendo o
+> que preciso resolver.*
+
+That is the test, and depth failed it. *How should layering FEEL* is a question
+about taste put to someone who is not a designer, ten seconds after the
+interview taught them the words. What follows derives it instead.
+
+### `elevation` — flat, or shadows
+
+| archetype | proposes |
+|---|---|
+| Editorial & Premium | `borders` |
+| Tech Minimalist | `borders` |
+| Utilitarian & Technical | `borders` |
+| Enterprise Solid | `soft-shadows` |
+| Playful & Expressive | `soft-shadows` |
+
+Then `dwell` moves it, and only in one direction:
+
+| `dwell` | |
+|---|---|
+| `hours` | **`borders` regardless of the archetype.** Every shadow is one more thing the eye reprocesses on a screen somebody sits in front of all day, and it is the cheapest thing to remove |
+| `seconds`, `minutes` | the archetype's answer stands |
+
+`projected-shadows` is never derived. It is reachable as a deviation and no
+combination of facts about a product argues for it — which is worth saying
+rather than leaving as an omission.
+
+### `elevationCarrier` — what does the work instead
+
+**This one is already answered by question 9.** Asking it was offering a choice
+the previous answer had made:
+
+| `surfaceModel` | `elevationCarrier` | why there is nothing to ask |
+|---|---|---|
+| `flat` | `border-color` | page and card share a tone, so a line is the only thing left |
+| `elevated` | `surface-tone` | the raised rung IS the carrier; that is what the model means |
+| `recessed` | `surface-tone` | the same, downward |
+
+The one real choice inside `flat` is between a line and pure space, and it comes
+from `posture`: `quiet` with `generous` density can carry it on space alone,
+everything else needs the line. Present that as the one thing to disagree with,
+rather than presenting the whole table.
+
+### `ladderSpend` — how many rungs the layout takes
+
+Derived from the **frame**, which is question 18 — and the old question asked
+this at question 10a, *before* the fact that answers it. A preference asked
+ahead of the fact that decides it is worse than a preference asked at all.
+
+| `frame` | rungs | what takes them |
+|---|---|---|
+| single column | 2 | the page, and one raised rung shared by header, card and modal |
+| content with an aside | 2 | the same; **the aside is separated by a rule** |
+| application frame | 3 | the page, the raised rung, and the navigation on its own tone |
+
+**The rungs the layout does not spend are RESERVED, not saved.** Badges, chips,
+tags, resting secondary actions and ghost hover live one rung past the layout's
+last. A layout that has spent every rung has nothing left that reads as an
+ELEMENT rather than a REGION, and every label then has to be either a
+page-coloured rectangle with no edge or a dark solid that looks like a button.
+
+So the third rung is a real cost and the app-frame row above is the one place a
+product pays it by default. Where a two-rung product wants its navigation to
+differ anyway, the answer is a rule and not a tone — and saying that costs one
+sentence, where discovering it costs the quiet fill.
+
+### `secondaryAction` — already in §A
+
+It was question 15 and §A already held the answer, which makes it the clearest
+case of the four:
+
+| | `quiet` | `balanced` | `loud` |
+|---|---|---|---|
+| secondary button | quiet fill or outline | quiet fill | solid neutral |
+
+The remaining choice — quiet fill against outline at `quiet` — comes from
+`elevationCarrier`: where the border carries hierarchy, the outline is coherent;
+where tone carries it, the quiet fill is. One sentence in the read-back, not a
+question in the interview.
+
+**`tinted` and `second-brand` are never derived.** Both spend colour the accent
+budget in §E has already allocated, and both are reachable as deviations.
+
 ## Validating a new question: does it discriminate?
 
 Before a question is considered finished, run it against three products that
@@ -1003,7 +1092,7 @@ These three are the standing set, chosen because they stress different axes:
 | `radius` | 4 / 8 | 4 / 8 | 2 / 2 |
 | divider | present, absent around cards | present everywhere | present everywhere |
 
-**The finding from running it.** The first draft of question 10 had a rule
+**The finding from running it.** The first draft of the surface-model question had a rule
 saying long dwell pulls the model one step toward `flat`. Applied here, the
 console and the editor both landed on `flat` and the question stopped
 discriminating between them — which is exactly the failure this table exists to

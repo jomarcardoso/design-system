@@ -126,9 +126,10 @@ every product that correctly has none is a report nobody reads twice.
 | a sheet on demand | absent until asked for | `progressive`; `mobile-first` | filters the user adjusts repeatedly |
 | the aside becomes a section | on narrow screens it moves below the content | `multiplatform` | asides carrying navigation, which must stay reachable |
 
-**An aside separated by a rule is not a lesser aside.** Question 10a fixed how
-many rungs the layout may spend, and an aside is the region most often given one
-it cannot afford. A hairline is the answer at `ladderSpend: 2`.
+**An aside separated by a rule is not a lesser aside.** `ladderSpend` fixes how
+many rungs the layout may spend — derived in `derivations.md` §W from the frame —
+and an aside is the region most often given one it cannot afford. A hairline is
+the answer at `ladderSpend: 2`.
 
 ## Form pages
 

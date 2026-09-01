@@ -64,8 +64,22 @@ colorCriticalWorkspace: false
 # up; `surfaceModel: recessed` moves it one step down. See derivations.md O.
 radius: subtle                    # square | subtle | rounded | pill
 
+# DERIVED from the archetype, then moved by `dwell` in one direction only: at
+# `hours` it is `borders` whatever the archetype wanted, because every shadow is
+# one more thing the eye reprocesses on a screen somebody sits in front of all
+# day, and it is the cheapest thing to remove.
+#
+# It was a question — "how should depth and layering feel" — and a client caught
+# what that was asking: what they WANT, at a point where the interview should
+# still have been finding out what the product NEEDS. `projected-shadows` is
+# never derived and stays reachable as a deviation. See derivations.md §W.
 elevation: borders                # borders | soft-shadows | projected-shadows
-elevationCarrier: border-color    # what carries hierarchy — required when elevation is `borders`
+
+# DERIVED from `surfaceModel`, which already answered it: `flat` leaves only a
+# line or space, and `elevated`/`recessed` mean the tone IS the carrier. The one
+# real choice is between a line and pure space inside `flat`, and it comes from
+# `posture` with `density`.
+elevationCarrier: border-color    # border-color | surface-tone | space
 
 # The PHYSICS of light on the screen, and independent of the colour school. A
 # product can be monochrome and elevated, monochrome and flat, functional and
@@ -90,10 +104,15 @@ elevationCarrier: border-color    # what carries hierarchy — required when ele
 surfaceSeparation: lines          # lines | tones | shadows
 
 surfaceModel: elevated            # flat | elevated | recessed
-# How many rungs the LAYOUT may spend. Omit when surfaceModel is `flat`. Three or
-# more is a deviation rather than a preference: the rungs the layout does not
-# spend are RESERVED for the quiet neutral fill every badge, chip and resting
-# secondary action is made of.
+# DERIVED from the FRAME. It used to be asked in block 3 — before the question
+# that answers it, which is worse than asking a preference at all. A single
+# column or a content-and-aside layout needs two; an application frame whose
+# navigation carries its own tone needs three.
+#
+# The rungs the layout does not spend are RESERVED, not saved: badges, chips,
+# tags and resting secondary actions live one rung past the layout's last, so a
+# layout that has spent every rung has nothing left that reads as an ELEMENT
+# rather than a REGION.
 ladderSpend: 2                    # 2 | 3
 
 # DERIVED from the archetype and from `radius`, no longer asked. The old
@@ -203,10 +222,15 @@ accentFill: washed                # saturated | washed
 # this file and the one that does the most visible work.
 neutralPigment: 0.7
 
-# outline | tinted | neutral | second-brand. Six of the seven treatments in
-# use are the same tokens pointed elsewhere, so this changes theme.scss and
-# never the product layer.
-secondaryAction: outline
+# DERIVED from `posture`, and derivations.md §A held the answer while this was
+# still a question — the clearest of the four demotions. The remaining choice,
+# quiet fill against outline at `quiet`, follows `elevationCarrier`: where the
+# border carries hierarchy the outline is coherent, where tone carries it the
+# quiet fill is.
+#
+# `tinted` and `second-brand` are never derived — both spend colour the accent
+# budget has already allocated — and both stay reachable as deviations.
+secondaryAction: outline          # outline | tinted | neutral | second-brand
 
 voice: action-oriented            # technical | action-oriented | warm
 voiceExceptions:                  # contexts that drop to a stricter register
