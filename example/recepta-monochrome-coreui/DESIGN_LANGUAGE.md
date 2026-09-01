@@ -94,16 +94,23 @@ colourStrategy: monochrome
 # change the measurement — change the accent.
 accentContrast: high
 
-# Washed. The photograph of the food is the magnet, not the button — and at an
-# hour a sitting, a saturated fill on every save button is the thing a cook
-# stops seeing. Derived from protagonist: user-content and dwell: hours.
+# SATURATED, against the derivation, and the measurement is the reason.
 #
-# It clears the floor it has to clear: bg-accent-subtle here is the only
-# chromatic fill on a page whose every other quiet element is sepia, so the
-# primary action is still unmistakably the strongest thing on its screen. In a
-# product with tinted badges it would not have been, and the answer would have
-# been saturated with that reason recorded.
-accentFill: washed
+# protagonist: user-content plus dwell: hours propose `washed` — the photograph
+# of the food should be the magnet, not the button. The floor says otherwise and
+# it is not close:
+#
+#   bg-accent-subtle sits 1.01 from the page
+#   bg-neutral-subtle sits 1.16 from the page
+#
+# So a washed action here would be LESS separated from the page than an ordinary
+# badge, and in the dark theme the two tokens measure identically. The primary
+# action would have been a tag. npm run verify:accent-fill measures it.
+#
+# This document said `washed` for a day, with a paragraph explaining that it
+# cleared the floor. It did not. The paragraph was judgement and the floor is
+# arithmetic, which is why the check exists.
+accentFill: saturated
 # 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
 # end of the ladder — see the note in section 2 on why the original "not sepia"
 # answer was withdrawn.

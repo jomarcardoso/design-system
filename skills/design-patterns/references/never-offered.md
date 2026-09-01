@@ -43,7 +43,7 @@ The second kind is the more useful half of this file.
 | **neumorphism** | dual soft shadows on a surface the same colour as its background | **never was.** The control and its background are the same fill BY DESIGN, so non-text contrast is near zero and it fails WCAG 1.4.11 by construction. It is not a strict reading of the rule; there is nothing there to measure | a fill one rung from the page, or a border | two `box-shadow` values, one light and one dark, on a surface with no background difference |
 | **glassmorphism** | a translucent fill over a blurred backdrop | **never was**, for a reason worth stating precisely: the contrast of anything on it depends on what happens to be behind it, so the pair invariant every theme is checked against cannot be evaluated at all. It is not that it fails the gate — it cannot be put through it | a solid raised surface at `bg-raised`, with `shadow-overlay` | `backdrop-filter` |
 | **hard offset drop shadow** | a dark shadow with a visible offset and no blur | dated, and it is the same decision as a border made twice as heavy | `shadow-raised`, or a border | `box-shadow` with zero blur and a non-zero offset |
-| **inner and outer glow** | a coloured halo around a control | dated; and as a focus treatment it is a ring drawn badly | `ring`, `ring-width`, `ring-offset` | a `box-shadow` whose colour is the accent at low alpha |
+| **glow as a focus ring, or as decoration** | a coloured halo around a control that did not ask for one | as a focus treatment it is a ring drawn badly, and as decoration it is the 2012 answer. **NOT refused as an archetype signature** — see below | `ring`, `ring-width`, `ring-offset` for focus; nothing for decoration | a `box-shadow` whose colour is the accent at low alpha, outside a `:focus-visible` rule |
 
 ## Colour
 
@@ -73,6 +73,31 @@ The second kind is the more useful half of this file.
 | **parallax on content** | background and foreground moving at different rates behind text | it is motion under text being read, and it is the first thing `prefers-reduced-motion` has to remove | a static image, or motion on decoration only | a scroll listener writing `transform` |
 | **a splash screen before content** | a branded interstitial on the way in | it spends the user's first seconds on something they did not ask for | the content, with a skeleton while it loads | not detectable |
 | **a hamburger as the only desktop navigation** | destinations hidden behind a menu on a wide screen | it hides navigation to buy room a desktop already has | a top bar or a rail. `layout-forms.md` offers both | not detectable |
+
+---
+
+## A shape is not dated when it is the premise
+
+The glow entry above was written unqualified and it was wrong, which is worth
+leaving in rather than quietly fixing: this repository ships an accent-driven
+cyberpunk example whose primary action is a neon edge, promoted deliberately
+because the library had no modifier for it. The file as first written refused
+the central signature of a product it also ships.
+
+**A halo is dated when it arrives as decoration in a product that did not ask
+for one. It is not dated when it is what the product IS.** The same holds for
+most of the Dated half of this file, and it is the line between a catalogue of
+recognition and a catalogue of taste.
+
+There is a second finding underneath it, and it is the larger one: **the
+interview cannot reach that example.** Neither form catalogue contains a glow,
+none of the five archetypes describes an expressive dark product, and
+`archetypes.md` already admits the matrix "is not a taxonomy of every product
+that can exist". So the tool produces neon and the questions do not lead there —
+the example was written by hand, beside the path the interview walks.
+
+That gap is recorded here rather than closed, because closing it is a decision
+about what the interview should cover, not a bug to fix quietly.
 
 ---
 

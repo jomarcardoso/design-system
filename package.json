@@ -44,7 +44,7 @@
     "docs:carmageddon": "node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html --stylesheet ./ds.css --title \"DS Carmageddon\"",
     "export:tokens": "node scripts/export-tokens.mjs",
     "lint": "stylelint \"src/**/*.scss\" \"app.css\" \"tailwind.css\" \"example/**/app.css\" \"example/**/patterns.scss\" \"example/**/theme.scss\" \"example/demo/*.scss\"",
-    "verify": "npm run build:tokens && npm run lint && npm run verify:examples && npm run verify:utilities && npm run verify:examples-refs && npm run verify:forms && npm run verify:chain && npm run audit:contrast",
+    "verify": "npm run build:tokens && npm run lint && npm run verify:examples && npm run verify:utilities && npm run verify:examples-refs && npm run verify:forms && npm run verify:accent-fill && npm run verify:chain && npm run audit:contrast",
     "verify:examples": "node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json && node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 --ledger example/ds-cyberpunk-bulma-phase2/patterns.json && node scripts/verify-patterns.mjs example/ds-carmageddon-nescss-phase3 --ledger example/ds-carmageddon-nescss-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-meu-caderninho-daisyui-phase3 --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-itau-shadcn-phase3 --ledger example/ds-itau-shadcn-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-booking-bulma --ledger example/ds-booking-bulma/patterns.json && node scripts/verify-patterns.mjs example/recepta-monochrome-coreui --ledger example/recepta-monochrome-coreui/patterns.json",
     "verify:patterns": "node scripts/verify-patterns.mjs",
     "verify:utilities": "node scripts/check-utilities.mjs example/ds-itau-shadcn-phase3/index.html example/ds-itau-shadcn-phase3/tw.css example/ds-itau-shadcn-phase3/ds.css example/ds-itau-shadcn-phase3/app.css",
@@ -53,7 +53,8 @@
     "verify:examples-refs": "node scripts/check-dangling-refs.mjs example/ds-booking-bulma/ds.css example/ds-caderno-accent-driven/ds.css example/ds-caderno-accent-driven/app.css example/ds-carmageddon-nescss-phase3/ds.css example/ds-cyberpunk-bulma-phase2/ds.css example/ds-hot-tone-bootstrap-phase1/ds.css example/ds-hot-tone-bootstrap-phase1/app.css example/ds-itau-shadcn-phase3/ds.css example/ds-itau-shadcn-phase3/app.css example/ds-meu-caderninho-daisyui-phase3/ds.css example/ds-meu-caderninho-daisyui-phase3/app.css example/recepta-monochrome-coreui/ds.css example/recepta-monochrome-coreui/app.css",
     "docs:forms": "node scripts/docs-forms-map.mjs > FORMS.md",
     "verify:forms": "node scripts/check-forms-reachable.mjs && node scripts/check-forms-exclusive.mjs && node scripts/check-never-offered.mjs",
-    "docs:form-set": "node scripts/docs-forms-derived.mjs example/recepta-monochrome-coreui"
+    "docs:form-set": "node scripts/docs-forms-derived.mjs example/recepta-monochrome-coreui",
+    "verify:accent-fill": "node scripts/check-accent-fill.mjs example/recepta-monochrome-coreui && node scripts/check-accent-fill.mjs example/ds-caderno-accent-driven"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

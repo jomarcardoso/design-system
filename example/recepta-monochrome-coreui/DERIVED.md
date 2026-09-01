@@ -170,10 +170,10 @@ tables nobody had checked against each other.
 | decision | value | from |
 |---|---|---|
 | the progression | washed → saturated | `posture: quiet` |
-| `accentFill` | `washed` | `protagonist: user-content` + `dwell: hours` |
+| `accentFill` | **`saturated`**, against the derivation | `protagonist` + `dwell` propose `washed`; the floor refuses it — accent-subtle sits 1.01 from the page and neutral-subtle 1.16, so a washed action would be quieter than a badge |
 | the second channel | the ink darkens with the fill | `accessibility: AA` — a tone step alone does not survive a printed recipe |
 | multi-select | washed only, never a solid fill | cardinality: the tag filters are multi-select, and eight filled chips is a wall of colour |
-| the floor it clears | the accent is the only chromatic fill on a sepia page | measured, not assumed — see DESIGN_LANGUAGE.md |
+| the floor it does NOT clear | washed was refused by measurement | `verify:accent-fill` — see DESIGN_LANGUAGE.md for the numbers |
 
 ### The accent budget
 

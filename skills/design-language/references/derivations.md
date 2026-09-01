@@ -845,7 +845,67 @@ saturated, sometimes washed, sometimes just a border* — is the right
 observation and the wrong thing to put to a non-designer, because the answer
 comes back as taste. Everything below derives.
 
-### The two progressions
+### Two decisions, not one
+
+The first draft of this section ran them together and the example caught it: the
+document said `accentFill: washed` and the build shipped a solid fill, and both
+passed every check because the chain verifies that a key was derived FROM, never
+that its value arrived.
+
+They are separate because they answer different questions, and §E already listed
+their destinations separately:
+
+| | decides | asked of |
+|---|---|---|
+| **`accentFill`** | what the PRIMARY ACTION is filled with | is the action the magnet, or is the content? |
+| **the selection progression** | what a CHOSEN state does | how many can be chosen, and how many are on screen? |
+
+**The invariant that ties them: a selection may never be more saturated than the
+primary action.** A chosen chip that outshouts the button is a page telling the
+user that what they already picked matters more than what they can do next. This
+is the rule to check when the two derivations disagree, and it decides in favour
+of the action.
+
+### `accentFill` — the primary action
+
+| `accentFill` | the fill | the ink on it |
+|---|---|---|
+| `saturated` | `bg-accent` | `fg-on-accent` — inverts |
+| `washed` | `bg-accent-subtle` | `fg-default` — stays dark |
+
+Derived from `protagonist` and `dwell`, which is the pair that decides how much
+of the page a product is willing to spend on being noticed:
+
+| | proposes |
+|---|---|
+| `brand` or `product-content`, at `seconds` | `saturated` — the action is the magnet, and nobody is here long enough to tire of it |
+| `user-content`, at `hours` | `washed` — the content stays the magnet |
+| anything else | `washed`, and say what it costs |
+
+**Then measure it, because the proposal is often wrong.** `washed` reaches for
+`bg-accent-subtle`, which sits at the pale end of a ramp — and the quiet fill
+every badge, tag and resting secondary action is made of sits at the pale end of
+another. In a monochrome product they can land on top of each other.
+
+> **`washed` survives only where `bg-accent-subtle` is further from the page than
+> `bg-neutral-subtle` is.**
+
+A comparison rather than a threshold, so it holds at any palette. Where it fails,
+the derived `washed` becomes `saturated` and the measurement is the reason.
+
+The accent-driven example is the worked case and it fails: `accent-subtle`
+measures **1.11** against its page, `neutral-subtle` measures **1.16**, and the
+two are **1.05** apart. A washed action there would be less separated from the
+page than an ordinary badge and indistinguishable from one. `npm run
+verify:accent-fill` measures it rather than leaving it to judgement, because
+judgement wrote `washed` into that document and did not notice.
+
+**A quiet product is one where the content is loudest, not one where the action
+is lost.**
+
+### The selection progression
+
+#### The two progressions
 
 | | at rest | when chosen |
 |---|---|---|
@@ -858,7 +918,7 @@ A third exists and is not a progression so much as its absence:
 |---|---|---|
 | **weight only** | nothing | the ink darkens and the weight goes up |
 
-### What decides it
+#### What decides it
 
 Four inputs, none of them a preference, and the second is the one that does the
 most work.
@@ -907,39 +967,6 @@ into a ticket. Where it must survive:
 |---|---|
 | `elevated` | a solid fill fights a surface that is already the lit thing. Prefer washed → saturated |
 | `flat`, `recessed` | either works |
-
-### `accentFill`
-
-The token the chosen state reaches for, and the front-matter key that records
-this:
-
-| `accentFill` | the chosen fill | the ink on it |
-|---|---|---|
-| `saturated` | `bg-accent` | `fg-on-accent` — inverts |
-| `washed` | `bg-accent-subtle` | `fg-default` — stays dark |
-
-Derived from `protagonist` and `dwell`, which is the same pair that decides how
-much of the page the product is willing to spend on being noticed:
-
-| | proposes |
-|---|---|
-| `brand` or `product-content`, at `seconds` | `saturated` — the action is the magnet, and nobody is here long enough to tire of it |
-| `user-content`, at `hours` | `washed` — the content stays the magnet |
-| anything else | `washed`, and say what it costs |
-
-**`accentFill` is not `accentContrast`.** The two look alike and are unrelated:
-`accentContrast` is MEASURED, comparing the accent against both ends of the ramp
-to decide which ink survives on it. This one chooses which accent token the
-chosen state uses at all. The names are close enough that the distinction has to
-be stated wherever either appears.
-
-**The floor `washed` has to clear.** In a `quiet` product, `bg-accent-subtle`
-sits very near the `bg-neutral-subtle` that every badge, tag and resting
-secondary action is made of — so a washed primary action can end up looking like
-a label. Measure it: if the chosen state is not clearly the strongest thing on
-its own screen, `washed` has failed and the answer is `saturated`, recorded as a
-deviation with this reason. **A quiet product is one where the content is
-loudest, not one where the action is lost.**
 
 ### The rule that ties it to the ledger
 
