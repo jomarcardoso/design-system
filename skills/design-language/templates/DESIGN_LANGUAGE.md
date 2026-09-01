@@ -103,6 +103,11 @@ elevationCarrier: border-color    # border-color | surface-tone | space
 # or contradict. It applies to every school; only the question was monochrome.
 surfaceSeparation: lines          # lines | tones | shadows
 
+# DERIVED from question 7 and nothing else, unless colorCriticalWorkspace
+# overrides it. It was derived and then offered back as a menu, which the client
+# named for what it is: a derivation presented as a menu is still a question.
+# Present the CONSEQUENCE in the read-back — the card will be lighter than the
+# page, so the eye reaches it before the chrome — never the token.
 surfaceModel: elevated            # flat | elevated | recessed
 # DERIVED from the FRAME. It used to be asked in block 3 — before the question
 # that answers it, which is worse than asking a preference at all. A single
@@ -182,6 +187,10 @@ typeScale: 1.25                   # 1.125 | 1.2 | 1.25 | 1.333 | 1.5
 iconPolicy: icon-leads            # label-always | icon-leads | icon-alone | icon-contained
 
 accessibility: AA                 # AA | AAA — sets the threshold in themes.check-contrast()
+# DERIVED from the archetype, then forced to brand-adapted by `monochrome` —
+# traditional green, amber, red and blue on a one-accent product is four more
+# colours arriving through the back door. Adapted moves chroma and temperature
+# and NEVER the hue family: error stays red.
 statusColours: traditional        # traditional | brand-adapted
 
 # Which school this product belongs to. Sets config.$colour-strategy, and so
@@ -191,6 +200,10 @@ statusColours: traditional        # traditional | brand-adapted
 #   functional  a colour per job (Atlassian, Polaris)
 #   brand       the brand hue also marks what is chosen (Material, Itau)
 #   monochrome  one accent, everything else grey (Apple, Vercel, Radix)
+# DERIVED from question 7 for a new product, and ASKED only where one already
+# exists, because there it is an observation: does a selected tab take your brand
+# colour today? The opener it used to carry — brand presence, dense workflow, or
+# a clean page — was question 7 asked a second time.
 colourStrategy: functional
 
 # --- Accent-driven only -----------------------------------------------------
@@ -218,8 +231,12 @@ accentContrast: high
 # any posture, because eight filled chips is a wall of colour with no hierarchy
 # left for the action that acts on them. See derivations.md section V.
 accentFill: washed                # saturated | washed
-# 0 = true grey, 1 = the seed pigment at full strength. The smallest number in
-# this file and the one that does the most visible work.
+# DERIVED from the archetype, capped at 0.2 by colorCriticalWorkspace, and
+# overruled by any MATERIAL the client named in question 1 — "recycled paper",
+# "kraft", "cold steel". A named material is a fact about the product; a number
+# between 0.5 and 0.8 is a choice nobody can make. Never read it aloud.
+#
+# The smallest number in this file and the one doing the most visible work.
 neutralPigment: 0.7
 
 # DERIVED from `posture`, and derivations.md §A held the answer while this was

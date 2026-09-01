@@ -1,8 +1,8 @@
 <!-- skills/design-language/references/derivations.md -->
 
-# Derivations — from twenty-one answers to a hundred decisions
+# Derivations — from eighteen answers to a hundred decisions
 
-The interview asks about twenty-one things. A finished interface needs hundreds
+The interview asks about eighteen things. A finished interface needs hundreds
 of decisions, and the ones in between have to come from somewhere.
 
 Today they come from judgement at generation time, and **when judgement has
@@ -950,7 +950,7 @@ lean, and it is the single most useful thing in this section.
 
 **3. Whether the state must survive without colour.**
 
-From question 15 and from `accessibility`. A selection carried by hue alone is
+From `statusColours` and from `accessibility`. A selection carried by hue alone is
 invisible to a colour-blind reader, in a printout, and in a screenshot pasted
 into a ticket. Where it must survive:
 
@@ -1069,6 +1069,110 @@ question in the interview.
 
 **`tinted` and `second-brand` are never derived.** Both spend colour the accent
 budget in §E has already allocated, and both are reachable as deviations.
+
+## X. The four the client removed
+
+§W removed four questions that asked what the client WANTED. Running the
+interview again removed four more, by the same test, and this section holds
+them. The test, in the client's words, is worth quoting exactly because it is
+sharper than anything this file had before:
+
+> *eu como não designer não deveria ser capaz de opinar se o card deve ficar
+> elevado ou escavado, e sim as necessidades devem dizer.*
+
+**A derivation presented as a menu is still a question.** That is the trap all
+four fell into. "I derived `elevated` — confirm, or would you rather have
+`recessed`?" reads as considerate and is not: it hands back the decision that
+was just derived, in vocabulary the client learned ten seconds ago. Deriving and
+then offering the alternative as a peer is the same failure wearing better
+manners.
+
+**Present the CONSEQUENCE, not the token.** A derived value reaches the client
+in the read-back as what it will do to their product — *"the recipe card will be
+lighter than the page, so the eye goes to it before it goes to the chrome"* —
+and they can object to that. They cannot usefully object to `elevated`.
+
+### `surfaceModel`
+
+Derived from question 7 and nothing else, unless the colour-critical flag
+overrides it:
+
+| `protagonist` | `surfaceModel` |
+|---|---|
+| the user's content | `elevated` — their content is the lit thing |
+| the product's content | `elevated` |
+| the brand | `flat` — brand-coloured blocks do the separating |
+| the tools | `recessed` — wells group the controls |
+| `colorCriticalWorkspace: true` | `flat` or `recessed`, never `elevated` |
+
+Long dwell does NOT change the model. It lowers the contrast between rungs and
+pulls `posture` toward quiet — a dense console still needs its wells however
+long somebody sits in front of it. That correction came out of the three-profile
+validation and is the reason this table has no dwell column.
+
+### `colourStrategy`
+
+The most load-bearing line in the document, and it was two questions: an opener
+about priority and a decider about what a chosen thing takes.
+
+**The opener was question 7 asked a second time.** "Brand presence everywhere /
+a dense operational workflow / a clean page where the user's content is the only
+thing standing out" maps one to one onto "the brand / the tools / the user's
+content". Same duplication as `surfaceSeparation`, same fix.
+
+**The decider survives only where there is something to observe.** For a product
+that exists, *"today, does a selected tab take your brand colour?"* is a fact the
+client can walk to a screen and check. For a new product it asks a non-designer
+to invent a colour architecture, so it is derived — see question 10.
+
+### `neutralPigment`
+
+Was "which paper is this", offering no paper, a hint, or unmistakably tinted.
+The archetype answers it, and question 1 usually says it outright: a client who
+describes a notebook has described paper.
+
+| archetype | `neutralPigment` |
+|---|---|
+| Editorial & Premium | 0.6 |
+| Playful & Expressive | 0.6 |
+| Tech Minimalist | 0.2 |
+| Enterprise Solid | 0.15 |
+| Utilitarian & Technical | 0 |
+
+Then two overrides, in order:
+
+- **`colorCriticalWorkspace: true` caps it at 0.2**, whatever the archetype. A
+  tinted grey beside an image is a colour cast the user will try to correct for.
+- **A material named in question 1 wins.** "Recycled paper", "linen", "kraft",
+  "cold steel" — the client naming a material is a fact about the product, not a
+  preference about a number, and it moves the value to 0.8 warm or 0.2 cool.
+  Say which words moved it.
+
+**Never read the number aloud.** A client asked to choose between 0.5 and 0.8
+cannot, correctly. It is the smallest value in the document and does more
+visible work than any other — a few thousandths of chroma in the mid-tones, and
+the difference between a notebook and a settings screen.
+
+### `statusColours`
+
+Was a question that carried its own default, which is the tell: its text said
+*"the archetype has a ✅ in every row, so offer it as the default instead of
+asking cold."* A question offering its own answer is a derivation that has not
+noticed yet.
+
+| archetype | `statusColours` |
+|---|---|
+| Editorial & Premium | `brand-adapted` |
+| everything else | `traditional` |
+
+Then the school moves it: **`monochrome` forces `brand-adapted`**, because
+traditional green, amber, red and blue on a one-accent product is four more
+colours arriving through the back door — the school abandoned one alert at a
+time.
+
+**Adapted moves chroma and temperature and never the hue family.** Error stays
+red. A system that changes the family has not adapted its status colours, it has
+changed what they mean.
 
 ## Validating a new question: does it discriminate?
 

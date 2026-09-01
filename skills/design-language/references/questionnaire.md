@@ -2,8 +2,8 @@
 
 # The discovery interview
 
-Twenty-one questions in six blocks — two of them apply to one colour school
-only, and one is skipped when the product is new. Two rules govern the whole thing:
+Eighteen questions in six blocks, and two of them are skipped for a product
+that does not exist yet. Two rules govern the whole thing:
 
 **Every question decides something concrete** — a token value, a build
 threshold, or a rule the build can check. A question whose answer changes
@@ -48,7 +48,7 @@ aloud is four.
 
 **One number, one decision.** A question that carries three decisions collects
 them positionally — "A, A" for three slots — and one disappears without anyone
-noticing which. Split it into 21a, 21b, 21c and let each answer have a label to
+noticing which. Split it into 18a, 18b, 18c and let each answer have a label to
 land on.
 
 **Confirming means proposing ONE option.** Compressing a question is allowed;
@@ -280,48 +280,7 @@ something to disagree with. **A derived default is not a decision taken away
 from anyone.** It is a decision made by the thing that has the standing to make
 it, and shown.
 
-**9. Which way does light fall?** — DERIVED from block 2, then confirmed.
-
-The physics of the screen, and **independent of the colour school**. A product
-can be monochrome and elevated (a reading app), monochrome and flat (Vercel),
-functional and recessed (a dense B2B console). Treating them as one axis is what
-makes generated systems converge: the school gets chosen, the surface model
-comes along for the ride, and two products with different jobs end up with the
-same page.
-
-- (A) **`flat`.** Page and cards share one tone. Everything is separated by
-  hairlines and by space. One tone on screen, no competition between greys.
-- (B) **`elevated`.** The page is a rung down and anything raised above it is
-  LIGHTER — a card, a modal, a dropdown. Paper on a table under a lamp.
-- (C) **`recessed`.** The page is the lightest step and anything grouped is
-  DARKER — a form panel, a data area, a well. Niches cut into a surface.
-
-**This used to be two questions inside the accent-driven profile**, asked only
-when the school was monochrome — so a functional or brand product was never
-asked which way its ladder ran, and half the products this tool generates had
-the decision made for them by whichever example got copied. Promoting it here is
-the single largest correction in this file.
-
-Derive the proposal from block 2 and present ONE option:
-
-| | proposes |
-|---|---|
-| protagonist A, the user's content | `elevated` |
-| protagonist B, the product's content | `elevated`, or `flat` at long dwell |
-| protagonist C, the brand | `flat` |
-| protagonist D, the tools | `recessed` |
-| `colorCriticalWorkspace: true` | `flat` or `recessed`, never `elevated` — a lit chrome is the thing being avoided |
-| dwell C, an hour or more | does NOT change the model — it lowers the contrast BETWEEN rungs and pulls `posture` to quiet |
-
-| | A · flat | B · elevated | C · recessed |
-|---|---|---|---|
-| Tech Minimalist | ✅ | ⚠️ | ⚠️ |
-| Enterprise Solid | ⚠️ | ⚠️ | ✅ |
-| Playful | ⚠️ | ✅ | ❌ |
-| Editorial | ✅ | ✅ | ⚠️ |
-| Utilitarian | ✅ | ❌ | ✅ |
-
-**10. When something needs attention, does this product raise its voice or
+**9. When something needs attention, does this product raise its voice or
 lower everyone else's?** — proposed from question 6, then confirmed.
 
 - (A) **Quiet.** One thing stands out because everything around it recedes.
@@ -361,54 +320,40 @@ saying when it comes up rather than treating it as a contradiction.
 
 > Decides the theme map and the threshold in `themes.check-contrast()`.
 
-**11. Which colour school does this product belong to?**
-
-Two phrasings of one decision: 11a opens the topic, 11b settles it. Ask 11a
-first because it sorts fast, then confirm with 11b — 11a alone is never the
-answer.
-
-**11a (opener). Which of these is the priority — brand presence everywhere,
-managing a dense operational workflow, or a clean page where the user's own
-content is the only thing standing out?**
-
-- Brand presence → probably `brand`
-- Dense operational workflow, many states and alerts → probably `functional`
-- Clean page, content is the protagonist → probably `monochrome`
-
-Use it to open the topic, **not to decide**. It sorts fast because it is about
-priority rather than pixels, and a client can answer it in one sentence. But it
-sorts by product TYPE, and product type does not determine the school: Apple
-Card is a bank and is monochrome; plenty of content apps are brand-led. Take the
-answer as a hypothesis and confirm it with 11b.
-
-**11b (decider). When something is CHOSEN — a selected tab, a ticked checkbox —
+**10. When something is CHOSEN today — a selected tab, a ticked checkbox —
 does it take your main brand colour, or a different one?**
 
-- (A) A different colour → `$colour-strategy: 'functional'`
-- (B) The main brand colour → `$colour-strategy: 'brand'`
+**Ask ONLY when a product already exists.** Then it is an observation, and the
+client can walk to a screen and look:
+
+- (A) A different colour → `colourStrategy: functional`
+- (B) The main brand colour → `'brand'`
 - (C) There is only one colour; everything else is grey → `'monochrome'`
 
-This is the decision. Phrased this way a client answers it without knowing any
-vocabulary, and it is the most load-bearing line in the document — it is what a
-new component six months later reads to find out whether "chosen" gets a colour
-of its own.
+**For a new product it is DERIVED and never asked**, because there is nothing to
+observe and the question then asks a non-designer to invent a colour
+architecture. It follows question 7, which already established who the screen
+belongs to:
 
-**When 11a and 11b disagree, 11b wins, and say so out loud.** The disagreement is
-information: a client who said "brand everywhere" and then described a grey
-interface with one accent has a marketing site in mind and a product in front of
-them. Naming that early is cheaper than discovering it in review.
+| `protagonist` | `colourStrategy` |
+|---|---|
+| the user's content | `monochrome` — the interface recedes so the content can be the only thing standing out |
+| the product's content | `monochrome`, or `brand` where the catalogue IS the brand |
+| the brand | `brand` |
+| the tools | `functional` — many states and alerts, each needing to be told apart |
 
-It sets which collapses `check-roles()` treats as mistakes, and NOT which
-tokens exist for SURFACES and STATUS — those are common — but it does decide the
-names of the interactive roles. Read
-[`references/colour-strategies.md`](colour-strategies.md) before asking, because
-the follow-ups differ per answer.
+**This question used to have an opener asking which of brand presence, dense
+operational workflow, or a clean page was the priority. That was question 7
+asked a second time**, in the colour block, in different words — the same
+duplication `surfaceSeparation` had, and the client caught it the same way. One
+answer, one place.
 
-**No archetype answers this one either.** Editorial products are as likely to
-be monochrome as Tech Minimalist ones, and a Playful brand may well mark
-selection with its own hue. The two axes are independent.
+It remains the most load-bearing line in the document: it is what a new
+component six months later reads to find out whether "chosen" gets a colour of
+its own. Deriving it does not make it less so. It makes it derived from the
+answer that already contained it.
 
-**12. Is there a brand primary colour, or should one be generated?**
+**11. Is there a brand primary colour, or should one be generated?**
 
 **Asked after the school on purpose.** The school changes what this question is
 even about: in `functional` it opens a palette of several roles, in `brand` it is
@@ -428,7 +373,7 @@ the fastest way to lose their confidence in everything else.
 
 **And the SCHOOL does not answer it either**, which is the trap in this block and
 has already been walked into: a client who opens with "we are accent-driven" has
-answered question 11, not this one. The school decides how many colours the system
+answered question 10, not this one. The school decides how many colours the system
 spends and on what — it never chooses the hue. Naming a school and then skipping
 the value produces *"a saturated blue ink tone"* in the finished document: a
 sentence, where the build needs a number.
@@ -441,7 +386,7 @@ to the words "ballpoint blue", and cannot judge it in the abstract six steps
 later.
 
 Leave the interview holding an `oklch()` or a hex. If there is none, say so,
-generate one against the level chosen in question 14, and record in the document
+generate one against the level chosen in question 12, and record in the document
 that it was generated rather than given.
 
 ---
@@ -464,69 +409,11 @@ text stays?"* — a question about `fg-on-accent`, answerable only by someone wh
 already knows the token contract, and deciding exactly one value while every
 other quiet element in the product stayed at the library default.
 
-It is now MEASURED from the accent that question 12 collected, and the posture
-answer from question 10 decides the eight things it used to be standing in for.
+It is now MEASURED from the accent that question 11 collected, and the posture
+answer from question 9 decides the eight things it used to be standing in for.
 See [`derivations.md`](derivations.md).
 
-**13. Which paper is this?**
-
-- (A) **No paper.** True grey, the colour of a settings screen. `neutralPigment: 0`
-- (B) **A hint of it.** Warm paper, or cold slate. You would call it grey until
-  you put it next to a real one. `0.5`–`0.8`
-- (C) **Unmistakably tinted.** Nobody would call this grey. `0.9`–`1`
-
-| | A · none | B · a hint | C · tinted |
-|---|---|---|---|
-| Tech Minimalist | ✅ | ✅ | ⚠️ |
-| Enterprise Solid | ✅ | ✅ | ❌ |
-| Playful | ⚠️ | ✅ | ✅ |
-| Editorial | ⚠️ | ✅ | ✅ |
-| Utilitarian | ✅ | ⚠️ | ❌ |
-
-**Ask for the FEELING and pick the number yourself.** This is the smallest value
-in the document and it does more visible work than any other — a few thousandths
-of chroma in the mid-tones, and the difference between a notebook and a settings
-screen. A client has no intuition for chroma and every intuition for paper.
-
-**Do not read the numbers aloud as the options.** A client asked to choose
-between 0.5 and 0.8 cannot, correctly: nothing in their experience distinguishes
-them, and *"I do not know which"* is the question failing rather than the client.
-Name the material, take the answer, and write the number down. Within (B),
-choose 0.6 unless the client reaches for a word like "linen" or "kraft", which is
-0.8.
-
-**Where `surfaceSeparation` comes from** — DERIVED, not asked.
-
-It follows `elevationCarrier`, which `derivations.md` §W derives from
-`surfaceModel` rather than asking:
-
-| `elevationCarrier` | `surfaceSeparation` |
-|---|---|
-| the border colour | `lines` |
-| the surface tone | `tones` |
-| space alone | `lines`, with the border at its faintest |
-| a shadow | `shadows` |
-
-Show the derived value in the read-back with its source named.
-**A question whose answer changes nothing is dropped rather than kept for
-symmetry** — that is the first rule of this file, and this one was breaking it.
-
-> **Four questions have left this file, and they left for the same reason.** The
-> ladder budget and its direction sat here as accent-driven questions and are
-> neither: every school has surfaces, and asking them only of monochrome
-> products left the other two inheriting whichever example got copied. Depth,
-> what carries it, how many rungs, and the shape of the secondary action all
-> asked what the client WANTED at a point where the interview should still have
-> been finding out what the product NEEDS.
->
-> The test that removed them, in the client's words: *the question started
-> asking what I want instead of continuing to understand what I need to solve.*
-> All four are in [`derivations.md`](derivations.md) §W, and all four reach the
-> client in the read-back with their provenance.
-
----
-
-**14. What level of accessibility rigour?**
+**12. What level of accessibility rigour?**
 
 - (A) **WCAG AA** — 4.5:1 body text. The recommended default for every archetype.
 - (B) **WCAG AAA** — 7:1. Government, health, anything with a legal requirement.
@@ -535,33 +422,11 @@ Not decoration: it sets the threshold the build enforces, and **AAA rejects
 palettes AA accepts**. Settle it before colours are picked. Ask it early even
 though it sits in block 4.
 
-**15. How should success, warning, error and info behave?**
-
-- (A) Traditional — green, amber, red, blue
-- (B) Adapted to the brand palette
-
-The archetype has a ✅ in every row below, so **offer it as the default** instead
-of asking cold: *"Editorial suggests adapted status colours — keep that?"*
-
-| | traditional green/amber/red/blue | adapted to the brand palette |
-|---|---|---|
-| Tech Minimalist | ✅ | ⚠️ |
-| Enterprise Solid | ✅ | ❌ |
-| Playful | ✅ | ⚠️ |
-| Editorial | ⚠️ | ✅ |
-| Utilitarian | ✅ | ❌ |
-
-If adapted: adjust **chroma and temperature, not hue family**. A green that is
-not green stops meaning "it worked", and that is the whole job of a status
-colour.
-
----
-
 ## Block 5 — Voice and microcopy
 
 > Decides the Voice section and the writing rules an agent follows.
 
-**16. How should the system speak in its own messages?**
+**13. How should the system speak in its own messages?**
 
 - (A) Direct and technical — *"Error 404: resource not found"*
 - (B) Clear and action-oriented — *"We couldn't find that page. Back to start"*
@@ -580,7 +445,7 @@ failure. The usable answer is normally "B, dropping to A for anything involving
 money or data loss", and that exception is what makes the rule enforceable —
 it goes into `voiceExceptions`.
 
-**17. Infinitive or imperative for action labels?**
+**14. Infinitive or imperative for action labels?**
 
 - (A) Infinitive — *"Save changes"*
 - (B) Imperative — *"Save your changes"*
@@ -604,7 +469,7 @@ recommending what the product is, which it does not get to do. Say that when
 the marks are noticed missing — an absent table reads as an oversight, and this
 one is a position.
 
-**18. What regions does a page have?**
+**15. What regions does a page have?**
 
 - (A) **A single column.** A header, the content, a footer. Nothing beside it.
 - (B) **Content with an aside.** A sidebar, filters, or a table of contents
@@ -612,7 +477,7 @@ one is a position.
 - (C) **An application frame.** Persistent navigation on one edge, a working
   area, and often a panel on the other.
 
-One of the two structural questions in the interview — this and question 19 —
+One of the two structural questions in the interview — this and question 16 —
 and they are here because they are facts about the PRODUCT rather than
 preferences about how it looks. Everything else in this block can be derived;
 these cannot. A recipe notebook and a recipe manager have the same archetype,
@@ -631,7 +496,7 @@ the frame degrades on a phone. Those follow from the archetype, question 5 and
 the disclosure posture, and the tables are in
 [`derivations.md`](derivations.md).
 
-**19. What role does imagery play?**
+**16. What role does imagery play?**
 
 - (A) **None.** The product has no photography, and none is planned. Illustration
   and icons are the only non-text elements.
@@ -653,14 +518,14 @@ separate from the card's, and it needs an answer for what shows before the image
 loads and when there is none — a hole the ledger otherwise fills at the first
 bug report.
 
-**19a. Ask only when the answer is (B) or (C) — what proportion?**
+**16a. Ask only when the answer is (B) or (C) — what proportion?**
 
 - (A) **Wide** — 16:9 or 3:2. Landscape, editorial, cinematic.
 - (B) **Square** — 1:1. Grids, avatars, anything that has to tile.
 - (C) **Tall** — 4:5 or 3:4. Phone-first, food, fashion.
 - (D) **Whatever the image is.** No crop.
 
-*Propose (A) for Editorial and Enterprise, (B) where the answer to 18 was (C),
+*Propose (A) for Editorial and Enterprise, (B) where the answer to 15 was (C),
 (D) only when the client says the images are not theirs to crop.*
 
 **(D) is not a free option.** An uncropped image makes every row a different
@@ -672,7 +537,7 @@ that do not hold together. That is a conflict, and
 whether they take a shadow, and what the system does with a decorative image.
 The tables are in [`derivations.md`](derivations.md), section K.
 
-**20. Are there visual restrictions the system must NEVER apply?**
+**17. Are there visual restrictions the system must NEVER apply?**
 
 **Do not ask this cold.** A client at this point in a first interview has no
 restrictions in mind, and asking them to produce some invites either an invented
@@ -683,7 +548,7 @@ client has not been burned yet.
 
 Ask it in two parts instead.
 
-**20a. Confirm what the archetype already forbids.** Present these as *already
+**17a. Confirm what the archetype already forbids.** Present these as *already
 held*, not as options to pick — the answer is a yes, or a correction:
 
 | archetype | implied restrictions |
@@ -697,7 +562,7 @@ held*, not as options to pick — the answer is a yes, or a correction:
 > *"Editorial already rules out gradients, heavy shadows and coloured headings.
 > I have those. Anything to add?"*
 
-**20b. Anything beyond that?**
+**17b. Anything beyond that?**
 
 - (A) Nothing for now
 - (B) Yes — say it
@@ -721,20 +586,20 @@ advice. *"Never gradients"* is detectable: `linear-gradient` in the product's ow
 CSS. *"Keep it elegant"* is not, and saying so honestly is better than pretending
 it is a guardrail.
 
-**21. What are the universal interaction patterns?**
+**18. What are the universal interaction patterns?**
 
 Three decisions, so **three labelled questions** — not one number carrying three
 answers. Numbering them together produces "A, A" for three slots: one answer
 silently dropped, and no way to tell which.
 
-**21a. Where do confirmations live?**
+**18a. Where do confirmations live?**
 
 - (A) A modal — blocks until answered
 - (B) A toast with undo
 
 *Propose (A) for anything that cannot be undone, (B) otherwise.*
 
-**21b. How much friction does a destructive action need?**
+**18b. How much friction does a destructive action need?**
 
 - (A) One click
 - (B) A confirmation step
@@ -742,7 +607,7 @@ silently dropped, and no way to tell which.
 
 *Propose (B), or (C) when the data is unrecoverable.*
 
-**21c. When do forms save?**
+**18c. When do forms save?**
 
 - (A) On blur, field by field
 - (B) On an explicit submit
