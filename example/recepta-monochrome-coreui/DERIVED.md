@@ -80,10 +80,12 @@ appear here so they can still be argued with.
 | decision | value | from |
 |---|---|---|
 | `surfaceModel` | `elevated` | `protagonist: user-content` — the cook's recipes are the lit thing |
+| `elevationCarrier` | `surface-tone` | a consequence of `elevated`, with no variation available |
+| `surfaceSeparation` | `tones` | follows the carrier one to one |
 | `ladderSpend` | 2 | `surfaceModel` + the frame; rung 3 stays reserved |
-| `border-divider` | `border-color` | `elevationCarrier: border-color` — the line is load-bearing here |
-| `border-interactive` | `border-color-strong` | same, and `posture: quiet` leaves it unmoved |
-| where the divider disappears | around any card lighter than the page | `surfaceModel: elevated` — the two fills already draw the line |
+| `border-divider` | `border-color`, one rung quieter than before | the tone carries hierarchy now, so the line keeps only what a tone cannot do |
+| `border-interactive` | `border-color-strong` | affordance, which is not separation — it survives whatever the model |
+| where the divider disappears | around every card | `surfaceModel: elevated` + `tones` — the card is already a rung lighter, and a rule on top separates it twice |
 | what may be elevated at once | one permanent (the card), one temporary (the modal). Never the header | always |
 | the same model in dark | unchanged — raised stays lighter | `elevated` is the one model that survives the flip |
 | input at rest | hairline, same fill as its container | `surfaceModel: elevated` + `quiet` |
@@ -126,25 +128,34 @@ appear here so they can still be argued with.
 
 | decision | value | from |
 |---|---|---|
-| `ratio-media` | 0.8 — 4:5, tall | `imageRatio`, itself from the phone being where a recipe is read |
+| `ratio-media` | 1 — square | `imageRatio`; one proportion from the thumbnail to the photograph on the recipe |
 | `ratio-thumb` | 1 | not a decision; an avatar is square in every product that has shipped |
-| `radius-image` | `radius-surface`, 12px | `imagery: content` — the photograph is a surface, not an ornament inside one |
-| edge | an inset hairline in `border-color` | `imagery: content` + the ladder running UP: a pale sky on cream paper has no boundary |
-| shadow | none | `elevationCarrier: border-color` |
+| `radius-image` | `radius-control`, 4px | `imagery: supporting` — the photograph sits INSIDE the card rather than being one |
+| rung of the ladder | **none** | `imagery: supporting`; when it was `content` the frame took one |
+| edge | an inset hairline in `border-divider` | the ladder runs UP, so a pale dish on a pale plate would otherwise bleed into the card |
+| shadow | never | `elevation: borders` |
 | decorative images | **not allowed** | `editorial-premium` permits them; question 1 does not — a notebook has photographs of food and nothing else |
-| before it loads | `aspect-ratio` reserves the box; a missing image shows `bg-neutral-subtle` and a centred icon at `fg-subtlest` | `imagery: content`, where there is no version of the product with the image always present |
+| before it loads | `aspect-ratio` reserves the box; a missing image shows `bg-neutral-subtle` and a centred icon at `fg-subtlest` | the frame is reserved whatever the role, because layout shift costs the same either way |
 
-The inset hairline is the interesting one. The ladder runs from the lightest
-paper upward, so every surface is at least as light as the page — and a
-photograph of a pale dish on a pale plate then bleeds into the card behind it.
-A border would have been the reflex; at a fixed 4:5 the box has no room to give
-up, so it is `box-shadow: inset 0 0 0 1px` instead.
+**The image stopped being the content**, and that is the change with the most
+consequences in this document. The client's distinction: the photograph here is
+not the product shot in a shop, the thing that wins you over. A recipe reads
+without it. So it takes the control radius, spends no rung, and never carries a
+shadow — where before it was a surface in its own right at 4:5.
+
+The inset hairline survives the change. The ladder runs from the lightest paper
+upward, so every surface is at least as light as the page, and a pale dish on a
+pale plate bleeds into the card behind it. A border would have been the reflex;
+inside a fixed square the box has no room to give up, so it is
+`box-shadow: inset 0 0 0 1px` instead.
 
 ### Grid and columns
 
 | decision | value | from |
 |---|---|---|
-| columns | none — one measure, centred | `frame: single-column` |
+| columns | content plus a 20rem aside above 62rem; one column below | `frame: content-aside` |
+| what the aside carries | dialogues, and the controls that help fill in a recipe | question 15 — it is not a filter rail, which changes which layout form applies |
+| how the aside separates | **a rule, not a rung** | `ladderSpend: 2` — the region most often given a rung it cannot afford |
 | `gap-grid` | `space-lg` | `frame` + `density: comfortable` |
 | `size-measure` | 68ch | `editorial-premium` + Q5, reading-adjacent |
 | where the grid stops | the recipe list is a two-up grid above the tablet breakpoint and a single stack below it | `platform: multiplatform` — the phone layout is the design, and the second column is what happens when there is room |

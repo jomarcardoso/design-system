@@ -48,9 +48,50 @@
    * `DESIGN_LANGUAGE.md`: 45–75 characters, because a method that runs wider
    * loses the line return exactly when the reader looks away at the pan. */
   .sheet {
-    max-width: 68ch;
+    max-width: var(--app-size-measure);
     margin-inline: auto;
     padding-inline: var(--app-space-lg);
+  }
+
+  /* THE FRAME — `frame: content-aside`.
+   *
+   * The aside is not a filter rail. It is where a dialogue opens instead of
+   * covering the screen, and where the controls that help fill in a recipe
+   * live — which is why it sits beside the content rather than over it.
+   *
+   * It spends NO rung of the ladder: `ladderSpend: 2` was already taken by the
+   * page and the raised surface, so the aside is separated by a rule. That is
+   * not a lesser aside; it is the region most often given a rung it cannot
+   * afford, and rung three is reserved for the quiet neutral fill every badge
+   * and resting secondary action is made of. */
+  .frame {
+    display: grid;
+    gap: var(--app-gap-grid);
+    margin-inline: auto;
+    max-width: calc(var(--app-size-measure) + 22rem);
+    padding-inline: var(--app-space-lg);
+  }
+
+  @media (min-width: 62rem) {
+    .frame {
+      grid-template-columns: minmax(0, 1fr) 20rem;
+      align-items: start;
+    }
+
+    .frame > .aside {
+      position: sticky;
+      top: var(--app-space-lg);
+      /* A rule, not a tone. */
+      border-inline-start: var(--app-border-width) solid var(--app-border-divider);
+      padding-inline-start: var(--app-space-lg);
+    }
+  }
+
+  /* Below the breakpoint the aside becomes a section under the content, which
+   * is the multiplatform answer: a phone is narrower, not denser, so nothing
+   * about the aside compacts — it moves. */
+  .frame > .aside {
+    min-inline-size: 0;
   }
 
   /* Vertical rhythm, from `composition.rhythm` in patterns.json: related
@@ -114,7 +155,7 @@
     border-radius: var(--app-radius-image);
     overflow: hidden;
     background-color: var(--app-bg-neutral-subtle);
-    box-shadow: inset 0 0 0 1px var(--app-border-color);
+    box-shadow: inset 0 0 0 1px var(--app-border-divider);
   }
 
   .photo > img {

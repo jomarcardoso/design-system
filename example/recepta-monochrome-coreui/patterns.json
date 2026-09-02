@@ -28,14 +28,14 @@
       "Never separate surfaces with a shadow. That decision was made in question 7 and spending it twice separates the same page two ways.",
       "Never a persistent rail or sidebar. The frame is a single column and a rail would be the application announcing itself."
     ],
-    "frame": {
-      "regions": "header, sheet, footer. No aside.",
-      "measure": "68ch",
-      "separation": "A rule under the header. Never a tone — the two-rung budget belongs to content.",
-      "phone": "Nothing to collapse. The single column is already the phone layout, which is what makes this frame cheap on a multiplatform product."
-    },
+    "frame": "content with an aside; the aside carries dialogues and the controls that help fill in a recipe, separated by a rule rather than a rung",
     "disclosure": "progressive — secondary actions sit behind the item they act on rather than in every row; filters open rather than persist.",
-    "iconPolicy": "Icons lead their labels. Alone only in a repeated toolbar, and never on a destructive action."
+    "iconPolicy": "Icons lead their labels. Alone only in a repeated toolbar, and never on a destructive action.",
+    "forms": {
+      "saving": "draft saved automatically; the recipe enters the notebook on an explicit review-and-save",
+      "confirmations": "a modal, because deleting a saved recipe cannot be undone",
+      "destructive": "one confirmation step, never a typed name — the data is recoverable from the draft"
+    }
   },
   "components": {
     "button": {

@@ -20,18 +20,18 @@ are listed with the condition that selects each.
 | `archetype` | `editorial-premium` |
 | `density` | `comfortable` |
 | `platform` | `multiplatform` |
-| `dwell` | `hours` |
+| `dwell` | `minutes` |
 | `protagonist` | `user-content` |
 | `colorCriticalWorkspace` | `false` |
 | `radius` | `subtle` |
 | `elevation` | `borders` |
-| `surfaceSeparation` | `lines` |
+| `surfaceSeparation` | `tones` |
 | `surfaceModel` | `elevated` |
 | `ladderSpend` | `2` |
 | `iconStyle` | `outline` |
 | `posture` | `quiet` |
-| `frame` | `single-column` |
-| `imagery` | `content` |
+| `frame` | `content-aside` |
+| `imagery` | `supporting` |
 | `disclosure` | `progressive` |
 | `accessibility` | `AA` |
 | `statusColours` | `brand-adapted` |
@@ -72,7 +72,7 @@ Several, separated by what the element IS.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **hairline, same fill** | 27% | `lines` | always |
+| **one rung lighter** | 9% | `elevated`, `tones` | the CONTENT role |
 
 ### Card with an image
 
@@ -80,7 +80,6 @@ Several, separated by what the element IS.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **split** | 11% | `quiet`, `lines` | always |
 | **framed, fixed ratio** | 20% | `editorial-premium` | anything imitating print |
 | **image above, no frame** | 100% | — | any archetype; any posture |
 
@@ -122,7 +121,6 @@ Several, separated by what the element IS.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **hairline per row** | 11% | `comfortable`, `lines` | always |
 | **row as a card** | 33% | `comfortable` | touch targets that need to be obvious |
 | **hover only, no resting treatment** | 100% | — | any density; any school |
 
@@ -146,7 +144,6 @@ Several, separated by what the element IS.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **border only, page fill** | 11% | `quiet`, `lines` | always |
 | **left border in the status colour, neutral fill** | 33% | `quiet` or `balanced`, `brand-adapted` | the INLINE reach: a message about the thing beside it |
 | **inverted toast** | 100% | — | any; for transient confirmation |
 
@@ -170,11 +167,10 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **title + rule** | 7% | `editorial-premium`, `lines` | pages whose body begins immediately; with no metadata between |
+| **eyebrow + title** | 20% | `editorial-premium` | content with taxonomy |
 
 Not available alongside it:
 
-- **eyebrow + title** — this family takes one treatment per product
 - **title alone** — this family takes one treatment per product
 - **stacked with metadata** — this family takes one treatment per product
 
@@ -245,7 +241,7 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **a rule and a section title** | 33% | `lines` | long forms |
+| **a card per group** | 33% | `tones` | forms that are also records |
 
 Not available alongside it:
 
@@ -406,11 +402,10 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **feed** | 8% | `single-column`, `user-content` | items with no natural order the user chooses |
+| **sectioned index** | 20% | `editorial-premium` | a set with a real taxonomy |
 
 Not available alongside it:
 
-- **sectioned index** — this family takes one treatment per product
 - **plain list** — this family takes one treatment per product
 
 ### Detail — how one thing is opened
@@ -419,10 +414,11 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **overlay** | 50% | `progressive` | a quick look that returns |
+| **side panel over the index** | 17% | `content-aside`, `progressive` | triage; review work |
 
 Not available alongside it:
 
+- **overlay** — this family takes one treatment per product
 - **its own page** — this family takes one treatment per product
 
 ### Navigation placement
@@ -431,7 +427,7 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **none — the content is the navigation** | 2% | `single-column`, `quiet`, `editorial-premium` | always |
+| **side rail, labelled** | 67% | `app-frame` or `content-aside` | always |
 
 Not available alongside it:
 
@@ -443,11 +439,19 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **sticky, condensed after the first screen** | 33% | `hours` | long pages |
+| **static, scrolls away** | 100% | — | anything |
+
+### The aside
+
+One treatment for the whole product.
+
+| take | reach | because | use it when |
+|---|---|---|---|
+| **the aside becomes a section** | 33% | `multiplatform` | always |
 
 Not available alongside it:
 
-- **static, scrolls away** — this family takes one treatment per product
+- **persistent panel** — this family takes one treatment per product
 
 ### Form pages
 
@@ -476,11 +480,7 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **sections of related metrics** | 33% | `hours` | many metrics |
-
-Not available alongside it:
-
-- **an even grid of tiles** — this family takes one treatment per product
+| **an even grid of tiles** | 100% | — | anything |
 
 ### Search and filter placement
 
@@ -516,11 +516,10 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **full page with a way back** | 33% | `single-column` | routing; permission failures |
+| **retry in place, no message** | 33% | `quiet` | transient network failures |
 
 Not available alongside it:
 
-- **retry in place, no message** — this family takes one treatment per product
 - **in place, the rest of the page intact** — this family takes one treatment per product
 
 ---
@@ -531,15 +530,14 @@ Each declares a precondition this product does not meet — an aside on a
 single-column page, a workspace in a reading product. They are listed rather
 than omitted so their absence reads as derived rather than forgotten.
 
-- The aside
 - Workspace and canvas pages
 
 ---
 
 ## How much the answers actually decided
 
-**34** of 40 families took a form the answers narrowed.
-**6** fell back to a form no answer rules out.
+**33** of 41 families took a form the answers narrowed.
+**8** fell back to a form no answer rules out.
 
 The second number is the one to read. A family there is one where this
 product could have taken any shape in the catalogue and got the same

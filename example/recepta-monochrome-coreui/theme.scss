@@ -102,17 +102,20 @@ $recepta: (
 
   // --- Structure -----------------------------------------------------------
   //
-  // `elevation: borders` with `elevationCarrier: border-color`. The border is
-  // the thing that has to be strong: a flat system with a weak border produces
-  // surfaces nobody can tell apart, and it passes the contrast gate while doing
-  // it, because that gate measures text against its background rather than one
-  // surface against another.
-  // Lines, at three weights: a divider between ingredients, the resting edge
-  // of an input, and the edge that has to be found by eye when a surface has
-  // nothing else to separate it.
-  border: paper(400),
-  'border-subtle': paper(300),
-  'border-strong': paper(600),
+  // `elevation: borders` with `elevationCarrier: SURFACE-TONE`, which is what
+  // `surfaceModel: elevated` means: the raised rung is lighter than the page and
+  // the tone does the separating. The document said `border-color` here for a
+  // long time and contradicted its own surface model — a card that is already
+  // lighter than the page and ALSO ringed is separated twice, and the second one
+  // is the graphic noise that makes a quiet product look busy for a reason
+  // nobody can name.
+  //
+  // So the lines get quieter, and they keep only the jobs a tone cannot do: a
+  // divider between ingredients on ONE plane, and the resting edge of a control,
+  // which is affordance rather than separation. See `derivations.md` §R.
+  border: paper(300),
+  'border-subtle': paper(200),
+  'border-strong': paper(500),
   ring: pen(600),
 
   'shadow-raised': base.scale(shadow, '2xs'),
@@ -172,15 +175,19 @@ $recepta: (
 // archetype's 40px to 44px because the product is multiplatform and 40px is a
 // miss target on a phone.
 //
-// The image tokens come from question 20 rather than the archetype row: 4:5
-// because a recipe is read on a phone, and `radius-image` matching
-// `radius-surface` because `imagery: content` makes the photograph a surface
-// in its own right rather than an ornament inside the card.
+// `imagery: supporting` — the photograph is not the product shot in a shop and
+// a recipe reads without it. So it takes the CONTROL radius rather than the
+// surface radius, and it spends no rung of the ladder: it sits inside the card
+// rather than being one.
+//
+// Square, at one proportion for the whole product — the thumbnail beside a
+// title and the photograph on the recipe are the same shape, which is coherent
+// with the image being support rather than the thing being sold.
 $structure: (
   'radius-control': 4px,
   'radius-surface': 6px,
-  'radius-image': 6px,
-  'ratio-media': 0.8,
+  'radius-image': 4px,
+  'ratio-media': 1,
   'size-control': calc(var(--app-space-unit) * 11),
   'size-icon': 20px,
   'icon-stroke': 1.25px,

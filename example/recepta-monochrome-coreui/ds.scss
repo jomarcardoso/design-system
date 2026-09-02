@@ -46,7 +46,20 @@
 // somewhere the library never imagined.
 @use '../../src/component' with (
   $badge-fg: #{core.ref('fg-muted')},
-  $badge-radius: #{core.ref('radius-control')}
+  $badge-radius: #{core.ref('radius-control')},
+
+  // THE CARD LOSES ITS BORDER, and this is the derivation reaching the build
+  // rather than a preference. `surfaceModel: elevated` with
+  // `surfaceSeparation: tones` means the card is already one rung lighter than
+  // the page — a rule around it separates the same thing twice, and the second
+  // one is the graphic noise that makes a quiet product look busy for a reason
+  // nobody can name. See `derivations.md` §R.
+  //
+  // `transparent` rather than a token, and it is the one case where that is not
+  // a literal sneaking in: what is wanted here is the ABSENCE of a line, and no
+  // colour expresses absence. Pointing it at `border-divider` would keep a
+  // visible rule, which is the thing being removed.
+  $surface-border-color: transparent
 );
 @use '../../src/derive';
 @use '../../src/adapters/coreui';

@@ -33,7 +33,8 @@
   </nav>
 </header>
 
-<main class="sheet" style="padding-block: var(--app-space-2xl)">
+<div class="frame" style="padding-block: var(--app-space-2xl)">
+<main style="min-inline-size: 0">
 
   <!-- ─── The recipe ───────────────────────────────────────────────────── -->
   <article class="section">
@@ -223,6 +224,28 @@
   </section>
 
 </main>
+
+<!-- THE ASIDE — dialogues and the controls that help fill in a recipe, beside
+     the content instead of over it. Separated by a rule, because the ladder
+     budget is two and the third rung belongs to the quiet neutral fill. -->
+<aside class="aside stack-loose">
+  <div>
+    <h2 class="h5">Enquanto você cozinha</h2>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item px-0">Dobrar as quantidades</li>
+      <li class="list-group-item px-0">Converter xícaras em gramas</li>
+      <li class="list-group-item px-0">Manter a tela acesa</li>
+    </ul>
+  </div>
+
+  <div>
+    <h2 class="h5">Rascunho</h2>
+    <p class="subtlest">Salvo automaticamente há 2 minutos. A receita só entra no
+      caderno quando você revisar e guardar.</p>
+    <button class="btn btn-primary w-100 with-icon" type="button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" /></svg>Guarde a receita</button>
+  </div>
+</aside>
+</div>
 
 <footer class="sheet" style="padding-block: var(--app-space-2xl)">
   <hr class="rule">

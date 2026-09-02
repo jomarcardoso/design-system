@@ -25,11 +25,16 @@ secondaryGoverns:
 density: comfortable
 platform: multiplatform
 
-# An hour, not a minute. The frequency answer is "occasional" — nobody opens a
-# recipe notebook daily — and the SITTING is long: the book stays open on the
-# counter for as long as the cooking takes. The two used to be one question and
-# this product is the case that breaks it.
-dwell: hours
+# Ten to thirty minutes. The frequency answer is "some days" — nobody opens a
+# recipe notebook daily — and the SITTING is the cooking. The two used to be one
+# question and this product is the case that broke the fusion.
+#
+# The MIDDLE bucket carries no signal, deliberately: a first draft had it
+# propose `posture: balanced`, which disagreed with Editorial's `quiet`, and the
+# interview then handed the disagreement to the client as a menu. A fork
+# invented by a coarse table looks like a real tension and is an artefact of
+# three buckets. So the archetype decides, and there is no conflict to record.
+dwell: minutes
 
 # The recipes are the cook's own, copied from a grandmother's book. The
 # interface is the paper they sit on.
@@ -40,10 +45,18 @@ colorCriticalWorkspace: false
 
 radius: subtle
 elevation: borders
-elevationCarrier: border-color
+# The raised rung IS the carrier — that is what `elevated` means, and there is
+# nothing here to choose. Only `flat` has a real fork, between a line and space.
+elevationCarrier: surface-tone
 
-# Derived from `elevationCarrier`. Used to be asked twice.
-surfaceSeparation: lines
+# Derived from `elevationCarrier`, one to one.
+#
+# It said `lines` for a long time, beside `surfaceModel: elevated`, and the two
+# contradicted each other: if the model is elevated the tone is already the
+# carrier, and a hairline on top is a second separation doing the same work. The
+# value had been written by hand rather than derived. Cards are now one rung
+# lighter than the page with no rule around them.
+surfaceSeparation: tones
 
 # Paper on a table: the page sits two rungs up the sepia ladder and anything
 # raised above it is LIGHTER. Derived from `protagonist: user-content` and
@@ -72,16 +85,27 @@ posture: quiet
 # A single column. The notebook has no sidebar: a page of a recipe book is a
 # page, and a persistent rail would be the app announcing itself on a surface
 # whose premise is that it does not.
-frame: single-column
+# Content with an aside — and the aside is NOT a filter rail. It is where a
+# dialogue opens instead of covering the screen, and where the controls that
+# help fill in a recipe live. That distinction decides which form the layout
+# catalogue offers: a persistent panel or a sheet on demand, never a filter
+# column.
+#
+# It spends no extra rung: the aside is separated by a rule, which keeps
+# `ladderSpend` at two and leaves rung three for the quiet neutral fill.
+frame: content-aside
 
-# The photograph IS the recipe. A card with no image is not a plainer card, it
-# is a broken one — which makes the image a first-class surface here, with its
-# own radius and a rung of the ladder for its frame.
-imagery: content
-# 4:5. Tall, because food is photographed from above onto a plate and because
-# the phone is where a recipe is actually read. The Editorial default is 3:2 and
-# was overruled by the second reason, not the first.
-imageRatio: 0.8
+# Supporting, not the content. The distinction the client drew: the photograph
+# here is not the product shot in a shop, the thing that wins you over. A recipe
+# reads without it.
+#
+# So the image does NOT spend a rung of the ladder, takes the control radius
+# rather than the surface radius, carries a hairline and never a shadow.
+imagery: supporting
+# Square. One proportion for the whole product, from the thumbnail beside a
+# title to the photograph on the recipe itself — which is coherent with the
+# image being support rather than the thing being sold.
+imageRatio: 1
 
 # DERIVED from Q5 (occasional) and the Editorial archetype. Controls appear when
 # they are needed; the cook reading a step is not also choosing a filter.
@@ -132,27 +156,43 @@ accentFill: washed
 # 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
 # end of the ladder — see the note in section 2 on why the original "not sepia"
 # answer was withdrawn.
+# The WARMTH domain, governed by the secondary archetype rather than by
+# Editorial. A grey ramp here would be an office; the sepia is what makes it a
+# notebook, and it is held at the LIGHT end of the ladder — what the original
+# "not sepia" answer was avoiding was age, and age is darkness rather than
+# yellow.
 neutralPigment: 0.6
-# lines | tones | shadows. Agrees with `elevation: borders` above.
-surfaceSeparation: lines
 
-# In this school it is close to a default: a supporting action tinted with the
-# accent puts two blues on a page whose premise is that there is one.
+# Quiet fill rather than outline. Both are available at `posture: quiet`, and
+# `elevationCarrier: surface-tone` breaks the tie: where the border carries
+# hierarchy an outline is coherent, and here the tone carries it.
+#
+# Tinting it with the accent is close to forbidden in this school — a supporting
+# action in accent puts two blues on a page whose premise is that there is one.
 secondaryAction: neutral
 
-voice: warm
+# Clear and action-oriented, which is Editorial's ✅ — and the secondary's
+# `voice` domain is what lets it sound like a person inside that register
+# rather than like a publication: "Guarde a receita", never "Item salvo com
+# sucesso".
+voice: action-oriented
 voiceExceptions:
-  - action-oriented for deleting a saved recipe, and for any failure to save
+  - technical for deleting a saved recipe, and for any failure to save
 ctaMood: imperative
 
-deviations:
-  - decision: comfortable density rather than the reading density Editorial wants
-    against: editorial-premium
-    reason: >
-      Editorial assumes continuous reading. This product is consulted in short
-      bursts with one hand and a wet counter, so it takes the ergonomics of
-      occasional use and keeps the archetype's leading.
-    accepted: 2026-08-29
+# EMPTY, and for a reason rather than by oversight. The list held two entries
+# before this interview and neither was a tension:
+#
+#   the warm voice        not a deviation — the SECONDARY archetype's `voice`
+#                         domain. It was never fighting Editorial; it was doing
+#                         a job Editorial was never asked to do.
+#   comfortable density   an artefact of the fused frequency question. Split
+#                         into frequency and dwell, "some days" is Editorial's
+#                         ✅ and derives `comfortable` with nothing to record.
+#
+# A deviation list holding things that are not tensions teaches its reader to
+# skip it, and then the real one arrives in the same tone.
+deviations: []
 
 # Conflicts raised and resolved. Not deviations — nothing here went against the
 # archetype — but decisions whose values look arbitrary without their story.
@@ -173,6 +213,18 @@ resolutions:
     instead-of: >
       dropping to a two-ink page, which flattens every screen, or lowering the
       threshold, which is not a typography decision
+  - conflict: >
+      the floor on a washed primary action was measured as a WCAG ratio of
+      bg-accent-subtle against the PAGE, which said 1.01 and refused it. The
+      document carried accentFill: saturated for a day on that reading.
+    chosen: >
+      washed, and the floor measured as the two things that actually hold —
+      dark ink on the fill at 13.73:1, and the fill 171 degrees of hue from the
+      badge fill. Luminance is the wrong instrument for "is this the badge";
+      pale blue against pale sepia measures 1.05 and looks nothing alike.
+    instead-of: >
+      saturated, which would have put a solid accent on every save button in a
+      product whose premise is that the recipe is the loudest thing
 
 overrides:
   - decision: size-control raised from 40px to 44px

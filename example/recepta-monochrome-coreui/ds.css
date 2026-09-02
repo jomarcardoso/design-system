@@ -6,8 +6,8 @@
     --app-radius-control: 4px;
     --app-radius-surface: 6px;
     --app-radius-pill: 9999px;
-    --app-radius-image: 6px;
-    --app-ratio-media: 0.8;
+    --app-radius-image: 4px;
+    --app-ratio-media: 1;
     --app-ratio-thumb: 1;
     --app-space-unit: 4px;
     --app-space-2xs: calc(var(--app-space-unit) * 1);
@@ -78,7 +78,7 @@
     --app-fg-heading: #120c05;
     --app-bg-accent: #4a5eab;
     --app-fg-on-accent: #ffffff;
-    --app-border-color: #cfc2b0;
+    --app-border-color: #ded6cb;
     --app-bg-sunken: #ebe5dd;
     --app-bg-overlay: rgba(38, 32, 22, 0.55);
     --app-fg-subtlest: #695b47;
@@ -104,10 +104,10 @@
     --app-bg-brand-deep: #344375;
     --app-fg-accent-hover: #3e4f8e;
     --app-fg-link-visited: #344375;
-    --app-border-color-subtle: #ded6cb;
-    --app-border-color-strong: #8f7d64;
-    --app-border-divider: #cfc2b0;
-    --app-border-interactive: #cfc2b0;
+    --app-border-color-subtle: #ebe5dd;
+    --app-border-color-strong: #b5a186;
+    --app-border-divider: #ded6cb;
+    --app-border-interactive: #ded6cb;
     --app-ring-color: #5a72c9;
     --app-shadow-raised: 0 1px 0 0 rgba(0, 0, 0, 0.05);
     --app-shadow-overlay: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
@@ -157,7 +157,7 @@
     --app-fg-default: #2b261e;
     --app-fg-heading: #120c05;
     --app-fg-muted: #463f35;
-    --app-border-color: #cfc2b0;
+    --app-border-color: #ded6cb;
     --app-fg-link-visited: #344375;
   }
 }
@@ -655,7 +655,7 @@
   .card {
     --cui-card-bg: var(--app-bg-surface);
     --cui-card-color: var(--app-fg-default);
-    --cui-card-border-color: var(--app-border-color);
+    --cui-card-border-color: transparent;
     --cui-card-border-radius: var(--app-radius-surface);
   }
   .modal {
