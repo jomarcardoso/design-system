@@ -882,23 +882,39 @@ of the page a product is willing to spend on being noticed:
 | `user-content`, at `hours` | `washed` — the content stays the magnet |
 | anything else | `washed`, and say what it costs |
 
-**Then measure it, because the proposal is often wrong.** `washed` reaches for
-`bg-accent-subtle`, which sits at the pale end of a ramp — and the quiet fill
-every badge, tag and resting secondary action is made of sits at the pale end of
-another. In a monochrome product they can land on top of each other.
+**Then measure it — and measure the right thing.** The first version of this
+rule tested `bg-accent-subtle` against the PAGE with a WCAG ratio, decided the
+accent-driven example failed, and was wrong twice over. The client said why:
 
-> **`washed` survives only where `bg-accent-subtle` is further from the page than
-> `bg-neutral-subtle` is.**
+> *no accentFill washed o texto é escuro para contrastar, e o fundo accent
+> lavado nem importa muito*
 
-A comparison rather than a threshold, so it holds at any palette. Where it fails,
-the derived `washed` becomes `saturated` and the measurement is the reason.
+In `washed` the reading is done by **dark ink on a pale fill**, so that fill's
+separation from the page is not what makes the control legible. And the failure
+at the other end is self-correcting: an accent strong enough that dark ink stops
+working on it is an accent needing light ink, which is `saturated` by
+definition.
 
-The accent-driven example is the worked case and it fails: `accent-subtle`
-measures **1.11** against its page, `neutral-subtle` measures **1.16**, and the
-two are **1.05** apart. A washed action there would be less separated from the
-page than an ordinary badge and indistinguishable from one. `npm run
-verify:accent-fill` measures it rather than leaving it to judgement, because
-judgement wrote `washed` into that document and did not notice.
+**Two things have to hold, and only two:**
+
+1. **The ink reads.** `fg-default` on `bg-accent-subtle`, against the product's
+   own `accessibility` threshold.
+2. **The fill is not the badge.** `bg-accent-subtle` must be tellable apart from
+   `bg-neutral-subtle`, or the primary action is a label.
+
+**The second is perceptual, and a WCAG ratio is the wrong instrument for it.**
+Two fills can sit at the same lightness and be obviously different because their
+hues are far apart — which is the accent-driven case exactly. Pale blue against
+pale sepia measures **1.05** by luminance and **171°** apart by hue. Luminance
+said indistinguishable; anyone with eyes says otherwise, and the example was
+made `saturated` for a day on the strength of that reading.
+
+So it is measured in OKLCH, where a distance means something about perception,
+and the check reports **which channel carries the difference** — because a
+difference carried by hue alone weakens for a colour-blind reader and one
+carried by lightness does not. The example's dark theme separates by hue alone,
+which the check reports as a note rather than a failure: the ink and the shape
+still carry it.
 
 **A quiet product is one where the content is loudest, not one where the action
 is lost.**
@@ -930,6 +946,17 @@ most work.
 | `quiet` | washed → saturated, or weight only |
 | `balanced` | washed → saturated |
 | `loud` | outline → filled |
+
+**And `posture` itself is derived from `dwell`, with the middle bucket carrying
+no signal.** `seconds` proposes `balanced` or `loud`, `hours` proposes `quiet`,
+and `minutes` — ten to thirty — proposes nothing: **the archetype decides.**
+
+That was not the first draft, and the first draft manufactured a conflict. It
+had `minutes` proposing `balanced`, which disagreed with Editorial's `quiet`,
+and the interview then put the disagreement to the client as a menu. A fork
+invented by a coarse table is worse than no table: it looks like a real tension
+in the product and it is an artefact of three buckets. Where a bucket has no
+signal, say so and let something else decide.
 
 **2. CARDINALITY — how many are on screen, and how many can be on at once.**
 

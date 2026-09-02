@@ -94,23 +94,23 @@ colourStrategy: monochrome
 # change the measurement — change the accent.
 accentContrast: high
 
-# SATURATED, against the derivation, and the measurement is the reason.
+# WASHED, as the derivation proposes. protagonist: user-content plus a sitting
+# measured in tens of minutes: the photograph of the food is the magnet, not the
+# button, and a saturated fill on every save button is the thing a cook stops
+# seeing.
 #
-# protagonist: user-content plus dwell: hours propose `washed` — the photograph
-# of the food should be the magnet, not the button. The floor says otherwise and
-# it is not close:
+# It was `saturated` for a day, because the floor test measured the wrong thing
+# — bg-accent-subtle against the PAGE, with a WCAG ratio. In washed the reading
+# is done by dark ink on a pale fill, so what has to hold is the ink and the
+# distance from the badge fill:
 #
-#   bg-accent-subtle sits 1.01 from the page
-#   bg-neutral-subtle sits 1.16 from the page
+#   fg-default on bg-accent-subtle          13.73:1, well past AA
+#   bg-accent-subtle vs bg-neutral-subtle   171 degrees of hue apart
 #
-# So a washed action here would be LESS separated from the page than an ordinary
-# badge, and in the dark theme the two tokens measure identically. The primary
-# action would have been a tag. npm run verify:accent-fill measures it.
-#
-# This document said `washed` for a day, with a paragraph explaining that it
-# cleared the floor. It did not. The paragraph was judgement and the floor is
-# arithmetic, which is why the check exists.
-accentFill: saturated
+# Pale blue against pale sepia measured 1.05 by luminance and reads as obviously
+# different, because luminance is the wrong instrument for that question.
+# npm run verify:accent-fill measures both, in OKLCH.
+accentFill: washed
 # 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
 # end of the ladder — see the note in section 2 on why the original "not sepia"
 # answer was withdrawn.

@@ -208,7 +208,7 @@ actually making and no amount of asking about elegance surfaces it.
 | dwell | proposes |
 |---|---|
 | A · seconds | `posture: balanced` or `loud`; density can be generous with weight |
-| B · minutes | `posture: balanced` |
+| B · minutes | **nothing — the archetype decides.** Ten to thirty minutes carries no signal either way, and a first draft that had it propose `balanced` manufactured a conflict with Editorial that the interview then put to the client as a menu |
 | C · an hour or more | `posture: quiet`; every decorative element has to justify itself |
 
 **7. Who is the screen for?**

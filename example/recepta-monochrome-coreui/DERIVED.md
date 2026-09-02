@@ -170,10 +170,10 @@ tables nobody had checked against each other.
 | decision | value | from |
 |---|---|---|
 | the progression | washed → saturated | `posture: quiet` |
-| `accentFill` | **`saturated`**, against the derivation | `protagonist` + `dwell` propose `washed`; the floor refuses it — accent-subtle sits 1.01 from the page and neutral-subtle 1.16, so a washed action would be quieter than a badge |
+| `accentFill` | `washed` | `protagonist: user-content` — the photograph is the magnet, not the button. The ink reads at 13.73:1 and the fill sits 171° of hue from the badge fill, so it is not mistakable for a label |
 | the second channel | the ink darkens with the fill | `accessibility: AA` — a tone step alone does not survive a printed recipe |
 | multi-select | washed only, never a solid fill | cardinality: the tag filters are multi-select, and eight filled chips is a wall of colour |
-| the floor it does NOT clear | washed was refused by measurement | `verify:accent-fill` — see DESIGN_LANGUAGE.md for the numbers |
+| the floor it clears | ink at 13.73:1, fill 171° from the badge | `verify:accent-fill`, in OKLCH — a luminance ratio had said the opposite |
 
 ### The accent budget
 
