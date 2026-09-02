@@ -38,6 +38,7 @@
 
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { keys as frontMatterKeys } from './lib/frontmatter.mjs';
 
 const dir = process.argv[2];
 if (!dir || !existsSync(dir)) {
@@ -77,8 +78,10 @@ const INERT = new Set([
   'dwell', 'protagonist', 'colorCriticalWorkspace'
 ]);
 
-const fm = language.split('---')[1] ?? '';
-const keys = [...fm.matchAll(/^([a-zA-Z][a-zA-Z0-9]*):/gm)].map((m) => m[1]);
+// Parsed properly rather than by splitting on the first `---`, which the
+// template's own banner comments contain. That read 28 of this document's 39
+// keys and reported "continuous" the whole time — see lib/frontmatter.mjs.
+const keys = frontMatterKeys(language);
 
 for (const key of keys) {
   if (INERT.has(key)) continue;

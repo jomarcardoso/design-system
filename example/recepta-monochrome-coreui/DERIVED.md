@@ -201,6 +201,8 @@ tables nobody had checked against each other.
 | decision | value | from |
 |---|---|---|
 | the progression | washed → saturated | `posture: quiet` |
+| `neutralPigment` | 0.6 | the SECONDARY archetype, domain `warmth` — a grey ramp here would be an office |
+| `accentContrast` | `high`, measured | the accent against both ends of the ramp; the light ink wins, so `fg-on-accent` is paper |
 | `accentFill` | `washed` | `protagonist: user-content` — the photograph is the magnet, not the button. The ink reads at 13.73:1 and the fill sits 171° of hue from the badge fill, so it is not mistakable for a label |
 | the second channel | the ink darkens with the fill | `accessibility: AA` — a tone step alone does not survive a printed recipe |
 | multi-select | washed only, never a solid fill | cardinality: the tag filters are multi-select, and eight filled chips is a wall of colour |

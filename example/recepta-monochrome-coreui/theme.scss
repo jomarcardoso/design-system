@@ -92,7 +92,12 @@ $recepta: (
   'on-accent': paper(0),
   'accent-hover': pen(800),
   'accent-active': pen(900),
-  'accent-subtle': pen(50),
+  accent-subtle: pen(50),
+  // The states of the subtle fill. `accentFill: washed` rests the primary
+  // action here, and hover is where a fill moves — without these it would
+  // either not react or jump to the solid and invert its own ink mid-gesture.
+  accent-subtle-hover: pen(100),
+  accent-subtle-active: pen(200),
   'accent-text': pen(700),
 
   // Does not collapse onto the accent. The school says one HUE, not one state,

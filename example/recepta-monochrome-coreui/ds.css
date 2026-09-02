@@ -96,6 +96,8 @@
     --app-bg-accent-hover: #3e4f8e;
     --app-bg-accent-active: #344375;
     --app-bg-accent-subtle: #f0f5ff;
+    --app-bg-accent-subtle-hover: #dee9ff;
+    --app-bg-accent-subtle-active: #c3d6ff;
     --app-fg-accent: #4a5eab;
     --app-border-accent: #4a5eab;
     --app-bg-brand: #4a5eab;
@@ -184,13 +186,15 @@
     --app-bg-neutral-hover: #d3cdc4;
     --app-bg-neutral-active: #e5e0d9;
     --app-bg-neutral-subtle: #211f1b;
-    --app-bg-neutral-subtle-hover: #d3cdc5;
-    --app-bg-neutral-subtle-active: #e9e0d2;
+    --app-bg-neutral-subtle-hover: #312d28;
+    --app-bg-neutral-subtle-active: #423c33;
     --app-bg-disabled: #1c1a17;
     --app-fg-disabled: #605d5a;
     --app-bg-accent-hover: #baccff;
     --app-bg-accent-active: #d1e0ff;
     --app-bg-accent-subtle: #1d1f23;
+    --app-bg-accent-subtle-hover: #292e38;
+    --app-bg-accent-subtle-active: #343d51;
     --app-fg-accent: #c4d6ff;
     --app-border-accent: #a1b5f1;
     --app-bg-brand: #a1b5f1;
@@ -259,13 +263,15 @@
       --app-bg-neutral-hover: #d3cdc4;
       --app-bg-neutral-active: #e5e0d9;
       --app-bg-neutral-subtle: #211f1b;
-      --app-bg-neutral-subtle-hover: #d3cdc5;
-      --app-bg-neutral-subtle-active: #e9e0d2;
+      --app-bg-neutral-subtle-hover: #312d28;
+      --app-bg-neutral-subtle-active: #423c33;
       --app-bg-disabled: #1c1a17;
       --app-fg-disabled: #605d5a;
       --app-bg-accent-hover: #baccff;
       --app-bg-accent-active: #d1e0ff;
       --app-bg-accent-subtle: #1d1f23;
+      --app-bg-accent-subtle-hover: #292e38;
+      --app-bg-accent-subtle-active: #343d51;
       --app-fg-accent: #c4d6ff;
       --app-border-accent: #a1b5f1;
       --app-bg-brand: #a1b5f1;
@@ -617,6 +623,20 @@
     --cui-btn-hover-bg: var(--app-bg-danger-subtle);
     --cui-btn-hover-border-color: transparent;
     --cui-btn-hover-color: var(--app-fg-danger);
+  }
+  .btn-primary {
+    --cui-btn-bg: var(--app-bg-accent-subtle);
+    --cui-btn-border-color: var(--app-bg-accent-subtle);
+    --cui-btn-color: var(--app-fg-accent);
+    --cui-btn-hover-bg: var(--app-bg-accent-subtle-hover);
+    --cui-btn-hover-border-color: var(--app-bg-accent-subtle-hover);
+    --cui-btn-hover-color: var(--app-fg-accent);
+    --cui-btn-active-bg: var(--app-bg-accent-subtle-active);
+    --cui-btn-active-border-color: var(--app-bg-accent-subtle-active);
+    --cui-btn-active-color: var(--app-fg-accent);
+    --cui-btn-disabled-bg: var(--app-bg-accent-subtle);
+    --cui-btn-disabled-border-color: var(--app-bg-accent-subtle);
+    --cui-btn-disabled-color: var(--app-fg-accent);
   }
   .btn:focus-visible {
     box-shadow: 0 0 0 var(--app-ring-width) var(--app-ring-color);

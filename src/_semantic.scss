@@ -550,6 +550,19 @@ $_type-scale-steps: (
     'bg-action-hover': _req($c, action-hover, $name),
     'bg-action-active': _req($c, action-active, $name),
     'bg-action-subtle': _req($c, action-subtle, $name),
+
+    // The STATES of the subtle fill, which `accentFill: washed` needs and the
+    // contract did not have. The neutral family got hover and active in 0.7.0
+    // and the action family did not, so a product whose primary action rests at
+    // the subtle step had nowhere to put its hover — and hover is where a fill
+    // moves. The omission meant a washed button either did not react at all or
+    // jumped to the solid, inverting its own ink mid-gesture.
+    //
+    // Optional, falling back to the subtle fill itself: a theme that has not
+    // thought about it keeps today's behaviour, and one that has can move a
+    // step without leaving the pale end of the ramp.
+    'bg-action-subtle-hover': _opt($c, 'action-subtle-hover', 'action-subtle', $name),
+    'bg-action-subtle-active': _opt($c, 'action-subtle-active', 'action-subtle', $name),
     'fg-action': _req($c, 'action-text', $name),
     // Defaults to the fill, which is what most brands want. A brand whose
     // outline button is a DIFFERENT hue from its solid one sets 'action-border'

@@ -6,6 +6,10 @@ archetypeNote: ~
 
 density: comfortable
 platform: mobile-first
+# The override mobile-first carries: size-control at 44px, over the archetype.
+# It was declared here and never built — the document said mobile-first and the
+# CSS shipped 36px targets for as long as this example has existed.
+# npm run verify:applied found it.
 
 radius: subtle
 elevation: borders

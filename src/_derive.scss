@@ -101,6 +101,10 @@ $_fill-hover: 0.85;
 $_fill-active: 0.91;
 // The tinted background behind a selected row or an inline alert.
 $_fill-subtle: 0.24;
+// A subtle fill moves AWAY from the page under the cursor, which is upward in
+// the dark. Two small steps, not the leap a solid fill takes.
+$_fill-subtle-hover: 0.3;
+$_fill-subtle-active: 0.36;
 // Tinted ink. Well clear of `surface-active` at 0.30.
 $_fill-text: 0.88;
 $_fill-border: 0.42;
@@ -215,6 +219,18 @@ $_chroma-surface-max: 0.018;
     } @else if string.index($key + '', 'on-') == 1 {
       // Handled with its fill below — see the second pass.
       $result: $value;
+    } @else if _ends-with($key, '-subtle-hover') {
+      // BEFORE the `-hover` branch on purpose: `action-subtle-hover` ends with
+      // `-hover` and is not a solid fill's hover. Falling through sent it to
+      // the solid branch, which lifted it to near-white — a washed button that
+      // rested at near-black and turned pale under the cursor, inverting its
+      // own ink mid-gesture.
+      //
+      // The rule for a subtle fill in the dark is the same as everywhere else:
+      // hover moves AWAY from the page, which is up here and down in the light.
+      $result: _at($value, $_fill-subtle-hover, $_chroma-ink, $_chroma-surface-max * 3);
+    } @else if _ends-with($key, '-subtle-active') {
+      $result: _at($value, $_fill-subtle-active, $_chroma-ink, $_chroma-surface-max * 3);
     } @else if _ends-with($key, '-subtle') {
       $result: _at($value, $_fill-subtle, $_chroma-ink, $_chroma-surface-max * 3);
     } @else if _ends-with($key, '-text') {

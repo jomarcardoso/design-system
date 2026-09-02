@@ -211,6 +211,38 @@ group is one where the product could have answered anything and got the same
 recommendation, which means the shape comes from the library. The fix is a
 condition column in the catalogue, not a better generator.
 
+## A decision recorded is not a decision built
+
+```bash
+npm run verify:applied
+```
+
+`verify:chain` asks whether every answer produced SOMETHING — whether the key is
+named in `DERIVED.md`. It never asked whether the VALUE reached the CSS, and
+that gap cost three bugs, each of which passed every check in the repository and
+was found by opening the page:
+
+| the document said | the build did |
+|---|---|
+| `accentFill: washed` | painted a solid accent — `.btn-primary` is bound inside a variant loop layer 3 cannot reach |
+| `surfaceSeparation: tones` | a card one rung lighter AND ringed, because the library card border was still bound |
+| `platform: mobile-first` | 36px targets, for as long as that example had existed |
+
+**And the guard meant to catch this was blind to a third of its input.** Every
+script parsed the front matter as `doc.split(---)[1]`, which is correct until
+a document contains `---` inside it — and the template groups its keys under
+`# --- banner ---` comments. Twenty-eight keys of thirty-nine were being read,
+and the eleven lost were the accent decisions, the deviations and the
+guardrails. `check-chain` reported "continuous" the whole time.
+
+Front matter is now parsed in `scripts/lib/frontmatter.mjs`: the delimiter is a
+line that IS `---`, never a `---` anywhere in the text. **A guard blind to part
+of its input reads exactly like a guard that passes.**
+
+`verify:applied` checks the decisions whose CSS consequence is unambiguous, and
+**reports what it cannot locate rather than passing it** — a silent skip is how
+a guard turns into decoration.
+
 ## Verifying
 
 

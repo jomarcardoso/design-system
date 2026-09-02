@@ -75,6 +75,8 @@ $_monochrome: (
   'bg-action-hover': 'bg-accent-hover',
   'bg-action-active': 'bg-accent-active',
   'bg-action-subtle': 'bg-accent-subtle',
+  'bg-action-subtle-hover': 'bg-accent-subtle-hover',
+  'bg-action-subtle-active': 'bg-accent-subtle-active',
   'fg-action': 'fg-accent',
   'border-action': 'border-accent',
 
@@ -83,6 +85,8 @@ $_monochrome: (
   'bg-selected-hover': 'bg-accent-hover',
   'bg-selected-active': 'bg-accent-active',
   'bg-selected-subtle': 'bg-accent-subtle',
+  'bg-selected-subtle-hover': 'bg-accent-subtle-hover',
+  'bg-selected-subtle-active': 'bg-accent-subtle-active',
   'fg-selected': 'fg-accent',
   'border-selected': 'border-accent',
 
@@ -175,6 +179,8 @@ $_brand: (
     $c: _alias($c, 'accent-hover', 'action-hover');
     $c: _alias($c, 'accent-active', 'action-active');
     $c: _alias($c, 'accent-subtle', 'action-subtle');
+    $c: _alias($c, 'accent-subtle-hover', 'action-subtle-hover');
+    $c: _alias($c, 'accent-subtle-active', 'action-subtle-active');
     $c: _alias($c, 'accent-text', 'action-text');
     $c: _alias($c, 'accent-border', 'action-border');
 

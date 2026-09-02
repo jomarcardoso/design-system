@@ -11,6 +11,7 @@
 // adapter, which is what the school looks like once a library is involved.
 // =============================================================================
 
+@use 'sass:map';
 @use '../../src/config' with (
   $adapters: (),
   // The load-bearing line. It tells `check-roles()` that `action`, `selected`
@@ -29,7 +30,15 @@
 @include base.emit();
 
 // Layer 2 — structure with this product's typefaces, then the day theme.
-@include semantic.emit-structure(theme.$typography);
+// `platform: mobile-first` RAISES the control height to 44px, over whatever the
+// archetype wanted — ergonomics outranks personality, and the tool has said so
+// since the override rule was written. It had never been applied here: the
+// document declared mobile-first and the build shipped 36px targets, which is
+// the third instance in this repository of a decision recorded and not built.
+// `npm run verify:applied` is what found it.
+@include semantic.emit-structure(
+  map.merge(theme.$typography, ('size-control': 44px))
+);
 @include semantic.emit-theme('light', theme.$caderno, $default: true);
 
 // Night, generated. `derive.dark()` transforms by ROLE rather than per colour,

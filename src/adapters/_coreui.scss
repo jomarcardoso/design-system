@@ -271,6 +271,39 @@ $_derived: (
     }
   }
 
+  // THE PRIMARY VARIANT READS LAYER 3, and it is the only one that can.
+  //
+  // The loop above binds every variant from layer 2 by role, and the layer 3
+  // bypass guard exempts it for a good reason: a Sass variable holds one value
+  // per compilation, so a hook inside the loop would paint `.btn-danger` with
+  // whatever `.btn-primary` was set to.
+  //
+  // But that exemption left the PRIMARY ACTION with no hook at all, and it is
+  // the one variant layer 3 does name — `$button-bg` and its states have been
+  // in the contract since the beginning with nothing reading them. The document
+  // could say `accentFill: washed`, meaning the primary action rests at the
+  // subtle step with dark ink, and the build had no way to hear it: the loop
+  // painted a solid accent and every check passed.
+  //
+  // So one rule after the loop, for the one variant that has a name. Same
+  // specificity, later in source order, so it wins — and it changes nothing for
+  // a product that leaves the layer 3 defaults alone, because those defaults
+  // are the same layer 2 tokens the loop just used.
+  .btn-primary {
+    --cui-btn-bg: #{component.$button-bg};
+    --cui-btn-border-color: #{component.$button-border-color};
+    --cui-btn-color: #{component.$button-fg};
+    --cui-btn-hover-bg: #{component.$button-bg-hover};
+    --cui-btn-hover-border-color: #{component.$button-bg-hover};
+    --cui-btn-hover-color: #{component.$button-fg};
+    --cui-btn-active-bg: #{component.$button-bg-active};
+    --cui-btn-active-border-color: #{component.$button-bg-active};
+    --cui-btn-active-color: #{component.$button-fg};
+    --cui-btn-disabled-bg: #{component.$button-bg};
+    --cui-btn-disabled-border-color: #{component.$button-bg};
+    --cui-btn-disabled-color: #{component.$button-fg};
+  }
+
 
   // --- ONE focus colour, for every button and every variant --------------
   //

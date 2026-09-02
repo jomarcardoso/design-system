@@ -59,7 +59,20 @@
   // a literal sneaking in: what is wanted here is the ABSENCE of a line, and no
   // colour expresses absence. Pointing it at `border-divider` would keep a
   // visible rule, which is the thing being removed.
-  $surface-border-color: transparent
+  $surface-border-color: transparent,
+
+  // THE PRIMARY ACTION RESTS AT THE SUBTLE STEP, which is what
+  // `accentFill: washed` means — and until the adapter grew a layer 3 hook for
+  // `.btn-primary`, the document said it and the build painted a solid accent.
+  //
+  // The ink is the accent rather than the body ink: pen on pale pen is the
+  // pairing this school is built on, and sepia ink on a blue fill would read as
+  // two systems meeting.
+  $button-bg: #{core.ref(bg-accent-subtle)},
+  $button-fg: #{core.ref(fg-accent)},
+  $button-border-color: #{core.ref(bg-accent-subtle)},
+  $button-bg-hover: #{core.ref(bg-accent-subtle-hover)},
+  $button-bg-active: #{core.ref(bg-accent-subtle-active)}
 );
 @use '../../src/derive';
 @use '../../src/adapters/coreui';
