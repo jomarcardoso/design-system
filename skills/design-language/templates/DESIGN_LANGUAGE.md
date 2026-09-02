@@ -16,8 +16,41 @@
 # file is merely edited.
 toolVersion: 0.8.0
 
-archetype: tech-minimalist        # tech-minimalist | enterprise-solid | playful-expressive | editorial-premium | utilitarian-technical | hybrid
-archetypeNote: ~                  # required when archetype is hybrid
+archetype: tech-minimalist        # tech-minimalist | enterprise-solid | playful-expressive | editorial-premium | utilitarian-technical
+
+# A product is rarely one archetype. The PRIMARY above governs structure —
+# geometry, type, the ladder, density, the accent budget. A SECONDARY governs
+# SOUL, and only the domains named below.
+#
+# `hybrid` was the old answer and is retired: it named two archetypes and never
+# said which won where, so every later decision re-opened the argument, and it
+# emptied the deviation list without resolving anything.
+#
+# The alternative was worse. Recording an Editorial product's warm voice as a
+# DEVIATION says a tension exists where none does — the voice is not fighting
+# the archetype, it is doing a job the archetype was never asked to do. A
+# deviation list full of things that are not tensions teaches its reader to skip
+# it, and then the real one arrives in the same tone.
+#
+# OPTIONAL, and most products have none. Propose one only where question 1 or
+# question 2 carries something the chosen archetype demonstrably does not.
+archetypeSecondary: ~             # or an archetype name
+
+# The CLOSED list, and the reason the model is safe:
+#   voice         the register of the system messages, and the microcopy
+#   illustration  decorative drawing — empty states, glyphs beside content
+#   warmth        the temperature of the neutral ramp, i.e. neutralPigment
+#   motion        micro-interactions, and how a state change announces itself
+#   marks         small artisanal markers — a status dot, a category pill
+#
+# It may NEVER govern geometry, the type pairing or scale, the surface model,
+# the ladder, density, spacing, the accent budget or elevation. A client asking
+# for one of those is asking to change the PRIMARY, which is a conversation to
+# have plainly rather than a domain to grant sideways.
+#
+# npm run verify:archetype refuses anything outside the list, and refuses a
+# deviation the secondary already explains.
+secondaryGoverns: ~
 
 density: comfortable              # dense | comfortable | generous
 platform: desktop-first           # desktop-first | mobile-first | multiplatform

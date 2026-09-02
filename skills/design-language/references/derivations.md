@@ -1201,6 +1201,96 @@ time.
 red. A system that changes the family has not adapted its status colours, it has
 changed what they mean.
 
+## Y. Two archetypes, and what each one is allowed to govern
+
+A product is rarely one archetype. The recipe notebook is the worked case: the
+structure of a printed cookbook, and the warmth of something kept in a kitchen
+drawer. Until now the tool had two ways to record that and both were bad.
+
+**`hybrid` was a laundering label.** It says two archetypes are involved and
+never says which one wins where, so every later decision re-opens the argument.
+It also empties the deviation list without resolving anything — the thing the
+skill already warns about, arriving through a value the front matter offered.
+
+**The alternative was worse.** Recording the warm voice of an Editorial product
+as a DEVIATION says a tension exists where none does. The voice is not fighting
+the archetype; it is doing a job the archetype was never asked to do. A
+deviation list full of things that are not tensions teaches its reader to skip
+it, and then the real one arrives in the same tone.
+
+### The model
+
+**A primary archetype governs structure. A secondary governs soul.** The split
+is not a percentage and should not be written as one — it is a list of DOMAINS,
+and a domain belongs to exactly one of them.
+
+| | governs |
+|---|---|
+| **primary** | everything not listed below |
+| **secondary** | only what it is explicitly assigned, from the closed list |
+
+### What a secondary may govern
+
+| domain | what it decides |
+|---|---|
+| `voice` | the register of the system's own messages, and the microcopy |
+| `illustration` | decorative drawing — empty states, glyphs beside content, marks that are not icons |
+| `warmth` | the temperature of the neutral ramp, which is `neutralPigment` |
+| `motion` | micro-interactions, and how a state change announces itself |
+| `marks` | small artisanal markers — a status dot, a category pill, a hand-drawn rule |
+
+### What a secondary may NEVER govern
+
+This list is the whole reason the model is safe, and it is drawn from where the
+mixing actually breaks:
+
+- **geometry** — radius, shape, corner treatment. Pill buttons beside 4px cards
+  is not two archetypes cooperating, it is a system with no shape.
+- **the type pairing and the scale.** Swapping a serif heading for a rounded
+  display face does not warm the product; it removes the thing the primary was
+  chosen for.
+- **the surface model, the ladder and `ladderSpend`.**
+- **density, control sizing and spacing.**
+- **the accent budget.** A secondary that may spend the accent is a second
+  palette arriving one component at a time.
+- **`elevation`.**
+
+**A client asking for one of these is asking to change the PRIMARY**, and that
+is a real conversation worth having plainly rather than granting sideways.
+
+### What it buys
+
+The recipe notebook's answers stop needing three deviations:
+
+| decision | before | now |
+|---|---|---|
+| warm, encouraging system messages | a deviation against Editorial | `playful-expressive` governing `voice` |
+| sepia-pigmented neutrals | argued for in prose | `playful-expressive` governing `warmth` |
+| drawn glyphs beside ingredients | nothing recorded it | `playful-expressive` governing `illustration` |
+
+**And the deviation list goes empty for a real reason** rather than by
+promotion, which is the whole difference from `hybrid`.
+
+### How it is collected
+
+**Not by a new question.** Question 3 already asks the archetype, and question 2
+already pointed at one — where the two disagree, the interview already raises
+it. That disagreement IS the secondary:
+
+> *"Question 2 pointed at Editorial and you chose it. Your answer to question 1
+> — a notebook kept in a kitchen — has warmth in it that Editorial does not
+> carry. Recording Playful as the secondary, governing the voice, the warmth of
+> the neutrals and the drawn marks. It governs nothing about the shape or the
+> type. Correct?"*
+
+One exchange, and it converts a tension the interview was already surfacing into
+a structure instead of a footnote.
+
+**A secondary is optional and most products do not have one.** Proposing one for
+every product would inflate every document with a second archetype nobody
+needed; propose it only where question 1 or question 2 carries something the
+chosen archetype demonstrably does not.
+
 ## Validating a new question: does it discriminate?
 
 Before a question is considered finished, run it against three products that

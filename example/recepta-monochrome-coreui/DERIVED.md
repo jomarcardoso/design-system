@@ -32,6 +32,26 @@ inherited from your mother — which rules out more than the archetype does.
 
 ## 2. What was derived
 
+### The two archetypes
+
+`archetypeSecondary: playful-expressive`, and `secondaryGoverns` names four
+domains. Editorial & Premium is the PRIMARY and governs structure; the secondary
+governs nothing structural.
+
+| domain | what Playful decides here | what it does NOT touch |
+|---|---|---|
+| `voice` | "Guarde a receita", never "Item salvo com sucesso" | — |
+| `illustration` | drawn glyphs beside the ingredients; the empty state | — |
+| `warmth` | the sepia pigment at 0.6; a grey ramp here would be an office | — |
+| `marks` | the quiet category pills — "45 min", "sem glúten" | — |
+| | | the radius, the serif pairing, the ladder, the density, the accent budget |
+
+**The warm voice used to be a deviation.** It was never a tension: the voice was
+not fighting Editorial, it was doing a job Editorial was never asked to do. A
+deviation list holding things that are not tensions teaches its reader to skip
+it, and then the real one arrives in the same tone.
+
+
 ### Quiet elements
 
 | decision | value | from |

@@ -108,15 +108,19 @@ test answers against.
 - (C) Playful & Expressive
 - (D) Editorial & Premium
 - (E) Utilitarian & Technical
-- (F) Hybrid — name the two
+- (F) Two of them — name which gives the STRUCTURE and which gives the SOUL
 
 Lead with the one question 2 pointed at, marked as the suggestion.
 
 **If 2 and 3 disagree, ask about it.** It usually means the brand aspires to one
 thing and the product needs another — an analytics tool whose brand is playful,
 say. That tension is the most useful thing the interview can surface, and the
-resolution is normally "Utilitarian density, Playful voice", which is a hybrid
-worth recording as one.
+resolution is normally "Utilitarian density, Playful voice" — and that is not a
+hybrid, it is a PRIMARY and a SECONDARY. Record Utilitarian as the archetype and
+Playful as `archetypeSecondary` governing `voice`. `hybrid` is retired: it named
+two and never said which won where, so every later decision re-opened the
+argument. See `derivations.md` §Y for the closed list of domains a secondary may
+govern, and the longer list it may never touch.
 
 **4. Is this a break with the current product, or an evolution of it?**
 

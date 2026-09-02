@@ -2,7 +2,25 @@
 toolVersion: 0.8.0
 
 archetype: editorial-premium
-archetypeNote: ~
+
+# The structure of a printed cookbook, and the warmth of something kept in a
+# kitchen drawer. Those are two archetypes and the tool had two bad ways to say
+# so: `hybrid`, which never said which one won where, and a deviation list that
+# recorded the warm voice as a TENSION when it is nothing of the kind.
+#
+# Playful governs soul here and nothing structural. It does not touch the
+# radius, the serif pairing, the ladder, the density or the accent budget —
+# every one of which is why Editorial was chosen.
+archetypeSecondary: playful-expressive
+secondaryGoverns:
+  # "Guarde a receita", not "Item salvo com sucesso"
+  - voice
+  # drawn glyphs beside the ingredients, and the empty state
+  - illustration
+  # the sepia pigment; a grey ramp here would be an office
+  - warmth
+  # the quiet category pills — "45 min", "sem glúten"
+  - marks
 
 density: comfortable
 platform: multiplatform
@@ -134,13 +152,6 @@ deviations:
       Editorial assumes continuous reading. This product is consulted in short
       bursts with one hand and a wet counter, so it takes the ergonomics of
       occasional use and keeps the archetype's leading.
-    accepted: 2026-08-29
-  - decision: warm voice
-    against: editorial-premium
-    reason: >
-      The promise is a notebook inherited from your mother, not a publication.
-      Editorial's reserve carries the typography and the restraint; it does not
-      get to carry the writing.
     accepted: 2026-08-29
 
 # Conflicts raised and resolved. Not deviations — nothing here went against the

@@ -106,6 +106,8 @@ is guessing at the one thing the client already knows.
 
 Say so in `DESIGN_LANGUAGE.md` and write the values out by hand. The matrix
 covers the common cases in the current market; it is not a taxonomy of every
-product that can exist. A hybrid — "Editorial type on a Utilitarian density",
-which is what most analytics products actually are — is a legitimate answer, and
-recording it as a hybrid is more useful than forcing it into one column.
+product that can exist. Two archetypes — "Editorial type on a Utilitarian density", which is what most
+analytics products actually are — is a legitimate answer, and the way to record
+it is a PRIMARY plus an `archetypeSecondary` with the domains it governs. Not
+`hybrid`, which named two and never said which won where. See
+`derivations.md` §Y.
