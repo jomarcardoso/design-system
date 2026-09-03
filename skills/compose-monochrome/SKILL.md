@@ -16,6 +16,12 @@ Two other skills produced that system: `design-language` chose the pigment, the
 ladder and the archetype; `design-patterns` chose which component forms exist.
 This one is what runs afterwards, every day, on every screen.
 
+**The long version is `design-language/references/monochrome.md`**, in the
+repository that generated the system: the twelve rungs and their jobs, the two
+numbering systems that get confused, elevation against excavation, the cross
+contrast test, and what that tool does and does not yet enforce. Read it when
+this file is not enough; it is the source everything here is compressed from.
+
 ## Read this first, in one paragraph
 
 There is exactly **one chromatic pigment** in this product. Everything else is a

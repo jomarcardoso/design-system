@@ -2,6 +2,12 @@
 
 # Colour strategies
 
+> **For the monochrome school, [`monochrome.md`](monochrome.md) is the long
+> version** — the twelve rungs and their jobs, the two numbering systems that get
+> confused, elevation against excavation, the naming trap every library shares,
+> and an honest list of what this tool enforces and what it does not. This file
+> says what the three schools ARE; that one says what one of them COSTS.
+
 Two questions in the interview decide more of the generated system than any
 other. They belong in block 4, right after the brand colour, and both have to
 be asked — neither has a default that is right often enough to assume.

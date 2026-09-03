@@ -31,6 +31,8 @@ find out what it needs:
 > 1. `skills/design-language/references/questionnaire.md` — the eighteen questions
 > 2. `skills/design-language/references/archetypes.md` — the preset behind every recommendation
 > 3. `skills/design-language/references/colour-strategies.md` — block 4
+> 3b. `skills/design-language/references/monochrome.md` — only when the school
+>     is monochrome, and then it is not optional
 > 4. `skills/design-language/templates/DESIGN_LANGUAGE.md` — the document I will fill in
 > 5. `skills/design-language/references/derivations.md` — the answers to component defaults
 > 6. `skills/design-language/references/conflicts.md` — answers that fight, and how to soften
@@ -68,6 +70,7 @@ invented value in the finished document rather than as an error.
 | `references/questionnaire.md` | the eighteen questions, their options and the ✅/⚠️/❌ tables | questions get skipped or asked as free text |
 | `references/archetypes.md` | the preset behind every recommendation, and the row that decides typography, spacing and icons | faces and numbers invented to sound right |
 | `references/colour-strategies.md` | block 4 — the three schools, the seven secondary treatments, the accent-driven follow-ups | the wrong follow-up questions asked |
+| `references/monochrome.md` | what the monochrome school COSTS: the twelve rungs and their jobs, the two numbering systems, elevation against excavation, the naming trap every library shares | a build that is technically monochrome and generically like its library — which is what this tool shipped before the file existed |
 | `templates/DESIGN_LANGUAGE.md` | the document being written | sections quietly missing |
 | `references/derivations.md` | turning the answers into component-level defaults | the hundred unowned decisions fall back to the library, and the build reads as generic however good the document is |
 | `references/conflicts.md` | answers that cannot all be true, and the moves that resolve each | a value quietly adjusted to make a conflict disappear, which the next reader takes for the original intent |
