@@ -61,6 +61,28 @@
   // visible rule, which is the thing being removed.
   $surface-border-color: transparent,
 
+  // THE MODAL FLOATS, SO THE SHADOW IS ITS BOUNDARY. It was carrying a raised
+  // tone AND a hairline AND a shadow — three mechanisms for one edge, which is
+  // the default library look this system exists to avoid. `verify:mechanism`
+  // found it. See `derivations.md` §Z.
+  $overlay-border-color: transparent,
+
+  // TABS ARE WEIGHT ONLY, which is what this product's own FORM-SET.md
+  // recommends: `quiet` plus `editorial-premium` reach it at 13% of the answer
+  // space, and the enclosed tab the library ships is explicitly avoided at
+  // `quiet` because it is a heavy shape.
+  //
+  // The recommendation existed and the page rendered enclosed tabs anyway —
+  // a surface and a border marking the active one. Same class of bug as the
+  // card that was a rung lighter AND ringed: a decision recorded and never
+  // built.
+  //
+  // Weight only means the active tab differs by INK, and the ink change lives
+  // in `$nav-tab-fg-active`, which already points at the accent.
+  $nav-tab-bg-active: transparent,
+  $nav-tab-border-color-active: transparent,
+  $nav-tab-border-color-hover: transparent,
+
   // THE PRIMARY ACTION IS SOLID, and it was briefly not.
   //
   // I invented a decision — `accentFill: saturated | washed` — as if those were

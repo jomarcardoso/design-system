@@ -1208,6 +1208,108 @@ every product would inflate every document with a second archetype nobody
 needed; propose it only where question 1 or question 2 carries something the
 chosen archetype demonstrably does not.
 
+## Z. Which mechanism carries which boundary
+
+Four mechanisms carry a boundary, and they are not interchangeable. In order of
+visual cost:
+
+| | costs | |
+|---|---|---|
+| **space** | viewport | Gestalt. Zero attention, zero bytes |
+| **tone** | one rung of the ladder | quieter than a line, and it groups better |
+| **line** | one more stroke the eye processes | cheap in space, expensive in noise |
+| **shadow** | it simulates physics, and a lie about physics is uncomfortable without anyone being able to say why | the most expensive |
+
+> **One boundary, one mechanism.**
+
+A card with a different background AND a border AND a shadow is the default
+library look this whole tool exists to avoid. When the second mechanism feels
+necessary, the first one is usually too weak, and the fix is to strengthen the
+first.
+
+**The one legitimate exception is an interactive element**, which often needs
+tone AND border — the tone carries identity (this is a field) and the border
+carries state (rest → hover → focus). Two mechanisms doing two jobs is not
+redundancy. Everything else is.
+
+### Escalate only when the one below fails
+
+**Start with space.** It fails in five situations, and they are recognisable
+rather than a matter of taste:
+
+- the content is **infinite or scrolling**, so there is no natural end for space
+  to mark;
+- the items are **heterogeneous** — a chart beside a paragraph beside a table.
+  Proximity groups things that are alike;
+- the product is **dense** by nature, and runs out of viewport before it runs
+  out of content;
+- the block is **clickable as a whole**, and a click target needs visible
+  limits;
+- the grouping must **survive a different background** — the same card on the
+  page and inside a modal.
+
+**If space failed, the next is tone, not line.** And tone has a ceiling nobody
+documents: **two levels, at most three**, before there is no usable contrast
+left. Adjacent surfaces sit between 1.05:1 and 1.3:1; stack four and the fourth
+disappears. Depth past level two changes mechanism — the card in tone, and
+sections inside it by space.
+
+**Line enters where tone is not visible enough**, which is most often in the
+dark, where the same lightness difference reads as less separation.
+
+**Shadow only for what is temporary and genuinely floats.** A header and a
+sidebar do not float; they are fixed chrome. One permanent level and one
+temporary is the ceiling. See §Q.
+
+## Contrast targets, by what the thing is FOR
+
+Three separate requirements, and treating them as one is what produces either a
+striped page or an invisible control.
+
+| pair | target | source |
+|---|---|---|
+| text on its surface | **4.5:1** | WCAG 1.4.3 |
+| whatever IDENTIFIES a control | **3:1** | WCAG 1.4.11 |
+| a decorative divider | **1.2–1.5:1** | outside 1.4.11 |
+| an interactive border at rest | 1.6–2:1 | |
+| focus, and selection | **3:1** or more | 1.4.11 |
+
+**This is why `border-divider` and `border-interactive` are two tokens**, and
+the reason is legal rather than aesthetic. Pushing every divider to 3:1 produces
+a striped, aggressive page; leaving a control's boundary below 3:1 produces one
+nobody can find.
+
+**A subtle fill may sit at 1.1–1.3:1 against the page and still be correct** —
+if a 1px border carries the 3:1 that identifies the control. Fill and boundary
+are two independent calculations, which is how a washed look survives: the
+border does the identifying, so the fill does not have to.
+
+**And the WCAG ratio is the wrong instrument at the pale end of the ladder.**
+The formula is logarithmic and compresses everything near 1.0 — the difference
+between 1.06 and 1.12 is large to the eye and almost nothing in the number. For
+surfaces and dividers measure **ΔL in OKLCH**, which is linear in perception:
+
+| pair | ΔL |
+|---|---|
+| adjacent surfaces | 0.02 – 0.04 |
+| a component fill against the page | 0.05 – 0.07 |
+| a divider | 0.10 – 0.14 |
+| an interactive border | 0.18 – 0.24 |
+
+Use ΔL from rung 1 to 7 and the contrast ratio from 8 to 12. **And in the dark
+the same ΔL reads as less separation** — typically 1.3× to 1.5× more is needed
+at the low rungs. A `derive.dark()` that copies the light theme's deltas
+produces a flat dark theme, and that is a bug every automatic checker passes,
+because none of them measures separation between surfaces.
+
+### Where this was already broken
+
+The accent-driven example shipped a primary action at **1.01:1** against its
+page with no border — neither the fill nor a boundary identifying it. And
+`border-interactive` existed as a token that nothing read, which
+`npm run report:orphans` found and `npm run verify:mechanism` now keeps from
+returning.
+
 ## Validating a new question: does it discriminate?
 
 Before a question is considered finished, run it against three products that

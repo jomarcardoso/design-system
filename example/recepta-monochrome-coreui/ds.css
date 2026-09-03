@@ -350,8 +350,11 @@
     --cui-tertiary-bg: var(--app-bg-sunken);
     --cui-link-color: var(--app-fg-accent);
     --cui-link-hover-color: var(--app-fg-accent-hover);
-    --cui-border-color: var(--app-border-color);
+    --cui-border-color: var(--app-border-divider);
     --cui-focus-ring-color: var(--app-ring-color);
+    --cui-input-border-color: var(--app-border-interactive);
+    --cui-form-check-input-border-color: var(--app-border-interactive);
+    --cui-form-select-border-color: var(--app-border-interactive);
     --cui-primary: var(--app-bg-accent);
     --cui-primary-bg-subtle: var(--app-bg-accent-subtle);
     --cui-primary-border-subtle: var(--app-border-accent);
@@ -638,8 +641,11 @@
     --cui-btn-disabled-border-color: var(--app-bg-accent);
     --cui-btn-disabled-color: var(--app-fg-on-accent);
   }
-  .btn:focus-visible {
-    box-shadow: 0 0 0 var(--app-ring-width) var(--app-ring-color);
+  .btn:focus-visible,
+  .form-control:focus-visible,
+  .form-select:focus-visible,
+  .form-check-input:focus-visible {
+    box-shadow: 0 0 0 var(--app-ring-offset) var(--app-bg-page), 0 0 0 calc(var(--app-ring-offset) + var(--app-ring-width)) var(--app-ring-color);
   }
   .chip {
     --cui-chip-border-radius: var(--app-radius-pill);
@@ -681,7 +687,7 @@
   .modal {
     --cui-modal-bg: var(--app-bg-raised);
     --cui-modal-color: var(--app-fg-default);
-    --cui-modal-border-color: var(--app-border-color);
+    --cui-modal-border-color: transparent;
   }
   .table {
     --cui-table-color: var(--app-fg-default);
@@ -693,7 +699,7 @@
   .form-select {
     background-color: var(--app-bg-surface);
     color: var(--app-fg-default);
-    border-color: var(--app-border-color);
+    border-color: var(--app-border-interactive);
   }
   .list-group {
     --cui-list-group-action-hover-bg: var(--app-bg-surface-hover);
@@ -730,9 +736,9 @@
   .nav-tabs {
     --cui-nav-tabs-border-color: var(--app-border-color);
     --cui-nav-tabs-link-active-color: var(--app-fg-accent);
-    --cui-nav-tabs-link-active-bg: var(--app-bg-surface);
-    --cui-nav-tabs-link-active-border-color: var(--app-border-accent);
-    --cui-nav-tabs-link-hover-border-color: var(--app-border-color-subtle);
+    --cui-nav-tabs-link-active-bg: transparent;
+    --cui-nav-tabs-link-active-border-color: transparent;
+    --cui-nav-tabs-link-hover-border-color: transparent;
   }
   .nav-underline {
     --cui-nav-underline-link-active-color: var(--app-fg-accent);
@@ -750,8 +756,8 @@
     --cui-nav-enclosed-link-color: var(--app-fg-default);
     --cui-nav-enclosed-link-disabled-color: var(--app-fg-disabled);
     --cui-nav-enclosed-link-active-color: var(--app-fg-accent);
-    --cui-nav-enclosed-link-active-bg: var(--app-bg-surface);
-    --cui-nav-enclosed-link-active-border-color: var(--app-border-accent);
+    --cui-nav-enclosed-link-active-bg: transparent;
+    --cui-nav-enclosed-link-active-border-color: transparent;
   }
   .breadcrumb {
     --cui-breadcrumb-divider-color: var(--app-fg-muted);

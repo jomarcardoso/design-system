@@ -182,7 +182,12 @@ $button-pad-x: #{core.ref('pad-control-x')} !default;
 // --- Input / field -----------------------------------------------------
 $field-bg: #{core.ref('bg-surface')} !default;
 $field-fg: #{core.ref('fg-default')} !default;
-$field-border-color: #{core.ref('border-color')} !default;
+// The INTERACTIVE role rather than the general border, and the distinction is
+// legal rather than aesthetic: what identifies a control sits inside WCAG
+// 1.4.11 and wants 3:1, while a decorative divider sits outside it and wants
+// 1.2-1.5:1. A field with no perceivable edge is a field nobody can find, and
+// this is the one place a border is not negotiable.
+$field-border-color: #{core.ref('border-interactive')} !default;
 $field-border-color-focus: #{core.ref('border-action')} !default;
 $field-radius: #{core.ref('radius-control')} !default;
 $field-height: #{core.ref('size-control')} !default;

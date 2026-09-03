@@ -37,9 +37,9 @@ question has to pass to stay here, and eight failed it across 0.8.0 and
 | `density` | `dense` · `comfortable` · `generous` | 5 | §D, §J, §L | `check-archetype-split` |
 | `platform` | `desktop-first` · `mobile-first` · `multiplatform` | 8 | §L | `check-chain`, `check-decisions-applied` |
 | `dwell` | `seconds` · `minutes` · `hours` | 6 | §W | `check-chain` |
-| `protagonist` | `user-content` · `product-content` · `brand` · `tools` | 7 | §X, §Y | `check-chain` |
-| `colorCriticalWorkspace` | `true` · `false` | 7 | §S, §X, §Y | `check-chain` |
-| `posture` | `quiet` · `balanced` · `loud` | 9 | §B, §C, §D, §E, §F, §G, §K, §M, §N, §O, §R, §W, §X, §Y | **—** |
+| `protagonist` | `user-content` · `product-content` · `brand` · `tools` | 7 | §X, §Z | `check-chain` |
+| `colorCriticalWorkspace` | `true` · `false` | 7 | §S, §X, §Z | `check-chain` |
+| `posture` | `quiet` · `balanced` · `loud` | 9 | §B, §C, §D, §E, §F, §G, §K, §M, §N, §O, §R, §W, §X, §Z | **—** |
 | `frame` | `single-column` · `content-aside` · `app-frame` | 15 | §L, §W | **—** |
 | `imagery` | `none` · `supporting` · `content` | 16 | §K | `check-decisions-applied` |
 | `imageRatio` | — | 16a | — | `check-decisions-applied` |
@@ -63,11 +63,11 @@ consequence, never the token.
 | key | values | derived in | checked by |
 |---|---|---|---|
 | `secondaryGoverns` | — | §Y | `check-archetype-split` |
-| `radius` | `square` · `subtle` · `rounded` · `pill` | §Y | `check-archetype-split`, `check-custom-prop-interpolation`, `check-dumb-components`, `check-token-grammar` |
+| `radius` | `square` · `subtle` · `rounded` · `pill` | §Z | `check-archetype-split`, `check-custom-prop-interpolation`, `check-dumb-components`, `check-token-grammar` |
 | `elevation` | `borders` · `soft-shadows` · `projected-shadows` | §B, §W, §Y | `check-archetype-split` |
 | `elevationCarrier` | — | §K, §N, §R, §W | `check-chain` |
-| `surfaceSeparation` | `lines` · `tones` · `shadows` | §B, §X | `check-decisions-applied` |
-| `surfaceModel` | `flat` · `elevated` · `recessed` | §B, §O, §R, §S, §W, §X, §Y | **—** |
+| `surfaceSeparation` | `lines` · `tones` · `shadows` | §B, §X | `check-decisions-applied`, `check-mechanism` |
+| `surfaceModel` | `flat` · `elevated` · `recessed` | §B, §O, §R, §S, §W, §X, §Z | **—** |
 | `ladderSpend` | `2` · `3` | §B, §H, §U, §W, §Y | `docs-forms-derived` |
 | `iconStyle` | `outline` · `filled` · `mixed` | §G, §P | **—** |
 | `iconStroke` | — | §P | **—** |
@@ -76,8 +76,8 @@ consequence, never the token.
 | `typeScale` | — | §I | **—** |
 | `iconPolicy` | — | §G | **—** |
 | `statusColours` | `traditional` · `brand-adapted` | §U, §X | **—** |
-| `accentContrast` | — | §Y | **—** |
-| `neutralPigment` | — | §S, §X, §Y | **—** |
+| `accentContrast` | — | §Z | **—** |
+| `neutralPigment` | — | §S, §X, §Y, §Z | **—** |
 | `secondaryAction` | — | §W | **—** |
 
 ---

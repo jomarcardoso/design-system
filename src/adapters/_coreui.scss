@@ -128,8 +128,27 @@ $_derived: (
   --cui-link-hover-color: #{core.ref('fg-link-hover')};
 
   // --- Lines and focus ---------------------------------------------------
-  --cui-border-color: #{core.ref('border-color')};
+  //
+  // The library has ONE border variable and this system has two ROLES, so the
+  // general one takes the divider — a rule under a header, the edge of an
+  // aside, a line between rows — and the controls that need affordance are
+  // rebound below.
+  //
+  // They are two legal requirements rather than two shades. A decorative
+  // divider sits outside WCAG 1.4.11 and wants 1.2–1.5:1; pushing every divider
+  // to 3:1 produces a striped page. What IDENTIFIES a control is inside 1.4.11
+  // and wants 3:1, because a field with no perceivable edge is a field nobody
+  // can find.
+  --cui-border-color: #{core.ref('border-divider')};
   --cui-focus-ring-color: #{core.ref('ring-color')};
+
+  // Everything a user can type into, tick or choose. This is the one place a
+  // border is not negotiable: the recessed tone says "content fits here" and
+  // the border says "clickable", and it carries the state from rest to hover to
+  // focus. See derivations.md §Z.
+  --cui-input-border-color: #{component.$field-border-color};
+  --cui-form-check-input-border-color: #{component.$field-border-color};
+  --cui-form-select-border-color: #{component.$field-border-color};
 
   // --- Theme colour family, generated ------------------------------------
   @each $cui, $role in $_map {
@@ -322,8 +341,18 @@ $_derived: (
   // and that answer has to look identical everywhere and unlike anything else
   // on screen. That is what `ring` is for, and why it is a role of its own
   // rather than an alias of `action`.
-  .btn:focus-visible {
-    box-shadow: 0 0 0 #{core.ref('ring-width')} #{core.ref('ring-color')};
+  // The OFFSET is what keeps the ring off the control's own edge, so an
+  // outlined button does not end up with two concentric lines and a filled one
+  // does not look merely thicker. Expressed as a two-stop shadow because that
+  // is how a library does focus; a product writing its own rule uses
+  // `outline` with `outline-offset`, which is what `--app-ring` is for.
+  .btn:focus-visible,
+  .form-control:focus-visible,
+  .form-select:focus-visible,
+  .form-check-input:focus-visible {
+    box-shadow:
+      0 0 0 #{core.ref('ring-offset')} #{core.ref('bg-page')},
+      0 0 0 calc(#{core.ref('ring-offset')} + #{core.ref('ring-width')}) #{core.ref('ring-color')};
   }
 
   // --- CHIP — the reason this adapter exists ----------------------------
