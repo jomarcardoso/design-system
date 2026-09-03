@@ -28,11 +28,12 @@
     line-height: var(--app-line-height);
   }
 
-  /* No heading rule here any more. `coreui-entry.scss` sets
+  /* The FACE and the WEIGHT are not here on purpose: `coreui-entry.scss` sets
    * `$headings-font-family` and `$headings-font-weight`, so the library emits
-   * them itself and this product needs no override. That deletion is the whole
-   * argument: the CSS that was here existed because a Sass variable was not
-   * set, not because the library could not do it. */
+   * them itself. The CSS that used to sit here existed because a Sass variable
+   * was not set, not because the library could not do it.
+   *
+   * What IS here is the part the library has no variable for. */
 
   :where(a) {
     color: var(--app-fg-accent);
@@ -44,6 +45,47 @@
 }
 
 @layer components {
+  /* SPACE IS DIRECTIONAL. A heading belongs to what comes after it, so the room
+   * above is two to three times the room below. The library ships a bottom
+   * margin and no top margin, which leaves every heading floating equidistant
+   * between the paragraph it belongs to and the one it does not — and that is
+   * most of what makes a page read as assembled rather than as designed.
+   *
+   * TWO REASONS IT LIVES HERE AND NOT IN `base`, both found by measuring rather
+   * than by reading:
+   *
+   * `:where()` was the first attempt, chosen so a component could override it
+   * without a fight. Zero specificity loses to the library's own plain
+   * `h1 { margin-top: 0 }` in reboot, so the rule was written, loaded and
+   * beaten by every heading on the page.
+   *
+   * And a real selector in `@layer base` still loses, because `vendor` is
+   * declared AFTER `base` in the layer order at the top of this file. A later
+   * layer beats an earlier one whatever the specificity. So it sits in
+   * `components`, which is this product's own layer and comes after the
+   * library's. */
+  h1, h2, h3, h4 {
+    margin-block-start: var(--app-space-xl);
+  }
+
+  /* The first heading of a region has nothing above it to be separated from.
+   * Without this, the rule above pushes every card and every section away from
+   * its own top edge. */
+  h1:first-child, h2:first-child, h3:first-child, h4:first-child {
+    margin-block-start: 0;
+  }
+
+  /* LEADING AND TRACKING ARE SIZE-DEPENDENT, and the theme had one value for
+   * every heading. Tracking helps from about 32px, because a typeface is drawn
+   * for body size and looks loose above it; below that it is a heading squeezed
+   * for nothing. Leading runs the other way — an h1 at 3rem carrying the same
+   * 1.25 as an h3 has lines that do not know each other. */
+  h1 {
+    line-height: var(--app-line-height-display);
+    letter-spacing: var(--app-letter-spacing-display);
+  }
+
+
   /* The page is a sheet of paper with a measure, not a full-width app.
    * `DESIGN_LANGUAGE.md`: 45–75 characters, because a method that runs wider
    * loses the line return exactly when the reader looks away at the pan. */
@@ -209,6 +251,18 @@
      * the design language states and the reason an icon set with its own
      * palette was never an option. */
     vertical-align: -0.2em;
+  }
+
+  /* TABULAR NUMERALS, on anything that stacks numbers. The ingredient
+   * quantities are a column of digits down the left of the list, and
+   * proportional numerals make that column wobble — a "1" is narrower than a
+   * "4" in almost every text face. One declaration, and it is the difference
+   * between a list of quantities and a list that looks typed.
+   *
+   * Scoped rather than global: applied to the whole page it would flatten the
+   * numerals inside running prose, which is the opposite of the intent. */
+  .quantities {
+    font-variant-numeric: tabular-nums;
   }
 
   /* `iconPolicy: icon-leads`. The gap is what makes them one unit rather than

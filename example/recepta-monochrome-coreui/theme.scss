@@ -121,6 +121,19 @@ $recepta: (
   border: paper(300),
   'border-subtle': paper(200),
   'border-strong': paper(500),
+
+  // The two ROLES, and they had been the same value until this audit — both
+  // falling back to `border`, which is one weight doing two jobs.
+  //
+  //   divider     1.34:1 against the page, ΔL 0.095. A hairline between
+  //               ingredients, under a header, along an aside. It sits OUTSIDE
+  //               WCAG 1.4.11 and wants to stay quiet: past 2.5:1 the page
+  //               reads as striped.
+  //   interactive the resting edge of a field. It is what tells a user where to
+  //               click to type, so it is inside 1.4.11 and wants 1.6-2:1 at
+  //               rest — roughly twice the divider's separation.
+  'border-divider': paper(300),
+  'border-interactive': paper(400),
   ring: pen(600),
 
   'shadow-raised': base.scale(shadow, '2xs'),
@@ -196,7 +209,25 @@ $structure: (
   'size-control': calc(var(--app-space-unit) * 11),
   'size-icon': 20px,
   'icon-stroke': 1.25px,
-  'line-height': 1.7
+  'line-height': 1.7,
+
+  // LEADING AND TRACKING ARE SIZE-DEPENDENT, and this theme had one value for
+  // every heading. Both rules run the same way:
+  //
+  //   leading is inversely proportional to size. Body at 1.7 is the Editorial
+  //   archetype's own generosity and stays; an h1 at 3rem with the same 1.25 as
+  //   a 1.25rem h3 has lines that do not know each other.
+  //
+  //   tracking only helps from about 32px. Typefaces are drawn for body size
+  //   and look loose above it, and -0.025em on a 20px heading is a 20px heading
+  //   that has been squeezed for no reason.
+  //
+  // So the display sizes get their own pair and the small headings keep the
+  // untightened one.
+  'line-height-heading': 1.25,
+  'line-height-display': 1.1,
+  'letter-spacing-heading': -0.01em,
+  'letter-spacing-display': -0.02em
 );
 
 // Typography is where a monochrome product keeps its identity. With one accent

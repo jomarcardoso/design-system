@@ -6,6 +6,9 @@
     --app-radius-control: 6px;
     --app-radius-surface: 12px;
     --app-radius-pill: 9999px;
+    --app-radius-image: var(--app-radius-surface);
+    --app-ratio-media: 1.7777777778;
+    --app-ratio-thumb: 1;
     --app-space-unit: 4px;
     --app-space-2xs: calc(var(--app-space-unit) * 1);
     --app-space-xs: calc(var(--app-space-unit) * 2);
@@ -19,6 +22,7 @@
     --app-pad-surface: var(--app-space-lg);
     --app-gap-inline: var(--app-space-xs);
     --app-gap-stack: var(--app-space-md);
+    --app-gap-grid: var(--app-space-lg);
     --app-font-family-body: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     --app-font-family-heading: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
     --app-font-family-display: ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
@@ -36,10 +40,14 @@
     --app-line-height: 1.5;
     --app-line-height-heading: 1.25;
     --app-letter-spacing-heading: -0.025em;
+    --app-line-height-display: var(--app-line-height-heading);
+    --app-letter-spacing-display: var(--app-letter-spacing-heading);
     --app-size-control: calc(var(--app-space-unit) * 9);
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);
     --app-size-icon: calc(var(--app-space-unit) * 4);
+    --app-size-measure: 68ch;
+    --app-icon-stroke: 1.5px;
     --app-ring-width: 2px;
     --app-ring-offset: 2px;
     --app-ring: var(--app-ring-width) solid var(--app-ring-color);
@@ -82,11 +90,16 @@
     --app-fg-on-neutral: #fafaf9;
     --app-bg-neutral-hover: #292524;
     --app-bg-neutral-active: #1c1917;
+    --app-bg-neutral-subtle: #ffedd4;
+    --app-bg-neutral-subtle-hover: #ffedd4;
+    --app-bg-neutral-subtle-active: #ffd6a7;
     --app-bg-disabled: #f5f5f4;
     --app-fg-disabled: #a6a09b;
     --app-bg-action-hover: #9f2d00;
     --app-bg-action-active: #7e2a0c;
     --app-bg-action-subtle: #fff7ed;
+    --app-bg-action-subtle-hover: #fff7ed;
+    --app-bg-action-subtle-active: #fff7ed;
     --app-fg-action: #9f2d00;
     --app-border-action: #ca3500;
     --app-bg-selected: #c70036;
@@ -105,6 +118,8 @@
     --app-fg-link-visited: #a50036;
     --app-border-color-subtle: #f5f5f4;
     --app-border-color-strong: #d6d3d1;
+    --app-border-divider: #e7e5e4;
+    --app-border-interactive: #e7e5e4;
     --app-ring-color: #f54900;
     --app-shadow-raised: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     --app-shadow-overlay: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
@@ -219,6 +234,7 @@
     --bs-btn-focus-shadow-rgb: 245, 73, 0;
     --bs-focus-ring-color: var(--app-ring-color);
     --bs-link-color-rgb: 159, 45, 0;
+    --bs-link-hover-color-rgb: 126, 42, 12;
     --bs-body-color-rgb: 28, 25, 23;
     --bs-body-bg-rgb: 255, 247, 237;
     --bs-emphasis-color-rgb: 12, 10, 9;
@@ -354,7 +370,7 @@
   .form-control,
   .form-select {
     background-color: var(--app-bg-surface);
-    border-color: var(--app-border-color);
+    border-color: var(--app-border-interactive);
     border-radius: var(--app-radius-control);
   }
   .form-control:focus,

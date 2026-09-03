@@ -173,6 +173,9 @@
     --app-radius-control: 6px;
     --app-radius-surface: 12px;
     --app-radius-pill: 9999px;
+    --app-radius-image: var(--app-radius-surface);
+    --app-ratio-media: 1.7777777778;
+    --app-ratio-thumb: 1;
     --app-space-unit: 4px;
     --app-space-2xs: calc(var(--app-space-unit) * 1);
     --app-space-xs: calc(var(--app-space-unit) * 2);
@@ -186,6 +189,7 @@
     --app-pad-surface: var(--app-space-lg);
     --app-gap-inline: var(--app-space-xs);
     --app-gap-stack: var(--app-space-md);
+    --app-gap-grid: var(--app-space-lg);
     --app-font-family-body: ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif;
     --app-font-family-heading: ui-serif, Georgia, Cambria, Times New Roman, serif;
     --app-font-family-display: Segoe Script, Bradley Hand, Brush Script MT, cursive;
@@ -203,10 +207,13 @@
     --app-line-height: 1.6;
     --app-line-height-heading: 1.25;
     --app-letter-spacing-heading: -0.025em;
+    --app-line-height-display: var(--app-line-height-heading);
+    --app-letter-spacing-display: var(--app-letter-spacing-heading);
     --app-size-control: calc(var(--app-space-unit) * 9);
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);
     --app-size-icon: calc(var(--app-space-unit) * 4);
+    --app-size-measure: 68ch;
     --app-icon-stroke: 1.5px;
     --app-ring-width: 2px;
     --app-ring-offset: 2px;
@@ -250,11 +257,16 @@
     --app-fg-on-neutral: #fbf9f6;
     --app-bg-neutral-hover: #37302b;
     --app-bg-neutral-active: #28211c;
+    --app-bg-neutral-subtle: #eae5dd;
+    --app-bg-neutral-subtle-hover: #f8f4ec;
+    --app-bg-neutral-subtle-active: #eae5dd;
     --app-bg-disabled: #eae5dd;
     --app-fg-disabled: #867f78;
     --app-bg-action-hover: #371a08;
     --app-bg-action-active: #1c0a02;
     --app-bg-action-subtle: #f5e9e0;
+    --app-bg-action-subtle-hover: #f5e9e0;
+    --app-bg-action-subtle-active: #f5e9e0;
     --app-fg-action: #48240b;
     --app-border-action: #48240b;
     --app-bg-selected: #5f3212;
@@ -273,6 +285,8 @@
     --app-fg-link-visited: #24323f;
     --app-border-color-subtle: #eae5dd;
     --app-border-color-strong: #b1a9a2;
+    --app-border-divider: #d8d1c9;
+    --app-border-interactive: #d8d1c9;
     --app-ring-color: #5f3212;
     --app-shadow-raised: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     --app-shadow-overlay: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);

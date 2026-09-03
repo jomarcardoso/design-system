@@ -211,6 +211,27 @@ tables nobody had checked against each other.
 | multi-select | washed only, never a solid fill | cardinality: the tag filters are multi-select, and eight filled chips is a wall of colour |
 | a washed fill is never affordance alone | a clickable washed chip carries a border or lives in an obviously actionable group | the recipe example broke this: a washed primary at 1.01:1 against the page, no border, neither invitation nor boundary |
 
+### Typography and rhythm, audited against the school
+
+| decision | value | from |
+|---|---|---|
+| body leading | 1.7 | `editorial-premium` — above the 1.5–1.6 general band, and the archetype is the more specific rule |
+| heading leading | 1.25 | one value for every heading was the bug; the display size now has its own |
+| display leading | 1.1 | leading runs inversely to size — an h1 at 3rem carrying an h3's 1.25 has lines that do not know each other |
+| heading tracking | -0.01em | it was -0.025em on every heading, including the 20px ones |
+| display tracking | -0.02em | tracking only helps from about 32px, because a face is drawn for body size and looks loose above it |
+| space above a heading | `space-xl`, 32px | **directional** — a heading belongs to what comes after it, so above is 2 to 3 times below |
+| space below a heading | `space-sm`, 12px | |
+| stacked numerals | `tabular-nums` on the ingredient quantities | a "1" is narrower than a "4" in almost every text face, and a column of quantities wobbles without it |
+| weights | two, 400 and 600 | bold and semibold together are indistinguishable at a glance and spend a lever for nothing |
+
+**The directional rule took three attempts and the first two were invisible.**
+`:where()` has zero specificity and lost to the library's own plain
+`h1 { margin-top: 0 }`; a real selector in `@layer base` still lost, because
+`vendor` is declared after `base` and a later layer wins whatever the
+specificity. It lives in `components` now. Measured at each attempt rather than
+read — the first two versions were written, loaded, and beaten.
+
 ### The accent budget
 
 | may appear | may not |

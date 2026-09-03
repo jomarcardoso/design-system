@@ -125,6 +125,20 @@ $line-height-base: 1.5;
 // that would otherwise need one.
 $headings-font-family: var(--app-font-family-heading);
 $headings-font-weight: var(--app-font-weight-heading);
+$headings-line-height: var(--app-line-height-heading);
+
+// SPACE IS DIRECTIONAL, and this is the cheapest correction on the list.
+//
+// A heading belongs to what comes AFTER it, so the room above has to be larger
+// than the room below — two to three times. The library ships a bottom margin
+// and no top margin at all, which leaves every heading floating equidistant
+// between the paragraph it belongs to and the one it does not. That is most of
+// what makes a page read as assembled rather than as designed.
+//
+// Bootstrap and CoreUI have no `$headings-margin-top`, so the top margin is set
+// in the product's own base layer. What the entry can do is make the bottom one
+// deliberate rather than inherited.
+$headings-margin-bottom: var(--app-space-sm);
 
 // Component WEIGHT and SHAPE — compiled, and the residue that keeps a themed
 // build still reading as Bootstrap. A badge at weight 700 is a chip shouting;

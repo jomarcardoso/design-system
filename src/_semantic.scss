@@ -263,6 +263,20 @@ $_type-scale-steps: (
     'line-height-heading': base.scale(leading, tight),
     'letter-spacing-heading': base.scale(tracking, tight),
 
+    // LEADING AND TRACKING ARE SIZE-DEPENDENT, and one value for every heading
+    // gets both wrong at one end.
+    //
+    // Leading runs inversely to size: an h1 at 3rem with the same 1.25 as a
+    // 1.25rem h3 has lines that do not know each other. Tracking only helps
+    // from about 32px, because typefaces are drawn for body size and look loose
+    // above it — applied to a 20px heading it is a heading squeezed for nothing.
+    //
+    // Optional, defaulting to the heading values, so a theme that has not
+    // thought about it changes nothing and one that has can tighten only where
+    // tightening helps.
+    'line-height-display': core.ref('line-height-heading'),
+    'letter-spacing-display': core.ref('letter-spacing-heading'),
+
     // --- Control sizing -------------------------------------------------
     // Without this, an input and a button next to each other are never the
     // same height, and every team rediscovers it independently.

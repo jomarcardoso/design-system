@@ -40,6 +40,8 @@
     --app-line-height: 1.5;
     --app-line-height-heading: 1.25;
     --app-letter-spacing-heading: -0.025em;
+    --app-line-height-display: var(--app-line-height-heading);
+    --app-letter-spacing-display: var(--app-letter-spacing-heading);
     --app-size-control: 44px;
     --app-size-control-sm: calc(var(--app-space-unit) * 7);
     --app-size-control-lg: calc(var(--app-space-unit) * 11);

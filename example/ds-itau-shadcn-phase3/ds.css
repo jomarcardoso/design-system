@@ -6,6 +6,9 @@
     --app-radius-control: 12px;
     --app-radius-surface: 16px;
     --app-radius-pill: 9999px;
+    --app-radius-image: var(--app-radius-surface);
+    --app-ratio-media: 1.7777777778;
+    --app-ratio-thumb: 1;
     --app-space-unit: 4px;
     --app-space-2xs: calc(var(--app-space-unit) * 1);
     --app-space-xs: calc(var(--app-space-unit) * 2);
@@ -19,6 +22,7 @@
     --app-pad-surface: var(--app-space-lg);
     --app-gap-inline: var(--app-space-xs);
     --app-gap-stack: var(--app-space-md);
+    --app-gap-grid: var(--app-space-lg);
     --app-font-family-body: Itau Text, Inter, Helvetica Neue, Arial, sans-serif;
     --app-font-family-heading: Itau Display, Inter, Helvetica Neue, Arial, sans-serif;
     --app-font-family-display: Itau Display, Inter, Helvetica Neue, Arial, sans-serif;
@@ -36,10 +40,14 @@
     --app-line-height: 1.5;
     --app-line-height-heading: 1.2;
     --app-letter-spacing-heading: -0.01em;
+    --app-line-height-display: var(--app-line-height-heading);
+    --app-letter-spacing-display: var(--app-letter-spacing-heading);
     --app-size-control: 48px;
     --app-size-control-sm: 40px;
     --app-size-control-lg: 56px;
     --app-size-icon: calc(var(--app-space-unit) * 4);
+    --app-size-measure: 68ch;
+    --app-icon-stroke: 1.5px;
     --app-ring-width: 2px;
     --app-ring-offset: 2px;
     --app-ring: var(--app-ring-width) solid var(--app-ring-color);
@@ -82,11 +90,16 @@
     --app-fg-on-neutral: #ffffff;
     --app-bg-neutral-hover: #1f1f1f;
     --app-bg-neutral-active: #000000;
+    --app-bg-neutral-subtle: #e3e5e8;
+    --app-bg-neutral-subtle-hover: #f1f2f4;
+    --app-bg-neutral-subtle-active: #e3e5e8;
     --app-bg-disabled: #cfd1d3;
     --app-fg-disabled: #999999;
     --app-bg-primary-hover: #e55800;
     --app-bg-primary-active: #cc4d00;
     --app-bg-primary-container: #e6e6f0;
+    --app-bg-action-subtle-hover: #e6e6f0;
+    --app-bg-action-subtle-active: #e6e6f0;
     --app-fg-primary: #000066;
     --app-border-primary: #000066;
     --app-bg-selected: #ff6200;
@@ -105,6 +118,8 @@
     --app-fg-link-visited: #000524;
     --app-border-color-subtle: #e3e5e8;
     --app-border-color-strong: #5d636f;
+    --app-border-divider: #cfd1d3;
+    --app-border-interactive: #cfd1d3;
     --app-ring-color: #000066;
     --app-shadow-raised: 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     --app-shadow-overlay: 0 8px 24px -4px rgba(0, 0, 0, 0.16);
