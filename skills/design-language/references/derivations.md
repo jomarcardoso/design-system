@@ -208,7 +208,7 @@ spending the accent on one point — which is why `posture: loud` with
 `exposed` is the hardest combination in the system, and worth flagging when it
 comes up.
 
-## G. Icon policy — how an icon is used, not what it looks like
+## G. Icon policy — `iconPolicy`, how an icon is used rather than what it looks like
 
 Question 9 decided the icon's STYLE. This decides its JOB, and it is derived
 then confirmed, because it changes what the client sees on every screen.
@@ -271,7 +271,7 @@ Question 19 gave the regions. These follow.
 a shadow or a radius — chrome that looks like content is the fastest way to make
 a product feel assembled from parts.
 
-## I. The type scale ratio
+## I. The type scale ratio — `typeScale`
 
 **The single number that most changes how a page feels at a glance**, more than
 any colour, and until now nobody chose it — every product inherited the scale
@@ -1146,7 +1146,7 @@ and a domain belongs to exactly one of them.
 | **primary** | everything not listed below |
 | **secondary** | only what it is explicitly assigned, from the closed list |
 
-### What a secondary may govern
+### What a secondary may govern — `secondaryGoverns`
 
 | domain | what it decides |
 |---|---|

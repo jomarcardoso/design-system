@@ -58,6 +58,14 @@ and takes a single "yes" for all of them. Whatever gets written down after that
 is a guess, and it looks exactly like a decision. If a confirmation mentions two
 options, it was not a confirmation — ask again with one.
 
+**Every question declares the key it fills**, as `→ \`key\`` after its
+heading. It is what `npm run docs:decisions` reads to build `DECISIONS.md`, and
+it is the only signal that generator accepts — inferring it from the nearest
+heading above a mention produced a table that was confidently wrong, reading
+`posture` as asked at question 6 because question 6 discusses it. A question
+with no marker fills no key, which is true of questions 1, 2, 4, 11, 18 and of
+every sub-question that shares its parent's.
+
 **Every option gets a letter.** A client answers "C" in a second and composes
 "preenchimento neutro sutil" in a minute, and the minute buys nothing — the two
 answers carry the same information. Where this file writes options as a prose
@@ -101,7 +109,7 @@ test answers against.
 | C | Editorial & Premium |
 | D | Tech Minimalist |
 
-**3. Which archetype matches the vision?**
+**3. Which archetype matches the vision?** → `archetype`, `archetypeSecondary`
 
 - (A) Tech Minimalist
 - (B) Enterprise Solid
@@ -170,7 +178,7 @@ vocabulary. The counterpoint that works is never *ugly versus elegant* — it is
 **what the product is for**, which has real trade-offs a client can weigh
 because they are trade-offs about their own users.
 
-**5. How often does someone open this, and for what?**
+**5. How often does someone open this, and for what?** → `density`
 
 - (A) **Every working day.** It is the tool their job runs on.
 - (B) **Some days.** A specific task, come back when it comes up again.
@@ -184,7 +192,7 @@ because they are trade-offs about their own users.
 | Editorial | ⚠️ | ✅ | ✅ |
 | Utilitarian | ✅ | ⚠️ | ❌ |
 
-**6. How long is one sitting?**
+**6. How long is one sitting?** → `dwell`
 
 - (A) **Seconds to a couple of minutes.**
 - (B) **Ten to thirty minutes.**
@@ -215,7 +223,7 @@ actually making and no amount of asking about elegance surfaces it.
 | B · minutes | **nothing — the archetype decides.** Ten to thirty minutes carries no signal either way, and a first draft that had it propose `balanced` manufactured a conflict with Editorial that the interview then put to the client as a menu |
 | C · an hour or more | `posture: quiet`; every decorative element has to justify itself |
 
-**7. Who is the screen for?**
+**7. Who is the screen for?** → `protagonist`, `colorCriticalWorkspace`
 
 - (A) **The content the user puts there.** Their notes, their photographs, their
   documents. The interface is the paper.
@@ -252,7 +260,7 @@ It is a flag any archetype may carry rather than a sixth archetype, because the
 case is real, rare, and does not change anything else about the product's
 personality. What it does change is written in `derivations.md`.
 
-**8. Which devices come first?**
+**8. Which devices come first?** → `platform`
 
 - (A) Desktop-first
 - (B) Mobile-first
@@ -284,7 +292,7 @@ something to disagree with. **A derived default is not a decision taken away
 from anyone.** It is a decision made by the thing that has the standing to make
 it, and shown.
 
-**9. When something needs attention, does this product raise its voice or
+**9. → `posture`. When something needs attention, does this product raise its voice or
 lower everyone else's?** — proposed from question 6, then confirmed.
 
 - (A) **Quiet.** One thing stands out because everything around it recedes.
@@ -324,7 +332,7 @@ saying when it comes up rather than treating it as a contradiction.
 
 > Decides the theme map and the threshold in `themes.check-contrast()`.
 
-**10. When something is CHOSEN today — a selected tab, a ticked checkbox —
+**10. → `colourStrategy`, asked ONLY on the conversion path. When something is CHOSEN today — a selected tab, a ticked checkbox —
 does it take your main brand colour, or a different one?**
 
 **Ask ONLY when a product already exists.** Then it is an observation, and the
@@ -417,7 +425,7 @@ It is now MEASURED from the accent that question 11 collected, and the posture
 answer from question 9 decides the eight things it used to be standing in for.
 See [`derivations.md`](derivations.md).
 
-**12. What level of accessibility rigour?**
+**12. What level of accessibility rigour?** → `accessibility`
 
 - (A) **WCAG AA** — 4.5:1 body text. The recommended default for every archetype.
 - (B) **WCAG AAA** — 7:1. Government, health, anything with a legal requirement.
@@ -430,7 +438,7 @@ though it sits in block 4.
 
 > Decides the Voice section and the writing rules an agent follows.
 
-**13. How should the system speak in its own messages?**
+**13. How should the system speak in its own messages?** → `voice`, `voiceExceptions`
 
 - (A) Direct and technical — *"Error 404: resource not found"*
 - (B) Clear and action-oriented — *"We couldn't find that page. Back to start"*
@@ -449,7 +457,7 @@ failure. The usable answer is normally "B, dropping to A for anything involving
 money or data loss", and that exception is what makes the rule enforceable —
 it goes into `voiceExceptions`.
 
-**14. Infinitive or imperative for action labels?**
+**14. Infinitive or imperative for action labels?** → `ctaMood`
 
 - (A) Infinitive — *"Save changes"*
 - (B) Imperative — *"Save your changes"*
@@ -473,7 +481,7 @@ recommending what the product is, which it does not get to do. Say that when
 the marks are noticed missing — an absent table reads as an oversight, and this
 one is a position.
 
-**15. What regions does a page have?**
+**15. What regions does a page have?** → `frame`
 
 - (A) **A single column.** A header, the content, a footer. Nothing beside it.
 - (B) **Content with an aside.** A sidebar, filters, or a table of contents
@@ -500,7 +508,7 @@ the frame degrades on a phone. Those follow from the archetype, question 5 and
 the disclosure posture, and the tables are in
 [`derivations.md`](derivations.md).
 
-**16. What role does imagery play?**
+**16. What role does imagery play?** → `imagery`
 
 - (A) **None.** The product has no photography, and none is planned. Illustration
   and icons are the only non-text elements.
@@ -522,7 +530,7 @@ separate from the card's, and it needs an answer for what shows before the image
 loads and when there is none — a hole the ledger otherwise fills at the first
 bug report.
 
-**16a. Ask only when the answer is (B) or (C) — what proportion?**
+**16a. Ask only when the answer is (B) or (C) — what proportion?** → `imageRatio`
 
 - (A) **Wide** — 16:9 or 3:2. Landscape, editorial, cinematic.
 - (B) **Square** — 1:1. Grids, avatars, anything that has to tile.
@@ -541,7 +549,7 @@ that do not hold together. That is a conflict, and
 whether they take a shadow, and what the system does with a decorative image.
 The tables are in [`derivations.md`](derivations.md), section K.
 
-**17. Are there visual restrictions the system must NEVER apply?**
+**17. Are there visual restrictions the system must NEVER apply?** → `guardrails`
 
 **Do not ask this cold.** A client at this point in a first interview has no
 restrictions in mind, and asking them to produce some invites either an invented

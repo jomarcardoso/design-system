@@ -211,7 +211,38 @@ group is one where the product could have answered anything and got the same
 recommendation, which means the shape comes from the library. The fix is a
 condition column in the catalogue, not a better generator.
 
+## Which decisions exist
+
+```bash
+npm run docs:decisions
+```
+
+Regenerates `DECISIONS.md` — all thirty-eight keys of a generated
+`DESIGN_LANGUAGE.md`, split into asked, derived and recorded-but-not-visual,
+each with the question or the derivation section behind it and the scripts that
+check it.
+
+It exists because there was no such place. The keys lived in the template's
+comments, in an axis map inside a script, and scattered through
+`derivations.md` — and when eleven of them turned out to have been invisible to
+`check-chain` for months, nobody could say what else was in the set.
+
+**Every question declares the key it fills**, as an arrow and a backticked key
+after its heading, and that declaration is the only signal the generator
+accepts. Inferring it from the nearest heading above a mention produced a table
+that was confidently wrong: `posture` read as asked at question 6 because
+question 6 discusses it. **A generated map that is confidently wrong is worse
+than one that is usefully incomplete**, because the whole point of generating it
+is that it can be trusted.
+
+The two rows to read are at the bottom. **Keys with neither a question nor a
+derivation** must stay empty — an entry there is a decision nobody implemented,
+or an inert key that never said it was inert. **Decisions no script checks** is
+a list to read rather than to empty: many decisions have no mechanical
+consequence a build can test, and the honest thing is to say which.
+
 ## A decision recorded is not a decision built
+
 
 ```bash
 npm run verify:applied
