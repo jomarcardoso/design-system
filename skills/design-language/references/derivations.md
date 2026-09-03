@@ -832,181 +832,98 @@ it is a role the system already has, it takes that treatment. If it is genuinely
 a fifth role, that is a change to this table and it is worth making — once, here,
 rather than locally and invisibly.
 
-## V. How a selection announces itself
+## V. Treatment, not hue — how a role announces itself
 
-**One decision, applied to every family that has a chosen state** — a chip, a
-tab, a toggle button, a selectable card, a list row, a checkbox. Until now it
-was decided four times in four tables that nobody had checked against each
-other, which is how a product ends up teaching a user that "chosen" means an
-accent edge and then meeting them with a darker fill two screens later.
+**The section this file got most wrong**, and the correction is worth keeping
+with its history because the mistake was structural rather than careless.
 
-**It is not asked.** The client's phrasing of the question — *sometimes
-saturated, sometimes washed, sometimes just a border* — is the right
-observation and the wrong thing to put to a non-designer, because the answer
-comes back as taste. Everything below derives.
+I invented a decision called `accentFill: saturated | washed`, as if those were
+two ways to paint a primary button. They are not two ways to paint one role.
+**They are two different roles**, and painting the action washed collapsed them:
 
-### Two decisions, not one
+> **Filled chromatic is an INVITATION. Washed chromatic is a CONDITION.**
 
-The first draft of this section ran them together and the example caught it: the
-document said `accentFill: washed` and the build shipped a solid fill, and both
-passed every check because the chain verifies that a key was derived FROM, never
-that its value arrived.
+A primary action and a selected tab coming out the same way is exactly the
+collision `check-roles()` exists to catch — and in `monochrome` the fix cannot
+be a second hue, because there is no second hue. **The fix is a different
+treatment.**
 
-They are separate because they answer different questions, and §E already listed
-their destinations separately:
+That sentence is the whole school in one line: **in `monochrome`, treatment
+replaces hue as the differentiator.** Everywhere else "primary action" is blue
+and "selected" is purple. Here both are the same pigment, so the difference has
+to live in HOW the pigment is applied.
 
-| | decides | asked of |
+### The ladder of prominence
+
+Four rungs, and each has a job. This is not a menu.
+
+| treatment | means | where | ink |
+|---|---|---|---|
+| **filled chromatic** | invitation — something happens if you press | the primary action | inverted, `fg-on-accent` |
+| **washed chromatic** | condition — the interface IS this right now | selected tab, ticked chip, active nav item | the accent's own text step |
+| **filled neutral** | the supporting action | secondary buttons | the page's ink |
+| **ghost** | tertiary, and anything repeated | text-only actions, toolbars | ink or accent, no fill |
+
+**The secondary action in `monochrome` is always NEUTRAL, never a washed
+accent.** In `brand` a washed-brand secondary is the norm, because the brand
+colour is already everywhere. Here it steals the scarcity the school runs on —
+and scarcity is the only thing the school has.
+
+**One filled chromatic per viewport**, and one per floating surface. Two solid
+buttons side by side destroy the hierarchy, because the user gets no signal
+about which way forward is expected. If you think you need two, one of them is
+secondary and does not know it yet.
+
+### Washed with accent ink, or washed with neutral ink
+
+A second fork inside the washed rung, and the criterion is **the length of the
+text**:
+
+| | ink | why |
 |---|---|---|
-| **`accentFill`** | what the PRIMARY ACTION is filled with | is the action the magnet, or is the content? |
-| **the selection progression** | what a CHOSEN state does | how many can be chosen, and how many are on screen? |
+| one to three words | the accent's text step | the colour reinforces a label |
+| a sentence or more | neutral ink | reading a paragraph in a chromatic colour is tiring, and the accent's text step is calibrated for a label rather than for continuous reading |
 
-**The invariant that ties them: a selection may never be more saturated than the
-primary action.** A chosen chip that outshouts the button is a page telling the
-user that what they already picked matters more than what they can do next. This
-is the rule to check when the two derivations disagree, and it decides in favour
-of the action.
+A whole callout in blue on pale blue is the classic version of this mistake.
 
-### `accentFill` — the primary action
+### Three technical details that prevent rework
 
-| `accentFill` | the fill | the ink on it |
-|---|---|---|
-| `saturated` | `bg-accent` | `fg-on-accent` — inverts |
-| `washed` | `bg-accent-subtle` | `fg-default` — stays dark |
+**The ink on a washed fill cannot be the solid fill's own colour.** Rung 9 on
+rung 3 lands near 2:1. The washed fill needs a dedicated text step — rung 11 —
+calibrated to ≥4.5:1 against rungs 1 to 3. This is why `fg-accent` exists as its
+own token rather than as a lazy derivation of the accent.
 
-Derived from `protagonist` and `dwell`, which is the pair that decides how much
-of the page a product is willing to spend on being noticed:
+**A washed fill is never on its own a signal of interactivity.** Tone reads as
+state or as ambience, not as affordance. A clickable washed chip needs a second
+cue: an interactive border, a cursor, or a position inside an obviously
+actionable group. **This is the rule the recipe example broke** — a washed
+primary at 1.01:1 against the page, with no border, which is neither an
+invitation nor a boundary.
 
-| | proposes |
+**In the dark, a washed fill is not alpha over the background.** The accent at
+12% opacity on a dark page is mud with no chroma. Build it by mixing the accent
+into the destination surface and recomputing. `derive.dark()` already does this;
+the rule is written down so a theme author does not reach for alpha.
+
+### States, when there is only one colour
+
+Five states, one pigment. The answer is always the same: **change rung, never
+hue.**
+
+| state | where the change happens |
 |---|---|
-| `brand` or `product-content`, at `seconds` | `saturated` — the action is the magnet, and nobody is here long enough to tire of it |
-| `user-content`, at `hours` | `washed` — the content stays the magnet |
-| anything else | `washed`, and say what it costs |
+| rest | rung 3 (fill) or 9 (solid), border at 7 |
+| hover | one rung up — 3→4, 9→10, border 7→8 |
+| pressed | one more — 4→5 |
+| focus | an outer ring at rung 8, always offset, never replacing the resting border |
+| selected | rung 5 plus border 8, or the washed fill with accent ink |
+| disabled | leaves the accent ladder and returns to the neutral one |
 
-**Then measure it — and measure the right thing.** The first version of this
-rule tested `bg-accent-subtle` against the PAGE with a WCAG ratio, decided the
-accent-driven example failed, and was wrong twice over. The client said why:
-
-> *no accentFill washed o texto é escuro para contrastar, e o fundo accent
-> lavado nem importa muito*
-
-In `washed` the reading is done by **dark ink on a pale fill**, so that fill's
-separation from the page is not what makes the control legible. And the failure
-at the other end is self-correcting: an accent strong enough that dark ink stops
-working on it is an accent needing light ink, which is `saturated` by
-definition.
-
-**Two things have to hold, and only two:**
-
-1. **The ink reads.** `fg-default` on `bg-accent-subtle`, against the product's
-   own `accessibility` threshold.
-2. **The fill is not the badge.** `bg-accent-subtle` must be tellable apart from
-   `bg-neutral-subtle`, or the primary action is a label.
-
-**The second is perceptual, and a WCAG ratio is the wrong instrument for it.**
-Two fills can sit at the same lightness and be obviously different because their
-hues are far apart — which is the accent-driven case exactly. Pale blue against
-pale sepia measures **1.05** by luminance and **171°** apart by hue. Luminance
-said indistinguishable; anyone with eyes says otherwise, and the example was
-made `saturated` for a day on the strength of that reading.
-
-So it is measured in OKLCH, where a distance means something about perception,
-and the check reports **which channel carries the difference** — because a
-difference carried by hue alone weakens for a colour-blind reader and one
-carried by lightness does not. The example's dark theme separates by hue alone,
-which the check reports as a note rather than a failure: the ink and the shape
-still carry it.
-
-**A quiet product is one where the content is loudest, not one where the action
-is lost.**
-
-### The selection progression
-
-#### The two progressions
-
-| | at rest | when chosen |
-|---|---|---|
-| **outline → filled** | a border in `border-interactive`, no fill | a solid fill in the accent, ink inverts to `fg-on-accent` |
-| **washed → saturated** | a quiet fill in `bg-neutral-subtle`, ink stays dark | the accent at its subtle step, then its solid step under pressure; ink stays dark until the fill is dark enough to need otherwise |
-
-A third exists and is not a progression so much as its absence:
-
-| | at rest | when chosen |
-|---|---|---|
-| **weight only** | nothing | the ink darkens and the weight goes up |
-
-#### What decides it
-
-Four inputs, none of them a preference, and the second is the one that does the
-most work.
-
-**1. `posture`, which comes from `dwell`.**
-
-| `posture` | proposes |
-|---|---|
-| `quiet` | washed → saturated, or weight only |
-| `balanced` | washed → saturated |
-| `loud` | outline → filled |
-
-**And `posture` itself is derived from `dwell`, with the middle bucket carrying
-no signal.** `seconds` proposes `balanced` or `loud`, `hours` proposes `quiet`,
-and `minutes` — ten to thirty — proposes nothing: **the archetype decides.**
-
-That was not the first draft, and the first draft manufactured a conflict. It
-had `minutes` proposing `balanced`, which disagreed with Editorial's `quiet`,
-and the interview then put the disagreement to the client as a menu. A fork
-invented by a coarse table is worse than no table: it looks like a real tension
-in the product and it is an artefact of three buckets. Where a bucket has no
-signal, say so and let something else decide.
-
-**2. CARDINALITY — how many are on screen, and how many can be on at once.**
-
-This is the discriminator the interview cannot supply and the screen always
-can. It is the content half, and it overrules the posture proposal:
-
-| on screen | how many active | progression |
-|---|---|---|
-| few, up to about six | one | **outline → filled** is affordable; a single solid mark reads instantly |
-| many, more than about eight | one | washed → saturated; eight outlines is a page of boxes |
-| any number | **several at once** | **washed → saturated, always** |
-
-**Multi-select and a solid fill do not go together, at any posture.** Eight
-chips filled with the accent is not eight selections, it is a wall of colour
-with no hierarchy left over for the action that acts on them — and the accent
-budget in §E was spent on the first three. This is a hard rule rather than a
-lean, and it is the single most useful thing in this section.
-
-**3. Whether the state must survive without colour.**
-
-From `statusColours` and from `accessibility`. A selection carried by hue alone is
-invisible to a colour-blind reader, in a printout, and in a screenshot pasted
-into a ticket. Where it must survive:
-
-- **outline → filled** already survives — the fill is a lightness change, not
-  only a hue change.
-- **washed → saturated** needs a second channel: a check mark, a weight change,
-  or a border appearing. The tone step alone is not enough.
-- **weight only** survives by construction and is the strongest of the three
-  here, which is worth saying because it looks like the weakest.
-
-**4. `surfaceModel`.**
-
-| | |
-|---|---|
-| `elevated` | a solid fill fights a surface that is already the lit thing. Prefer washed → saturated |
-| `flat`, `recessed` | either works |
-
-### The rule that ties it to the ledger
-
-**One progression per product**, across every family that has a chosen state.
-The catalogues enforce it as `**Never both:**` lines inside each family; this
-section is why those lines exist. A tab that underlines in the accent and a chip
-that fills with it are the same decision expressed twice, and they must agree.
-
-Where they genuinely cannot — a filter chip that is multi-select beside a tab
-set that is single-select — the **cardinality rule wins per family**, and the
-document records both with the reason. That is not two design languages; it is
-one rule producing two outcomes from two different facts, which is what a
-derivation is for.
+Two accessibility rules that save a bug later. **Focus is never a background
+change alone** — it is `outline` with `outline-offset`, so it works identically
+for filled, outlined and ghost treatments and never shifts the layout. And
+**selected is never colour alone**: weight, a mark or a border comes with it, or
+a colour-blind reader loses the state.
 
 ## W. Depth, what carries it, and how many rungs
 

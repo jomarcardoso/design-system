@@ -251,20 +251,18 @@ colourStrategy: functional
 # measurement — change the accent instead.
 accentContrast: high
 
-# Which accent token a CHOSEN state reaches for — the decision the client
-# describes as "sometimes saturated, sometimes washed". NOT accentContrast, which
-# is the measurement above; the two look alike and are unrelated, and the
-# distinction has to be restated wherever either appears.
+# accentFill was a key here and is RETIRED. It asked whether the primary
+# action's fill was saturated or washed, and the question was wrong: those are
+# not two ways to paint one role, they are two ROLES.
 #
-#   saturated  bg-accent, ink inverts to fg-on-accent
-#   washed     bg-accent-subtle, ink stays dark
+#   filled chromatic  the primary action — an INVITATION
+#   washed chromatic  a selected state — a CONDITION
+#   filled neutral    the secondary action
+#   ghost             the tertiary
 #
-# DERIVED from protagonist and dwell. Overruled by CARDINALITY, which the screen
-# supplies rather than the interview: multi-select never takes a solid fill at
-# any posture, because eight filled chips is a wall of colour with no hierarchy
-# left for the action that acts on them. See derivations.md section V.
-accentFill: washed                # saturated | washed
-# DERIVED from the archetype, capped at 0.2 by colorCriticalWorkspace, and
+# Painting the action washed collapses two roles, which is the collision
+# check-roles() looks for; in monochrome the fix is a different TREATMENT,
+# because there is no second hue to reach for. See derivations.md section V.# DERIVED from the archetype, capped at 0.2 by colorCriticalWorkspace, and
 # overruled by any MATERIAL the client named in question 1 — "recycled paper",
 # "kraft", "cold steel". A named material is a fact about the product; a number
 # between 0.5 and 0.8 is a choice nobody can make. Never read it aloud.

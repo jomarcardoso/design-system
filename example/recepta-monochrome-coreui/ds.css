@@ -625,18 +625,18 @@
     --cui-btn-hover-color: var(--app-fg-danger);
   }
   .btn-primary {
-    --cui-btn-bg: var(--app-bg-accent-subtle);
-    --cui-btn-border-color: var(--app-bg-accent-subtle);
-    --cui-btn-color: var(--app-fg-accent);
-    --cui-btn-hover-bg: var(--app-bg-accent-subtle-hover);
-    --cui-btn-hover-border-color: var(--app-bg-accent-subtle-hover);
-    --cui-btn-hover-color: var(--app-fg-accent);
-    --cui-btn-active-bg: var(--app-bg-accent-subtle-active);
-    --cui-btn-active-border-color: var(--app-bg-accent-subtle-active);
-    --cui-btn-active-color: var(--app-fg-accent);
-    --cui-btn-disabled-bg: var(--app-bg-accent-subtle);
-    --cui-btn-disabled-border-color: var(--app-bg-accent-subtle);
-    --cui-btn-disabled-color: var(--app-fg-accent);
+    --cui-btn-bg: var(--app-bg-accent);
+    --cui-btn-border-color: var(--app-border-accent);
+    --cui-btn-color: var(--app-fg-on-accent);
+    --cui-btn-hover-bg: var(--app-bg-accent-hover);
+    --cui-btn-hover-border-color: var(--app-bg-accent-hover);
+    --cui-btn-hover-color: var(--app-fg-on-accent);
+    --cui-btn-active-bg: var(--app-bg-accent-active);
+    --cui-btn-active-border-color: var(--app-bg-accent-active);
+    --cui-btn-active-color: var(--app-fg-on-accent);
+    --cui-btn-disabled-bg: var(--app-bg-accent);
+    --cui-btn-disabled-border-color: var(--app-bg-accent);
+    --cui-btn-disabled-color: var(--app-fg-on-accent);
   }
   .btn:focus-visible {
     box-shadow: 0 0 0 var(--app-ring-width) var(--app-ring-color);

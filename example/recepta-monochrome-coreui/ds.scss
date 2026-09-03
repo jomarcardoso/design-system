@@ -61,18 +61,27 @@
   // visible rule, which is the thing being removed.
   $surface-border-color: transparent,
 
-  // THE PRIMARY ACTION RESTS AT THE SUBTLE STEP, which is what
-  // `accentFill: washed` means — and until the adapter grew a layer 3 hook for
-  // `.btn-primary`, the document said it and the build painted a solid accent.
+  // THE PRIMARY ACTION IS SOLID, and it was briefly not.
   //
-  // The ink is the accent rather than the body ink: pen on pale pen is the
-  // pairing this school is built on, and sepia ink on a blue fill would read as
-  // two systems meeting.
-  $button-bg: #{core.ref(bg-accent-subtle)},
-  $button-fg: #{core.ref(fg-accent)},
-  $button-border-color: #{core.ref(bg-accent-subtle)},
-  $button-bg-hover: #{core.ref(bg-accent-subtle-hover)},
-  $button-bg-active: #{core.ref(bg-accent-subtle-active)}
+  // I invented a decision — `accentFill: saturated | washed` — as if those were
+  // two ways to paint a primary button. They are not. They are two ROLES:
+  //
+  //     filled chromatic  = the primary action, an INVITATION
+  //     washed chromatic  = a selected state, a CONDITION
+  //     filled neutral    = the secondary action
+  //     ghost             = the tertiary
+  //
+  // Painting the primary action washed collapsed two roles into one — the exact
+  // collision `check-roles()` looks for — and in this school the fix is not a
+  // second hue, because there is no second hue. It is a different TREATMENT.
+  //
+  // A washed primary also steals the scarcity the whole school runs on: one
+  // solid fill per viewport is the only thing saying "this is the way forward".
+  //
+  // So layer 3 is left at its defaults here, which already resolve to the solid
+  // accent through the monochrome role map. The block that used to sit here
+  // pointed `$button-bg` at `bg-accent-subtle` and is gone.
+
 );
 @use '../../src/derive';
 @use '../../src/adapters/coreui';

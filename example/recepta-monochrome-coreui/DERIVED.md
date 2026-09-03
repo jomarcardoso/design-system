@@ -203,10 +203,13 @@ tables nobody had checked against each other.
 | the progression | washed → saturated | `posture: quiet` |
 | `neutralPigment` | 0.6 | the SECONDARY archetype, domain `warmth` — a grey ramp here would be an office |
 | `accentContrast` | `high`, measured | the accent against both ends of the ramp; the light ink wins, so `fg-on-accent` is paper |
-| `accentFill` | `washed` | `protagonist: user-content` — the photograph is the magnet, not the button. The ink reads at 13.73:1 and the fill sits 171° of hue from the badge fill, so it is not mistakable for a label |
+| the primary action | **filled, solid accent** | the ladder of prominence — filled chromatic is an INVITATION, and there is one per viewport. `accentFill` was a key here for two days and the question behind it was wrong |
+| the selected state | washed accent, accent ink | the same ladder, one rung down: washed chromatic is a CONDITION |
+| the secondary action | **filled NEUTRAL**, never a washed accent | in this school a washed-accent secondary steals the scarcity the whole thing runs on |
+| the tertiary | ghost, no fill at rest | |
 | the second channel | the ink darkens with the fill | `accessibility: AA` — a tone step alone does not survive a printed recipe |
 | multi-select | washed only, never a solid fill | cardinality: the tag filters are multi-select, and eight filled chips is a wall of colour |
-| the floor it clears | ink at 13.73:1, fill 171° from the badge | `verify:accent-fill`, in OKLCH — a luminance ratio had said the opposite |
+| a washed fill is never affordance alone | a clickable washed chip carries a border or lives in an obviously actionable group | the recipe example broke this: a washed primary at 1.01:1 against the page, no border, neither invitation nor boundary |
 
 ### The accent budget
 

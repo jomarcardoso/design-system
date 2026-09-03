@@ -136,24 +136,15 @@ colourStrategy: monochrome
 # change the measurement — change the accent.
 accentContrast: high
 
-# WASHED, as the derivation proposes. protagonist: user-content plus a sitting
-# measured in tens of minutes: the photograph of the food is the magnet, not the
-# button, and a saturated fill on every save button is the thing a cook stops
-# seeing.
+# accentFill is RETIRED and no longer a key. It was a decision this tool
+# invented — "is the primary action's fill saturated or washed?" — and the
+# question was wrong: those are not two ways to paint one role, they are two
+# ROLES. Filled chromatic is the primary action; washed chromatic is a selected
+# state. Painting the action washed collapses them.
 #
-# It was `saturated` for a day, because the floor test measured the wrong thing
-# — bg-accent-subtle against the PAGE, with a WCAG ratio. In washed the reading
-# is done by dark ink on a pale fill, so what has to hold is the ink and the
-# distance from the badge fill:
-#
-#   fg-default on bg-accent-subtle          13.73:1, well past AA
-#   bg-accent-subtle vs bg-neutral-subtle   171 degrees of hue apart
-#
-# Pale blue against pale sepia measured 1.05 by luminance and reads as obviously
-# different, because luminance is the wrong instrument for that question.
-# npm run verify:accent-fill measures both, in OKLCH.
-accentFill: washed
-# 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
+# The value here was `washed` for two days and produced a primary button at
+# 1.01:1 against the page with no border: no perceivable boundary, and no
+# invitation either. See derivations.md section V.# 0 = true grey, 1 = the seed pigment at full strength. Sepia, kept at the light
 # end of the ladder — see the note in section 2 on why the original "not sepia"
 # answer was withdrawn.
 # The WARMTH domain, governed by the secondary archetype rather than by

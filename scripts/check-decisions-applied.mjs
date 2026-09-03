@@ -15,6 +15,9 @@
 //                             subtle step with dark ink. The adapter painted a
 //                             solid accent, because `.btn-primary` was bound
 //                             inside a variant loop that layer 3 cannot reach.
+//                             (That key is retired now — the question behind it
+//                             was wrong — but the layer 3 hook it forced into
+//                             the adapter stayed, and so did this check.)
 //
 //   surfaceSeparation: tones  the document said the card is separated by its
 //                             tone. The card was one rung lighter AND ringed,
@@ -87,29 +90,6 @@ const expect = (label, ok, detail) => {
   if (ok) checked.push(label);
   else problems.push([label, detail]);
 };
-
-// --- accentFill --------------------------------------------------------------
-const fill = answer('accentFill');
-if (fill) {
-  const role = primaryFill();
-  if (role === null) {
-    expect('accentFill', null, 'the primary action\'s fill was not locatable in this library\'s CSS');
-  } else if (fill === 'washed') {
-    expect(
-      'accentFill: washed',
-      /-subtle$/.test(role),
-      `the primary action is filled with \`--app-${role}\`, which is the solid step. ` +
-        '`washed` means the subtle one, with dark ink. Point layer 3\'s $button-bg at it.'
-    );
-  } else if (fill === 'saturated') {
-    expect(
-      'accentFill: saturated',
-      !/-subtle/.test(role),
-      `the primary action is filled with \`--app-${role}\`, the subtle step, while the ` +
-        'document says saturated.'
-    );
-  }
-}
 
 // --- surfaceSeparation -------------------------------------------------------
 const sep = answer('surfaceSeparation');

@@ -279,7 +279,7 @@ produced it in `toolVersion`.
 |---|---|
 | `src/` | the four layers; layer 2 is the only public contract |
 | `src/adapters/` | one file per third-party library, leaves that nothing depends on |
-| `skills/` | the three skills, in order: `design-language`, `design-system`, `design-patterns` |
+| `skills/` | five skills. Three GENERATE a system — `design-language`, `design-system`, `design-patterns` — and two are vendored into the target project to SPEND it: `compose-monochrome` and `compose-archetype` |
 | `patterns/` | the ledger schema and an empty template |
 | `example/` | one folder per worked product; they disagree with each other on purpose |
 | `scripts/` | the guards `npm run verify` chains together |
