@@ -14,7 +14,7 @@
 # catching up means diffing a document against a template of unknown vintage.
 # Bump it when a later version's decisions are actually applied, not when the
 # file is merely edited.
-toolVersion: 0.8.0
+toolVersion: 0.9.0
 
 archetype: tech-minimalist        # tech-minimalist | enterprise-solid | playful-expressive | editorial-premium | utilitarian-technical
 

@@ -1,5 +1,5 @@
 ---
-toolVersion: 0.8.0
+toolVersion: 0.9.0
 
 archetype: editorial-premium
 

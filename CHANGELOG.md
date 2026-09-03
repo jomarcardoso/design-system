@@ -25,6 +25,193 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.9.0]
+
+**The release where the tool learned to check itself, and found that it had been
+lying.** 0.8.0 made the interview ask about the product instead of about taste.
+This one asks the next question: does what the interview decided actually reach
+the CSS? Three times it did not, and every one passed every guard in the
+repository. They were found by opening the page and measuring — a method that
+does not scale past one example, which is why most of this release is guards.
+
+The other half is the interview shrinking again. It went from twenty-three
+questions to eighteen, and the four that left were removed by the client saying,
+four separate times, some version of *the question started asking what I want
+instead of what I need to solve.*
+
+**To upgrade:** copy the new `src/`. `bg-action-subtle-hover` and `-active` are
+new and optional. Then regenerate `DESIGN_LANGUAGE.md` — the questionnaire
+renumbered again and `accentFill` is retired; a document carrying it is carrying
+a key whose question was wrong. Run `npm run verify:applied` against your
+product before anything else: it is the check that would have caught all three
+bugs, and it will tell you which of your own decisions never arrived.
+
+### Added
+
+- **`check-decisions-applied`** — `npm run verify:applied`. `check-chain` asks
+  whether every answer produced SOMETHING; this asks whether the VALUE reached
+  the build. It caught `surfaceSeparation: tones` shipping a card that was both
+  a rung lighter AND ringed, and `platform: mobile-first` shipping 36px targets
+  in an example that had had them since it was written.
+
+  **It reports what it cannot locate rather than passing it**, because a silent
+  skip is how a guard turns into decoration.
+
+- **`scripts/lib/frontmatter.mjs`, and the reason it had to exist.** Every
+  script parsed front matter as `doc.split('---')[1]`, which is correct until a
+  document contains `---` inside it — and the template groups its keys under
+  `# --- banner ---` comments. **Twenty-eight keys of thirty-nine were being
+  read.** The eleven lost were `accentContrast`, `accentFill`, `neutralPigment`,
+  `secondaryAction`, `voice`, `voiceExceptions`, `ctaMood`, `deviations`,
+  `resolutions`, `overrides` and `guardrails`: the accent decisions, the
+  deviations and the guardrails.
+
+  `check-chain` reported "continuous" the whole time. **A guard blind to part of
+  its input reads exactly like a guard that passes.**
+
+- **`check-forms-reachable`** — `npm run verify:forms`. The catalogues stated a
+  rule they had no way to keep. Two checks: a form no combination of answers can
+  reach is dead vocabulary, and **a family with no fitting form is where a
+  generator falls back to the library**, because a library default is the only
+  concrete thing available.
+
+  It found four real holes on its first honest run, including a bordered product
+  at `balanced` — the commonest enterprise configuration — having no card form
+  at all.
+
+- **`check-forms-exclusive`.** `multiplicity` says how many treatments a family
+  may have and never says WHICH forms can stand beside each other, which is the
+  question a person building a screen actually has. Every pair that can be live
+  at once must be either ruled out by a `**Never both:**` line or separated by a
+  CONTENT condition. 43 ambiguous pairs of 344 at the start; none now.
+
+  **An answer condition is not separation.** Two forms both fitting `quiet` are
+  not separated by `quiet`: the answers are fixed for the whole product, so if
+  both fit, both fit everywhere. Only the content half can break a tie.
+
+- **`check-never-offered`**, and `never-offered.md` — nineteen shapes this tool
+  does not propose, each with why, what to reach for instead, and how you would
+  know it was broken. A catalogue of RECOGNITION rather than prohibition: an
+  agent that does not know a shape exists reinvents it.
+
+- **`check-archetype-split`** and the two-archetype model. A **primary** governs
+  structure; a **secondary** governs a closed list of five domains — `voice`,
+  `illustration`, `warmth`, `motion`, `marks` — and never geometry, type, the
+  ladder, density, the accent budget or elevation.
+
+- **`layout-forms.md`** — thirteen families, 58 forms, in the same table shape as
+  the component catalogue so one parser and one checker read both. The larger of
+  the two holes: question 20 collected a frame and nothing described the page
+  shapes inside it.
+
+- **`FORM-SET.md`, generated per product.** `DERIVED.md` was hand-listing eleven
+  component families out of forty-two, so a client saw no recommendation for the
+  other thirty-one — and a family with no recommendation takes the library's
+  shape while nobody is looking.
+
+- **`compose-monochrome` and `compose-archetype`** — two skills vendored into
+  the TARGET project rather than run here, for the agent writing pages against a
+  finished system. Which mechanism carries which boundary, where a border goes
+  and where it does not, the three separate contrast requirements, and the two
+  tests that catch the school's two failure modes.
+
+- **`bg-action-subtle-hover` and `-active`**, their monochrome aliases, and
+  their dark derivation.
+
+### Changed
+
+- **The interview is eighteen questions, from twenty-three.** Eight demotions
+  across two passes, all by one test:
+
+  | left the interview | now derived from |
+  |---|---|
+  | shape and radius | the archetype |
+  | icon style | the archetype and the shape |
+  | depth, and what carries it | the archetype and the surface model |
+  | how many rungs the layout spends | the frame — which was asked AFTER it |
+  | the secondary action's treatment | `posture`, and §A already held the answer |
+  | the surface model | question 7 alone |
+  | which paper | the archetype, and a material named in question 1 |
+  | status colours | the archetype, then forced by the school |
+
+  **A derivation presented as a menu is still a question.** "I derived
+  `elevated` — confirm, or would you rather have `recessed`?" reads as
+  considerate and is not: it hands back the decision that was just derived, in
+  vocabulary the client learned ten seconds ago. Present the CONSEQUENCE, never
+  the token.
+
+  And two of the eight were **the same question asked twice**: the colour
+  school's opener was question 7 in different words, and `surfaceSeparation` was
+  the elevation question in different words.
+
+- **Question 5 split into frequency and dwell.** It carried both and forced one
+  letter to answer two things. A recipe notebook is the case that breaks it:
+  opened some days, and left open for the length of the cooking.
+
+  **Dwell is the counterpoint the interview was missing.** Ask a client whether
+  they want an elegant product and they say yes; nobody says no. Ask how long
+  one sitting lasts and the trade appears on its own.
+
+- **`hybrid` is retired.** It named two archetypes and never said which won
+  where, so every later decision re-opened the argument — and it emptied the
+  deviation list without resolving anything.
+
+- **The four container roles are a CONTAINER model, not a universal one.**
+  Buttons vary on rank, badge/tag/chip on job, alerts on reach. Forcing all of
+  them into one enum produced four button patterns labelled `target`, which
+  records nothing.
+
+- **`check-dangling-refs` reads each example's `app.css`**, not only its
+  generated `ds.css`. The generated file is the one place the mistake cannot
+  happen.
+
+### Removed
+
+- **`accentFill`**, and the question behind it was wrong rather than badly
+  phrased. It asked whether the primary action's fill was saturated or washed,
+  as if those were two ways to paint one role. **They are two roles:** filled
+  chromatic is an INVITATION, washed chromatic is a CONDITION. Painting the
+  action washed collapses them — the collision `check-roles()` exists to catch —
+  and in `monochrome` the fix cannot be a second hue, because there is no second
+  hue. It is a different TREATMENT.
+
+  The cost of the mistake was measurable: a primary button at **1.01:1** against
+  its page with no border. Neither an invitation nor a boundary.
+
+- **The ladder-budget and ladder-direction questions** leave the accent-driven
+  block; they belong to every school. **The `surfaceSeparation` question**, now
+  derived. **The shape, icon-style, paper and status questions**, now derived.
+
+### Fixed
+
+- **A washed subtle fill inverted its own ink mid-gesture in the dark.**
+  `action-subtle-hover` ends in `-hover` and fell through to the solid fill's
+  branch in `derive.dark()`, so a button resting at near-black turned pale under
+  the cursor. The subtle branches now come first.
+
+- **The `accentFill` floor measured the wrong thing** before the key was
+  retired, and the correction is worth keeping because it is a lesson about
+  instruments. It compared the fill to the PAGE with a WCAG ratio. In a washed
+  fill the reading is done by dark ink, so that comparison is not what makes the
+  control legible — and pale blue against pale sepia measures 1.05 by luminance
+  and **171 degrees apart** by hue. Luminance is the wrong instrument for "is
+  this distinguishable"; OKLCH is.
+
+- **The coverage search space was wrong, not slow.** Adding the layout catalogue
+  took it from 8,640 combinations to **18.9 million** and the checker stopped
+  finishing. Optimising the loop was the wrong instinct: whether a family has a
+  fitting form depends only on the axes its own forms mention. Per-family
+  enumeration is exact and runs in 0.4s.
+
+- **A product with projected shadows had no card form**, because the soft-shadow
+  row named only one of the two shadow elevations.
+
+- **Placeholder-as-label was listed as a FORM** with the objection in prose
+  underneath — present, readable, and outvoted by the table above it. A
+  generator reads the table, not the paragraph.
+
+---
+
 ## [0.8.0]
 
 **The interview stops producing library themes.** Two runs against a weaker
