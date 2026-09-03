@@ -241,6 +241,30 @@ or an inert key that never said it was inert. **Decisions no script checks** is
 a list to read rather than to empty: many decisions have no mechanical
 consequence a build can test, and the honest thing is to say which.
 
+## Which tokens nothing reads
+
+```bash
+npm run report:orphans
+```
+
+A REPORT, never a gate. Layer 2 is a public contract, so a token with no
+consumer yet is legitimate — but the list has to exist, because an orphan is a
+question only a person can answer: a name waiting for its first use, or a rung
+nobody implemented?
+
+**Rung 3 is the one most often skipped** — the resting fill under every badge,
+chip, tag and secondary button. A system that skips it looks technically
+monochrome and generically like its library, and that skip is invisible to
+every other check here: the token exists, the contract promises it, the
+contrast audit measures it, and nothing on any screen reads it.
+
+`check-dangling-refs` asks the opposite question — a reference with no
+declaration. This asks: a declaration with no reference.
+
+Its first run found `--app-border-interactive` unread. That token was added to
+give an interactive control a boundary, and nothing consumed it, which is the
+same hole as the primary button that shipped at 1.01:1 against its page.
+
 ## A decision recorded is not a decision built
 
 

@@ -56,7 +56,8 @@
     "docs:form-set": "node scripts/docs-forms-derived.mjs example/recepta-monochrome-coreui",
     "verify:archetype": "node scripts/check-archetype-split.mjs example/recepta-monochrome-coreui && node scripts/check-archetype-split.mjs example/ds-caderno-accent-driven",
     "verify:applied": "node scripts/check-decisions-applied.mjs example/recepta-monochrome-coreui && node scripts/check-decisions-applied.mjs example/ds-caderno-accent-driven",
-    "docs:decisions": "node scripts/docs-decisions.mjs"
+    "docs:decisions": "node scripts/docs-decisions.mjs",
+    "report:orphans": "node scripts/check-orphan-tokens.mjs example/recepta-monochrome-coreui"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",
