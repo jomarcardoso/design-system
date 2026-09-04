@@ -165,30 +165,76 @@
     white-space: nowrap;
   }
 
+  .rail-link {
+    position: relative;
+  }
+
+  /* HOVER AND ACTIVE SINK, they do not light up.
+   *
+   * The rail's items sit directly on the page with no track around them, and
+   * claude-7 gives the rule for exactly that shape: when a container has a
+   * surface of its own, the chosen item RISES to the parent's plane; when the
+   * items are loose on the page, it SINKS. One rung for hover, two for active,
+   * both neutral. */
   .rail-link:hover {
-    background-color: var(--app-bg-surface-hover);
+    background-color: var(--app-bg-neutral-subtle);
     color: var(--app-fg-default);
   }
 
-  /* THE CHOSEN ITEM IS WASHED, NOT SOLID. It is a CONDITION the interface is
-   * in — where you are — and not an invitation to act, and the ladder of
-   * prominence keeps the solid fill for the one action that invites. "Guarde a
-   * receita" holds it on this page; a solid rail item would take it back and
-   * the reader would have two things claiming to be the way forward.
+  /* THE CHOSEN ITEM IS NEUTRAL, AND THE ACCENT IS A 3px BAR.
    *
-   * The ink is `fg-accent`, not `fg-on-accent`. `fg-on-accent` is the ink
-   * measured against the SOLID fill and is near-white; on a pale wash it would
-   * be invisible. `(action-subtle, link)` is a declared pair in
-   * `_semantic.scss` and is measured by the contrast gate — the washed fill and
-   * the accent ink belong together, and that is the only reason this is safe to
-   * write by hand.
+   * It was a washed accent, and it was the single thing on this page that made
+   * a reader say the colours were not working. Three reasons, and they compound:
    *
-   * The names here are `accent`, not `selected`: this product is
-   * `colourStrategy: monochrome`, and the school emits its own vocabulary. */
+   * 1. A NAV IS A CLOSED, CONTIGUOUS SET. Exactly one item is active and the
+   *    items are adjacent, so POSITION already carries the state. Spending the
+   *    accent there buys nothing the layout had not already said. It is the same
+   *    argument that makes a segmented control neutral.
+   *
+   * 2. THE PAGE IS NOT THE CARD. Inside a card the elements sit on a near-white
+   *    surface and everything worked; out here the ground is the page, one rung
+   *    lower, so a fill calibrated for the card had almost no separation left.
+   *    Rungs are a DISTANCE FROM THE SURFACE, not a property of the component.
+   *
+   * 3. THE HUE FIGHT. `audit-wash` measures 146° between the pigment and the
+   *    paper. A pale patch of a near-opposite hue on warm paper reads as a
+   *    stain rather than a tint, which is what "it looked like water" was.
+   *
+   * So the fill sinks two neutral rungs — a real ΔL of 0.095 against the page,
+   * far past the 0.04 where tone stops needing help — and the accent comes back
+   * as a small SOLID bar. That is the cheapest accent there is: the budget is
+   * area multiplied by chroma, and a 3px bar at full strength paints a fraction
+   * of what a washed row does while reading as unambiguously coloured. Trying to
+   * economise with a wash was spending more.
+   *
+   * The weight is the third cue, and it is not decoration: "selected" expressed
+   * by tone alone fails for anyone who cannot separate these two tones. */
   .rail-link.active {
-    background-color: var(--app-bg-accent-subtle);
-    color: var(--app-fg-accent);
+    background-color: var(--app-bg-neutral-subtle-hover);
+    color: var(--app-fg-heading);
     font-weight: var(--app-font-weight-heading);
+  }
+
+  .rail-link.active::before {
+    content: '';
+    position: absolute;
+    inset-block: var(--app-space-2xs);
+    inset-inline-start: 0;
+    inline-size: 3px;
+    border-radius: var(--app-radius-pill);
+    background-color: var(--app-bg-accent);
+  }
+
+  /* Below the breakpoint the rail is a horizontal row, so the bar moves to the
+   * bottom edge — an indicator marks the edge the row is aligned on, and a
+   * vertical bar on a horizontal item reads as a divider between items. */
+  @media (max-width: 61.99rem) {
+    .rail-link.active::before {
+      inset-block: auto 0;
+      inset-inline: var(--app-space-2xs);
+      inline-size: auto;
+      block-size: 3px;
+    }
   }
 
   /* Above the breakpoint it becomes a column on the left, and the frame gains a

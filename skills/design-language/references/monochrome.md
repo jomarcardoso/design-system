@@ -384,6 +384,199 @@ That test is phase V of the improvement plan and is not implemented.
 
 ---
 
+## 12. When the washed accent stops being an option
+
+The washed accent — the pale tint that means *the interface is currently in this
+state* — is the most fragile thing in the school, and whether a given palette can
+have one at all is decided before anyone opens a design tool. This section is the
+knowledge behind `scripts/audit-wash.mjs`, which computes it.
+
+It exists because a real product got it wrong in four compounding ways at once,
+and every automated check in the repository was green throughout.
+
+### 12.1 A rung is a distance from a surface, not a property of a component
+
+The single most misleading sentence in earlier drafts of this document was
+"an element at rest sits on rung 3". That is true **for an element sitting on
+rung 1**. The number was never a property of the component.
+
+| | on rung 1 (inside a card) | on rung 2 (the page) |
+|---|---|---|
+| rest | 3 | 4 |
+| hover | 4 | 5 |
+| selected | 5 | 6 |
+| divider | 6 | 7 |
+| interactive border | 7 | 8 |
+
+The arithmetic is one line: **component rest = surface + 2**, hover +3, selected
++4, divider +4, interactive border +5.
+
+And this is the reason there are only ever two or three surfaces, which is not an
+aesthetic convention but a counting problem: the ladder has twelve rungs and 9
+through 12 are spoken for by solid fills and text. Put a surface on rung 4 and its
+selected state lands on 8, which is the focus ring, and the next rung is a solid
+fill. You have run out of ladder.
+
+The symptom, when this is got wrong: everything inside cards looks right and
+everything on the page looks flat. That is the giveaway, and it means a component
+is using a rung calibrated for a surface it is not on.
+
+### 12.2 What does NOT shift: text
+
+The offset applies to rungs 3 through 8. It does not apply to 9 through 12.
+
+Adjacent surfaces are ΔL 0.02–0.04 apart and rung 11 clears 4.5:1 on both, so
+shifting text with the surface would be work for nothing and a source of bugs.
+
+The related thing people want — a region whose text is quieter — is real and is a
+**different decision**. It is not the same token redeclared; it is another ROLE.
+An aside does not get a weaker `fg-default`, it gets `fg-muted`, which is rung 11
+instead of 12. Worth holding the distinction:
+
+- **surface context** redeclares fills and borders. Automatic, derived from the offset.
+- **choice of role** is composition. Manual, and recorded.
+
+The one real exception is an inverted surface, where everything flips at once and
+the `bg-X` / `fg-on-X` pair takes over.
+
+### 12.3 Three tests decide whether a wash is possible
+
+**Chroma against the neutral beneath it.** A wash has to read as coloured, and the
+neutral underneath is not colourless — warm paper carries chroma of its own. When
+the two are close the eye reads neither grey nor colour, and the word people reach
+for is *water*. The rule with a number: **the wash needs at least three times the
+chroma of the neutral it sits on.** A neutral at C 0.014 demands a wash at C 0.042.
+
+This is where a wash built by mixing with white fails. Mixing a C 0.15 blue 15%
+into a light ground lands near C 0.022, and against a C 0.014 cream the difference
+is 0.008 — under the threshold at which the eye calls something coloured at all.
+
+**The sRGB gamut ceiling.** sRGB does not allow light and saturated at once, and
+how much it disallows depends on hue. The blue primary is intrinsically dark
+(L≈0.45), so a pale blue is *obligatorily* low-chroma; amber is the opposite.
+
+| L | amber (h 85) | green (h 145) | blue (h 250) |
+|---|---|---|---|
+| 0.95 | ~0.13 | ~0.09 | ~0.035 |
+| 0.90 | ~0.15 | ~0.11 | ~0.07 |
+| 0.85 | ~0.17 | ~0.13 | ~0.10 |
+
+At the same lightness a blue has roughly a quarter of the chroma available to an
+amber. This is physics, not design, and the remedy is to **lower the lightness of
+the wash**: every 0.04 of L given up buys chroma back, because the gamut is widest
+in the middle.
+
+**Hue distance from the neutral.** Past about 150° a pale patch of the accent
+reads as a stain on the surface rather than a tint of it.
+
+| relation | distance | how the accent works |
+|---|---|---|
+| same family | 0–30° | wash works beautifully; the risk is blandness |
+| adjacent | 30–90° | the safest. Wash and solid both work |
+| distant | 90–150° | needs high chroma; wash only with a forced floor |
+| near-complementary | 150–180° | **solid and dark ink only.** A wash turns to mud |
+
+Cream and blue — the classic notebook pairing — is about 165° apart. It is a
+beautiful combination *as dark ink on paper* and a bad one as pale blue on cream.
+Think navy on a page: the accent lives at rungs 9 and 11, almost never at 3.
+
+### 12.4 A correction about the accent budget
+
+The budget is **area multiplied by chroma**, not "is it saturated or not".
+
+A whole menu row in a wash paints far more surface than a 3px indicator bar at
+full strength. Reaching for a wash in order to spend less accent spends more. Small
+solid indicators are the cheapest accent there is, and they are also the most
+legible.
+
+### 12.5 Alpha, by rung rather than by colour
+
+| rungs | alpha? | why |
+|---|---|---|
+| 3, 4, 5 — component fills | **yes**, the main case | these are exactly the ones that must adapt to the surface |
+| 6, 7 — divider, resting border | yes | same, and no contrast requirement |
+| 8 — focus | only with an audited floor | must reach 3:1 |
+| 9, 10 — solid | **never** | they carry text; alpha makes that contrast depend on the ground |
+| 11, 12 — text | never | same reason |
+
+This holds for the neutral as much as for the accent — Radix publishes an alpha
+scale beside every solid one for exactly this reason.
+
+Inside the washed family the progression is roughly 8% / 12% / 16% for rest,
+hover and pressed, with selected around 14–18%. The solid at rung 9 is **not** the
+continuation of that scale; it is 100% and belongs to a different family. There is
+no continuous path from 8% to 100%, there is a jump, because filled and washed are
+different treatments. Filling in the middle creates steps that mean nothing.
+
+The percentages are per theme, not universal: 12% over white reads strong, and the
+same 12% over a dark ground nearly vanishes. Dark typically needs 1.5–2× the
+alpha of light.
+
+And the limit worth stating plainly: **alpha fixes belonging, not saturation.** It
+makes the wash inherit the ground's temperature, which removes the cold-stain
+effect. The chroma arithmetic is unchanged — 12% of blue mixed into cream has the
+same low chroma with or without alpha.
+
+### 12.6 Neutral as the selected state
+
+Common, and underused. Two directions, and the choice is mechanical:
+
+**Rise** — the chosen item becomes lighter than the track. Requires a recessed
+track. The active item goes to the parent surface's own rung. This is the iOS
+segmented control.
+
+**Sink** — the chosen item becomes darker than its surroundings. Works when the
+items sit directly on the page with no track. The active item goes to surface + 3,
+hover to surface + 2, rest transparent. GitHub's and Linear's sidebars do this.
+
+> **If the container has a surface of its own, rise. If the items are loose on the
+> page, sink.**
+
+In both cases add a non-chromatic cue — weight, or a filled icon. At ΔL 0.03–0.05
+tone alone is too weak to carry a state, and that cue is also what makes the state
+survive colour blindness.
+
+### 12.7 The viability gate, and where it belongs in the interview
+
+`audit-wash.mjs` computes this from the emitted tokens, but the right moment is
+EARLIER — right after the client gives the brand colour and the neutral pigment,
+before any question that could offer an option the palette cannot deliver:
+
+```
+Δh          = hue distance between accent and neutral
+C_neutral   = chroma of the neutral
+C_max(L, h) = the gamut ceiling for the accent hue at the wash's lightness
+
+wash  viable when  C_wash >= 3 × C_neutral  AND  Δh <= 150
+solid viable when  contrast(accent9, surface) >= 3.0
+ink   viable when  contrast(accent11, wash)   >= 4.5
+```
+
+The output is a **capability report**, not an error: solid available, ink
+available, wash unavailable at this hue, outlined available.
+
+And then the interview BRANCHES. If the wash is unavailable, the secondary-action
+question stops offering "a soft tint of the main colour", and the derivation for
+a selected state stops offering washed accent. Instead of letting the client pick
+something that will come out ugly, offer the treatments that work: neutral
+elevation, a solid indicator, an outline.
+
+Offer the three remedies with the number attached — how far the accent hue must
+move (in both directions, because the shorter arc is not automatically the better
+design), how far the neutral could move instead, and what lightness recovers the
+chroma. If the client keeps the difficult pairing, record it as a `deviation`
+with a reason and a date. They have the right to keep it; it stops being an
+accident.
+
+This generalises past colour, and it is probably the most valuable sentence in
+this document: **every pair of answers that produces an impossible capability
+deserves the same treatment — compute early, warn before asking, and narrow the
+options rather than letting the client choose something the build will later
+reject.** That is the difference between an interview that collects and one that
+guides.
+
+---
+
 ## 11. What this tool already does, and what it does not
 
 | | |

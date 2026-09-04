@@ -44,7 +44,7 @@
     "docs:carmageddon": "node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html --stylesheet ./ds.css --title \"DS Carmageddon\"",
     "export:tokens": "node scripts/export-tokens.mjs",
     "lint": "stylelint \"src/**/*.scss\" \"app.css\" \"tailwind.css\" \"example/**/app.css\" \"example/**/patterns.scss\" \"example/**/theme.scss\" \"example/demo/*.scss\"",
-    "verify": "npm run build:tokens && npm run lint && npm run verify:examples && npm run verify:utilities && npm run verify:examples-refs && npm run verify:forms && npm run verify:archetype && npm run verify:mechanism && npm run verify:coverage && npm run verify:derived && npm run verify:applied && npm run verify:chain && npm run audit:contrast",
+    "verify": "npm run build:tokens && npm run lint && npm run verify:examples && npm run verify:utilities && npm run verify:examples-refs && npm run verify:forms && npm run verify:archetype && npm run verify:mechanism && npm run verify:coverage && npm run verify:derived && npm run verify:applied && npm run verify:chain && npm run audit:contrast && npm run audit:wash",
     "verify:examples": "node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json && node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 --ledger example/ds-cyberpunk-bulma-phase2/patterns.json && node scripts/verify-patterns.mjs example/ds-carmageddon-nescss-phase3 --ledger example/ds-carmageddon-nescss-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-meu-caderninho-daisyui-phase3 --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-itau-shadcn-phase3 --ledger example/ds-itau-shadcn-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-booking-bulma --ledger example/ds-booking-bulma/patterns.json && node scripts/verify-patterns.mjs example/recepta-monochrome-coreui --ledger example/recepta-monochrome-coreui/patterns.json",
     "verify:patterns": "node scripts/verify-patterns.mjs",
     "verify:utilities": "node scripts/check-utilities.mjs example/ds-itau-shadcn-phase3/index.html example/ds-itau-shadcn-phase3/tw.css example/ds-itau-shadcn-phase3/ds.css example/ds-itau-shadcn-phase3/app.css",
@@ -61,7 +61,8 @@
     "verify:mechanism": "node scripts/check-mechanism.mjs example/recepta-monochrome-coreui",
     "verify:derived": "node scripts/check-derived.mjs example/recepta-monochrome-coreui --library example/recepta-monochrome-coreui/coreui.css",
     "verify:coverage": "node scripts/check-coverage.mjs example/recepta-monochrome-coreui --library example/recepta-monochrome-coreui/coreui.css",
-    "build:example-recepta-lib": "sass --no-source-map --quiet-deps --silence-deprecation=import,global-builtin,color-functions,if-function --load-path=. --load-path=node_modules example/recepta-monochrome-coreui/coreui.scss example/recepta-monochrome-coreui/coreui.css"
+    "build:example-recepta-lib": "sass --no-source-map --quiet-deps --silence-deprecation=import,global-builtin,color-functions,if-function --load-path=. --load-path=node_modules example/recepta-monochrome-coreui/coreui.scss example/recepta-monochrome-coreui/coreui.css",
+    "audit:wash": "node scripts/audit-wash.mjs example/recepta-monochrome-coreui --gate"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

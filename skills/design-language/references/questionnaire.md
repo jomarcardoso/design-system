@@ -403,6 +403,83 @@ that it was generated rather than given.
 
 ---
 
+### The viability gate — computed, not asked
+
+**Run this the moment questions 11 and 11b have answers, and before asking
+anything else.** It is not a question. It is arithmetic on the two pigments, and
+its output decides which options the remaining questions are allowed to offer.
+
+```
+Δh          = hue distance between accent and neutral, in OKLCH
+C_neutral   = chroma of the neutral
+C_max(L, h) = the sRGB gamut ceiling for the accent's hue at the wash lightness
+
+wash  viable when   C_wash >= 3 × C_neutral   AND   Δh <= 150
+solid viable when   contrast(accent rung 9, surface) >= 3.0
+ink   viable when   contrast(accent rung 11, wash)   >= 4.5
+outlined            always viable — a border needs no chroma headroom
+```
+
+`node scripts/audit-wash.mjs <product-dir>` computes all of it and prints the
+report. During the interview the palette is not built yet, so compute it by hand
+from the two pigments; the numbers are the same.
+
+**Why it has to happen here and not at build time.** A client whose palette
+cannot hold a washed accent will, if asked, cheerfully choose "a soft tint of the
+main colour" for the selected state — it is the nicest-sounding option — and the
+build will then produce a pale patch of a near-opposite hue on warm paper, which
+reads as a stain. Nobody involved will be able to say what went wrong, because
+every individual decision was reasonable. The interview has to stop offering the
+option, not the build has to reject it.
+
+The reason is physical rather than aesthetic, and it is worth being able to say
+out loud: sRGB does not allow a colour to be light and saturated at once, and how
+much it disallows depends on hue. A pale blue is obligatorily low-chroma; a pale
+amber is not. Mix either into a warm neutral and you get the same lightness back,
+but only one of them is still recognisably coloured. See
+[`monochrome.md`](monochrome.md) §12.
+
+### What the gate changes downstream
+
+| capability | what stops being offered |
+|---|---|
+| wash unavailable | question 14 drops "a soft tint of the main colour" for the secondary action. The derivation for a SELECTED state stops proposing washed accent and proposes neutral elevation, a solid indicator, or an outline instead. Chips, tabs and nav items all follow. |
+| solid unavailable | the accent cannot be a primary button fill. Very rare, and usually means the accent is too pale — say so and offer to darken it. |
+| ink unavailable | the accent cannot be used as text. Offer a dedicated rung 11 rather than deriving ink from the fill. |
+
+### Presenting an unavailable wash to the client
+
+Never as a refusal, and never in token vocabulary. Three routes, with the numbers
+attached, in this order:
+
+1. **Keep the colour and spend it differently.** The accent lives at the solid
+   fill and at dark ink. For a near-complementary pair this is not a consolation
+   prize — it is the pairing's best form, and navy-on-cream has been a good idea
+   for four hundred years.
+2. **Move the accent hue**, by the computed amount, and give BOTH directions with
+   the resulting distance. The shorter arc is not automatically the better design:
+   from a blue, one way lands in violet and keeps the coldness, the other lands in
+   teal and gives some of it up. That is a product decision, not an arithmetic one.
+3. **Move the neutral instead.** If the pigment is the brand, the paper is what
+   should give ground — and a neutral carrying a little of the accent's hue is the
+   school's default pairing precisely because it removes this whole problem.
+
+If the client keeps the difficult pairing, record it as a `deviation` with the
+reason and the date. They have the right to keep it; what they should not have is
+an accident.
+
+### The general rule this is an instance of
+
+**Every pair of answers that produces an impossible capability deserves the same
+treatment: compute early, warn before asking, and narrow the options rather than
+letting the client choose something the build will later reject.**
+
+That is the difference between an interview that collects and one that guides,
+and colour is only the first place it showed up. When another such pair is found,
+it belongs here, in the same shape.
+
+---
+
 ### The accent-driven profile — question 13
 
 Ask **only when 11b answered (C)**. In the other two schools the palette is

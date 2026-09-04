@@ -17,23 +17,23 @@ chosen is `DESIGN_LANGUAGE.md`.
 
 | token | light | dark |
 |---|---|---|
-| `--app-bg-accent` | #4a5eab | #a1b5f1 |
-| `--app-bg-accent-active` | #344375 | #d1e0ff |
-| `--app-bg-accent-hover` | #3e4f8e | #baccff |
-| `--app-bg-accent-subtle` | #dee9ff | #1b1f29 |
-| `--app-bg-accent-subtle-active` | #a1bbff | #313c5a |
-| `--app-bg-accent-subtle-hover` | #c3d6ff | #252d40 |
-| `--app-bg-brand` | #4a5eab | #a1b5f1 |
-| `--app-bg-brand-deep` | #344375 | #d1e0ff |
+| `--app-bg-accent` | #6456a7 | #b5aeee |
+| `--app-bg-accent-active` | #453d73 | #dfdbff |
+| `--app-bg-accent-hover` | #53488b | #cbc6fe |
+| `--app-bg-accent-subtle` | #e8e6ff | #1f1e29 |
+| `--app-bg-accent-subtle-active` | #bdb2ff | #3d3858 |
+| `--app-bg-accent-subtle-hover` | #d5d0ff | #2d2a40 |
+| `--app-bg-brand` | #6456a7 | #b5aeee |
+| `--app-bg-brand-deep` | #453d73 | #dfdbff |
 | `--app-bg-danger` | #c10007 | #ff8e80 |
 | `--app-bg-danger-active` | #82181a | #ffd0ca |
 | `--app-bg-danger-hover` | #9f0712 | #ffb3a9 |
 | `--app-bg-danger-subtle` | #fef2f2 | #231e1e |
 | `--app-bg-disabled` | #ebe5dd | #1c1a17 |
-| `--app-bg-info` | #4a5eab | #a1b5f1 |
-| `--app-bg-info-active` | #344375 | #d1e0ff |
-| `--app-bg-info-hover` | #3e4f8e | #baccff |
-| `--app-bg-info-subtle` | #f0f5ff | #1d1f23 |
+| `--app-bg-info` | #6456a7 | #b5aeee |
+| `--app-bg-info-active` | #453d73 | #dfdbff |
+| `--app-bg-info-hover` | #53488b | #cbc6fe |
+| `--app-bg-info-subtle` | #f4f3ff | #1f1f23 |
 | `--app-bg-neutral` | #695b47 | #c1b6a6 |
 | `--app-bg-neutral-active` | #2b261e | #e5e0d9 |
 | `--app-bg-neutral-hover` | #463f35 | #d3cdc4 |
@@ -60,15 +60,15 @@ chosen is `DESIGN_LANGUAGE.md`.
 
 | token | light | dark |
 |---|---|---|
-| `--app-fg-accent` | #4a5eab | #c4d6ff |
-| `--app-fg-accent-hover` | #3e4f8e | #baccff |
-| `--app-fg-brand` | #4a5eab | #c4d6ff |
+| `--app-fg-accent` | #6456a7 | #d5d0ff |
+| `--app-fg-accent-hover` | #53488b | #cbc6fe |
+| `--app-fg-brand` | #6456a7 | #d5d0ff |
 | `--app-fg-danger` | #9f0712 | #ffc2b9 |
 | `--app-fg-default` | #2b261e | #f1eeea |
 | `--app-fg-disabled` | #b5a186 | #605d5a |
 | `--app-fg-heading` | #120c05 | #f8f5f1 |
-| `--app-fg-info` | #4a5eab | #c4d6ff |
-| `--app-fg-link-visited` | #344375 | #a4b0d3 |
+| `--app-fg-info` | #6456a7 | #d5d0ff |
+| `--app-fg-link-visited` | #453d73 | #afacd1 |
 | `--app-fg-muted` | #463f35 | #c0bdb9 |
 | `--app-fg-on-accent` | #ffffff | #040302 |
 | `--app-fg-on-brand` | #ffffff | #040302 |
@@ -86,20 +86,20 @@ chosen is `DESIGN_LANGUAGE.md`.
 | token | light | dark |
 |---|---|---|
 | `--app-border` | var(--app-border-width) var(--app-border-style) var(--app-border-color) | var(--app-border-width) var(--app-border-style) var(--app-border-color) |
-| `--app-border-accent` | #4a5eab | #a1b5f1 |
+| `--app-border-accent` | #6456a7 | #b5aeee |
 | `--app-border-color` | #ded6cb | #3a3834 |
 | `--app-border-color-strong` | #b5a186 | #54524f |
 | `--app-border-color-subtle` | #ebe5dd | #262421 |
 | `--app-border-danger` | #ffc9c9 | #604545 |
 | `--app-border-divider` | #ded6cb | #bcb6af |
-| `--app-border-info` | #c3d6ff | #444d61 |
+| `--app-border-info` | #d5d0ff | #4c4a61 |
 | `--app-border-interactive` | #b5a186 | #c3b5a1 |
 | `--app-border-style` | solid | solid |
 | `--app-border-success` | #b9f8cf | #365541 |
 | `--app-border-warning` | #ffd230 | #614a00 |
 | `--app-border-width` | 1px | 1px |
 | `--app-ring` | var(--app-ring-width) solid var(--app-ring-color) | var(--app-ring-width) solid var(--app-ring-color) |
-| `--app-ring-color` | #5a72c9 | #a7a4a0 |
+| `--app-ring-color` | #7868c5 | #a7a4a0 |
 | `--app-ring-offset` | 2px | 2px |
 | `--app-ring-width` | 2px | 2px |
 
@@ -203,11 +203,11 @@ chosen is `DESIGN_LANGUAGE.md`.
 | `--cui-body-color-rgb` | 43, 38, 30 | 241, 238, 234 |
 | `--cui-danger-rgb` | 193, 0, 7 | 255, 142, 128 |
 | `--cui-emphasis-color-rgb` | 18, 12, 5 | 248, 245, 241 |
-| `--cui-focus-ring-color-rgb` | 90, 114, 201 | 167, 164, 160 |
-| `--cui-info-rgb` | 74, 94, 171 | 161, 181, 241 |
-| `--cui-link-color-rgb` | 74, 94, 171 | 196, 214, 255 |
-| `--cui-link-hover-color-rgb` | 62, 79, 142 | 186, 204, 255 |
-| `--cui-primary-rgb` | 74, 94, 171 | 161, 181, 241 |
+| `--cui-focus-ring-color-rgb` | 120, 104, 197 | 167, 164, 160 |
+| `--cui-info-rgb` | 100, 86, 167 | 181, 174, 238 |
+| `--cui-link-color-rgb` | 100, 86, 167 | 213, 208, 255 |
+| `--cui-link-hover-color-rgb` | 83, 72, 139 | 203, 198, 254 |
+| `--cui-primary-rgb` | 100, 86, 167 | 181, 174, 238 |
 | `--cui-secondary-bg-rgb` | 235, 229, 221 | 33, 31, 27 |
 | `--cui-secondary-rgb` | 105, 91, 71 | 193, 182, 166 |
 | `--cui-success-rgb` | 0, 130, 54 | 130, 204, 146 |

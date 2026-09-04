@@ -21,7 +21,7 @@
       "bg-page",
       "bg-surface"
     ],
-    "accentBudget": "One SOLID accent fill per screen — the primary action, and nothing else. Washed accent is unlimited but means one thing only: a condition the interface is in. Where you are (the rail), what you have chosen (a chip), what is selected (a tab mark). Never on a heading, a rule, or a decorative tag.",
+    "accentBudget": "The budget is AREA MULTIPLIED BY CHROMA, not \"is it saturated\". One solid accent fill per screen for the primary action, plus small solid indicators, which are the cheapest accent there is. A washed accent is for independent, scattered items — a filter chip — and never for a closed contiguous set, where position already carries the state. Never on a heading, a rule, or a decorative tag.",
     "donts": [
       "Never a third surface level. With elevation: borders a level is carried by a hairline, and a third would have to be a second hairline, which is not a level.",
       "Never tint a heading for emphasis — hierarchy is size and weight.",
@@ -352,14 +352,16 @@
           "intent": "Moving between areas of the notebook: the caderno itself, exploring, writing, the shopping list.",
           "state": "own",
           "styled": "rail",
-          "notes": "CoreUI has a sidebar and it is an application chrome component — collapsible, with its own brand block, its own toggler and its own surface. This product wants four links against a hairline. `own` rather than `styled` because there is no library component underneath: it is a flex column built from tokens, and the whole of it is about forty lines in `app.css`. It spends NO rung, which is the decision the ledger is really recording — see the composition `donts`.",
+          "notes": "CoreUI has a sidebar and it is an application chrome component — collapsible, with its own brand block, its own toggler and its own surface. This product wants four links against a hairline. `own` rather than `styled` because there is no library component underneath: it is a flex column built from tokens, and the whole of it is about forty lines in `app.css`. It spends NO rung, which is the decision the ledger is really recording — see the composition `donts`. THE ACTIVE ITEM WAS A WASHED ACCENT AND IT WAS THE WORST THING ON THE PAGE. Three causes compounded, and the order matters because only the first is about colour: a nav is a closed contiguous set and should never have spent accent at all; the rail sits on the PAGE while the cards sit a rung above it, so a fill calibrated for a card had almost no separation left out here (a rung is a distance from a surface, not a property of a component); and audit-wash measures 146 degrees of hue between pigment and paper, where a pale patch reads as a stain rather than a tint. The fill now sinks two neutral rungs, and the accent returns as a 3px solid bar — which is also the cheaper accent, because the budget is area multiplied by chroma and a washed row paints far more than a bar at full strength.",
           "dos": [
-            "A hairline between the rail and the content, in `border-divider`.",
-            "The current destination in WASHED accent — where you are is a condition, not an invitation."
+            "A hairline between the rail and the content, in the divider tone.",
+            "The current destination sinks TWO NEUTRAL RUNGS and takes a 3px solid accent bar. Not a washed accent — see the donts.",
+            "Weight on the active label, always. A state carried by tone alone is a state some readers do not receive."
           ],
           "donts": [
             "Never a surface tone of its own. That would be the third rung, and this product has two.",
-            "Never a solid accent on the current item — the solid fill belongs to the one action the screen exists for."
+            "Never a washed accent on the active item. A nav is a CLOSED, CONTIGUOUS set — position already says which one is chosen, so the accent buys nothing the layout had not said. It is the same argument that keeps a segmented control neutral.",
+            "Never a solid accent fill on the active item either. The solid belongs to the one action the screen exists for."
           ],
           "responsive": "Below the tablet breakpoint it becomes a scrolling row above the content, not a hamburger. A phone is narrower, not denser, so the rail moves rather than compacts.",
           "role": "chrome"
