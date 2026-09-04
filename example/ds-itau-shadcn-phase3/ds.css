@@ -297,8 +297,8 @@
     --muted-foreground: var(--app-fg-muted);
     --destructive: var(--app-bg-danger);
     --destructive-foreground: var(--app-fg-on-danger);
-    --border: var(--app-border-color);
-    --input: var(--app-border-color);
+    --border: var(--app-border-divider);
+    --input: var(--app-border-interactive);
     --ring: var(--app-ring-color);
     --radius: var(--app-radius-control);
     --sidebar: var(--app-bg-sunken);

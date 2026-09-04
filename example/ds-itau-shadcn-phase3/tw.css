@@ -27,6 +27,10 @@
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --tracking-tight: -0.025em;
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--app-font-family-body);
@@ -1219,6 +1223,9 @@
     }
     .hover\:bg-\[var\(--app-bg-warning-hover\)\]:hover {
       background-color: var(--app-bg-warning-hover);
+    }
+    .hover\:bg-accent:hover {
+      background-color: var(--accent);
     }
     .hover\:bg-muted:hover {
       background-color: var(--muted);

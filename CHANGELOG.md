@@ -23,6 +23,54 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### Four naming axes, and the one family that speaks two
+
+A token name answers one of four questions — POSITION (which rung), RELATION
+(where in space), PROMINENCE (how loudly), ROLE (what it does) — and a family
+that mixes two of them produces names nobody can place.
+
+That is the diagnosis for a wall hit a day earlier: "which rung is `sunken`?" had
+no answer, because `sunken` is relation and `subtle` is prominence and they are
+not neighbours on any scale. Worth keeping as a diagnostic in its own right, and
+it has now applied three times: **when nobody can say which rung a token is, the
+value is almost never the problem — the name belongs to an axis that has no
+rungs.**
+
+`check-token-axis` declares the axis of each layer 2 family and refuses foreign
+vocabulary inside it. It reports nothing today, and that result is the useful
+part: once legitimate compounds are allowed — `bg-danger-subtle` is role plus
+prominence and is settled convention everywhere — layer 2 turns out not to be
+axis-mixed. It runs as a regression guard so the next `bg-page-subtle` cannot
+arrive unnoticed.
+
+**The one real case is the border family**, and it is measurable rather than
+stylistic. Five names, three values:
+
+    border-color         #ded6cb  =  border-divider       #ded6cb
+    border-color-strong  #b5a186  =  border-interactive   #b5a186
+    border-color-subtle  #ebe5dd
+
+Two vocabularies for one set of decisions — `-subtle`/`-strong` say how loud,
+`divider`/`interactive` say what for — and only the second pair carries a legal
+requirement. A reader picks whichever name looks closest, which is exactly what
+happened twice: CoreUI's checkbox and shadcn's `--input` both took the general
+border where the role border was meant, and both produced a control outlined at a
+divider's weight, under the 3:1 WCAG 1.4.11 asks of the boundary that identifies
+a control.
+
+The shadcn half is fixed here: `--border` now takes `border-divider` and `--input`
+takes `border-interactive`. Retiring the prominence trio is a rename of the
+public contract and is not done yet.
+
+### A duplicate-by-value detector, written and deleted
+
+It reported every pair of tokens in one family resolving to the same value. It
+found thirty-one, and almost all of them were the school working as designed —
+monochrome collapses info onto the accent, `$accent-wash: false` routes the
+accent wash onto the neutral. A collapse a school declares is not a duplication,
+and a guard that cannot tell them apart reports the design as a defect. The
+reasoning is kept in the file so it is not rediscovered.
+
 ### The accent outline belongs to focus
 
 `check-focus-collision` reserves it. A component marked as selected by a thin
