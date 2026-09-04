@@ -30,18 +30,18 @@
     --cui-gray-700: #4a566d;
     --cui-gray-800: #323a49;
     --cui-gray-900: #212631;
-    --cui-primary: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-secondary: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-primary: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-secondary: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-success: rgb(0%, 50.9997661091%, 20.9809607311%);
-    --cui-info: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-info: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-warning: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%);
     --cui-danger: rgb(75.6884697918%, 0%, 2.8754347938%);
     --cui-light: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
     --cui-dark: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-primary-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
-    --cui-secondary-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-primary-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
+    --cui-secondary-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-success-rgb: 0, 130.0494035782, 53.5014498644;
-    --cui-info-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-info-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-warning-rgb: 253.9111302598, 229.80723062, 133.1582141291;
     --cui-danger-rgb: 193.0055979691, 0, 7.3323587243;
     --cui-light-rgb: 249.965274862, 249.965274862, 249.965274862;
@@ -123,11 +123,11 @@
     --cui-medium-emphasis-inverse: rgba(255, 255, 255, 0.6);
     --cui-disabled-inverse: rgba(255, 255, 255, 0.38);
     --cui-heading-color: inherit;
-    --cui-link-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-link-color-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-link-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-link-color-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-link-decoration: underline;
-    --cui-link-hover-color: rgb(32.5353079947%, 28.1460500261%, 54.4379896646%);
-    --cui-link-hover-color-rgb: 82.9650353864, 71.7724275665, 138.8168736447;
+    --cui-link-hover-color: rgb(24.1348523493%, 30.974411737%, 55.555159812%);
+    --cui-link-hover-color-rgb: 61.5438734908, 78.9847499292, 141.6656575206;
     --cui-code-color: #d63384;
     --cui-highlight-color: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
     --cui-highlight-bg: rgb(100%, 95.137254902%, 80.5490196078%);
@@ -148,7 +148,7 @@
     --cui-box-shadow-inset: inset 0 1px 2px rgba(8, 10, 12, 0.075);
     --cui-focus-ring-width: 0.25rem;
     --cui-focus-ring-opacity: 0.25;
-    --cui-focus-ring-color: rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    --cui-focus-ring-color: rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-focus-ring-blur: 0;
     --cui-form-valid-color: rgb(0%, 50.9997661091%, 20.9809607311%);
     --cui-form-valid-border-color: rgb(0%, 50.9997661091%, 20.9809607311%);
@@ -175,10 +175,10 @@
     --cui-high-emphasis: rgba(255, 255, 255, 0.87);
     --cui-medium-emphasis: rgba(255, 255, 255, 0.6);
     --cui-disabled: rgba(255, 255, 255, 0.38);
-    --cui-primary: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-secondary: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-primary: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-secondary: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-success: rgb(2.5499883055%, 48.4497778037%, 21.4328529635%);
-    --cui-info: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-info: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-warning: rgb(97.2052880209%, 88.6980293245%, 54.5866117395%);
     --cui-danger: rgb(71.9040463022%, 3.7844234896%, 6.3723148041%);
     --cui-light: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
@@ -192,10 +192,10 @@
     --cui-gray-700: #4a566d;
     --cui-gray-800: #323a49;
     --cui-gray-900: #212631;
-    --cui-primary-rgb: 102.3433558649, 89.8046354795, 163.0284770786;
-    --cui-secondary-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-primary-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
+    --cui-secondary-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-success-rgb: 6.5024701789, 123.5469333993, 54.6537750568;
-    --cui-info-rgb: 102.3433558649, 89.8046354795, 163.0284770786;
+    --cui-info-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
     --cui-warning-rgb: 247.8734844533, 226.1799747774, 139.1958599356;
     --cui-danger-rgb: 183.3553180706, 9.6502798985, 16.2494027503;
     --cui-light-rgb: 249.965274862, 249.965274862, 249.965274862;
@@ -225,10 +225,10 @@
     --cui-light-border-subtle: #4a566d;
     --cui-dark-border-subtle: #323a49;
     --cui-heading-color: inherit;
-    --cui-link-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-link-hover-color: rgb(52.107719487%, 48.1740032877%, 71.1461888874%);
-    --cui-link-color-rgb: 102.3433558649, 89.8046354795, 163.0284770786;
-    --cui-link-hover-color-rgb: 132.8746846919, 122.8437083836, 181.4227816629;
+    --cui-link-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-link-hover-color: rgb(44.6307027778%, 50.5128902818%, 71.985951693%);
+    --cui-link-color-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
+    --cui-link-hover-color-rgb: 113.8082920834, 128.8078702187, 183.564176817;
     --cui-code-color: rgb(90.3529411765%, 52%, 71.0588235294%);
     --cui-highlight-color: rgba(255, 255, 255, 0.87);
     --cui-highlight-bg: rgb(40%, 30.2745098039%, 1.0980392157%);
@@ -1856,26 +1856,26 @@
   }
   .table-primary {
     --cui-table-color: #080a0c;
-    --cui-table-bg: rgb(87.8171416329%, 86.7244426886%, 93.1056053552%);
-    --cui-table-border-color: rgb(70.8811642867%, 70.1638678764%, 75.4256607547%);
-    --cui-table-striped-bg: rgb(83.5831472963%, 82.5842989855%, 88.6856192051%);
+    --cui-table-bg: rgb(85.7777416817%, 87.4116826551%, 93.3764219359%);
+    --cui-table-border-color: rgb(69.2496443258%, 70.7136598496%, 75.6423140193%);
+    --cui-table-striped-bg: rgb(81.6457173428%, 83.2371769537%, 88.9428949568%);
     --cui-table-striped-color: #080a0c;
-    --cui-table-active-bg: rgb(79.3491529598%, 78.4441552825%, 84.265633055%);
+    --cui-table-active-bg: rgb(77.5136930038%, 79.0626712523%, 84.5093679776%);
     --cui-table-active-color: #080a0c;
-    --cui-table-hover-bg: rgb(81.466150128%, 80.514227134%, 86.47562613%);
+    --cui-table-hover-bg: rgb(79.5797051733%, 81.149924103%, 86.7261314672%);
     --cui-table-hover-color: #080a0c;
     color: var(--cui-table-color);
     border-color: var(--cui-table-border-color);
   }
   .table-secondary {
     --cui-table-color: #080a0c;
-    --cui-table-bg: rgb(87.8171416329%, 86.7244426886%, 93.1056053552%);
-    --cui-table-border-color: rgb(70.8811642867%, 70.1638678764%, 75.4256607547%);
-    --cui-table-striped-bg: rgb(83.5831472963%, 82.5842989855%, 88.6856192051%);
+    --cui-table-bg: rgb(85.7777416817%, 87.4116826551%, 93.3764219359%);
+    --cui-table-border-color: rgb(69.2496443258%, 70.7136598496%, 75.6423140193%);
+    --cui-table-striped-bg: rgb(81.6457173428%, 83.2371769537%, 88.9428949568%);
     --cui-table-striped-color: #080a0c;
-    --cui-table-active-bg: rgb(79.3491529598%, 78.4441552825%, 84.265633055%);
+    --cui-table-active-bg: rgb(77.5136930038%, 79.0626712523%, 84.5093679776%);
     --cui-table-active-color: #080a0c;
-    --cui-table-hover-bg: rgb(81.466150128%, 80.514227134%, 86.47562613%);
+    --cui-table-hover-bg: rgb(79.5797051733%, 81.149924103%, 86.7261314672%);
     --cui-table-hover-color: #080a0c;
     color: var(--cui-table-color);
     border-color: var(--cui-table-border-color);
@@ -1895,13 +1895,13 @@
   }
   .table-info {
     --cui-table-color: #080a0c;
-    --cui-table-bg: rgb(87.8171416329%, 86.7244426886%, 93.1056053552%);
-    --cui-table-border-color: rgb(70.8811642867%, 70.1638678764%, 75.4256607547%);
-    --cui-table-striped-bg: rgb(83.5831472963%, 82.5842989855%, 88.6856192051%);
+    --cui-table-bg: rgb(85.7777416817%, 87.4116826551%, 93.3764219359%);
+    --cui-table-border-color: rgb(69.2496443258%, 70.7136598496%, 75.6423140193%);
+    --cui-table-striped-bg: rgb(81.6457173428%, 83.2371769537%, 88.9428949568%);
     --cui-table-striped-color: #080a0c;
-    --cui-table-active-bg: rgb(79.3491529598%, 78.4441552825%, 84.265633055%);
+    --cui-table-active-bg: rgb(77.5136930038%, 79.0626712523%, 84.5093679776%);
     --cui-table-active-color: #080a0c;
-    --cui-table-hover-bg: rgb(81.466150128%, 80.514227134%, 86.47562613%);
+    --cui-table-hover-bg: rgb(79.5797051733%, 81.149924103%, 86.7261314672%);
     --cui-table-hover-color: #080a0c;
     color: var(--cui-table-color);
     border-color: var(--cui-table-border-color);
@@ -2023,7 +2023,7 @@
     }
   }
   .chip-input:focus-within {
-    border-color: rgb(69.5428540821%, 66.8111067215%, 82.7640133879%);
+    border-color: rgb(64.4443542044%, 68.5292066377%, 83.4410548399%);
     outline: 0;
     box-shadow: 0 0 var(--cui-focus-ring-blur) var(--cui-focus-ring-width) var(--cui-focus-ring-color);
   }
@@ -2113,9 +2113,9 @@
   .form-control:focus {
     color: var(--cui-body-color);
     background-color: var(--cui-body-bg);
-    border-color: rgb(69.5428540821%, 66.8111067215%, 82.7640133879%);
+    border-color: rgb(64.4443542044%, 68.5292066377%, 83.4410548399%);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
   }
   .form-control::-webkit-date-and-time-value {
     min-width: 85px;
@@ -2255,9 +2255,9 @@
     }
   }
   .form-select:focus {
-    border-color: rgb(69.5428540821%, 66.8111067215%, 82.7640133879%);
+    border-color: rgb(64.4443542044%, 68.5292066377%, 83.4410548399%);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
   }
   .form-select[multiple], .form-select[size]:not([size="1"]) {
     padding-inline-end: 0.75rem;
@@ -2331,9 +2331,9 @@
     filter: brightness(90%);
   }
   .form-check-input:focus {
-    border-color: rgb(69.5428540821%, 66.8111067215%, 82.7640133879%);
+    border-color: rgb(64.4443542044%, 68.5292066377%, 83.4410548399%);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
   }
   .form-check-input:checked {
     background-color: var(--cui-form-check-input-checked-bg-color, var(--cui-primary));
@@ -2380,7 +2380,7 @@
     }
   }
   .form-switch .form-check-input:focus {
-    --cui-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%2869.5428540821%, 66.8111067215%, 82.7640133879%%29'/%3e%3c/svg%3e");
+    --cui-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='rgb%2864.4443542044%, 68.5292066377%, 83.4410548399%%29'/%3e%3c/svg%3e");
   }
   .form-switch .form-check-input:checked {
     background-position: right center;
@@ -2444,10 +2444,10 @@
     outline: 0;
   }
   .form-range:focus::-webkit-slider-thumb {
-    box-shadow: 0 0 0 1px rgb(97.7230553116%, 96.5626930333%, 94.9765396167%), 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    box-shadow: 0 0 0 1px rgb(97.7230553116%, 96.5626930333%, 94.9765396167%), 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
   }
   .form-range:focus::-moz-range-thumb {
-    box-shadow: 0 0 0 1px rgb(97.7230553116%, 96.5626930333%, 94.9765396167%), 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    box-shadow: 0 0 0 1px rgb(97.7230553116%, 96.5626930333%, 94.9765396167%), 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
   }
   .form-range::-moz-focus-outer {
     border: 0;
@@ -2468,7 +2468,7 @@
     }
   }
   .form-range::-webkit-slider-thumb:active {
-    background-color: rgb(81.7257124493%, 80.0866640329%, 89.6584080328%);
+    background-color: rgb(78.6666125226%, 81.1175239826%, 90.0646329039%);
   }
   .form-range::-webkit-slider-runnable-track {
     width: 100%;
@@ -2494,7 +2494,7 @@
     }
   }
   .form-range::-moz-range-thumb:active {
-    background-color: rgb(81.7257124493%, 80.0866640329%, 89.6584080328%);
+    background-color: rgb(78.6666125226%, 81.1175239826%, 90.0646329039%);
   }
   .form-range::-moz-range-track {
     width: 100%;
@@ -2956,35 +2956,35 @@
   }
   .btn-primary {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(33.2228519396%, 28.5788814265%, 55.6988227595%);
-    --cui-btn-hover-border-color: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-focus-shadow-rgb: 122.9682724461, 111.1261476376, 180.2819980368;
+    --cui-btn-hover-bg: rgb(24.5554021474%, 31.4996512841%, 56.8497932278%);
+    --cui-btn-hover-border-color: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-focus-shadow-rgb: 100.8662754759, 118.5741107744, 183.2169727308;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-active-border-color: rgb(29.3142811232%, 25.2166600822%, 49.1460200819%);
+    --cui-btn-active-bg: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-active-border-color: rgb(21.6665313065%, 27.7938099566%, 50.1615822598%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .btn-secondary {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(33.2228519396%, 28.5788814265%, 55.6988227595%);
-    --cui-btn-hover-border-color: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-focus-shadow-rgb: 122.9682724461, 111.1261476376, 180.2819980368;
+    --cui-btn-hover-bg: rgb(24.5554021474%, 31.4996512841%, 56.8497932278%);
+    --cui-btn-hover-border-color: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-focus-shadow-rgb: 100.8662754759, 118.5741107744, 183.2169727308;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-active-border-color: rgb(29.3142811232%, 25.2166600822%, 49.1460200819%);
+    --cui-btn-active-bg: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-active-border-color: rgb(21.6665313065%, 27.7938099566%, 50.1615822598%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .btn-success {
     --cui-btn-color: #fff;
@@ -3004,19 +3004,19 @@
   }
   .btn-info {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(33.2228519396%, 28.5788814265%, 55.6988227595%);
-    --cui-btn-hover-border-color: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-focus-shadow-rgb: 122.9682724461, 111.1261476376, 180.2819980368;
+    --cui-btn-hover-bg: rgb(24.5554021474%, 31.4996512841%, 56.8497932278%);
+    --cui-btn-hover-border-color: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-focus-shadow-rgb: 100.8662754759, 118.5741107744, 183.2169727308;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-active-border-color: rgb(29.3142811232%, 25.2166600822%, 49.1460200819%);
+    --cui-btn-active-bg: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-active-border-color: rgb(21.6665313065%, 27.7938099566%, 50.1615822598%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .btn-warning {
     --cui-btn-color: #080a0c;
@@ -3083,35 +3083,35 @@
     --cui-btn-disabled-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
   }
   .btn-outline-primary {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-focus-shadow-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-focus-shadow-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-gradient: none;
   }
   .btn-outline-secondary {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-focus-shadow-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-focus-shadow-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-gradient: none;
   }
   .btn-outline-success {
@@ -3131,19 +3131,19 @@
     --cui-gradient: none;
   }
   .btn-outline-info {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-focus-shadow-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-focus-shadow-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-gradient: none;
   }
   .btn-outline-warning {
@@ -3211,28 +3211,28 @@
     --cui-gradient: none;
   }
   .btn-ghost-primary {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
   .btn-ghost-secondary {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
@@ -3250,15 +3250,15 @@
     --cui-btn-disabled-border-color: transparent;
   }
   .btn-ghost-info {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
@@ -3325,7 +3325,7 @@
     --cui-btn-disabled-color: #6d7d9c;
     --cui-btn-disabled-border-color: transparent;
     --cui-btn-box-shadow: none;
-    --cui-btn-focus-shadow-rgb: 122.9682724461, 111.1261476376, 180.2819980368;
+    --cui-btn-focus-shadow-rgb: 100.8662754759, 118.5741107744, 183.2169727308;
     text-decoration: underline;
   }
   .btn-link:focus-visible {
@@ -3345,35 +3345,35 @@
   }
   [data-coreui-theme=dark] .btn-primary {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(34.114451955%, 29.9348784932%, 54.3428256929%);
-    --cui-btn-hover-border-color: rgb(32.107719487%, 28.1740032877%, 51.1461888874%);
-    --cui-btn-focus-shadow-rgb: 125.2418524852, 114.5839401576, 176.8242055168;
+    --cui-btn-hover-bg: rgb(26.1701217014%, 32.4199459244%, 55.2350736738%);
+    --cui-btn-hover-border-color: rgb(24.6307027778%, 30.5128902818%, 51.985951693%);
+    --cui-btn-focus-shadow-rgb: 104.9838103386, 120.9208621073, 179.0994378681;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(32.107719487%, 28.1740032877%, 51.1461888874%);
-    --cui-btn-active-border-color: rgb(30.1009870191%, 26.4131280822%, 47.9495520819%);
+    --cui-btn-active-bg: rgb(24.6307027778%, 30.5128902818%, 51.985951693%);
+    --cui-btn-active-border-color: rgb(23.0912838542%, 28.6058346392%, 48.7368297121%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-disabled-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-disabled-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
   }
   [data-coreui-theme=dark] .btn-secondary {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(33.2228519396%, 28.5788814265%, 55.6988227595%);
-    --cui-btn-hover-border-color: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-focus-shadow-rgb: 122.9682724461, 111.1261476376, 180.2819980368;
+    --cui-btn-hover-bg: rgb(24.5554021474%, 31.4996512841%, 56.8497932278%);
+    --cui-btn-hover-border-color: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-focus-shadow-rgb: 100.8662754759, 118.5741107744, 183.2169727308;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(31.2685665314%, 26.8977707544%, 52.4224214207%);
-    --cui-btn-active-border-color: rgb(29.3142811232%, 25.2166600822%, 49.1460200819%);
+    --cui-btn-active-bg: rgb(23.110966727%, 29.6467306203%, 53.5056877438%);
+    --cui-btn-active-border-color: rgb(21.6665313065%, 27.7938099566%, 50.1615822598%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   [data-coreui-theme=dark] .btn-success {
     --cui-btn-color: #fff;
@@ -3393,19 +3393,19 @@
   }
   [data-coreui-theme=dark] .btn-info {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(34.114451955%, 29.9348784932%, 54.3428256929%);
-    --cui-btn-hover-border-color: rgb(32.107719487%, 28.1740032877%, 51.1461888874%);
-    --cui-btn-focus-shadow-rgb: 125.2418524852, 114.5839401576, 176.8242055168;
+    --cui-btn-hover-bg: rgb(26.1701217014%, 32.4199459244%, 55.2350736738%);
+    --cui-btn-hover-border-color: rgb(24.6307027778%, 30.5128902818%, 51.985951693%);
+    --cui-btn-focus-shadow-rgb: 104.9838103386, 120.9208621073, 179.0994378681;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(32.107719487%, 28.1740032877%, 51.1461888874%);
-    --cui-btn-active-border-color: rgb(30.1009870191%, 26.4131280822%, 47.9495520819%);
+    --cui-btn-active-bg: rgb(24.6307027778%, 30.5128902818%, 51.985951693%);
+    --cui-btn-active-border-color: rgb(23.0912838542%, 28.6058346392%, 48.7368297121%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-disabled-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-disabled-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
   }
   [data-coreui-theme=dark] .btn-warning {
     --cui-btn-color: #080a0c;
@@ -3472,35 +3472,35 @@
     --cui-btn-disabled-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
   }
   [data-coreui-theme=dark] .btn-outline-primary {
-    --cui-btn-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-hover-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-focus-shadow-rgb: 102.3433558649, 89.8046354795, 163.0284770786;
+    --cui-btn-hover-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-hover-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-focus-shadow-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-active-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-active-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-active-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-outline-secondary {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-focus-shadow-rgb: 99.6685558189, 85.7366442795, 167.0964682785;
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-focus-shadow-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-outline-success {
@@ -3520,19 +3520,19 @@
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-outline-info {
-    --cui-btn-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-hover-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-focus-shadow-rgb: 102.3433558649, 89.8046354795, 163.0284770786;
+    --cui-btn-hover-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-hover-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-focus-shadow-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-active-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-active-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-active-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-outline-warning {
@@ -3600,28 +3600,28 @@
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-ghost-primary {
-    --cui-btn-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-hover-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-hover-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-hover-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-active-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-active-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-active-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
   [data-coreui-theme=dark] .btn-ghost-secondary {
-    --cui-btn-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-hover-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-hover-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-hover-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
-    --cui-btn-active-border-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-active-bg: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
+    --cui-btn-active-border-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-btn-disabled-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
@@ -3639,15 +3639,15 @@
     --cui-btn-disabled-border-color: transparent;
   }
   [data-coreui-theme=dark] .btn-ghost-info {
-    --cui-btn-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-hover-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-hover-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-hover-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
-    --cui-btn-active-border-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-active-bg: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
+    --cui-btn-active-border-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(40.1346493588%, 35.2175041096%, 63.9327361093%);
+    --cui-btn-disabled-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
@@ -4168,7 +4168,7 @@
   }
   .nav-link:focus-visible {
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
   }
   .nav-link.disabled, .nav-link:disabled {
     color: var(--cui-nav-link-disabled-color);
@@ -4929,7 +4929,7 @@
     --cui-accordion-btn-icon-transform: rotate(-180deg);
     --cui-accordion-btn-icon-transition: transform 0.2s ease-in-out;
     --cui-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%233634a3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
-    --cui-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    --cui-accordion-btn-focus-box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-accordion-body-padding-x: 1.25rem;
     --cui-accordion-body-padding-y: 1rem;
     --cui-accordion-active-color: var(--cui-primary-text-emphasis);
@@ -5086,7 +5086,7 @@
     --cui-pagination-hover-border-color: var(--cui-border-color);
     --cui-pagination-focus-color: var(--cui-link-hover-color);
     --cui-pagination-focus-bg: var(--cui-secondary-bg);
-    --cui-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    --cui-pagination-focus-box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-pagination-active-color: rgba(255, 255, 255, 0.87);
     --cui-pagination-active-bg: var(--cui-primary);
     --cui-pagination-active-border-color: var(--cui-primary);
@@ -5698,7 +5698,7 @@
     --cui-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23080a0c'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414'/%3e%3c/svg%3e");
     --cui-btn-close-opacity: 0.5;
     --cui-btn-close-hover-opacity: 0.75;
-    --cui-btn-close-focus-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    --cui-btn-close-focus-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-btn-close-focus-opacity: 1;
     --cui-btn-close-disabled-opacity: 0.25;
     box-sizing: content-box;
@@ -7443,10 +7443,10 @@
     border-radius: var(--cui-callout-border-radius);
   }
   .callout-primary {
-    --cui-callout-border-left-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-callout-border-left-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .callout-secondary {
-    --cui-callout-border-left-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-callout-border-left-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .callout-success {
     --cui-callout-border-left-color: rgb(0%, 50.9997661091%, 20.9809607311%);
@@ -7458,7 +7458,7 @@
     --cui-callout-border-left-color: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%);
   }
   .callout-info {
-    --cui-callout-border-left-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%);
+    --cui-callout-border-left-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .callout-light {
     --cui-callout-border-left-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
@@ -7713,8 +7713,8 @@
     --cui-search-button-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     --cui-search-button-focus-color: var(--cui-body-color);
     --cui-search-button-focus-bg: var(--cui-body-bg);
-    --cui-search-button-focus-border-color: rgb(69.5428540821%, 66.8111067215%, 82.7640133879%);
-    --cui-search-button-focus-box-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    --cui-search-button-focus-border-color: rgb(64.4443542044%, 68.5292066377%, 83.4410548399%);
+    --cui-search-button-focus-box-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-search-button-icon-size: 1.125rem;
     --cui-search-button-keys-gap: 0.25rem;
     --cui-search-button-key-width: 1.5rem;
@@ -7938,7 +7938,7 @@
     --cui-sidebar-toggler-color: var(--cui-tertiary-color);
     --cui-sidebar-toggler-icon: url("data:image/svg+xml,%0A%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cg xmlns='http://www.w3.org/2000/svg' transform='matrix%28-1 0 0 -1 512 512%29'%3E%3Cpath fill='%23000' d='M472,16H40A24.028,24.028,0,0,0,16,40V200H48V48H464V464H48V304H16V472a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V40A24.028,24.028,0,0,0,472,16Z'/%3E%3Cpolygon fill='%23000' points='209.377 363.306 232.004 385.933 366.627 251.31 232.004 116.687 209.377 139.313 305.374 235.311 16 235.311 16 267.311 305.372 267.311 209.377 363.306'/%3E%3C/g%3E%3C/svg%3E");
     --cui-sidebar-toggler-hover-color: var(--cui-secondary-color);
-    --cui-sidebar-toggler-focus-shadow: 0 0 0 0.25rem rgba(39.0857081643%, 33.622213443%, 65.5280267759%, 0.25);
+    --cui-sidebar-toggler-focus-shadow: 0 0 0 0.25rem rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-sidebar-toggler-focus-color: var(--cui-secondary-color);
     --cui-sidebar-toggler-transition: transform 0.15s;
     position: relative;
@@ -8407,11 +8407,11 @@
   }
   [data-coreui-theme=dark] .text-bg-primary {
     color: #fff !important;
-    background-color: rgba(102.3433558649, 89.8046354795, 163.0284770786, var(--cui-bg-opacity, 1)) !important;
+    background-color: rgba(78.5103651043, 97.2598377733, 165.7052210213, var(--cui-bg-opacity, 1)) !important;
   }
   [data-coreui-theme=dark] .text-bg-secondary {
     color: #fff !important;
-    background-color: rgba(99.6685558189, 85.7366442795, 167.0964682785, var(--cui-bg-opacity, 1)) !important;
+    background-color: rgba(73.6662064422, 94.4989538523, 170.5493796833, var(--cui-bg-opacity, 1)) !important;
   }
   [data-coreui-theme=dark] .text-bg-success {
     color: #fff !important;
@@ -8419,7 +8419,7 @@
   }
   [data-coreui-theme=dark] .text-bg-info {
     color: #fff !important;
-    background-color: rgba(102.3433558649, 89.8046354795, 163.0284770786, var(--cui-bg-opacity, 1)) !important;
+    background-color: rgba(78.5103651043, 97.2598377733, 165.7052210213, var(--cui-bg-opacity, 1)) !important;
   }
   [data-coreui-theme=dark] .text-bg-warning {
     color: #080a0c !important;
@@ -8442,16 +8442,16 @@
     text-decoration-color: rgba(var(--cui-primary-rgb), var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-primary:hover, .link-primary:focus {
-    color: rgba(79.7348446551, 68.5893154236, 133.6771746228, var(--cui-link-opacity, 1)) !important;
-    text-decoration-color: rgba(79.7348446551, 68.5893154236, 133.6771746228, var(--cui-link-underline-opacity, 1)) !important;
+    color: rgba(58.9329651538, 75.5991630818, 136.4395037467, var(--cui-link-opacity, 1)) !important;
+    text-decoration-color: rgba(58.9329651538, 75.5991630818, 136.4395037467, var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-secondary {
     color: rgba(var(--cui-secondary-rgb), var(--cui-link-opacity, 1)) !important;
     text-decoration-color: rgba(var(--cui-secondary-rgb), var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-secondary:hover, .link-secondary:focus {
-    color: rgba(79.7348446551, 68.5893154236, 133.6771746228, var(--cui-link-opacity, 1)) !important;
-    text-decoration-color: rgba(79.7348446551, 68.5893154236, 133.6771746228, var(--cui-link-underline-opacity, 1)) !important;
+    color: rgba(58.9329651538, 75.5991630818, 136.4395037467, var(--cui-link-opacity, 1)) !important;
+    text-decoration-color: rgba(58.9329651538, 75.5991630818, 136.4395037467, var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-success {
     color: rgba(var(--cui-success-rgb), var(--cui-link-opacity, 1)) !important;
@@ -8466,8 +8466,8 @@
     text-decoration-color: rgba(var(--cui-info-rgb), var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-info:hover, .link-info:focus {
-    color: rgba(79.7348446551, 68.5893154236, 133.6771746228, var(--cui-link-opacity, 1)) !important;
-    text-decoration-color: rgba(79.7348446551, 68.5893154236, 133.6771746228, var(--cui-link-underline-opacity, 1)) !important;
+    color: rgba(58.9329651538, 75.5991630818, 136.4395037467, var(--cui-link-opacity, 1)) !important;
+    text-decoration-color: rgba(58.9329651538, 75.5991630818, 136.4395037467, var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-warning {
     color: rgba(var(--cui-warning-rgb), var(--cui-link-opacity, 1)) !important;
@@ -8995,16 +8995,16 @@
     border-color: rgba(var(--cui-white-rgb), var(--cui-border-opacity)) !important;
   }
   .border-top-primary {
-    border-top-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-top-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-top-secondary {
-    border-top-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-top-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-top-success {
     border-top-color: rgb(0%, 50.9997661091%, 20.9809607311%) !important;
   }
   .border-top-info {
-    border-top-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-top-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-top-warning {
     border-top-color: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%) !important;
@@ -9022,16 +9022,16 @@
     border-top-color: #fff !important;
   }
   .border-end-primary {
-    border-inline-end-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-inline-end-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-end-secondary {
-    border-inline-end-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-inline-end-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-end-success {
     border-inline-end-color: rgb(0%, 50.9997661091%, 20.9809607311%) !important;
   }
   .border-end-info {
-    border-inline-end-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-inline-end-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-end-warning {
     border-inline-end-color: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%) !important;
@@ -9049,16 +9049,16 @@
     border-inline-end-color: #fff !important;
   }
   .border-bottom-primary {
-    border-bottom-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-bottom-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-bottom-secondary {
-    border-bottom-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-bottom-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-bottom-success {
     border-bottom-color: rgb(0%, 50.9997661091%, 20.9809607311%) !important;
   }
   .border-bottom-info {
-    border-bottom-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-bottom-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-bottom-warning {
     border-bottom-color: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%) !important;
@@ -9076,16 +9076,16 @@
     border-bottom-color: #fff !important;
   }
   .border-start-primary {
-    border-inline-start-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-inline-start-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-start-secondary {
-    border-inline-start-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-inline-start-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-start-success {
     border-inline-start-color: rgb(0%, 50.9997661091%, 20.9809607311%) !important;
   }
   .border-start-info {
-    border-inline-start-color: rgb(39.0857081643%, 33.622213443%, 65.5280267759%) !important;
+    border-inline-start-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%) !important;
   }
   .border-start-warning {
     border-inline-start-color: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%) !important;

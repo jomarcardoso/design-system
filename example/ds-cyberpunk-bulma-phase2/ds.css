@@ -19934,9 +19934,9 @@
     --app-fg-disabled: #71717b;
     --app-bg-action-hover: #53eafd;
     --app-bg-action-active: #a2f4fd;
-    --app-bg-action-subtle: #053345;
-    --app-bg-action-subtle-hover: #053345;
-    --app-bg-action-subtle-active: #053345;
+    --app-bg-action-subtle: rgba(0, 211, 242, 0.128);
+    --app-bg-action-subtle-hover: rgba(0, 211, 242, 0.192);
+    --app-bg-action-subtle-active: rgba(0, 211, 242, 0.256);
     --app-fg-action: #53eafd;
     --app-border-action: #00d3f2;
     --app-bg-selected: #ed6aff;
@@ -20012,6 +20012,69 @@
     --app-fg-link-visited: #f4a8ff;
     --app-fg-action: #53eafd;
     --app-border-action: #00d3f2;
+  }
+  :root,
+  [data-theme=cyberpunk] {
+    color-scheme: dark;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=surface],
+  :root [data-surface=surface],
+  [data-theme=cyberpunk][data-surface=surface],
+  [data-theme=cyberpunk] [data-surface=surface] {
+    --app-bg-neutral-subtle: #010101;
+    --app-bg-neutral-subtle-hover: #38383c;
+    --app-bg-neutral-subtle-active: #18181b;
+    --app-bg-selected-subtle: #5f1a63;
+    --app-bg-surface-hover: #38383c;
+    --app-bg-surface-active: #18181b;
+    --app-border-color: #515159;
+    --app-border-color-subtle: #38383c;
+    --app-border-color-strong: #656570;
+    --app-border-divider: #515159;
+    --app-border-interactive: #515159;
+  }
+  :root,
+  [data-theme=cyberpunk] {
+    color-scheme: dark;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=sunken],
+  :root [data-surface=sunken],
+  [data-theme=cyberpunk][data-surface=sunken],
+  [data-theme=cyberpunk] [data-surface=sunken] {
+    --app-bg-neutral-subtle: #000000;
+    --app-bg-neutral-subtle-hover: #08080a;
+    --app-bg-neutral-subtle-active: #000000;
+    --app-bg-selected-subtle: #230029;
+    --app-bg-surface-hover: #08080a;
+    --app-bg-surface-active: #000000;
+    --app-border-color: #1c1c23;
+    --app-border-color-subtle: #08080a;
+    --app-border-color-strong: #2d2d36;
+    --app-border-divider: #1c1c23;
+    --app-border-interactive: #1c1c23;
+  }
+  :root,
+  [data-theme=cyberpunk] {
+    color-scheme: dark;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=raised],
+  :root [data-surface=raised],
+  [data-theme=cyberpunk][data-surface=raised],
+  [data-theme=cyberpunk] [data-surface=raised] {
+    --app-bg-neutral-subtle: #080808;
+    --app-bg-neutral-subtle-hover: #49494d;
+    --app-bg-neutral-subtle-active: #27272a;
+    --app-bg-selected-subtle: #722d76;
+    --app-bg-surface-hover: #49494d;
+    --app-bg-surface-active: #27272a;
+    --app-border-color: #63636b;
+    --app-border-color-subtle: #49494d;
+    --app-border-color-strong: #787883;
+    --app-border-divider: #63636b;
+    --app-border-interactive: #63636b;
   }
 }
 @layer vendor-config {

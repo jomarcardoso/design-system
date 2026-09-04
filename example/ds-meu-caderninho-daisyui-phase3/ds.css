@@ -343,6 +343,78 @@
     --app-fg-action: #48240b;
     --app-border-action: #48240b;
   }
+  :root,
+  [data-theme=caderninho] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=surface],
+  :root [data-surface=surface],
+  [data-theme=caderninho][data-surface=surface],
+  [data-theme=caderninho] [data-surface=surface] {
+    --app-bg-neutral-subtle: #efeae2;
+    --app-bg-neutral-subtle-hover: #fdf9f1;
+    --app-bg-neutral-subtle-active: #efeae2;
+    --app-bg-action-subtle: #faede5;
+    --app-bg-action-subtle-hover: #faede5;
+    --app-bg-action-subtle-active: #faede5;
+    --app-bg-selected-subtle: #faede5;
+    --app-bg-surface-hover: #fdf9f1;
+    --app-bg-surface-active: #efeae2;
+    --app-border-color: #ddd6ce;
+    --app-border-color-subtle: #efeae2;
+    --app-border-color-strong: #b6aea6;
+    --app-border-divider: #ddd6ce;
+    --app-border-interactive: #ddd6ce;
+  }
+  :root,
+  [data-theme=caderninho] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=sunken],
+  :root [data-surface=sunken],
+  [data-theme=caderninho][data-surface=sunken],
+  [data-theme=caderninho] [data-surface=sunken] {
+    --app-bg-neutral-subtle: #dcd7cf;
+    --app-bg-neutral-subtle-hover: #eae6de;
+    --app-bg-neutral-subtle-active: #dcd7cf;
+    --app-bg-action-subtle: #e7dad2;
+    --app-bg-action-subtle-hover: #e7dad2;
+    --app-bg-action-subtle-active: #e7dad2;
+    --app-bg-selected-subtle: #e7dad2;
+    --app-bg-surface-hover: #eae6de;
+    --app-bg-surface-active: #dcd7cf;
+    --app-border-color: #cac4bc;
+    --app-border-color-subtle: #dcd7cf;
+    --app-border-color-strong: #a49c94;
+    --app-border-divider: #cac4bc;
+    --app-border-interactive: #cac4bc;
+  }
+  :root,
+  [data-theme=caderninho] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=raised],
+  :root [data-surface=raised],
+  [data-theme=caderninho][data-surface=raised],
+  [data-theme=caderninho] [data-surface=raised] {
+    --app-bg-neutral-subtle: #f5f0e8;
+    --app-bg-neutral-subtle-hover: #fffff7;
+    --app-bg-neutral-subtle-active: #f5f0e8;
+    --app-bg-action-subtle: #fff3ea;
+    --app-bg-action-subtle-hover: #fff3ea;
+    --app-bg-action-subtle-active: #fff3ea;
+    --app-bg-selected-subtle: #fff3ea;
+    --app-bg-surface-hover: #fffff7;
+    --app-bg-surface-active: #f5f0e8;
+    --app-border-color: #e2dcd4;
+    --app-border-color-subtle: #f5f0e8;
+    --app-border-color-strong: #bbb3ac;
+    --app-border-divider: #e2dcd4;
+    --app-border-interactive: #e2dcd4;
+  }
 }
 @layer vendor-config {
   :root,

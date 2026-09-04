@@ -379,7 +379,24 @@ $chip-fg-selected: #{core.ref('fg-selected')} !default;
 // on rung 3 needs the selected chip to keep an edge too, otherwise the outline
 // disappears at the moment of being chosen and the control stops looking like a
 // control. Such a product sets both, together.
-$chip-border-color-selected: transparent !default;
+// THE ACCENT EDGE IS THE FALLBACK WHEN THE WASH IS NOT AVAILABLE.
+//
+// It was `transparent`, on the argument that the washed fill is the mechanism
+// and a border beside it is a second one. That argument holds only while the
+// fill IS washed. A palette that declares `$accent-wash: false` routes the
+// subtle slots onto the neutral family, and a chip whose selected state is a
+// quiet neutral fill with no edge has lost the only thing tying it to the brand
+// — and, worse, sits one rung from its own resting state.
+//
+// `border-selected` costs nothing that the wash was paying: a LINE needs no
+// chroma headroom, so it survives every hue pairing, including the
+// near-complementary ones where a pale fill turns to mud. It is the cheapest
+// way to keep a selected state recognisably branded, and it is the same
+// reasoning as the 3px indicator bar on an active nav item.
+//
+// For a palette that CAN wash, this adds an accent edge around an accent fill,
+// which is one idea drawn twice rather than two mechanisms competing.
+$chip-border-color-selected: #{core.ref('border-selected')} !default;
 
 // THE OUTLINED CHIP, which is not a style but a CONTEXT.
 //

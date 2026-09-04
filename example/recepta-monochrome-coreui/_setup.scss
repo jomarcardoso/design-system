@@ -56,7 +56,26 @@
 // is what makes `accent` the emitted name rather than `action`.
 @forward '../../src/config' with (
   $adapters: (coreui),
-  $colour-strategy: 'monochrome'
+  $colour-strategy: 'monochrome',
+
+  // NO WASHED ACCENT, and it is the palette that decides rather than taste.
+  //
+  // `audit-wash` measures 165 degrees of hue between the pen and the paper.
+  // Past about 150 a pale patch of the accent stops reading as a tint of the
+  // surface and starts reading as a stain on it — a cold mark on warm paper —
+  // and no amount of chroma repairs that. The chroma itself is fine here, which
+  // is worth saying because it was the first thing suspected: the ramp is a real
+  // OKLCH ladder rather than a mix with white, so the pigment survives. What
+  // fails is distance.
+  //
+  // Cream and blue is a beautiful pairing and this is the form it takes: dark
+  // ink and solid fills, navy on a page. The accent lives at the solid step and
+  // at small indicators; every subtle slot routes to the neutral family.
+  //
+  // The alternative was measured and rejected: moving the pigment 15 degrees to
+  // 289 makes the wash viable and turns the pen into an indigo-violet. It looked
+  // good. It stopped being a ballpoint.
+  $accent-wash: false
 );
 
 // The type scale, GENERATED from a ratio rather than inherited.

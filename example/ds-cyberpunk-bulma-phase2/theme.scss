@@ -15,7 +15,9 @@
 //     carrying white text is unreadable; the pairing has to invert.
 // =============================================================================
 
+@use 'sass:map';
 @use '../../src/base';
+@use '../../src/wash';
 
 $cyberpunk: (
   // Surfaces — near-black, with a violet cast rather than neutral grey so the
@@ -55,7 +57,29 @@ $cyberpunk: (
   'on-action': base.color(cyan, 950),
   'action-hover': base.color(cyan, 300),
   'action-active': base.color(cyan, 200),
-  'action-subtle': base.color(cyan, 950),
+  // THE WASH IS ALPHA, AND THIS IS THE THEME WHERE THAT PAYS.
+  //
+  // It used to be `cyan 950` — one opaque near-black cyan, with no hover and no
+  // pressed state, so `_opt()` fell both back to the rest and the control did
+  // not react at all. `check-ladder` found that: "the state does not move".
+  //
+  // Two problems, one mechanism. `wash.states()` writes rest, hover and pressed
+  // from a single declaration, so a theme cannot ship a fill without its states.
+  // And alpha makes one value correct on THREE grounds: this theme has a page at
+  // zinc 950, a surface at zinc 900 and a sunken at pure black, and an opaque
+  // wash calibrated for any one of them is wrong on the other two. A translucent
+  // one mixes with whatever is actually beneath it, at paint time.
+  //
+  // The alpha is scaled up, which is the dark-theme rule rather than taste: the
+  // luminance gap between an accent and a dark ground is smaller than against a
+  // light one, so the same percentage reads much weaker. 1.5 to 2 times is the
+  // band; `wash.$dark-multiplier` holds 1.6.
+  //
+  // What this does NOT fix is chroma. Twelve percent of cyan over near-black has
+  // the same chroma with or without alpha — alpha buys belonging, not saturation.
+  // Here the pigment is neon and the ground is nearly colourless, so there is
+  // chroma to spare; on a warm-paper product with a cold pigment there would not
+  // be, and the answer there is `$accent-wash: false`.
   'action-text': base.color(cyan, 300),
 
   // Selected — magenta, the other half of the two-colour neon scheme.
@@ -111,3 +135,16 @@ $cyberpunk: (
   'info-text': base.color(sky, 300),
   'info-border': base.color(sky, 800)
 );
+
+// The washed action family, written as ALPHA and as three states at once.
+//
+// It is merged in afterwards rather than declared inline because Sass cannot
+// spread a map into sibling keys of a literal. That is a syntax limit, and the
+// shape it forces is the better one anyway: rest, hover and pressed arrive
+// together and correctly spaced, so a theme cannot declare a resting fill and
+// forget the two states that make the control react.
+//
+// The pigment is read back out of the map rather than written again here. Two
+// declarations of one colour is how a hover ends up a different blue from the
+// fill it belongs to, and the map already holds the authoritative one.
+$cyberpunk: map.merge($cyberpunk, wash.dark-states(map.get($cyberpunk, action), 'action'));

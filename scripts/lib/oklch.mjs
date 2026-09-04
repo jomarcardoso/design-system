@@ -80,7 +80,11 @@ export function contrast(a, b) {
   return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05);
 }
 
-// CSS colour text -> [r, g, b] in 0..1. Handles what Sass actually emits.
+// CSS colour text -> [r, g, b] in 0..1, plus the alpha when there is one.
+//
+// The alpha matters: an alpha WASH is a real mechanism here, and a checker that
+// drops it measures the solid pigment instead of the pale fill anyone will see.
+// `compositeOver()` is what turns it back into something measurable.
 export function parseColour(v) {
   const s = v.trim();
   let m = s.match(/^#([0-9a-f]{3,8})$/i);
@@ -91,10 +95,23 @@ export function parseColour(v) {
   }
   m = s.match(/^rgba?\(([^)]+)\)$/i);
   if (m) {
-    const parts = m[1].split(/[\s,/]+/).filter(Boolean).slice(0, 3);
-    return parts.map((p) => (p.endsWith('%') ? parseFloat(p) / 100 : parseFloat(p) / 255));
+    const all = m[1].split(/[\s,/]+/).filter(Boolean);
+    const rgb = all.slice(0, 3).map((p) => (p.endsWith('%') ? parseFloat(p) / 100 : parseFloat(p) / 255));
+    if (all.length > 3) {
+      rgb.alpha = all[3].endsWith('%') ? parseFloat(all[3]) / 100 : parseFloat(all[3]);
+    }
+    return rgb;
   }
   if (s.toLowerCase() === 'white') return [1, 1, 1];
   if (s.toLowerCase() === 'black') return [0, 0, 0];
   return null;
+}
+
+// Lay a translucent colour over an opaque one. Straight source-over in linear
+// light would be more correct physically; browsers composite in sRGB, so this
+// matches what a screen actually shows.
+export function compositeOver(fg, bg) {
+  const a = fg.alpha;
+  if (a == null || a >= 1) return fg;
+  return [0, 1, 2].map((i) => fg[i] * a + bg[i] * (1 - a));
 }

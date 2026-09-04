@@ -176,6 +176,78 @@
     --app-fg-action: #9f2d00;
     --app-border-action: #ca3500;
   }
+  :root,
+  [data-theme=hot-tone] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=surface],
+  :root [data-surface=surface],
+  [data-theme=hot-tone][data-surface=surface],
+  [data-theme=hot-tone] [data-surface=surface] {
+    --app-bg-neutral-subtle: #fff4db;
+    --app-bg-neutral-subtle-hover: #fff4db;
+    --app-bg-neutral-subtle-active: #ffddae;
+    --app-bg-action-subtle: #fffef4;
+    --app-bg-action-subtle-hover: #fffef4;
+    --app-bg-action-subtle-active: #fffef4;
+    --app-bg-selected-subtle: #ffeaec;
+    --app-bg-surface-hover: #fff4db;
+    --app-bg-surface-active: #ffddae;
+    --app-border-color: #eeebea;
+    --app-border-color-subtle: #fcfcfb;
+    --app-border-color-strong: #dddad7;
+    --app-border-divider: #eeebea;
+    --app-border-interactive: #eeebea;
+  }
+  :root,
+  [data-theme=hot-tone] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=sunken],
+  :root [data-surface=sunken],
+  [data-theme=hot-tone][data-surface=sunken],
+  [data-theme=hot-tone] [data-surface=sunken] {
+    --app-bg-neutral-subtle: #f7e4cc;
+    --app-bg-neutral-subtle-hover: #f7e4cc;
+    --app-bg-neutral-subtle-active: #f6ce9f;
+    --app-bg-action-subtle: #f7eee4;
+    --app-bg-action-subtle-hover: #f7eee4;
+    --app-bg-action-subtle-active: #f7eee4;
+    --app-bg-selected-subtle: #f6dbdd;
+    --app-bg-surface-hover: #f7e4cc;
+    --app-bg-surface-active: #f6ce9f;
+    --app-border-color: #dfdcdb;
+    --app-border-color-subtle: #ececec;
+    --app-border-color-strong: #cecbc8;
+    --app-border-divider: #dfdcdb;
+    --app-border-interactive: #dfdcdb;
+  }
+  :root,
+  [data-theme=hot-tone] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=raised],
+  :root [data-surface=raised],
+  [data-theme=hot-tone][data-surface=raised],
+  [data-theme=hot-tone] [data-surface=raised] {
+    --app-bg-neutral-subtle: #fff4db;
+    --app-bg-neutral-subtle-hover: #fff4db;
+    --app-bg-neutral-subtle-active: #ffddae;
+    --app-bg-action-subtle: #fffef4;
+    --app-bg-action-subtle-hover: #fffef4;
+    --app-bg-action-subtle-active: #fffef4;
+    --app-bg-selected-subtle: #ffeaec;
+    --app-bg-surface-hover: #fff4db;
+    --app-bg-surface-active: #ffddae;
+    --app-border-color: #eeebea;
+    --app-border-color-subtle: #fcfcfb;
+    --app-border-color-strong: #dddad7;
+    --app-border-divider: #eeebea;
+    --app-border-interactive: #eeebea;
+  }
 }
 @layer vendor-config {
   :root,

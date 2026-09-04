@@ -109,21 +109,6 @@
 
         <!-- THE LIBRARY'S OWN UNDERLINE-BORDER TAB, justified.
 
-         "Weight only" was the derived recommendation, it was built, and it
-         failed: the active tab differed by INK ALONE and the selection was hard
-         to find even with normal vision. That deviation is recorded in ds.scss
-         rather than quietly reversed.
-
-         This variant is not a custom tab — it is CoreUI's own, and it is the
-         row in claude-4.md's border table: a thin divider across the whole
-         track, which is decorative and belongs at rung 6, and a solid accent
-         MARK under the chosen tab, which is an indicator of state and not a
-         border. Two lines, two jobs, two tokens.
-
-         Justified because a notebook's tabs are equal-width index tabs cut into
-         the edge of the page, not a row of links. -->
-        <!-- THE LIBRARY'S OWN UNDERLINE-BORDER TAB, justified.
-
              "Weight only" was the derived recommendation, it was built, and it
              failed: the active tab differed by INK ALONE and the selection was
              hard to find even with normal vision. The deviation is recorded in
@@ -384,7 +369,22 @@
           uma superfície mais clara. Compare com a seção acima: o campo é
           idêntico, os marcadores não.</p>
 
-        <div class="card mt-3">
+        <!-- data-surface="surface" — THE MECHANISM, DECLARED ONCE PER CONTAINER.
+
+             Inside this card every rung from 3 to 8 is redeclared, shifted by the
+             exact lightness distance between the card and the page. The chips,
+             the field and the buttons below are the same tokens as the ones
+             further up the page and they are not the same colours, because a rung
+             is a distance from the surface rather than a property of the
+             component.
+
+             This attribute is the whole correction. Without it every one of those
+             elements would be wearing a fill calibrated against a ground it is
+             not on — which is what made the rail look flat while the cards looked
+             right, and what made it impossible to fix without editing each
+             component. Text is deliberately NOT redeclared: the two surfaces are
+             0.015 apart and the ink clears its floor on both. -->
+        <div class="card mt-3" data-surface="surface">
           <div class="card-body stack-loose">
             <div>
               <p class="text-body-tertiary small mb-2">Marcadores, contornados

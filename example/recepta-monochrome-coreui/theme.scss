@@ -218,7 +218,7 @@ $recepta: (
   'on-success': paper(0),
   'success-hover': base.color(green, 800),
   'success-active': base.color(green, 900),
-  'success-subtle': base.color(green, 50),
+  'success-subtle': base.color(green, 100),
   'success-text': base.color(green, 800),
   'success-border': base.color(green, 200),
 
@@ -229,7 +229,7 @@ $recepta: (
   'on-warning': base.color(amber, 950),
   'warning-hover': base.color(amber, 100),
   'warning-active': base.color(amber, 50),
-  'warning-subtle': base.color(amber, 50),
+  'warning-subtle': base.color(amber, 100),
   'warning-text': base.color(amber, 800),
   'warning-border': base.color(amber, 300),
 
@@ -237,7 +237,7 @@ $recepta: (
   'on-danger': paper(0),
   'danger-hover': base.color(red, 800),
   'danger-active': base.color(red, 900),
-  'danger-subtle': base.color(red, 50),
+  'danger-subtle': base.color(red, 100),
   'danger-text': base.color(red, 800),
   'danger-border': base.color(red, 200),
 
@@ -248,7 +248,7 @@ $recepta: (
   'on-info': paper(0),
   'info-hover': pen(800),
   'info-active': pen(900),
-  'info-subtle': pen(50),
+  'info-subtle': pen(100),
   'info-text': pen(700),
   'info-border': pen(200)
 );

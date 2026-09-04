@@ -216,6 +216,39 @@ $_brand: (
     $c: _alias($c, 'primary-border', 'selected-border');
   }
 
+  // THE WASH, ROUTED TO THE NEUTRAL FAMILY WHEN THE PALETTE CANNOT HOLD ONE.
+  //
+  // This runs AFTER the school aliases and overwrites what they produced, which
+  // is the correct order: the school says which family the wash belongs to, and
+  // this says whether that family can supply it at all.
+  //
+  // `map.merge` rather than `_alias`, because `_alias` refuses to overwrite a
+  // key that already exists — it exists to fill gaps. Here the key is present
+  // and wrong, and being polite about it was the first version's bug: nothing
+  // changed and the build reported success.
+  //
+  // Which slots move, and which deliberately do not:
+  //
+  //   subtle fills  ->  the neutral quiet fill and its states. Everything that
+  //                     was going to be a pale patch of accent.
+  //   border        ->  UNTOUCHED. A line needs no chroma headroom, so a neutral
+  //                     fill with an accent edge is still available and is the
+  //                     cheapest way to keep a selected state branded.
+  //   solid, text   ->  UNTOUCHED. Near-complementary pairs are at their best
+  //                     here; this is where the accent goes instead.
+  @if not config.$accent-wash {
+    $quiet: if(map.has-key($c, 'neutral-subtle'), map.get($c, 'neutral-subtle'), map.get($c, sunken));
+    $quiet-h: if(map.has-key($c, 'neutral-subtle-hover'), map.get($c, 'neutral-subtle-hover'), $quiet);
+    $quiet-a: if(map.has-key($c, 'neutral-subtle-active'), map.get($c, 'neutral-subtle-active'), $quiet-h);
+
+    $c: map.merge($c, (
+      'action-subtle': $quiet,
+      'action-subtle-hover': $quiet-h,
+      'action-subtle-active': $quiet-a,
+      'selected-subtle': $quiet
+    ));
+  }
+
   @return $c;
 }
 

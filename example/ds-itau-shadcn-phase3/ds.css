@@ -174,6 +174,75 @@
     --app-fg-link-hover: #000d3c;
     --app-fg-link-visited: #000524;
   }
+  :root,
+  [data-theme=itau] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=surface],
+  :root [data-surface=surface],
+  [data-theme=itau][data-surface=surface],
+  [data-theme=itau] [data-surface=surface] {
+    --app-bg-neutral-subtle: #f0f2f5;
+    --app-bg-neutral-subtle-hover: #feffff;
+    --app-bg-neutral-subtle-active: #f0f2f5;
+    --app-bg-action-subtle-hover: #f3f3fd;
+    --app-bg-action-subtle-active: #f3f3fd;
+    --app-bg-selected-subtle: #fffcf3;
+    --app-bg-surface-hover: #feffff;
+    --app-bg-surface-active: #f0f2f5;
+    --app-border-color: #dcdee0;
+    --app-border-color-subtle: #f0f2f5;
+    --app-border-color-strong: #686e7a;
+    --app-border-divider: #dcdee0;
+    --app-border-interactive: #dcdee0;
+  }
+  :root,
+  [data-theme=itau] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=sunken],
+  :root [data-surface=sunken],
+  [data-theme=itau][data-surface=sunken],
+  [data-theme=itau] [data-surface=sunken] {
+    --app-bg-neutral-subtle: #d6d8db;
+    --app-bg-neutral-subtle-hover: #e4e5e7;
+    --app-bg-neutral-subtle-active: #d6d8db;
+    --app-bg-action-subtle-hover: #d9d9e3;
+    --app-bg-action-subtle-active: #d9d9e3;
+    --app-bg-selected-subtle: #f2e4db;
+    --app-bg-surface-hover: #e4e5e7;
+    --app-bg-surface-active: #d6d8db;
+    --app-border-color: #c2c4c6;
+    --app-border-color-subtle: #d6d8db;
+    --app-border-color-strong: #525864;
+    --app-border-divider: #c2c4c6;
+    --app-border-interactive: #c2c4c6;
+  }
+  :root,
+  [data-theme=itau] {
+    color-scheme: light;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=raised],
+  :root [data-surface=raised],
+  [data-theme=itau][data-surface=raised],
+  [data-theme=itau] [data-surface=raised] {
+    --app-bg-neutral-subtle: #f0f2f5;
+    --app-bg-neutral-subtle-hover: #feffff;
+    --app-bg-neutral-subtle-active: #f0f2f5;
+    --app-bg-action-subtle-hover: #f3f3fd;
+    --app-bg-action-subtle-active: #f3f3fd;
+    --app-bg-selected-subtle: #fffcf3;
+    --app-bg-surface-hover: #feffff;
+    --app-bg-surface-active: #f0f2f5;
+    --app-border-color: #dcdee0;
+    --app-border-color-subtle: #f0f2f5;
+    --app-border-color-strong: #686e7a;
+    --app-border-divider: #dcdee0;
+    --app-border-interactive: #dcdee0;
+  }
 }
 @layer ds.semantic {
   [data-surface=brand] {

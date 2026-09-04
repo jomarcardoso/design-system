@@ -108,6 +108,19 @@ for (const [name, g] of grounds) {
 }
 
 const dh = hueDistance(accent.h, page.h);
+
+// IS THE WASH EVEN AN ACCENT WASH?
+//
+// `$accent-wash: false` routes every subtle slot onto the neutral family, so
+// what comes back under `bg-accent-subtle` is a quiet neutral fill. Measured
+// naively that reads as a catastrophic chroma failure — it has the paper's own
+// chroma, which is the whole point — and the audit spent one run reporting a
+// deliberate decision as a defect.
+//
+// The signature is unambiguous: the wash shares the PAPER's hue while the accent
+// does not. No palette produces that by accident.
+const neutralWash =
+  wash != null && hueDistance(wash.h, page.h) < 20 && hueDistance(accent.h, page.h) > 20;
 const band =
   dh <= 30 ? 'same family — a wash works easily, and the risk is blandness'
   : dh <= 90 ? 'adjacent — the safest pairing. Wash and solid both work'
@@ -121,7 +134,7 @@ console.log(`                ${band}`);
 const findings = [];
 
 for (const [name, g] of grounds) {
-  if (!wash) continue;
+  if (!wash || neutralWash) continue;
   const floor = g.C * 3;
   const ceiling = maxChroma(wash.L, accent.h);
   const ok = wash.C >= floor;
@@ -135,7 +148,7 @@ for (const [name, g] of grounds) {
   if (ceiling < floor) findings.push({ kind: 'gamut', name, need: floor, ceiling, L: wash.L });
 }
 
-if (ink && wash) {
+if (ink && wash && !neutralWash) {
   const c = contrast(ink.rgb, wash.rgb);
   console.log(
     `\n  ${bold('accent ink on the wash')}  ${f(c, 2)}:1  ${dim('needs ≥ 4.5 — the most forgotten pair in the school')}` +
@@ -158,10 +171,14 @@ const inkViable = !findings.some((x) => x.kind === 'ink');
 console.log(`\n${bold('Capability')}`);
 console.log(`  solid fill      ${solidViable ? 'available' : bold('unavailable')}`);
 console.log(`  accent ink      ${inkViable ? 'available' : bold('unavailable')}`);
-console.log(`  washed accent   ${washViable ? 'available' : bold('unavailable')}`);
+console.log(
+    neutralWash
+      ? `  washed accent   ${bold('routed to neutral')}   ${dim('the palette declared $accent-wash: false')}`
+      : `  washed accent   ${washViable ? 'available' : bold('unavailable')}`
+  );
 console.log(`  outlined        available   ${dim('a border in the accent needs no chroma headroom')}`);
 
-if (!washViable) {
+if (!washViable && !neutralWash) {
   // WHICH TEST FAILED decides which remedies are honest, and the first version
   // of this block printed all three every time. On the palette that prompted it,
   // chroma passed on both grounds and only the hue distance failed — so it
@@ -272,7 +289,7 @@ if (uses.length) {
 
 if (gate) {
   const fatal = [...findings];
-  if (!washViable && uses.length) {
+  if (!washViable && !neutralWash && uses.length) {
     fatal.push({ kind: 'used-anyway' });
     console.log(
       `\n  ${bold('A wash this palette cannot support is being painted.')}\n` +

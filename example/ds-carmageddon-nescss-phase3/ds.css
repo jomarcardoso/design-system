@@ -2566,6 +2566,78 @@
     --app-fg-action: #ff6467;
     --app-border-action: #fb2c36;
   }
+  :root,
+  [data-theme=carmageddon] {
+    color-scheme: dark;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=surface],
+  :root [data-surface=surface],
+  [data-theme=carmageddon][data-surface=surface],
+  [data-theme=carmageddon] [data-surface=surface] {
+    --app-bg-neutral-subtle: #010101;
+    --app-bg-neutral-subtle-hover: #3b3635;
+    --app-bg-neutral-subtle-active: #1b1918;
+    --app-bg-action-subtle: #5b1d1a;
+    --app-bg-action-subtle-hover: #5b1d1a;
+    --app-bg-action-subtle-active: #5b1d1a;
+    --app-bg-selected-subtle: #582517;
+    --app-bg-surface-hover: #3b3635;
+    --app-bg-surface-active: #1b1918;
+    --app-border-color: #6b6660;
+    --app-border-color-subtle: #57524e;
+    --app-border-color-strong: #bcb5b1;
+    --app-border-divider: #6b6660;
+    --app-border-interactive: #6b6660;
+  }
+  :root,
+  [data-theme=carmageddon] {
+    color-scheme: dark;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=sunken],
+  :root [data-surface=sunken],
+  [data-theme=carmageddon][data-surface=sunken],
+  [data-theme=carmageddon] [data-surface=sunken] {
+    --app-bg-neutral-subtle: #000000;
+    --app-bg-neutral-subtle-hover: #080505;
+    --app-bg-neutral-subtle-active: #000000;
+    --app-bg-action-subtle: #1b0000;
+    --app-bg-action-subtle-hover: #1b0000;
+    --app-bg-action-subtle-active: #1b0000;
+    --app-bg-selected-subtle: #1b0000;
+    --app-bg-surface-hover: #080505;
+    --app-bg-surface-active: #000000;
+    --app-border-color: #302c27;
+    --app-border-color-subtle: #1f1b17;
+    --app-border-color-strong: #7a746f;
+    --app-border-divider: #302c27;
+    --app-border-interactive: #302c27;
+  }
+  :root,
+  [data-theme=carmageddon] {
+    color-scheme: dark;
+    accent-color: var(--app-bg-selected);
+  }
+  :root[data-surface=raised],
+  :root [data-surface=raised],
+  [data-theme=carmageddon][data-surface=raised],
+  [data-theme=carmageddon] [data-surface=raised] {
+    --app-bg-neutral-subtle: #060606;
+    --app-bg-neutral-subtle-hover: #484342;
+    --app-bg-neutral-subtle-active: #282524;
+    --app-bg-action-subtle: #6b2b27;
+    --app-bg-action-subtle-hover: #6b2b27;
+    --app-bg-action-subtle-active: #6b2b27;
+    --app-bg-selected-subtle: #683325;
+    --app-bg-surface-hover: #484342;
+    --app-bg-surface-active: #282524;
+    --app-border-color: #7a756f;
+    --app-border-color-subtle: #66615c;
+    --app-border-color-strong: #cdc6c1;
+    --app-border-divider: #7a756f;
+    --app-border-interactive: #7a756f;
+  }
 }
 @layer vendor-config {
   body {

@@ -64,8 +64,10 @@
 // idea, and keeping it is precisely why the daisyUI adapter is thirty lines.
 // =============================================================================
 
+@use 'sass:color';
 @use 'sass:math';
 @use 'sass:list';
+@use 'sass:meta';
 @use 'sass:map';
 @use 'base';
 @use 'core';
@@ -831,6 +833,37 @@ $_contrast-pairs: (
 
 // Public: `emit-theme()` calls it, and it is also usable standalone to measure
 // a theme map without emitting it.
+// -----------------------------------------------------------------------------
+// THE RUNGS A SURFACE CONTEXT MOVES
+// -----------------------------------------------------------------------------
+//
+// Rungs 3 to 8 — everything whose job is defined by its distance from the ground
+// it sits on. The list is explicit rather than pattern-matched because the
+// distinction it encodes is a design decision, and a regex would quietly pick up
+// the next token somebody adds. Notably absent: every `fg-*`, every solid fill,
+// and `bg-page` / `bg-surface` themselves, which ARE the grounds.
+$_shifts: (
+  'bg-neutral-subtle', 'bg-neutral-subtle-hover', 'bg-neutral-subtle-active',
+  'bg-action-subtle', 'bg-action-subtle-hover', 'bg-action-subtle-active',
+  'bg-selected-subtle',
+  'bg-surface-hover', 'bg-surface-active',
+  'border-color', 'border-color-subtle', 'border-color-strong',
+  'border-divider', 'border-interactive'
+);
+
+@function _lightness($c) {
+  @return math.div(color.channel(color.to-space($c, oklch), 'lightness', $space: oklch), 100%);
+}
+
+// Move a colour by a lightness delta, keeping hue and chroma. The clamp is not
+// defensive tidiness: a fill already near white shifted up would leave the
+// gamut, and Sass would hand back something silently clipped rather than error.
+@function _shift($c, $delta) {
+  $l: _lightness($c) + $delta;
+  $l: math.max(0, math.min(1, $l));
+  @return color.change(color.to-space($c, oklch), $lightness: $l * 100%, $space: oklch);
+}
+
 @mixin check-contrast($name, $choices) {
   @each $pair in $_contrast-pairs {
     $bg-key: list.nth($pair, 1);
@@ -839,7 +872,33 @@ $_contrast-pairs: (
     $fg: map.get($choices, $fg-key);
 
     @if $bg != null and $fg != null {
-      $ratio: base.contrast($fg, $bg);
+      // A TRANSLUCENT FILL IS COMPOSITED OVER THE PAGE BEFORE MEASURING.
+      //
+      // An alpha wash exists precisely so that its final colour depends on what
+      // is beneath it, which is the one thing a build cannot know. Measured raw,
+      // `rgb(0 210 255 / 13%)` looks like a near-transparent cyan and the ratio
+      // comes back at 1.25:1 — a failure that would never appear on screen.
+      //
+      // The page is the honest stand-in. It is the theme's own default ground,
+      // it is where most of these fills actually land, and using it means the
+      // gate keeps measuring something real rather than being switched off for
+      // the whole family.
+      //
+      // What it does NOT cover: the same fill inside a card, a modal or a
+      // coloured band. Those grounds differ, and on a light theme they differ in
+      // the SAFE direction — a lighter ground makes a dark ink more legible, not
+      // less. On a dark theme the raised surfaces are lighter, so the worst case
+      // is the page again. `audit-contrast` opens the real page and reads
+      // composited values, which is what covers the rest.
+      $solid-bg: $bg;
+      $a: color.channel($bg, 'alpha');
+      @if $a < 1 {
+        $ground: map.get($choices, page);
+        @if $ground != null {
+          $solid-bg: color.mix(color.change($bg, $alpha: 1), $ground, math.percentage($a), $method: oklab);
+        }
+      }
+      $ratio: base.contrast($fg, $solid-bg);
 
       // One threshold, and it ERRORS. The old ladder warned between 3.0 and
       // 4.5 on the grounds that large text may legitimately sit there — true,
@@ -1029,6 +1088,76 @@ $_contrast-pairs: (
       &[data-surface="base"],
       [data-surface="base"] {
         @include core.emit($base-set);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // SURFACE CONTEXTS — the rungs move with the ground they sit on
+    // -------------------------------------------------------------------------
+    //
+    // THE BUG THIS EXISTS TO END, in one sentence: a rung is a DISTANCE FROM THE
+    // SURFACE, not a property of the component. `bg-neutral-subtle` is calibrated
+    // against the page, so inside a card — a different ground — the same token is
+    // a different distance, and the same chip that looks right in one place looks
+    // flat in the other. The symptom is unmistakable once you know it: everything
+    // inside cards works and everything on the page looks washed out.
+    //
+    // Fixing that per component is how a design system dies. There is one
+    // arithmetic answer and it belongs here: every rung shifts by the SAME ΔL
+    // that separates the two surfaces. If the sunken panel is 0.05 of lightness
+    // below the page, then every fill, every state and every line inside it moves
+    // 0.05 too, and the distances the theme chose are preserved exactly.
+    //
+    // WHAT MOVES AND WHAT DOES NOT, and the asymmetry is the important part:
+    //
+    //   rungs 3–8 move.   Component fills, their states, dividers, borders.
+    //                     These are defined by their distance from the ground.
+    //   rungs 9–12 do NOT. Solid fills and text. Adjacent surfaces sit ΔL 0.02–
+    //                     0.04 apart and the text rungs clear their contrast
+    //                     floor on both with room, so shifting them would be
+    //                     work for nothing and a source of bugs. A region that
+    //                     wants quieter text does not get a weaker `fg-default`;
+    //                     it chooses `fg-muted`, which is a different ROLE. That
+    //                     distinction is worth holding: a surface context is
+    //                     automatic and derived, a choice of role is composition
+    //                     and is recorded.
+    //
+    // A TRANSLUCENT FILL IS SKIPPED, because it has already solved this problem
+    // by itself — an alpha wash mixes with whatever is beneath it at paint time,
+    // which is the entire reason `src/_wash.scss` exists. Shifting it as well
+    // would apply the correction twice.
+    // `surface` is in this list and is the MOST important entry, because it is
+    // the card — and "everything inside cards works and everything on the page
+    // looks flat" is the exact sentence that started this. A theme calibrates its
+    // rungs against the page; a card is a different ground, so inside one every
+    // rung has to move by the distance between them or the chip that looked right
+    // on the page looks wrong here. It shifts UP in an elevated model and DOWN in
+    // a recessed one, and neither is special-cased: the delta carries the sign.
+    @each $surface in (surface, sunken, raised) {
+      $ground: map.get($choices, $surface);
+      $page-bg: map.get($choices, page);
+
+      @if $ground != null and $page-bg != null {
+        $delta: _lightness($ground) - _lightness($page-bg);
+
+        // Below this the two surfaces are not really different planes and the
+        // shift is noise — a rounding error emitted as thirteen declarations.
+        @if math.abs($delta) >= 0.01 {
+          $shifted: ();
+          @each $key in $_shifts {
+            $v: map.get($resolved, $key);
+            @if $v != null and meta.type-of($v) == color and color.channel($v, 'alpha') >= 1 {
+              $shifted: map.merge($shifted, ($key: _shift($v, $delta)));
+            }
+          }
+
+          @include core.theme($name, $default, $scheme) {
+            &[data-surface="#{$surface}"],
+            [data-surface="#{$surface}"] {
+              @include core.emit($shifted);
+            }
+          }
+        }
       }
     }
   }

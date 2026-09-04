@@ -23,6 +23,93 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### Rungs move with the surface they sit on
+
+`emit-theme()` now emits a context per surface — `[data-surface="surface"]`,
+`"sunken"`, `"raised"` — that redeclares every rung from 3 to 8, shifted by the
+exact lightness distance between that surface and the page.
+
+This is the fix for the sentence that started it: *everything inside cards works
+and everything on the page looks flat*. A rung is a DISTANCE FROM THE SURFACE,
+not a property of the component, so a fill calibrated against the page is a
+different distance inside a card, and the same chip is right in one place and
+invisible in the other. One attribute on the container corrects every token
+inside it.
+
+Rungs 9 to 12 deliberately do NOT move. Adjacent surfaces sit 0.02–0.04 apart in
+lightness and the text rungs clear their floor on both, so shifting them would be
+work for nothing. A region that wants quieter text does not get a weaker
+`fg-default`; it chooses `fg-muted`, which is a different ROLE — a surface
+context is automatic and derived, a choice of role is composition and is
+recorded.
+
+### `src/_wash.scss` — a washed fill that mixes with what is under it
+
+A wash built by mixing with white carries white. On cream paper that reads as a
+cold patch rather than as a tint of the page. An ALPHA fill mixes with whatever
+is actually beneath it, at paint time, so one value is correct on the page, in a
+card, in a modal and on a coloured band.
+
+`wash.states()` writes rest, hover and pressed from one declaration, which also
+closes a failure the new `check-ladder` found in four themes: a theme that
+declares a subtle fill and no states gets both from `_opt()`'s fallback, and the
+control does not react at all.
+
+Alpha fixes BELONGING, not saturation — 12% of a blue over cream has the same low
+chroma either way. `$accent-wash` is the other half.
+
+`check-contrast()` now composites a translucent fill over the page before
+measuring, so the gate keeps working on alpha fills instead of reporting 1.25:1
+on something nobody will ever see at that value.
+
+### `$accent-wash: false` — for palettes that cannot have one
+
+A near-complementary pigment and neutral cannot produce a washed accent that
+reads as colour. Setting this routes every subtle SLOT of the accent family onto
+the neutral family, so a selected chip, an active nav item and an outlined
+button's hover all take a quiet neutral fill — while the accent stays where such
+a pairing has always been good: solid fills, dark ink, and small indicators.
+
+One switch rather than a decision per component, because the alternative is four
+people each answering it differently in their own component.
+
+The accent BORDER is untouched: a line needs no chroma headroom, so a neutral
+fill with an accent edge survives every hue pairing and is the cheapest way to
+keep a selected state branded. `$chip-border-color-selected` now defaults to it.
+
+### `check-ladder` — the two measurements
+
+For every subtle fill a theme emits, against every surface it might sit on:
+
+- ΔL against the ground. Under 0.02 the tone does nothing; 0.02–0.04 it is trying
+  and failing and needs a border or another rung.
+- Chroma against the neutral beneath. Under 3× is the effect people call water.
+
+A fill that clears the chroma rule is exempt from the lightness rule — it
+separates by hue, and demanding both is asking for a second mechanism to do a job
+the first already did. That exemption was learned from the check flagging every
+status background in the repository.
+
+Three more false positives shaped it, and all three were the check being wrong in
+the dangerous direction, which is toward MORE findings: surfaces measured with a
+fill's band, states measured against the ground instead of against their own
+resting fill, and white flagged for having no chroma.
+
+It gates the reference product and reports on the rest, where it currently finds
+83 real problems across six themes.
+
+### To upgrade
+
+`$accent-wash` is new in `src/_config.scss` and defaults to `true`, so nothing
+changes unless a product sets it. Run `node scripts/audit-wash.mjs <dir>` to find
+out whether your palette should.
+
+`$chip-border-color-selected` changed default from `transparent` to
+`border-selected`. A product that wants no edge on a selected chip sets it back.
+
+Surface contexts are additive — a product that never writes `data-surface` sees
+no change.
+
 ### The two guards that ask where a value came from
 
 `check-derived` and `check-coverage` are new, and neither moves a byte. They
