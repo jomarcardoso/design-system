@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="pt-BR" data-theme="light">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Recepta — caderno de receitas</title>
 
-<!--
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recepta — caderno de receitas</title>
+
+  <!--
   example/recepta-monochrome-coreui/index.html
 
   Run `npm run demo:examples`, then open with a TRAILING SLASH:
@@ -20,237 +21,496 @@
   interface can read through weight, shape and space with one colour on it. If
   that is true, this page is legible with a single blue on it and nothing else.
 -->
-<link rel="stylesheet" href="./app.css">
+  <link rel="stylesheet" href="./app.css">
 </head>
+
 <body>
 
-<header>
-  <nav class="navbar border-bottom">
-    <div class="sheet d-flex align-items-center justify-content-between w-100">
-      <span class="navbar-brand mb-0">Recepta</span>
-      <button class="btn btn-secondary btn-sm" type="button">Entrar</button>
-    </div>
-  </nav>
-</header>
+  <header>
+    <nav class="navbar border-bottom">
+      <div
+        class="sheet d-flex align-items-center justify-content-between w-100">
+        <span class="navbar-brand mb-0">Recepta</span>
+        <button class="btn btn-secondary btn-sm" type="button">Entrar</button>
+      </div>
+    </nav>
+  </header>
 
-<div class="frame" style="padding-block: var(--app-space-2xl)">
-<main style="min-inline-size: 0">
+  <div class="frame" style="padding-block: var(--app-space-2xl)">
 
-  <!-- ─── The recipe ───────────────────────────────────────────────────── -->
-  <article class="section">
-    <p class="mb-1"><span class="badge bg-body-secondary">Bolos</span>
-      <span class="badge bg-body-secondary">1 h 20</span>
-      <span class="badge bg-body-secondary">8 porções</span></p>
-
-    <h1>Bolo de fubá da vó Terezinha</h1>
-
-    <p class="mb-1">Aquele que ela fazia no domingo de manhã e o cheiro subia
-      antes de qualquer um acordar. Fica com a casquinha por cima se você
-      resistir a abrir o forno.</p>
-
-    <p class="muted mb-1">Passada por Terezinha Alves, em 1998. Copiada do
-      caderno de capa dura que ficava em cima da geladeira.</p>
-
-    <p class="subtlest mb-0">Editada pela última vez há 3 dias · 214 preparos</p>
-
-    <hr class="rule">
-
-    <nav class="nav nav-tabs" aria-label="Seções da receita">
-      <a class="nav-link active" href="#ingredientes" aria-current="page">Ingredientes</a>
-      <a class="nav-link" href="#preparo">Modo de preparo</a>
-      <a class="nav-link" href="#notas">Notas</a>
+    <!-- THE RAIL — persistent navigation on one edge, which makes this an
+     application frame rather than content-with-an-aside.
+     It spends NO rung. A nav is already distinguishable by position, density
+     and typography, so giving it a tone of its own would spend the third rung
+     on an element that did not need it — and rung three belongs to the quiet
+     fill every badge, chip and resting secondary action is made of. A hairline
+     does the whole job. -->
+    <nav class="rail" aria-label="Seções do caderno">
+      <a class="rail-link active" href="#" aria-current="page">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2" />
+        </svg>
+        O caderno
+      </a>
+      <a class="rail-link" href="#">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m21 21-4.34-4.34" />
+          <circle cx="11" cy="11" r="8" />
+        </svg>
+        Explorar
+      </a>
+      <a class="rail-link" href="#">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path
+            d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+          <path d="m15 5 4 4" />
+        </svg>
+        Escrever
+      </a>
+      <a class="rail-link" href="#">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 6h18" />
+          <path d="M7 12h10" />
+          <path d="M10 18h4" />
+        </svg>
+        Lista de compras
+      </a>
     </nav>
 
-    <!-- ─── Ingredients ────────────────────────────────────────────────── -->
-    <section id="ingredientes" class="section">
-      <h2>Ingredientes</h2>
+    <main style="min-inline-size: 0">
 
-      <div class="card">
-        <div class="card-body stack quantities">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="i1" checked>
-            <label class="form-check-label" for="i1">3 xícaras de fubá</label>
+      <!-- ─── The recipe ───────────────────────────────────────────────────── -->
+      <article class="section">
+        <p class="mb-1"><span class="badge bg-body-secondary">Bolos</span>
+          <span class="badge bg-body-secondary">1 h 20</span>
+          <span class="badge bg-body-secondary">8 porções</span>
+        </p>
+
+        <h1>Bolo de fubá da vó Terezinha</h1>
+
+        <p class="mb-1">Aquele que ela fazia no domingo de manhã e o cheiro
+          subia
+          antes de qualquer um acordar. Fica com a casquinha por cima se você
+          resistir a abrir o forno.</p>
+
+        <p class="muted mb-1">Passada por Terezinha Alves, em 1998. Copiada do
+          caderno de capa dura que ficava em cima da geladeira.</p>
+
+        <p class="text-body-tertiary small mb-0">Editada pela última vez há 3
+          dias · 214 preparos</p>
+
+        <hr>
+
+        <!-- THE LIBRARY'S OWN UNDERLINE-BORDER TAB, justified.
+
+         "Weight only" was the derived recommendation, it was built, and it
+         failed: the active tab differed by INK ALONE and the selection was hard
+         to find even with normal vision. That deviation is recorded in ds.scss
+         rather than quietly reversed.
+
+         This variant is not a custom tab — it is CoreUI's own, and it is the
+         row in claude-4.md's border table: a thin divider across the whole
+         track, which is decorative and belongs at rung 6, and a solid accent
+         MARK under the chosen tab, which is an indicator of state and not a
+         border. Two lines, two jobs, two tokens.
+
+         Justified because a notebook's tabs are equal-width index tabs cut into
+         the edge of the page, not a row of links. -->
+        <!-- THE LIBRARY'S OWN UNDERLINE-BORDER TAB, justified.
+
+             "Weight only" was the derived recommendation, it was built, and it
+             failed: the active tab differed by INK ALONE and the selection was
+             hard to find even with normal vision. The deviation is recorded in
+             ds.scss rather than quietly reversed.
+
+             This variant is not a custom tab — it is CoreUI's own, and it is
+             the row in claude-4.md's border table: a thin divider across the
+             whole TRACK, decorative and at rung 6, and a solid accent MARK
+             under the chosen tab, which is an indicator of state and not a
+             border. Two lines, two jobs, two tokens.
+
+             Justified because a notebook's tabs are equal-width index tabs cut
+             into the edge of the page, not a row of links. -->
+        <nav class="nav nav-underline-border nav-justified"
+          aria-label="Seções da receita">
+          <a class="nav-link active" href="#ingredientes"
+            aria-current="page">Ingredientes</a>
+          <a class="nav-link" href="#preparo">Modo de preparo</a>
+          <a class="nav-link" href="#notas">Notas</a>
+        </nav>
+
+        <!-- ─── Ingredients ────────────────────────────────────────────────── -->
+        <section id="ingredientes" class="section">
+          <h2>Ingredientes</h2>
+
+          <div class="card">
+            <div class="card-body stack quantities">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="i1" checked>
+                <label class="form-check-label" for="i1">3 xícaras de
+                  fubá</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="i2">
+                <label class="form-check-label" for="i2">2 xícaras de
+                  açúcar</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="i3">
+                <label class="form-check-label" for="i3">4 ovos, em temperatura
+                  ambiente</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="i4">
+                <label class="form-check-label" for="i4">1 xícara de
+                  leite</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="i5">
+                <label class="form-check-label" for="i5">1 colher de sopa de
+                  fermento em pó</label>
+              </div>
+            </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="i2">
-            <label class="form-check-label" for="i2">2 xícaras de açúcar</label>
+
+          <!-- A PLAIN CARD, and it carried the recessed utility until this
+               pass. Two things were wrong with that. The ledger's own
+               composition lists two surfaces, and a recessed card was quietly a
+               third. And excavation is now spent where claude-5.md says it
+               belongs — "quase sempre um nível só, e é local", meaning a field —
+               so a recessed card and a textarea would have been the same tone,
+               and a reader would have had to work out which of the two was
+               typeable.
+
+               What marks this block as a different KIND of thing is not a tone:
+               it is the handwriting face, which nothing else on the page
+               uses. -->
+          <div class="card">
+            <div class="card-body">
+              <h3 class="card-title">Da cozinha dela</h3>
+              <p class="hand text-body-secondary mb-1">Peneire o fubá antes.</p>
+              <p class="card-text muted mb-0">Ela dizia que era frescura, e
+                fazia
+                sempre.</p>
+            </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="i3">
-            <label class="form-check-label" for="i3">4 ovos, em temperatura ambiente</label>
+        </section>
+
+        <!-- ─── Method ─────────────────────────────────────────────────────── -->
+        <section id="preparo" class="section">
+          <h2>Modo de preparo</h2>
+
+          <ol class="stack-loose ps-4 mb-0">
+            <li>Bata os ovos com o açúcar até clarear. Não tenha pressa aqui —
+              é o que deixa o bolo leve.</li>
+            <li>Acrescente o leite e o fubá aos poucos, alternando, sem parar
+              de bater.</li>
+            <li>Por último o fermento, misturado com uma colher e nada mais.
+              <button class="btn btn-link btn-sm with-icon" type="button"><svg
+                  class="icon " viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true">
+                  <path
+                    d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" />
+                  <path d="m15 5 4 4" />
+                </svg>Editar passo</button>
+            </li>
+            <li>Forno médio, 40 minutos. Espete um palito no centro: sai limpo,
+              está pronto.</li>
+          </ol>
+        </section>
+
+        <!-- ─── Notes ──────────────────────────────────────────────────────── -->
+        <section id="notas" class="section">
+          <h2>Notas</h2>
+
+          <div class="card">
+            <div class="card-body">
+              <label class="form-label" for="nota">Sua anotação</label>
+              <p class="text-body-tertiary small mb-2">Só você vê o que escrever
+                aqui.</p>
+              <textarea class="form-control" id="nota"
+                rows="3">Fiz com metade do açúcar e ficou melhor. Da próxima, forma de buraco.</textarea>
+            </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="i4">
-            <label class="form-check-label" for="i4">1 xícara de leite</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="i5">
-            <label class="form-check-label" for="i5">1 colher de sopa de fermento em pó</label>
-          </div>
+        </section>
+
+        <hr>
+
+        <div class="d-flex flex-wrap gap-2 align-items-center">
+          <button class="btn btn-primary with-icon" type="button"><svg
+              class="icon " viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" aria-hidden="true">
+              <path
+                d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" />
+            </svg>Guarde a receita</button>
+          <!-- THE THREE RANKS, side by side on purpose, and each is a different
+               TREATMENT of one pigment rather than a different hue:
+
+                 solid accent    an INVITATION — one per viewport
+                 filled rung 3   supporting; ordinary dark ink, not inverted
+                 ghost           available, and not being suggested
+
+               The secondary was a small dark button until this pass, because
+               nothing at layer 3 named it and the adapter generated it from the
+               neutral ROLE — which is the one solid neutral, rung 9. A
+               supporting action rests on rung 3. -->
+          <button class="btn btn-secondary" type="button">Cancelar</button>
+          <button class="btn btn-ghost" type="button">Imprimir</button>
+          <!-- GHOST, in the danger ink — and it was OUTLINED for one build,
+               which is the thing being fixed.
+
+               claude-4.md: "ter secundário preenchido E contornado na mesma
+               tela cria um quarto nível de hierarquia que ninguém pediu."
+               An outlined delete beside a filled secondary produced exactly
+               that. An outline is not a rank of its own — it is the SAME rank
+               as the filled secondary reached by another mechanism, and a
+               product picks one of the two and stays with it. This one is
+               filled, so nothing here is outlined.
+
+               Destructive goes back to being what it is: an INTENT laid over a
+               rank, never a rank. Here the delete is tertiary — it is not what
+               the screen is for, it sits pushed to the far edge, and there is a
+               confirmation in front of it. Tertiary means ghost, and ghost in
+               the danger ink is still ghost.
+
+               In the modal the same action is the primary and takes the solid
+               fill, because rank is a property of the screen and not of the
+               verb. -->
+          <button class="btn btn-ghost-danger btn-sm ms-auto"
+            type="button">Apagar</button>
         </div>
-      </div>
+      </article>
 
-      <div class="card bg-body-tertiary">
-        <div class="card-body">
-          <h3 class="card-title">Da cozinha dela</h3>
-          <p class="hand mb-1">Peneire o fubá antes.</p>
-          <p class="card-text muted mb-0">Ela dizia que era frescura, e fazia
-            sempre.</p>
+      <!-- ─── The notebook ─────────────────────────────────────────────────── -->
+      <section class="section">
+        <h2>No seu caderno</h2>
+
+        <!-- CHIPS, and they are not the badges at the top of the page. A badge is a
+         count and a tag is a label the content carries; a chip is a CHOICE the
+         user makes and unmakes, which is why it is the only one of the three
+         that is interactive and the only one that may take the accent when
+         selected.
+         No border in the default case — the tone does the work. The bordered
+         case is below, inside the sunken panel. -->
+        <div class="d-flex flex-wrap gap-2 mb-3" role="group"
+          aria-label="Filtrar por marcador">
+          <button class="chip chip-clickable active" type="button"
+            aria-pressed="true">Bolos</button>
+          <button class="chip chip-clickable" type="button"
+            aria-pressed="false">Salgados</button>
+          <button class="chip chip-clickable" type="button"
+            aria-pressed="false">Da vó</button>
+          <button class="chip chip-clickable" type="button"
+            aria-pressed="false">Rápidas</button>
         </div>
-      </div>
-    </section>
 
-    <!-- ─── Method ─────────────────────────────────────────────────────── -->
-    <section id="preparo" class="section">
-      <h2>Modo de preparo</h2>
-
-      <ol class="stack-loose ps-4 mb-0">
-        <li>Bata os ovos com o açúcar até clarear. Não tenha pressa aqui —
-          é o que deixa o bolo leve.</li>
-        <li>Acrescente o leite e o fubá aos poucos, alternando, sem parar
-          de bater.</li>
-        <li>Por último o fermento, misturado com uma colher e nada mais.
-          <button class="btn btn-link btn-sm with-icon" type="button"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z" /> <path d="m15 5 4 4" /></svg>Editar passo</button></li>
-        <li>Forno médio, 40 minutos. Espete um palito no centro: sai limpo,
-          está pronto.</li>
-      </ol>
-    </section>
-
-    <!-- ─── Notes ──────────────────────────────────────────────────────── -->
-    <section id="notas" class="section">
-      <h2>Notas</h2>
-
-      <div class="card">
-        <div class="card-body">
-          <label class="form-label" for="nota">Sua anotação</label>
-          <p class="subtlest mb-2">Só você vê o que escrever aqui.</p>
-          <textarea class="form-control" id="nota" rows="3">Fiz com metade do açúcar e ficou melhor. Da próxima, forma de buraco.</textarea>
-        </div>
-      </div>
-    </section>
-
-    <hr class="rule">
-
-    <div class="d-flex flex-wrap gap-2 align-items-center">
-      <button class="btn btn-primary with-icon" type="button"><svg class="icon " viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" /></svg>Guarde a receita</button>
-      <button class="btn btn-secondary" type="button">Cancelar</button>
-      <button class="btn btn-danger btn-sm ms-auto" type="button">Apagar</button>
-    </div>
-  </article>
-
-  <!-- ─── The notebook ─────────────────────────────────────────────────── -->
-  <section class="section">
-    <h2>No seu caderno</h2>
-
-    <div class="row g-3 mt-0">
-      <div class="col-12 col-md-6">
-        <div class="card h-100">
-          <!-- The image is the content, so it comes first and the box is
+        <div class="row g-3 mt-0">
+          <div class="col-12 col-md-6">
+            <div class="card h-100">
+              <!-- The image is the content, so it comes first and the box is
                reserved before it loads. -->
-          <div class="photo">
-            <img src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22500%22%3E%3Crect%20width%3D%22400%22%20height%3D%22500%22%20fill%3D%22%23e8dcc4%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22250%22%20r%3D%22120%22%20fill%3D%22%23d6c3a0%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22250%22%20r%3D%2278%22%20fill%3D%22%23c9b189%22%2F%3E%3C%2Fsvg%3E" alt="Pães de queijo dourados numa travessa">
+              <div class="photo">
+                <img
+                  src="data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22500%22%3E%3Crect%20width%3D%22400%22%20height%3D%22500%22%20fill%3D%22%23e8dcc4%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22250%22%20r%3D%22120%22%20fill%3D%22%23d6c3a0%22%2F%3E%3Ccircle%20cx%3D%22200%22%20cy%3D%22250%22%20r%3D%2278%22%20fill%3D%22%23c9b189%22%2F%3E%3C%2Fsvg%3E"
+                  alt="Pães de queijo dourados numa travessa">
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Pão de queijo mineiro</h3>
+                <p class="card-text muted">Polvilho azedo, e a paciência de
+                  esperar
+                  a massa esfriar antes de enrolar.</p>
+                <p class="text-body-tertiary small mb-2">Guardada em março</p>
+                <span class="badge bg-body-secondary">45 min</span>
+              </div>
+            </div>
           </div>
-          <div class="card-body">
-            <h3 class="card-title">Pão de queijo mineiro</h3>
-            <p class="card-text muted">Polvilho azedo, e a paciência de esperar
-              a massa esfriar antes de enrolar.</p>
-            <p class="subtlest mb-2">Guardada em março</p>
-            <span class="badge bg-body-secondary">45 min</span>
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-6">
-        <div class="card h-100">
-          <!-- The same frame with nothing in it. A recipe saved in a hurry has
+          <div class="col-12 col-md-6">
+            <div class="card h-100">
+              <!-- The same frame with nothing in it. A recipe saved in a hurry has
                no photograph, and the row still aligns because the ratio is on
                the frame rather than on the image. -->
-          <div class="photo photo-empty">
-            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2" /> <circle cx="9" cy="9" r="2" /> <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" /></svg>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">Canja de galinha</h3>
-            <p class="card-text muted">Para quando alguém em casa não está bem,
-              que é a única razão pela qual essa receita existe.</p>
-            <p class="subtlest mb-2">Guardada em julho</p>
-            <span class="badge bg-body-secondary">1 h</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── Search ───────────────────────────────────────────────────────── -->
-  <section class="section">
-    <h2>Procurar</h2>
-    <div class="row g-2">
-      <div class="col-12 col-sm-7">
-        <div class="field-with-icon">
-          <svg class="icon field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21 21-4.34-4.34" /> <circle cx="11" cy="11" r="8" /></svg>
-          <input class="form-control" type="search" placeholder="Nome ou ingrediente" aria-label="Procurar receita">
-        </div>
-      </div>
-      <div class="col-12 col-sm-5">
-        <select class="form-select" aria-label="Categoria">
-          <option selected>Todas as categorias</option>
-          <option>Bolos</option>
-          <option>Salgados</option>
-          <option>Sopas</option>
-        </select>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── The one modal ────────────────────────────────────────────────── -->
-  <section class="section">
-    <h2>Confirmação destrutiva</h2>
-    <p class="mb-0">O único modal do produto, mostrado aberto para inspeção.</p>
-
-    <div class="modal d-block position-static mt-3" tabindex="-1" role="dialog" aria-modal="false" aria-label="Apagar receita">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3 class="modal-title">Apagar esta receita?</h3>
-          </div>
-          <div class="modal-body">
-            <p class="mb-0">Isto não pode ser desfeito.</p>
-          </div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button">Manter</button>
-            <button class="btn btn-danger" type="button">Apagar</button>
+              <div class="photo photo-empty">
+                <svg class="icon" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-linecap="round"
+                  stroke-linejoin="round" aria-hidden="true">
+                  <rect width="18" height="18" x="3" y="3" rx="2" />
+                  <circle cx="9" cy="9" r="2" />
+                  <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
+                </svg>
+              </div>
+              <div class="card-body">
+                <h3 class="card-title">Canja de galinha</h3>
+                <p class="card-text muted">Para quando alguém em casa não está
+                  bem,
+                  que é a única razão pela qual essa receita existe.</p>
+                <p class="text-body-tertiary small mb-2">Guardada em julho</p>
+                <span class="badge bg-body-secondary">1 h</span>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
+      </section>
 
-</main>
+      <!-- ─── The same components, one rung up ─────────────────────────────── -->
+      <!--
+        WHY THIS SECTION EXISTS AT ALL.
 
-<!-- THE ASIDE — dialogues and the controls that help fill in a recipe, beside
+        Every control above sits on the PAGE. This one puts the same controls on
+        a CARD, which is a rung higher, and the point is that some of them have
+        to change and some of them must not.
+
+        The rule that decides it, from claude-4.md: a chip has no border,
+        BECAUSE its rung 3 fill is doing the work — "só quando o tom empata com o
+        fundo" does it swap mechanism, and then it becomes an outline at rung 7.
+        A card whose own fill is at rung 3 is exactly that tie. So the chips in
+        here are outlined and the chips out there are not, and neither of those
+        is a preference.
+
+        The field does NOT change: its fill is the sunken tone, which is below
+        both the page and the card, so a well stays a well wherever it is put.
+        That asymmetry is the whole reason the two live in different tokens.
+      -->
+      <section class="section">
+        <h2>Os mesmos controles, um degrau acima</h2>
+        <p class="mb-0">A mesma barra de filtros e o mesmo campo, agora dentro de
+          uma superfície mais clara. Compare com a seção acima: o campo é
+          idêntico, os marcadores não.</p>
+
+        <div class="card mt-3">
+          <div class="card-body stack-loose">
+            <div>
+              <p class="text-body-tertiary small mb-2">Marcadores, contornados
+                porque o fundo do card empata com o tom de repouso do chip</p>
+              <div class="d-flex flex-wrap gap-2" role="group"
+                aria-label="Filtrar por marcador, dentro do card">
+                <button class="chip chip-outline chip-clickable active"
+                  type="button" aria-pressed="true">Bolos</button>
+                <button class="chip chip-outline chip-clickable" type="button"
+                  aria-pressed="false">Salgados</button>
+                <button class="chip chip-outline chip-clickable" type="button"
+                  aria-pressed="false">Da vó</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="form-label" for="busca-card">Procurar dentro deste
+                caderno</label>
+              <input class="form-control" id="busca-card" type="search"
+                placeholder="Nome ou ingrediente">
+            </div>
+
+            <div>
+              <p class="text-body-tertiary small mb-2">E os três degraus de ação,
+                para conferir que continuam legíveis aqui</p>
+              <div class="d-flex flex-wrap gap-2 align-items-center">
+                <button class="btn btn-primary btn-sm"
+                  type="button">Guardar</button>
+                <button class="btn btn-secondary btn-sm"
+                  type="button">Cancelar</button>
+                <button class="btn btn-ghost btn-sm"
+                  type="button">Imprimir</button>
+                <span class="badge bg-body-secondary ms-auto">rascunho</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── Search ───────────────────────────────────────────────────────── -->
+      <section class="section">
+        <h2>Procurar</h2>
+        <div class="row g-2">
+          <div class="col-12 col-sm-7">
+            <div class="field-with-icon">
+              <svg class="icon field-icon" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="m21 21-4.34-4.34" />
+                <circle cx="11" cy="11" r="8" />
+              </svg>
+              <input class="form-control" type="search"
+                placeholder="Nome ou ingrediente" aria-label="Procurar receita">
+            </div>
+          </div>
+          <div class="col-12 col-sm-5">
+            <select class="form-select" aria-label="Categoria">
+              <option selected>Todas as categorias</option>
+              <option>Bolos</option>
+              <option>Salgados</option>
+              <option>Sopas</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- ─── The one modal ────────────────────────────────────────────────── -->
+      <section class="section">
+        <h2>Confirmação destrutiva</h2>
+        <p class="mb-0">O único modal do produto, mostrado aberto para inspeção.
+        </p>
+
+        <div class="modal d-block position-static mt-3" tabindex="-1"
+          role="dialog" aria-modal="false" aria-label="Apagar receita">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h3 class="modal-title">Apagar esta receita?</h3>
+              </div>
+              <div class="modal-body">
+                <p class="mb-0">Isto não pode ser desfeito.</p>
+              </div>
+              <div class="modal-footer">
+                <button class="btn btn-secondary" type="button">Manter</button>
+                <button class="btn btn-danger" type="button">Apagar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- THE ASIDE — dialogues and the controls that help fill in a recipe, beside
      the content instead of over it. Separated by a rule, because the ladder
      budget is two and the third rung belongs to the quiet neutral fill. -->
-<aside class="aside stack-loose">
-  <div>
-    <h2 class="h5">Enquanto você cozinha</h2>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item px-0">Dobrar as quantidades</li>
-      <li class="list-group-item px-0">Converter xícaras em gramas</li>
-      <li class="list-group-item px-0">Manter a tela acesa</li>
-    </ul>
+    <aside class="aside stack-loose">
+      <div>
+        <h2 class="h5">Enquanto você cozinha</h2>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item px-0">Dobrar as quantidades</li>
+          <li class="list-group-item px-0">Converter xícaras em gramas</li>
+          <li class="list-group-item px-0">Manter a tela acesa</li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="h5">Rascunho</h2>
+        <p class="text-body-tertiary small">Salvo automaticamente há 2 minutos.
+          A receita só entra no
+          caderno quando você revisar e guardar.</p>
+        <button class="btn btn-primary w-100 with-icon" type="button"><svg
+            class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path
+              d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" />
+          </svg>Guarde a receita</button>
+      </div>
+    </aside>
   </div>
 
-  <div>
-    <h2 class="h5">Rascunho</h2>
-    <p class="subtlest">Salvo automaticamente há 2 minutos. A receita só entra no
-      caderno quando você revisar e guardar.</p>
-    <button class="btn btn-primary w-100 with-icon" type="button"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2 2 0 0 1 2 2v15a1 1 0 0 1-1.496.868l-4.512-2.578a2 2 0 0 0-1.984 0l-4.512 2.578A1 1 0 0 1 5 20V5a2 2 0 0 1 2-2z" /></svg>Guarde a receita</button>
-  </div>
-</aside>
-</div>
-
-<footer class="sheet" style="padding-block: var(--app-space-2xl)">
-  <hr class="rule">
-  <p class="mb-0"><small>Recepta — o caderno que era da sua mãe.</small></p>
-</footer>
+  <footer class="sheet" style="padding-block: var(--app-space-2xl)">
+    <hr>
+    <p class="mb-0"><small>Recepta — o caderno que era da sua mãe.</small></p>
+  </footer>
 
 </body>
+
 </html>

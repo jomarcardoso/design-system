@@ -21,14 +21,14 @@
       "bg-page",
       "bg-surface"
     ],
-    "accentBudget": "One primary action per screen, plus whatever is currently selected. Nowhere else — not on headings, not on rules, not on a decorative tag.",
+    "accentBudget": "One SOLID accent fill per screen — the primary action, and nothing else. Washed accent is unlimited but means one thing only: a condition the interface is in. Where you are (the rail), what you have chosen (a chip), what is selected (a tab mark). Never on a heading, a rule, or a decorative tag.",
     "donts": [
       "Never a third surface level. With elevation: borders a level is carried by a hairline, and a third would have to be a second hairline, which is not a level.",
       "Never tint a heading for emphasis — hierarchy is size and weight.",
       "Never separate surfaces with a shadow. That decision was made in question 7 and spending it twice separates the same page two ways.",
-      "Never a persistent rail or sidebar. The frame is a single column and a rail would be the application announcing itself."
+      "A rail spends no rung. It is separated by a hairline, never by a tone of its own — a nav is already distinguishable by position, density and typography, and rung three belongs to the quiet fill that badges, chips and resting secondary actions are made of. Reversal recorded: this ledger forbade a rail outright until 0.9.0, on the argument that it would be the application announcing itself. The product acquired four destinations, and four destinations with nowhere to live is a worse answer than a quiet rail."
     ],
-    "frame": "content with an aside; the aside carries dialogues and the controls that help fill in a recipe, separated by a rule rather than a rung",
+    "frame": "application frame — a persistent rail on the left, the reading column in the middle, an aside on the right. The rail and the aside are chrome at fixed widths; the measure stays on the middle column, which is the whole reason it is named.",
     "disclosure": "progressive — secondary actions sit behind the item they act on rather than in every row; filters open rather than persist.",
     "iconPolicy": "Icons lead their labels. Alone only in a repeated toolbar, and never on a destructive action.",
     "forms": {
@@ -76,25 +76,37 @@
               "btn-secondary"
             ]
           },
-          "notes": "`secondaryAction: neutral` in DESIGN_LANGUAGE.md. A tinted supporting action would put two blues on a page whose premise is that there is one.",
-          "role": "secondary"
+          "notes": "RUNG 3, and it was the solid neutral until 0.9.0 — rung 9, with inverted ink, which is a small dark button standing beside the primary and competing with it. The cause was structural rather than a slip: layer 3 named no secondary button, so the adapter generated `.btn-secondary` from the `neutral` theme role like any other colour, and `neutral` is the ONE SOLID neutral. claude-4.md puts the resting fill of a neutral secondary on rung 3, carrying ordinary dark ink — the same quiet fill a badge and a chip are made of — and adds the rule for when it feels too faint: raise the rung, never add an outline.",
+          "role": "secondary",
+          "dos": [
+            "Beside the primary, at most one or two per region."
+          ],
+          "donts": [
+            "Never outlined instead. Filled and outlined on one screen are the same rank twice and invent a fourth level."
+          ]
         },
         "danger": {
-          "intent": "An action that is hard to undo: delete a saved recipe.",
+          "intent": "Reaching for something hard to undo from a page where it is not the main business: the delete beside a recipe.",
           "state": "raw",
           "raw": {
             "coreui": [
               "btn",
-              "btn-danger"
+              "btn-ghost-danger"
             ]
           },
           "dos": [
-            "Always behind a confirmation modal — the guardrail in DESIGN_LANGUAGE.md."
+            "Always behind the confirmation modal.",
+            "At the far edge of an action row, never beside the primary."
           ],
-          "role": "primary"
+          "role": "tertiary",
+          "notes": "GHOST IN THE DANGER INK, and it has now been solid, then outlined, then this. The solid version put a second full-strength fill on a page that already had one and read as more important than the save. The outline fixed that and broke something else: claude-4.md — \"ter secundário preenchido E contornado na mesma tela cria um quarto nível de hierarquia que ninguém pediu\". An outline is not a rank; it is the SAME rank as the filled secondary reached by a different mechanism, and a product picks one and stays with it. This one is filled, so nothing in it is outlined. What was left was to notice that destructive is an INTENT laid over a rank rather than a rank of its own — and on this page the delete is tertiary: not what the screen is for, pushed to the far edge, with a confirmation in front of it.",
+          "donts": [
+            "Never solid outside its own confirmation — see `danger-confirm`.",
+            "Never outlined. This product has no outlined buttons at all, by the rule above."
+          ]
         },
         "quiet": {
-          "intent": "A tertiary action inside a dense surface, where even an outline would be noise: edit a step, remove an ingredient row.",
+          "intent": "A tertiary action INSIDE FLOWING TEXT, where even a ghost button would be a box interrupting a sentence: edit a step, remove an ingredient row.",
           "state": "raw",
           "raw": {
             "coreui": [
@@ -102,7 +114,8 @@
               "btn-link"
             ]
           },
-          "role": "tertiary"
+          "role": "tertiary",
+          "notes": "Distinct from `tertiary`, and the difference is the surroundings rather than the emphasis. `btn-link` is shaped like the prose it sits in; `btn-ghost` is shaped like the buttons it sits beside. Using either in the other place is what makes an action bar look ragged or a paragraph look interrupted."
         },
         "status-coloured": {
           "intent": "A button carrying a status colour to suggest an outcome.",
@@ -133,6 +146,56 @@
               "btn-outline-dark"
             ]
           }
+        },
+        "tertiary": {
+          "intent": "The third rank in a row of buttons: an action that is available and is not being suggested. Print, duplicate, export.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "btn",
+              "btn-ghost"
+            ]
+          },
+          "notes": "The ladder of prominence, and the page had no example of its bottom rung until 0.9.0 — which is its own finding, because a rank nobody renders is a rank nobody designed. `btn-ghost` carries no border at rest AND none on hover, which is claude-4.md's row for the tertiary button: it rises to a rung 3 fill on hover instead. That is the state rule for the whole system — hover and active change RUNG, never TREATMENT. A ghost that gained a border on hover would be changing family mid-gesture.",
+          "dos": [
+            "Third in a row, after the primary and the secondary."
+          ],
+          "donts": [
+            "Never alone as the only action in a region — with nothing to be third to, it reads as disabled."
+          ],
+          "role": "tertiary"
+        },
+        "danger-confirm": {
+          "intent": "The destructive action INSIDE its own confirmation dialogue, where it is the thing that dialogue exists for.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "btn",
+              "btn-danger"
+            ]
+          },
+          "notes": "The same action at a different rank, which is the point of two patterns. In the page the delete is tertiary; in the modal that asks about nothing else it is the primary and takes the solid fill. Rank is a property of the screen, not of the verb. It also keeps \"one solid fill per viewport\" exactly true rather than roughly true — the modal is its own viewport and the page behind it is covered.",
+          "donts": [
+            "Never outside a confirmation. If there is no dialogue, the delete is `danger`."
+          ],
+          "role": "primary"
+        },
+        "outlined": {
+          "intent": "Any button whose border replaces its fill.",
+          "state": "forbidden",
+          "reason": "Not because an outlined button is bad — it is a perfectly good secondary, and for a lighter archetype it is arguably the better one. Because this product already chose the FILLED secondary, and claude-4.md is explicit that having both on one screen creates a fourth level of hierarchy that no reader can rank: a filled neutral and an outline are the same weight, expressed two ways. The choice is per product, once, and this product made it. Reversing it means moving the secondary AND the destructive together, not adding one outline.",
+          "instead": "secondary",
+          "matches": {
+            "coreui": [
+              "btn-outline-primary",
+              "btn-outline-secondary",
+              "btn-outline-danger",
+              "btn-outline-success",
+              "btn-outline-warning",
+              "btn-outline-info",
+              "btn-outline"
+            ]
+          }
         }
       },
       "modifiers": {
@@ -161,9 +224,9 @@
     "card": {
       "intent": "A bounded block of recipe content resting on the page: a recipe in a list, the ingredients, a note.",
       "namespace": {
-        "coreui": "^card$|^bg-body-tertiary$"
+        "coreui": "^card$"
       },
-      "namespaceNote": "The root class, plus the ONE background utility this product allows on a card. `card-body`, `card-title`, `card-text`, `card-header` and `card-img-top` are ANATOMY — the markup CoreUI requires — not variants, so no pattern produces them and claiming them would make the verifier report ordinary markup as unknown. The utility is claimed because on a card it IS the variant: leave it out and `sunken` is indistinguishable from `default`.",
+      "namespaceNote": "The root class only. `card-body`, `card-title`, `card-text`, `card-header` and `card-img-top` are ANATOMY — the markup CoreUI requires — not variants, so no pattern produces them and claiming them would make the verifier report ordinary markup as unknown. `bg-body-tertiary` used to be claimed here as the one background utility a card could take; the pattern that needed it is forbidden below, and the utility went with it.",
       "patterns": {
         "default": {
           "intent": "The standard block, resting on the page and separated from it by a hairline.",
@@ -177,7 +240,8 @@
             "Let a photograph run to the edge of its own card, and no further."
           ],
           "donts": [
-            "Never separate two cards with a shadow — this product carries hierarchy in border-color."
+            "Never separate two cards with a shadow — this product carries hierarchy in tone.",
+            "Never give a card its own recessed tone. Excavation is spent on fields."
           ],
           "trajectory": {
             "to": "own",
@@ -188,16 +252,15 @@
           "role": "content"
         },
         "sunken": {
-          "intent": "A recessed block inside a recipe: the utensils list, the cook's note, a tip.",
-          "state": "raw",
-          "raw": {
+          "intent": "A recessed block inside a recipe: a tip, the cook's note, a utensils list.",
+          "state": "forbidden",
+          "reason": "It was allowed until 0.9.0 and it was a third surface in a product whose composition lists two. The deeper reason is what excavation is FOR. claude-5.md: \"escavação é quase sempre um nível só, e é local\" — one level, and it belongs to the thing that receives content, which is a field. Once `$field-bg` is the sunken tone, a recessed card and a textarea are the same colour, and a reader has to work out which of the two boxes can be typed in. A note is not a hole in the page; it is a card whose CONTENT differs, and the handwriting face already says so.",
+          "instead": "default",
+          "matches": {
             "coreui": [
-              "card",
               "bg-body-tertiary"
             ]
-          },
-          "notes": "CoreUI has no tonal card variant, so this is the base class plus a background utility. It passes both tests: `card` is a complete card before the utility arrives, and the utility touches nothing else. A third test only a build can run: the ADAPTER has to bind it. `.bg-body-tertiary` is written as `rgba(var(--cui-tertiary-bg-rgb), ...)`, and the adapter bound `--cui-tertiary-bg` without the triplet — so this card kept CoreUI own grey through a theme flip until that was fixed. Named here rather than left open so the product does not acquire four recessed panels that do not match.",
-          "role": "grouping"
+          }
         }
       },
       "multiplicity": "per-role"
@@ -245,9 +308,9 @@
     "nav": {
       "intent": "Moving between sections of one recipe, or between areas of the notebook.",
       "namespace": {
-        "coreui": "^nav$|^nav-(tabs|pills|underline)$|^navbar$"
+        "coreui": "^nav$|^nav-(tabs|pills|underline|underline-border|justified|fill)$|^navbar$|^rail$"
       },
-      "namespaceNote": "The root plus the three variant classes, ENUMERATED rather than excluded. `nav-item` and `nav-link` are anatomy; a lookahead like `^nav-(?!bar)` would claim them and report every tab link as an unknown variant.",
+      "namespaceNote": "The root plus the variant classes, ENUMERATED rather than excluded, and `rail`, which is this product own. `nav-item`, `nav-link` and `rail-link` are anatomy; a lookahead like `^nav-(?!bar)` would claim them and report every tab link as an unknown variant. `nav-justified` is enumerated because in this product it is not optional — the tabs are always equal-width, so it is part of the pattern rather than a modifier of it.",
       "patterns": {
         "bar": {
           "intent": "The notebook's own header.",
@@ -265,7 +328,8 @@
           "raw": {
             "coreui": [
               "nav",
-              "nav-tabs"
+              "nav-underline-border",
+              "nav-justified"
             ]
           },
           "dos": [
@@ -277,10 +341,27 @@
           "responsive": "Below the tablet breakpoint these stack as headings in the flow; tabs sit at the top of a phone screen and compete with the header.",
           "trajectory": {
             "to": "own",
-            "when": "the recipe view gets a fourth section, or the first phone review",
-            "why": "The enclosed tab is CoreUI's shape and it is heavier than a quiet Editorial product wants. It also has no answer below the tablet breakpoint, which the responsive note admits and the markup does not yet honour.",
-            "form": "weight only"
+            "when": "the first phone review",
+            "why": "The shape is now right and the responsive answer still is not: the responsive note below promises these stack as headings below the tablet breakpoint, and the markup does not yet do it. That is the remaining reason to own this component, and it is a layout reason rather than a colour one.",
+            "form": "stacked headings below the tablet breakpoint"
           },
+          "role": "chrome",
+          "notes": "THE SHAPE CHANGED IN 0.9.0 AND THE REASON IS WORTH KEEPING. `FORM-SET.md` derived \"weight only\" for this product — `quiet` plus `editorial-premium` reach it — and it was built: the active tab differed by INK ALONE. It failed on the first person who looked at the page, who could not tell which section was open, with no visual impairment involved. The catalogue own \"avoid when\" for weight-only says the affordance is subtle; this is what subtle costs. The replacement is still not custom CSS: `nav-underline-border` is CoreUI own variant and it is exactly claude-4.md row for a tab — a thin divider across the whole TRACK, decorative and at rung 6, and a solid accent MARK under the chosen tab, which is an indicator of state rather than a border. They are two lines with two jobs, and they need separate tokens because a theme flip breaks one of them if they share."
+        },
+        "rail": {
+          "intent": "Moving between areas of the notebook: the caderno itself, exploring, writing, the shopping list.",
+          "state": "own",
+          "styled": "rail",
+          "notes": "CoreUI has a sidebar and it is an application chrome component — collapsible, with its own brand block, its own toggler and its own surface. This product wants four links against a hairline. `own` rather than `styled` because there is no library component underneath: it is a flex column built from tokens, and the whole of it is about forty lines in `app.css`. It spends NO rung, which is the decision the ledger is really recording — see the composition `donts`.",
+          "dos": [
+            "A hairline between the rail and the content, in `border-divider`.",
+            "The current destination in WASHED accent — where you are is a condition, not an invitation."
+          ],
+          "donts": [
+            "Never a surface tone of its own. That would be the third rung, and this product has two.",
+            "Never a solid accent on the current item — the solid fill belongs to the one action the screen exists for."
+          ],
+          "responsive": "Below the tablet breakpoint it becomes a scrolling row above the content, not a hamburger. A phone is narrower, not denser, so the rail moves rather than compacts.",
           "role": "chrome"
         }
       },
@@ -328,14 +409,7 @@
               "bg-body-secondary"
             ]
           },
-          "notes": "The library's own badge, rendering as a paper chip with no product CSS. Three token decisions get it there: the adapter binds `--cui-badge-color` and `--cui-badge-border-radius`, which CoreUI exposes and nobody had bound; the adapter points `--cui-secondary-bg-rgb` at `bg-neutral-subtle`; and the entry configures layer 3 with `$badge-fg: fg-muted`. CoreUI hardcodes `--cui-badge-color: #fff` inside the rule, which is why it looked untokenisable — a literal in a declaration is still beatable by the same variable at a later layer.",
-          "trajectory": {
-            "to": "own",
-            "when": "the first filter chip — the moment a label has to become interactive",
-            "why": "The library badge is a label and cannot carry a selected state or a remove affordance. It is adequate for the read-only tags on the page today and will not stretch.",
-            "form": "removable chip",
-            "blocked": "no chip pattern exists yet; adding one is a ledger change, discussed first"
-          },
+          "notes": "The library's own badge, rendering as a paper chip with no product CSS. Three token decisions get it there: the adapter binds `--cui-badge-color` and `--cui-badge-border-radius`, which CoreUI exposes and nobody had bound; the adapter points `--cui-secondary-bg-rgb` at `bg-neutral-subtle`; and the entry configures layer 3 with `$badge-fg: fg-muted`. CoreUI hardcodes `--cui-badge-color: #fff` inside the rule, which is why it looked untokenisable — a literal in a declaration is still beatable by the same variable at a later layer. A TRAJECTORY WAS REMOVED HERE IN 0.9.0 rather than completed. It read \"promote this to a removable chip when a label has to become interactive\", and it was blocked pending a ledger discussion. The discussion happened and the answer was that a label never becomes interactive: a badge reports what the content IS, a chip holds what the reader CHOSE, and they are two components because they are two meanings. `chip/filter` was added beside this instead. The badge stays what it is — read-only, adequate, and not stretching anywhere.",
           "role": "label"
         },
         "status-coloured": {
@@ -356,6 +430,74 @@
         }
       },
       "multiplicity": "per-role"
+    },
+    "chip": {
+      "intent": "A filter the reader turns on and off. Not a badge and not a button: a badge is a label the content carries, a button performs an action, and a chip holds a CHOICE that stays held.",
+      "namespace": {
+        "coreui": "^chip$|^chip-[a-z]+$"
+      },
+      "namespaceNote": "The root plus its variants. `chip-icon`, `chip-img` and `chip-remove` are anatomy and are claimed by this regex, which is a known cost: CoreUI names anatomy and variants alike. The alternative was an exclusion lookahead, and the refusal below needs to be able to catch eight colour variants by name, so enumeration wins.",
+      "patterns": {
+        "filter": {
+          "intent": "Narrowing the notebook to one marker, ON THE PAGE: bolos, salgados, da vó.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "chip",
+              "chip-clickable"
+            ]
+          },
+          "notes": "CoreUI is the reason this ledger can have a chip at all — the only library of the ten here that ships a real selectable one, and the adapter binds every one of its variables to layer 3. NO BORDER: the resting fill is RUNG 3, which is the rung the ladder reserves for an element at rest, and that tone is the whole boundary. It pointed at bg-surface until 0.9.0 — a SURFACE LEVEL, the tone a card is made of — so a chip on the page measured a lightness difference of 0.015 and a chip inside a card vanished outright. The fix was the fill, not a border; see filter-on-surface for the case where a border IS the answer. SELECTED IS WASHED ACCENT, and that default was wrong too: bg-selected aliases onto the accent family in this school, so every ticked chip came out a full-strength block.",
+          "dos": [
+            "Ticked chips are washed accent, and there may be several — a condition is not scarce the way an invitation is.",
+            "`aria-pressed` on every one. The visual state is a tone, and a tone is not announced."
+          ],
+          "donts": [
+            "Never a border at rest. Add one only if the resting tone ever lands on a surface that matches it.",
+            "Never as a label. A read-only tag is `badge/neutral`, and giving it a chip shape promises an interaction that is not there."
+          ],
+          "role": "target"
+        },
+        "status-coloured": {
+          "intent": "A chip carrying a theme colour rather than the accent.",
+          "state": "forbidden",
+          "reason": "The same refusal as the badge and the button, and the strongest of the three: a chip is already the one element allowed to take the accent when chosen, so a chip in six other colours empties the accent of the only meaning it has. This product has one pigment; a green chip would be the second.",
+          "instead": "filter",
+          "matches": {
+            "coreui": [
+              "chip-primary",
+              "chip-secondary",
+              "chip-success",
+              "chip-info",
+              "chip-warning",
+              "chip-danger",
+              "chip-light",
+              "chip-dark"
+            ]
+          }
+        },
+        "filter-on-surface": {
+          "intent": "The same filter, sitting on a card or any surface already at rung 3.",
+          "state": "raw",
+          "raw": {
+            "coreui": [
+              "chip",
+              "chip-outline",
+              "chip-clickable"
+            ]
+          },
+          "notes": "THE ONE EXCEPTION IN claude-4.md, and it is a context rather than a taste: \"Chips não têm borda no caso padrão... A exceção é quando o chip vive sobre uma superfície que já está no degrau 3. Aí o tom do chip empata com o fundo e você troca de mecanismo: chip contornado com borda no degrau 7.\" A rung 3 fill on a rung 3 ground has no boundary left, so the boundary moves to a line. Only the markup can know this, because only the markup knows what the chip is standing on — which is exactly why it is a second pattern and not a modifier.",
+          "dos": [
+            "Inside a card, a panel, or any filled container.",
+            "Switch the whole group at once. Two mechanisms in one row of chips is worse than either."
+          ],
+          "donts": [
+            "Never on the page background. There the fill already works and the outline is a second mechanism for one boundary."
+          ],
+          "role": "target"
+        }
+      },
+      "multiplicity": "one"
     }
   }
 }

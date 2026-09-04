@@ -246,40 +246,86 @@ $_derived: (
   //   3. NOTHING IS DUPLICATED. The library's CSS is left intact and unfought;
   //      we change what it reads, not what it does.
   @each $cui, $role in $_map {
-    .btn-#{$cui} {
-      --cui-btn-bg: #{core.ref('bg-#{$role}')};
-      --cui-btn-border-color: #{core.ref('bg-#{$role}')};
-      --cui-btn-color: #{core.ref('fg-on-#{$role}')};
-      --cui-btn-hover-bg: #{core.ref('bg-#{$role}-hover')};
-      --cui-btn-hover-border-color: #{core.ref('bg-#{$role}-hover')};
-      --cui-btn-hover-color: #{core.ref('fg-on-#{$role}')};
-      --cui-btn-active-bg: #{core.ref('bg-#{$role}-active')};
-      --cui-btn-active-border-color: #{core.ref('bg-#{$role}-active')};
-      --cui-btn-active-color: #{core.ref('fg-on-#{$role}')};
-      --cui-btn-disabled-bg: #{core.ref('bg-#{$role}')};
-      --cui-btn-disabled-border-color: #{core.ref('bg-#{$role}')};
-      --cui-btn-disabled-color: #{core.ref('fg-on-#{$role}')};
+    // THE SOLID TREATMENT SKIPS THE TWO VARIANTS LAYER 3 OWNS.
+    //
+    // `.btn-primary` and `.btn-secondary` get a block of their own further down,
+    // because they are the two ranks layer 3 names and a Sass variable holds one
+    // value per compilation — a layer 3 hook inside this loop would paint
+    // `.btn-danger` with whatever `.btn-primary` was set to. That block comes
+    // later in source order at equal specificity, so it wins every time.
+    //
+    // Which made these twelve declarations, twice, into CSS that is emitted,
+    // downloaded, parsed and then overruled. Not a bug — nothing rendered wrong
+    // — but 24 declarations of a file whose job is to be small, and a reader
+    // seeing `.btn-primary` twice with different values has to work out which
+    // one is real.
+    //
+    // The `outline` and `ghost` treatments below are NOT skipped: layer 3 names
+    // no equivalent for them, so the loop is the only thing writing them.
+    @if $cui != 'primary' and $cui != 'secondary' {
+      .btn-#{$cui} {
+        --cui-btn-bg: #{core.ref('bg-#{$role}')};
+        --cui-btn-border-color: #{core.ref('bg-#{$role}')};
+        --cui-btn-color: #{core.ref('fg-on-#{$role}')};
+        --cui-btn-hover-bg: #{core.ref('bg-#{$role}-hover')};
+        --cui-btn-hover-border-color: #{core.ref('bg-#{$role}-hover')};
+        --cui-btn-hover-color: #{core.ref('fg-on-#{$role}')};
+        --cui-btn-active-bg: #{core.ref('bg-#{$role}-active')};
+        --cui-btn-active-border-color: #{core.ref('bg-#{$role}-active')};
+        --cui-btn-active-color: #{core.ref('fg-on-#{$role}')};
+        --cui-btn-disabled-bg: #{core.ref('bg-#{$role}')};
+        --cui-btn-disabled-border-color: #{core.ref('bg-#{$role}')};
+        --cui-btn-disabled-color: #{core.ref('fg-on-#{$role}')};
+      }
     }
 
     // Outline keeps the outline on hover: a tint plus the border it already
     // had. Filling it with the solid colour — the library's own convention —
     // turns a hovered secondary into a second primary, so a screen briefly has
     // two main actions.
+    //
+    // THE BORDER IS THE LABEL'S COLOUR, and it was `-border` until this pass.
+    // That looked right and was measurably wrong: `danger-border` is the edge
+    // of a subtle ALERT — a container, decorative, outside WCAG 1.4.11 — and it
+    // sits around red 200. Bound to an outlined button it produced a control
+    // whose entire boundary measured 1.35:1 against the page, and an outlined
+    // button has no fill, so that boundary is the only thing saying "button".
+    // 1.4.11 asks 3:1 for exactly that.
+    //
+    // Using the text slot fixes it and says something truer as well: an
+    // outlined button is ONE ink drawn twice, once as a label and once as an
+    // edge. It is also what the library already does — CoreUI's own outline
+    // variants take the variant colour, not a subtle one — so this stops being
+    // an override of the library and becomes the same idea in these tokens.
     .btn-outline-#{$cui} {
       --cui-btn-bg: transparent;
       --cui-btn-color: #{core.ref(_slot($role, text))};
-      --cui-btn-border-color: #{core.ref(_slot($role, border))};
+      --cui-btn-border-color: #{core.ref(_slot($role, text))};
       --cui-btn-hover-bg: #{core.ref(_slot($role, subtle))};
-      --cui-btn-hover-border-color: #{core.ref(_slot($role, border))};
+      --cui-btn-hover-border-color: #{core.ref(_slot($role, text))};
       --cui-btn-hover-color: #{core.ref(_slot($role, text))};
       --cui-btn-active-bg: #{core.ref(_slot($role, subtle))};
-      --cui-btn-active-border-color: #{core.ref(_slot($role, border))};
+      --cui-btn-active-border-color: #{core.ref(_slot($role, text))};
       --cui-btn-active-color: #{core.ref(_slot($role, text))};
     }
 
     // Ghost — label only, gaining the subtle tint on hover. The three
     // treatments are one colour at three strengths; emphasis is carried by
     // fill, border and nothing, never by hue.
+    //
+    // THE PRESSED AND DISABLED STATES WERE MISSING, and `check-derived` is what
+    // found them — nobody had pressed a ghost button on a real page.
+    //
+    // CoreUI's own `.btn-ghost-danger` sets `--cui-btn-active-bg` to the SOLID
+    // variant colour with white ink. So this ghost, which is the product's
+    // tertiary rank, turned into a full-strength red button for as long as a
+    // finger was on it: it changed FAMILY mid-gesture, which is precisely what
+    // claude-4.md forbids — "hover e active mudam de degrau, nunca de
+    // tratamento". And on the delete button, of all controls.
+    //
+    // Pressed is therefore one rung past hover, still ghost. Disabled leaves
+    // the accent ladder entirely and returns to the neutral one, which is the
+    // rule for every disabled control in the system.
     .btn-ghost-#{$cui} {
       --cui-btn-bg: transparent;
       --cui-btn-border-color: transparent;
@@ -287,7 +333,24 @@ $_derived: (
       --cui-btn-hover-bg: #{core.ref(_slot($role, subtle))};
       --cui-btn-hover-border-color: transparent;
       --cui-btn-hover-color: #{core.ref(_slot($role, text))};
+      --cui-btn-active-bg: #{core.ref(_slot($role, subtle))};
+      --cui-btn-active-border-color: transparent;
+      --cui-btn-active-color: #{core.ref(_slot($role, text))};
+      --cui-btn-disabled-bg: transparent;
+      --cui-btn-disabled-border-color: transparent;
+      --cui-btn-disabled-color: #{component.$button-fg-disabled};
     }
+  }
+
+  // THE LINK BUTTON, whose disabled ink was a literal the library chose.
+  //
+  // `.btn-link` is outside the variant loop because it is not a theme colour —
+  // it is a button shaped like prose. Its resting and hover inks already follow
+  // `--cui-link-color`, which the adapter binds at the root, so only the
+  // disabled state was left behind: a hard-coded `#6d7d9c`, a grey-blue that
+  // belongs to no theme here and does not move when one is swapped.
+  .btn-link {
+    --cui-btn-disabled-color: #{component.$button-fg-disabled};
   }
 
   // THE PRIMARY VARIANT READS LAYER 3, and it is the only one that can.
@@ -321,6 +384,37 @@ $_derived: (
     --cui-btn-disabled-bg: #{component.$button-bg};
     --cui-btn-disabled-border-color: #{component.$button-bg};
     --cui-btn-disabled-color: #{component.$button-fg};
+  }
+
+  // AND THE SECONDARY, for the same reason and a worse symptom.
+  //
+  // `secondary` is a theme colour in every Bootstrap-derived library, so the
+  // loop above treats it exactly like `success` or `danger`: fill from
+  // `bg-neutral`, ink from `fg-on-neutral`. `bg-neutral` is the ONE SOLID
+  // NEUTRAL, rung 9 — so the supporting action came out as a small dark button
+  // with inverted ink, standing beside the primary and competing with it.
+  //
+  // That is not a theming slip, it is the trap this repository has recorded
+  // twice already in another form: every library uses `secondary` to mean "the
+  // grey button", which in this vocabulary is `neutral`, and `neutral` has two
+  // very different rungs. The resting fill of a secondary action is rung 3.
+  //
+  // Same shape as the primary rule: one block after the loop, same specificity,
+  // later in source order. A product that leaves layer 3 alone still gets the
+  // library's own look, because these defaults resolve through layer 2.
+  .btn-secondary {
+    --cui-btn-bg: #{component.$button-secondary-bg};
+    --cui-btn-border-color: #{component.$button-secondary-border-color};
+    --cui-btn-color: #{component.$button-secondary-fg};
+    --cui-btn-hover-bg: #{component.$button-secondary-bg-hover};
+    --cui-btn-hover-border-color: #{component.$button-secondary-border-color};
+    --cui-btn-hover-color: #{component.$button-secondary-fg};
+    --cui-btn-active-bg: #{component.$button-secondary-bg-active};
+    --cui-btn-active-border-color: #{component.$button-secondary-border-color};
+    --cui-btn-active-color: #{component.$button-secondary-fg};
+    --cui-btn-disabled-bg: #{component.$button-secondary-bg};
+    --cui-btn-disabled-border-color: #{component.$button-secondary-border-color};
+    --cui-btn-disabled-color: #{component.$button-fg-disabled};
   }
 
 
@@ -394,12 +488,41 @@ $_derived: (
     --cui-chip-bg: #{component.$chip-bg};
     --cui-chip-color: #{component.$chip-fg};
     --cui-chip-active-bg: #{component.$chip-bg-selected};
+    // The SELECTED chip's edge, and it was unbound: CoreUI's `.chip.active`
+    // rule sets `border-color: var(--cui-chip-active-border-color)`, which
+    // defaults to `transparent`, so a product that gave its resting chip a
+    // border watched that border vanish the moment the chip was ticked. Found
+    // by reading the computed style of a chip on a page rather than by reading
+    // the adapter — the resting binding was correct and the state was not, and
+    // the two live in different rules.
+    --cui-chip-active-border-color: #{component.$chip-border-color-selected};
     --cui-chip-active-color: #{component.$chip-fg-selected};
 
     // Hover has no contract entry — it reads layer 2 directly, which is the
     // documented reason the contract stopped at eight names.
     --cui-chip-hover-bg: #{component.$chip-bg-hover};
     --cui-chip-hover-color: #{component.$chip-fg-hover};
+  }
+
+  // The OUTLINED chip, for a chip standing on a surface its own fill ties with.
+  //
+  // CoreUI's variant is written as `--cui-chip-border-color: var(--cui-color,
+  // var(--cui-border-color))`, so left alone it takes the general border — the
+  // DIVIDER, rung 6 — for a job that is affordance and belongs at rung 7. And
+  // its selected fill falls through to `var(--cui-primary)`, the solid accent,
+  // which would make a ticked outlined chip louder than a ticked plain one for
+  // no reason a reader could name. Both rebound here, so the two chip forms
+  // differ in MECHANISM and agree on everything else.
+  .chip-outline {
+    --cui-chip-bg: transparent;
+    --cui-chip-color: #{component.$chip-fg};
+    --cui-chip-border-color: #{component.$chip-outline-border-color};
+    --cui-chip-hover-bg: #{component.$chip-bg-hover};
+    --cui-chip-hover-color: #{component.$chip-fg-hover};
+    --cui-chip-hover-border-color: #{component.$chip-outline-border-color};
+    --cui-chip-active-bg: #{component.$chip-bg-selected};
+    --cui-chip-active-color: #{component.$chip-fg-selected};
+    --cui-chip-active-border-color: #{component.$chip-outline-border-color-selected};
   }
 
   // --- Tooltip ----------------------------------------------------------
@@ -466,6 +589,39 @@ $_derived: (
     --cui-table-border-color: #{component.$table-border-color};
     --cui-table-striped-bg: #{component.$table-row-bg-striped};
     --cui-table-hover-bg: #{component.$table-row-bg-hover};
+  }
+
+  // THE HAMBURGER, which is the one place in this library where a colour cannot
+  // be a token by any amount of variable binding.
+  //
+  // CoreUI draws it as an SVG in a `url("data:…")`, with the stroke written
+  // inside the encoded markup. A `var()` inside a data URI is never substituted
+  // — the browser treats the whole thing as an opaque URL — so the icon keeps
+  // whatever ink the library computed at build time and misses every theme
+  // flip. On dark it is the library's own `rgba(255,255,255,.55)` regardless of
+  // what the theme says.
+  //
+  // The fix is to stop using it as an IMAGE. The same data URI as a `mask`
+  // leaves the shape and takes the colour from `background-color`, which is a
+  // token like anything else. The image is then explicitly removed, because a
+  // masked background and a background image would otherwise stack.
+  //
+  // Worth generalising: when a library encodes a colour inside an asset, the
+  // answer is a mask, not a bigger variable.
+  .navbar-toggler-icon {
+    background-image: none;
+    background-color: #{component.$nav-fg};
+    mask: var(--cui-navbar-toggler-icon-bg) center / 100% 100% no-repeat;
+    -webkit-mask: var(--cui-navbar-toggler-icon-bg) center / 100% 100% no-repeat;
+  }
+
+  // The horizontal rule is a DIVIDER, so it takes the divider token like the
+  // hairline under a header does. The library renders it as inherited text
+  // colour at 25% opacity, which is not a token at all — it is whatever ink the
+  // rule happens to land next to, faded. `coreui-entry.scss` sets the opacity
+  // to 1 so this line is the whole colour decision.
+  hr {
+    border-color: #{component.$rule-border-color};
   }
 
   .form-control,

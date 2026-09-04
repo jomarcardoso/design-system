@@ -16,7 +16,14 @@
 @layer legacy, theme, base, ds.base, ds.semantic, ds.component, vendor,
   vendor-config, components, ds.overrides, utilities;
 
-@import '../../dist/coreui.css';
+/* THE LIBRARY, COMPILED BY THIS PRODUCT, and it used to be the shared
+ * build in dist/. That shared file is compiled against the DEMONSTRATION
+ * theme, so every value CoreUI derives at Sass time — a button hover, a focus
+ * triplet, every alert and table variant — was the demo's indigo, in every
+ * application that loaded it. Nothing looked wrong, because the adapter rebinds
+ * what it knows to name; everything it does not name was another product's
+ * colour. See templates/entry-coreui.scss. */
+@import './coreui.css';
 @import './ds.css';
 
 @layer base {
@@ -28,7 +35,7 @@
     line-height: var(--app-line-height);
   }
 
-  /* The FACE and the WEIGHT are not here on purpose: `coreui-entry.scss` sets
+  /* The FACE and the WEIGHT are not here on purpose: `coreui.scss` sets
    * `$headings-font-family` and `$headings-font-weight`, so the library emits
    * them itself. The CSS that used to sit here existed because a Sass variable
    * was not set, not because the library could not do it.
@@ -68,11 +75,27 @@
     margin-block-start: var(--app-space-xl);
   }
 
-  /* The first heading of a region has nothing above it to be separated from.
-   * Without this, the rule above pushes every card and every section away from
-   * its own top edge. */
-  h1:first-child, h2:first-child, h3:first-child, h4:first-child {
+  /* The first heading of a PADDED BOX has nothing above it to be separated
+   * from — the box's own padding already did that job — and without this rule
+   * every card and every modal is shoved away from its own top edge.
+   *
+   * SCOPED TO BOXES, and it was a bare `:first-child` until a heading turned up
+   * jammed against the tab strip above it. A section in the flow is NOT a box:
+   * its first heading has the previous region directly above it and needs the
+   * full separation, which is exactly what the bare selector was cancelling.
+   * Two situations that look identical in a selector and mean opposite things. */
+  :is(.card-body, .modal-content, .modal-header, .modal-body, .accordion-body)
+    > :is(h1, h2, h3, h4):first-child {
     margin-block-start: 0;
+  }
+
+  /* CARDS DO NOT TOUCH. CoreUI ships zero margin on the card, correctly — a card
+   * cannot know what is around it — so two stacked in a section were glued edge
+   * to edge and read as one box with a seam through it. The step is the
+   * "unrelated" one from the rhythm in patterns.json: two notes about one recipe
+   * are each related to the recipe and not to each other. */
+  .card + .card {
+    margin-block-start: var(--app-space-lg);
   }
 
   /* LEADING AND TRACKING ARE SIZE-DEPENDENT, and the theme had one value for
@@ -95,7 +118,99 @@
     padding-inline: var(--app-space-lg);
   }
 
-  /* THE FRAME — `frame: content-aside`.
+  /* THE RAIL — persistent navigation on one edge.
+   *
+   * IT SPENDS NO RUNG, and that is the whole decision. §W's table gives an
+   * app-frame three rungs of surface, and this product has two; the reflex is
+   * to give the nav a fill of its own so it reads as chrome. claude-2.md is
+   * blunt about why that is wrong: a nav is already distinguishable by
+   * POSITION, DENSITY and TYPOGRAPHY, so a tone spends the scarcest thing in
+   * the ladder on an element that did not need it — and rung three is the quiet
+   * fill every badge, chip and resting secondary action is made of. Take it for
+   * the nav and the chips have nowhere to go.
+   *
+   * So: a hairline, and the divider tone rather than the general border,
+   * because separating two regions is decorative and rung 6 is where that
+   * lives.
+   *
+   * Recorded as a deliberate deviation from the app-frame row of §W. */
+  /* IT WRAPS RATHER THAN SCROLLING, and that was the second attempt. The first
+   * was `overflow-x: auto`, which is the usual phone answer for a nav and is
+   * wrong here for two reasons that only appeared once the page was opened at
+   * 572px: it put a permanent scrollbar across the top of a product whose whole
+   * premise is quiet, and it hid the fourth destination behind a gesture. Four
+   * short links wrap to two rows and every one of them stays readable.
+   *
+   * The general rule this is an instance of: horizontal scroll is for a list
+   * that is long and open-ended. A closed set of four is not that, and hiding
+   * one quarter of a site's navigation to save one row of height is a bad
+   * trade. */
+  .rail {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--app-space-2xs);
+    padding-block-end: var(--app-space-sm);
+    border-block-end: var(--app-border-width) solid var(--app-border-divider);
+  }
+
+  .rail-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--app-space-xs);
+    padding: var(--app-pad-control-y) var(--app-pad-control-x);
+    border-radius: var(--app-radius-control);
+    color: var(--app-fg-muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .rail-link:hover {
+    background-color: var(--app-bg-surface-hover);
+    color: var(--app-fg-default);
+  }
+
+  /* THE CHOSEN ITEM IS WASHED, NOT SOLID. It is a CONDITION the interface is
+   * in — where you are — and not an invitation to act, and the ladder of
+   * prominence keeps the solid fill for the one action that invites. "Guarde a
+   * receita" holds it on this page; a solid rail item would take it back and
+   * the reader would have two things claiming to be the way forward.
+   *
+   * The ink is `fg-accent`, not `fg-on-accent`. `fg-on-accent` is the ink
+   * measured against the SOLID fill and is near-white; on a pale wash it would
+   * be invisible. `(action-subtle, link)` is a declared pair in
+   * `_semantic.scss` and is measured by the contrast gate — the washed fill and
+   * the accent ink belong together, and that is the only reason this is safe to
+   * write by hand.
+   *
+   * The names here are `accent`, not `selected`: this product is
+   * `colourStrategy: monochrome`, and the school emits its own vocabulary. */
+  .rail-link.active {
+    background-color: var(--app-bg-accent-subtle);
+    color: var(--app-fg-accent);
+    font-weight: var(--app-font-weight-heading);
+  }
+
+  /* Above the breakpoint it becomes a column on the left, and the frame gains a
+   * third column. Below it, the rail is a scrolling row above the content —
+   * `platform: multiplatform` again: a phone is narrower, not denser, so the
+   * nav moves rather than compacts. */
+  @media (min-width: 62rem) {
+    .rail {
+      flex-direction: column;
+      gap: var(--app-space-2xs);
+      position: sticky;
+      top: var(--app-space-lg);
+      align-self: start;
+      flex-wrap: nowrap;
+      padding-block-end: 0;
+      padding-inline-end: var(--app-space-lg);
+      border-block-end: 0;
+      border-inline-end: var(--app-border-width) solid var(--app-border-divider);
+    }
+  }
+
+  /* THE FRAME — `frame: app-frame`.
    *
    * The aside is not a filter rail. It is where a dialogue opens instead of
    * covering the screen, and where the controls that help fill in a recipe
@@ -110,13 +225,17 @@
     display: grid;
     gap: var(--app-gap-grid);
     margin-inline: auto;
-    max-width: calc(var(--app-size-measure) + 22rem);
+    max-width: calc(var(--app-size-measure) + 36rem);
     padding-inline: var(--app-space-lg);
   }
 
   @media (min-width: 62rem) {
     .frame {
-      grid-template-columns: minmax(0, 1fr) 20rem;
+      /* rail · content · aside. The measure is on the middle column, which is
+       * the point of naming it: the rail and the aside are chrome and take
+       * fixed widths, and the reading column keeps its 45–75 characters
+       * whatever the window does. */
+      grid-template-columns: 13rem minmax(0, 1fr) 20rem;
       align-items: start;
     }
 
@@ -150,24 +269,32 @@
     margin-block-start: var(--app-space-2xl);
   }
 
-  /* The three inks. `fg-default` is the body and needs no class; these two are
-   * the steps below it, and a page that never uses them has one ink and reads
-   * flat — every line shouting equally. */
+  /* THE INKS ARE THE LIBRARY'S, and this block used to be three classes.
+   *
+   * `.subtlest` is gone entirely. CoreUI ships `.text-body-tertiary`, the
+   * adapter already binds `--cui-tertiary-color` to `--app-fg-subtlest`, and
+   * `.small` carries the size — so the class was a product reimplementing a
+   * utility that was already themed correctly. A design system that makes its
+   * consumers write CSS the library would have given them has failed at the
+   * only job it has.
+   *
+   * The rule for deciding: if the library has a utility AND the adapter binds
+   * the variable behind it, use the utility. Write a class only for something
+   * the library has no vocabulary for.
+   *
+   * `.muted` stays for now and is the same argument in reverse — it predates
+   * `.text-body-secondary` on this page and is one grep from going too. */
   .muted {
     color: var(--app-fg-muted);
   }
 
-  .subtlest {
-    color: var(--app-fg-subtlest);
-    font-size: var(--app-font-size-sm);
-  }
-
-  /* The handwriting face, for the one place a notebook should look handwritten.
-   * `font-family-display` — used once, on purpose. */
+  /* The handwriting face, which IS something the library has no vocabulary for:
+   * there is no utility for "the display face", because a library cannot know
+   * a product has one. Reduced to exactly that — the colour moved to
+   * `.text-body-secondary` in the markup. Used once, on purpose. */
   .hand {
     font-family: var(--app-font-family-display);
     font-size: var(--app-font-size-heading-sm);
-    color: var(--app-fg-muted);
   }
 
   /* THE PHOTOGRAPH — `imagery: content`, and the whole of derivations.md K.
@@ -292,10 +419,23 @@
     padding-inline-start: calc(var(--app-space-sm) * 2 + var(--app-size-icon));
   }
 
-  /* A ruled line, which is what this product uses instead of a shadow. */
-  .rule {
-    border: 0;
-    border-block-start: var(--app-border);
-    margin-block: var(--app-space-lg);
-  }
+  /* `.rule` USED TO BE HERE and it is gone, because the question "what is this
+   * class for?" had no good answer.
+   *
+   * It existed to make `<hr>` usable: the library renders a rule as inherited
+   * text colour at 25% opacity, which is not a colour a token can reach and not
+   * a weight that stays put — the same `<hr>` came out darker beside a heading
+   * than beside body text. So the product wrote a class that zeroed the border
+   * and drew its own.
+   *
+   * That is a product working around a library variable nobody had set.
+   * `coreui-entry.scss` now sets `$hr-opacity: 1` and `$hr-margin-y`, and the
+   * adapter binds the colour to `divider-color`, so a plain `<hr>` is already
+   * the right hairline at the right spacing. Three lines in two files that
+   * belong to the system, instead of one class in every product that needs a
+   * horizontal rule.
+   *
+   * The general test, and it is the same one that removed `.subtlest`: if the
+   * library has the element and a variable behind it, set the variable. Write a
+   * class only for something the library has no vocabulary for. */
 }

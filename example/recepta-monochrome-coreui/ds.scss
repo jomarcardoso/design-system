@@ -11,100 +11,36 @@
 // what the school looks like once CoreUI is involved — which is the harder
 // claim, because a library arrives with its own opinion about every colour.
 //
-// The library's own CSS is NOT built here. `coreui-entry.scss` compiles CoreUI
-// with the Sass-time variables set; this file emits the tokens and the adapter
-// that drive it at runtime. Two files, loaded in that order.
+// The library's own CSS is NOT built here. `coreui.scss`, next to this file,
+// compiles CoreUI with this product's Sass-time values; this file emits the
+// tokens and the adapter that drive it at runtime. Two outputs, loaded in that
+// order, and one shared set of decisions in `_setup.scss`.
 // =============================================================================
 
 @use 'sass:map';
-// The type scale, GENERATED from a ratio rather than inherited.
-//
-// `typeScale: 1.25` — a major third. The foundation ships Tailwind's hand-tuned
-// scale, which is a good scale and is also the one a large share of interfaces
-// built in the last few years already use. Keeping it would mean inheriting a
-// typographic signature this product never chose, on the surface where Editorial
-// products are supposed to be recognisable.
-@use '../../src/type';
-@use '../../src/config' with (
-  $adapters: (coreui),
-  // The load-bearing line. It tells `check-roles()` that action, selected and
-  // link all resolving to the same pen is the design and not a collapse — and
-  // it is what makes `accent` the emitted name rather than `action`.
-  $colour-strategy: 'monochrome'
-);
 
-@use '../../src/base' with ($text: type.scale(1rem, 1.25));
+// ALL OF THIS PRODUCT'S CONFIGURATION, IN ONE PLACE, AND THAT PLACE IS NOT HERE.
+//
+// The type scale, the colour strategy, the adapter list and every layer 3
+// override used to be written in this file's own `@use … with ()` clauses. They
+// moved to `_setup.scss` when the product started compiling CoreUI as well,
+// because the library entry has to read exactly the same values — and a Sass
+// module can only be configured once, by whoever loads it first.
+//
+// That constraint is not in the way; it is the language enforcing the thing
+// that matters. Two compilations reading two copies of one decision is a drift
+// waiting to happen, and the drift would be silent: a `$spacer` here that no
+// longer lines up with `space-md` there is a page a few pixels wrong everywhere
+// and obviously wrong nowhere.
+//
+// It has to be the FIRST `@use`. Anything from `src/` loaded above it is already
+// configured with its defaults, and Sass refuses to go on.
+@use './setup';
+
+@use '../../src/base';
 @use '../../src/core';
 @use '../../src/semantic';
-// Layer 3, CONFIGURED — which is how a product customises a library without
-// writing a component. CoreUI ships a badge whose ink is a literal `#fff` and
-// whose fill comes from a utility; the adapter binds the two variables the
-// library does expose, and these two lines decide what they carry.
-//
-// The result is the library's own `.badge`, rendering as a paper chip. No new
-// class, no CSS of this product's own — just the token contract pointed
-// somewhere the library never imagined.
-@use '../../src/component' with (
-  $badge-fg: #{core.ref('fg-muted')},
-  $badge-radius: #{core.ref('radius-control')},
-
-  // THE CARD LOSES ITS BORDER, and this is the derivation reaching the build
-  // rather than a preference. `surfaceModel: elevated` with
-  // `surfaceSeparation: tones` means the card is already one rung lighter than
-  // the page — a rule around it separates the same thing twice, and the second
-  // one is the graphic noise that makes a quiet product look busy for a reason
-  // nobody can name. See `derivations.md` §R.
-  //
-  // `transparent` rather than a token, and it is the one case where that is not
-  // a literal sneaking in: what is wanted here is the ABSENCE of a line, and no
-  // colour expresses absence. Pointing it at `border-divider` would keep a
-  // visible rule, which is the thing being removed.
-  $surface-border-color: transparent,
-
-  // THE MODAL FLOATS, SO THE SHADOW IS ITS BOUNDARY. It was carrying a raised
-  // tone AND a hairline AND a shadow — three mechanisms for one edge, which is
-  // the default library look this system exists to avoid. `verify:mechanism`
-  // found it. See `derivations.md` §Z.
-  $overlay-border-color: transparent,
-
-  // TABS ARE WEIGHT ONLY, which is what this product's own FORM-SET.md
-  // recommends: `quiet` plus `editorial-premium` reach it at 13% of the answer
-  // space, and the enclosed tab the library ships is explicitly avoided at
-  // `quiet` because it is a heavy shape.
-  //
-  // The recommendation existed and the page rendered enclosed tabs anyway —
-  // a surface and a border marking the active one. Same class of bug as the
-  // card that was a rung lighter AND ringed: a decision recorded and never
-  // built.
-  //
-  // Weight only means the active tab differs by INK, and the ink change lives
-  // in `$nav-tab-fg-active`, which already points at the accent.
-  $nav-tab-bg-active: transparent,
-  $nav-tab-border-color-active: transparent,
-  $nav-tab-border-color-hover: transparent,
-
-  // THE PRIMARY ACTION IS SOLID, and it was briefly not.
-  //
-  // I invented a decision — `accentFill: saturated | washed` — as if those were
-  // two ways to paint a primary button. They are not. They are two ROLES:
-  //
-  //     filled chromatic  = the primary action, an INVITATION
-  //     washed chromatic  = a selected state, a CONDITION
-  //     filled neutral    = the secondary action
-  //     ghost             = the tertiary
-  //
-  // Painting the primary action washed collapsed two roles into one — the exact
-  // collision `check-roles()` looks for — and in this school the fix is not a
-  // second hue, because there is no second hue. It is a different TREATMENT.
-  //
-  // A washed primary also steals the scarcity the whole school runs on: one
-  // solid fill per viewport is the only thing saying "this is the way forward".
-  //
-  // So layer 3 is left at its defaults here, which already resolve to the solid
-  // accent through the monochrome role map. The block that used to sit here
-  // pointed `$button-bg` at `bg-accent-subtle` and is gone.
-
-);
+@use '../../src/component';
 @use '../../src/derive';
 @use '../../src/adapters/coreui';
 @use 'theme';

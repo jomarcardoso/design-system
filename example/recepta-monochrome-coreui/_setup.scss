@@ -1,0 +1,128 @@
+// example/recepta-monochrome-coreui/_setup.scss
+
+// =============================================================================
+// THE PRODUCT'S CONFIGURATION, IN ONE PLACE, FOR TWO COMPILATIONS
+// =============================================================================
+//
+// This file answers a problem that only appears once a product compiles the
+// LIBRARY as well as its own tokens.
+//
+// There are two outputs — `coreui.css`, which is CoreUI compiled with this
+// product's values, and `ds.css`, which is the tokens plus the adapter. They are
+// separate compilations, and every choice below is read by both. Written twice,
+// they would drift, and the drift would be silent: a `$spacer` here and a
+// `space-md` there that no longer line up produce a page that is a few pixels
+// wrong everywhere and obviously wrong nowhere.
+//
+// So the configuration lives here, and both entries load this first.
+//
+// -----------------------------------------------------------------------------
+// WHY `@forward … with ()` AND NOT `@use … with ()`
+// -----------------------------------------------------------------------------
+//
+// A Sass module can be configured exactly once, by whoever loads it first, and
+// only with `with ()`. `@forward … with ()` sets that configuration WITHOUT the
+// forwarding file having to be the one that uses the module: any entry that
+// loads this file first has configured all three, and can then `@use` them
+// under their own names as usual.
+//
+// The order below is the dependency order and is not decorative. `config` is
+// read by `core`, which is read by `component`, so it has to be configured
+// before either is loaded. `base` is configured with a type scale that `type`
+// generates, which is why `type` is a plain `@use` above it.
+//
+// THE CONSEQUENCE FOR AN ENTRY: this must be the first `@use` in the file. Load
+// anything from `src/` before it and that module is already configured with its
+// defaults, and Sass raises "this module was already loaded" — which is the
+// error working, not the error being in the way.
+// =============================================================================
+
+@use '../../src/type';
+
+// `config` COMES FIRST, and the order is not cosmetic: `src/_base.scss` opens
+// with `@use 'config'`, so forwarding `base` above this line loads `config`
+// with its defaults and Sass then refuses to configure it —
+//
+//     Error: This module was already loaded, so it can't be configured
+//            using "with".
+//
+// which is the language protecting an invariant that used to be protected by
+// nobody. Two compilations quietly disagreeing about the colour strategy is
+// exactly the failure this file exists to prevent, and Sass will not let it
+// happen silently.
+//
+// The load-bearing line. It tells `check-roles()` that action, selected and
+// link all resolving to the same pen is the design and not a collapse — and it
+// is what makes `accent` the emitted name rather than `action`.
+@forward '../../src/config' with (
+  $adapters: (coreui),
+  $colour-strategy: 'monochrome'
+);
+
+// The type scale, GENERATED from a ratio rather than inherited.
+//
+// `typeScale: 1.25` — a major third. The foundation ships Tailwind's hand-tuned
+// scale, which is a good scale and is also the one a large share of interfaces
+// built in the last few years already use. Keeping it would mean inheriting a
+// typographic signature this product never chose, on the surface where Editorial
+// products are supposed to be recognisable.
+@forward '../../src/base' with ($text: type.scale(1rem, 1.25));
+
+// -----------------------------------------------------------------------------
+// LAYER 3 — the naming contract, configured
+// -----------------------------------------------------------------------------
+//
+// This is how a product customises a library without writing a component.
+// CoreUI ships a badge whose ink is a literal `#fff` and whose fill comes from a
+// utility; the adapter binds the two variables the library does expose, and
+// these lines decide what they carry.
+//
+// It matters that this block is READ BY BOTH ENTRIES. The adapter turns these
+// into `--cui-*` bindings at runtime; the library entry can hand the same values
+// to CoreUI at Sass time. Two consumers, one decision.
+@forward '../../src/component' with (
+  $badge-fg: var(--app-fg-muted),
+  $badge-radius: var(--app-radius-control),
+
+  // THE CARD LOSES ITS BORDER, and this is the derivation reaching the build
+  // rather than a preference. `surfaceModel: elevated` with
+  // `surfaceSeparation: tones` means the card is already one rung lighter than
+  // the page — a rule around it separates the same thing twice, and the second
+  // one is the graphic noise that makes a quiet product look busy for a reason
+  // nobody can name. See `derivations.md` §R.
+  //
+  // `transparent` rather than a token, and it is the one case where that is not
+  // a literal sneaking in: what is wanted here is the ABSENCE of a line, and no
+  // colour expresses absence.
+  $surface-border-color: transparent,
+
+  // THE MODAL FLOATS, SO THE SHADOW IS ITS BOUNDARY. It was carrying a raised
+  // tone AND a hairline AND a shadow — three mechanisms for one edge, which is
+  // the default library look this system exists to avoid. `verify:mechanism`
+  // found it. See `derivations.md` §Z.
+  $overlay-border-color: transparent,
+
+  // THE TABS GO BACK TO A SHAPE THE LIBRARY ALREADY SHIPS.
+  //
+  // `FORM-SET.md` derived "weight only" for this product and it was built, and
+  // it FAILED on the first person who looked at the page: the active tab
+  // differed by ink alone. Recorded as a DEVIATION rather than argued with.
+  //
+  // The replacement is `.nav-underline-border`, CoreUI's own variant, and it is
+  // exactly the row in `claude-4.md`'s border table: a thin rule across the
+  // whole track, decorative and at rung 6, plus a solid accent mark under the
+  // chosen one, which is an INDICATOR of state and not a border. The track takes
+  // the divider rather than the general border.
+  $nav-border-color: var(--app-border-divider),
+
+  // THE FIELD IS A WELL. `surfaceModel: elevated` puts the card ABOVE the page,
+  // so a field left at `bg-surface` was the same tone as the card it sat in and
+  // the only thing marking it was a hairline — which is how a border ends up
+  // being asked to reach 3:1 alone and drags the whole ladder up behind it.
+  //
+  // claude-4.md describes what a field actually does, and it is two mechanisms
+  // on purpose: "fundo escavado (degrau 2, mais escuro que a página) E borda. O
+  // tom diz 'aqui cabe conteúdo', a borda diz 'clicável'". It is also what lets
+  // `border-interactive` sit at rung 7 rather than rung 8.
+  $field-bg: var(--app-bg-sunken)
+);

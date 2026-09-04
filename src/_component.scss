@@ -179,6 +179,34 @@ $button-radius: #{core.ref('radius-control')} !default;
 $button-height: #{core.ref('size-control')} !default;
 $button-pad-x: #{core.ref('pad-control-x')} !default;
 
+// THE SECONDARY ACTION, AND IT RESTS ON RUNG 3 — not on the solid neutral.
+//
+// This set did not exist, and its absence is why every adapter here rendered a
+// dark filled secondary. With nothing at layer 3 to read, an adapter generates
+// `.btn-secondary` from the `neutral` ROLE like any other theme colour, which
+// gives it `bg-neutral` — the one solid neutral, rung 9 — and `fg-on-neutral`,
+// which inverts. The result is a small dark button standing beside the primary,
+// competing with it, and nobody could say which rung it was on.
+//
+// claude-4.md is unambiguous: the resting fill of a neutral secondary is rung
+// 3, the same quiet fill a badge and a chip are made of, carrying ORDINARY ink
+// rather than inverted ink. That is the whole difference between a supporting
+// action and a second call to action. And when it feels like it disappears,
+// "a correção é subir o degrau, não adicionar contorno" — raise the rung, never
+// reach for an outline, because a filled secondary and an outlined one on the
+// same screen invent a fourth level of hierarchy nobody asked for.
+//
+// Hover and active move ONE RUNG each — 3 to 4 to 5 — which is the rule for
+// every state in a one-pigment system: change rung, never treatment.
+$button-secondary-bg: #{core.ref('bg-neutral-subtle')} !default;
+$button-secondary-fg: #{core.ref('fg-default')} !default;
+$button-secondary-bg-hover: #{core.ref('bg-neutral-subtle-hover')} !default;
+$button-secondary-bg-active: #{core.ref('bg-neutral-subtle-active')} !default;
+// A FILLED BUTTON HAS NO BORDER. The fill already delimits it, and a border
+// would be the redundant second mechanism. It is bound rather than left alone
+// because the library ships one and `transparent` is how you take it away.
+$button-secondary-border-color: transparent !default;
+
 // --- Input / field -----------------------------------------------------
 $field-bg: #{core.ref('bg-surface')} !default;
 $field-fg: #{core.ref('fg-default')} !default;
@@ -293,14 +321,80 @@ $code-fg: #{core.ref('fg-default')} !default;
 // and the admission test asks whether a consumer would plausibly override
 // this ONE part for ONE instance — which is true of the resting and selected
 // fills and not of the hover.
-$chip-bg: #{core.ref('bg-surface')} !default;
+// RUNG 3, not a surface level — and this was `bg-surface` until it was measured
+// on a page. A chip is an ELEMENT AT REST, which is the job rung 3 exists for;
+// `bg-surface` is a SURFACE LEVEL, the tone a card is made of. Pointing a chip
+// at it meant the chip was the card, so a chip inside a card vanished entirely
+// and a chip on the page measured ΔL 0.015 — invisible, with no border to save
+// it because chips correctly have none.
+//
+// This is the exact confusion claude-5.md opens with: two numbering systems
+// sharing the word "degrau". Surface levels are three or four ROLES with names;
+// rungs are twelve numbered steps. Never number a surface, and never hand a
+// component a surface.
+$chip-bg: #{core.ref('bg-neutral-subtle')} !default;
 $chip-fg: #{core.ref('fg-default')} !default;
-$chip-border-color: #{core.ref('border-color')} !default;
+// NO BORDER, because the tone does the whole job. The exception is written
+// down and is a CONTEXT rather than a preference: when a chip sits on a surface
+// that is already rung 3 — inside a filled card — its tone ties with the ground
+// and the mechanism has to change to an outline at rung 7. That is what
+// `.chip-outline` is for, and it is a decision the markup makes because only
+// the markup knows what the chip is standing on.
+$chip-border-color: transparent !default;
 $chip-radius: #{core.ref('radius-pill')} !default;
 $chip-height: #{core.ref('size-control-sm')} !default;
 $chip-pad-x: #{core.ref('pad-control-x')} !default;
-$chip-bg-selected: #{core.ref('bg-selected')} !default;
-$chip-fg-selected: #{core.ref('fg-on-selected')} !default;
+// A SELECTED CHIP IS WASHED, NOT SOLID, and this default was wrong until now.
+//
+// It read `bg-selected` + `fg-on-selected`, which in a school where `selected`
+// aliases onto the accent family — monochrome does exactly that, see
+// `_roles.scss` — resolves to the SOLID fill. So every filter chip a product
+// ticked came out as a full-strength accent block.
+//
+// That is the ladder of prominence collapsed, and it is the same mistake as the
+// washed primary button, running the other way:
+//
+//     filled chromatic = an INVITATION to act   (the primary action)
+//     washed chromatic = a CONDITION            (selected, chosen, current)
+//
+// A chip the user has ticked is a condition. Painting it solid puts a second
+// thing on the page claiming to be the way forward, and in a school with one
+// pigment that scarcity is the only hierarchy there is.
+//
+// `bg-selected-subtle` is the washed rung and it already existed. Its ink is
+// `fg-selected`, NOT `fg-on-selected`: the latter is measured against the solid
+// fill and is near-white, which on a pale wash is invisible. `(action-subtle,
+// link)` is a declared pair in `_semantic.scss`, so the gate measures this one.
+//
+// claude-4.md draws the line for when a selected state gets the accent at all:
+// independent, scattered items — filter chips — take the washed accent; a
+// closed, visually contiguous set — a segmented control — takes neutral
+// elevation inside a sunken track and spends no accent whatsoever.
+$chip-bg-selected: #{core.ref('bg-selected-subtle')} !default;
+$chip-fg-selected: #{core.ref('fg-selected')} !default;
+// The selected chip's EDGE — transparent by default, for the same reason the
+// resting one is: the washed accent is the mechanism, and a border beside it is
+// the second one. It is bound at all so that the OUTLINED case stays coherent:
+// a product that turned the resting chip into `.chip-outline` because it sits
+// on rung 3 needs the selected chip to keep an edge too, otherwise the outline
+// disappears at the moment of being chosen and the control stops looking like a
+// control. Such a product sets both, together.
+$chip-border-color-selected: transparent !default;
+
+// THE OUTLINED CHIP, which is not a style but a CONTEXT.
+//
+// claude-4.md names one exception to "chips have no border", and it is
+// mechanical: when the chip sits on a surface that is already rung 3 — inside a
+// filled card — its resting fill ties with the ground, and the boundary has to
+// move from tone to line. Rung 7, the same rung a field's edge uses, because
+// this is the same job: telling a user that a thing can be pressed.
+//
+// It stays outlined when SELECTED. Losing the line at the moment of being
+// chosen would take the boundary away exactly when the chip matters most, and
+// the accent then does two jobs at once — fill and edge — which is one idea
+// drawn twice rather than two mechanisms competing.
+$chip-outline-border-color: #{core.ref('border-interactive')} !default;
+$chip-outline-border-color-selected: #{core.ref('border-selected')} !default;
 
 // --- Progress ----------------------------------------------------------
 //
@@ -462,6 +556,28 @@ $nav-border-color: #{core.ref('border-color')} !default;
 $nav-radius: #{core.ref('radius-control')} !default;
 $nav-fg-disabled: #{core.ref('fg-disabled')} !default;
 $nav-fg-on-active: #{core.ref('fg-on-selected')} !default;
+// A NEUTRAL SURFACE, NOT THE WASHED ACCENT — and this looks like a mistake
+// every time someone reads it, so here is why it is not.
+//
+// The rule everywhere else in this system is that a chosen thing takes the
+// washed accent: a filter chip, a nav item, a selected row. claude-4.md carves
+// out exactly one exception and gives the test for it:
+//
+//   "quando o conjunto é fechado e visualmente contíguo, use elevação neutra;
+//    quando os itens são independentes e espalhados, como chips de filtro, use
+//    accent lavado."
+//
+// A tab strip is the closed, contiguous case. Only one tab can be active, the
+// tabs are adjacent, and POSITION already carries the state — so the accent
+// would be spent saying something the layout has said. What the chosen tab does
+// instead is come FORWARD: a neutral surface lifted out of the track, which is
+// how iOS and macOS draw a segmented control. It is accent saved, deliberately,
+// for the one action per screen that needs it.
+//
+// The corollary is that this only holds for the ENCLOSED and SEGMENTED shapes,
+// where there is a track to come out of. An underline tab has no track, so its
+// active state is an accent INDICATOR instead, which is a different token
+// again — see `derivations.md` on the two lines a tab set carries.
 $nav-tab-bg-active: #{core.ref('bg-surface')} !default;
 // The tab LABEL, and it is a different decision from `nav-fg-active`.
 //
@@ -604,6 +720,14 @@ $dropdown-shadow: #{core.ref('shadow-overlay')} !default;
 $dropdown-pad-x: #{core.ref('pad-control-x')} !default;
 $dropdown-pad-y: #{core.ref('pad-control-y')} !default;
 $dropdown-divider-color: #{core.ref('border-color-subtle')} !default;
+
+// --- divider ------------------------------------------------------------
+// --- rule (the standalone `<hr>`) ---------------------------------------
+// The standalone rule between blocks of content. Decorative, rung 6, outside
+// WCAG 1.4.11 — the one line on a page that is allowed to be quiet, and the
+// one that goes wrong most often because libraries render it as an OPACITY on
+// inherited ink rather than as a colour. A token cannot reach an opacity.
+$rule-border-color: #{core.ref('border-divider')} !default;
 $dropdown-header-fg: #{core.ref('fg-muted')} !default;
 $dropdown-item-bg-selected: #{core.ref('bg-selected')} !default;
 $dropdown-item-fg-selected: #{core.ref('fg-on-selected')} !default;

@@ -92,12 +92,12 @@ $recepta: (
   'on-accent': paper(0),
   'accent-hover': pen(800),
   'accent-active': pen(900),
-  accent-subtle: pen(50),
+  accent-subtle: pen(100),
   // The states of the subtle fill. `accentFill: washed` rests the primary
   // action here, and hover is where a fill moves — without these it would
   // either not react or jump to the solid and invert its own ink mid-gesture.
-  accent-subtle-hover: pen(100),
-  accent-subtle-active: pen(200),
+  accent-subtle-hover: pen(200),
+  accent-subtle-active: pen(300),
   'accent-text': pen(700),
 
   // Does not collapse onto the accent. The school says one HUE, not one state,
@@ -122,18 +122,87 @@ $recepta: (
   'border-subtle': paper(200),
   'border-strong': paper(500),
 
-  // The two ROLES, and they had been the same value until this audit — both
-  // falling back to `border`, which is one weight doing two jobs.
+  // THE TWELVE RUNGS, MAPPED ONTO THIS RAMP, MEASURED RATHER THAN GUESSED.
   //
-  //   divider     1.34:1 against the page, ΔL 0.095. A hairline between
-  //               ingredients, under a header, along an aside. It sits OUTSIDE
-  //               WCAG 1.4.11 and wants to stay quiet: past 2.5:1 the page
-  //               reads as striped.
-  //   interactive the resting edge of a field. It is what tells a user where to
-  //               click to type, so it is inside 1.4.11 and wants 1.6-2:1 at
-  //               rest — roughly twice the divider's separation.
+  // `claude-5.md` §5 gives the targets, and it makes one methodological point
+  // that this table depends on: THE WCAG RATIO IS THE WRONG INSTRUMENT FOR THE
+  // PALE END. The formula is logarithmic and compresses everything near 1.0 —
+  // 1.06 and 1.12 are a large perceptual difference and almost no numeric one.
+  // So rungs 1 to 7 are set by ΔL in OKLCH, which is linear in perception, and
+  // 8 to 12 by contrast ratio. Both columns are measured against paper(100),
+  // the page.
+  //
+  //   rung  job                          target         step  ΔL     ratio
+  //   ----  ---------------------------  -------------  ----  -----  -----
+  //    1    the page                     —              100   —      —
+  //    2    adjacent surface             ΔL 0.02–0.04   150   0.025  1.08
+  //    3    ELEMENT AT REST              ΔL 0.05–0.07   200   0.050  1.16
+  //    4    its hover                    one rung up    300   0.095  1.34
+  //    5    its pressed / selected       one more       400   0.155  1.63
+  //    6    divider                      ΔL 0.10–0.14   300   0.095  1.34
+  //    7    interactive border           ΔL 0.18–0.24   500   0.255  2.32
+  //    8    focus ring                   ≥ 3:1          pen600 —     4.10
+  //    9    the one solid neutral        ≥ 3:1          700   —      6.11
+  //   11    secondary ink                ≥ 4.5:1        800   —      9.72
+  //   12    heading ink                  ≥ 7:1          900   —     14.03
+  //
+  // Rung 3 is the one the school says is forgotten most often, and this theme
+  // forgot it in the direction that is hardest to see: the token existed and
+  // was correct, and nothing was bound to it. Every quiet fill on the page —
+  // the chip, the secondary button, the badge — was reaching for a SURFACE
+  // level instead. See the note on `neutral-subtle` above.
+  //
+  // Two honest notes about this ramp rather than about the model:
+  //
+  //   Rungs 4 and 6 land on the same step. The ramp has thirteen unevenly
+  //   spaced entries, not twelve even ones, and there is nothing between
+  //   paper(200) and paper(300). A component hover and a divider being the same
+  //   tone is harmless — they never touch — but it is a real limit, and if this
+  //   product ever needs them apart the ramp gains a step rather than the
+  //   theme gaining a literal.
+  //
+  //   paper(200) carries TWO jobs: the local excavation a field is made of, and
+  //   rung 3. claude-5.md's elevated-model table puts them one apart — input at
+  //   rung 2, element-at-rest at rung 3 — and on this ramp that is not reachable.
+  //   The page is paper(100) and the card is paper(50), so a field at the page's
+  //   own tone measures ΔL 0.014 inside a card, which is below every band in the
+  //   table; paper(200) gives 0.064 against the card and 0.050 against the page,
+  //   a real well in both places. This is the "o terceiro já é apertado" warning
+  //   arriving in practice, and the choice was made toward the value that is
+  //   visible rather than the one that is nominally on the right rung.
+  //
+  //   What makes it safe is that the two never have to be told apart by tone:
+  //   a field is a full-width box with a rung 7 border, a chip is a small pill
+  //   with none, and a secondary button is a control-height box with none. The
+  //   demonstration card in `index.html` puts all three side by side so that
+  //   claim can be checked by looking rather than argued.
+  //
+  //   Rung 7 lands slightly ABOVE its band: ΔL 0.255 against a target of
+  //   0.18–0.24, because paper(400) at 0.155 is below it and there is nothing
+  //   between. Erring high was chosen deliberately — this is the edge that
+  //   makes a field findable.
+  //
+  //   divider     rung 6. A hairline between ingredients, under a header, along
+  //               the rail. Decorative: it identifies nothing, so WCAG 1.4.11
+  //               does not reach it, and past 2.5:1 the page reads as striped.
+  //   interactive rung 7. The resting edge of a control.
+  //
+  // A CORRECTION, KEPT VISIBLE BECAUSE IT WAS MADE TWICE IN ONE DAY. This entry
+  // first read paper(400) under a comment claiming 1.4.11 "wants 1.6-2:1", which
+  // named a criterion and then stated a target that violates it. The fix went to
+  // paper(600) on a strict 3:1 reading — and overshot into rung 8, giving fields
+  // a focus-weight edge at rest, which is exactly the "borda de repouso" that
+  // claude-4.md says focus must never be confused with. paper(500) is rung 7.
+  //
+  // That leaves a tension worth stating out loud rather than burying: 2.32:1 is
+  // the school's number for this rung, and a strict reading of WCAG 1.4.11 asks
+  // 3:1 of any boundary that identifies a control. This product does not rely on
+  // the border alone — `$field-bg` is the SUNKEN tone, so a field is a recessed
+  // well AND an outlined box, which is the pairing claude-4.md describes and the
+  // reason the number is allowed to sit where the school puts it. If a field
+  // ever loses that fill, this rung has to go back up.
   'border-divider': paper(300),
-  'border-interactive': paper(400),
+  'border-interactive': paper(500),
   ring: pen(600),
 
   'shadow-raised': base.scale(shadow, '2xs'),

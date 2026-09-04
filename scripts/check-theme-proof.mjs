@@ -91,6 +91,11 @@ const walk = (d) => {
       walk(p);
       continue;
     }
+    // FILES are skippable too, not only directories, and this became necessary
+    // the day a product started compiling its own copy of the library beside its
+    // own stylesheets. `dist/` was skipped as a directory; a per-product library
+    // build has no directory to skip, only a name.
+    if (SKIP.has(e.name)) continue;
     if (/\.(scss|css)$/.test(e.name)) files.push(p);
   }
 };

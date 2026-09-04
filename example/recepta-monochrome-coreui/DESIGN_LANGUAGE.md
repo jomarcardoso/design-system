@@ -93,7 +93,7 @@ posture: quiet
 #
 # It spends no extra rung: the aside is separated by a rule, which keeps
 # `ladderSpend` at two and leaves rung three for the quiet neutral fill.
-frame: content-aside
+frame: app-frame
 
 # Supporting, not the content. The distinction the client drew: the photograph
 # here is not the product shot in a shop, the thing that wins you over. A recipe
@@ -521,11 +521,30 @@ Everything here is a **relation**, not a value. The concrete steps live in
 `patterns.json`, which is allowed to know which theme this is; these hold across
 every theme this language will ever have.
 
-- **The frame: a single column.** A header with a rule under it, the sheet, a
-  footer. No aside — a page of a recipe book is a page, and a persistent rail
+- **The frame: rail, reading column, aside.** A rail of destinations on the
+  left, the sheet in the middle, and an aside on the right for the controls that
+  help while cooking. Every separation is a RULE rather than a tone, which keeps
+  the whole two-rung budget for content.
+
+  **This reversed an earlier decision and the earlier one is worth keeping in
+  view.** This document said "a single column, no aside — a persistent rail
   would be the application announcing itself on a surface whose whole premise is
-  that it does not. The header is separated by a rule rather than by a tone,
-  which keeps the two-rung budget for content.
+  that it does not", and that was right about the risk and wrong about the
+  remedy. The product has four destinations. Four destinations and nowhere to
+  put them is not restraint, it is a navigation problem left unsolved, and the
+  reader pays for it on every visit.
+
+  What survives from the old decision is the constraint, not the prohibition:
+  **the rail spends no rung.** No fill of its own, no shadow, no tone — a
+  hairline, and the current destination in washed accent. A nav is already
+  distinguishable by position, density and typography, so a surface tone would
+  buy separation that three other channels have already provided, at the price
+  of the one rung this product has left. That rung belongs to the quiet neutral
+  fill that badges, chips and resting secondary actions are made of.
+
+  This is also a deliberate departure from the app-frame row of `derivations.md`
+  §W, which allocates three rungs to a frame of this shape. Recorded rather than
+  silently taken.
 - **Measure: 45–75 characters**, held at 68ch. A method that runs wider loses the
   line return exactly when the reader looks away at the pan.
 - **Disclosure: progressive.** Controls appear when they are needed — the cook

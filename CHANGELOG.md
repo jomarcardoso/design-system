@@ -23,6 +23,85 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### The two guards that ask where a value came from
+
+`check-derived` and `check-coverage` are new, and neither moves a byte. They
+close the two failure modes that have no symptom on a page.
+
+**`verify:derived`** — for every class a product's ledger allows, no colour
+property may resolve to a value the LIBRARY chose. It found six on the first
+run, all of them live:
+
+- `.btn-ghost-danger` took CoreUI's SOLID red with white ink for its pressed and
+  disabled states. The delete button, which had just been promoted to a ghost
+  tertiary, turned into a full-strength red button for as long as a finger was
+  on it — changing family mid-gesture, which is exactly what the school forbids.
+  The adapter's ghost block bound rest and hover and stopped there.
+- `.btn-link` had a hard-coded `#6d7d9c` for disabled ink.
+- `.navbar-toggler-icon` carries its colour inside an SVG data URI, where a
+  `var()` is never substituted. The adapter now uses the URI as a MASK and
+  paints with `background-color`, which is the general answer whenever a library
+  encodes a colour inside an asset.
+
+**`verify:coverage`** — every class the ledger lists as `raw`, `styled` or
+`wrapped` must exist in the compiled CSS. This is the guard that makes pruning
+safe: a library does not error on a variant it was not asked to generate, the
+class simply does not exist and the markup falls back to something plausible.
+
+### A product compiles its own copy of the library
+
+`dist/coreui.css` was compiled against `example/demo/themes`, and every product
+that loaded it inherited the demonstration's indigo in every value CoreUI
+derives at Sass time — button hovers, focus triplets, every alert and table
+variant. Nothing looked wrong, because the adapter rebinds what it knows to
+name. Everything it did not name was another product's colour.
+
+`templates/entry-coreui.scss` is the fix and is the deliverable: the entry a
+product copies, with three marked lines. `example/recepta-monochrome-coreui/`
+is the first consumer, and its `.btn-primary` moved from the demo's indigo to
+its own pen.
+
+The product's configuration now lives in one `_setup.scss` that BOTH
+compilations load, and Sass enforces it: a module can only be configured by
+whoever loads it first, so a second entry that tried to configure it differently
+fails with "this module was already loaded". The duplication is not discouraged,
+it is impossible.
+
+`coreui-entry.scss` stays as the demonstration page's build and carries a
+warning not to copy it.
+
+### Ranks, rungs and the things that were on the wrong ladder
+
+Measuring the page against the school's own numbers found four bindings pointing
+at a SURFACE LEVEL where they should have pointed at a RUNG. Surface levels are
+three or four named roles; rungs are twelve numbered steps, and the two share a
+word in Portuguese and in English alike.
+
+- **The secondary button rested on rung 9**, the one solid neutral, with
+  inverted ink — a small dark button competing with the primary. Layer 3 named
+  no secondary button at all, so the adapter generated it from the `neutral`
+  theme role like any other colour. New `$button-secondary-*` puts it on rung 3
+  with ordinary dark ink, and hover and active move one rung each.
+- **A chip's resting fill was `bg-surface`**, the tone a card is made of, so a
+  chip inside a card vanished and a chip on the page measured ΔL 0.015. Now
+  rung 3.
+- **A selected chip was solid accent.** `bg-selected` aliases onto the accent
+  family in the monochrome school, so every ticked chip came out a
+  full-strength block. Now `bg-selected-subtle` with accent ink — filled is an
+  invitation, washed is a condition.
+- **`$chip-border-color-selected` was unbound**, so a bordered chip lost its
+  border the moment it was ticked.
+
+### To upgrade
+
+`$button-secondary-*`, `$chip-border-color-selected` and
+`$chip-outline-border-color*` are new layer 3 names. An adapter that binds
+`.btn-secondary` from the theme-colour loop should read them instead; the
+CoreUI adapter shows the shape.
+
+Products compiling CoreUI should move to `templates/entry-coreui.scss`. A shared
+library build is a shared theme, and `verify:derived` will now say so.
+
 ---
 
 ## [0.9.0]

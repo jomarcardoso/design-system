@@ -30,7 +30,7 @@ are listed with the condition that selects each.
 | `ladderSpend` | `2` |
 | `iconStyle` | `outline` |
 | `posture` | `quiet` |
-| `frame` | `content-aside` |
+| `frame` | `app-frame` |
 | `imagery` | `supporting` |
 | `disclosure` | `progressive` |
 | `accessibility` | `AA` |
@@ -414,11 +414,10 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **side panel over the index** | 17% | `content-aside`, `progressive` | triage; review work |
+| **overlay** | 50% | `progressive` | a quick look that returns |
 
 Not available alongside it:
 
-- **overlay** — this family takes one treatment per product
 - **its own page** — this family takes one treatment per product
 
 ### Navigation placement
@@ -439,7 +438,11 @@ One treatment for the whole product.
 
 | take | reach | because | use it when |
 |---|---|---|---|
-| **static, scrolls away** | 100% | — | anything |
+| **none** | 33% | `app-frame` | where the rail carries identity |
+
+Not available alongside it:
+
+- **static, scrolls away** — this family takes one treatment per product
 
 ### The aside
 
@@ -536,8 +539,8 @@ than omitted so their absence reads as derived rather than forgotten.
 
 ## How much the answers actually decided
 
-**33** of 41 families took a form the answers narrowed.
-**8** fell back to a form no answer rules out.
+**34** of 41 families took a form the answers narrowed.
+**7** fell back to a form no answer rules out.
 
 The second number is the one to read. A family there is one where this
 product could have taken any shape in the catalogue and got the same

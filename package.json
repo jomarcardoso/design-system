@@ -22,7 +22,7 @@
     "build:demo-themes": "sass --no-source-map --style=compressed example/demo/demo.scss dist/demo-themes.css",
     "build:example-booking": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function,global-builtin,color-functions --load-path=. --load-path=node_modules example/ds-booking-bulma/ds.scss example/ds-booking-bulma/ds.css",
     "build:example-caderninho": "sass --no-source-map --load-path=. example/ds-meu-caderninho-daisyui-phase3/ds.scss example/ds-meu-caderninho-daisyui-phase3/ds.css",
-    "build:example-recepta": "sass --no-source-map --silence-deprecation=if-function,global-builtin --load-path=. --load-path=node_modules example/recepta-monochrome-coreui/ds.scss example/recepta-monochrome-coreui/ds.css",
+    "build:example-recepta": "npm run build:example-recepta-lib && sass --no-source-map --silence-deprecation=if-function,global-builtin --load-path=. --load-path=node_modules example/recepta-monochrome-coreui/ds.scss example/recepta-monochrome-coreui/ds.css",
     "verify:chain": "node scripts/check-chain.mjs example/recepta-monochrome-coreui",
     "docs:foundations": "node scripts/docs-foundations.mjs example/recepta-monochrome-coreui/ds.css --out example/recepta-monochrome-coreui/FOUNDATIONS.md",
     "build:example-carmageddon": "sass --no-source-map --quiet-deps --silence-deprecation=import,if-function --load-path=. --load-path=node_modules example/ds-carmageddon-nescss-phase3/ds.scss example/ds-carmageddon-nescss-phase3/ds.css",
@@ -36,7 +36,7 @@
     "build:preline": "tailwindcss -i preline-entry.css -o dist/preline.css",
     "build:tailwind": "tailwindcss -i tailwind.css -o dist/tailwind.css",
     "build:themes": "node scripts/build-themes.mjs",
-    "build:tokens": "sass --no-source-map --style=compressed src/ds.scss dist/ds.css && npm run build:demo-themes && node scripts/check-collisions.mjs dist/ds.css && node scripts/check-dangling-refs.mjs dist/ds.css dist/demo-themes.css && node scripts/check-state-families.mjs dist/ds.css && node scripts/check-layer3-bypass.mjs src/adapters && node scripts/check-token-grammar.mjs src/_component.scss && node scripts/check-custom-prop-interpolation.mjs src example && node scripts/check-theme-proof.mjs example --skip=bootstrap-5.3.8-examples && node scripts/check-adapter-forms.mjs",
+    "build:tokens": "sass --no-source-map --style=compressed src/ds.scss dist/ds.css && npm run build:demo-themes && node scripts/check-collisions.mjs dist/ds.css && node scripts/check-dangling-refs.mjs dist/ds.css dist/demo-themes.css && node scripts/check-state-families.mjs dist/ds.css && node scripts/check-layer3-bypass.mjs src/adapters && node scripts/check-token-grammar.mjs src/_component.scss && node scripts/check-custom-prop-interpolation.mjs src example && node scripts/check-theme-proof.mjs example --skip=bootstrap-5.3.8-examples,coreui.css,bootstrap.css && node scripts/check-adapter-forms.mjs",
     "build:water": "tailwindcss -i water-entry.css -o dist/water.css",
     "demo": "npm run build:tokens && npm run build:demo-themes && npm run build:adapters && npm run build:bootstrap && npm run build:daisyui && npm run build:pico && npm run build:bulma && npm run build:tailwind && npm run build:flowbite && npm run build:preline && npm run build:water && npm run build:mvp && npm run build:nescss && npm run build:coreui && npm run build:themes && npm run export:tokens",
     "demo:examples": "npm run build:bootstrap && npm run build:daisyui && npm run build:example-hot-tone && npm run build:example-cyberpunk && npm run build:example-carmageddon && npm run build:example-caderninho && npm run docs:carmageddon && npm run docs:caderninho && npm run build:example-itau && npm run build:example-booking && npm run build:example-caderno && npm run build:example-recepta && npm run docs:foundations && npm run docs:form-set && npm run docs:decisions",
@@ -44,7 +44,7 @@
     "docs:carmageddon": "node scripts/generate-pattern-docs.mjs --ledger example/ds-carmageddon-nescss-phase3/patterns.json --out example/ds-carmageddon-nescss-phase3/docs.html --stylesheet ./ds.css --title \"DS Carmageddon\"",
     "export:tokens": "node scripts/export-tokens.mjs",
     "lint": "stylelint \"src/**/*.scss\" \"app.css\" \"tailwind.css\" \"example/**/app.css\" \"example/**/patterns.scss\" \"example/**/theme.scss\" \"example/demo/*.scss\"",
-    "verify": "npm run build:tokens && npm run lint && npm run verify:examples && npm run verify:utilities && npm run verify:examples-refs && npm run verify:forms && npm run verify:archetype && npm run verify:mechanism && npm run verify:applied && npm run verify:chain && npm run audit:contrast",
+    "verify": "npm run build:tokens && npm run lint && npm run verify:examples && npm run verify:utilities && npm run verify:examples-refs && npm run verify:forms && npm run verify:archetype && npm run verify:mechanism && npm run verify:coverage && npm run verify:derived && npm run verify:applied && npm run verify:chain && npm run audit:contrast",
     "verify:examples": "node scripts/verify-patterns.mjs example/ds-hot-tone-bootstrap-phase1 --ledger example/ds-hot-tone-bootstrap-phase1/patterns.json && node scripts/verify-patterns.mjs example/ds-cyberpunk-bulma-phase2 --ledger example/ds-cyberpunk-bulma-phase2/patterns.json && node scripts/verify-patterns.mjs example/ds-carmageddon-nescss-phase3 --ledger example/ds-carmageddon-nescss-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-meu-caderninho-daisyui-phase3 --ledger example/ds-meu-caderninho-daisyui-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-itau-shadcn-phase3 --ledger example/ds-itau-shadcn-phase3/patterns.json && node scripts/verify-patterns.mjs example/ds-booking-bulma --ledger example/ds-booking-bulma/patterns.json && node scripts/verify-patterns.mjs example/recepta-monochrome-coreui --ledger example/recepta-monochrome-coreui/patterns.json",
     "verify:patterns": "node scripts/verify-patterns.mjs",
     "verify:utilities": "node scripts/check-utilities.mjs example/ds-itau-shadcn-phase3/index.html example/ds-itau-shadcn-phase3/tw.css example/ds-itau-shadcn-phase3/ds.css example/ds-itau-shadcn-phase3/app.css",
@@ -58,7 +58,10 @@
     "verify:applied": "node scripts/check-decisions-applied.mjs example/recepta-monochrome-coreui && node scripts/check-decisions-applied.mjs example/ds-caderno-accent-driven",
     "docs:decisions": "node scripts/docs-decisions.mjs",
     "report:orphans": "node scripts/check-orphan-tokens.mjs example/recepta-monochrome-coreui",
-    "verify:mechanism": "node scripts/check-mechanism.mjs example/recepta-monochrome-coreui"
+    "verify:mechanism": "node scripts/check-mechanism.mjs example/recepta-monochrome-coreui",
+    "verify:derived": "node scripts/check-derived.mjs example/recepta-monochrome-coreui --library example/recepta-monochrome-coreui/coreui.css",
+    "verify:coverage": "node scripts/check-coverage.mjs example/recepta-monochrome-coreui --library example/recepta-monochrome-coreui/coreui.css",
+    "build:example-recepta-lib": "sass --no-source-map --quiet-deps --silence-deprecation=import,global-builtin,color-functions,if-function --load-path=. --load-path=node_modules example/recepta-monochrome-coreui/coreui.scss example/recepta-monochrome-coreui/coreui.css"
   },
   "devDependencies": {
     "@picocss/pico": "^2.1.1",

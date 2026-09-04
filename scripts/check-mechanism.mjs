@@ -56,7 +56,18 @@ if (!dir || !existsSync(join(dir, 'ds.css'))) {
 // whether the thing it paints can be clicked.
 const INTERACTIVE = new Set([
   'input', 'form-control', 'form-select', 'form-check-input', 'form-switch',
-  'btn', 'button', 'select', 'textarea', 'range', 'chip', 'tag-interactive'
+  'btn', 'button', 'select', 'textarea', 'range', 'chip', 'tag-interactive',
+  // An ENCLOSED TAB is the same shape as an outlined button: the border draws
+  // the tab, and the surface is what brings the chosen one forward out of the
+  // track. Two jobs, not two mechanisms — and the alternative reading flags
+  // every product that binds CoreUI's or Bootstrap's tab at all, which is a
+  // guard reporting the library's anatomy as a design error.
+  //
+  // The line that had to be drawn before adding this: the CONTAINER around a
+  // tab set is not interactive and is not exempt. `nav-tabs` itself — the
+  // track — still gets checked; it is `nav-tabs-link`, the tab, that is a
+  // control.
+  'nav-tabs-link', 'nav-enclosed-link'
 ]);
 
 // Floating by nature: a shadow is the whole point, and these legitimately carry

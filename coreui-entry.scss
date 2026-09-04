@@ -1,7 +1,26 @@
 // coreui-entry.scss
 
 // =============================================================================
-// COREUI BUILD ENTRY  (OPTIONAL)
+// COREUI BUILD ENTRY — FOR THE DEMONSTRATION PAGE ONLY
+// =============================================================================
+//
+// ⚠ DO NOT COPY THIS FILE INTO A PRODUCT. Copy `templates/entry-coreui.scss`.
+//
+// This one compiles `dist/coreui.css` against `example/demo/themes`, which is
+// correct for `example/coreui.html` — a page whose whole job is to show the
+// library wearing the demonstration theme — and wrong for anything else.
+//
+// The reason is not stylistic. CoreUI derives hundreds of values from
+// `$primary` and its siblings AT SASS TIME with `shade-color()` and
+// `tint-color()`, and those become literals. A shared build therefore carries
+// ONE theme's colours into every product that loads it: `.btn-primary` in
+// `dist/coreui.css` is `rgb(31%, 22%, 96%)`, the demo's indigo, and it was
+// loaded by a real product for months. Nothing looked wrong, because the
+// adapter rebinds every property it knows to name — and everything it did not
+// name was the demonstration's colour.
+//
+// `scripts/check-derived.mjs` fails the build when that reaches a class a
+// product's ledger allows. The template is what makes it pass by construction.
 // =============================================================================
 //
 //     sass --load-path=. --load-path=node_modules coreui-entry.scss dist/coreui.css
@@ -139,6 +158,22 @@ $headings-line-height: var(--app-line-height-heading);
 // in the product's own base layer. What the entry can do is make the bottom one
 // deliberate rather than inherited.
 $headings-margin-bottom: var(--app-space-sm);
+
+// THE HORIZONTAL RULE, which is a token decision the library expresses as an
+// OPACITY and therefore hides.
+//
+// `_reboot` renders `hr` as `color: inherit` at 25% opacity, so every rule on a
+// page is a quarter-strength wash of whatever text colour it happens to inherit
+// — which means it changes weight depending on where it sits, and no divider
+// token can reach it. A product that wants a controlled hairline has no choice
+// but to override, and that is how `.rule` classes get invented.
+//
+// Setting the opacity to 1 here hands the colour back to the adapter, which
+// binds it to `border-divider` like every other decorative line. `$hr-color`
+// stays `inherit` on purpose: the adapter sets `color` on the element, and a
+// literal here would be a build-time value that a theme flip could not move.
+$hr-opacity: 1;
+$hr-margin-y: var(--app-space-lg);
 
 // Component WEIGHT and SHAPE — compiled, and the residue that keeps a themed
 // build still reading as Bootstrap. A badge at weight 700 is a chip shouting;

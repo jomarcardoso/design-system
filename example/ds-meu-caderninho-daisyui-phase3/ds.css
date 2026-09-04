@@ -25,17 +25,17 @@
       font-size: var(--app-font-size-sm);
       color: var(--app-fg-default);
       cursor: pointer;
-      background: var(--app-bg-surface);
-      border: var(--app-border-width) solid var(--app-border-color);
+      background: var(--app-bg-neutral-subtle);
+      border: var(--app-border-width) solid transparent;
       border-radius: var(--app-radius-pill);
     }
     .mc-chip:hover {
       background: var(--app-bg-sunken);
     }
     .mc-chip[aria-pressed=true] {
-      color: var(--app-fg-on-selected);
-      background: var(--app-bg-selected);
-      border-color: var(--app-bg-selected);
+      color: var(--app-fg-selected);
+      background: var(--app-bg-selected-subtle);
+      border-color: var(--app-bg-selected-subtle);
     }
     .mc-chip-group {
       display: flex;
