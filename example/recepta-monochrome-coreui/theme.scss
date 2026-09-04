@@ -271,8 +271,24 @@ $recepta: (
 // title and the photograph on the recipe are the same shape, which is coherent
 // with the image being support rather than the thing being sold.
 $structure: (
+  // THE RADIUS SCALE, WITH STEPS THAT ARE STEPS.
+  //
+  // It was 4px and 6px, and a reader said the product looked like it had a
+  // single radius by mistake. It did: two pixels apart is one value written
+  // twice, and `check-radius` now fails a build for it. The archetype had asked
+  // for restraint and the theme had turned restraint into sameness.
+  //
+  // The fix is not more radii. It is the same four jobs with real distance
+  // between them — a mark, a control, a surface, and the pill. The control stays
+  // sharp, because that is what Editorial means here; the card is the one that
+  // had to move.
+  'radius-sm': 2px,
   'radius-control': 4px,
-  'radius-surface': 6px,
+  'radius-surface': 10px,
+
+  // The photograph takes the CONTROL radius rather than the surface radius, on
+  // purpose: it sits inside the card rather than being one, and a picture as
+  // round as its container reads as a second card.
   'radius-image': 4px,
   'ratio-media': 1,
   'size-control': calc(var(--app-space-unit) * 11),

@@ -371,6 +371,15 @@ $_derived: (
   // specificity, later in source order, so it wins — and it changes nothing for
   // a product that leaves the layer 3 defaults alone, because those defaults
   // are the same layer 2 tokens the loop just used.
+  // ONE CORNER FOR EVERY CONTROL. CoreUI rounds a button with its own general
+  // radius and an input with the same one, and layer 3 names `radius-control`
+  // for exactly this family — so a product that moves `radius-control` moved the
+  // input and not the button, and the two ended up 2px apart. Two pixels is
+  // invisible as a decision and visible as a mistake.
+  .btn {
+    --cui-btn-border-radius: #{component.$button-radius};
+  }
+
   .btn-primary {
     --cui-btn-bg: #{component.$button-bg};
     --cui-btn-border-color: #{component.$button-border-color};
@@ -624,8 +633,47 @@ $_derived: (
     border-color: #{component.$rule-border-color};
   }
 
+  // A CHECKBOX IS A FIELD, and it was being drawn from a different vocabulary.
+  //
+  // CoreUI gives it `--cui-form-check-bg: var(--cui-body-bg)` — the PAGE — while
+  // the text input took the field fill. So inside a card the input was a
+  // recessed well and the checkbox beside it was page-coloured, two answers to
+  // one question, and the checkbox's edge measured well under the 3:1 that WCAG
+  // 1.4.11 asks of the boundary that identifies a control. On a checkbox that
+  // border is the entire control: there is nothing else to see when it is empty.
+  //
+  // Input, textarea, select and checkbox are one family and take one fill and
+  // one border. The CHECKED state stays accent, which is correct and was never
+  // in question.
+  .form-check-input {
+    --cui-form-check-bg: #{component.$field-bg};
+
+    // THE BORDER, SET THROUGH THE GENERAL VARIABLE, and that is not laziness.
+    //
+    // `--cui-form-check-input-border-color` exists in the adapter and CoreUI
+    // never reads it: the compiled rule is `border: var(--cui-border-width) solid
+    // var(--cui-border-color)`, the DIVIDER. So the checkbox was outlined at rung
+    // 6 while every other field was at rung 7, and its edge measured 1.39:1
+    // against the card — well under the 3:1 WCAG 1.4.11 asks of the boundary
+    // that identifies a control. On a checkbox that border is the entire
+    // control: an empty box has nothing else to show.
+    //
+    // Rebinding the general variable INSIDE this rule is the only way in, and it
+    // is safe precisely because it is scoped — the page-wide divider is
+    // untouched. The dead binding is left in place at `:root` for the moment
+    // `check-adapter-forms` learns to catch a variable the library declares and
+    // never consumes.
+    --cui-border-color: #{component.$field-border-color};
+  }
+
   .form-control,
   .form-select {
+    // THE SAME CORNER AS A BUTTON. CoreUI draws a field with `--cui-border-radius`
+    // — the library general radius, 6px here — while a button takes
+    // `radius-control`, 4px. Two controls of the same family, rounded
+    // differently, and the input looked softer than the button beside it for a
+    // reason nobody would have found by reading the theme.
+    border-radius: #{component.$field-radius};
     background-color: #{component.$field-bg};
     color: #{component.$field-fg};
     border-color: #{component.$field-border-color};

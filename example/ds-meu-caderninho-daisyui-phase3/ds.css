@@ -170,6 +170,7 @@
     --app-border-width: 1px;
     --app-border-style: solid;
     --app-border: var(--app-border-width) var(--app-border-style) var(--app-border-color);
+    --app-radius-sm: 2px;
     --app-radius-control: 6px;
     --app-radius-surface: 12px;
     --app-radius-pill: 9999px;
@@ -361,6 +362,7 @@
     --app-bg-selected-subtle: #faede5;
     --app-bg-surface-hover: #fdf9f1;
     --app-bg-surface-active: #efeae2;
+    --app-bg-sunken: #efeae2;
     --app-border-color: #ddd6ce;
     --app-border-color-subtle: #efeae2;
     --app-border-color-strong: #b6aea6;
@@ -385,6 +387,7 @@
     --app-bg-selected-subtle: #e7dad2;
     --app-bg-surface-hover: #eae6de;
     --app-bg-surface-active: #dcd7cf;
+    --app-bg-sunken: #dcd7cf;
     --app-border-color: #cac4bc;
     --app-border-color-subtle: #dcd7cf;
     --app-border-color-strong: #a49c94;
@@ -409,6 +412,7 @@
     --app-bg-selected-subtle: #fff3ea;
     --app-bg-surface-hover: #fffff7;
     --app-bg-surface-active: #f5f0e8;
+    --app-bg-sunken: #f5f0e8;
     --app-border-color: #e2dcd4;
     --app-border-color-subtle: #f5f0e8;
     --app-border-color-strong: #bbb3ac;

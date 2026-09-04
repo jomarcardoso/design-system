@@ -328,15 +328,18 @@
           "raw": {
             "coreui": [
               "nav",
-              "nav-underline-border",
+              "nav-tabs",
               "nav-justified"
             ]
           },
           "dos": [
-            "Section-level navigation inside a single recipe."
+            "Section-level navigation inside a single recipe.",
+            "Inactive labels one ink below the active one, so the chosen tab dominates instead of competing."
           ],
           "donts": [
-            "Not for moving between recipes — that is a route, not a tab."
+            "Not for moving between recipes — that is a route, not a tab.",
+            "Never an accent border on the active tab. That is the focus ring.",
+            "Never a second tab design elsewhere in the product."
           ],
           "responsive": "Below the tablet breakpoint these stack as headings in the flow; tabs sit at the top of a phone screen and compete with the header.",
           "trajectory": {
@@ -346,7 +349,7 @@
             "form": "stacked headings below the tablet breakpoint"
           },
           "role": "chrome",
-          "notes": "THE SHAPE CHANGED IN 0.9.0 AND THE REASON IS WORTH KEEPING. `FORM-SET.md` derived \"weight only\" for this product — `quiet` plus `editorial-premium` reach it — and it was built: the active tab differed by INK ALONE. It failed on the first person who looked at the page, who could not tell which section was open, with no visual impairment involved. The catalogue own \"avoid when\" for weight-only says the affordance is subtle; this is what subtle costs. The replacement is still not custom CSS: `nav-underline-border` is CoreUI own variant and it is exactly claude-4.md row for a tab — a thin divider across the whole TRACK, decorative and at rung 6, and a solid accent MARK under the chosen tab, which is an indicator of state rather than a border. They are two lines with two jobs, and they need separate tokens because a theme flip breaks one of them if they share."
+          "notes": "ONE TAB DESIGN, and for a while the product had two. An underline tab and an enclosed tab are the same component drawn two ways, and a design system tolerates two patterns for \"selected\" across a whole product — with a rule saying when each applies — never two for one component. The enclosed one is official. Its active state also used to be an ACCENT border, which is the vocabulary of a focus ring: a keyboard user could not distinguish selected from focused, which is an accessibility failure rather than a preference. The accent outline is now reserved for focus, and  fails the build if any component takes it back. What carries the state instead is what a closed, contiguous set should use — the chosen tab comes FORWARD out of the track, neutral surface and neutral edge, with position doing the rest."
         },
         "rail": {
           "intent": "Moving between areas of the notebook: the caderno itself, exploring, writing, the shopping list.",
@@ -451,12 +454,13 @@
           },
           "notes": "CoreUI is the reason this ledger can have a chip at all — the only library of the ten here that ships a real selectable one, and the adapter binds every one of its variables to layer 3. NO BORDER: the resting fill is RUNG 3, which is the rung the ladder reserves for an element at rest, and that tone is the whole boundary. It pointed at bg-surface until 0.9.0 — a SURFACE LEVEL, the tone a card is made of — so a chip on the page measured a lightness difference of 0.015 and a chip inside a card vanished outright. The fix was the fill, not a border; see filter-on-surface for the case where a border IS the answer. SELECTED IS WASHED ACCENT, and that default was wrong too: bg-selected aliases onto the accent family in this school, so every ticked chip came out a full-strength block.",
           "dos": [
-            "Ticked chips are washed accent, and there may be several — a condition is not scarce the way an invitation is.",
-            "`aria-pressed` on every one. The visual state is a tone, and a tone is not announced."
+            "Ticked chips sit two rungs BELOW the resting ones — darker, never lighter. In an elevated model a chosen thing that recedes is the one direction the eye reads as wrong.",
+            "aria-pressed on every one. The visual state is a tone, and a tone is not announced.",
+            "Inside a card, put data-surface=\"surface\" on the container and change nothing else."
           ],
           "donts": [
-            "Never a border at rest. Add one only if the resting tone ever lands on a surface that matches it.",
-            "Never as a label. A read-only tag is `badge/neutral`, and giving it a chip shape promises an interaction that is not there."
+            "Never a border, at rest or when chosen. An accent edge is the focus ring; a neutral edge is a second mechanism for a boundary the fill already drew.",
+            "Never as a label. A read-only tag is badge/neutral."
           ],
           "role": "target"
         },
@@ -480,23 +484,14 @@
         },
         "filter-on-surface": {
           "intent": "The same filter, sitting on a card or any surface already at rung 3.",
-          "state": "raw",
-          "raw": {
+          "state": "forbidden",
+          "reason": "IT WAS A WORKAROUND FOR A BUG, and the bug is fixed. The outlined chip existed because a chip inside a card resolved to the same tone as the card — its fill was calibrated against the PAGE and nothing rescoped it on the way in — so a border was added to make it visible. That border was not a decision, it was a bandage. Surface contexts now shift every rung by the distance between the two grounds, so the ordinary filled chip works in both places with different values resolved automatically. What is left is what should have been there: one chip design, two states, both fills. The clue that it was always wrong: the product had seven colours inside a component that needs four.",
+          "instead": "filter",
+          "matches": {
             "coreui": [
-              "chip",
-              "chip-outline",
-              "chip-clickable"
+              "chip-outline"
             ]
-          },
-          "notes": "THE ONE EXCEPTION IN claude-4.md, and it is a context rather than a taste: \"Chips não têm borda no caso padrão... A exceção é quando o chip vive sobre uma superfície que já está no degrau 3. Aí o tom do chip empata com o fundo e você troca de mecanismo: chip contornado com borda no degrau 7.\" A rung 3 fill on a rung 3 ground has no boundary left, so the boundary moves to a line. Only the markup can know this, because only the markup knows what the chip is standing on — which is exactly why it is a second pattern and not a modifier.",
-          "dos": [
-            "Inside a card, a panel, or any filled container.",
-            "Switch the whole group at once. Two mechanisms in one row of chips is worse than either."
-          ],
-          "donts": [
-            "Never on the page background. There the fill already works and the outline is a second mechanism for one boundary."
-          ],
-          "role": "target"
+          }
         }
       },
       "multiplicity": "one"

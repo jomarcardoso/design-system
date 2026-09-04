@@ -257,7 +257,13 @@ $overlay-backdrop: #{core.ref('bg-overlay')} !default;
 // --- Navigation --------------------------------------------------------
 // Navigation CHROME, not an inline link: a sidebar item that came out toffee
 // would read as a hyperlink in a list. `fg-link` is for text inside prose.
-$nav-fg: #{core.ref('fg-default')} !default;
+// AN INACTIVE TAB IS QUIETER THAN BODY TEXT, and it was the same ink.
+//
+// At the body ink an inactive tab has the same weight as the paragraph below
+// it, so the ACTIVE tab has to compete rather than simply dominate — the strip
+// reads as four equal things one of which happens to be coloured. Rung 11 is
+// where a label that is present but not chosen belongs.
+$nav-fg: #{core.ref('fg-muted')} !default;
 // Hover on a nav item PREVIEWS selection, so it comes from the `selected`
 // family. It defaulted to `fg-link-hover` — the link colour — which is how a
 // product ended up previewing one hue and committing to another on the same
@@ -396,7 +402,21 @@ $chip-fg-selected: #{core.ref('fg-selected')} !default;
 //
 // For a palette that CAN wash, this adds an accent edge around an accent fill,
 // which is one idea drawn twice rather than two mechanisms competing.
-$chip-border-color-selected: #{core.ref('border-selected')} !default;
+// TRANSPARENT, and it was the accent for one build.
+//
+// The reasoning then: a palette with no wash routes the selected fill to the
+// neutral family, so an accent EDGE keeps the state recognisably branded and a
+// line needs no chroma headroom. Both halves were true and the conclusion was
+// still wrong, because a thin accent outline is what a FOCUS RING looks like —
+// a keyboard user then cannot separate 'this chip is chosen' from 'my keyboard
+// is here'. `check-focus-collision` exists to stop that specific reasoning from
+// being followed again.
+//
+// What replaced it is cheaper and needs no token at all: the selected fill sits
+// two rungs below the resting one, so both states are a FILL and only the depth
+// changes. Same mechanism, different value — which is what the school asks of
+// every state.
+$chip-border-color-selected: transparent !default;
 
 // THE OUTLINED CHIP, which is not a style but a CONTEXT.
 //
@@ -411,7 +431,12 @@ $chip-border-color-selected: #{core.ref('border-selected')} !default;
 // the accent then does two jobs at once — fill and edge — which is one idea
 // drawn twice rather than two mechanisms competing.
 $chip-outline-border-color: #{core.ref('border-interactive')} !default;
-$chip-outline-border-color-selected: #{core.ref('border-selected')} !default;
+// NEUTRAL, like the resting one. An outlined chip that turns its edge to the
+// accent when chosen is wearing a focus ring, and `check-focus-collision` fails
+// the build for it. The selection is carried by the FILL, which is what the
+// plain chip does too — the outline is a context adjustment, not a second
+// design with its own state vocabulary.
+$chip-outline-border-color-selected: #{core.ref('border-interactive')} !default;
 
 // --- Progress ----------------------------------------------------------
 //
@@ -604,7 +629,16 @@ $nav-tab-bg-active: #{core.ref('bg-surface')} !default;
 // measured 1.03:1 in a real build; the contrast gate never saw it, because it
 // measures layer 2 pairs and this is a layer 3 crossing.
 $nav-tab-fg-active: #{core.ref('fg-selected')} !default;
-$nav-tab-border-color-active: #{core.ref('border-selected')} !default;
+// NEUTRAL, AND IT WAS THE ACCENT. An accent outline around a pale fill is the
+// visual vocabulary of a FOCUS RING, and a component that borrows it makes
+// 'this tab is selected' and 'this tab has keyboard focus' indistinguishable.
+// That is an accessibility failure, not a matter of taste, and it is why the
+// accent outline is now reserved: see `scripts/check-focus-collision.mjs`.
+//
+// The enclosed tab does not need it. It carries its state by coming FORWARD out
+// of the track — a surface and an edge, both neutral — which is the pattern for
+// a closed contiguous set and spends no accent at all.
+$nav-tab-border-color-active: #{core.ref('border-color')} !default;
 $nav-tab-border-color-hover: #{core.ref('border-color-subtle')} !default;
 $nav-underline-width: #{core.ref('border-width')} !default;
 
@@ -843,7 +877,13 @@ $checkbox-width: #{core.ref('size-control')} !default;
 // checked state by hand and the contrast gate never sees it.
 $checkbox-bg-checked: #{core.ref('bg-selected')} !default;
 $checkbox-fg-checked: #{core.ref('fg-on-selected')} !default;
-$checkbox-radius: #{core.ref('radius-control')} !default;
+// A CHECKBOX IS A MARK, NOT A CONTROL — for the purposes of its corners.
+//
+// It took the control radius, which is right for a 40px button and wrong for a
+// 16px square: the same value is a much larger share of a small corner, and the
+// box ends up looking like a circle that changed its mind. `radius-sm` is the
+// rung the school reserves for exactly this — checkbox, badge, small indicator.
+$checkbox-radius: #{core.ref('radius-sm')} !default;
 $field-label-font-family: #{core.ref('font-family-heading')} !default;
 $field-input-font-family: #{core.ref('font-family-display')} !default;
 // The placeholder is an EXAMPLE of what to type, so it is written in the same

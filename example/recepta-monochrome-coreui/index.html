@@ -107,23 +107,31 @@
 
         <hr>
 
-        <!-- THE LIBRARY'S OWN UNDERLINE-BORDER TAB, justified.
+        <!-- THE ENCLOSED TAB, which is the product's one and only tab.
 
-             "Weight only" was the derived recommendation, it was built, and it
-             failed: the active tab differed by INK ALONE and the selection was
-             hard to find even with normal vision. The deviation is recorded in
-             ds.scss rather than quietly reversed.
+             Two things were wrong before, and only one of them was the shape.
 
-             This variant is not a custom tab — it is CoreUI's own, and it is
-             the row in claude-4.md's border table: a thin divider across the
-             whole TRACK, decorative and at rung 6, and a solid accent MARK
-             under the chosen tab, which is an indicator of state and not a
-             border. Two lines, two jobs, two tokens.
+             THE SHAPE: for a while this page carried an underline tab and the
+             product carried an enclosed one, which is the same component drawn
+             two ways. A design system tolerates two patterns for "selected" in
+             a whole product, with a rule saying when each applies. It does not
+             tolerate two for one component.
+
+             THE COLOUR: the enclosed tab marked its active state with an ACCENT
+             border, and that is the vocabulary of a focus ring. A keyboard user
+             could not tell "this tab is selected" from "this tab is focused" —
+             an accessibility failure rather than a matter of taste. The accent
+             outline is now reserved for focus and nothing else, enforced by
+             `check-focus-collision`.
+
+             What is left carries the state the way a closed contiguous set
+             should: the chosen tab COMES FORWARD out of the track, on a neutral
+             surface with a neutral edge, and position does the rest. Accent is
+             saved for the one action the screen exists for.
 
              Justified because a notebook's tabs are equal-width index tabs cut
              into the edge of the page, not a row of links. -->
-        <nav class="nav nav-underline-border nav-justified"
-          aria-label="Seções da receita">
+        <nav class="nav nav-tabs nav-justified" aria-label="Seções da receita">
           <a class="nav-link active" href="#ingredientes"
             aria-current="page">Ingredientes</a>
           <a class="nav-link" href="#preparo">Modo de preparo</a>
@@ -365,7 +373,8 @@
       -->
       <section class="section">
         <h2>Os mesmos controles, um degrau acima</h2>
-        <p class="mb-0">A mesma barra de filtros e o mesmo campo, agora dentro de
+        <p class="mb-0">A mesma barra de filtros e o mesmo campo, agora dentro
+          de
           uma superfície mais clara. Compare com a seção acima: o campo é
           idêntico, os marcadores não.</p>
 
@@ -391,11 +400,11 @@
                 porque o fundo do card empata com o tom de repouso do chip</p>
               <div class="d-flex flex-wrap gap-2" role="group"
                 aria-label="Filtrar por marcador, dentro do card">
-                <button class="chip chip-outline chip-clickable active"
+                <button class="chip chip-clickable active"
                   type="button" aria-pressed="true">Bolos</button>
-                <button class="chip chip-outline chip-clickable" type="button"
+                <button class="chip chip-clickable" type="button"
                   aria-pressed="false">Salgados</button>
-                <button class="chip chip-outline chip-clickable" type="button"
+                <button class="chip chip-clickable" type="button"
                   aria-pressed="false">Da vó</button>
               </div>
             </div>
@@ -408,7 +417,8 @@
             </div>
 
             <div>
-              <p class="text-body-tertiary small mb-2">E os três degraus de ação,
+              <p class="text-body-tertiary small mb-2">E os três degraus de
+                ação,
                 para conferir que continuam legíveis aqui</p>
               <div class="d-flex flex-wrap gap-2 align-items-center">
                 <button class="btn btn-primary btn-sm"

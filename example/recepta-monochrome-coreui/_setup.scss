@@ -101,7 +101,10 @@
 // to CoreUI at Sass time. Two consumers, one decision.
 @forward '../../src/component' with (
   $badge-fg: var(--app-fg-muted),
-  $badge-radius: var(--app-radius-control),
+  // A badge is a MARK, so it takes the mark radius rather than the control one.
+  // It was pointed at the control radius back when there was no smaller step to
+  // point at.
+  $badge-radius: var(--app-radius-sm),
 
   // THE CARD LOSES ITS BORDER, and this is the derivation reaching the build
   // rather than a preference. `surfaceModel: elevated` with
@@ -143,5 +146,26 @@
   // on purpose: "fundo escavado (degrau 2, mais escuro que a página) E borda. O
   // tom diz 'aqui cabe conteúdo', a borda diz 'clicável'". It is also what lets
   // `border-interactive` sit at rung 7 rather than rung 8.
-  $field-bg: var(--app-bg-sunken)
+  $field-bg: var(--app-bg-sunken),
+
+  // A SELECTED CHIP GOES DEEPER, IT DOES NOT GAIN AN EDGE.
+  //
+  // With no wash available, `bg-selected-subtle` routes to the quiet neutral
+  // rung — the same rung a RESTING chip sits on. Two states, one colour.
+  //
+  // The first fix was an accent border on the selected one, and it failed a
+  // different rule: a thin accent outline is the vocabulary of a focus ring, so
+  // a keyboard user could not tell 'chosen' from 'focused'.
+  // `check-focus-collision` catches that now.
+  //
+  // This is the fix that needs nothing new: both states are a FILL and only the
+  // depth changes, with the chosen one two rungs DOWN. Darker, never lighter —
+  // in an elevated model a chosen thing that recedes is the one direction the
+  // eye reads as wrong without being able to name it.
+  //
+  // It lives at layer 3 rather than in the role map because the school collapses
+  // `action-subtle` and `selected-subtle` onto one token, and `check-roles`
+  // correctly refuses to let a product split them.
+  $chip-bg-selected: var(--app-bg-neutral-subtle-active),
+  $chip-fg-selected: var(--app-fg-heading)
 );

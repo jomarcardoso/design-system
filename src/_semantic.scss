@@ -132,6 +132,13 @@ $_type-scale-steps: (
     // --- Radius ---------------------------------------------------------
     // Named by what they wrap, not by size. `radius-md` forces every consumer
     // to re-decide which size a button is; `radius-control` decides once.
+    // The fourth entry, and it was missing. A checkbox, a badge and a small
+    // indicator are not controls — they are marks, and a control's radius on a
+    // 16px square reads as a circle attempt that did not commit. The school's
+    // table has four jobs and layer 2 had three, so every product was rounding
+    // its checkbox with the button's value and nobody had a token to say
+    // otherwise.
+    'radius-sm': base.scale(radius, xs),
     'radius-control': base.scale(radius, md),
     'radius-surface': base.scale(radius, xl),
     'radius-pill': base.scale(radius, full),
@@ -847,6 +854,19 @@ $_shifts: (
   'bg-action-subtle', 'bg-action-subtle-hover', 'bg-action-subtle-active',
   'bg-selected-subtle',
   'bg-surface-hover', 'bg-surface-active',
+
+  // `bg-sunken` IS in this list, and it is the entry that fixes the worst
+  // symptom of not having one: a form field two levels inside a card came out
+  // DARKER THAN THE PAGE BEHIND THE CARD. An element nested inward had ended up
+  // deeper than the plane below it, and the screen stopped making physical
+  // sense.
+  //
+  // It happened because a local excavation was written as an absolute value. A
+  // hole is relative to the thing it is cut into: one rung below the card when
+  // it is in a card, one rung below the page when it is on the page. That is a
+  // different job from `bg-page` and `bg-surface`, which ARE grounds and stay
+  // put — which is why they are not here and this is.
+  'bg-sunken',
   'border-color', 'border-color-subtle', 'border-color-strong',
   'border-divider', 'border-interactive'
 );

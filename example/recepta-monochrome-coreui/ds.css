@@ -3,8 +3,9 @@
     --app-border-width: 1px;
     --app-border-style: solid;
     --app-border: var(--app-border-width) var(--app-border-style) var(--app-border-color);
+    --app-radius-sm: 2px;
     --app-radius-control: 4px;
-    --app-radius-surface: 6px;
+    --app-radius-surface: 10px;
     --app-radius-pill: 9999px;
     --app-radius-image: 4px;
     --app-ratio-media: 1;
@@ -178,6 +179,7 @@
     --app-bg-neutral-subtle-active: #d4c7b5;
     --app-bg-surface-hover: #f7f3ec;
     --app-bg-surface-active: #f0eae2;
+    --app-bg-sunken: #f0eae2;
     --app-border-color: #e3dbd0;
     --app-border-color-subtle: #f0eae2;
     --app-border-color-strong: #baa68a;
@@ -198,6 +200,7 @@
     --app-bg-neutral-subtle-active: #bfb2a0;
     --app-bg-surface-hover: #e2ddd7;
     --app-bg-surface-active: #dbd5cc;
+    --app-bg-sunken: #dbd5cc;
     --app-border-color: #cec6bb;
     --app-border-color-subtle: #dbd5cc;
     --app-border-color-strong: #a59277;
@@ -218,6 +221,7 @@
     --app-bg-neutral-subtle-active: #d7cab8;
     --app-bg-surface-hover: #fbf6f0;
     --app-bg-surface-active: #f4ede5;
+    --app-bg-sunken: #f4ede5;
     --app-border-color: #e7ded3;
     --app-border-color-subtle: #f4ede5;
     --app-border-color-strong: #bda98d;
@@ -407,6 +411,7 @@
     --app-bg-neutral-subtle-active: #504940;
     --app-bg-surface-hover: #302d2a;
     --app-bg-surface-active: #3c3a37;
+    --app-bg-sunken: #110f0c;
     --app-border-color: #474541;
     --app-border-color-subtle: #32302d;
     --app-border-color-strong: #62605d;
@@ -424,6 +429,7 @@
     --app-bg-neutral-subtle-active: #3b342c;
     --app-bg-surface-hover: #1c1a17;
     --app-bg-surface-active: #282623;
+    --app-bg-sunken: #030201;
     --app-border-color: #32302d;
     --app-border-color-subtle: #1f1d1a;
     --app-border-color-strong: #4c4a47;
@@ -441,6 +447,7 @@
     --app-bg-neutral-subtle-active: #615a50;
     --app-bg-surface-hover: #3f3d3a;
     --app-bg-surface-active: #4c4a47;
+    --app-bg-sunken: #1f1d1a;
     --app-border-color: #575551;
     --app-border-color-subtle: #423f3c;
     --app-border-color-strong: #74716e;
@@ -751,6 +758,9 @@
   .btn-link {
     --cui-btn-disabled-color: var(--app-fg-disabled);
   }
+  .btn {
+    --cui-btn-border-radius: var(--app-radius-control);
+  }
   .btn-primary {
     --cui-btn-bg: var(--app-bg-accent);
     --cui-btn-border-color: var(--app-border-accent);
@@ -792,9 +802,9 @@
     --cui-chip-border-color: transparent;
     --cui-chip-bg: var(--app-bg-neutral-subtle);
     --cui-chip-color: var(--app-fg-default);
-    --cui-chip-active-bg: var(--app-bg-accent-subtle);
-    --cui-chip-active-border-color: var(--app-border-accent);
-    --cui-chip-active-color: var(--app-fg-accent);
+    --cui-chip-active-bg: var(--app-bg-neutral-subtle-active);
+    --cui-chip-active-border-color: transparent;
+    --cui-chip-active-color: var(--app-fg-heading);
     --cui-chip-hover-bg: var(--app-bg-surface-hover);
     --cui-chip-hover-color: var(--app-fg-default);
   }
@@ -805,9 +815,9 @@
     --cui-chip-hover-bg: var(--app-bg-surface-hover);
     --cui-chip-hover-color: var(--app-fg-default);
     --cui-chip-hover-border-color: var(--app-border-interactive);
-    --cui-chip-active-bg: var(--app-bg-accent-subtle);
-    --cui-chip-active-color: var(--app-fg-accent);
-    --cui-chip-active-border-color: var(--app-border-accent);
+    --cui-chip-active-bg: var(--app-bg-neutral-subtle-active);
+    --cui-chip-active-color: var(--app-fg-heading);
+    --cui-chip-active-border-color: var(--app-border-interactive);
   }
   .tooltip {
     --cui-tooltip-bg: var(--app-fg-default);
@@ -847,15 +857,20 @@
   }
   .navbar-toggler-icon {
     background-image: none;
-    background-color: var(--app-fg-default);
+    background-color: var(--app-fg-muted);
     mask: var(--cui-navbar-toggler-icon-bg) center/100% 100% no-repeat;
     -webkit-mask: var(--cui-navbar-toggler-icon-bg) center/100% 100% no-repeat;
   }
   hr {
     border-color: var(--app-border-divider);
   }
+  .form-check-input {
+    --cui-form-check-bg: var(--app-bg-sunken);
+    --cui-border-color: var(--app-border-interactive);
+  }
   .form-control,
   .form-select {
+    border-radius: var(--app-radius-control);
     background-color: var(--app-bg-sunken);
     color: var(--app-fg-default);
     border-color: var(--app-border-interactive);
@@ -880,10 +895,10 @@
   }
   .badge {
     --cui-badge-color: var(--app-fg-muted);
-    --cui-badge-border-radius: var(--app-radius-control);
+    --cui-badge-border-radius: var(--app-radius-sm);
   }
   .nav {
-    --cui-nav-link-color: var(--app-fg-default);
+    --cui-nav-link-color: var(--app-fg-muted);
     --cui-nav-link-hover-color: var(--app-fg-accent);
     --cui-nav-link-disabled-color: var(--app-fg-disabled);
   }
@@ -896,7 +911,7 @@
     --cui-nav-tabs-border-color: var(--app-border-divider);
     --cui-nav-tabs-link-active-color: var(--app-fg-accent);
     --cui-nav-tabs-link-active-bg: var(--app-bg-surface);
-    --cui-nav-tabs-link-active-border-color: var(--app-border-accent);
+    --cui-nav-tabs-link-active-border-color: var(--app-border-color);
     --cui-nav-tabs-link-hover-border-color: var(--app-border-color-subtle);
   }
   .nav-underline {
@@ -905,18 +920,18 @@
   }
   .nav-underline-border {
     --cui-nav-underline-border-link-active-color: var(--app-fg-accent);
-    --cui-nav-underline-border-link-color: var(--app-fg-default);
+    --cui-nav-underline-border-link-color: var(--app-fg-muted);
     --cui-nav-underline-border-link-disabled-color: var(--app-fg-disabled);
     --cui-nav-underline-border-border-color: var(--app-border-divider);
   }
   .nav-enclosed {
     --cui-nav-enclosed-bg: var(--app-bg-sunken);
     --cui-nav-enclosed-border-radius: var(--app-radius-control);
-    --cui-nav-enclosed-link-color: var(--app-fg-default);
+    --cui-nav-enclosed-link-color: var(--app-fg-muted);
     --cui-nav-enclosed-link-disabled-color: var(--app-fg-disabled);
     --cui-nav-enclosed-link-active-color: var(--app-fg-accent);
     --cui-nav-enclosed-link-active-bg: var(--app-bg-surface);
-    --cui-nav-enclosed-link-active-border-color: var(--app-border-accent);
+    --cui-nav-enclosed-link-active-border-color: var(--app-border-color);
   }
   .breadcrumb {
     --cui-breadcrumb-divider-color: var(--app-fg-muted);

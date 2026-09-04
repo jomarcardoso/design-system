@@ -245,6 +245,18 @@ $_brand: (
       'action-subtle': $quiet,
       'action-subtle-hover': $quiet-h,
       'action-subtle-active': $quiet-a,
+      // SELECTED STAYS ON THE SAME RUNG HERE, AND THAT IS THE SCHOOL SPEAKING.
+      //
+      // The obvious move is to send it two rungs deeper, so a chosen chip is
+      // darker than a resting one without needing a border. `check-roles`
+      // refused: in the monochrome school `action-subtle` and `selected-subtle`
+      // COLLAPSE ONTO ONE EMITTED TOKEN, and giving them different values is the
+      // product asking for a school it did not choose.
+      //
+      // The guard is right. Which rung a selected CHIP uses is a component
+      // decision, not a role decision, and it belongs at layer 3 —
+      // `$chip-bg-selected` — where one product can go deeper without splitting
+      // a role the school says is single. See `monochrome.md` §12.
       'selected-subtle': $quiet
     ));
   }

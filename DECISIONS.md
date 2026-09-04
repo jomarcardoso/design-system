@@ -63,7 +63,7 @@ consequence, never the token.
 | key | values | derived in | checked by |
 |---|---|---|---|
 | `secondaryGoverns` | — | §Y | `check-archetype-split` |
-| `radius` | `square` · `subtle` · `rounded` · `pill` | §Z | `check-archetype-split`, `check-custom-prop-interpolation`, `check-dumb-components`, `check-token-grammar` |
+| `radius` | `square` · `subtle` · `rounded` · `pill` | §Z | `check-archetype-split`, `check-custom-prop-interpolation`, `check-dumb-components`, `check-radius`, `check-token-grammar` |
 | `elevation` | `borders` · `soft-shadows` · `projected-shadows` | §B, §W, §Y | `check-archetype-split` |
 | `elevationCarrier` | — | §K, §N, §R, §W | `check-chain` |
 | `surfaceSeparation` | `lines` · `tones` · `shadows` | §B, §X | `check-decisions-applied`, `check-mechanism` |

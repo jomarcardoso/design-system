@@ -23,6 +23,74 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### The accent outline belongs to focus
+
+`check-focus-collision` reserves it. A component marked as selected by a thin
+accent border around a pale fill is drawn in the vocabulary of a focus ring, and
+a keyboard user then cannot tell "this is the section I am in" from "this is
+where my keyboard is" — at the moment when telling them apart matters most.
+
+It is arrived at innocently: the wash comes out nearly white because pigment and
+paper are near-complementary, a border is added so the state can be seen, and the
+only border colour that reads as "selected" is the accent. Three reasonable steps.
+This repository took all three, twice, and the second time the check caught it.
+
+Two exemptions, both principled. A border on ONE side is an INDICATOR — the mark
+under an active tab — and cannot be mistaken for a ring that surrounds. An
+OUTLINED BUTTON wears its accent edge at rest, so it has not borrowed a state's
+vocabulary; its focus ring sits outside with an offset.
+
+The fix it forced is better than the border was: both chip states are a FILL and
+only the depth changes, with the chosen one two rungs DOWN. Darker, never
+lighter — in an elevated model a chosen thing that recedes is the one direction
+the eye reads as wrong without being able to name it.
+
+### `check-radius` — is there a scale, or one value written three times?
+
+A product said its interface "looked like it had a single corner radius" and
+assumed that was a mistake. It was: `radius-control: 4px` beside
+`radius-surface: 6px`. The archetype had asked for restraint and the build had
+turned restraint into sameness.
+
+`radius-sm` is new in layer 2 — the fourth job the school names and the contract
+did not have, for a checkbox, a badge, a small indicator. A control's radius on a
+16px square reads as a circle that did not commit.
+
+The check also reports CONCENTRIC corners: an outer radius should be the inner
+radius plus the padding between them, or nested corners diverge. Report, never a
+gate, and only where the padding is small enough for the two arcs to see each
+other — the first version fired on all eight products with 24px of card padding,
+which is the rule applied where it does not bite.
+
+### One family of form controls
+
+The checkbox was drawn from a different vocabulary than the input beside it:
+CoreUI reads `--cui-border-color` — the DIVIDER — for a checkbox, so its edge sat
+at rung 6 and measured 1.39:1 against the card, well under the 3:1 WCAG 1.4.11
+asks of the boundary that identifies a control. On a checkbox that border IS the
+control; an empty box has nothing else to show. It now shares the field's fill,
+edge and rung with every other control.
+
+The adapter had a `--cui-form-check-input-border-color` binding all along and
+CoreUI never reads it — a dead binding that looked like coverage.
+
+Buttons and inputs also disagreed about their corners by 2px, because CoreUI
+rounds both with its general radius while layer 3 names `radius-control` for the
+family. Both now take it.
+
+### `bg-sunken` moves with its surface
+
+The surface contexts gained the token that fixes the worst symptom of not having
+had them: a field two levels inside a card came out DARKER THAN THE PAGE BEHIND
+THE CARD. An element nested inward had ended up deeper than the plane below it.
+A hole is relative to what it is cut into.
+
+### An inactive tab is quieter than body text
+
+`$nav-fg` was the body ink, so an inactive tab had the same weight as the
+paragraph under it and the active one had to compete rather than dominate. Rung
+11 is where a label that is present but not chosen belongs.
+
 ### Rungs move with the surface they sit on
 
 `emit-theme()` now emits a context per surface — `[data-surface="surface"]`,
