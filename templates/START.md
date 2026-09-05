@@ -10,12 +10,17 @@ and fighting it.
 ## What arrived
 
 ```
-src/styles/ds/            the foundation. Do not edit it — see "the one rule" below
-src/styles/ds/templates/  the entry template you copy and then own
-scripts/ds/               the checks. Every one takes a directory argument
-.claude/skills/           how to write pages in this school, for whoever writes them
-VENDORED.json             which commit this came from, and a hash per file
+<styles>/            the foundation. Do not edit it — see "the one rule" below
+<styles>/templates/  the entry template you copy and then own
+<scripts>/           the checks. Every one takes a directory argument
+<skills>/            how to write pages in this school, for whoever writes them
+VENDORED.json        the commit this came from, a hash per file, and the three
+                     roots above — which is why later runs need no arguments
 ```
+
+The three roots default to `src/styles/ds`, `scripts/ds` and `.claude/skills`,
+and a project that keeps its styles somewhere else passes `--styles=`,
+`--scripts=` and `--skills=` on the first copy only.
 
 ## The one rule
 
@@ -32,10 +37,11 @@ Everything you need to change is reachable without touching it:
 | what the library compiles with | your entry, copied from `templates/` |
 | which classes are allowed | `patterns.json` |
 
-If something genuinely needs a change inside `ds/`, make it, and then run
-`node scripts/ds/vendor.mjs . --check` before every update. It tells local edits
-and upstream changes apart, so a fix made here is never silently lost. Better:
-take it upstream.
+If something genuinely needs a change inside `ds/`, make it, and then run the
+check FROM THE FOUNDATION'S OWN CHECKOUT — `node scripts/vendor.mjs <this project>
+--check` — before every update. The script stays where the foundation is, because
+it reads both sides to tell local edits and upstream changes apart, and a copy
+of it here would only ever see one. Better still: take the change upstream.
 
 ---
 

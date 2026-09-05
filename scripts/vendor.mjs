@@ -70,7 +70,12 @@ const dry = args.includes('--dry-run');
 if (!dest) {
   console.error(`usage: node scripts/vendor.mjs <destination> [--check] [--dry-run]
 
-  <destination>  the consuming project's root, e.g. ../recepta-book/www`);
+  <destination>  the consuming project's root, e.g. ../recepta-book/notebook-layout
+  --styles       where the foundation lands       (default src/styles/ds)
+  --scripts      where the checks land            (default scripts/ds)
+  --skills       where the authoring skills land  (default .claude/skills)
+
+  The three roots are recorded in VENDORED.json and reused, so pass them once.`);
   process.exit(1);
 }
 if (!existsSync(dest)) {
@@ -78,20 +83,51 @@ if (!existsSync(dest)) {
   process.exit(1);
 }
 
+const hash = (p) => createHash('sha256').update(readFileSync(p)).digest('hex').slice(0, 16);
+
+const bold = (s) => `[1m${s}[0m`;
+const dim = (s) => `[2m${s}[0m`;
+
+const manifestPath = join(dest, 'VENDORED.json');
+const previous = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : null;
+
 // -----------------------------------------------------------------------------
 // WHAT GOES WHERE
 // -----------------------------------------------------------------------------
 //
-// Destinations are relative to the project root. They are conventions rather
-// than requirements — a project that wants its styles somewhere else edits this
-// map once, and `--check` keeps working, because drift is tracked per recorded
-// path rather than per assumed one.
+// Destinations are relative to the project root, and only their ROOTS are a
+// convention. `src/styles/ds` fits an application; a library whose whole reason
+// to exist IS the styles keeps them at `styles/ds` and has no `src/` at all.
+//
+// So the roots are arguments rather than constants:
+//
+//     --styles=styles/ds          the foundation, and the entry templates
+//     --scripts=scripts/ds        the checks
+//     --skills=.claude/skills     the authoring skills
+//
+// A project passes them once. They are recorded in the manifest and reused on
+// every later run, which is also what keeps `--check` honest: drift is compared
+// per RECORDED path, so a layout that had to be re-typed and was typed
+// differently would read as "every file deleted, a new set added" rather than
+// as the ordinary update it is.
+const flag = (name, fallback) => {
+  const hit = args.find((a) => a.startsWith(`--${name}=`));
+  return hit ? hit.slice(name.length + 3).replace(/\/+$/, '') : fallback;
+};
+
+const recorded = (previous && previous.layout) || {};
+const layout = {
+  styles: flag('styles', recorded.styles || 'src/styles/ds'),
+  scripts: flag('scripts', recorded.scripts || 'scripts/ds'),
+  skills: flag('skills', recorded.skills || '.claude/skills')
+};
+
 const PARCELS = [
-  { from: 'src', to: 'src/styles/ds', what: 'the foundation — layers 1, 2, 3 and every adapter' },
-  { from: 'templates', to: 'src/styles/ds/templates', what: 'the entry template a product copies and owns' },
-  { from: 'scripts', to: 'scripts/ds', what: 'the checks', skip: /^vendor\.mjs$|^docs-|^generate-/ },
-  { from: 'skills/compose-monochrome', to: '.claude/skills/compose-monochrome', what: 'how to write pages in this school' },
-  { from: 'skills/compose-archetype', to: '.claude/skills/compose-archetype', what: 'how to keep the archetype' }
+  { from: 'src', to: layout.styles, what: 'the foundation — layers 1, 2, 3 and every adapter' },
+  { from: 'templates', to: `${layout.styles}/templates`, what: 'the entry template a product copies and owns' },
+  { from: 'scripts', to: layout.scripts, what: 'the checks', skip: /^vendor\.mjs$|^docs-|^generate-/ },
+  { from: 'skills/compose-monochrome', to: `${layout.skills}/compose-monochrome`, what: 'how to write pages in this school' },
+  { from: 'skills/compose-archetype', to: `${layout.skills}/compose-archetype`, what: 'how to keep the archetype' }
 ];
 
 const START = 'templates/START.md';
@@ -109,14 +145,6 @@ const files = (dir, skip) => {
   walk(dir);
   return out;
 };
-
-const hash = (p) => createHash('sha256').update(readFileSync(p)).digest('hex').slice(0, 16);
-
-const bold = (s) => `[1m${s}[0m`;
-const dim = (s) => `[2m${s}[0m`;
-
-const manifestPath = join(dest, 'VENDORED.json');
-const previous = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, 'utf8')) : null;
 
 let commit = 'unknown';
 try { commit = execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim(); } catch {}
@@ -181,7 +209,7 @@ if (check) {
 }
 
 // --- copy ---------------------------------------------------------------------
-const manifest = { source: 'design-system', commit, date: new Date().toISOString().slice(0, 10), files: {} };
+const manifest = { source: 'design-system', commit, date: new Date().toISOString().slice(0, 10), layout, files: {} };
 let written = 0;
 for (const f of planned) {
   manifest.files[f.out] = hash(f.src);
