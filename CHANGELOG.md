@@ -23,6 +23,64 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### Fixed — two border tokens were being derived as solid fills
+
+`border-divider` and `border-interactive` were added to layer 2 when the four
+naming axes were settled, and were never given a rule in `derive.dark()`. A key
+that map does not name falls through every branch to the last one, which treats
+it as a base fill and lifts it to the far end of the ramp.
+
+So on dark, every divider in the system was a **near-white line at 10.4:1
+against the page**, and every input border with it. The `.border` utility was
+the loudest case, because it is the one a product types by hand around a panel.
+
+Nothing could see it. A border is not text, so the contrast gates ignore it;
+`check-ladder` measures fills. This is the third time the dark map has proved to
+be part of a token's DEFINITION rather than an optional extra — `field` was the
+second — so `dark()` now also has a catch-all for any key beginning `border-`,
+which routes it to the ordinary line distance instead of to the fill branch.
+
+**To upgrade:** rebuild. If your theme sets its own `border-*` keys, check them
+in the dark theme; a value that was previously near-white will drop by design.
+
+### `check-utility-colour.mjs` — the utilities nobody has used yet
+
+`audit-contrast` renders the demo pages and measures what is on them, which
+leaves one structural blind spot: **a utility nobody has used yet is
+unmeasured.** It ships anyway — a library emits every `.bg-*`, `.text-*` and
+`.border-*` in its role map — and it gets used in month three, by hand, by
+someone who reasonably assumes a class the design system compiled is a class the
+design system stands behind.
+
+The new check builds a probe page carrying every colour utility the product's
+own library build emits, renders it on each ground `patterns.json` declares, in
+each theme, and asks four questions:
+
+    DANGLING     the colour computes to transparent — a `var()` nothing
+                 defines. The literal "I used it and nothing happened".
+    INERT        the value is there and is indistinguishable from the ground.
+                 Same experience, different cause.
+    UNREADABLE   a text utility below the floor on a ground the product uses.
+    INVERTED     a LINE that is a hairline in one theme and a rule in the
+                 other, which means the derivation filed it under fills.
+
+It found the divider bug above on its first run, and one more: **`.text-warning`
+measures 1.16:1 on cream paper.** The library builds `.text-*` from each role's
+SOLID FILL, which is right for a palette whose roles are all dark and wrong for
+any palette with a light one in it. The readable member of that family is
+`.text-*-emphasis`, which is bound to the ink role — recorded in `START.md` so
+the next product does not rediscover it.
+
+The gate fires on USE, not on existence: everything is reported, and only a
+class the ledger allows fails the build, plus DANGLING anywhere. Failing on a
+library's whole role map teaches people to skip the output.
+
+Two side effects worth naming. `composition.surfaces` in the ledger now has a
+reader — it says which planes to measure on — which also settles what it is:
+those are layer 2 TOKEN names, not classes, and there is no `.bg-surface` to
+write. And `scripts/lib/serve.mjs` exists so a browser-based check can answer
+its own probe URL without leaving a file behind in the product directory.
+
 ### `vendor.mjs` — the copy, made repeatable
 
 This tool is vendored by design: a project copies `src/` into its own tree rather
