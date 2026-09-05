@@ -921,8 +921,8 @@
     --cui-nav-link-disabled-color: var(--app-fg-disabled);
   }
   .nav-pills {
-    --cui-nav-pills-link-active-bg: var(--app-bg-accent);
-    --cui-nav-pills-link-active-color: var(--app-fg-on-accent);
+    --cui-nav-pills-link-active-bg: var(--app-bg-surface);
+    --cui-nav-pills-link-active-color: var(--app-fg-accent);
     --cui-nav-pills-border-radius: var(--app-radius-control);
   }
   .nav-tabs {
