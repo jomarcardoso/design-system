@@ -156,6 +156,16 @@ $_derived: (
     --cui-#{$cui}-bg-subtle: #{core.ref(_slot($role, subtle))};
     --cui-#{$cui}-border-subtle: #{core.ref(_slot($role, border))};
     --cui-#{$cui}-text-emphasis: #{core.ref(_slot($role, text))};
+
+    // The label the SOLID fill carries. CoreUI 5.4 computes it with
+    // `color-contrast()`, which picks black or white by luminance — a guess
+    // where this system has a measured answer per role, and a guess that cannot
+    // follow a theme.
+    //
+    // It is here rather than in the entry, and not by preference:
+    // `$theme-colors-contrast` lives in `_maps.scss`, which `coreui.scss` does
+    // not forward, so no entry can reach it. See the note there.
+    --cui-#{$cui}-contrast: #{core.ref('fg-on-#{$role}')};
   }
 }
 

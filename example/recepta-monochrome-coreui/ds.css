@@ -491,26 +491,32 @@
     --cui-primary-bg-subtle: var(--app-bg-accent-subtle);
     --cui-primary-border-subtle: var(--app-border-accent);
     --cui-primary-text-emphasis: var(--app-fg-accent);
+    --cui-primary-contrast: var(--app-fg-on-accent);
     --cui-secondary: var(--app-bg-neutral);
     --cui-secondary-bg-subtle: var(--app-bg-sunken);
     --cui-secondary-border-subtle: var(--app-border-color-strong);
     --cui-secondary-text-emphasis: var(--app-fg-muted);
+    --cui-secondary-contrast: var(--app-fg-on-neutral);
     --cui-success: var(--app-bg-success);
     --cui-success-bg-subtle: var(--app-bg-success-subtle);
     --cui-success-border-subtle: var(--app-border-success);
     --cui-success-text-emphasis: var(--app-fg-success);
+    --cui-success-contrast: var(--app-fg-on-success);
     --cui-info: var(--app-bg-info);
     --cui-info-bg-subtle: var(--app-bg-info-subtle);
     --cui-info-border-subtle: var(--app-border-info);
     --cui-info-text-emphasis: var(--app-fg-info);
+    --cui-info-contrast: var(--app-fg-on-info);
     --cui-warning: var(--app-bg-warning);
     --cui-warning-bg-subtle: var(--app-bg-warning-subtle);
     --cui-warning-border-subtle: var(--app-border-warning);
     --cui-warning-text-emphasis: var(--app-fg-warning);
+    --cui-warning-contrast: var(--app-fg-on-warning);
     --cui-danger: var(--app-bg-danger);
     --cui-danger-bg-subtle: var(--app-bg-danger-subtle);
     --cui-danger-border-subtle: var(--app-border-danger);
     --cui-danger-text-emphasis: var(--app-fg-danger);
+    --cui-danger-contrast: var(--app-fg-on-danger);
   }
   :root,
   [data-theme=light] {

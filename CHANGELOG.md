@@ -21,7 +21,111 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
-## [Unreleased]
+## [0.9.2] — 2026-09-05
+
+**Fourteen library decisions were reaching the page unopposed, and they were
+CoreUI's blue-greys on a cream-paper product.** Almost all of them are now set in
+the entry, as configuration, rather than overridden in the adapter.
+
+### How the list was found, which matters more than the list
+
+Take every `--cui-*` the library declares in its own `:root`. Subtract the ones
+the adapter rebinds. Keep the ones the compiled CSS actually READS back with a
+`var()`. What is left is exactly the set of library decisions nothing in the
+product opposes.
+
+The reassuring half of the same audit, because it is what people notice first:
+`--cui-gray-100` … `--cui-gray-900`, `--cui-blue`, `--cui-pink` and the rest of
+the named palette are declared and read **zero** times. They are the Sass palette
+echoed into `:root` for consumers. They paint nothing. The metallic ramp that is
+alarming to read in devtools is inert.
+
+### What moved into `entry-coreui.scss`
+
+Every one of these is a REFERENCE in the sense section 2 of that file defines —
+the library writes it into `:root` and never computes with it, so the token still
+owns it at runtime, theme flips included.
+
+**Shape.** `$border-radius` and its family were `base.scale(radius, md)` — the
+FOUNDATION's default scale, not the product's. A theme that decided on 2 / 4 / 10
+was handing the library 6px, and `--cui-border-radius` is read 51 times: every
+alert, list group, pagination link, dropdown, toast, tab strip and toggler.
+`check-radius` could not see it, because it reads `--app-radius-*` and this
+number never appeared there. Safe as a `var()`: CoreUI's `valid-radius()` clamps
+numbers and appends anything else untouched.
+
+**`$border-color-translucent`** — `rgba(49, 72, 112, .175)`, the boundary of every
+dropdown, toast, popover and offcanvas. Card and modal were already rebound,
+which is why this only survived on the components the demonstration page has not
+used yet.
+
+**`$box-shadow`, `-sm`, `-lg`** — built on the library's own near-black.
+`$box-shadow-inset` deliberately keeps the library value: there is no inset token,
+and inventing a colour in an entry file is the thing this architecture stops.
+
+**`$high-emphasis`, `$medium-emphasis`, `$disabled`** — CoreUI's own scale,
+deprecated in 5.0 and still read by the sidebar and by `.text-high-emphasis`,
+which `check-utility-colour` measured at **1.35:1 on dark** — a near-black ink on
+a near-black page. The `-inverse` trio is left alone on purpose: white alphas
+meant for the opposite ground are absolute names, and binding one to a role is
+the mistake this repository has made three times.
+
+**`$form-valid-color`, `$form-invalid-color` and their borders** — the most
+interesting entry, because these were ALREADY the product's colours and were
+still wrong. The entry set `$success` and `$danger` as literals, CoreUI derived
+the validation four from them at Sass time, and a literal cannot invert: **a form
+error in the dark theme drew the light theme's red.** Ink and border are
+different roles now — `fg-*` is text and clears AA, the border identifies the
+control and takes the solid fill for its 3:1.
+
+**`$code-color`, `$mark-color`, `$mark-bg`** — pink and yellow-100, the two most
+visible leftovers of an unthemed build, and both prose-level, so they surface in
+documentation pages long after the components were signed off.
+
+`$code-color` is also the one variable here CoreUI computes with, and the
+workaround generalises: `_variables-dark.scss` does
+`$code-color-dark: tint-color($code-color, 40%)`, which hard-errors on a `var()`.
+Setting the DERIVED variable first stops the expression being evaluated at all —
+`!default` skips its right-hand side when the variable already has a value.
+
+### The door the library did not open
+
+`$theme-colors-contrast` — the label a solid fill carries — looked like it
+belonged in the entry and does not. It lives in `_maps.scss`, and `coreui.scss`
+`@forward`s `variables` and `variables-dark` but **not** `maps`. A `!default` is
+only configurable by whoever can see it, and a module reached solely through
+another module's `@use` is invisible to an entry. Setting it there compiles,
+changes nothing, and looks exactly like working.
+
+The same wall stands in front of everything else `_maps.scss` defines:
+`$utilities-text-colors`, `$theme-colors-text`, `$utilities-bg-subtle`. Which is
+the real answer to why `.text-warning` cannot be repointed at the ink role from
+an entry — not a decision anybody declined to make, a door the library did not
+open. So `--cui-*-contrast` is bound in the adapter instead, where it also
+follows a theme flip.
+
+**The one-grep test for which side of that line a variable falls on: is its file
+forwarded by `coreui.scss`?**
+
+### Visual changes to expect
+
+Deliberate, and they are the product's own scale finally reaching the library:
+alert, list group, pagination, dropdown, toast and tab strip go from 6px to 4px;
+modal and popover from 12px to 10px; the elevation shadows go from the library's
+three sizes to this system's two.
+
+**To upgrade:** copy the new `templates/entry-coreui.scss` over your own entry,
+keeping your three changed paths, and rebuild. If your theme has no
+`--app-radius-surface-lg`, point `$border-radius-xl` and `-xxl` at
+`--app-radius-surface` instead.
+
+---
+
+## [0.9.1] — 2026-09-05
+
+**A line is not a fill.** Two border tokens had been reaching the dark theme
+through the branch that handles solid fills, and the check written to find out
+whether the library's colour utilities are any good found them on its first run.
 
 ### Fixed — two border tokens were being derived as solid fills
 
@@ -80,6 +184,29 @@ reader — it says which planes to measure on — which also settles what it is:
 those are layer 2 TOKEN names, not classes, and there is no `.bg-surface` to
 write. And `scripts/lib/serve.mjs` exists so a browser-based check can answer
 its own probe URL without leaving a file behind in the product directory.
+
+---
+
+## [0.9.0]
+
+**The release where the tool learned to check itself, and found that it had been
+lying.** 0.8.0 made the interview ask about the product instead of about taste.
+This one asks the next question: does what the interview decided actually reach
+the CSS? Three times it did not, and every one passed every guard in the
+repository. They were found by opening the page and measuring — a method that
+does not scale past one example, which is why most of this release is guards.
+
+The other half is the interview shrinking again. It went from twenty-three
+questions to eighteen, and the four that left were removed by the client saying,
+four separate times, some version of *the question started asking what I want
+instead of what I need to solve.*
+
+**To upgrade:** copy the new `src/`. `bg-action-subtle-hover` and `-active` are
+new and optional. Then regenerate `DESIGN_LANGUAGE.md` — the questionnaire
+renumbered again and `accentFill` is retired; a document carrying it is carrying
+a key whose question was wrong. Run `npm run verify:applied` against your
+product before anything else: it is the check that would have caught all three
+bugs, and it will tell you which of your own decisions never arrived.
 
 ### `vendor.mjs` — the copy, made repeatable
 
@@ -470,29 +597,6 @@ CoreUI adapter shows the shape.
 
 Products compiling CoreUI should move to `templates/entry-coreui.scss`. A shared
 library build is a shared theme, and `verify:derived` will now say so.
-
----
-
-## [0.9.0]
-
-**The release where the tool learned to check itself, and found that it had been
-lying.** 0.8.0 made the interview ask about the product instead of about taste.
-This one asks the next question: does what the interview decided actually reach
-the CSS? Three times it did not, and every one passed every guard in the
-repository. They were found by opening the page and measuring — a method that
-does not scale past one example, which is why most of this release is guards.
-
-The other half is the interview shrinking again. It went from twenty-three
-questions to eighteen, and the four that left were removed by the client saying,
-four separate times, some version of *the question started asking what I want
-instead of what I need to solve.*
-
-**To upgrade:** copy the new `src/`. `bg-action-subtle-hover` and `-active` are
-new and optional. Then regenerate `DESIGN_LANGUAGE.md` — the questionnaire
-renumbered again and `accentFill` is retired; a document carrying it is carrying
-a key whose question was wrong. Run `npm run verify:applied` against your
-product before anything else: it is the check that would have caught all three
-bugs, and it will tell you which of your own decisions never arrived.
 
 ### Added
 

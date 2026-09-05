@@ -116,9 +116,9 @@
     --cui-tertiary-color-rgb-dark: 255, 255, 255;
     --cui-tertiary-bg-dark: rgb(16.2745098039%, 18.8235294118%, 23.9215686275%);
     --cui-tertiary-bg-rgb-dark: 41.5, 48, 61;
-    --cui-high-emphasis: rgba(14.5098039216%, 16.831372549%, 21.1843137255%, 0.95);
-    --cui-medium-emphasis: rgba(14.5098039216%, 16.831372549%, 21.1843137255%, 0.681);
-    --cui-disabled: rgba(14.5098039216%, 16.831372549%, 21.1843137255%, 0.38);
+    --cui-high-emphasis: var(--app-fg-default);
+    --cui-medium-emphasis: var(--app-fg-muted);
+    --cui-disabled: var(--app-fg-disabled);
     --cui-high-emphasis-inverse: rgba(255, 255, 255, 0.87);
     --cui-medium-emphasis-inverse: rgba(255, 255, 255, 0.6);
     --cui-disabled-inverse: rgba(255, 255, 255, 0.38);
@@ -128,32 +128,32 @@
     --cui-link-decoration: underline;
     --cui-link-hover-color: rgb(24.1348523493%, 30.974411737%, 55.555159812%);
     --cui-link-hover-color-rgb: 61.5438734908, 78.9847499292, 141.6656575206;
-    --cui-code-color: #d63384;
-    --cui-highlight-color: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
-    --cui-highlight-bg: rgb(100%, 95.137254902%, 80.5490196078%);
+    --cui-code-color: var(--app-fg-accent);
+    --cui-highlight-color: var(--app-fg-default);
+    --cui-highlight-bg: var(--app-bg-warning-subtle);
     --cui-border-width: 1px;
     --cui-border-style: solid;
     --cui-border-color: rgb(87.2127880855%, 83.9784448665%, 79.542744295%);
-    --cui-border-color-translucent: rgba(49, 72, 112, 0.175);
-    --cui-border-radius: 6px;
-    --cui-border-radius-sm: 4px;
-    --cui-border-radius-lg: 12px;
-    --cui-border-radius-xl: 1rem;
-    --cui-border-radius-xxl: 2rem;
+    --cui-border-color-translucent: var(--app-border-color);
+    --cui-border-radius: var(--app-radius-control);
+    --cui-border-radius-sm: var(--app-radius-sm);
+    --cui-border-radius-lg: var(--app-radius-surface);
+    --cui-border-radius-xl: var(--app-radius-surface-lg);
+    --cui-border-radius-xxl: var(--app-radius-surface-lg);
     --cui-border-radius-2xl: var(--cui-border-radius-xxl);
-    --cui-border-radius-pill: 9999px;
-    --cui-box-shadow: 0 0.5rem 1rem rgba(8, 10, 12, 0.15);
-    --cui-box-shadow-sm: 0 0.125rem 0.25rem rgba(8, 10, 12, 0.075);
-    --cui-box-shadow-lg: 0 1rem 3rem rgba(8, 10, 12, 0.175);
+    --cui-border-radius-pill: var(--app-radius-pill);
+    --cui-box-shadow: var(--app-shadow-overlay);
+    --cui-box-shadow-sm: var(--app-shadow-raised);
+    --cui-box-shadow-lg: var(--app-shadow-overlay);
     --cui-box-shadow-inset: inset 0 1px 2px rgba(8, 10, 12, 0.075);
     --cui-focus-ring-width: 0.25rem;
     --cui-focus-ring-opacity: 0.25;
     --cui-focus-ring-color: rgba(28.8887084087%, 37.0584132754%, 66.8821096797%, 0.25);
     --cui-focus-ring-blur: 0;
-    --cui-form-valid-color: rgb(0%, 50.9997661091%, 20.9809607311%);
-    --cui-form-valid-border-color: rgb(0%, 50.9997661091%, 20.9809607311%);
-    --cui-form-invalid-color: rgb(75.6884697918%, 0%, 2.8754347938%);
-    --cui-form-invalid-border-color: rgb(75.6884697918%, 0%, 2.8754347938%);
+    --cui-form-valid-color: var(--app-fg-success);
+    --cui-form-valid-border-color: var(--app-bg-success);
+    --cui-form-invalid-color: var(--app-fg-danger);
+    --cui-form-invalid-border-color: var(--app-bg-danger);
   }
   [data-coreui-theme=dark] {
     color-scheme: dark;
@@ -229,7 +229,7 @@
     --cui-link-hover-color: rgb(44.6307027778%, 50.5128902818%, 71.985951693%);
     --cui-link-color-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
     --cui-link-hover-color-rgb: 113.8082920834, 128.8078702187, 183.564176817;
-    --cui-code-color: rgb(90.3529411765%, 52%, 71.0588235294%);
+    --cui-code-color: var(--app-fg-accent);
     --cui-highlight-color: rgba(255, 255, 255, 0.87);
     --cui-highlight-bg: rgb(40%, 30.2745098039%, 1.0980392157%);
     --cui-border-color: #323a49;
@@ -423,7 +423,7 @@
     font-size: 0.875em;
     color: var(--cui-kbd-color, var(--cui-body-bg));
     background-color: var(--cui-kbd-bg, var(--cui-body-color));
-    border-radius: 4px;
+    border-radius: var(--app-radius-sm);
   }
   kbd kbd {
     padding: 0;
@@ -4270,7 +4270,7 @@
   .nav-enclosed {
     --cui-nav-enclosed-padding: 0.125rem;
     --cui-nav-enclosed-bg: var(--cui-tertiary-bg);
-    --cui-nav-enclosed-border-radius: 12px;
+    --cui-nav-enclosed-border-radius: var(--app-radius-surface);
     --cui-nav-enclosed-link-padding-x: 0.875rem;
     --cui-nav-enclosed-link-padding-y: 0.375rem;
     --cui-nav-enclosed-link-color: var(--cui-body-color);
@@ -4305,7 +4305,7 @@
     box-shadow: var(--cui-nav-enclosed-link-hover-box-shadow);
   }
   .nav-enclosed-pills {
-    --cui-nav-enclosed-border-radius: 9999px;
+    --cui-nav-enclosed-border-radius: var(--app-radius-pill);
   }
   .nav-fill > .nav-link,
   .nav-fill .nav-item {
@@ -5709,7 +5709,7 @@
     background: transparent var(--cui-btn-close-bg) center/1em auto no-repeat;
     filter: var(--cui-btn-close-filter);
     border: 0;
-    border-radius: 6px;
+    border-radius: var(--app-radius-control);
     opacity: var(--cui-btn-close-opacity);
   }
   .btn-close:hover {
@@ -7948,7 +7948,7 @@
     padding: 0.25rem 0.25rem;
     background-color: var(--cui-sidebar-toggler-bg);
     border: 0;
-    border-radius: 6px;
+    border-radius: var(--app-radius-control);
   }
   .sidebar-toggler::before {
     position: absolute;
