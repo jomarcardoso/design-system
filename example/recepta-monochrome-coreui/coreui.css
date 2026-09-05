@@ -19,57 +19,57 @@
     --cui-cyan: #0dcaf0;
     --cui-black: #080a0c;
     --cui-white: #fff;
-    --cui-gray: #6d7d9c;
-    --cui-gray-dark: #323a49;
-    --cui-gray-100: #f3f4f7;
-    --cui-gray-200: #e7eaee;
-    --cui-gray-300: #dbdfe6;
-    --cui-gray-400: #cfd4de;
-    --cui-gray-500: #aab3c5;
-    --cui-gray-600: #6d7d9c;
-    --cui-gray-700: #4a566d;
-    --cui-gray-800: #323a49;
-    --cui-gray-900: #212631;
+    --cui-gray: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
+    --cui-gray-dark: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-gray-100: rgb(97.7230553116%, 96.5626930333%, 94.9765396167%);
+    --cui-gray-200: rgb(92.330687462%, 89.8754921563%, 86.5132409491%);
+    --cui-gray-300: rgb(87.2127880855%, 83.9784448665%, 79.542744295%);
+    --cui-gray-400: rgb(81.2507993261%, 76.0805796086%, 68.9586086263%);
+    --cui-gray-500: rgb(70.9886431622%, 63.2674592958%, 52.5186203815%);
+    --cui-gray-600: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
+    --cui-gray-700: rgb(41.3375063455%, 35.7473871937%, 27.9146230318%);
+    --cui-gray-800: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-gray-900: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
     --cui-primary: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-secondary: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-success: rgb(0%, 50.9997661091%, 20.9809607311%);
     --cui-info: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
     --cui-warning: rgb(99.5729922588%, 90.1204825961%, 52.2189075016%);
     --cui-danger: rgb(75.6884697918%, 0%, 2.8754347938%);
-    --cui-light: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-dark: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-light: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-dark: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-primary-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-secondary-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-success-rgb: 0, 130.0494035782, 53.5014498644;
     --cui-info-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-warning-rgb: 253.9111302598, 229.80723062, 133.1582141291;
     --cui-danger-rgb: 193.0055979691, 0, 7.3323587243;
-    --cui-light-rgb: 249.965274862, 249.965274862, 249.965274862;
-    --cui-dark-rgb: 23.9180797372, 23.9171938438, 26.9870719758;
+    --cui-light-rgb: 253.4889896554, 251.3676126452, 248.4689612104;
+    --cui-dark-rgb: 17.6716684162, 12.2261656767, 5.2723418501;
     --cui-primary-text-emphasis: #3634a3;
     --cui-secondary-text-emphasis: #212233;
     --cui-success-text-emphasis: #0f5722;
     --cui-info-text-emphasis: #184c77;
     --cui-warning-text-emphasis: #764705;
     --cui-danger-text-emphasis: #671414;
-    --cui-light-text-emphasis: #4a566d;
-    --cui-dark-text-emphasis: #323a49;
+    --cui-light-text-emphasis: rgb(41.3375063455%, 35.7473871937%, 27.9146230318%);
+    --cui-dark-text-emphasis: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
     --cui-primary-bg-subtle: #cfc7f3;
     --cui-secondary-bg-subtle: #ced2d8;
     --cui-success-bg-subtle: #cbedd6;
     --cui-info-bg-subtle: #c0e6ff;
     --cui-warning-bg-subtle: #feecc5;
     --cui-danger-bg-subtle: #f9d4d4;
-    --cui-light-bg-subtle: rgb(97.6470588235%, 97.8431372549%, 98.431372549%);
-    --cui-dark-bg-subtle: #cfd4de;
+    --cui-light-bg-subtle: rgb(98.8615276558%, 98.2813465166%, 97.4882698084%);
+    --cui-dark-bg-subtle: rgb(81.2507993261%, 76.0805796086%, 68.9586086263%);
     --cui-primary-border-subtle: #9d92e6;
     --cui-secondary-border-subtle: #9da5b1;
     --cui-success-border-subtle: #96dbad;
     --cui-info-border-subtle: #80c6ff;
     --cui-warning-border-subtle: #fcd88a;
     --cui-danger-border-subtle: #f2a9a9;
-    --cui-light-border-subtle: #e7eaee;
-    --cui-dark-border-subtle: #aab3c5;
+    --cui-light-border-subtle: rgb(92.330687462%, 89.8754921563%, 86.5132409491%);
+    --cui-dark-border-subtle: rgb(70.9886431622%, 63.2674592958%, 52.5186203815%);
     --cui-primary-contrast: #fff;
     --cui-secondary-contrast: #fff;
     --cui-success-contrast: #fff;
@@ -95,27 +95,27 @@
     --cui-emphasis-color-rgb: 8, 10, 12;
     --cui-secondary-color: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
     --cui-secondary-color-rgb: 69.5469104068, 62.554338335, 52.8683030321;
-    --cui-secondary-bg: #e7eaee;
-    --cui-secondary-bg-rgb: 231, 234, 238;
+    --cui-secondary-bg: rgb(92.330687462%, 89.8754921563%, 86.5132409491%);
+    --cui-secondary-bg-rgb: 235.4432530282, 229.1825049986, 220.6087644201;
     --cui-tertiary-color: rgba(14.5098039216%, 16.831372549%, 21.1843137255%, 0.38);
     --cui-tertiary-color-rgb: 37, 42.92, 54.02;
-    --cui-tertiary-bg: #f3f4f7;
-    --cui-tertiary-bg-rgb: 243, 244, 247;
-    --cui-tertiary-bg-translucent: rgba(135, 145, 175, 0.1);
+    --cui-tertiary-bg: rgb(97.7230553116%, 96.5626930333%, 94.9765396167%);
+    --cui-tertiary-bg-rgb: 249.1937910446, 246.2348672348, 242.1901760227;
+    --cui-tertiary-bg-translucent: rgba(197, 167, 127, 0.1);
     --cui-body-color-dark: rgba(255, 255, 255, 0.87);
     --cui-body-color-rgb-dark: 255, 255, 255;
-    --cui-body-bg-dark: #212631;
-    --cui-body-bg-rgb-dark: 33, 38, 49;
+    --cui-body-bg-dark: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
+    --cui-body-bg-rgb-dark: 42.7677375225, 37.5326874375, 30.2641574282;
     --cui-emphasis-color-dark: #fff;
     --cui-emphasis-color-rgb-dark: 255, 255, 255;
     --cui-secondary-color-dark: rgba(255, 255, 255, 0.6);
     --cui-secondary-color-rgb-dark: 255, 255, 255;
-    --cui-secondary-bg-dark: #323a49;
-    --cui-secondary-bg-rgb-dark: 50, 58, 73;
+    --cui-secondary-bg-dark: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-secondary-bg-rgb-dark: 69.5469104068, 62.554338335, 52.8683030321;
     --cui-tertiary-color-dark: rgba(255, 255, 255, 0.38);
     --cui-tertiary-color-rgb-dark: 255, 255, 255;
-    --cui-tertiary-bg-dark: rgb(16.2745098039%, 18.8235294118%, 23.9215686275%);
-    --cui-tertiary-bg-rgb-dark: 41.5, 48, 61;
+    --cui-tertiary-bg-dark: rgb(20.1072373347%, 19.7165369284%, 19.9741770651%);
+    --cui-tertiary-bg-rgb-dark: 51.2734552034, 50.2771691675, 50.934151516;
     --cui-high-emphasis: var(--app-fg-default);
     --cui-medium-emphasis: var(--app-fg-muted);
     --cui-disabled: var(--app-fg-disabled);
@@ -159,19 +159,19 @@
     color-scheme: dark;
     --cui-body-color: rgba(255, 255, 255, 0.87);
     --cui-body-color-rgb: 255, 255, 255;
-    --cui-body-bg: #212631;
-    --cui-body-bg-rgb: 33, 38, 49;
+    --cui-body-bg: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
+    --cui-body-bg-rgb: 42.7677375225, 37.5326874375, 30.2641574282;
     --cui-emphasis-color: #fff;
     --cui-emphasis-color-rgb: 255, 255, 255;
     --cui-secondary-color: rgba(255, 255, 255, 0.6);
     --cui-secondary-color-rgb: 255, 255, 255;
-    --cui-secondary-bg: #323a49;
-    --cui-secondary-bg-rgb: 50, 58, 73;
+    --cui-secondary-bg: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-secondary-bg-rgb: 69.5469104068, 62.554338335, 52.8683030321;
     --cui-tertiary-color: rgba(255, 255, 255, 0.38);
     --cui-tertiary-color-rgb: 255, 255, 255;
-    --cui-tertiary-bg: rgb(16.2745098039%, 18.8235294118%, 23.9215686275%);
-    --cui-tertiary-bg-rgb: 41.5, 48, 61;
-    --cui-tertiary-bg-translucent: rgba(118, 138, 169, 0.1);
+    --cui-tertiary-bg: rgb(20.1072373347%, 19.7165369284%, 19.9741770651%);
+    --cui-tertiary-bg-rgb: 51.2734552034, 50.2771691675, 50.934151516;
+    --cui-tertiary-bg-translucent: rgba(128, 165, 237, 0.1);
     --cui-high-emphasis: rgba(255, 255, 255, 0.87);
     --cui-medium-emphasis: rgba(255, 255, 255, 0.6);
     --cui-disabled: rgba(255, 255, 255, 0.38);
@@ -181,49 +181,49 @@
     --cui-info: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-warning: rgb(97.2052880209%, 88.6980293245%, 54.5866117395%);
     --cui-danger: rgb(71.9040463022%, 3.7844234896%, 6.3723148041%);
-    --cui-light: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-dark: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-gray-100: #f3f4f7;
-    --cui-gray-200: #e7eaee;
-    --cui-gray-300: #dbdfe6;
-    --cui-gray-400: #cfd4de;
-    --cui-gray-500: #aab3c5;
-    --cui-gray-600: #6d7d9c;
-    --cui-gray-700: #4a566d;
-    --cui-gray-800: #323a49;
-    --cui-gray-900: #212631;
+    --cui-light: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-dark: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-gray-100: rgb(97.7230553116%, 96.5626930333%, 94.9765396167%);
+    --cui-gray-200: rgb(92.330687462%, 89.8754921563%, 86.5132409491%);
+    --cui-gray-300: rgb(87.2127880855%, 83.9784448665%, 79.542744295%);
+    --cui-gray-400: rgb(81.2507993261%, 76.0805796086%, 68.9586086263%);
+    --cui-gray-500: rgb(70.9886431622%, 63.2674592958%, 52.5186203815%);
+    --cui-gray-600: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
+    --cui-gray-700: rgb(41.3375063455%, 35.7473871937%, 27.9146230318%);
+    --cui-gray-800: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-gray-900: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
     --cui-primary-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
     --cui-secondary-rgb: 73.6662064422, 94.4989538523, 170.5493796833;
     --cui-success-rgb: 6.5024701789, 123.5469333993, 54.6537750568;
     --cui-info-rgb: 78.5103651043, 97.2598377733, 165.7052210213;
     --cui-warning-rgb: 247.8734844533, 226.1799747774, 139.1958599356;
     --cui-danger-rgb: 183.3553180706, 9.6502798985, 16.2494027503;
-    --cui-light-rgb: 249.965274862, 249.965274862, 249.965274862;
-    --cui-dark-rgb: 23.9180797372, 23.9171938438, 26.9870719758;
+    --cui-light-rgb: 253.4889896554, 251.3676126452, 248.4689612104;
+    --cui-dark-rgb: 17.6716684162, 12.2261656767, 5.2723418501;
     --cui-primary-text-emphasis: rgb(23.2745098039%, 22.568627451%, 61.7450980392%);
     --cui-secondary-text-emphasis: #212233;
     --cui-success-text-emphasis: rgb(7.2941176471%, 32.7058823529%, 14%);
     --cui-info-text-emphasis: rgb(11.2745098039%, 29.6274509804%, 44.8039215686%);
     --cui-warning-text-emphasis: rgb(44.0588235294%, 27.4705882353%, 4.1764705882%);
     --cui-danger-text-emphasis: rgb(38.7647058824%, 9.4705882353%, 9.4705882353%);
-    --cui-light-text-emphasis: #f3f4f7;
-    --cui-dark-text-emphasis: #dbdfe6;
+    --cui-light-text-emphasis: rgb(97.7230553116%, 96.5626930333%, 94.9765396167%);
+    --cui-dark-text-emphasis: rgb(87.2127880855%, 83.9784448665%, 79.542744295%);
     --cui-primary-bg-subtle: #cfc7f3;
     --cui-secondary-bg-subtle: #ced2d8;
     --cui-success-bg-subtle: #cbedd6;
     --cui-info-bg-subtle: #c0e6ff;
     --cui-warning-bg-subtle: #feecc5;
     --cui-danger-bg-subtle: #f9d4d4;
-    --cui-light-bg-subtle: #323a49;
-    --cui-dark-bg-subtle: rgb(11.3725490196%, 13.3333333333%, 16.6666666667%);
+    --cui-light-bg-subtle: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-dark-bg-subtle: rgb(15.2052765504%, 14.22634085%, 12.7192751043%);
     --cui-primary-border-subtle: #9d92e6;
     --cui-secondary-border-subtle: #9da5b1;
     --cui-success-border-subtle: #96dbad;
     --cui-info-border-subtle: #80c6ff;
     --cui-warning-border-subtle: #fcd88a;
     --cui-danger-border-subtle: #f2a9a9;
-    --cui-light-border-subtle: #4a566d;
-    --cui-dark-border-subtle: #323a49;
+    --cui-light-border-subtle: rgb(41.3375063455%, 35.7473871937%, 27.9146230318%);
+    --cui-dark-border-subtle: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
     --cui-heading-color: inherit;
     --cui-link-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
     --cui-link-hover-color: rgb(44.6307027778%, 50.5128902818%, 71.985951693%);
@@ -232,8 +232,8 @@
     --cui-code-color: var(--app-fg-accent);
     --cui-highlight-color: rgba(255, 255, 255, 0.87);
     --cui-highlight-bg: rgb(40%, 30.2745098039%, 1.0980392157%);
-    --cui-border-color: #323a49;
-    --cui-border-color-translucent: rgba(130, 152, 186, 0.175);
+    --cui-border-color: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
+    --cui-border-color-translucent: rgba(196, 181, 159, 0.175);
     --cui-form-valid-color: rgb(45.8823529412%, 71.7647058824%, 59.7647058824%);
     --cui-form-valid-border-color: rgb(45.8823529412%, 71.7647058824%, 59.7647058824%);
     --cui-form-invalid-color: rgb(91.7647058824%, 52.4705882353%, 56.2352941176%);
@@ -681,7 +681,7 @@
     margin-top: -16px;
     margin-bottom: 16px;
     font-size: 0.875em;
-    color: #6d7d9c;
+    color: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
   }
   .blockquote-footer::before {
     content: "— ";
@@ -1934,26 +1934,26 @@
   }
   .table-light {
     --cui-table-color: #080a0c;
-    --cui-table-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-table-border-color: rgb(79.0479293685%, 79.2047921136%, 79.3616548587%);
-    --cui-table-striped-bg: rgb(93.2811808309%, 93.3203965172%, 93.3596122035%);
+    --cui-table-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-table-border-color: rgb(80.1534085193%, 79.644741222%, 78.8922231248%);
+    --cui-table-striped-bg: rgb(94.5939373226%, 93.8428360835%, 92.8021620196%);
     --cui-table-striped-color: #080a0c;
-    --cui-table-active-bg: rgb(88.5367636768%, 88.6151950493%, 88.6936264219%);
+    --cui-table-active-bg: rgb(89.7804277215%, 89.1101377964%, 88.1655157213%);
     --cui-table-active-color: #080a0c;
-    --cui-table-hover-bg: rgb(90.9089722539%, 90.9677957833%, 91.0266193127%);
+    --cui-table-hover-bg: rgb(92.1871825221%, 91.4764869399%, 90.4838388704%);
     --cui-table-hover-color: #080a0c;
     color: var(--cui-table-color);
     border-color: var(--cui-table-border-color);
   }
   .table-dark {
     --cui-table-color: #fff;
-    --cui-table-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-table-border-color: rgb(27.5037112901%, 27.5034333628%, 28.4665323846%);
-    --cui-table-striped-bg: rgb(13.910657157%, 13.9103271183%, 15.0540072067%);
+    --cui-table-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-table-border-color: rgb(25.5440528365%, 23.8356598201%, 21.6540680314%);
+    --cui-table-striped-bg: rgb(11.5835627433%, 9.5548460364%, 6.9642057873%);
     --cui-table-striped-color: #fff;
-    --cui-table-active-bg: rgb(18.4416752014%, 18.4413625331%, 19.5248489327%);
+    --cui-table-active-bg: rgb(16.237059441%, 14.3151172977%, 11.8608265353%);
     --cui-table-active-color: #fff;
-    --cui-table-hover-bg: rgb(16.1761661792%, 16.1758448257%, 17.2894280697%);
+    --cui-table-hover-bg: rgb(13.9103110922%, 11.934981667%, 9.4125161613%);
     --cui-table-hover-color: #fff;
     color: var(--cui-table-color);
     border-color: var(--cui-table-border-color);
@@ -2228,7 +2228,7 @@
     height: calc(1.5em + 1rem + calc(var(--cui-border-width) * 2));
   }
   .form-select {
-    --cui-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23323a49' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    --cui-form-select-bg-img: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='rgb%2827.2732981988%, 24.5311130726%, 20.7326678557%%29' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     display: block;
     width: 100%;
     padding-inline-start: 0.75rem;
@@ -2598,7 +2598,7 @@
   }
   .form-floating > :disabled ~ label,
   .form-floating > .form-control:disabled ~ label {
-    color: #6d7d9c;
+    color: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
   }
   .input-group {
     position: relative;
@@ -3052,35 +3052,35 @@
   }
   .btn-light {
     --cui-btn-color: #080a0c;
-    --cui-btn-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-hover-color: #080a0c;
-    --cui-btn-hover-bg: rgb(83.3217582873%, 83.3217582873%, 83.3217582873%);
-    --cui-btn-hover-border-color: rgb(78.4204783881%, 78.4204783881%, 78.4204783881%);
-    --cui-btn-focus-shadow-rgb: 213.6704836327, 213.9704836327, 214.2704836327;
+    --cui-btn-hover-bg: rgb(84.4963298851%, 83.7892042151%, 82.8229870701%);
+    --cui-btn-hover-border-color: rgb(79.5259575389%, 78.8604274965%, 77.9510466542%);
+    --cui-btn-focus-shadow-rgb: 216.6656412071, 215.1624707485, 212.9986170288;
     --cui-btn-active-color: #080a0c;
-    --cui-btn-active-bg: rgb(78.4204783881%, 78.4204783881%, 78.4204783881%);
-    --cui-btn-active-border-color: rgb(73.5191984888%, 73.5191984888%, 73.5191984888%);
+    --cui-btn-active-bg: rgb(79.5259575389%, 78.8604274965%, 77.9510466542%);
+    --cui-btn-active-border-color: rgb(74.5555851928%, 73.931650778%, 73.0791062383%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #080a0c;
-    --cui-btn-disabled-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-disabled-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-disabled-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
   }
   .btn-dark {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(22.9726932457%, 22.9723979479%, 23.9956906586%);
-    --cui-btn-hover-border-color: rgb(18.4416752014%, 18.4413625331%, 19.5248489327%);
-    --cui-btn-focus-shadow-rgb: 58.5803677766, 58.5796147672, 61.1890111795;
+    --cui-btn-hover-bg: rgb(20.8905561387%, 19.0753885589%, 16.7574472834%);
+    --cui-btn-hover-border-color: rgb(16.237059441%, 14.3151172977%, 11.8608265353%);
+    --cui-btn-focus-shadow-rgb: 53.2709181538, 48.6422408252, 42.7314905726;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(27.5037112901%, 27.5034333628%, 28.4665323846%);
-    --cui-btn-active-border-color: rgb(18.4416752014%, 18.4413625331%, 19.5248489327%);
+    --cui-btn-active-bg: rgb(25.5440528365%, 23.8356598201%, 21.6540680314%);
+    --cui-btn-active-border-color: rgb(16.237059441%, 14.3151172977%, 11.8608265353%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-disabled-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-disabled-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
   }
   .btn-outline-primary {
     --cui-btn-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
@@ -3179,35 +3179,35 @@
     --cui-gradient: none;
   }
   .btn-outline-light {
-    --cui-btn-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-hover-color: #080a0c;
-    --cui-btn-hover-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-hover-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-focus-shadow-rgb: 249.965274862, 249.965274862, 249.965274862;
+    --cui-btn-hover-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-hover-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-focus-shadow-rgb: 253.4889896554, 251.3676126452, 248.4689612104;
     --cui-btn-active-color: #080a0c;
-    --cui-btn-active-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-active-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-active-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-active-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-gradient: none;
   }
   .btn-outline-dark {
-    --cui-btn-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-hover-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-focus-shadow-rgb: 23.9180797372, 23.9171938438, 26.9870719758;
+    --cui-btn-hover-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-hover-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-focus-shadow-rgb: 17.6716684162, 12.2261656767, 5.2723418501;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-active-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-active-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-active-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-gradient: none;
   }
   .btn-ghost-primary {
@@ -3289,28 +3289,28 @@
     --cui-btn-disabled-border-color: transparent;
   }
   .btn-ghost-light {
-    --cui-btn-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-hover-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-hover-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-hover-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-hover-color: #080a0c;
-    --cui-btn-active-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-active-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-active-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-active-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-active-color: #080a0c;
-    --cui-btn-disabled-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
   .btn-ghost-dark {
-    --cui-btn-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-hover-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-hover-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-hover-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-active-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-active-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-active-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
@@ -3322,7 +3322,7 @@
     --cui-btn-hover-color: var(--cui-link-hover-color);
     --cui-btn-hover-border-color: transparent;
     --cui-btn-active-border-color: transparent;
-    --cui-btn-disabled-color: #6d7d9c;
+    --cui-btn-disabled-color: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
     --cui-btn-disabled-border-color: transparent;
     --cui-btn-box-shadow: none;
     --cui-btn-focus-shadow-rgb: 100.8662754759, 118.5741107744, 183.2169727308;
@@ -3441,35 +3441,35 @@
   }
   [data-coreui-theme=dark] .btn-light {
     --cui-btn-color: #080a0c;
-    --cui-btn-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-hover-color: #080a0c;
-    --cui-btn-hover-bg: rgb(98.3217582873%, 98.3217582873%, 98.3217582873%);
-    --cui-btn-hover-border-color: rgb(98.2230381866%, 98.2230381866%, 98.2230381866%);
-    --cui-btn-focus-shadow-rgb: 213.6704836327, 213.9704836327, 214.2704836327;
+    --cui-btn-hover-bg: rgb(99.4963298851%, 98.7892042151%, 97.8229870701%);
+    --cui-btn-hover-border-color: rgb(99.4667022313%, 98.7179809336%, 97.694927486%);
+    --cui-btn-focus-shadow-rgb: 216.6656412071, 215.1624707485, 212.9986170288;
     --cui-btn-active-color: #080a0c;
-    --cui-btn-active-bg: rgb(98.4204783881%, 98.4204783881%, 98.4204783881%);
-    --cui-btn-active-border-color: rgb(98.2230381866%, 98.2230381866%, 98.2230381866%);
+    --cui-btn-active-bg: rgb(99.5259575389%, 98.8604274965%, 97.9510466542%);
+    --cui-btn-active-border-color: rgb(99.4667022313%, 98.7179809336%, 97.694927486%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #080a0c;
-    --cui-btn-disabled-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-disabled-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-disabled-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
   }
   [data-coreui-theme=dark] .btn-dark {
     --cui-btn-color: #fff;
-    --cui-btn-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(7.9726932457%, 7.9723979479%, 8.9956906586%);
-    --cui-btn-hover-border-color: rgb(7.5037112901%, 7.5034333628%, 8.4665323846%);
-    --cui-btn-focus-shadow-rgb: 58.5803677766, 58.5796147672, 61.1890111795;
+    --cui-btn-hover-bg: rgb(5.8905561387%, 4.0753885589%, 1.7574472834%);
+    --cui-btn-hover-border-color: rgb(5.5440528365%, 3.8356598201%, 1.6540680314%);
+    --cui-btn-focus-shadow-rgb: 53.2709181538, 48.6422408252, 42.7314905726;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(7.5037112901%, 7.5034333628%, 8.4665323846%);
-    --cui-btn-active-border-color: rgb(7.0347293345%, 7.0344687776%, 7.9373741105%);
+    --cui-btn-active-bg: rgb(5.5440528365%, 3.8356598201%, 1.6540680314%);
+    --cui-btn-active-border-color: rgb(5.1975495342%, 3.5959310814%, 1.5506887794%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
     --cui-btn-disabled-color: #fff;
-    --cui-btn-disabled-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-disabled-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-disabled-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
   }
   [data-coreui-theme=dark] .btn-outline-primary {
     --cui-btn-color: rgb(30.7883784723%, 38.1411128523%, 64.9824396162%);
@@ -3568,35 +3568,35 @@
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-outline-light {
-    --cui-btn-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-hover-color: #080a0c;
-    --cui-btn-hover-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-hover-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-focus-shadow-rgb: 249.965274862, 249.965274862, 249.965274862;
+    --cui-btn-hover-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-hover-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-focus-shadow-rgb: 253.4889896554, 251.3676126452, 248.4689612104;
     --cui-btn-active-color: #080a0c;
-    --cui-btn-active-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-active-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-active-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-active-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-outline-dark {
-    --cui-btn-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-hover-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-hover-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-focus-shadow-rgb: 23.9180797372, 23.9171938438, 26.9870719758;
+    --cui-btn-hover-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-hover-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-focus-shadow-rgb: 17.6716684162, 12.2261656767, 5.2723418501;
     --cui-btn-active-color: #fff;
-    --cui-btn-active-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-active-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-active-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-active-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-active-shadow: inset 0 3px 5px rgba(8, 10, 12, 0.125);
-    --cui-btn-disabled-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-disabled-bg: transparent;
-    --cui-btn-disabled-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-gradient: none;
   }
   [data-coreui-theme=dark] .btn-ghost-primary {
@@ -3678,28 +3678,28 @@
     --cui-btn-disabled-border-color: transparent;
   }
   [data-coreui-theme=dark] .btn-ghost-light {
-    --cui-btn-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-hover-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-hover-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-hover-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-hover-color: #080a0c;
-    --cui-btn-active-bg: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
-    --cui-btn-active-border-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-active-bg: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
+    --cui-btn-active-border-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-active-color: #080a0c;
-    --cui-btn-disabled-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-btn-disabled-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
   [data-coreui-theme=dark] .btn-ghost-dark {
-    --cui-btn-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-border-color: transparent;
-    --cui-btn-hover-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-hover-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-hover-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-hover-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-hover-color: #fff;
-    --cui-btn-active-bg: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
-    --cui-btn-active-border-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-active-bg: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
+    --cui-btn-active-border-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-active-color: #fff;
-    --cui-btn-disabled-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-btn-disabled-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
     --cui-btn-disabled-bg: transparent;
     --cui-btn-disabled-border-color: transparent;
   }
@@ -3785,7 +3785,7 @@
     --cui-dropdown-link-disabled-color: var(--cui-tertiary-color);
     --cui-dropdown-item-padding-x: 16px;
     --cui-dropdown-item-padding-y: 4px;
-    --cui-dropdown-header-color: #6d7d9c;
+    --cui-dropdown-header-color: rgb(56.1052223385%, 49.0894686983%, 39.2794459651%);
     --cui-dropdown-header-padding-x: 16px;
     --cui-dropdown-header-padding-y: 0.5rem;
     position: absolute;
@@ -4027,18 +4027,18 @@
     color: var(--cui-dropdown-link-color);
   }
   .dropdown-menu-dark {
-    --cui-dropdown-color: #dbdfe6;
-    --cui-dropdown-bg: #323a49;
+    --cui-dropdown-color: rgb(87.2127880855%, 83.9784448665%, 79.542744295%);
+    --cui-dropdown-bg: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
     --cui-dropdown-border-color: var(--cui-border-color-translucent);
     --cui-dropdown-box-shadow: ;
-    --cui-dropdown-link-color: #dbdfe6;
+    --cui-dropdown-link-color: rgb(87.2127880855%, 83.9784448665%, 79.542744295%);
     --cui-dropdown-link-hover-color: #fff;
     --cui-dropdown-divider-bg: var(--cui-border-color-translucent);
     --cui-dropdown-link-hover-bg: rgba(255, 255, 255, 0.15);
     --cui-dropdown-link-active-color: rgba(255, 255, 255, 0.87);
     --cui-dropdown-link-active-bg: var(--cui-primary);
-    --cui-dropdown-link-disabled-color: #aab3c5;
-    --cui-dropdown-header-color: #aab3c5;
+    --cui-dropdown-link-disabled-color: rgb(70.9886431622%, 63.2674592958%, 52.5186203815%);
+    --cui-dropdown-header-color: rgb(70.9886431622%, 63.2674592958%, 52.5186203815%);
   }
   .btn-group,
   .btn-group-vertical {
@@ -7461,10 +7461,10 @@
     --cui-callout-border-left-color: rgb(28.8887084087%, 37.0584132754%, 66.8821096797%);
   }
   .callout-light {
-    --cui-callout-border-left-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%);
+    --cui-callout-border-left-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%);
   }
   .callout-dark {
-    --cui-callout-border-left-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%);
+    --cui-callout-border-left-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%);
   }
   .footer {
     --cui-footer-min-height: 3rem;
@@ -7508,8 +7508,8 @@
     --cui-header-active-color: rgba(var(--cui-emphasis-color-rgb), 1);
     --cui-header-transition: box-shadow 0.15s ease-in-out;
     --cui-header-brand-padding-y: 0.3125rem;
-    --cui-header-brand-color: #212631;
-    --cui-header-brand-hover-color: rgb(11.6470588235%, 13.4117647059%, 17.2941176471%);
+    --cui-header-brand-color: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
+    --cui-header-brand-hover-color: rgb(15.0944955962%, 13.2468308603%, 10.6814673276%);
     --cui-header-toggler-padding-x: 0.75rem;
     --cui-header-toggler-padding-y: 0.25rem;
     --cui-header-toggler-bg: transparent;
@@ -8008,13 +8008,13 @@
   }
   .sidebar-dark {
     --cui-body-color: rgba(255, 255, 255, 0.87);
-    --cui-body-bg: #212631;
+    --cui-body-bg: rgb(16.7716617735%, 14.7187009559%, 11.8682970307%);
     --cui-emphasis-color: #fff;
     --cui-secondary-color: rgba(255, 255, 255, 0.6);
-    --cui-secondary-bg: #323a49;
+    --cui-secondary-bg: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
     --cui-tertiary-color: rgba(255, 255, 255, 0.38);
-    --cui-tertiary-bg: rgb(16.2745098039%, 18.8235294118%, 23.9215686275%);
-    --cui-border-color: #323a49;
+    --cui-tertiary-bg: rgb(20.1072373347%, 19.7165369284%, 19.9741770651%);
+    --cui-border-color: rgb(27.2732981988%, 24.5311130726%, 20.7326678557%);
   }
   .sidebar-dark .sidebar-toggler {
     filter: var(--cui-sidebar-toggler-white-filter);
@@ -8431,11 +8431,11 @@
   }
   [data-coreui-theme=dark] .text-bg-light {
     color: #080a0c !important;
-    background-color: rgba(249.965274862, 249.965274862, 249.965274862, var(--cui-bg-opacity, 1)) !important;
+    background-color: rgba(253.4889896554, 251.3676126452, 248.4689612104, var(--cui-bg-opacity, 1)) !important;
   }
   [data-coreui-theme=dark] .text-bg-dark {
     color: #fff !important;
-    background-color: rgba(23.9180797372, 23.9171938438, 26.9870719758, var(--cui-bg-opacity, 1)) !important;
+    background-color: rgba(17.6716684162, 12.2261656767, 5.2723418501, var(--cui-bg-opacity, 1)) !important;
   }
   .link-primary {
     color: rgba(var(--cui-primary-rgb), var(--cui-link-opacity, 1)) !important;
@@ -8490,16 +8490,16 @@
     text-decoration-color: rgba(var(--cui-light-rgb), var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-light:hover, .link-light:focus {
-    color: rgba(250.9722198896, 250.9722198896, 250.9722198896, var(--cui-link-opacity, 1)) !important;
-    text-decoration-color: rgba(250.9722198896, 250.9722198896, 250.9722198896, var(--cui-link-underline-opacity, 1)) !important;
+    color: rgba(253.7911917243, 252.0940901162, 249.7751689683, var(--cui-link-opacity, 1)) !important;
+    text-decoration-color: rgba(253.7911917243, 252.0940901162, 249.7751689683, var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-dark {
     color: rgba(var(--cui-dark-rgb), var(--cui-link-opacity, 1)) !important;
     text-decoration-color: rgba(var(--cui-dark-rgb), var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-dark:hover, .link-dark:focus {
-    color: rgba(19.1344637898, 19.133755075, 21.5896575807, var(--cui-link-opacity, 1)) !important;
-    text-decoration-color: rgba(19.1344637898, 19.133755075, 21.5896575807, var(--cui-link-underline-opacity, 1)) !important;
+    color: rgba(14.137334733, 9.7809325414, 4.2178734801, var(--cui-link-opacity, 1)) !important;
+    text-decoration-color: rgba(14.137334733, 9.7809325414, 4.2178734801, var(--cui-link-underline-opacity, 1)) !important;
   }
   .link-body-emphasis {
     color: rgba(var(--cui-emphasis-color-rgb), var(--cui-link-opacity, 1)) !important;
@@ -9013,10 +9013,10 @@
     border-top-color: rgb(75.6884697918%, 0%, 2.8754347938%) !important;
   }
   .border-top-light {
-    border-top-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%) !important;
+    border-top-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%) !important;
   }
   .border-top-dark {
-    border-top-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%) !important;
+    border-top-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%) !important;
   }
   .border-top-white {
     border-top-color: #fff !important;
@@ -9040,10 +9040,10 @@
     border-inline-end-color: rgb(75.6884697918%, 0%, 2.8754347938%) !important;
   }
   .border-end-light {
-    border-inline-end-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%) !important;
+    border-inline-end-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%) !important;
   }
   .border-end-dark {
-    border-inline-end-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%) !important;
+    border-inline-end-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%) !important;
   }
   .border-end-white {
     border-inline-end-color: #fff !important;
@@ -9067,10 +9067,10 @@
     border-bottom-color: rgb(75.6884697918%, 0%, 2.8754347938%) !important;
   }
   .border-bottom-light {
-    border-bottom-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%) !important;
+    border-bottom-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%) !important;
   }
   .border-bottom-dark {
-    border-bottom-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%) !important;
+    border-bottom-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%) !important;
   }
   .border-bottom-white {
     border-bottom-color: #fff !important;
@@ -9094,10 +9094,10 @@
     border-inline-start-color: rgb(75.6884697918%, 0%, 2.8754347938%) !important;
   }
   .border-start-light {
-    border-inline-start-color: rgb(98.0255979851%, 98.0255979851%, 98.0255979851%) !important;
+    border-inline-start-color: rgb(99.4074469237%, 98.5755343707%, 97.4388083178%) !important;
   }
   .border-start-dark {
-    border-inline-start-color: rgb(9.3796391126%, 9.3792917035%, 10.5831654807%) !important;
+    border-inline-start-color: rgb(6.9300660456%, 4.7945747752%, 2.0675850392%) !important;
   }
   .border-start-white {
     border-inline-start-color: #fff !important;

@@ -21,6 +21,73 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.9.3] — 2026-09-05
+
+**The library is not the only reader.** 0.9.2 audited which `--cui-*` the LIBRARY
+consumes, found that `--cui-gray-100` … `--cui-gray-900` are read zero times, and
+called them inert. The conclusion was correct and its boundary was never stated:
+an application is a reader too.
+
+An application that used CoreUI before this foundation arrived is full of
+`var(--cui-gray-300)`, and that is the migration case the tool exists to serve.
+Every one of those lines was rendering CoreUI's blue-greys on a cream-paper
+product, and the `:root` block was metallic to anyone who opened devtools because
+it **was** metallic. "The library ignores it" is not the same claim as "it is
+safe".
+
+### The grey ramp is the product's now
+
+`$gray-100` … `$gray-900` are set in the entry from the product's own neutral
+ramp, step for step. LITERALS, for two independent reasons.
+
+CoreUI computes with them all over — `$border-color: $gray-300`,
+`$dropdown-header-color: $gray-600`, the table and input defaults — so a `var()`
+would hard-error, and setting them corrects **68 derived values** in the compiled
+library at the same time. That is the larger half of this change: the `:root`
+block is what you see, the derivations are what you get.
+
+And they must NOT follow a theme flip. `gray-100` names a POSITION on a ramp —
+"the lightest step" — not a role, and an application that wrote it meant "pale",
+not "the page". Binding it to `--app-bg-sunken` would invert it in the dark theme
+and turn every legacy line inside out. Same call as `$light` and `$dark`, for the
+same reason, and this repository has broken three adapters getting it the other
+way round.
+
+**The residue, worth telling a migrating team once:** a `--cui-gray-*` is an
+absolute palette entry. It is the PRODUCT's palette now instead of the library's,
+which is the fix — but it still does not follow the theme, and code that needs to
+should move to `--app-*`.
+
+### `$light` and `$dark` were the same bug, one line up
+
+They read `base.color(zinc, …)`, and the comment above them claimed they came
+"from the palette so they are on-brand". Half true, and the wrong half: zinc is
+the FOUNDATION's palette, not the product's. `.bg-light` measured `#fafafa`, a
+cool near-white, on a cream page — the same mistake the radius family was making
+one section down. They now read the two ends of the product's neutral ramp.
+
+`$black` and `$white` are deliberately left alone. They are the two names where
+"absolute" is a definition rather than a convention.
+
+### A note that was true for one commit
+
+0.9.2 recorded `--cui-tertiary-bg-translucent` as unreachable from an entry: no
+`!default` of its own, computed by `_root.scss` from `$body-tertiary-bg`, which
+the entry leaves unset. Binding the grey ramp made it false — `$body-tertiary-bg`
+defaults to `$gray-100`, so it now derives `rgba(197, 167, 127, .1)`, a warm tan,
+with nothing overriding it.
+
+The comment is corrected in place rather than deleted, because the general shape
+is worth more than the one variable: **a value that looks unreachable is often
+only unreachable from where you were standing.** The question is not "can I set
+this variable" but "what does it derive from, and can I set THAT".
+
+**To upgrade:** copy the new `templates/entry-coreui.scss` over your entry,
+keeping your changed paths, and point the four marked lines — the grey ramp,
+`$light` and `$dark` — at your own neutral ramp.
+
+---
+
 ## [0.9.2] — 2026-09-05
 
 **Fourteen library decisions were reaching the page unopposed, and they were

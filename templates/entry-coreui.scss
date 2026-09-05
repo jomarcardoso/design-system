@@ -117,12 +117,64 @@ $info: _c(info);
 $warning: _c(warning);
 $danger: _c(danger);
 
-// `light` and `dark` are absolute palette aliases, not theme roles. They take
-// their value from the palette so they are on-brand, and they do not invert,
-// which is what the names promise. Three adapters have been broken by treating
-// one of these as a role.
-$light: srgb(base.color(zinc, 50));
-$dark: srgb(base.color(zinc, 900));
+// THE LIBRARY'S OWN GREY RAMP, WHICH IS A PUBLIC SURFACE WHETHER OR NOT THE
+// LIBRARY READS IT.
+//
+// The first audit of this file asked which `--cui-*` the LIBRARY consumes, found
+// that `--cui-gray-100` … `--cui-gray-900` are read zero times, and concluded
+// they were inert. That conclusion had a boundary nobody stated: the library is
+// not the only reader. An application is one too, and an application that
+// already used CoreUI before this foundation arrived is FULL of
+// `var(--cui-gray-300)` — which is the whole migration case this tool exists to
+// serve. Those lines would have kept rendering CoreUI's blue-greys on a
+// cream-paper product, and the `:root` block would have kept looking metallic
+// to anyone who opened devtools, because it WAS metallic.
+//
+// LITERALS, not references, for two independent reasons.
+//
+// CoreUI computes with them everywhere at Sass time — `$border-color: $gray-300`,
+// `$dropdown-header-color: $gray-600`, the table and input defaults — so a
+// `var()` here would hard-error, and setting them fixes every one of those
+// derivations at the same time.
+//
+// And they must NOT follow a theme flip, which is the more interesting reason.
+// `gray-100` names a POSITION on a ramp: "the lightest step". It does not name a
+// role, and an application that wrote `var(--cui-gray-100)` meant "pale", not
+// "the page". Binding it to `--app-bg-sunken` would invert it in the dark theme
+// and turn every one of those legacy lines inside out. Same call as `$light` and
+// `$dark` below, for the same reason, and this repository has broken three
+// adapters by getting it the other way round.
+//
+// The honest residue, worth telling a migrating team once: a `--cui-gray-*` is
+// an absolute palette entry. It is now the PRODUCT's palette instead of the
+// library's, which is the whole fix — but it still does not follow the theme,
+// and code that needs to should move to `--app-*`.
+//
+// ← CHANGE THIS: your product's neutral ramp, step for step.
+$gray-100: srgb(theme.paper(100));
+$gray-200: srgb(theme.paper(200));
+$gray-300: srgb(theme.paper(300));
+$gray-400: srgb(theme.paper(400));
+$gray-500: srgb(theme.paper(500));
+$gray-600: srgb(theme.paper(600));
+$gray-700: srgb(theme.paper(700));
+$gray-800: srgb(theme.paper(800));
+$gray-900: srgb(theme.paper(900));
+
+// `light` and `dark` are absolute palette aliases, not theme roles. They do not
+// invert, which is what the names promise, and three adapters have been broken
+// by treating one of these as a role.
+//
+// They used to read `base.color(zinc, …)`, and the comment above them claimed
+// they came "from the palette so they are on-brand". Half true, and the wrong
+// half: zinc is the FOUNDATION's palette, not the product's. `.bg-light`
+// measured #fafafa — a COOL near-white — on a cream page, which is the same
+// mistake the radius family was making one section down, and it is the mistake
+// this whole file exists to prevent.
+//
+// ← CHANGE THIS: the two ends of your product's neutral ramp.
+$light: srgb(theme.paper(50));
+$dark: srgb(theme.paper(950));
 
 $body-bg: _c(page);
 $body-color: _c(text);
@@ -367,12 +419,20 @@ $code-color: var(--app-fg-accent);
 $mark-color: var(--app-fg-default);
 $mark-bg: var(--app-bg-warning-subtle);
 
-// WHAT THE ENTRY CANNOT REACH, recorded so the next person does not go looking.
+// A NOTE THAT WAS TRUE FOR ONE COMMIT, kept because the correction is the useful
+// part.
 //
-// `--cui-tertiary-bg-translucent` (the sidebar's hover and active fill) has no
-// `!default` variable at all: `_root.scss` computes it with `color-translucent()`
-// from `$body-tertiary-bg`, which this file leaves unset for the reason given in
-// section 2. It is an adapter override or it is nothing.
+// `--cui-tertiary-bg-translucent` — the sidebar's hover and active fill — has no
+// `!default` variable of its own: `_root.scss` computes it with
+// `color-translucent()` from `$body-tertiary-bg`. That was written down here as
+// "an adapter override or nothing", and it stopped being true the moment the
+// grey ramp above was bound: `$body-tertiary-bg` defaults to `$gray-100`, so it
+// now derives `rgba(197, 167, 127, .1)` — a warm tan — with nothing overriding it.
+//
+// The general shape, which is worth more than this one variable: a value that
+// looks unreachable is often only unreachable from where you were standing. The
+// question to ask is not "can I set this variable" but "what does it derive
+// from, and can I set THAT".
 
 // -----------------------------------------------------------------------------
 // 6. THE LIBRARY
