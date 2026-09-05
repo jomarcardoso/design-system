@@ -23,6 +23,37 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### `vendor.mjs` — the copy, made repeatable
+
+This tool is vendored by design: a project copies `src/` into its own tree rather
+than resolving it from a package manager. That choice has exactly one failure
+mode, and nothing was watching it.
+
+Someone copies the foundation, then fixes something locally because it is right
+there and editable. Weeks later the foundation moves, the copy is updated, and
+the local fix is gone — or the update is skipped forever because nobody can tell
+what was changed on purpose. There is no dependency range to violate and no
+install step to fail, so it is silent.
+
+`node scripts/vendor.mjs <dest>` copies and records a hash per file plus the
+commit it came from. `--check` reads that back and tells three cases apart:
+changed HERE only (take it upstream or lose it), changed UPSTREAM only (an
+ordinary update), and changed on BOTH sides — which is a merge, needs a person,
+and is refused rather than overwritten.
+
+What travels: the foundation, the entry template, the checks, and the two
+authoring skills. What deliberately does not: the examples, the changelog and the
+interview material, which are the tool's own evidence and belong where the tool
+is developed. A consuming project carrying seven other products' palettes has
+copied a repository rather than a foundation. Nor are the project's own files
+ever touched — `palette.scss`, `theme.scss`, `_setup.scss`, the entry and
+`patterns.json` are authored, not vendored.
+
+`templates/START.md` travels with it: the four layers in a paragraph each, the
+one rule (do not edit the copy), the idea that explains most bugs (a rung is a
+distance from a surface), what each check asks, and the two habits worth more
+than any of them.
+
 ### `bg-field` — a well is an object, not a plane
 
 A form field was pointing at `bg-sunken`, and in one product that resolved to the
