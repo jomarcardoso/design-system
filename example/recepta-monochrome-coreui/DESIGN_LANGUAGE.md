@@ -416,11 +416,27 @@ The tokens live in `src/`. This section is the **rules for using them**.
   one decision here that was originally inherited rather than made — the first
   build copied another example's ladder, the result happened to be liked, and
   nothing recorded why. Question 10 exists because of that.
-- **Hierarchy is carried by:** `border-color`. This is load-bearing — a flat
-  system with a weak border produces surfaces nobody can tell apart, **and it
-  passes the contrast check while doing it**, because that check measures text
-  against its background and not one surface against another. The border is the
-  thing that has to be strong.
+- **Hierarchy is carried by:** TONE. `surfaceModel: elevated` with
+  `surfaceSeparation: tones` — a card is a rung lighter than the page and the
+  tone does the separating, so the card carries no border at all.
+
+  **This paragraph said the opposite for weeks and nobody noticed.** It read
+  "hierarchy is carried by `border-color`, and the border is the thing that has
+  to be strong", which was true of the first build and false of every one since
+  the surface model was answered. The document went on being read as authority
+  while the build had moved.
+
+  That is the mirror image of the failure this project has a guard for. A
+  decision recorded and never built is caught by `check-decisions-applied`; a
+  decision CHANGED and never re-recorded had nothing looking at it, because the
+  claim lives in prose. `check-doc-tokens` now catches the narrow version — a
+  document naming a token the build no longer emits — and the wide version stays
+  a reading habit: when a derived key changes, the prose that explains it has to
+  be re-read, not just the CSS.
+
+  What the lines still do is the part a tone cannot: a divider between items on
+  ONE plane, and the resting edge of a control, which is affordance rather than
+  separation.
 - `shadow-raised` is `2xs` and `shadow-overlay` is `sm`, used only where
   something genuinely floats — a menu, a dialog. Two steps and no third.
 
@@ -536,7 +552,12 @@ every theme this language will ever have.
 
   What survives from the old decision is the constraint, not the prohibition:
   **the rail spends no rung.** No fill of its own, no shadow, no tone — a
-  hairline, and the current destination in washed accent. A nav is already
+  hairline, and the current destination TWO NEUTRAL RUNGS DOWN with a small
+  solid accent bar. It said "washed accent" here until the palette was measured:
+  165° between the pen and the paper means a pale patch of the accent reads as a
+  stain rather than a tint, so this product has no wash at all
+  (`$accent-wash: false`) and the accent appears at full strength in a 3px mark
+  instead. Cheaper, too — the budget is area times chroma. A nav is already
   distinguishable by position, density and typography, so a surface tone would
   buy separation that three other channels have already provided, at the price
   of the one rung this product has left. That rung belongs to the quiet neutral

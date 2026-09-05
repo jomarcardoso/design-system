@@ -137,16 +137,6 @@
   // the divider rather than the general border.
   $nav-border-color: var(--app-border-divider),
 
-  // THE FIELD IS A WELL. `surfaceModel: elevated` puts the card ABOVE the page,
-  // so a field left at `bg-surface` was the same tone as the card it sat in and
-  // the only thing marking it was a hairline — which is how a border ends up
-  // being asked to reach 3:1 alone and drags the whole ladder up behind it.
-  //
-  // claude-4.md describes what a field actually does, and it is two mechanisms
-  // on purpose: "fundo escavado (degrau 2, mais escuro que a página) E borda. O
-  // tom diz 'aqui cabe conteúdo', a borda diz 'clicável'". It is also what lets
-  // `border-interactive` sit at rung 7 rather than rung 8.
-  $field-bg: var(--app-bg-sunken),
 
   // A SELECTED CHIP GOES DEEPER, IT DOES NOT GAIN AN EDGE.
   //

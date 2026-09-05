@@ -19906,6 +19906,9 @@
     --app-duration-base: 200ms;
     --app-duration-slow: 320ms;
     --app-ease: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --app-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --app-z-base: 0;
     --app-z-dropdown: 1000;
     --app-z-sticky: 1020;
@@ -19931,6 +19934,7 @@
     --app-fg-on-action: #1a1a1a;
     --app-border-color: #e0e0e0;
     --app-bg-sunken: #ebebeb;
+    --app-bg-field: #ebebeb;
     --app-bg-overlay: rgba(26, 26, 26, 0.6);
     --app-fg-subtlest: #767676;
     --app-bg-surface-hover: #f5f5f5;
@@ -20044,6 +20048,7 @@
     --app-bg-surface-hover: #ffffff;
     --app-bg-surface-active: #f5f5f5;
     --app-bg-sunken: #f5f5f5;
+    --app-bg-field: #f5f5f5;
     --app-border-color: #eaeaea;
     --app-border-color-subtle: #f5f5f5;
     --app-border-color-strong: #9d9d9d;
@@ -20069,6 +20074,7 @@
     --app-bg-surface-hover: #ebebeb;
     --app-bg-surface-active: #e1e1e1;
     --app-bg-sunken: #e1e1e1;
+    --app-bg-field: #e1e1e1;
     --app-border-color: #d6d6d6;
     --app-border-color-subtle: #e1e1e1;
     --app-border-color-strong: #8b8b8b;
@@ -20094,6 +20100,7 @@
     --app-bg-surface-hover: #ffffff;
     --app-bg-surface-active: #f5f5f5;
     --app-bg-sunken: #f5f5f5;
+    --app-bg-field: #f5f5f5;
     --app-border-color: #eaeaea;
     --app-border-color-subtle: #f5f5f5;
     --app-border-color-strong: #9d9d9d;

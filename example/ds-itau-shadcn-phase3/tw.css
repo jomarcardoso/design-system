@@ -690,6 +690,9 @@
   .border-success-subtle {
     border-color: var(--app-bg-success-subtle);
   }
+  .border-sunken {
+    border-color: var(--app-bg-sunken);
+  }
   .border-warning-subtle {
     border-color: var(--app-bg-warning-subtle);
   }

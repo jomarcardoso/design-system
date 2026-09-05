@@ -84,9 +84,80 @@
    * its first heading has the previous region directly above it and needs the
    * full separation, which is exactly what the bare selector was cancelling.
    * Two situations that look identical in a selector and mean opposite things. */
-  :is(.card-body, .modal-content, .modal-header, .modal-body, .accordion-body)
+  :is(.card-body, .modal-content, .modal-header, .modal-body, .accordion-body,
+    .tab-panel, .panel-block)
     > :is(h1, h2, h3, h4):first-child {
     margin-block-start: 0;
+  }
+
+  /* And one level deeper, because a padded box often wraps its first heading in
+   * a section for the anchor. The heading is still the first thing IN the box;
+   * the section between them is markup, not a plane. */
+  :is(.tab-panel, .card-body) > :first-child > :is(h1, h2, h3, h4):first-child {
+    margin-block-start: 0;
+  }
+
+  /* THE FOLDER, AND THE THREE DETAILS THAT MAKE IT CLOSE.
+   *
+   * An enclosed tab is the folder metaphor and it only means anything attached
+   * to a folder. Without this panel the tabs were the front of nothing, which is
+   * the strangeness a reader felt without being able to name it.
+   *
+   * 1. THE TRACK'S BASE LINE MUST NOT PASS UNDER THE ACTIVE TAB. That gap is
+   *    the opening — it is what says the chosen tab and the panel are one
+   *    continuous piece of card rather than two objects that happen to touch.
+   *    The library draws the line across the whole strip, so the active tab
+   *    covers its own inch of it by sitting one border-width lower with a
+   *    matching bottom edge.
+   *
+   * 2. ONLY THE TOP CORNERS OF THE ACTIVE TAB ARE ROUNDED. A tab rounded at the
+   *    bottom is a tab detaching from the folder.
+   *
+   * 3. THE PANEL SHARES THE TAB'S TONE AND ITS TOP EDGE IS SQUARE on the side
+   *    the tabs sit on. Two shapes, one sheet. */
+  .tab-panel {
+    background-color: var(--app-bg-surface);
+    border: var(--app-border-width) solid var(--app-border-color);
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+    border-end-start-radius: var(--app-radius-surface);
+    border-end-end-radius: var(--app-radius-surface);
+    border-block-start: 0;
+    padding: var(--app-pad-surface);
+    margin-block-start: calc(-1 * var(--app-border-width));
+  }
+
+  .nav-tabs .nav-link.active {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+    margin-block-end: calc(-1 * var(--app-border-width));
+    border-block-end-color: var(--app-bg-surface);
+  }
+
+  /* THE ACTIVE TAB DROPS ITS ACCENT INK, and that is a subtraction rather than
+   * a loss. It had four signals at once — white fill, border, accent text and
+   * weight — where a closed contiguous set needs one or two. Position already
+   * says which tab is chosen; coming forward out of the track says it again.
+   * The accent was the fourth, and the least necessary, and every drop of it
+   * saved here is spent on the one action the screen exists for. */
+  .nav-tabs .nav-link.active {
+    color: var(--app-fg-heading);
+    font-weight: var(--app-font-weight-heading);
+  }
+
+  /* INSIDE A TONE, SECTIONS ARE SEPARATED BY SPACE.
+   *
+   * The three blocks in this panel used to be cards. On a cream page that was
+   * right; inside a white panel a white card is not a level, it is two things
+   * pretending to be one — and the school's escalation says exactly this: tone
+   * for the container, and inside it space for the sections. There is no third
+   * rung to spend and no reason to want one.
+   *
+   * What is left is a block with rhythm and nothing else. The one that needs to
+   * read as a different KIND of thing — the note from the cook — is marked by
+   * the handwriting face, which no other block uses. */
+  .panel-block + .panel-block {
+    margin-block-start: var(--app-space-lg);
   }
 
   /* CARDS DO NOT TOUCH. CoreUI ships zero margin on the card, correctly — a card
@@ -210,7 +281,16 @@
    * The weight is the third cue, and it is not decoration: "selected" expressed
    * by tone alone fails for anyone who cannot separate these two tones. */
   .rail-link.active {
-    background-color: var(--app-bg-neutral-subtle-hover);
+    /* THE SAME DEPTH AS A SELECTED CHIP, and it was one rung short.
+     *
+     * It sat on the rung a chip uses for HOVER while a chip that is chosen sits
+     * one deeper — so the product had two depths for one meaning, and whichever
+     * you saw first taught you the wrong one. The sink rule is written relative
+     * to the surface (hover two above it, chosen three), and translating that
+     * onto this ramp landed a step early because the page is not rung one here.
+     *
+     * Selected is selected: one meaning, one depth, wherever it appears. */
+    background-color: var(--app-bg-neutral-subtle-active);
     color: var(--app-fg-heading);
     font-weight: var(--app-font-weight-heading);
   }

@@ -58,6 +58,9 @@
     --app-duration-base: 200ms;
     --app-duration-slow: 320ms;
     --app-ease: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --app-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --app-z-base: 0;
     --app-z-dropdown: 1000;
     --app-z-sticky: 1020;
@@ -83,6 +86,7 @@
     --app-fg-on-accent: #ffffff;
     --app-border-color: #ddd6cd;
     --app-bg-sunken: #ebe5de;
+    --app-bg-field: #ebe5de;
     --app-bg-overlay: rgba(40, 33, 28, 0.55);
     --app-fg-subtlest: #8d7e6a;
     --app-bg-surface-hover: #f2eee9;
@@ -180,6 +184,7 @@
     --app-bg-surface-hover: #f7f3ee;
     --app-bg-surface-active: #f0eae3;
     --app-bg-sunken: #f0eae3;
+    --app-bg-field: #f0eae3;
     --app-border-color: #e2dbd2;
     --app-border-color-subtle: #f0eae3;
     --app-border-color-strong: #b7a691;
@@ -201,6 +206,7 @@
     --app-bg-surface-hover: #e1ddd8;
     --app-bg-surface-active: #dad5ce;
     --app-bg-sunken: #dad5ce;
+    --app-bg-field: #dad5ce;
     --app-border-color: #cdc6bd;
     --app-border-color-subtle: #dad5ce;
     --app-border-color-strong: #a3927d;
@@ -222,6 +228,7 @@
     --app-bg-surface-hover: #faf6f1;
     --app-bg-surface-active: #f3eee7;
     --app-bg-sunken: #f3eee7;
+    --app-bg-field: #f3eee7;
     --app-border-color: #e6ded5;
     --app-border-color-subtle: #f3eee7;
     --app-border-color-strong: #bba994;
@@ -243,6 +250,7 @@
     --app-fg-on-accent: #040302;
     --app-border-color: #3a3835;
     --app-bg-sunken: #070604;
+    --app-bg-field: #070604;
     --app-bg-overlay: rgba(189, 182, 177, 0.55);
     --app-fg-subtlest: #8e8c89;
     --app-bg-surface-hover: #23211f;
@@ -320,6 +328,7 @@
       --app-fg-on-accent: #040302;
       --app-border-color: #3a3835;
       --app-bg-sunken: #070604;
+      --app-bg-field: #070604;
       --app-bg-overlay: rgba(189, 182, 177, 0.55);
       --app-fg-subtlest: #8e8c89;
       --app-bg-surface-hover: #23211f;
@@ -412,6 +421,7 @@
     --app-bg-surface-hover: #2f2d2b;
     --app-bg-surface-active: #3c3a38;
     --app-bg-sunken: #110f0d;
+    --app-bg-field: #110f0d;
     --app-border-color: #474542;
     --app-border-color-subtle: #32302d;
     --app-border-color-strong: #62605d;
@@ -430,6 +440,7 @@
     --app-bg-surface-hover: #1c1a18;
     --app-bg-surface-active: #282624;
     --app-bg-sunken: #030202;
+    --app-bg-field: #030202;
     --app-border-color: #32302d;
     --app-border-color-subtle: #1e1d1a;
     --app-border-color-strong: #4c4a47;
@@ -448,6 +459,7 @@
     --app-bg-surface-hover: #3f3d3a;
     --app-bg-surface-active: #4c4a47;
     --app-bg-sunken: #1e1d1a;
+    --app-bg-field: #1e1d1a;
     --app-border-color: #575552;
     --app-border-color-subtle: #413f3d;
     --app-border-color-strong: #73716e;

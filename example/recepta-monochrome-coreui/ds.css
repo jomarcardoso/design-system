@@ -58,6 +58,9 @@
     --app-duration-base: 200ms;
     --app-duration-slow: 320ms;
     --app-ease: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --app-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --app-z-base: 0;
     --app-z-dropdown: 1000;
     --app-z-sticky: 1020;
@@ -83,6 +86,7 @@
     --app-fg-on-accent: #ffffff;
     --app-border-color: #ded6cb;
     --app-bg-sunken: #ebe5dd;
+    --app-bg-field: #f2eee7;
     --app-bg-overlay: rgba(38, 32, 22, 0.55);
     --app-fg-subtlest: #695b47;
     --app-bg-surface-hover: #f2eee7;
@@ -180,6 +184,7 @@
     --app-bg-surface-hover: #f7f3ec;
     --app-bg-surface-active: #f0eae2;
     --app-bg-sunken: #f0eae2;
+    --app-bg-field: #f7f3ec;
     --app-border-color: #e3dbd0;
     --app-border-color-subtle: #f0eae2;
     --app-border-color-strong: #baa68a;
@@ -201,6 +206,7 @@
     --app-bg-surface-hover: #e2ddd7;
     --app-bg-surface-active: #dbd5cc;
     --app-bg-sunken: #dbd5cc;
+    --app-bg-field: #e2ddd7;
     --app-border-color: #cec6bb;
     --app-border-color-subtle: #dbd5cc;
     --app-border-color-strong: #a59277;
@@ -222,6 +228,7 @@
     --app-bg-surface-hover: #fbf6f0;
     --app-bg-surface-active: #f4ede5;
     --app-bg-sunken: #f4ede5;
+    --app-bg-field: #fbf6f0;
     --app-border-color: #e7ded3;
     --app-border-color-subtle: #f4ede5;
     --app-border-color-strong: #bda98d;
@@ -243,6 +250,7 @@
     --app-fg-on-accent: #040302;
     --app-border-color: #3a3834;
     --app-bg-sunken: #070604;
+    --app-bg-field: #090705;
     --app-bg-overlay: rgba(188, 183, 173, 0.55);
     --app-fg-subtlest: #8e8c88;
     --app-bg-surface-hover: #23211e;
@@ -320,6 +328,7 @@
       --app-fg-on-accent: #040302;
       --app-border-color: #3a3834;
       --app-bg-sunken: #070604;
+      --app-bg-field: #090705;
       --app-bg-overlay: rgba(188, 183, 173, 0.55);
       --app-fg-subtlest: #8e8c88;
       --app-bg-surface-hover: #23211e;
@@ -412,6 +421,7 @@
     --app-bg-surface-hover: #302d2a;
     --app-bg-surface-active: #3c3a37;
     --app-bg-sunken: #110f0c;
+    --app-bg-field: #13110f;
     --app-border-color: #474541;
     --app-border-color-subtle: #32302d;
     --app-border-color-strong: #62605d;
@@ -430,6 +440,7 @@
     --app-bg-surface-hover: #1c1a17;
     --app-bg-surface-active: #282623;
     --app-bg-sunken: #030201;
+    --app-bg-field: #040302;
     --app-border-color: #32302d;
     --app-border-color-subtle: #1f1d1a;
     --app-border-color-strong: #4c4a47;
@@ -448,6 +459,7 @@
     --app-bg-surface-hover: #3f3d3a;
     --app-bg-surface-active: #4c4a47;
     --app-bg-sunken: #1f1d1a;
+    --app-bg-field: #211f1c;
     --app-border-color: #575551;
     --app-border-color-subtle: #423f3c;
     --app-border-color-strong: #74716e;
@@ -865,13 +877,13 @@
     border-color: var(--app-border-divider);
   }
   .form-check-input {
-    --cui-form-check-bg: var(--app-bg-sunken);
+    --cui-form-check-bg: var(--app-bg-field);
     --cui-border-color: var(--app-border-interactive);
   }
   .form-control,
   .form-select {
     border-radius: var(--app-radius-control);
-    background-color: var(--app-bg-sunken);
+    background-color: var(--app-bg-field);
     color: var(--app-fg-default);
     border-color: var(--app-border-interactive);
   }

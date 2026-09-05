@@ -69,6 +69,18 @@
 $_surfaces: (
   'page': 0.15,
   'sunken': 0.12,
+
+  // A WELL IS SHALLOWER THAN A PANEL, and on a dark theme it is also shallower
+  // than the page. That is not a contradiction of the light theme, it is the
+  // same idea inverted: a field is one step INTO the plane it sits on, and on a
+  // dark plane a step in is a step down.
+  //
+  // Adding `field` to layer 2 without adding it here left the derivation with no
+  // rule for the key, so the light value passed through untouched — a pale field
+  // on a dark page carrying pale ink, 1.73:1. The contrast gate caught it, which
+  // is the second time a new surface token has proved that this map is part of
+  // the token's definition rather than an optional extra.
+  'field': 0.13,
   'surface': 0.2,
   'surface-hover': 0.25,
   'surface-active': 0.3,

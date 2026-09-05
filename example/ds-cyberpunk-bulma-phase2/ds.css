@@ -19895,6 +19895,9 @@
     --app-duration-base: 200ms;
     --app-duration-slow: 320ms;
     --app-ease: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --app-ease-in: cubic-bezier(0.4, 0, 1, 1);
+    --app-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
     --app-z-base: 0;
     --app-z-dropdown: 1000;
     --app-z-sticky: 1020;
@@ -19920,6 +19923,7 @@
     --app-fg-on-action: #053345;
     --app-border-color: #3f3f46;
     --app-bg-sunken: #000000;
+    --app-bg-field: #000000;
     --app-bg-overlay: rgba(0, 0, 0, 0.72);
     --app-fg-subtlest: #71717b;
     --app-bg-surface-hover: #27272a;
@@ -20030,6 +20034,7 @@
     --app-bg-surface-hover: #38383c;
     --app-bg-surface-active: #18181b;
     --app-bg-sunken: #010101;
+    --app-bg-field: #010101;
     --app-border-color: #515159;
     --app-border-color-subtle: #38383c;
     --app-border-color-strong: #656570;
@@ -20052,6 +20057,7 @@
     --app-bg-surface-hover: #08080a;
     --app-bg-surface-active: #000000;
     --app-bg-sunken: #000000;
+    --app-bg-field: #000000;
     --app-border-color: #1c1c23;
     --app-border-color-subtle: #08080a;
     --app-border-color-strong: #2d2d36;
@@ -20074,6 +20080,7 @@
     --app-bg-surface-hover: #49494d;
     --app-bg-surface-active: #27272a;
     --app-bg-sunken: #080808;
+    --app-bg-field: #080808;
     --app-border-color: #63636b;
     --app-border-color-subtle: #49494d;
     --app-border-color-strong: #787883;

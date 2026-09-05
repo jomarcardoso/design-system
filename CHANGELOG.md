@@ -23,6 +23,83 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ## [Unreleased]
 
+### `bg-field` — a well is an object, not a plane
+
+A form field was pointing at `bg-sunken`, and in one product that resolved to the
+same value as `bg-neutral-subtle` — so a text input, a chip at rest and a
+recessed panel were three different things wearing one tone. Worse, it put a
+PASSIVE control deeper than the page behind the card it sat in: an element nested
+inward, below the plane under it, and the screen stopped making physical sense.
+
+The naming axes are what unlocked it. `sunken` is on the RELATION axis — it names
+a plane — and a field is not a plane, it is an object. An object wearing a
+plane's name is the same error that made a chip resolve to the tone of the card
+it sat in. `bg-field` is on the role axis with the other component fills, it is
+one rung into its surface rather than two, and it moves with surface contexts.
+
+Optional, falling back to `sunken`, so every theme written before this keeps
+today's behaviour.
+
+`derive.dark()` gained the matching entry, and only because the contrast gate
+caught its absence: a layer 2 surface token with no rule in the dark map passes
+its light value straight through, which put a pale field on a dark page at
+1.73:1. That is the second time a new surface token has proved the dark map is
+part of a token's definition rather than an optional extra.
+
+### Three easing curves, and two of them did not exist
+
+Every design language here says the same sentence — a thing arriving decelerates,
+a thing leaving does not linger — and layer 2 emitted one easing token, so the
+sentence had nowhere to land. `ease-out`, `ease-in` and `ease-in-out` now exist;
+`ease` stays and stays `out`, because deceleration is the right default and a
+product that never thinks about motion should get the good curve for free.
+
+### `check-doc-tokens` — the mirror of `check-decisions-applied`
+
+One guard asks whether a decision that was RECORDED reaches the CSS. This asks
+whether a decision that CHANGED was ever re-recorded.
+
+It was prompted by a paragraph reading "hierarchy is carried by `border-color`,
+and the border is the thing that has to be strong" — true of the first build,
+false of every build since the surface model was answered and the card lost its
+border. The document went on being read as authority while the build had moved.
+
+It cannot read a sentence. It checks every `--app-*` a document names against
+what the product emits, which catches renames, retirements and tokens that never
+existed — and it found the missing easing curves immediately. A token discussed
+in the past tense is allowed, detected by the words around it, because a record
+of a reversed decision is worth more than silence.
+
+The wide version stays a reading habit, stated in the file so nobody mistakes the
+guard for more than it is: **when a derived key changes, the prose explaining it
+has to be re-read, not just the CSS.**
+
+### The tabs open onto a folder
+
+An enclosed tab is the folder metaphor, and a folder tab means nothing attached
+to nothing. The three sections sat straight on the cream page, so the white tab
+was the front of no folder — which is the strangeness a reader felt without being
+able to name it. The tab was not badly drawn; it was making a promise the layout
+did not keep.
+
+Three details close it: the track's base line does not pass under the active tab,
+that gap being the opening; only the top corners of the active tab are rounded;
+and the panel shares its tone and its top edge. The active tab also drops its
+accent ink — it had white fill, border, accent text and weight, four signals for
+a closed contiguous set that needs one or two.
+
+Inside the panel the cards are gone. A white card on a white panel is not a
+level, it is two things pretending to be one, and the school's own escalation
+says tone for the container and space for the sections within it.
+
+### One depth for one meaning
+
+The rail's active item sat on the rung a chip uses for HOVER, while a chip that
+is chosen sits one deeper — two depths for one meaning, and whichever you saw
+first taught you the wrong one. The sink rule is written relative to the surface,
+and translating it onto this ramp landed a step early because the page is not
+rung one here.
+
 ### Four naming axes, and the one family that speaks two
 
 A token name answers one of four questions — POSITION (which rung), RELATION

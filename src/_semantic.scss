@@ -324,7 +324,21 @@ $_type-scale-steps: (
     'duration-fast': base.scale(duration, fast),
     'duration-base': base.scale(duration, base),
     'duration-slow': base.scale(duration, slow),
+    // THREE CURVES, AND TWO OF THEM WERE MISSING.
+    //
+    // Every design language in this repository says the same sentence — a thing
+    // arriving decelerates, a thing leaving does not linger — and layer 2 emitted
+    // ONE easing token, so the sentence had nowhere to land. Found by
+    // `check-doc-tokens`, from the direction nobody was watching: a document
+    // naming `--app-ease-out` and `--app-ease-in` that the build never emitted.
+    //
+    // `ease` stays and stays `out`, because deceleration is the right default
+    // for almost everything and a product that never thinks about motion should
+    // get the good curve for free.
     'ease': base.scale(ease, out),
+    'ease-out': base.scale(ease, out),
+    'ease-in': base.scale(ease, in),
+    'ease-in-out': base.scale(ease, 'in-out'),
 
     // --- Layering -------------------------------------------------------
     // A scale, not arbitrary numbers. Prevents the z-index arms race.
@@ -476,6 +490,31 @@ $_type-scale-steps: (
     'border-color': _req($c, border, $name),
 
     'bg-sunken': _req($c, sunken, $name),
+
+    // THE WELL A CONTROL IS CUT INTO, and it needed a name of its own.
+    //
+    // A field was pointing at `bg-sunken`, and in at least one product those
+    // resolved to the same value as `bg-neutral-subtle` — so a text input, a
+    // chip at rest and a recessed panel were three different things wearing one
+    // tone. The symptom was a field two levels inside a card coming out darker
+    // than the page behind the card: an element nested inward, deeper than the
+    // plane below it, and the screen stopped making physical sense.
+    //
+    // The naming question is what unlocked it. `sunken` is on the RELATION axis
+    // — it names a plane — and a field is not a plane, it is an OBJECT. An
+    // object wearing a plane's name is the same error that made a chip resolve
+    // to the tone of the card it sat in. This is on the ROLE axis, with the
+    // other component fills, and it answers "what does it do": it receives
+    // typed content.
+    //
+    // Shallower than `sunken` on purpose. A field is one step into the surface
+    // it sits on, not two — deep enough to say "something goes here", not so
+    // deep that a passive control outweighs the buttons beside it.
+    //
+    // OPTIONAL, falling back to `sunken`, so every theme written before this
+    // keeps exactly today's behaviour and a theme that has thought about it can
+    // separate the two.
+    'bg-field': _opt($c, field, sunken, $name),
     'bg-overlay': _req($c, overlay, $name),
 
     // The third step down. Named `subtlest`, not `subtle`, because `-subtle`
@@ -866,7 +905,7 @@ $_shifts: (
   // it is in a card, one rung below the page when it is on the page. That is a
   // different job from `bg-page` and `bg-surface`, which ARE grounds and stay
   // put — which is why they are not here and this is.
-  'bg-sunken',
+  'bg-sunken', 'bg-field',
   'border-color', 'border-color-subtle', 'border-color-strong',
   'border-divider', 'border-interactive'
 );

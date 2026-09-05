@@ -36,6 +36,19 @@ $recepta: (
   surface: paper(50),
   raised: paper(0),
   sunken: paper(200),
+
+  // THE WELL A CONTROL IS CUT INTO — one rung, not two.
+  //
+  // A field used to take `sunken`, which in this theme is the same step as the
+  // resting component fill: a text input, a chip at rest and a recessed panel
+  // were three different things wearing one tone. And it put a PASSIVE control
+  // deeper than the page behind the card it sat in, which is more visual weight
+  // than the buttons beside it — passive things should never outweigh active
+  // ones.
+  //
+  // paper(150) is one step into the surface: enough to say 'something goes
+  // here', not so much that the field competes with the card.
+  field: paper(150),
   'surface-hover': paper(150),
   'surface-active': paper(200),
   overlay: rgba(38, 32, 22, 0.55),

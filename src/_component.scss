@@ -208,7 +208,17 @@ $button-secondary-bg-active: #{core.ref('bg-neutral-subtle-active')} !default;
 $button-secondary-border-color: transparent !default;
 
 // --- Input / field -----------------------------------------------------
-$field-bg: #{core.ref('bg-surface')} !default;
+// The field's OWN fill, rather than a surface borrowed for the purpose.
+//
+// This read `bg-surface` — the tone a CARD is made of — so a field inside a card
+// was the same colour as the card and the only thing marking it was a hairline.
+// That is how a border ends up being asked to reach 3:1 on its own and drags the
+// whole ladder up behind it. It then read `bg-sunken`, which was one rung too
+// deep and collided with the resting component fill.
+//
+// `bg-field` is the token for exactly this job, and it moves with the surface
+// the field is on.
+$field-bg: #{core.ref('bg-field')} !default;
 $field-fg: #{core.ref('fg-default')} !default;
 // The INTERACTIVE role rather than the general border, and the distinction is
 // legal rather than aesthetic: what identifies a control sits inside WCAG
