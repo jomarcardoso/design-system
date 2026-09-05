@@ -226,7 +226,7 @@ $field-fg: #{core.ref('fg-default')} !default;
 // 1.2-1.5:1. A field with no perceivable edge is a field nobody can find, and
 // this is the one place a border is not negotiable.
 $field-border-color: #{core.ref('border-interactive')} !default;
-$field-border-color-focus: #{core.ref('border-color-strong')} !default;
+$field-border-color-focus: #{core.ref('border-interactive')} !default;
 $field-radius: #{core.ref('radius-control')} !default;
 $field-height: #{core.ref('size-control')} !default;
 // Your example lives here: unusual to theme, occasionally set per instance.
@@ -1018,11 +1018,19 @@ $table-caption-fg: #{core.ref('fg-on-brand')} !default;
 // appearing on something that is merely focused, which is the collision
 // `check-focus-collision` exists to prevent — reached from the other side.
 //
-// The edge still firms up, one neutral step, so the field a cursor is in reads
-// as more present than the ones around it. The ring does the announcing.
+// THE RESTING BORDER DOES NOT MOVE, and that is the rule rather than an
+// omission: the border is what says the thing is a control, so replacing it on
+// focus removes the affordance at the exact moment the user is relying on it.
+// These three keep their names so a product can still step them — a dense
+// product may want the edge to firm up — and default to the resting value, so
+// out of the box the ring is the only thing that changes.
+//
+// A step was tried here first and measured: `border-color-strong` and
+// `border-interactive` land on the same rung of a twelve-step ramp, so the
+// "firmer edge" was the same colour with a comment claiming otherwise.
 $field-ring: #{core.ref('ring')} !default;
 $field-ring-offset: #{core.ref('ring-offset')} !default;
-$field-box-border-color-focus: #{core.ref('border-color-strong')} !default;
+$field-box-border-color-focus: #{core.ref('border-interactive')} !default;
 // The ruled lines do NOT move. Decoration does not carry state, and a page of
 // rules changing colour because a cursor entered the box is the field telling
 // the reader something the cursor already told them.
@@ -1033,7 +1041,7 @@ $field-divider-color-focus: #{core.ref('border-divider')} !default;
 // that has to move with the fill while the box's does not.
 $field-border-width: #{core.ref('border-width')} !default;
 $field-label-border-color: #{core.ref('border-color')} !default;
-$field-label-border-color-focus: #{core.ref('border-color-strong')} !default;
+$field-label-border-color-focus: #{core.ref('border-color')} !default;
 $carousel-indicator-border-color-active: #{core.ref('border-selected')} !default;
 $button-border-width: #{core.ref('border-width')} !default;
 $button-fg-disabled: #{core.ref('fg-disabled')} !default;
