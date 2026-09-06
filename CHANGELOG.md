@@ -24,6 +24,59 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.9.6] — 2026-09-06
+
+**Pressing a ghost button did nothing, and the comment above it said otherwise.**
+
+The adapter argued at length that a ghost's pressed state is "one rung past
+hover, still ghost" — and then bound `--cui-btn-active-bg` to the same slot as
+`--cui-btn-hover-bg`. The state existed in prose and not on screen. The outlined
+variant one block up had the identical defect.
+
+It surfaced while answering a different question — a product asking whether the
+ghost's HOVER fill was correct — which is the ordinary way this kind of thing
+comes out: nobody had pressed the button.
+
+### The fix, and why it needs a fallback
+
+`_slot()` learns `subtle-hover` and `subtle-active`, and a new `_step()` binds
+them with the flat subtle tone behind them:
+
+    --cui-btn-active-bg: var(--app-bg-accent-subtle-hover, var(--app-bg-accent-subtle));
+
+The fallback is the right shape rather than a hedge, for two reasons. The tokens
+are genuinely optional — only `accent` and `neutral` carry a ladder above their
+subtle tone; a status role has one subtle tone and nothing above it. And the
+fallback is exactly the value the binding had before, so a role without the
+ladder is unchanged rather than broken.
+
+### What was NOT a bug, checked because a product asked
+
+A ghost button's hover fill measures `#ebe5dd`, which is also the secondary
+button's fill at rest. That is correct, and it is what the 12-rung ladder says:
+
+    secondary   rest rung 3   hover rung 4
+    ghost       rest rung 0   hover rung 3   pressed rung 4
+
+Two controls that start one rung apart share the rung they pass through. The
+ladder is a ladder; the same step is under both feet at different moments.
+
+They do not become confusable, because the INK does not move with the fill: a
+ghost keeps `--app-fg-accent` (`#4a5eab`, the ballpoint blue) through every
+state, while the secondary carries `--app-fg-default` (`#2b261e`). A hovered
+ghost is a blue label on a neutral tint; a resting secondary is dark ink on the
+same tint. Reported as identical text, measured as two different inks.
+
+The fills coincide here for one more reason worth naming: this product runs
+`$accent-wash: false`, so `bg-accent-subtle` is routed to the neutral family by
+design. On a palette that can hold a wash the ghost's hover is a chromatic tint
+and the two never meet at all.
+
+**To upgrade:** copy the new `src/`. Nothing to change; a role without the subtle
+ladder keeps its current behaviour through the fallback.
+
+---
+
 ## [0.9.5] — 2026-09-06
 
 **The segment's radius is not a decision, it is a consequence.** A product

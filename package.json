@@ -1,6 +1,6 @@
 {
   "name": "@org/ds",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "private": true,
   "description": "Framework-independent design token foundation. Layer 1 compiles away, layer 2 is the public contract, adapters are leaves.",
   "type": "module",
