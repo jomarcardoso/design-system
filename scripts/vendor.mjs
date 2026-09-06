@@ -146,6 +146,25 @@ const files = (dir, skip) => {
   return out;
 };
 
+// THE VERSION, and it is the one thing a vendored copy could not previously
+// answer about itself.
+//
+// CHANGELOG.md tells a reader to catch up by "applying the blocks newer than
+// your copy", and then says which version you have is in `package.json`. The
+// tool's `package.json` does not travel — it is not a parcel and should not be
+// — so inside a consumer that instruction had nothing to read. The only handle
+// was the commit sha, which does not say which entries apply without a clone of
+// the tool sitting beside you.
+//
+// Recorded here so the manifest answers it. It does not make the copy partial:
+// vendoring is all-or-nothing by design and a project takes the whole
+// foundation at a commit. What the version buys is knowing WHICH "To upgrade"
+// blocks to read, which is the half of an upgrade no script can do for you.
+let version = 'unknown';
+try {
+  version = JSON.parse(readFileSync('package.json', 'utf8')).version ?? 'unknown';
+} catch {}
+
 let commit = 'unknown';
 try { commit = execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim(); } catch {}
 
@@ -184,7 +203,18 @@ if (previous) {
     if (list.length > 12) console.log(dim(`    …and ${list.length - 12} more`));
   };
 
-  console.log(`\n${bold('Vendored copy')} ${dim(`— from ${previous.commit}, ${previous.date}`)}`);
+  const was = previous.version ? `${previous.version}, ` : '';
+  console.log(
+    `\n${bold('Vendored copy')} ${dim(`— ${was}from ${previous.commit}, ${previous.date}`)}`
+  );
+  if (previous.version && previous.version !== version) {
+    console.log(
+      `  ${bold(`${previous.version} → ${version}`)}  ${dim('read every CHANGELOG entry above your version')}`
+    );
+    console.log(
+      `  ${dim('their "To upgrade" blocks are the half of the upgrade no copy can apply for you')}`
+    );
+  }
   say('changed here only', drift.local, 'take these upstream, or the next update loses them');
   say('changed upstream only', drift.upstream, 'an ordinary update');
   say('changed on BOTH sides', drift.both, 'a merge — a person has to read these');
@@ -209,7 +239,7 @@ if (check) {
 }
 
 // --- copy ---------------------------------------------------------------------
-const manifest = { source: 'design-system', commit, date: new Date().toISOString().slice(0, 10), layout, files: {} };
+const manifest = { source: 'design-system', version, commit, date: new Date().toISOString().slice(0, 10), layout, files: {} };
 let written = 0;
 for (const f of planned) {
   manifest.files[f.out] = hash(f.src);

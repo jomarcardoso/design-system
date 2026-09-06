@@ -11,8 +11,11 @@ That is what this file is for. Every entry that requires action from a vendoring
 project carries a **To upgrade** block with the concrete edit, so catching up is
 reading this file top-down and applying the blocks newer than your copy.
 
-Which version you have is in `package.json`. If your copy predates versioning,
-start at 0.2.0 and apply everything.
+Which version you have is in `VENDORED.json`, written there by `vendor.mjs` at
+copy time — the tool's own `package.json` does not travel, so inside a
+consuming project that is the only place the answer lives. A manifest with no
+`version` field predates this and is older than 0.9.4; a copy with no manifest
+at all predates versioning, and should start at 0.2.0 and apply everything.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning is [semantic](https://semver.org/spec/v2.0.0.html), where "public
