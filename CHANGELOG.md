@@ -21,6 +21,85 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.9.4] — 2026-09-06
+
+**A pill set is a segmented control, and it was reading the tab strip's
+variables.** Two shapes, two mechanisms, one family — which is a conflict of
+interest rather than a saving.
+
+### The two are not the same component
+
+`$nav-tab-*` is an ENCLOSED tab: the strip sits on the page, the chosen tab is a
+surface fused to the panel below it, and a border closes the shape. There is no
+recess.
+
+`$tabs-*` is a SEGMENTED control: a recessed track holds every segment, the
+chosen one is lifted OUT of it, and no border is drawn at all — the tone step is
+the boundary.
+
+Sharing one family across both means a product cannot deepen the pill's track
+without also moving a tab strip that has no track. `.nav-pills` reads `$tabs-*`
+now, which also gives that family its first consumer: it had been declared,
+argued for at length, and bound by nothing.
+
+### Hover existed only as a slightly darker word
+
+A pill set changed its label colour on hover and nothing else, because CoreUI
+ships `.nav-pills` as bare links — no track, no inset, no hover fill, and no
+variables for any of them. Those three are written as PROPERTIES in the adapter
+rather than as invented `--cui-nav-pills-*` names: an adapter may style a class
+the library ships, but a variable nobody reads is a feature the product loses the
+moment it stops loading the adapter.
+
+`$tabs-tab-bg-hover` is `bg-surface-hover`, and the choice is the rule this
+system already holds — **hover is a preview of the state that comes next**. The
+next state is "lifted out of the track", so the hover moves toward the surface.
+The neutral fill family moves the other way, deeper into the plane, which on a
+recess previews the opposite of what clicking does. Measured on the recepta ramp
+the three land in order: track `#ebe5dd`, hover `#f2eee7`, selected `#fdfbf8`.
+
+### Two defaults reversed
+
+**`$tabs-tab-fg-selected` was `fg-selected` and is `fg-default`.** The chosen
+segment is a neutral surface lifted out of a track — it is not a selection fill —
+so its label is the ordinary ink, the same one a neutral button carries. Accent
+ink on it spends pigment saying what the lift already said, and in a monochrome
+school that is the entire budget going to a state POSITION has made obvious.
+
+**`$tabs-tab-shadow-selected` was `none` and is `shadow-raised`.** The line that
+was there read "the tone difference is the mechanism and a shadow is the same
+boundary drawn twice". True of a panel; wrong here, and the difference is the
+track. A segment is not separating itself from the page — it is claiming to be
+ABOVE a surface that is still visible on both sides of it. Tone alone gives a
+lighter patch; tone plus a hairline gives a lifted one. `check-mechanism` passes,
+because controls are exempt by name and for exactly this reason.
+
+### The family, for anyone building a segmented control of their own
+
+| variable | default |
+|---|---|
+| `$tabs-bg` | `bg-sunken` — the track, a recess |
+| `$tabs-pad` | `space-2xs` — the inset that makes it a track |
+| `$tabs-radius` | `radius-surface` — the outer corner |
+| `$tabs-border-color` | `transparent` — the track draws no line |
+| `$tabs-tab-fg` | `fg-muted` — a segment at rest |
+| `$tabs-tab-radius` | `radius-control` — the inner corner |
+| `$tabs-tab-bg-hover` | `bg-surface-hover` |
+| `$tabs-tab-fg-hover` | `fg-default` |
+| `$tabs-tab-bg-selected` | `bg-surface` — lifted out |
+| `$tabs-tab-fg-selected` | `fg-default` |
+| `$tabs-tab-shadow-selected` | `shadow-raised` |
+| `$tabs-layout-content-bg` | `bg-surface` — the panel below |
+
+A segment at rest has no fill of its own on purpose, so that only the chosen one
+is a shape.
+
+**To upgrade:** copy the new `src/`. A product that had set `$nav-tab-*` expecting
+it to reach its pills should move those settings to `$tabs-*`; nothing else
+changes, and `$nav-tab-*` keeps its meaning for enclosed tabs.
+
+---
+
 ## [0.9.3] — 2026-09-05
 
 **The library is not the only reader.** 0.9.2 audited which `--cui-*` the LIBRARY

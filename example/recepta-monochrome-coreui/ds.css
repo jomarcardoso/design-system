@@ -922,8 +922,19 @@
   }
   .nav-pills {
     --cui-nav-pills-link-active-bg: var(--app-bg-surface);
-    --cui-nav-pills-link-active-color: var(--app-fg-accent);
+    --cui-nav-pills-link-active-color: var(--app-fg-default);
     --cui-nav-pills-border-radius: var(--app-radius-control);
+    background-color: var(--app-bg-sunken);
+    padding: var(--app-space-2xs);
+    border-radius: var(--app-radius-surface);
+    color: var(--app-fg-muted);
+  }
+  .nav-pills .nav-link:hover:not(.active):not(.disabled) {
+    background-color: var(--app-bg-surface-hover);
+    color: var(--app-fg-default);
+  }
+  .nav-pills .nav-link.active {
+    box-shadow: var(--app-shadow-raised);
   }
   .nav-tabs {
     --cui-nav-tabs-border-color: var(--app-border-divider);
