@@ -923,7 +923,7 @@
   .nav-pills {
     --cui-nav-pills-link-active-bg: var(--app-bg-surface);
     --cui-nav-pills-link-active-color: var(--app-fg-default);
-    --cui-nav-pills-border-radius: var(--app-radius-control);
+    --cui-nav-pills-border-radius: max(0px, var(--app-radius-surface) - var(--app-space-2xs));
     background-color: var(--app-bg-sunken);
     padding: var(--app-space-2xs);
     border-radius: var(--app-radius-surface);

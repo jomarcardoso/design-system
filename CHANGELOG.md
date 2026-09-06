@@ -24,6 +24,70 @@ signatures of `emit-theme()`, `core.context()` and each adapter's `emit()`.
 
 ---
 
+## [0.9.5] — 2026-09-06
+
+**The segment's radius is not a decision, it is a consequence.** A product
+reported that the pill track's corners and the segment's corners "almost touch",
+and could not name why. The reason is arithmetic and it has one right answer.
+
+### What each alternative actually does
+
+The rule is outer = inner + inset. Measured on the recepta geometry — a 10px
+track with a 4px inset — as the gap on the DIAGONAL through the corner, against
+the 4px it is on the straight edges:
+
+| segment radius | corner gap | |
+|---|---|---|
+| 2px | 2.34px | 41% tighter |
+| **4px** | **3.17px** | **21% tighter — what it was** |
+| **6px** | **4.00px** | **constant — outer minus inset** |
+| 8px | 4.83px | 21% looser |
+
+A segment SQUARER than concentric pushes its corner outward toward the track's
+corner, and the two edges close in on each other. A segment rounder than
+concentric does the opposite and leaves a puddle at every corner. Exactly one
+value keeps the gap constant all the way round, and neither "make them equal" nor
+"make the inner larger" is it.
+
+### So it is derived
+
+`$tabs-tab-radius` is now `max(0px, calc($tabs-radius - $tabs-pad))` — the one
+piece of arithmetic in layer 3, and the reason it earns the exception is that it
+is not an independent decision. Once the track's radius and its inset are chosen,
+picking the segment's radius off the scale means picking a number that disagrees
+with two decisions already made.
+
+It also means the relationship survives being reconfigured: a product that sets
+`$tabs-radius` or `$tabs-pad` through `@use … with ()` gets a segment radius that
+follows, because a `!default` expression is evaluated after configuration.
+
+`max(0px, …)` guards the case where a product's inset exceeds its track radius,
+which is a legitimate way to say "my track is nearly square".
+
+### The track agrees with the cards
+
+`$tabs-radius` stays `radius-surface`, which is the card's radius, because the
+track IS a container and a container that rounds differently from every other
+container on the page reads as a foreign object. The segment is the one free to
+differ, and now it differs by exactly the inset.
+
+Measured after the change: card 10px, track 10px, segment 6px.
+
+**A note on the scale.** 6px is not a step in this product's radius scale
+(2 / 4 / 10 / pill) and that is not a fourth step sneaking in — it is a value
+computed at runtime from two steps. `check-radius` reads `--app-radius-*` and
+sees three steps, correctly, because that is still how many decisions there are.
+
+This reverses a note written one release ago that said arithmetic between scale
+steps lands between steps. True of a value somebody CHOOSES; this one is measured
+off two that were already chosen.
+
+**To upgrade:** copy the new `src/`. A product that had set `$tabs-tab-radius`
+explicitly keeps its value and loses the derivation, which is the correct
+trade — an explicit setting is a decision.
+
+---
+
 ## [0.9.4] — 2026-09-06
 
 **A pill set is a segmented control, and it was reading the tab strip's
